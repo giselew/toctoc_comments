@@ -1,0 +1,3 @@
+The zip-file toctoc_comments_mod_extensions.zip, containing
+comments_ipbl, comments_response and comments_report can be found and downloaded from 
+www.toctoc.ch/fileadmin/download/toctoc_comments_mod_extensions.zip
