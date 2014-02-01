@@ -1,0 +1,25 @@
+# cat=basic; type=int+; label=Backend-Module, max. records shown: How much comments should be displayed per page
+max_records = 10
+
+# cat=basic; type=int+; label=Backend-Module, comment crop: Set the crop size of the comment field in the backend
+text_crop = 55
+
+# cat=basic; type=boolean; label=Backend-Module, show comments in subpages: If activated, lists also comments in subpages of the actual page
+show_sub = 1
+
+# cat=basic; type=string; label=Backend-Module, select values: The select values which appear in the selectbox in the BE module (comma separated list)
+select_val = 5,10,20,30,50,100
+
+# cat=basic/enable; type=boolean; label=Ratings, debug mode:While in debug mode, it is possible to remove entries from toctoc_comments_rating tables or change values there
+debugMode = 0
+
+# cat=basic/enable; type=boolean; label=Frontend, update mode:While in update mode, the plugin converts existing comments from extension comments 1.5.x to toctoc_comments. The Update is done by the plugin itself: On next use of the plugin on a page with old comments, these comments are updated to toctoc_comments.
+updateMode = 0
+
+# cat=basic/enable; type=string; label=Network blocking lists:Comma-separated list of network blocking lists (such as cbl.abuseat.org)
+dnsbl_list =
+
+# cat=basic/10; type=boolean; label=Update folder for static tables:Check this, if you want to move the static tables from the rootpage to the folder the storage-folder (TS-configuration) of the plugin. The Update is done by the plugin itself: On next use of the plugin in the frontend pids are updated.
+updatefromRoottoCommentFolder = 
+
+
