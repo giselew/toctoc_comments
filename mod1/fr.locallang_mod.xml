@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallangExt>
+	<data type="array">
+		<languageKey index="fr" type="array">
+			<label index="mlang_tabs_tab">Commentaires</label>
+			<label index="mlang_labels_tabdescr">Affiche les commentaires de votre site dans un module Backend</label>
+			<label index="mlang_labels_tablabel">Consulter vos commentaires</label>
+		</languageKey>
+	</data>
+	<orig_hash type="array">
+		<languageKey index="fr" type="array">
+			<label index="mlang_tabs_tab" type="integer">138493032</label>
+			<label index="mlang_labels_tabdescr" type="integer">30233838</label>
+			<label index="mlang_labels_tablabel" type="integer">101757379</label>
+		</languageKey>
+	</orig_hash>
+	<orig_text type="array">
+		<languageKey index="fr" type="array">
+			<label index="mlang_tabs_tab">Comments</label>
+			<label index="mlang_labels_tabdescr">Display the comments of your website in a backend module</label>
+			<label index="mlang_labels_tablabel">Display your comments</label>
+		</languageKey>
+	</orig_text>
+</T3locallangExt>

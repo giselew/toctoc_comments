@@ -1,0 +1,1354 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!-- ###HEADER_ADDITIONS### begin
+        This section will be appended to html headers of the output. Allows you to include CSS, JS, etc
+        Markers in this section:
+            SITE_REL_PATH    - path to file relative to web root, ending with slash
+-->
+<link href="###SITE_REL_PATH###res/css/themes/###THEME###/css/tx-tc###EXTVERSION###-theme.css" type="text/css" rel="stylesheet" />
+<link href="###SITE_REL_PATH###res/css/###BOXMODEL###" type="text/css" rel="stylesheet" />
+<link href="###SITE_REL_PATH###res/css/flowplayer/functional.css" rel="stylesheet" type="text/css"/>
+###EMOJICSS###
+
+<link href="###SITE_REL_PATH###res/css/###BOXMODELCONF###" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="###SITE_REL_PATH###res/js/tx-tc-###LANCODE###.js"></script>
+<!-- ALL jQuery Tools. No jQuery library -->
+###JSSERVERVARS###
+<script type="text/javascript" src="###SITE_REL_PATH###res/js/tx-tc###EXTVERSION###.js"></script>
+<script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.sharrre-1.3.4.js"></script>
+<script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.elastic-1.6.min.js"></script>
+<script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.simplemodal.1.4.3.min.js"></script>
+<script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.watermark.js"></script>
+<script  type="text/javascript" src="###SITE_REL_PATH###res/js/flowplayer.min.js"></script>
+###EMOJIJS###
+
+
+<!-- ###ADDITIONAL_CSS### begin -->
+<link rel="stylesheet" href="###CSS_FILE###" />
+<!-- ###ADDITIONAL_CSS### end -->
+
+<!-- ###HEADER_ADDITIONS### end -->
+</head>
+<body>
+
+    <h4>AJAX Header subpart</h4>
+    <hr size="1" />
+<!-- ###AJAXHEADER### begin
+    This subpart formats comments
+-->
+    
+    <div id="uidajax###UID######CID###" style="display: none;">
+        ###AJAX_DATA###
+        ###AJAX_COMMENTSDATA###
+        ###AJAX_COMMENTSIMGS###
+    </div>
+     ###IMAGESPRITE###
+ 	
+ <!-- ###AJAXHEADER### end -->
+        
+<h4>Comment listing subpart</h4>
+    <hr size="1" />
+<!-- ###COMMENT_LIST### begin
+    This subpart formats comments
+-->
+    ###REPLYONCOMMENTTOP###
+    <div id="uid0###UID######CID###" class="tx-tc-cts">
+        <div id="tx-tc-cts-###REFCSS###">
+        	
+            <!-- ###COMMENT_LISTAJAX### begin -->
+           
+            <div id="tx-tc-cts-dp-###REFCSS###">
+            <a id="tx-tc-cts-a-###REF###" name="tx-tc-cts-a###REF###"></a>
+                <div class="tx-tc-cts-dp###TOPBORDERCLASS###">
+                ###SUBTEMPLATE_TOPAREA###
+                ###PAGE_BROWSERTOP###
+					<!-- ###CONTENT### begin -->
+            
+                    <!-- ###SINGLE_COMMENT### begin
+                        A single comment in the list. Possible markers:
+                            ALTERNATE        - "-1" for odd and "-2" for even entries, allows to have alternating styles
+                            FIRSTNAME        - first name
+                            LASTNAME        - last name
+                            IMAGE            - image
+                            EMAIL            - email (spam protect works!)
+                            LOCATION        - location
+                            HOMEPAGE        - homepage
+                            COMMENT_DATE    - date when posted
+                            COMMENT_CONTENT    - content of the comment (nl2br + htmlspecialchars)
+                            DELETE_LINK_TEXT - Comment l�schen
+                            TEXT_ADD_COMMENT
+                            COMMENT_ID
+                            RATINGS
+                    -->
+                    
+                    <div id="tx-tc-cts-ct-tx-tc-cts_###COMMENT_ID###" ###STYLECOMMENTBOX###>
+                        <div id="tx-tc-cts-ct-dp-tx-tc-cts_###COMMENT_ID###" ###HIGHLIGHTSTYLE###>
+                            <div class="tx-tc-cts-ct-dp">
+                                <div class="tx-tc-ct-box">
+	                                
+                                    <div class="tx-tc-ct-uc" id="tx-tc-cts-uc-###COMMENT_ID###">
+                                    <div class="tx-tc-ct-uc-pic2" id="tx-tc-cts-uc-pic2-###COMMENT_ID###">###PCEHDRPIC###</div>
+                                    <div class="tx-tc-ct-box-ctclose">
+	                                    <a href="javascript:void(0)" rel="nofollow" onclick="toctoc_comments_uc_close(###COMMENT_ID###);">
+			                                <label class="tx-tc-ucclose tx-tc-CloseButton tx-tc-CloseButtonSmall" for="ux76myu8###COMMENT_ID###">
+												<input id="ux76myu8###COMMENT_ID###" type="button" title="###TXTCLOSE###">
+											</label>
+										</a>
+									</div>
+										<div id="tx-tc-cts-uc-inner-###COMMENT_ID###">
+                                        </div>
+                                    </div>
+                                    <div class="tx-tc-ze"></div>
+                                    <div class="tx-tc-ct-box-ctpic">
+                                        <div class="tx-tc-ct-box-picturecrop32"><a href="javascript:void(0)" rel="nofollow" onclick="###SHOWUCLINK###">###IMAGE###</a></div>
+                                        ###EXPANDCOMMENTS###
+                                    </div>
+                                     
+                                    <div class="tx-tc-ct-box-cttxt" ###TIPPJS###>
+                                        ###DENOTIFY_LINK######DELETE_LINK######EDIT_LINK###
+                                        <a id="tx-tc-ct-id-###COMMENT_ID###" name="tx-tc-ct-###COMMENT_ID###"></a>
+                                        <p id="tx-tc-ct-box-cttxt-###COMMENT_ID###" class="tx-tc-text" ###STYLEBOX###>###NAMEPART######COMMENT_CONTENT###</p>
+                                        ###ATTACHMENT###
+                                        <div class="tx-tc-rt">
+                                            <div id="tx-tc-rts-tx_toctoc_comments_comments_###COMMENT_ID###" class="tx-tc-rts-area">
+                                            ###COMMENTDATENORATINGS###
+                                                ###RATINGS###
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    ###LINE_COMMENTSREPORTREPLYSTART### 
+                                        ###TX_COMMENTSREPORT### 
+                                        ###TX_COMMENTSREPLY### 
+                                    ###LINE_COMMENTSREPORTREPLYEND###     
+                                   ###COMMENT_RESPONSE_START######COMMENT_RESPONSE######COMMENT_RESPONSE_END###
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                    <!-- ###SINGLE_COMMENT### end -->
+                    <!-- ###CONTENT### end -->
+            
+                    ###PAGE_BROWSER###
+                       
+                </div>    
+            </div>
+            <script type="text/javascript">
+            	tttip('t101',".tx-tc-ct-pvs-images img[title]");
+		     	tttip('t101',".tx-tc-ct-ry a[title]");
+		     	tttip('t101',".tx-tc-atrts-ctlink a[title]");
+		     	tttip('t101',".tx-tc-ct-form-field-ntf input[title]");
+		     	tttip('t101',".tx-tc-userpic[title]");
+		     	tttip('t101',".tx-tc-userpicf[title]");
+		     	tttip('t101',".tx-tc-ct-report img[title]");
+		     	tttip('t101',".tx-tc-ct-box-ctpic img[title]");
+		     	tttip('t101',".tx-tc-ct-actionforms form input.tx-tc-ct-deletebutton[title]");
+		     	tttip('t101',".tx-tc-ct-actionforms form input.tx-tc-ct-editbutton[title]");
+		     	tttip('t101',".tx-tc-scopetitlebold[title]");
+		     	tttip('t201-65','.tx-tc-scopetitle[title]');
+		     	tttip('t201-20','.tx-tc-img-image a img[title]');
+		     	tttip('t101','.tx-tc-ct-denotifybutton[title]');
+				jQuery("img[rel]").overlay({mask: '#000'});
+           	</script> 
+            <!-- ###COMMENT_LISTAJAX### end -->
+         </div> 
+    </div>
+    ###REPLYONCOMMENT###
+<!-- ###COMMENT_LIST### end -->
+    <hr />
+    
+    					
+    <h4>Subtemplate for the top area of the plugin</h4>
+<!-- ###SUBTOPAREA### begin -->
+ ###TOPATTACHMENT###
+                    <div id="uid###UID######CID###" ###TOPATTACHMENTSTYLEHIDE###class="tx-tc-ct-box">            
+                        <div class="tx-tc-text-top">
+                            <div id="tx-tc-myrtstop-###REF###" class="tx-tc-rts-area###HIDECSS###"  onmouseover="tttip('t101','#tx-tc-myrtstop-dp-###REF### .tx-tc-atrtstop-ilike-dp a[title]');">
+                                <div id="tx-tc-myrtstop-dp-###REF###" class="tx-tc-rts-li-text###HIDECSS###">
+                                     <div class="tx-tc-atrtstop-ilike-dp###STATICADDON###">
+                                         ###ARTICLELIKE###
+                                     </div>
+                                 </div>
+                             </div>
+                             ###ARTICLECOMMENTLINK###
+                             ###ARTICLESHARE### 
+                            <div class="tx-tc-atrts-dp" id="tx-tc-atrts-dp-###REF###" >
+                                <div id="tx-tc-rts-###REF###" class="tx-tc-rts-area">###ARTICLEVOTE###</div>
+                            </div>
+                            ###COMMENTSCOUNT###
+                        </div>
+                    </div>
+					<div id="confirm###CID###" style="display:none;">
+						<div class="header"><span>###TXTCONFIRM###</span></div>
+						<div class="message"></div>
+						<div class="buttons">
+							<div class="no simplemodal-close">###TXTNO###</div><div class="yesconfirm">###TXTYES###</div>
+						</div>
+					</div>
+					<div id="information###CID###" style="display:none;">
+						<div class="header"><span>###TXTINFO###</span></div>
+						<div class="message"></div>
+						<div class="buttons">
+							<div class="yes simplemodal-close">###TXTOK###</div>
+						</div>
+					</div>
+<!-- ###SUBTOPAREA### end -->
+
+<!-- ###SUBTOPAREAFP### begin -->
+            <div class="tx-tc-cts-dp" id="tx-tc-cts-dp-split-###REFCSS###">
+              ###TOPAREA###				
+			</div>
+			<div id="dummy"></div>
+<!-- ###SUBTOPAREAFP### end -->
+
+    <hr size="1" />
+					
+    <h4>No comments</h4>
+<!-- ###NO_COMMENTS### begin -->
+    <div class="tx-tc-ct-box">
+	    <div class="tx-tc-ct-box-empty">
+	        <p class="tx-tc-text">###TEXT_NO_COMMENTS###</p>
+	    </div>
+    </div>
+<!-- ###NO_COMMENTS### end -->
+    <hr size="1" />
+
+    <h4>Comment form subpart</h4>
+    <hr size="1" />
+<!-- ###COMMENTSCOUNTSUB### begin -->    
+     <div class="tx-tc-ct-cnt" id="tx-tc-ct-cnt-###CID###">
+<span>###COMMENTSCOUNT###</span>
+     </div>
+ <!-- ###COMMENTSCOUNTSUB### end -->  
+ 
+ <!-- ###COMMENTSVIEWCOUNTSUB### begin -->    
+<span class="tx-tc-ct-viewcnt" >###COMMENTSVIEWCOUNT###</span>
+ <script type="text/javascript">
+ 	
+ 	comments_view('###RECORD###','###FEUSERID###', commentsAjaxData###CID###,0);
+ </script>        	
+ <!-- ###COMMENTSVIEWCOUNTSUB### end --> 
+ 
+  <!-- ###COMMENTSVIEWONLYCOUNTSUB### begin -->    
+ <script type="text/javascript">
+	
+ 	comments_view('###RECORD###','###FEUSERID###', commentsAjaxData###CID###,0);
+ </script>        	
+ <!-- ###COMMENTSVIEWONLYCOUNTSUB### end --> 
+    
+<!-- ###COMMENT_FORM### begin
+    This subpart formats comment form
+-->
+
+    <div class="tx-tc-pi1">
+    <script type="text/javascript">
+	    var previewstarted###CID### = 0;
+	    var previewstartedfp###CID### = 0;
+	    var previewfpheight###CID### = 0;
+	    var previewselpic###CID### = 888;
+	    var previewselpreviewid###CID### = 0;
+	    var previewcountnr###CID### = 0;
+	    var previewfpcountnr###CID### = 0;
+	    var previewhtml###CID### = '';
+	    var previewselcomment###CID### = 0;
+	    var previewstartedfup###CID### = 0;
+	</script>
+        <div id="tx-tc-form-###REF###" class="tx-tc-state-###LOGGEDIN###">
+        <!-- ###COMMENT_FORMAJAX### start -->
+            <div id="tx-tc-form-dp-###REF###">
+            
+                <div class="tx-tc-form-dp">
+            
+                ###TOP_MESSAGE###
+                    <div class="tx-tc-ct-box-ctpic2">
+                        <div class="tx-tc-ct-box-picturecrop322">###IMAGETAG###</div>
+                        
+                    </div>
+                   
+                    <div class="tx-tc-ct-box-cttxt" id="tx-tc-formsqueezer-###CID###" style="height: ###TAAREAHEIGHT###px;">
+                        <form autocomplete="off" id="cf###CID###" class="tx-tc-form-for-newcomment" action="###ACTION_URL###"
+                            method="post" onsubmit="return commentform_validate('toctoc_comments_pi1_contenttextbox_###CID###', '###CID###');" name="ncf###CID###" enctype="multipart/form-data">
+                            <fieldset id="cffs###CID###" class="tx-tc-ct-fieldset" >
+            
+                                <input type="hidden" name="toctoc_comments_pi1[itemurl]" id="toctoc_comments_pi1_###CID###itemurl" value="###CURRENT_URL###" />
+                                <input type="hidden" name="toctoc_comments_pi1[itemurlchk]" id="toctoc_comments_pi1_###CID###itemurlchk" value="###CURRENT_URL_CHK###" />
+                                <script type="text/javascript">
+                                	jQuery(document).ready(function(){
+								         jQuery("#toctoc_comments_pi1_contenttextbox_###CID###").autoGrow();								         
+								         jQuery('#textarea-###CID###').bind('keyup click', function(e) {
+								        	 previewstarted###CID### = toctoc_checkurl(e.keyCode,document.getElementById('toctoc_comments_pi1_contenttextbox_###CID###'),'###CID###', previewstarted###CID###, '###LANG###', ###PVSHEIGHT###, commentsAjaxData###CID###, commentsAjaxDataAtt###CID###,###MAXCOMMENTLENGTH###);
+								         });
+								         jQuery('img#tx-tc-cts-pvsnext-###CID###').click(function() {
+								        	 previewselpic###CID###= change_pvs_pic('###CID###', previewselpic###CID###, 1);
+								         });                                         
+								         jQuery('img#tx-tc-cts-pvsprev-###CID###').click(function() {
+								        	 previewselpic###CID###= change_pvs_pic('###CID###', previewselpic###CID###, 0);
+								         });                                          
+								         jQuery('img#tx-tc-cts-pvsnopreview-###CID###').click(function() {
+								        	 toctoc_previewurl_close('###CID###', previewstarted###CID###, ###PVSHEIGHT###, commentsAjaxData###CID###, commentsAjaxDataAtt###CID### );
+								         });    
+								         jQuery('img#tx-tc-form-wpp-working###CID###').click(function() {
+								        	 toctoc_previewurl_close('###CID###', previewstarted###CID###, ###PVSHEIGHT###, commentsAjaxData###CID###, commentsAjaxDataAtt###CID### );
+								         });  
+								         jQuery('img#tx-tc-cts-nopreviewpic-###CID###').click(function() {
+								        	 previewselpic###CID###=remove_pvs_pic('###CID###');
+								         });
+								         jQuery('img#toctoc_comments_caprefresh_###CID###').click(function() {
+								            change_captcha_###CID###();
+								         });
+								     });
+                                	function change_captcha_###CID###() {
+							             document.getElementById('toctoc_comments_cap_###CID###').src="index.php?eID=toctoc_comments_ajax&cmd=getcap&captchatype=###CAPTYPE###&cid=###CID######AJAXDATACONF###&rnd=" + Math.random();
+							        }
+                                	
+								</script>            
+                                ###SUBFORM###
+                                ###JS_USER_DATA###
+                                
+                            </fieldset>
+                        </form>
+                         ###PRVCTAREA###
+             <a id="comment-###CURRENT_URL_CHK######CID###" name="comment_a_###CID###"></a>
+                    </div>
+                </div>
+            
+            </div>
+            <!-- ###COMMENT_FORMAJAX### end -->
+        </div>
+    </div>
+<!-- ###COMMENT_FORM### end -->
+
+    <hr size="1" />
+
+    <h4>Required field mark</h4>
+    <hr size="1" />
+<!-- ###REQUIRED_FIELD### begin -->
+*
+<!-- ###REQUIRED_FIELD### end -->
+
+    <hr size="1" />
+
+    <h4>Form top message block</h4>
+    <hr size="1" />
+
+<!-- ###FORM_TOP_MESSAGE### begin -->
+
+<div class="tx-tc-form-top-message" id="tx-tc-cts-ftm-###CID###">
+    <p class="tx-tc-ftm-text">###MESSAGE###</p>
+
+ 	<div class="tx-tc-ct-box-ctclose">
+    	<a href="javascript:void(0)" rel="nofollow" onclick="toctoc_comments_ftm_close('###CID###');">
+	         <label class="tx-tc-ucclose tx-tc-CloseButton tx-tc-CloseButtonSmall" for="ux76myuf###CID###">
+				<input id="ux76myuf###CID###" type="button" title="###TXTCLOSE###">
+			</label>
+		</a>
+	</div>
+</div>
+<!-- ###FORM_TOP_MESSAGE### end -->
+
+<!-- ###COMMENTING_CLOSED### begin -->
+    <div class="tx-tc-pi1">
+        <div class="tx-tc-form-dp">
+            <div class="tx-tc-closed">
+                <p class="tx-tc-text">
+                    <img src="###SITE_REL_PATH###res/css/themes/###SELTHEME###/img/commenting-closed.gif" width="16"
+                        height="16" alt="" /> ###MESSAGE###
+                </p>
+            </div>
+        </div>
+    </div>
+<!-- ###COMMENTING_CLOSED### end -->
+
+<!-- ###CAPTCHA_SUB### begin -->
+    <div class="tx-tc-ct-form-field">
+        <label class="tx-tc-ct-label-cap">###TEXT_ENTER_CODE######REQUIRED_CAPTCHA###</label>
+        <span class="tx-tc-ct-cap-area-image"><img class="tx-tc-cap-image" src="index.php?eID=toctoc_comments_ajax&cmd=getcap&captchatype=1&cid=###CID######AJAXDATACONF###" alt="" id="toctoc_comments_cap_###CID###" /></span>
+        <input class="tx-tc-ct-input" type="text" required="required" 
+        id="toctoc_comments_pi1-cap-###CID###" name="toctoc_comments_pi1[captcha]" size="6" value="" /><img class="tx-tc-cap-image-rf" id="toctoc_comments_caprefresh_###CID###" src="###SITE_REL_PATH###res/###THEMEPATH###/refresh.png" width="25" title="###SR_FREECAP_CANT_READ###" />
+    </div>
+    <div class="tx-tc-ct-form-field" id="tx-tc-cap-message-dp-###CID###"  style="display: none;">
+        <div id="tx-tc-cap-message-###CID###" class="tx-tc-ct-cap-message">
+            ###ERROR_CAPTCHA###
+        </div>
+        
+    </div>
+<!-- ###CAPTCHA_SUB### end -->
+    
+<!-- ###RECAPTCHA_SUB### begin -->
+    <div class="tx-tc-ct-form-field-recap">
+        <div id="cap-wrap">
+            <div class="cap-box">
+                <span class="tx-tc-ct-cap-area-image-recap"><img class="tx-tc-cap-image-recap" src="index.php?eID=toctoc_comments_ajax&cmd=getcap&captchatype=2&cid=###CID######AJAXDATACONF###" alt="" id="toctoc_comments_cap_###CID###" /></span>
+            </div>
+            <div class="over-text-box">
+            <div class="text-box">
+                <label>###TEXT_ENTER_CODE######REQUIRED_CAPTCHA###</label>
+                <input class="tx-tc-ct-input" type="text" required="required" 
+            id="toctoc_comments_pi1-cap-###CID###" name="toctoc_comments_pi1[captcha]" size="8" value="" />
+            </div>
+            <div class="cap-action">
+                <img class="tx-tc-cap-image-rf-recap" id="toctoc_comments_caprefresh_###CID###" src="###SITE_REL_PATH###res/###THEMEPATH###/rcrefresh.jpg" width="16" title="###SR_FREECAP_CANT_READ###" />
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="tx-tc-ct-form-field" id="tx-tc-cap-message-dp-###CID###" style="display: none;">
+        <div id="tx-tc-cap-message-###CID###" class="tx-tc-ct-cap-message">
+            ###ERROR_CAPTCHA###
+        </div>
+       
+    </div>
+    
+<!-- ###RECAPTCHA_SUB### end -->
+
+<!-- ###TTNEWS_COMMENT_COUNT_SUB### begin -->
+    <span class="tx-tc-count-wrap"><a
+        href="###COMMENTS_LINK####tx-tc-cts-att_news_###UID###"
+        rel="nofollow" class="tx-tc-count">###COMMENTS_COUNT###</a></span>
+<!-- ###TTNEWS_COMMENT_COUNT_SUB### end -->
+
+<!-- ###TTNEWS_COMMENT_NONE_SUB### begin -->
+    <span class="tx-tc-count-wrap"><a
+        href="###COMMENTS_LINK####tx-tc-cts-att_news_###UID###"
+        rel="nofollow" class="tx-tc-count">###COMMENTS_COUNT_NONE###</a></span>
+<!-- ###TTNEWS_COMMENT_NONE_SUB### end -->
+    
+<!-- ###ERROR_SUB### begin -->
+    <div class="tx-tc-errors">
+        <!-- ###ERROR### begin -->
+        <div>###MESSAGE</div>
+        <!-- ###ERROR### end -->
+    </div>
+<!-- ###ERROR_SUB### end -->
+    
+<!-- ###DELETE_COMMENT_LINK_SUB### begin -->
+tttip('hide');toctoc_comments_delete('###REF###', ###VALUE###, commentsAjaxData###CID###, '###CHECK###', 'deletecomment', 'cts-ct', commentsAjaxDataC###CID###, commentsAjaxThisData###CID###, ###UID###, '###CID###', ###PCID###, commentsAjaxDataImg###CID###,'###REFSHOW###','###EXTREF###');return false
+<!-- ###DELETE_COMMENT_LINK_SUB### end -->
+    
+<!-- ###DENOTIFY_COMMENT_LINK_SUB### begin -->
+tttip('hide');toctoc_comments_denotify('###REF###', ###VALUE###, commentsAjaxData###CID###, '###CHECK###', 'denotifycomment', 'cts-ct', commentsAjaxDataC###CID###, commentsAjaxThisData###CID###, ###UID###, '###CID###');return false
+<!-- ###DENOTIFY_COMMENT_LINK_SUB### end -->    
+    
+<!-- ###ADD_COMMENT_LINK_SUB### begin -->
+commentsAjaxDataC###CID### = toctoc_comments_pi1_getUserData('###CID###');toctoc_comments_submit('###REF###', ###VALUE###, commentsAjaxData###CID###, '###CHECK###', 'addcomment', 'form', commentsAjaxDataC###CID###, commentsAjaxThisData###CID###, '###CAPSESS###', '###CID###', '###ERROR_CAPTCHA###', commentsAjaxDataImg###CID###, ###LOGGEDON###,'###EXTREF###',###PVSHEIGHT###,previewhtml###CID###);return false
+<!-- ###ADD_COMMENT_LINK_SUB### end -->
+        
+<!-- ###BROWSE_COMMENT_LINK_SUB### begin -->
+toctoc_comments_browse('###REF###', ###VALUE###, commentsAjaxData###CID###, '###CHECK###', 'browse', 'cts', commentsAjaxDataC###CID###, commentsAjaxThisData###CID###,###STARTPOINT###,'###CID###',###TOTALROWS###, commentsAjaxDataImg###CID###);return false
+<!-- ###BROWSE_COMMENT_LINK_SUB### end -->    
+    
+<!-- ###BROWSEHIDE_COMMENT_LINK_SUB### begin -->
+toctoc_comments_browse('###REF###', ###VALUE###, commentsAjaxData###CID###, '###CHECK###', 'browsehide', 'cts', commentsAjaxDataC###CID###, commentsAjaxThisData###CID###,###STARTPOINT###,'###CID###',###TOTALROWS###, commentsAjaxDataImg###CID###);return false
+<!-- ###BROWSEHIDE_COMMENT_LINK_SUB### end -->
+    
+<!-- ###SHOWUCLINK_SUB### begin -->
+show_uc(###COMMENT_ID###,'###CID###',commentsAjaxData###CID###,'###TOCTOCUID###','###IMGBENC###',###TIMEOUTMS###);return false
+<!-- ###SHOWUCLINK_SUB### end -->
+
+<!-- ###SHOWUC_SUB### begin -->
+<div class="tx-tc-ct-uc" id="tx-tc-cts-uc-###COMMENT_ID###">
+<div class="tx-tc-ct-uc-pic2" id="tx-tc-cts-uc-pic2-###COMMENT_ID###">###PCEHDRPIC###</div>
+<div class="tx-tc-ct-box-ctclose">
+         <a href="javascript:void(0)" rel="nofollow" onclick="toctoc_comments_uc_close(###COMMENT_ID###);">
+	         <label class="tx-tc-ucclose tx-tc-CloseButton tx-tc-CloseButtonSmall" for="ux76myu8###COMMENT_ID###">
+				<input id="ux76myu8###COMMENT_ID###" type="button" title="###TXTCLOSE###">
+			</label>
+		</a>
+</div>
+<div id="tx-tc-cts-uc-inner-###COMMENT_ID###">
+</div>
+</div>
+<!-- ###SHOWUC_SUB### end -->
+
+<!-- ###EDIT_COMMENT_LINK_SUB### begin -->
+editct(###UID###, '###CID###', ###PID###, ###ONOFF###);return false
+<!-- ###EDIT_COMMENT_LINK_SUB### end -->
+
+
+<!-- ###SHARRRE### begin -->
+<style>
+.sharrre #sharrremiddle###CID### {    
+       display: none;
+       z-index:4;
+}
+.sharrre .shrbox:hover #sharrremiddle###CID### {
+        display: block;
+}
+</style>
+
+<div id="shareme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###"></div>
+<script type="text/javascript">
+var thetemplate = String('<div id="sharebox###CID###" class="shrbox"><div class="shrleft">###ARTICLESHARE###</div><div class="shrmiddle" id="sharrremiddle###CID###">###SHAREHTML_FACEBOOK######SHAREHTML_TWITTER######SHAREHTML_GOOGLE######SHAREHTML_LINKEDIN######SHAREHTML_STUMBLEUPON###</div><div id="shareright###CID###" class="shrright">{total}</div></div>'); 
+    jQuery('#shareme###CID###').sharrre({
+    share: {
+        ###SHARELIST_TWITTER######SHARELIST_FACEBOOK######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON###
+    },
+    template: thetemplate,
+    enableHover: false,
+    enableTracking: true,
+    render: function(api, options){
+        ###JSSHARRRET###
+        ###JSSHARRREF###
+        ###JSSHARRREG###
+        ###JSSHARRREL###
+        ###JSSHARRRED###
+    }
+    });
+</script>    
+<!-- ###SHARRRE### end -->
+
+<!-- ###SHARRREDESIGN2### begin -->
+<style type="text/css">
+#shareme###CID### .box a:hover {
+    text-decoration:underline;
+}
+#shareme###CID### .count {
+    border-right:1px solid ####SHRCNTBRDR_CCCCCC###;
+}
+#shareme###CID### .buttons {
+	background: none repeat scroll 0 0 ####SHRBG_E6E6E6###;
+	border-color: ####SHRBRDR_A2A2A2### ####SHRBRDR_A2A2A2### ####SHRBRDR_ADADAD###;
+	width: ###BUTTONSCOUNTWIDTH###px;
+	-webkit-box-shadow: 0 1px 2px ####SHRBOXSHADOW_DDD###;
+	-moz-box-shadow: 0 1px 2px ####SHRBOXSHADOW_DDD###;
+	box-shadow: 0 1px 2px ####SHRBOXSHADOW_DDD###;
+	border-radius: 3px 3px 3px 3px;	
+	border-width: 1px;
+	border-style: solid;
+}
+#shareme###CID### .facebook {
+    float:left;
+	left: ###BUTTONFBLEFT###px;
+	z-index: 3;
+}
+#shareme###CID### .twitter {
+	left: ###BUTTONTWLEFT###px;
+	z-index: 2;
+}
+#shareme###CID### .linkedin {
+}
+#shareme###CID### span.IN-widget {
+	margin-left: ###BUTTONINLEFT###px; 	
+}
+#shareme###CID### .googleplus {
+ 	left: ###BUTTONGOLEFT###px;
+	z-index: 2;  
+}
+#shareme###CID### .stumbleupon {
+    left: ###BUTTONSTLEFT###px;  
+}
+</style>
+
+<div id="sharemearea###CID###" class="tx-tc-sharrrearea-popup">
+    <div id="shareme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###"></div>
+</div>
+
+<script type="text/javascript">
+var googlenodie###CID###=0;
+ 
+jQuery('#shareme###CID###').sharrre({
+share: {
+	###SHARELIST_FACEBOOK######SHARELIST_TWITTER######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON###
+},
+enableTracking: true,
+buttons: {
+	###SHAREBUTTON_FACEBOOK######SHAREBUTTON_TWITTER######SHAREBUTTON_GOOGLE######SHAREBUTTON_LINKEDIN######SHAREBUTTON_STUMBLEUPON###
+},
+hover: function(api, options){
+    jQuery(api.element).find('.buttons').show();
+    jQuery(api.element).find('.googleplus').hover(function() {
+    	googlenodie###CID###=1;
+    	window.setTimeout("googlenodie###CID###=0", 2000);
+    });
+    jQuery(api.element).find('.twitter').hover(function() {
+    	googlenodie###CID###=0;
+    });
+    jQuery(api.element).find('.linkedin').hover(function() {
+    	googlenodie###CID###=0;
+    });
+},
+hide: function(api, options){
+	if (googlenodie###CID###==0) {
+    jQuery(api.element).find('.buttons').hide();
+	}
+}
+});
+</script>    
+<!-- ###SHARRREDESIGN2### end -->
+
+<!-- ###SHARRRET### begin -->
+jQuery(api.element).on('click', '.twitter', function() {
+api.openPopup('twitter');
+});
+<!-- ###SHARRRET### end -->
+
+<!-- ###SHARRREF### begin -->
+jQuery(api.element).on('click', '.facebook', function() {
+api.openPopup('facebook');
+});
+<!-- ###SHARRREF### end -->
+
+<!-- ###SHARRREG### begin -->
+
+jQuery(api.element).on('click', '.googleplus', function() {
+api.openPopup('googlePlus');
+});
+<!-- ###SHARRREG### end -->
+
+<!-- ###SHARRREL### begin -->
+jQuery(api.element).on('click', '.linkedin', function() {
+api.openPopup('linkedin');
+});
+<!-- ###SHARRREL### end -->
+
+<!-- ###SHARRRED### begin -->
+jQuery(api.element).on('click', '.stumbleupon', function() {
+api.openPopup('stumbleupon');
+}); 
+<!-- ###SHARRRED### end -->
+
+<!-- ###SHARRREJSCALL### begin -->
+jQuery(api.element).on('click', '.###CLICKFUNCTION###', function() {
+api.openPopup('###OPENPOPUPVAR###');
+}); 
+<!-- ###SHARRREJSCALL### end -->
+
+
+
+<!-- ###SHARRREDESIGNADDTHIS### begin -->
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style ">
+       ###ADDTHISF###
+		###ADDTHIST###
+        ###ADDTHISG###
+        ###ADDTHISL###
+        ###ADDTHISD###	 
+        ###ADDTHISMORE###		
+</div>
+<script type="text/javascript">var addthis_config = {###ADDTHISCONFIG###};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=###ADDTHISID###"></script>
+<!-- AddThis Button END -->
+<!-- ###SHARRREDESIGNADDTHIS### end -->
+
+<!-- ###SHARRREDESIGN3### begin -->
+
+<div id="shareme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###"></div>
+<script type="text/javascript">
+var thetemplate = '<div id="sharebox###CID###" class="shrboxopen"><div class="shrleft">###ARTICLESHARE###</div><div class="shrmiddleopen" id="sharrremiddle###CID###">###SHAREHTML_FACEBOOK######SHAREHTML_TWITTER######SHAREHTML_GOOGLE######SHAREHTML_LINKEDIN######SHAREHTML_STUMBLEUPON###</div><div id="shareright###CID###" class="shrrightopen">{total}</div></div>';
+
+    jQuery('#shareme###CID###').sharrre({
+    share: {
+        ###SHARELIST_TWITTER######SHARELIST_FACEBOOK######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON###
+    },
+    template: thetemplate,
+    enableHover: false,
+    enableTracking: true,
+    render: function(api, options){
+        ###JSSHARRRET###
+        ###JSSHARRREF###
+        ###JSSHARRREG###
+        ###JSSHARRREL###
+        ###JSSHARRRED###
+    }
+    });
+</script>    
+<!-- ###SHARRREDESIGN3### end -->
+
+<!-- ###SHARRREDESIGN4### begin -->
+<style type="text/css">
+#sharemearea###CID### {
+    float:left;
+ 	min-width: ###BUTTONSCOUNTWIDTH###px;
+   line-height: 19px;
+	margin-top: 0px;
+	height:70px;
+	max-height:70px;
+}
+#sharemearea###CID### .box a:hover{
+    text-decoration:underline;
+}
+#sharemearea###CID### .count {
+    border-right:1px solid ####SHRCNTBRDR_CCCCCC###;
+}
+#sharemearea###CID### .buttons {
+	background: none repeat scroll 0 0 ####SHRBG_E6E6E6###;
+	min-width: ###BUTTONSCOUNTWIDTH###px;
+	-webkit-box-shadow: 0 1px 2px ####SHRBOXSHADOW_DDD###;
+	-moz-box-shadow: 0 1px 2px ####SHRBOXSHADOW_DDD###;
+	box-shadow: 0 1px 2px ####SHRBOXSHADOW_DDD###;
+}
+#sharemearea###CID### .facebook {
+    float:left;
+	left: ###BUTTONFBLEFT###px;
+	z-index: 3;
+}
+#sharemearea###CID### .twitter {
+	float:left;
+	/*left: ###BUTTONTWLEFT###px;*/
+	z-index: 2;
+}
+#sharemearea###CID### .linkedin {
+	float:left;
+	/*margin-left: ###BUTTONINLEFT###px;*/ 	
+}
+#sharemearea###CID### span.IN-widget {
+	/*margin-left: ###BUTTONINLEFT###px;*/ 	
+}
+#sharemearea###CID### .googleplus {
+ 	/*left: ###BUTTONGOLEFT###px;*/
+	z-index: 2; 
+	overflow: hidden;
+	
+}
+#sharemearea###CID### .stumbleupon {
+    /*left: ###BUTTONSTLEFT###px;*/  
+}
+.sharrre .button {
+	float:left;
+	padding:4px;
+	position: relative;
+	top: -6px;
+	margin: 0x;
+}
+
+.sharrre .buttons {
+    padding: 3px 0 0;
+}
+</style>
+
+<div id="sharemearea###CID###">
+
+    <div id="shareme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###"></div>
+
+<script type="text/javascript">
+
+jQuery('#sharemearea###CID###').sharrre({
+share: {
+	###SHARELIST_FACEBOOK######SHARELIST_TWITTER######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON###
+},
+buttons: {
+	###SHAREBUTTON_FACEBOOK######SHAREBUTTON_TWITTER######SHAREBUTTON_GOOGLE######SHAREBUTTON_LINKEDIN######SHAREBUTTON_STUMBLEUPON###
+},
+enableHover: false,
+enableCounter: false,
+enableTracking: false
+}); 
+</script>    
+</div>
+<!-- ###SHARRREDESIGN4### end -->
+<!-- ###COMMENTLINKTOP### begin -->
+                            <div class="tx-tc-atrts-ctlink"###STYLECOMMENT###>
+                                 ###BEGINSTRING###<a id="link###UID###_###CID###" href="###ARTICLESHAREURL####comment_a_###CID###"                      
+                                 onblur="comment_formhider('###CID###', 1, '', ###LOGGEDIN###, 0, document.getElementById('toctoc_comments_pi1_contenttextbox_###CID###'));" 
+                                 title="###TEXT_ADD_COMMENTTITLE###">###TEXT_ADD_COMMENTTOP###</a>
+                                 <a name="commentit_a_###CID###"></a>
+                            </div>
+ <!-- ###COMMENTLINKTOP### end -->
+ 
+ <!-- ###SUBFORMIP### begin -->
+                                <div class="tx-tc-cts-form-fieldtextarea" >
+                                    <div class="tx-tc-divtextarea" id="textarea-###CID###" style="margin: 0;min-height: ###TAHEIGHT###px;padding: 0 ###TAPADDING###px 0 0;">
+                                    	
+                                        <textarea autocomplete="off" class="tx-tc-ctinput-textarea" cols="42" rows="1" style="overflow: hidden; height: ###TAHEIGHT###px;"
+                                        onblur="if (tctrim(value)=='') {comment_formhider('###CID###', 2, '###TEXT_ADD_COMMENT###', 0,1);jQuery('#toctoc_comments_pi1_contenttextbox_###CID###').elastic();} else {if (tctrim(value)!='') {jQuery('#toctoc_comments_pi1_contenttextbox_###CID###').autoGrow();jQuery('#toctoc_comments_pi1_contenttextbox_###CID###').elastic();}};" 
+                                        onFocus="jQuery('#toctoc_comments_pi1_contenttextbox_###CID###').elastic();###SETPARENTCOMMENT#### if (document.getElementById('toctoc_comments_pi1_submit_###CID###').style.display == 'none') {value=''; comment_formhider('###CID###', 3, '', 0,1);return};"
+                                        placeholder="###TEXT_ADD_COMMENT###" name="toctoc_comments_pi1[content]" id="toctoc_comments_pi1_contenttextbox_###CID###">###CONTENT###</textarea>
+                                        ###SMILIESSELECTOR###
+                                        <script type="text/javascript">
+                                        jQuery(function () {
+                                        	jQuery('#toctoc_comments_pi1_contenttextbox_###CID###').watermark('###TEXT_ADD_COMMENT###', {left: 0, top: 0, fallback: true});
+                                        });
+							            
+							            </script>
+                                    </div>
+                                </div>
+                                
+                                <div id="formhider-###CID###" class="tx-tcfh" style="display:none; height:0; margin:-112px 0 0px;">
+					                 
+					                 <div class="tx-tc-ct-form-field-wpp" id="tx-tc-form-dp-wpp-###CID###" 
+					                       style="display:none; min-height:0; max-height:0; opacity:1; filter: alpha(opacity=100);">
+										<div id="tx-tc-cts-pvsprevnext-###CID###"  class="tx-tc-pvs-prevnext" style="display:none; margin-top: ###NAVICLOSEMGTOP###px;width: ###PVSHEIGHT###px;" >
+											<img id="tx-tc-cts-pvsprev-###CID###" title="###TXTPREV###" height="11" width="12" src="###SITE_REL_PATH###res/###THEMEPATH###/prev.png" class="tx-tc-pvs-prev" style="display:none;float:right;" > 
+											<img id="tx-tc-cts-pvsnext-###CID###" height="11" width="12" title="###TXTNEXT###" src="###SITE_REL_PATH###res/###THEMEPATH###/next.png" class="tx-tc-pvs-next" style="display:none;float:right;" >
+											<img id="tx-tc-cts-nopreviewpic-###CID###"  height="11" width="12" title="###TXTNOPREVIEWPIC###" src="###SITE_REL_PATH###res/###THEMEPATH###/nopreviewpic.png" class="tx-tc-pvs-nopreviewpic" style="display:none;float:right;padding: 1px 2px 1px ###NAVICLOSEPADLEFT###px;margin-left: ###NAVICLOSEMGLEFT###px;" >
+										</div>
+										<div id="tx-tc-cts-pvsfuncs-###CID###"  class="tx-tc-pvs-pvsfuncs" style="display:none;" >
+											<img id="tx-tc-cts-pvsnopreview-###CID###" src="###SITE_REL_PATH###res/###THEMEPATH###/nopreviewpic.png" height="11" width="12" title="###TXTCLSPRV###" class="tx-tc-pvs-pvsnopreview" style="display:none;" > 
+										</div>
+										<div id="tx-tc-form-wpp-###CID###">
+											<img id="tx-tc-form-wpp-working###CID###" style="display:block;" align="right" src="###SITE_REL_PATH###res/###THEMEPATH###/workingslides.gif" width="16"
+										            	height="11" alt="###TXTLOADING###" title="###TXTLOADING###" />
+										</div>
+					        		</div>
+ 									###FORMPICUPLOAD###
+                                    <div class="tx-tc-ct-form-field">
+                                    	<label class="tx-tc-ct-label" for="toctoc_comments_pi1_firstname" style="width: ###LABELWIDTH###px">###TEXT_FIRST_NAME######REQUIRED_FIRSTNAME###</label>
+                                    	<input class="tx-tc-ct-input"  type="text" size="###INPUTSIZE###" name="toctoc_comments_pi1[firstname]" id="toctoc_comments_pi1_###CID###firstname" value="###FIRSTNAME###" />
+                                    </div>
+                                    ###ERROR_FIRSTNAME###
+                                    <div class="tx-tc-ct-form-field">
+	                                    <label class="tx-tc-ct-label" for="toctoc_comments_pi1_lastname" style="width: ###LABELWIDTH###px">###TEXT_LAST_NAME######REQUIRED_LASTNAME###</label>
+	                                    <input class="tx-tc-ct-input"  style="float:left" type="text" size="###INPUTSIZESMALL###" name="toctoc_comments_pi1[lastname]" id="toctoc_comments_pi1_###CID###lastname" value="###LASTNAME###" />
+	                                    <div class="tx-tc-ct-form-gender" id="tx-tc-ct-form-gender###CID###">
+		                                    <label class="tx-tc-ct-labelgender" for="toctoc_comments_pi1_gender">###TEXT_GENDER###</label>
+		                                    <input type="hidden" name="toctoc_comments_pi1[gender]" id="toctoc_comments_pi1_###CID###gender" value="###GENDER###" />
+	                                    </div>
+                                    </div>
+                                    ###ERROR_LASTNAME###
+                                    <div class="tx-tc-ct-form-field">
+	                                    <label class="tx-tc-ct-label" for="toctoc_comments_pi1_email" style="width: ###LABELWIDTH###px">###TEXT_EMAIL######REQUIRED_EMAIL###</label>
+	                                    <input class="tx-tc-ct-input"  type="text" size="###INPUTSIZE###" name="toctoc_comments_pi1[email]" id="toctoc_comments_pi1_###CID###email" value="###EMAIL###" />
+    	                                <input type="hidden" name="toctoc_comments_pi1[homepage]" id="toctoc_comments_pi1_###CID###homepage" value="###HOMEPAGE###" />
+                                    </div>
+                                    ###ERROR_EMAIL###
+                                    <div class="tx-tc-ct-form-field">
+        	                            <label class="tx-tc-ct-label" for="toctoc_comments_pi1_location" style="width: ###LABELWIDTH###px">###TEXT_LOCATION######REQUIRED_LOCATION###</label>
+            	                        <input class="tx-tc-ct-input"  type="text" size="###INPUTSIZE###" name="toctoc_comments_pi1[location]" id="toctoc_comments_pi1_###CID###location" value="###LOCATION###" />
+                                    </div>
+                                    ###TEXT_REQUIRED_HINT###
+                                    
+                                    ###SUBFORMCOMMENTATORNOTIFYPART###
+                                    ###CAPTCHA###
+                                    <input type="hidden" name="toctoc_comments_pi1[cid]" id="toctoc_comments_pi1_###CID###cid" value="###CID###" />
+                                    <input type="hidden" name="toctoc_comments_pi1[level]" id="toctoc_comments_pi1_###CID###level" value="###LEVEL###" />
+                                </div>
+                                <div class="tx-tc-div-submit" id="tx-tc-div-submit###CID###" style="display: none;white-space:nowrap;opacity: ###THEMEOPACITY###;">  
+                                   
+                                    <input type="hidden" name="insert" id="toctoc_comments_pi1_###CID###insert" value="insert" />
+                                    <input type="button" class="tx-tc-ct-submit" name="toctoc_comments_pi1[submit]" 
+                                    onclick="var errcodesubmit = commentform_validate('toctoc_comments_pi1_contenttextbox_###CID###', '###CID###'); if (errcodesubmit==true) {###SUBMITONCLICK###};" 
+                                    id="toctoc_comments_pi1_submit_###CID###" value="###TEXT_SUBMIT###" style="float: left; display: none; height: 0; margin: 0; opacity: 1;filter: alpha(opacity=100); " />
+                                    ###PRVCT###
+                                    <!-- &nbsp;&nbsp;<input type="reset" value="###TEXT_RESET###" class="tx-tc-ct-reset" />   -->
+                                </div>
+                               
+                                <script type="text/javascript">
+                                    var errcodeform = "###ERRCODE###";
+                                    if (errcodeform == "1") {
+                                        if (document.getElementById('toctoc_comments_pi1_submit_###CID###').style.display == 'none') {
+                                            jQuery('#toctoc_comments_pi1_contenttextbox_###CID###').elastic();comment_formhider('###CID###', 3, '', 0, 0);
+                                        };                        
+                                    };
+                                </script>
+ <!-- ###SUBFORMIP### end -->
+ 
+ <!-- ###SUBFORMUSER### begin -->
+  
+                                 <div class="tx-tc-cts-form-fieldtextarea-1" >
+                                    <div class="tx-tc-divtextarea" id="textarea-###CID###" style="margin: 0;min-height: ###TAHEIGHT###px;;padding: 0 ###TAPADDING###px 0 0;">
+                                    	
+                                        <textarea autocomplete="off" class="tx-tc-ctinput-textarea" cols="42" rows="1" style="overflow: hidden; height: ###TAHEIGHT###px;" 
+                                        onblur="if (tctrim(value)=='') {comment_formhider('###CID###', 2, '###TEXT_ADD_COMMENT###', 1,1);jQuery('#toctoc_comments_pi1_contenttextbox_###CID###').elastic();} else {if (tctrim(value)!='') {jQuery('#toctoc_comments_pi1_contenttextbox_###CID###').autoGrow();jQuery('#toctoc_comments_pi1_contenttextbox_###CID###').elastic();}};" 
+                                        onFocus="jQuery('#toctoc_comments_pi1_contenttextbox_###CID###').elastic();###SETPARENTCOMMENT#### if (document.getElementById('toctoc_comments_pi1_submit_###CID###').style.display == 'none') {value=''; comment_formhider('###CID###', 3, '', 1,1);return};"
+                                        placeholder="###TEXT_ADD_COMMENT###" name="toctoc_comments_pi1[content]" id="toctoc_comments_pi1_contenttextbox_###CID###">###CONTENT###</textarea>
+	                                     ###SMILIESSELECTOR###
+	                                     <script type="text/javascript">
+	                                     jQuery(function () {
+								            jQuery('#toctoc_comments_pi1_contenttextbox_###CID###').watermark('###TEXT_ADD_COMMENT###', {left: 0, top: 0, fallback: true});
+	                                     });
+							            </script>
+							            </div>
+                                </div>
+                                
+                                    
+                                <div class="" id="formhider-###CID###" style="display:none; height:0; margin:-32px 0 0px;">
+					                 <div class="tx-tc-ct-form-field-wpp" id="tx-tc-form-dp-wpp-###CID###" 
+					                       style="display:none; min-height:0; max-height:0; opacity:1; filter: alpha(opacity=100); margin: 5px 0 3px;">
+										<div id="tx-tc-cts-pvsprevnext-###CID###"  class="tx-tc-pvs-prevnext" style="display:none; margin-top: ###NAVICLOSEMGTOP###px;width: ###PVSHEIGHT###px;" >
+											<img id="tx-tc-cts-pvsprev-###CID###" title="###TXTPREV###" height="11" width="12" src="###SITE_REL_PATH###res/###THEMEPATH###/prev.png" class="tx-tc-pvs-prev" style="display:none;float:right;" > 
+											<img id="tx-tc-cts-pvsnext-###CID###" height="11" width="12" title="###TXTNEXT###" src="###SITE_REL_PATH###res/###THEMEPATH###/next.png" class="tx-tc-pvs-next" style="display:none;float:right;" >
+											<img id="tx-tc-cts-nopreviewpic-###CID###"  height="11" width="12" title="###TXTNOPREVIEWPIC###" src="###SITE_REL_PATH###res/###THEMEPATH###/nopreviewpic.png" class="tx-tc-pvs-nopreviewpic" style="display:none;float:right;padding: 1px 2px 1px ###NAVICLOSEPADLEFT###px;margin-left: ###NAVICLOSEMGLEFT###px;" >
+										</div>
+										 <div id="tx-tc-cts-pvsfuncs-###CID###"  class="tx-tc-pvs-pvsfuncs" style="display:none;" >
+											<img id="tx-tc-cts-pvsnopreview-###CID###" src="###SITE_REL_PATH###res/###THEMEPATH###/nopreviewpic.png" height="11" width="12" title="###TXTCLSPRV###" class="tx-tc-pvs-pvsnopreview" style="display:none;" > 
+										</div>
+										<div id="tx-tc-form-wpp-###CID###">
+											<img id="tx-tc-form-wpp-working###CID###" style="display:block;" align="right" src="###SITE_REL_PATH###res/###THEMEPATH###/workingslides.gif" width="16"
+										           	height="11" alt="###TXTLOADING###" title="###TXTLOADING###" />
+										</div>
+					        		</div>
+                                    ###FORMPICUPLOAD###
+                                    <input type="hidden" name="toctoc_comments_pi1[firstname]"
+                                    id="toctoc_comments_pi1_###CID###firstname" value="###FIRSTNAME###" /> 
+                                     <input type="hidden" name="toctoc_comments_pi1[gender]"
+                                    id="toctoc_comments_pi1_###CID###gender" value="###GENDER###" /> <input
+                                    type="hidden" name="toctoc_comments_pi1[lastname]"
+                                    id="toctoc_comments_pi1_###CID###lastname" value="###LASTNAME###" /><input
+                                    type="hidden" name="toctoc_comments_pi1[image]"
+                                    id="toctoc_comments_pi1_###CID###image" value="###IMAGE###" /> <input
+                                    type="hidden" name="toctoc_comments_pi1[email]"
+                                    id="toctoc_comments_pi1_###CID###email" value="###EMAIL###" /> <input
+                                    type="hidden" name="toctoc_comments_pi1[homepage]"
+                                    id="toctoc_comments_pi1_###CID###homepage" value="###HOMEPAGE###" /> <input
+                                    type="hidden" name="toctoc_comments_pi1[location]"
+                                    id="toctoc_comments_pi1_###CID###location" value="###LOCATION###" />
+                                    ###SUBFORMCOMMENTATORNOTIFYPART###
+                                    ###CAPTCHA###
+                                    <input type="hidden" name="toctoc_comments_pi1[cid]" id="toctoc_comments_pi1_###CID###cid" value="###CID###" />
+                                    <input type="hidden" name="toctoc_comments_pi1[level]" id="toctoc_comments_pi1_###CID###level" value="###LEVEL###" />
+                                </div>
+                                <div class="tx-tc-div-submit" id="tx-tc-div-submit###CID###" style="display: none;opacity: ###THEMEOPACITY###;white-space:nowrap;">
+                                    
+                                    
+                                    <input type="hidden" name="insert" id="toctoc_comments_pi1_###CID###insert" value="insert" />
+                                    <input type="button" class="tx-tc-ct-submit-loggedin" name="toctoc_comments_pi1[submit]" 
+                                    onclick="var errcodesubmit = commentform_validate('toctoc_comments_pi1_contenttextbox_###CID###', '###CID###'); if (errcodesubmit==true) {###SUBMITONCLICK###};" 
+                                    id="toctoc_comments_pi1_submit_###CID###" value="###TEXT_SUBMIT###" style="float:left; display: none; height: 0; margin: 0; opacity: 1;filter: alpha(opacity=100); " />
+                                    ###PRVCT###
+                                   <!-- &nbsp;&nbsp;<input type="reset" value="###TEXT_RESET###" class="tx-tc-ct-reset" />   -->
+                                </div>
+                            
+                                <script type="text/javascript">
+                                    var errcodeform = "###ERRCODE###";
+                                    if (errcodeform == "1") {
+                                        if (document.getElementById('toctoc_comments_pi1_submit_###CID###').style.display == 'none') {
+                                            jQuery('#toctoc_comments_pi1_contenttextbox_###CID###').elastic();comment_formhider('###CID###', 3, '', 1, 0);
+                                        };                        
+                                    }
+                                </script>
+ <!-- ###SUBFORMUSER### end -->
+ 
+  <!-- ###SUBPRVCT### begin --> 
+    ###PRVLINK###
+ <!-- ###SUBPRVCT### end --> 
+ <!-- ###SUBFORMPICUPLOAD### begin --> 
+  
+	<div id="tx-tc-###CID###uploaddiv" class="tx-tc-ct-form-field-upload" style="float:right; display:###CSSSHOW###;">
+		<input type="hidden" name="toctoc_comments_pi1[uploadpicid]" id="toctoc_comments_pi1_###CID###uploadpicid" value="###UPLOADPICID###" />
+		<input type="hidden" name="toctoc_comments_pi1[uploadpicheight]" id="toctoc_comments_pi1_###CID###uploadpicheight" value="###UPLOADPICHEIGHT###" />
+		<input type="hidden" name="toctoc_comments_pi1[originalfilename]" id="toctoc_comments_pi1_###CID###originalfilename" value="###ORIGINALUPLOADFILENAME###" />
+	 	<input type="hidden" name="toctoc_comments_pi1[ajax]" id="toctoc_comments_pi1_###CID###ajax" value="" />
+	 	<input type="hidden" name="toctoc_comments_pi1[theme]" id="toctoc_comments_pi1_###CID###theme" value="###SELTHEME###" />
+	 	<input type="file" id="toctoc_comments_pi1_###CID###uploadpic" classe="txtc-putImages" name="toctoc_comments_pi1[uploadpic]" style="display:none;">
+	 	###OPENFILEDIALOG###
+	 	###OPENPDFFILEDIALOG###
+	</div>
+	<div id="tx-tc-form-fup-###CID###" style="float:right;" >
+		<img id="tx-tc-form-fup-working###CID###" style="display:none;" align="right" src="###SITE_REL_PATH###res/###THEMEPATH###/workingslides.gif" width="16"
+		           	height="11" alt="###TXTLOADING###" title="###TXTLOADING###" />
+	</div>
+	<div class="tx-tc-ct-form-field-fup" id="tx-tc-form-dp-fup-###CID###" 
+		style="display:###CSSHIDE###; min-height:###UPLOADPICHEIGHT###px; max-height:###UPLOADPICHEIGHT###px;">
+		 <div id="tx-tc-cts-pvsfuncsfup-###CID###"  class="tx-tc-fuparea" style="display:###CSSHIDE###;" >
+		 <div id="tx-tc-cts-fuppicprv-###CID###" style="float:left;display:###CSSHIDE###;"> 
+		 
+			<img id="tx-tc-cts-previewfup-###CID###" src="###UPLOADPICRELPATH###" title="###TXTTIPPFUP###" class="tx-tc-fup-preview" style="display:###CSSHIDE###;float:left; margin-top:4px;" /> 
+			<img id="tx-tc-cts-nopreviewfup-###CID###" src="###SITE_REL_PATH###res/###THEMEPATH###/nopreviewpic.png" title="###TXTCLSFUP###" class="tx-tc-fup-nopreview" style="display:###CSSHIDE###;float:left; margin-top:4px;" />
+			</div>
+			<div id="tx-tc-cts-fupta-###CID###" style="float:left;display:###CSSHIDE###;width: 68%;"> 
+			<textarea autocomplete="off" class="tx-tc-ctinput-textarea" cols="42" rows="1" 
+			style="overflow: hidden; display:###CSSHIDE###; max-height: ###UPLOADPICHEIGHT###px;  height: ###TAHEIGHT###px;  float:left; margin-top:4px;margin-left:4px; " 
+                onblur="if (tctrim(value)=='') {jQuery('#toctoc_comments_pi1_uplcontenttextbox_###CID###').elastic();} else {if (tctrim(value)!='') {jQuery('#toctoc_comments_pi1_uplcontenttextbox_###CID###').autoGrow();jQuery('#toctoc_comments_pi1_uplcontenttextbox_###CID###').elastic();}};" 
+                onFocus="jQuery('#toctoc_comments_pi1_uplcontenttextbox_###CID###').elastic();"
+                placeholder="###TEXT_ADD_DESC###" name="toctoc_comments_pi1[descriptionbyuser]" id="toctoc_comments_pi1_uplcontenttextbox_###CID###">###USERUPLOADDESCRIPTION###</textarea>
+                <script type="text/javascript">
+				
+					jQuery('#toctoc_comments_pi1_uplcontenttextbox_###CID###').watermark('###TEXT_ADD_DESC###', {left: 0, top: 0, fallback: true});
+			    			
+				</script>
+	        </div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	jQuery('input#toctoc_comments_pi1_###CID###uploadpic').change(function(){
+   		tcfilechange_delayed('###CID###', '###LANG###', ###PVSHEIGHT###, commentsAjaxData###CID###, commentsAjaxDataAtt###CID###,'');
+    });
+	 jQuery('img#tx-tc-cts-nopreviewfup-###CID###').click(function() {
+		 remove_fup_pic('###CID###', previewstartedfp###CID###, previewfpheight###CID###, commentsAjaxData###CID###, commentsAjaxDataAtt###CID### );
+     });
+	</script>
+	
+<!-- ###SUBFORMPICUPLOAD### end -->
+ 
+ <!-- ###SUBFORMCOMMENTATORNOTIFY### begin -->
+<div class="tx-tc-ct-ntf-wrap">
+	<div class="tx-tc-ct-form-field-ntf">###DIVSHOW_NOTIFICATION###<label  class="tx-tc-ct-label-ntf" for="">###TEXT_NOTIFICATION###</label>
+    	<input type="checkbox" name="toctoc_comments_pi1[notify]" title="###TEXT_NOTIFICATION_DESC###" class="tx-tc-ntf-check" id="toctoc_comments_pi1_###CID###notify" value="1" />
+    	
+    </div>
+</div>
+ <!-- ###SUBFORMCOMMENTATORNOTIFY### end -->
+
+<!-- ###SUBFORMATTACHMENTPIC### begin -->
+<div class="tx-tc-ct-img" style="display: block; ">
+	<div>
+		<div style="margin-top: 0px; ">
+			
+			<div id="tx-tc-cts-pic-formtext-###IDPLUS###p###CID###" style="margin: 0px; "> 
+				
+				<div class="tx-tc-img-desc">
+					###DESC###
+				</div>	
+				<div class="tx-tc-img-image">		 
+			  		<a href="###LINK###" rel="nofollow" title= "###LINKTITLE###" onclick="">###IMAGE###</a>
+			  
+			  	<!-- overlay for the first trigger. id matches the rel- attribute -->
+					<div class="txtc_overlay" id="txtcphoto###CID###">
+					  ###IMAGESRC###
+					  <div class="txtc_details">
+					    <div class="txtc_h2">###TITLE###</div>
+					    <p>###DESC###</p>
+					  </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- ###SUBFORMATTACHMENTPIC### end -->
+
+<!-- ###SUBFORMATTACHMENTVIDHTML5### begin -->
+<div style="display:none;" class="tx-tc-vid-embed" id="tx-tc-cts-vid-box-###IDPLUS###p###CID###" >
+	<div class="flowplayer" data-swf="###SITE_REL_PATH###res/flowplayer/flowplayer.swf" data-ratio="0.417">
+		###VIDEOHTML###
+	</div>
+</div>
+<!-- ###SUBFORMATTACHMENTVIDHTML5### end -->
+
+<!-- ###SUBFORMATTACHMENTVIDFLASH### begin -->
+<div style="display:none;" class="tx-tc-vid-embed" id="tx-tc-cts-vid-box-###IDPLUS###p###CID###" >
+			<object id="tx-tc-cts-vid-flasho-###IDPLUS###p###CID###" width="450" height="300" style="max-width:100%;"  >
+			<param name="movie" value="###EMBEDURL###"></param>
+			<param name="allowFullScreen" value="true"></param>
+			<param name="allowscriptaccess" value="always"></param>
+			<param name="scale" value="exactfit"></param>
+			<embed id="tx-tc-cts-vid-flash-###IDPLUS###p###CID###" src="###EMBEDURL###" type="application/x-shockwave-flash" scale="exactfit" style="max-width:100%;"  width="450" height="300" allowscriptaccess="always" allowfullscreen="true">
+			</embed>
+			</object>
+			</div>
+<!-- ###SUBFORMATTACHMENTVIDFLASH### end -->
+
+<!-- ###SUBFORMATTACHMENTVID### begin -->
+<div class="tx-tc-ct-video">
+	<div class="tx-tc-ct-video-dp">
+		<div id="tx-tc-cts-vid-formtext-###IDPLUS###p###CID###" class="tx-tc-cts-vid-formtext">
+			<div class="tx-tc-vid" id="tx-tc-cts-vid-img-###IDPLUS###p###CID###" >
+			
+				<a id="player###IDPLUS###p###CID###" href="javascript:void(0)" rel="nofollow" >###IMAGE###
+				###IMAGEOVERLAY###</a>
+			</div>
+			
+			###SUBVIDEOEMBED###
+			<div style="display:none;" class="tx-tc-ct-box-ctclose" id="tx-tc-ct-box-ctclose###IDPLUS###p###CID###">
+	             <a id="playerclose###IDPLUS###p###CID######HTML5FLAG###" href="javascript:void(0)" rel="nofollow" onclick="">
+			        <label class="tx-tc-ucclose tx-tc-CloseButton tx-tc-CloseButtonSmall" for="lihgl###IDPLUS###p###CID###">
+						<input id="lihgl###IDPLUS###p###CID###" type="button" title="###TXTCLOSE###">
+					</label>
+				</a>
+			</div>
+			<script type="text/javascript">
+				var savemove###IDPLUS###p###CID### = '';
+				jQuery('#player###IDPLUS###p###CID###').click(function() {
+					if ( savemove###IDPLUS###p###CID### != ''){
+						document.getElementById('tx-tc-cts-vid-box-###IDPLUS###p###CID###').innerHTML=savemove###IDPLUS###p###CID###;
+					}
+					jQuery('#tx-tc-cts-vid-img-###IDPLUS###p###CID###').css('display', 'none');
+					jQuery('#tx-tc-cts-vid-box-###IDPLUS###p###CID###').css('display', 'block');
+					jQuery('#tx-tc-ct-box-ctclose###IDPLUS###p###CID###').css('display', 'block');
+					jQuery('#tx-tc-cts-vid-title-###IDPLUS###p###CID###').css('float', 'left');
+					jQuery('#tx-tc-cts-vid-desc-###IDPLUS###p###CID###').css('float', 'left');
+
+				});
+				jQuery('#playerclose###IDPLUS###p###CID###').click(function() {
+					
+				   
+					savemove###IDPLUS###p###CID### = document.getElementById('tx-tc-cts-vid-box-###IDPLUS###p###CID###').innerHTML;
+					document.getElementById('tx-tc-cts-vid-box-###IDPLUS###p###CID###').innerHTML='';
+					jQuery('#tx-tc-cts-vid-img-###IDPLUS###p###CID###').css('display', 'block');
+					jQuery('#tx-tc-cts-vid-box-###IDPLUS###p###CID###').css('display', 'none');
+					jQuery('#tx-tc-ct-box-ctclose###IDPLUS###p###CID###').css('display', 'none');
+					jQuery('#tx-tc-cts-vid-title-###IDPLUS###p###CID###').css('float', 'none');
+					jQuery('#tx-tc-cts-vid-desc-###IDPLUS###p###CID###').css('float', 'none');
+					
+				});
+				jQuery('#playerclose###IDPLUS###p###CID###Y').click(function() {
+					
+					var myVideo=document.getElementById('vidimg###IDPLUS###p###CID###index2'); 
+
+	
+					if (myVideo.paused) {
+						
+					} else { 
+					  myVideo.pause(); 
+					}
+					jQuery('#tx-tc-cts-vid-img-###IDPLUS###p###CID###').css('display', 'block');
+					jQuery('#tx-tc-cts-vid-box-###IDPLUS###p###CID###').css('display', 'none');
+					jQuery('#tx-tc-ct-box-ctclose###IDPLUS###p###CID###').css('display', 'none');
+					jQuery('#tx-tc-cts-vid-title-###IDPLUS###p###CID###').css('float', 'none');
+					jQuery('#tx-tc-cts-vid-desc-###IDPLUS###p###CID###').css('float', 'none');
+					
+				});
+			</script>
+			                         
+			<div class="tx-tc-vid-video" id="tx-tc-cts-vid-title-###IDPLUS###p###CID###" >
+				<a href="###VIDEOURL###" rel="nofollow" title="###DESCTITLE###" onclick="">###TITLE###</a>
+			</div>
+			<div class="tx-tc-vid-desc" id="tx-tc-cts-vid-desc-###IDPLUS###p###CID###">
+				###DESC###
+			</div>
+			
+		</div>
+	</div>
+</div>
+<!-- ###SUBFORMATTACHMENTVID### end -->
+
+<!-- ###SUBFORMATTACHMENTWPP### begin -->
+<div class="tx-tc-ct-wpp" style="display:block;###BOXMINHEIGHT###">
+	<div>###LOGOBG###
+		<div style="margin-top: 0px; ">
+			<a href="###URL###" rel="nofollow">###IMAGE###</a>
+			<div id="tx-tc-cts-pvs-formtext-###IDPLUS###p###CID###" style="margin: 0 0 0 ###TEXTAREAMARGIN###px; "> 
+				<div class="tx-tc-pvs-title">
+					<a href="###URL###" rel="nofollow">###TITLE###</a>
+				</div>
+				<div class="tx-tc-pvs-urltext">
+					###URLTEXT###
+				</div>
+				<div class="tx-tc-pvs-desc">
+					###DESC###
+				 </div>
+			  </div>
+		</div>
+	</div>
+</div>
+<!-- ###SUBFORMATTACHMENTWPP### end -->
+
+<!-- ###SUBFORMATTACHMENTVIDMAIL### begin -->
+<hr />
+<strong>###TXTATTACHMENT###</strong><br />
+<b>###LINKTITLE###</b>
+<p>###DESC###</p>	 
+###IMAGE###
+<!-- ###SUBFORMATTACHMENTVIDMAIL### end -->
+
+<!-- ###SUBFORMATTACHMENTPICMAIL### begin -->
+<hr />
+<strong>###TXTATTACHMENT###</strong><br />
+<b>###LINKTITLE###</b>
+<p>###DESC###</p>	 
+###IMAGE###
+<!-- ###SUBFORMATTACHMENTPICMAIL### end -->
+
+<!-- ###SUBFORMATTACHMENTWPPMAIL### begin -->
+<hr />
+<strong>###TXTATTACHMENT###</strong><br />
+<a href="###URL###" rel="nofollow">###IMAGE###</a>
+<a href="###URL###" rel="nofollow">###TITLE###</a>
+<br>
+###URLTEXT###
+<br>
+###DESC###
+<!-- ###SUBFORMATTACHMENTWPPMAIL### end -->
+
+<!-- ###RECENTCOMMENT_LIST### begin -->
+<div class="tx-tc-box-recent-cts">
+        <!-- ###SINGLE_RECENTCOMMENT### begin -->
+            <div class="tx-tc-recent-cts-article" id="tx-tc-recent-cts-article-###RCID###">
+                <div class="tx-tc-recent-cts-entry">###AUTHOR###&nbsp;###COMMENT_CONTENT###</div>
+                <div class="tx-tc-recent-cts-title">###TITLE### &#124; ###COMMENT_DATE###</div>
+            </div>
+        <!-- ###SINGLE_RECENTCOMMENT### end -->
+</div>
+<script type="text/javascript">
+tttip('temo','.tx-tc-recent-cts-article img[title]');
+tttip('temo','.tx-tc-recent-cts-article .emoji[title]');
+</script>
+<!-- ###RECENTCOMMENT_LIST### end -->
+
+<!-- ###RECENTNO_COMMENTS### begin -->
+<div class="tx-tc-box-recent-cts">
+        ###LL_TEXT_NO_COMMENTS###
+</div>
+<!-- ###RECENTNO_COMMENTS### end -->
+
+<!-- ###TOPRATINGS_LIST### begin -->
+<div class="toctoc-comments-pi1">
+	<div class="tx-tc-box-trt-cts">
+		<div class="tx-tc-trt-listtitle">###TOPRATINGS_CONFIG_TITLE###</div>
+		<div class="tx-tc-trt-listdesc">###TOPRATINGS_CONFIG_DETAIL###</div>
+	        <!-- ###SINGLE_TOPRATINGS### begin -->
+	            <div class="tx-tc-trt-cts-article" id="tx-tc-trt-cts-article-###RCID###">
+	                ###TOPRATINGS_RANK###
+	                ###TOPRATINGS_IMG###
+	                <div class="tx-tc-trt-rating-detail"###STYLEHEIGHT###>
+		                <div class="tx-tc-trt-rating-rating-wrap"><div class="tx-tc-trt-rating-rating">###TOPRATINGS_ILIKE_VOTE######TOPRATINGS_NBRVOTES###</div>###ADDBR###</div>
+		                 ###LINKTOPRATEDITEM###
+		                 ###TOPRATINGS_CONTENT###
+		            </div>
+	        
+	            </div>
+	        <!-- ###SINGLE_TOPRATINGS### end -->
+	        
+	</div>
+	<script type="text/javascript">
+		tttip('t101','.tx-tc-rcentpic[title]');
+		tttip('t201-5','.tx-tc-trt-cts-article .tx-tc-rts-vote-bar div span[title]');
+		tttip('temo','.tx-tc-box-trt-cts .tx-tc-trt-content span.emoji[title]');
+		tttip('temo','.tx-tc-box-trt-cts .tx-tc-trt-content img[title]');
+		tttip('t101','.tx-tc-trt-rating-rating img[title]');
+		tttip('t101','.tx-tc-trt-rating-img img[title]');
+		tttip('t101','.tx-tc-trt-rating-right img[title]');
+	</script>
+</div>
+<!-- ###TOPRATINGS_LIST### end -->
+
+<!-- ###NO_TOPRATINGS### begin -->
+<div class="toctoc-comments-pi1">
+	<div class="tx-tc-box-trt-cts">
+		<div class="tx-tc-trt-listtitle">###TOPRATINGS_CONFIG_TITLE###</div>
+		<div class="tx-tc-trt-listdesc">###TOPRATINGS_CONFIG_DETAIL###</div>
+	       ###LL_TEXT_NO_TOPRATINGS###
+	</div>
+</div>
+<!-- ###NO_TOPRATINGS### end -->
+
+<!-- ###REPORT_FORM### begin -->
+<div class="tx-tc-cts-pi1">
+	<div class="tx-tc-pi1" style="padding: 0 0 0 4px;">
+		<h2>###TEXT_YOURCOMPLAINT###</h2>
+		###BADCOMMENT###
+		<script type="text/javascript">
+	tttip('t101','.tx-tc-recent-cts-article img[title]');
+</script>
+		<div id="confirm1" style="display:none;">
+			<div class="header"><span>###TXTCONFIRM###</span></div>
+			<div class="message"></div>
+			<div class="buttons">
+				<div class="no simplemodal-close">###TXTNO###</div><div class="yesconfirm">###TXTYES###</div>
+			</div>
+		</div>
+		<div id="information1" style="display:none;">
+			<div class="header"><span>###TXTINFO###</span></div>
+			<div class="message"></div>
+			<div class="buttons">
+				<div class="yes simplemodal-close">###TXTOK###</div>
+			</div>
+		</div>
+		
+		<div class="tx-tc-ct-box-cttxt" id="tx-tc-formsqueezer-1" style="height: 32px;">
+			<form autocomplete="off" id="cf1" class="tx-tc-form-for-newcomment" action="###ACTION###" method="post"
+			onsubmit="var errcodesubmit = commentform_validate('toctoc_comments_pi1_contenttextbox_1',1); if (errcodesubmit!=true) {return false};" >
+				<fieldset id="cffs1" class="tx-tc-ct-fieldset">
+			
+					<input type="hidden" name="toctoc_comments_pi1[info]" value="###INFO###" />
+					<script type="text/javascript">
+					var kkretcode=0;
+						jQuery(document).ready(function(){
+							jQuery("#toctoc_comments_pi1_contenttextbox_1").autoGrow();
+						
+							jQuery('#textarea-1').bind('keyup', function(e) {
+								kkretcode=toctoc_checkurl(e.keyCode,document.getElementById('toctoc_comments_pi1_contenttextbox_1'),'1', 0, 'jedi', 0, '','', 2084);
+					          }); 
+						});
+					</script>	
+			
+					<div class="tx-tc-cts-form-fieldtextarea" >
+						<div class="tx-tc-divtextarea" id="textarea-1" style="margin: 0;min-height: ###TAHEIGHT###px;">
+							<textarea autocomplete="off" class="tx-tc-ctinput-textarea" cols="42" rows="1"  tabindex="1"  style="overflow: hidden; height: ###TAHEIGHT###px;"
+							onblur="if ((tctrim(value)=='') && (tctrim('###TEXT###')=='')) {comment_formhider('1', 2, '###TEXT_TEXT###', 0,1);jQuery('#toctoc_comments_pi1_contenttextbox_1').elastic();} else {if (tctrim(value)!='') {jQuery('#toctoc_comments_pi1_contenttextbox_1').autoGrow();jQuery('#toctoc_comments_pi1_contenttextbox_1').elastic();}};" 
+							onFocus="jQuery('#toctoc_comments_pi1_contenttextbox_1').elastic();if (document.getElementById('toctoc_comments_pi1_submit_1').style.display == 'none') {value=''; comment_formhider('1', 3, '', 0,1);return};"
+							placeholder="###TEXT_TEXT###" name="toctoc_comments_pi1[text]" id="toctoc_comments_pi1_contenttextbox_1"></textarea>
+						 	<script type="text/javascript">
+						 	jQuery(function () {
+				            	jQuery('#toctoc_comments_pi1_contenttextbox_1').watermark('###TEXT_TEXT###', {left: 0, top: 0, fallback: true});
+						 	});
+				            </script>
+						</div>
+					</div>
+					 ###ERROR_TEXT###
+					<div id="formhider-1" class="tx-tcfh" style="display:none; height:0; margin:0px 0 0px;">
+				
+						<div class="tx-tc-ct-form-field">
+							<label class="tx-tc-ct-label" for="toctoc_comments_pi1[from]">###TEXT_FROM###</label>
+							<input class="tx-tc-ct-input" tabindex="2" type="text" name="toctoc_comments_pi1[from]" id="toctoc_comments_pi1from" value="###FROM###" /> ###ERROR_FROM###
+						</div>
+						<div class="tx-tc-ct-form-field">
+							<label class="tx-tc-ct-label" for="toctoc_comments_pi1[frommail]">###TEXT_FROMMAIL###</label>
+							<input class="tx-tc-ct-input" tabindex="3" type="text" name="toctoc_comments_pi1[frommail]" id="toctoc_comments_pi1frommail" value="###FROMMAIL###" /> ###ERROR_FROMMAIL###
+						</div>
+						###CAPTCHA###
+						
+						<div class="tx-tc-div-submit" id="tx-tc-div-submit1" style="display: none;opacity:0.6;">
+							<input id="toctoc_comments_pi1_submit_1" class="tx-tc-ct-submit" type="submit" name="toctoc_comments_pi1[submit]" 
+							value="###TEXT_SUBMIT###"  style="display: none;" tabindex="5" />
+						</div>
+						<script type="text/javascript">
+							var strtext = "###TEXT###";
+							var strtext_text = "###TEXT_TEXT###";
+							if (strtext !='') {
+								strtext_text=strtext;
+							}
+							var strtfvalue = document.getElementById('toctoc_comments_pi1_contenttextbox_1');
+				
+							if (strtfvalue && strtfvalue.value != '') {
+								if (strtfvalue.value != strtext_text) {
+									if (document.getElementById('toctoc_comments_pi1_submit_1').style.display == 'none') {
+										strtfvalue.value=strtext_text;
+										comment_formhider('1', 3, '', 0, 0);
+									};						
+								};
+							};
+						</script>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- ###REPORT_FORM### end -->
+
+
+<h1>Required</h1>
+<!-- ###REPORT_REQUIRED### begin -->
+<span class="tx-tc-required">###TEXT_REQUIRED###</span>
+<!-- ###REPORT_REQUIRED### end -->
+
+<h1>Error</h1>
+<!-- ###REPORT_ERROR### begin -->
+<span class="tx-tc-required-error"> ###TEXT###</span>
+<!-- ###REPORT_ERROR### end -->
+
+<h1>Captcha</h1>
+<!-- ###REPORT_CAPTCHA### begin -->
+	<div class="tx-tc-ct-form-field">
+		<label class="tx-tc-ct-label">###TEXT_CAPTCHA###</label>
+		<span class="tx-tc-ct-cap-area-image">###SR_FREECAP_IMAGE###</span>
+		<input class="tx-tc-ct-input" type="text" required="required" 
+		id="tx_comments_pi1-cap1" tabindex="4" name="toctoc_comments_pi1[captcha]" value="" />
+		<span class="tx-tc-ct-cap-area-accessible"></span>
+	</div>
+	<div class="tx-tc-ct-form-field">
+		<div class="tx-tc-ct-cap-message">###ERROR_CAPTCHA###</div>
+		<div class="tx-tc-ct-cap-area">
+				<div class="tx-tc-ct-cap-area-cantreadit">###SR_FREECAP_CANT_READ###</div>				
+	   </div>
+	</div>
+<!-- ###REPORT_CAPTCHA### end -->
+
+<h1>"Thank you" message</h1>
+<!-- ###THANK_YOU### begin -->
+
+	<div class="tx-tc-ct-form-field" style="height: 20px; ">
+		<p><b>###TEXT_THANKYOU###</b></p>
+	</div>
+
+<!-- ###THANK_YOU### end -->
+
+<h1>Reporting link</h1>
+<!-- ###REPORT_LINK### begin -->
+<a href="###LINK###" rel="nofollow">###TITLE###</a>
+<!-- ###REPORT_LINK### end -->
+<!-- ###COMMENTDATE_NORATINGS### begin -->
+<div class="tx-tc-rts-container">
+	<div id="tx-tc-rts-dp-tx_toctoc_comments_comments_###REF###" class="tx-tc-rts-li">
+		<div class="tx-tc-rts">
+			<div class="tx-tc-ctdate" id="tx-tc-ctdatedisp-###COMMENTID###"###STYLECOMMENT###>###COMMENT_DATE###</div>###COMMENTVIEWS###<div id="tx-tc-ctdatetime-###COMMENTID###" style="display:none;">###COMMENT_TIMESTAMP###</div>
+		</div>
+	</div>
+</div>
+<!-- ###COMMENTDATE_NORATINGS### begin -->
+</body>
+</html>
