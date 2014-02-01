@@ -1,0 +1,500 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!-- ###HEADER_ADDITIONS### begin
+		This section will be appended to html headers of the output. Allows you to include CSS, JS, etc
+		Markers in this section:
+			SITE_REL_PATH	- path to file relative to web root, ending with slash
+-->
+<link href="###SITE_REL_PATH###res/css/toctoccomments_pi1.css" type="text/css"
+	rel="stylesheet" />
+<script type="text/javascript" src="###SITE_REL_PATH###res/js/toctoccomments_pi1.js"></script>
+<script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.sharrre-1.3.2.js"></script>
+<script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.elastic-1.6.js"></script>
+<link rel="stylesheet" href="###SITE_REL_PATH###res/css/toctoccomments_ratings.css" />
+<!-- ###ADDITIONAL_CSS### begin -->
+<link rel="stylesheet" href="###CSS_FILE###" />
+<!-- ###ADDITIONAL_CSS### end -->
+
+<!-- ###HEADER_ADDITIONS### end -->
+</head>
+<body>
+
+	<h4>Comment listing subpart</h4>
+	<hr size="1" />
+	<!-- ###COMMENT_LIST### begin
+	This subpart formats comments
+-->
+	
+	<div id="uid0###UID######CID###" class="tx-toctoc-comments-comments">
+		###AJAX_DATA###
+		###AJAX_COMMENTSDATA###
+		###AJAX_COMMENTSIMGS###
+		<div id="tx-toctoc-comments-comments-###REF###">
+			<!-- ###COMMENT_LISTAJAX### begin -->
+			<div id="tx-toctoc-comments-comments-display-###REF###">
+				<div class="tx-toctoc-comments-comments-display">
+					<div id="uid###UID######CID###" class="tx-toctoc-comments-comment-box">
+			
+						<div class="tx-toctoc-comments-text">
+							<div id="tx-toctoc-comments-myratingstop-###REF###" class="tx-toctoc-comments-ratings-area">
+								<div id="tx-toctoc-comments-myratingstop-display-###REF###" class="tx-toctoc-comments-ratings-li-text###HIDECSS###">
+							
+									 <div class="tx-toctoc-comments-articleratingstop-ilike-display">
+									 	###ARTICLELIKE###
+									 </div>
+								 </div>
+							 </div>
+							 ###ARTICLECOMMENTLINK###
+							 ###ARTICLESHARE### 
+							<div class="tx-toctoc-comments-articleratings-display">
+								<div id="tx-toctoc-comments-ratings-###REF###" class="tx-toctoc-comments-ratings-area">###ARTICLEVOTE###</div>
+							</div>
+						</div>
+					</div>
+					<!-- ###CONTENT### begin -->
+			
+					<!-- ###SINGLE_COMMENT### begin
+						A single comment in the list. Possible markers:
+							ALTERNATE		- "-1" for odd and "-2" for even entries, allows to have alternating styles
+							FIRSTNAME		- first name
+							LASTNAME		- last name
+							IMAGE			- image
+							EMAIL			- email (spam protect works!)
+							LOCATION		- location
+							HOMEPAGE		- homepage
+							COMMENT_DATE	- date when posted
+							COMMENT_CONTENT	- content of the comment (nl2br + htmlspecialchars)
+							DELETE_LINK_TEXT - Comment löschen
+							TEXT_ADD_COMMENT
+							COMMENT_ID
+							RATINGS
+					-->
+					<div id="tx-toctoc-comments-comments-comment-tx_toctoc_comments_comments_###COMMENT_ID###">
+						<div id="tx-toctoc-comments-comments-comment-display-tx_toctoc_comments_comments_###COMMENT_ID###">
+							<div class="tx-toctoc-comments-comments-comment-display">
+								<div class="tx-toctoc-comments-comment-box">
+								
+									<div class="tx-toctoc-comments-comment-uc" id="toctoc-comments-uc-###COMMENT_ID###">
+										<div id="toctoc-comments-uc-inner-###COMMENT_ID###">
+										</div>
+									</div>
+									<div class="tx-toctoc-comments-comment-box-commentpic">
+										<div class="tx-toctoc-comments-comment-box-picturecrop32"><a href="javascript:void(0)" rel="nofollow" onclick="###SHOWUCLINK###">###IMAGE###</a></div>
+									</div>
+									<div class="tx-toctoc-comments-comment-box-commenttxt">
+										###DELETE_LINK###<p class="tx-toctoc-comments-text"><b>###FIRSTNAME### ###LASTNAME###</b> - ###COMMENT_CONTENT###</p>
+										<div class="tx-toctoc-comments-rating">
+											<div id="tx-toctoc-comments-ratings-tx_toctoc_comments_comments_###COMMENT_ID###" class="tx-toctoc-comments-ratings-area">
+												<div class="tx-toctoc-comments-ratings">
+													<div class="tx-toctoc-comments-commentdate">###COMMENT_DATE###</div>
+													###RATINGS###</div>
+											</div>
+										</div>
+									</div>
+									<!-- ###REPORT_SUB### -->
+									<!--
+									<div class="tx-toctoc-comments-comment-report">
+										&bull; <a href="###REPORT_LINK###">Report</a> this comment as inappropriate
+									</div>
+									-->
+									<!-- ###REPORT_SUB### -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- ###SINGLE_COMMENT### end -->
+					<!-- ###CONTENT### end -->
+			
+					###PAGE_BROWSER###
+				</div>	
+			</div>
+			<!-- ###COMMENT_LISTAJAX### end -->
+		</div>	
+	</div>
+	<!-- ###COMMENT_LIST### end -->
+	<hr />
+
+	<h4>No comments (replaces ###SINGLE_COMMENT###)</h4>
+	<!-- ###NO_COMMENTS### begin -->
+	<div class="tx-toctoc-comments-comment-box">
+		<p class="tx-toctoc-comments-text">###TEXT_NO_COMMENTS###</p>
+	</div>
+	<!-- ###NO_COMMENTS### end -->
+	<hr size="1" />
+
+	<h4>Comment form subpart</h4>
+	<hr size="1" />
+	<!-- ###COMMENT_FORM### begin
+	This subpart formats comment form
+-->
+
+	<div class="tx-toctoc-comments-pi1">
+	###AJAX_DATA###
+	###AJAX_COMMENTSDATA###
+	###AJAX_COMMENTSIMGS###
+		<div id="tx-toctoc-comments-form-###REF###">
+		<!-- ###COMMENT_FORMAJAX### start -->
+			<div id="tx-toctoc-comments-form-display-###REF###">
+			
+				<div class="tx-toctoc-comments-form-display">
+			
+				###TOP_MESSAGE###
+					<div class="tx-toctoc-comments-comment-box-commentpic2">
+						<div class="tx-toctoc-comments-comment-box-picturecrop322">###IMAGETAG###</div>
+						
+					</div>
+					<div class="tx-toctoc-comments-comment-box-commenttxt" id="tx-toctoc-comments-formsqueezer-###CID###" style="height: 32px;">
+						<form autocomplete="off" id="cf###CID###" class="tx-toctoc-comments-form-for-newcomment" action="###ACTION_URL###"
+							method="post" onsubmit="return commentform_validate(###CID###, '###TEXT_ERR_COMMENT_NULL###', '###TEXT_ERR_COMMENT_LENGTH###');">
+							<fieldset id="cffs###CID###" class="tx-toctoc-comments-comment-fieldset">
+			
+								<input type="hidden" name="toctoc_comments_pi1[itemurl]" id="toctoc_comments_pi1_###CID###itemurl" value="###CURRENT_URL###" />
+								<input type="hidden" name="toctoc_comments_pi1[itemurlchk]" id="toctoc_comments_pi1_###CID###itemurlchk" value="###CURRENT_URL_CHK###" />
+			                    <script type="text/javascript">
+									jQuery(document).ready(function(){
+																			
+										jQuery("#toctoc_comments_pi1_contenttextbox_###CID###").elastic();
+										jQuery("#toctoc_comments_pi1_contenttextbox_###CID###").autoGrow();
+
+									
+										 // refresh captcha
+										 jQuery('img#toctoc_comments_caprefresh_###CID###').click(function() {
+												change_captcha_###CID###();
+										 });
+										 
+										 function change_captcha_###CID###()
+										 {
+										 	document.getElementById('toctoc_comments_captcha_###CID###').src="index.php?eID=toctoc_comments_ajax&cmd=getcap&captchatype=###CAPTYPE###&cid=###CID###&rnd" + Math.random();
+										 }
+										
+									});
+								</script>
+								###SUBFORM###
+								###JS_USER_DATA###
+								
+							</fieldset>
+						</form>
+			
+					</div>
+				</div>
+			
+			</div>
+			<!-- ###COMMENT_FORMAJAX### end -->
+		</div>
+	</div>
+	<!-- ###COMMENT_FORM### end -->
+
+	<hr size="1" />
+
+	<h4>Required field mark</h4>
+	<hr size="1" />
+	<!-- ###REQUIRED_FIELD### begin
+	This subpart formats mark for required field
+-->
+
+	<!-- ###REQUIRED_FIELD### end -->
+
+	<hr size="1" />
+
+	<h4>Form top message block</h4>
+	<hr size="1" />
+
+	<!-- ###FORM_TOP_MESSAGE### begin
+	This subpart formats mark for required field
+-->
+	<div class="tx-toctoc-comments-form-top-message">
+		<p class="tx-toctoc-comments-text">###MESSAGE###</p>
+	</div>
+	<!-- ###FORM_TOP_MESSAGE### end -->
+
+	<!-- ###COMMENTING_CLOSED### begin -->
+	<div class="tx-toctoc-comments-pi1">
+		<div class="tx-toctoc-comments-form-display">
+			<div class="tx-toctoc-comments-closed">
+				<p class="tx-toctoc-comments-text">
+					<img src="###SITE_REL_PATH###res/img/commenting-closed.gif" width="16"
+						height="16" alt="" /> ###MESSAGE###
+				</p>
+			</div>
+		</div>
+	</div>
+	<!-- ###COMMENTING_CLOSED### end -->
+
+	<!-- ###CAPTCHA_SUB### begin
+	This subpart formats captcha
+-->
+	<div class="tx-toctoc-comments-comment-form-field">
+		<label class="tx-toctoc-comments-comment-label">###TEXT_ENTER_CODE###</label>
+		<span class="tx-toctoc-comments-comment-captcha-area-image"><img class="tx-toctoc-capchta-image" src="index.php?eID=toctoc_comments_ajax&cmd=getcap&captchatype=1&cid=###CID###" alt="" id="toctoc_comments_captcha_###CID###" /></span>
+		<input class="tx-toctoc-comments-comment-input" type="text" required="required" tabindex="1"
+		id="toctoc_comments_pi1-captcha-###CID###" name="toctoc_comments_pi1[captcha]" value="" /><img class="tx-toctoc-capchta-image-rf" id="toctoc_comments_caprefresh_###CID###" src="###SITE_REL_PATH###res/img/refresh.jpg" width="25" alt="###SR_FREECAP_CANT_READ###" />
+	</div>
+	<div class="tx-toctoc-comments-comment-form-field">
+		<div id="tx-toctoc-comments-captcha-message-###CID###" class="tx-toctoc-comments-comment-captcha-message">
+			###REQUIRED_CAPTCHA### ###ERROR_CAPTCHA###
+		</div>
+		<div class="tx-toctoc-comments-comment-captcha-area">
+			<div class="tx-toctoc-comments-comment-captcha-area-cantread">
+
+			</div>
+	   </div>
+	</div>
+	
+	<!-- ###CAPTCHA_SUB### end -->
+	
+	<!-- ###RECAPTCHA_SUB### begin
+	This subpart formats recaptcha
+-->
+	<div class="tx-toctoc-comments-comment-form-field-recap">
+		<div id="captcha-wrap">
+			<div class="captcha-box">
+				<span class="tx-toctoc-comments-comment-captcha-area-image-recap"><img class="tx-toctoc-capchta-image-recap" src="index.php?eID=toctoc_comments_ajax&cmd=getcap&captchatype=2&cid=###CID###" alt="" id="toctoc_comments_captcha_###CID###" /></span>
+			</div>
+			<div class="over-text-box">
+			<div class="text-box">
+				<label>###TEXT_ENTER_CODE###</label>
+				<input class="tx-toctoc-comments-comment-input" type="text" required="required" tabindex="1"
+			id="toctoc_comments_pi1-captcha-###CID###" name="toctoc_comments_pi1[captcha]" value="" />
+			</div>
+			<div class="captcha-action">
+				<img class="tx-toctoc-capchta-image-rf-recap" id="toctoc_comments_caprefresh_###CID###" src="###SITE_REL_PATH###res/img/rcrefresh.jpg" width="16" alt="###SR_FREECAP_CANT_READ###" />
+			</div>
+			</div>
+		</div>
+	</div>
+	<div class="tx-toctoc-comments-comment-form-field">
+		<div id="tx-toctoc-comments-captcha-message-###CID###" class="tx-toctoc-comments-comment-captcha-message">
+			###REQUIRED_CAPTCHA### ###ERROR_CAPTCHA###
+		</div>
+		<div class="tx-toctoc-comments-comment-captcha-area">
+			<div class="tx-toctoc-comments-comment-captcha-area-cantread">
+
+			</div>
+	   </div>
+	</div>
+	
+	<!-- ###RECAPTCHA_SUB### end -->
+
+	<!-- ###TTNEWS_COMMENT_COUNT_SUB### begin -->
+	<span class="tx-toctoc-comments-count-wrap"><a
+		href="###COMMENTS_LINK####tx-toctoc-comments-comments-###UID###"
+		class="tx-toctoc-comments-count">###COMMENTS_COUNT###</a></span>
+	<!-- ###TTNEWS_COMMENT_COUNT_SUB### end -->
+
+	<!-- ###TTNEWS_COMMENT_NONE_SUB### begin -->
+	<span class="tx-toctoc-comments-count-wrap"><a
+		href="###COMMENTS_LINK####tx-toctoc-comments-comments-###UID###"
+		class="tx-toctoc-comments-count">###COMMENTS_COUNT_NONE###</a></span>
+	<!-- ###TTNEWS_COMMENT_NONE_SUB### end -->
+
+
+
+	<!-- ###ERROR_SUB### begin -->
+	<div class="tx-toctoc-comments-errors">
+		<!-- ###ERROR### begin -->
+		<li>###MESSAGE</div>
+		<!-- ###ERROR### end -->
+	</div>
+	<!-- ###ERROR_SUB### end -->
+	
+	
+	
+	<!-- ###DELETE_COMMENT_LINK_SUB### begin -->
+toctoc_comments_delete('###REF###', ###VALUE###, commentsAjaxData###CID###, '###CHECK###', 'deletecomment', 'comments-comment', commentsAjaxDataC###CID###, commentsAjaxThisData###CID###, ###UID###, ###CID###);return false
+	<!-- ###DELETE_COMMENT_LINK_SUB### end -->	
+	
+	<!-- ###ADD_COMMENT_LINK_SUB### begin -->
+commentsAjaxDataC###CID### = toctoc_comments_pi1_getUserData(###CID###);toctoc_comments_submit('###REF###', ###VALUE###, commentsAjaxData###CID###, '###CHECK###', 'addcomment', 'form', commentsAjaxDataC###CID###, commentsAjaxThisData###CID###, '###CAPSESS###', ###CID###, '###ERROR_CAPTCHA###', commentsAjaxDataImg###CID###, ###LOGGEDON###);return false
+	<!-- ###ADD_COMMENT_LINK_SUB### end -->
+		
+	<!-- ###BROWSE_COMMENT_LINK_SUB### begin -->
+toctoc_comments_browse('###REF###', ###VALUE###, commentsAjaxData###CID###, '###CHECK###', 'browse', 'comments', commentsAjaxDataC###CID###, commentsAjaxThisData###CID###,###STARTPOINT###,###CID###,###TOTALROWS###, commentsAjaxDataImg###CID###);return false
+	<!-- ###BROWSE_COMMENT_LINK_SUB### end -->	
+	
+	<!-- ###BROWSEHIDE_COMMENT_LINK_SUB### begin -->
+toctoc_comments_browse('###REF###', ###VALUE###, commentsAjaxData###CID###, '###CHECK###', 'browsehide', 'comments', commentsAjaxDataC###CID###, commentsAjaxThisData###CID###,###STARTPOINT###,###CID###,###TOTALROWS###, commentsAjaxDataImg###CID###);return false
+	<!-- ###BROWSEHIDE_COMMENT_LINK_SUB### end -->
+	
+<!-- ###SHOWUCLINK_SUB### begin -->
+show_uc(###COMMENT_ID###, ###CID###, commentsAjaxData###CID###,'###TOCTOCUID###','###IMGBENC###',###TIMEOUTMS###);return false
+<!-- ###SHOWUCLINK_SUB### end -->
+
+
+	<!-- ###SHARRRE### begin -->
+<style>
+.sharrre #sharrremiddle###CID### {
+	left: ###ARTICLESHAREMIDDLELEFT###px;
+}
+.sharrre #sharebox###CID###:hover {
+	padding-right:###ARTICLESHAREDIVWIDTH###px;
+}
+.sharrre .shrbox:hover #sharrremiddle###CID### {
+	width:###ARTICLESHAREDIVWIDTHHM###px;
+}
+.sharrre #sharebox###CID###:hover #shareright###CID### {
+	right: ###ARTICLESHAREDIVRIGHTRIGHT###px;
+}
+</style>
+<div id="shareme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###"></div>
+<script>
+	jQuery('#shareme###CID###').sharrre({
+	share: {
+		###SHARELIST_TWITTER######SHARELIST_FACEBOOK######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON###
+	},
+	template: '<div id="sharebox###CID###" class="shrbox"><div class="shrleft">###BEGINSPACER######ARTICLESHARE###</div><div class="shrmiddle" id="sharrremiddle###CID###">###SHAREHTML_FACEBOOK######SHAREHTML_TWITTER######SHAREHTML_GOOGLE######SHAREHTML_LINKEDIN######SHAREHTML_STUMBLEUPON###</div><div id="shareright###CID###" class="shrright">{total}</div></div>',
+	enableHover: false,
+	enableTracking: true,
+	render: function(api, options){
+		###JSSHARRRET###
+		###JSSHARRREF###
+		###JSSHARRREG###
+		###JSSHARRREL###
+		###JSSHARRRED###
+	}
+	});
+</script>	
+	<!-- ###SHARRRE### end -->
+	
+<!-- ###SHARRRET### begin -->
+		jQuery(api.element).on('click', '.twitter', function() {
+api.openPopup('twitter');
+});
+<!-- ###SHARRRET### end -->
+<!-- ###SHARRREF### begin -->
+jQuery(api.element).on('click', '.facebook', function() {
+api.openPopup('facebook');
+});
+<!-- ###SHARRREF### end -->
+<!-- ###SHARRREG### begin -->
+jQuery(api.element).on('click', '.googleplus', function() {
+api.openPopup('googlePlus');
+});
+<!-- ###SHARRREG### end -->
+<!-- ###SHARRREL### begin -->
+jQuery(api.element).on('click', '.linkedin', function() {
+api.openPopup('linkedin');
+});
+<!-- ###SHARRREL### end -->
+<!-- ###SHARRRED### begin -->
+jQuery(api.element).on('click', '.stumbleupon', function() {
+api.openPopup('stumbleupon');
+}); 
+<!-- ###SHARRRED### end -->
+
+<!-- ###COMMENTLINKTOP### begin -->
+							<div class="tx-toctoc-comments-articleratings-commentlink">
+								 ###BEGINSTRING###<a id="link###UID###_###CID###" href="###ARTICLESHAREURL####comment_a_###CID###" 					 
+								 onblur="comment_formhider('###CID###', 1, '', ###LOGGEDIN###, 0, document.getElementById('toctoc_comments_pi1_contenttextbox_###CID###'));" 
+								 title="###TEXT_ADD_COMMENTTITLE###">###TEXT_ADD_COMMENTTOP###</a>
+								 <a name="commentit_a_###CID###"></a>
+							 </div>
+ <!-- ###COMMENTLINKTOP### end -->
+ 
+ <!-- ###SUBFORMIP### begin -->
+								<div class="tx-toctoc-comments-comments-form-fieldtextarea" >
+									<div class="tx-toctoc-comments-divtextarea" id="textarea-###CID###" style="margin: 0;min-height: 25px;">
+									
+										<textarea autocomplete="off" class="tx-toctoc-comments-commentinput-textarea" cols="42" rows="1"  tabindex="1" 
+										onblur="if (tctrim(value)=='') {value='###TEXT_ADD_COMMENT###';	comment_formhider('###CID###', 2, '###TEXT_ADD_COMMENT###', 0,1);jQuery('#toctoc_comments_pi1_contenttextbox_###CID###').elastic();} else {if ((tctrim(value)!='###TEXT_ADD_COMMENT###') && (tctrim(value)!='')) {jQuery('#toctoc_comments_pi1_contenttextbox_###CID###').autoGrow();jQuery('#toctoc_comments_pi1_contenttextbox_###CID###').elastic();}};" 
+										onFocus="if (document.getElementById('toctoc_comments_pi1_submit_###CID###').style.visibility == 'hidden') {value=''; comment_formhider('###CID###', 3, '', 0,1);return};"
+										name="toctoc_comments_pi1[content]" id="toctoc_comments_pi1_contenttextbox_###CID###">###CONTENT###</textarea>
+									</div>
+								</div>
+								
+								<div id="formhider-###CID###" class="tx-toctoc-commentsfh" style="visibility:hidden; height:0; margin:-112px 0 0px;">
+						
+									<a id="comment-###CURRENT_URL_CHK######CID###" name="comment_a_###CID###"></a>
+									
+									<div class="tx-toctoc-comments-comment-form-field">
+									<label class="tx-toctoc-comments-comment-label" for="toctoc_comments_pi1_firstname">###TEXT_FIRST_NAME### *</label>
+									<input  class="tx-toctoc-comments-comment-input"  type="text" size="35" name="toctoc_comments_pi1[firstname]" id="toctoc_comments_pi1_###CID###firstname" value="###FIRSTNAME###" />
+									
+									</div>
+									<div>###REQUIRED_FIRSTNAME### ###ERROR_FIRSTNAME###</div>
+									<div class="tx-toctoc-comments-comment-form-field">
+									<label class="tx-toctoc-comments-comment-label" for="toctoc_comments_pi1_lastname">###TEXT_LAST_NAME### *</label>
+									<input class="tx-toctoc-comments-comment-input"  type="text" size="35" name="toctoc_comments_pi1[lastname]" id="toctoc_comments_pi1_###CID###lastname" value="###LASTNAME###" />
+									</div>
+									<div>###REQUIRED_LASTNAME### ###ERROR_LASTNAME###</div>
+									<div class="tx-toctoc-comments-comment-form-field">
+									<label class="tx-toctoc-comments-comment-label" for="toctoc_comments_pi1_email">###TEXT_EMAIL### *</label>
+									<input class="tx-toctoc-comments-comment-input"  type="text" size="35" name="toctoc_comments_pi1[email]" id="toctoc_comments_pi1_###CID###email" value="###EMAIL###" />
+									<input type="hidden" name="toctoc_comments_pi1[homepage]" id="toctoc_comments_pi1_###CID###homepage" value="###HOMEPAGE###" />
+									</div>
+									<div>###REQUIRED_EMAIL### ###ERROR_EMAIL###</div>
+									<div class="tx-toctoc-comments-comment-form-field">
+									<label class="tx-toctoc-comments-comment-label" for="toctoc_comments_pi1_location">###TEXT_LOCATION###</label>
+									<input class="tx-toctoc-comments-comment-input"  type="text" size="35" name="toctoc_comments_pi1[location]" id="toctoc_comments_pi1_###CID###location" value="###LOCATION###" />
+									</div>
+									<div><!--###TEXT_REQUIRED_HINT###--></div>
+									###CAPTCHA###
+									<input type="hidden" name="toctoc_comments_pi1[cid]" id="toctoc_comments_pi1_###CID###cid" value="###CID###" />
+			                    </div>
+								<div class="tx-toctoc-comments-div-submit">
+									<!--
+									&nbsp; | &nbsp;	<input type="reset" value="###TEXT_RESET###" class="tx-toctoc-comments-comment-reset" />	
+									-->
+									<input type="hidden" name="insert" id="toctoc_comments_pi1_###CID###insert" value="insert" />
+									<input type="button" class="tx-toctoc-comments-comment-submit" tabindex="2"  name="toctoc_comments_pi1[submit]" 
+									onclick="var errcodesubmit = commentform_validate(###CID###, '###TEXT_ERR_COMMENT_NULL###', '###TEXT_ERR_COMMENT_LENGTH###'); if (errcodesubmit==true) {###SUBMITONCLICK###};" 
+									id="toctoc_comments_pi1_submit_###CID###" value="###TEXT_SUBMIT###" style="visibility: hidden; height: 0; margin: 0;" />
+								</div>
+								<script type="text/javascript">
+									var errcodeform = "###ERRCODE###";
+									if (errcodeform == "1") {
+										if (document.getElementById('toctoc_comments_pi1_submit_###CID###').style.visibility == 'hidden') {
+											comment_formhider('###CID###', 3, '', 0, 0);
+										};						
+									};
+								</script>
+ <!-- ###SUBFORMIP### end -->
+ <!-- ###SUBFORMUSER### begin -->
+ 								<div class="tx-toctoc-comments-comments-form-fieldtextarea" >
+									<div class="tx-toctoc-comments-divtextarea" id="textarea-###CID###" style="margin: 0;min-height: 25px;">
+									
+										<textarea autocomplete="off" class="tx-toctoc-comments-commentinput-textarea" cols="42" rows="1"  tabindex="1" 
+										onblur="if (tctrim(value)=='') {value='###TEXT_ADD_COMMENT###';	comment_formhider('###CID###', 2, '###TEXT_ADD_COMMENT###', 1,1);jQuery('#toctoc_comments_pi1_contenttextbox_###CID###').elastic();} else {if ((tctrim(value)!='###TEXT_ADD_COMMENT###') && (tctrim(value)!='')) {jQuery('#toctoc_comments_pi1_contenttextbox_###CID###').autoGrow();jQuery('#toctoc_comments_pi1_contenttextbox_###CID###').elastic();}};" 
+										onFocus="if (document.getElementById('toctoc_comments_pi1_submit_###CID###').style.visibility == 'hidden') {value=''; comment_formhider('###CID###', 3, '', 1,1);return};"
+										name="toctoc_comments_pi1[content]" id="toctoc_comments_pi1_contenttextbox_###CID###">###CONTENT###</textarea>
+									</div>
+								</div>
+									
+								<div class="" id="formhider-###CID###" style="visibility:hidden; height:0; margin:-32px 0 0px;">
+				
+									<a id="comment-###CURRENT_URL_CHK######CID###" name="comment_a_###CID###"></a>
+								
+									<input type="hidden" name="toctoc_comments_pi1[firstname]"
+									id="toctoc_comments_pi1_###CID###firstname" value="###FIRSTNAME###" /> <input
+									type="hidden" name="toctoc_comments_pi1[lastname]"
+									id="toctoc_comments_pi1_###CID###lastname" value="###LASTNAME###" /><input
+									type="hidden" name="toctoc_comments_pi1[image]"
+									id="toctoc_comments_pi1_###CID###image" value="###IMAGE###" /> <input
+									type="hidden" name="toctoc_comments_pi1[email]"
+									id="toctoc_comments_pi1_###CID###email" value="###EMAIL###" /> <input
+									type="hidden" name="toctoc_comments_pi1[homepage]"
+									id="toctoc_comments_pi1_###CID###homepage" value="###HOMEPAGE###" /> <input
+									type="hidden" name="toctoc_comments_pi1[location]"
+									id="toctoc_comments_pi1_###CID###location" value="###LOCATION###" />
+									###CAPTCHA###
+									<input type="hidden" name="toctoc_comments_pi1[cid]" id="toctoc_comments_pi1_###CID###cid" value="###CID###" />
+								</div>
+								<div class="tx-toctoc-comments-div-submit">
+									<!--
+									&nbsp; | &nbsp;	<input type="reset" value="###TEXT_RESET###" class="tx-toctoc-comments-comment-reset" />	
+									-->
+									<input type="hidden" name="insert" id="toctoc_comments_pi1_###CID###insert" value="insert" />
+									<input type="button" class="tx-toctoc-comments-comment-submit-loggedin" tabindex="2"  name="toctoc_comments_pi1[submit]" 
+									onclick="var errcodesubmit = commentform_validate(###CID###, '###TEXT_ERR_COMMENT_NULL###', '###TEXT_ERR_COMMENT_LENGTH###'); if (errcodesubmit==true) {###SUBMITONCLICK###};" 
+									id="toctoc_comments_pi1_submit_###CID###" value="###TEXT_SUBMIT###" style="visibility: hidden; height: 0; margin: 0;" />
+								</div>
+								<script type="text/javascript">
+									var errcodeform = "###ERRCODE###";
+									if (errcodeform == "1") {
+										if (document.getElementById('toctoc_comments_pi1_submit_###CID###').style.visibility == 'hidden') {
+											comment_formhider('###CID###', 3, '', 1, 0);
+										};						
+									}
+								</script>
+ <!-- ###SUBFORMUSER### end -->
+</body>
+</html>

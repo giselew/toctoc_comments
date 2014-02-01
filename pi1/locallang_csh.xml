@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<description>CSH labels</description>
+		<type>CSH</type>
+		<csh_table>tx_toctoc_comments_comments</csh_table>
+		<fileId>EXT:toctoc_comments/pi1/locallang_csh.xml</fileId>
+		<labelContext type="array">
+            		<label index=".description"></label>
+            		<label index="_.seeAlso"></label>
+			<label index="code"></label>
+			<label index="code.details"></label>
+			<label index="externalPrefix.description"></label>
+			<label index="storagePid.description"></label>
+			<label index="templateFile.description"></label>
+			<label index="commentsPerPage.description"></label>
+			<label index="commentsPerPage.details"></label>
+			<label index="closeCommentsAfter.description"></label>
+			<label index="closeCommentsAfter.details"></label>
+			<label index="enableRatings.description"></label>
+			<label index="enableRatings.details"></label>
+			<label index="requireApproval.description"></label>
+			<label index="considerReferer.description"></label>
+			<label index="considerReferer.details"></label>
+			<label index="useCaptcha.description"></label>
+			<label index="useCaptcha.image"></label>
+			<label index="useCaptcha.image_descr"></label>
+			<label index="notificationEmail.description"></label>
+			<label index="fromEmail.description"></label>
+			<label index="emailTemplate.description"></label></labelContext>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+            		<label index=".description">toctoc_comments.</label>
+            		<label index="_.seeAlso">toctoc_comments manual | http://www.toctoc.ch/toctoc_comments_doc.html</label>
+			<label index="code.description">Defines operation mode of the plugin</label>
+			<label index="code.details">"Comment listing" mode shows list of comments. "Comment form" mode shows form to enter comments.</label>
+			<label index="externalPrefix.description">Defines a parameter in URL that will trigger comments displaying. Typically it is a parameter that defines a single view. For example, tt_news extension uses tx_ttnews[tt_news] as a parameter to define single item to show. Therefore external prefix is tx_ttnews in this case.&lt;br /&gt;&lt;br /&gt; To comment on pages, use "pages" prefix.</label>
+			<label index="storagePid.description">Defines where to store comment records</label>
+			<label index="templateFile.description">Defines file path to the template file. Default points to the extension. Usual TYPO3 fules apply: to specify file in fileadmin, start file path from "fileadmin/", to specify file in another extension, use "EXT:" prefix.</label>
+			<label index="commentsPerPage.description">Defines how many comments per page to show</label>
+			<label index="commentsPerPage.details">Defines how many comments per page to show</label>
+			<label index="closeCommentsAfter.description">Defines a period after which commenting is closed</label>
+			<label index="closeCommentsAfter.details">Period is defined by an integer number followed by suffix. Suffix can be h, m, y or d (meaning hours, months, years or days respectively). Example: 5d (means close commenting after 5 days). If empty, comments can be added at any moment.</label>
+			<label index="enableRatings.description">Enables comment ratings</label>
+			<label index="enableRatings.details">This works undependant from "ratings" extension installed.</label>
+			<label index="requireApproval.description">If checked, every message will require to be approved by moderator. Moderator will receive e-mail with message content and links to approve or delete comment.</label>
+			<label index="considerReferer.description">If checked, comments will not be approved unless referer matches current site</label>
+			<label index="considerReferer.details">It is not safe to use this option because many browsers are not reliable in sending referer (and they are not really required to). Also many firewalls block this field. Use only if you are really paranoid about it.</label>
+			<label index="useCaptcha.description">Require captcha to be submitted together with comment.</label>
+			<label index="useCaptcha.image">EXT:toctoc_comments/csh/captcha.png</label>
+			<label index="useCaptcha.image_descr">Example of captcha in the comment form</label>
+			<label index="notificationEmail.description">Defines the e-mail address to which notifications about new unapproved comments are sent.</label>
+			<label index="fromEmail.description">Defines the e-mail address from which e-mails are sent.</label>
+			<label index="emailTemplate.description">Defines template to use for e-mail. Usual TYPO3 rules apply: to specify file in fileadmin, start file path from "fileadmin/", to specify file in another extension, use "EXT:" prefix.</label>
+		</languageKey>
+	</data>
+	<orig_hash type="array">
+	</orig_hash>
+	<orig_text type="array">
+	</orig_text>
+</T3locallang>
