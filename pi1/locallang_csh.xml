@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<description>CSH labels for FlexForm fields</description>
+		<type>CSH</type>
+		<csh_table></csh_table>
+		<fileId>EXT:toctoc_comments/pi1/locallang_csh.xml</fileId>
+		<labelContext type="array">
+		</labelContext>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index=".alttitle">toctoc_comments plugin configuration options</label>
+			<label index="_.image">EXT:toctoc_comments/ext_icon.gif</label>
+			<label index=".image_descr">Plugin options serve to overwrite the options set in general or page Typoscript. Here, in the plugin itself - just make the exceptions work.</label>
+			<label index="pluginmode.description">Defines operation mode of the plugin</label>
+			<label index="pluginmode.details">&quot;Normal&quot; mode for use of social network components. &quot;Recent Comments&quot; Displays recent comments list. &quot;Reportbad comment&quot; Displays a form where the user can enter a complaint about a comment.</label>
+			<label index="recentcommentslistCount.description">Number of recent comments shown</label>
+			<label index="restrictToExternalPrefix.description">Select if to show all comments or just comments attached to specific records</label>
+			<label index="restrictToExternalPrefix.details">If you select &quot;custom&quot; you can select the concerned extension in the next step. (after the reload of the page).</label>
+			<label index="restrictToCustomExternalPrefix.description">Custom external prefix for recent comments</label>
+			<label index="restrictToCustomExternalPrefix.details">The custom external prefix for recent comments triggers specific records like News, Products or other records with associated comments.</label>
+			<label index="recentcommentsPluginpages.description">List of pages where a record of a contained plugin should be shown</label>
+			<label index="recentcommentsPluginpages.details">When displaying the recent comments list over all pages in a website, there can be web pages where the plugin is setup without triggering prefix, but in fact the page displays records. If you have setups like this, here you can specify the concerned pages.</label>
+			<label index="_recentcommentsPluginpages.seeAlso">:recentcommentsPluginRecords</label>
+			<label index="recentcommentsPluginRecords.description">Associated records to show for the selected pages containing plugins</label>
+			<label index="recentcommentsPluginRecords.details">The list of the records must be sorted according the pages-list.</label>
+			<label index="_recentcommentsPluginRecords.seeAlso">:recentcommentsPluginpages</label>
+			<label index="externalPrefix.description">Defines a parameter in URL that will trigger comments displaying for records</label>
+			<label index="externalPrefix.details">Defines a parameter in URL that will trigger comments displaying. Typically it is a parameter that defines a single view. For example, tt_news extension uses tx_ttnews[tt_news] as a parameter to define single item to show. Therefore external prefix is tx_ttnews in this case.&lt;br /&gt;&lt;br /&gt; To comment on content elements, the &quot;pages&quot; prefix is set automatically in background, you can leave the field blank.</label>
+			<label index="optionalRecordId.description">Defines an (optional) content element or record for which comments will be stored. Exclusive with triggering prefix for content elements</label>
+			<label index="optionalRecordId.details">You can specify another toctoc_comments plugin with this. If so the comments of the other plugin are displayed, but still you can configure the current plugin as you want. It works for toctoc_comment plugins implemented for comments on pages (default). For toctoc_comment plugins implemented for comments on records it will not work, the prefix-to-table map can be used only in context of the plugin for the external records. And makes no sense, because comments are attached to records and not to a content element.</label>
+			<label index="storagePid.description">Defines where to store comment records</label>
+			<label index="commentsPerPage.description">Defines how many comments to show</label>
+			<label index="closeCommentsAfter.description">Defines a period after which commenting is closed</label>
+			<label index="closeCommentsAfter.details">Period is defined by an integer number followed by suffix. Suffix can be h, m, y or d (meaning hours, months, years or days respectively). Example: 5d (means close commenting after 5 days). If empty, comments can be added at any moment.</label>
+			<label index="requireApproval.description">Comments need be approved by moderator</label>
+			<label index="requireApproval.details">If checked, every message will require to be approved by moderator. Moderator will receive an email with comment content and links to approve or delete comment.</label>
+			<label index="considerReferer.description">If checked, comments will not be approved unless referer matches current site</label>
+			<label index="considerReferer.details">It is not safe to use this option because many browsers are not reliable in sending referer (and they are not really required to). Also many firewalls block this field. Use only if you are really paranoid about it.</label>
+			<label index="useCaptcha.description">Require captcha to be submitted together with comment.</label>
+			<label index="useCaptcha.image_descr">Example of captcha in the comment form</label>
+			<label index="notificationEmail.description">Defines the email address to which notifications about new unapproved comments are sent.</label>
+			<label index="fromEmail.description">Defines the email address from which emails are sent.</label>
+			<label index="useWebpagePreview.description">Use Attachment Feature Webpagepreview</label>
+			<label index="useWebpagePreview.details">if the Attachment feature Webpagepreview is enabled, then webpagepreviews are shown and users can generate new previews.</label>
+			<label index="useSharing.description">Use of Share-Links</label>
+			<label index="useSharing.details">Use of Share-Links for social networks like Facebook, Google and Twitter</label>
+			<label index="dontUseSharingFacebook.description">Share-Link for Facebook is suppressed</label>
+			<label index="dontUseSharingFacebook.details">Use of Share-Link for Facebook is suppressed. Similar options exist for other social networks</label>
+			<label index="commentingClosed.description">Stop Commenting</label>
+			<label index="commentingClosed.details">Commenting can be totally suppressed, 0 (default) or 1</label>
+			<label index="ratingsOnly.description">Enable only ratings</label>
+			<label index="ratingsOnly.details">Enable ratings only just displays the rating component of the plugin</label>
+			<label index="enableRatings.description">Enable ratings</label>
+			<label index="enableRatings.details">Enables web site visitors to rate comments or records. Notice that ratings change is only available if comments are not closed for the item. When comments are closed, ratings automatically become read-only</label>
+			<label index="useVotes.description">Shows voting</label>
+			<label index="useVotes.details">Shows the rating stars and enables voting, if checked.</label>
+			<label index="useMyVote.description">Show vote of user</label>
+			<label index="useMyVote.details">Shows the vote of the user</label>
+			<label index="useLikeDislike.description">Show Like and Dislike</label>
+			<label index="useLikeDislike.details">Show Like and Dislike Features, if checked both are active.</label>
+			<label index="useDislike.description">Show Dislike Feature</label>
+			<label index="useDislike.details">The show Dislike features makes only sense in connection with useLikeDislike.</label>
+			<label index="useTopWebpagePreview.description">Select a Webpage preview</label>
+			<label index="useTopWebpagePreview.details">Select a Webpage preview that has been created in the frontend and assign it to the plugin. The Webpagepreview will be shown at the top of the plugin. It can be used to illustrate the article people are commenting on.</label>
+			<label index="useCaptcha.image">EXT:toctoc_comments/csh/captcha.png</label>
+		</languageKey>
+	</data>
+	<orig_hash type="array">
+	</orig_hash>
+	<orig_text type="array">
+	</orig_text>
+</T3locallang>
