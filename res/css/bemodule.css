@@ -1,0 +1,77 @@
+﻿div.typo3-bigDoc, div.typo3-noDoc, div.typo3-smallDoc, div.typo3-mediumDoc {
+	height: 99%;
+	overflow: auto;
+}
+div.typo3-bigDoc {
+	width: 97%;
+}
+.div-float {
+	float: right;
+}
+table.tablesorter {
+	margin: 10px 0pt 15px;
+	width: 100%;
+	text-align: left;
+	/* border-collapse: collapse; */
+}
+table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+	background-color: #A9B0BD;
+	padding: 4px;
+	color: #fff;
+}
+table.tablesorter thead tr .header {
+	background-image: url('../img/bg.gif');
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+table.tablesorter tbody td {
+	color: #3D3D3D;
+	padding: 4px;
+	background-color: #FFF;
+	vertical-align: top;
+}
+table.tablesorter tbody tr.odd td {
+	background-color: #F0F0F6;
+}
+table.tablesorter thead tr .headerSortUp {
+	background-image: url('../img/asc.gif');
+}
+table.tablesorter thead tr .headerSortDown {
+	background-image: url('../img/desc.gif');
+}
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+	background-color: #66A552;
+}
+.pagenav {
+	float: left;
+}
+.clearit {
+	clear: both;
+	font-size: 0;
+	height: 0;
+}
+fieldset {
+	border: none;
+}
+#pager img {
+	vertical-align: middle;
+	cursor: pointer;
+}
+#pager input.pagedisplay {
+	border: 1px solid #A9B0BD;
+	outline: none;
+	font-size: 10px;
+	padding: 2px;
+	width: 50px;
+}
+#pager select.pagesize {
+	outline: none;
+	vertical-align: middle;
+	font-size: 10px;
+	border: 1px solid #A9B0BD;
+}
+span.show_comments {
+	vertical-align: middle;
+	font-size: 10px;
+}

@@ -1,0 +1,17 @@
+# cat=basic; type=string; label=Backend, max. records shown: How much comments should be displayed per page
+max_records = 10
+
+# cat=basic; type=string; label=Backend, comment crop: Set the crop size of the comment field in the backend
+text_crop = 55
+
+# cat=basic; type=boolean; label=Backend, show comments in subpages: If activated, lists also comments in subpages of the actual page
+show_sub = 1
+
+# cat=basic; type=string; label=Backend, select values: The select values which appear in the selectbox in the BE module (comma separated list)
+select_val = 5,10,20,30,50,100
+
+# cat=basic; type=boolean; label=Ratings, debug mode:While in debug mode, it is possible to remove entries from toctoc_comments_rating tables or change values there
+debugMode = 0
+
+# cat=basic; type=boolean; label=Frontend, update mode:While in update mode, the plugin converts existing comments from extension comments 1.5.x to toctoc_comments
+updateMode = 0
