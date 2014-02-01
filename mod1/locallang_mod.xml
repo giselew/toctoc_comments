@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for module &quot;web_toctoccommentsbeM1&quot; - header, description</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="mlang_tabs_tab">Comments</label>
+			<label index="mlang_labels_tabdescr">Display the comments of your website in a backend module</label>
+			<label index="mlang_labels_tablabel">Display your comments</label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="mlang_tabs_tab">Kommentare</label>
+			<label index="mlang_labels_tabdescr">Zeigt die Kommentare Ihrer Seite in einem seperaten Backend Module an</label>
+			<label index="mlang_labels_tablabel">Ihre Kommentare</label>
+		</languageKey>
+		<languageKey index="fr" type="array">
+			<label index="mlang_tabs_tab">Commentaires</label>
+			<label index="mlang_labels_tabdescr">Affiche les commentaires de votre site dans un module Backend</label>
+			<label index="mlang_labels_tablabel">Consulter vos commentaires</label>
+		</languageKey>
+	</data>
+</T3locallang>

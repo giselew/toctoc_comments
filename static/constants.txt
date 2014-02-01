@@ -1,0 +1,160 @@
+plugin.tx_toctoccomments_pi1 {
+	# cat=plugin.tx_toctoccomments_pi1: Basic; type=int+; label=Storage PID: The (single) PID where toctoc_comments data is stored
+	storagePid =
+
+	# cat=plugin.tx_toctoccomments_pi1: Basic; type=string; label=Comment trigger: If this prefix to showUid URL parameter exists, it will trigger commenting system
+	externalPrefix = pages
+
+	# cat=plugin.tx_toctoccomments_pi1: Basic; type=string; label=Template file: Template file for commenting system
+	templateFile = EXT:toctoc_comments/res/template/toctoccomments_template.html
+
+	# cat=plugin.tx_toctoccomments_pi1: Basic; type=int+; label=Comments per page: Number of comments
+	commentsPerPage = 3
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic; type=string; label=Delete Icon: Icon to display for comment deletion, size will be 16x16
+	DeleteCommentImage = EXT:toctoc_comments/res/img/deletecommentfe.png
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic; type=string; label=Default User Image: Image to display for not logged in commentators
+	DefaultUserImage = EXT:toctoc_comments/res/img/profile.png
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic; type=int+; label=Size for user images: Size of user image in pixels. Image will be cropped from the center of the original image (square)
+	UserImageSize = 32	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic; type=boolean; label=Create and maintain userstatistics:Check this option if you want to create statictis for each user leaving comments or making ratings. Slower, but better control.
+	userStats = 1	
+
+	# cat=plugin.tx_toctoccomments_pi1: Basic; type=boolean; label=Display basic contact info on usercards:This option enables display of basic user contact information in usercards
+	userContactUC = 1	
+
+	# cat=plugin.tx_toctoccomments_pi1: Basic; type=boolean; label=Display homepage of user in contact info on usercards:This option enables display of the users homepage in usercards
+	userHomepageUC = 1	
+
+	# cat=plugin.tx_toctoccomments_pi1: Basic; type=boolean; label=Display email in contact info on usercards:This option enables display of the email of the commenting user in usercards
+	userEmailUC = 1	
+
+	# cat=plugin.tx_toctoccomments_pi1: Basic; type=boolean; label=Display location in contact info on usercards:This option enables display of the users location in usercards
+	userLocationUC = 1		
+
+	# cat=plugin.tx_toctoccomments_pi1: Basic; type=boolean; label=Display statistics on usercards:This option enables display of statistics in usercards
+	userStatsUC = 1	
+
+	# cat=plugin.tx_toctoccomments_pi1: Basic; type=boolean; label=Display IP information on usercards:This option enables display IP information about the user in usercards
+	userIPUC = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic; type=int+; label=Usercard display time: Time in seconds for display of a usercard. Values between 3 and 15 are ok 
+	timeoutUC = 8
+
+	# cat=plugin.tx_toctoccomments_pi1: Advanced; type=string; label=Date format: Date format specification. See PHP date() function for details. If empty, uses TYPO3 date format defined in Install tool
+	dateFormat =
+
+	# cat=plugin.tx_toctoccomments_pi1: Advanced; type=options[date()=date,strftime()=strftime]; label=Date format mode:If "date()", use date() PHP function (traditional default). If "strftime()", use strftime() function (better international support)
+	dateFormatMode = date
+
+	# cat=plugin.tx_toctoccomments_pi1: Advanced; type=boolean; label=Create links in comments:If enabled, will search comment text for links (using "http://" or "www." as trigger) and create HTML links automatically.
+	autoConvertLinks = 1
+
+	# cat=plugin.tx_toctoccomments_pi1: Advanced; type=boolean; label=Closes Commenting:Closes commenting totally
+	commentingClosed = 0
+
+	# cat=plugin.tx_toctoccomments_pi1: Advanced; type=string; label=Closes Commenting after some time:Comments can be automatically closed after X months, days or hours. Specify integer number followed by m, d or h. Empty means "no limit"
+	closeCommentsAfter = 
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced; type=int+; label=When show older comments, scroll-multiplicator:commentsPerPage*scroll-multiplicator gives the number of comments that are scrolled back when show older comments is clicked.
+	CommentsShowOldPerCID = 3
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced; type=string; label=TemplaVoila-field with comments:Name of the field defined in templavoila (if used) where the comments-plugins goes. Check your templavoila page-template.
+	UseTemplavoilaField = field_content
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced; type=int; label=tt_content Column (colPos) with comments-plugins:Columnposition (colPos) where the comments-plugins go. Important if no templavoila used. Can be left on 0, most of the times.
+	UseMainColPos = 0
+
+	# cat=plugin.tx_toctoccomments_pi1: Advanced; type=string; label=Path to feuser-images:Path where the feuser-images are stored. Normally uploads/pics/.
+	FeUserImagePath = uploads/pics/
+
+	# cat=plugin.tx_toctoccomments_pi1: Advanced; type=string; label=style for feuser-images  in comments:Additionional style information applied on the img-tag of the feuser-image in a comment.
+	FeUserImageStyle = padding: 0; border-radius: 2px 2px 2px 2px; border: 1px solid #97b0ee;
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced; type=boolean; label=Use Shareing:Use of Share-Link for Facebook, Google and Twitter
+	useSharing = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced; type=boolean; label=Dont Use facebook sharing :Use of Share-Link for Facebook is suppressed
+	dontUseSharingFacebook = 0
+
+	# cat=plugin.tx_toctoccomments_pi1: Advanced; type=boolean; label=Dont Use Googleplus sharing :Use of Share-Link for Google+ is suppressed
+	dontUseSharingGoogle = 0
+
+	# cat=plugin.tx_toctoccomments_pi1: Advanced; type=boolean; label=Dont Use Twitter sharing :Use of Share-Link for Twitter is suppressed
+	dontUseSharingTwitter = 0
+
+	# cat=plugin.tx_toctoccomments_pi1: Advanced; type=boolean; label=Dont Use LinkedIn sharing :Use of Share-Link for LinkedIn is suppressed
+	dontUseSharingLinkedIn = 1
+
+	# cat=plugin.tx_toctoccomments_pi1: Advanced; type=boolean; label=Dont Use Stumbleupon sharing :Use of Share-Link for Stumbleupon is suppressed
+	dontUseSharingStumbleupon = 1
+			
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection; type=boolean; label=Require approval:Comments must be approved by moderator before showing them to other users
+	requireApproval = 1
+
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection; type=options[None=0,sr_freecap clone=1,recaptcha clone=2]; label=Use captcha:Enable captcha usage.
+	useCaptcha = 0
+
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection; type=boolean; label=Filter out typical spam:Automatically disapproves messages that contain signs of typical spam (such as "[url=", etc).
+	checkTypicalSpam = 1
+
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection; type=string; label=Approval needed e-mail:Notify administrator about comment that need to be approved by e-mail
+	notificationEmail =
+
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection; type=string; label=Information e-mail:Notify administrator about posted comment without approval by e-mail
+	informationEmail =
+
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection; type=string; label=From e-mail:Notification to administrator about posted comment is sent from this e-mail
+	fromEmail =
+
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection; type=string; label=E-mail template for approval:Template to use for approval needed-notification email to administrator
+	emailTemplate = EXT:toctoc_comments/res/template/toctoccomments_template_email.txt
+
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection; type=string; label=E-mail template for notification:Template to use for information-notification email to administrator
+	emailTemplateInfo = EXT:toctoc_comments/res/template/toctoccomments_template_emailinfo.txt
+
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection; type=string; label=Spam cut off point:New comment will not be posted at all if it earns this amount of points or more
+	spamCutOffPoint = 10	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings; type=boolean; label=Enable ratings: Enable or disable ratings for comments. 
+	enableRatings = 1	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings; type=boolean; label=Enable ratings only: Use plugin as rating-only version
+	ratingsOnly = 0
+
+	# cat=plugin.tx_toctoccomments_pi1: Ratings; type=int; label=Minimal rating value: Warning! this value must not be changed after ratings start working or results will be incorrect!
+	minValue = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings; type=int; label=Maximal rating value: Warning! this value must not be changed after ratings start working or results will be incorrect! You may also need to change CSS styles to display ratings properly
+	maxValue = 5
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings; type=int+; label=Rating image width: The width of a rating star in pixels
+	ratingImageWidth = 11
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings; type=options[Auto=auto,Force static=static]; label=Display mode: Force static display of ratings
+	mode = auto
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings; type=boolean; label=Disable IP checks: If checked, disables IP checks. This will let users to vote many times on the same item. Useful for debugging.
+	disableIpCheck = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings; type=string; label=Additional CSS file: Additional CSS file to use when ratings are displayed
+	additionalCSS =
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings; type=string; label=Template file for Ratings
+	ratingsTemplateFile = EXT:toctoc_comments/res/template/toctoccomments_ratings.html
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings; type=boolean; label=Show users vote: Show the vote of the user, if checked.
+	useMyVote = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings; type=boolean; label=Shows the rating stars: Shows the rating stars and enables voting, if checked.
+	useVotes = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings; type=boolean; label=Show Like and Dislike Features: if checked both are active.
+	useLikeDislike = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings; type=boolean; label=Show Dislike Feature: Makes only sense in connection with useLikeDislike, here you can turn off the dislike.
+	useDislike = 1
+}
