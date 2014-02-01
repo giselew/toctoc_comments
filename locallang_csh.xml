@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<description>Additional CSH labels</description>
+		<type>CSH</type>
+		<csh_table>tt_news</csh_table>
+		<fileId>EXT:toctoc_comments/locallang_csh.xml</fileId>
+		<labelContext type="array">
+		</labelContext>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="external_ref.description">Commented record</label>
+			<label index="external_ref.details">Displays commented record. Never change this field manually!</label>
+			<label index="approved.description">Approval status</label>
+			<label index="approval.description">Approval by system or moderator</label>
+			<label index="approval.details">Comments must be approved by system or moderator in order to be displayed. Check this box to approve comments.</label>
+			<label index="firstname.description">First name</label>
+			<label index="firstname.details">Commenter's first name.</label>
+			<label index="lastname.description">Last name</label>
+			<label index="lastname.details">Commenter's last name.</label>
+			<label index="email.description">E-mail</label>
+			<label index="email.details">Commenter's e-mail.</label>
+			<label index="location.description">Location</label>
+			<label index="location.details">Commenter's location (where he comes from).</label>
+			<label index="homepage.description">Web site</label>
+			<label index="homepage.details">Commenter's web site.</label>
+			<label index="content.description">Comment</label>
+			<label index="content.details">This is a text as entered by commenter.</label>
+			<label index="remote_addr.description">IP address</label>
+			<label index="remote_addr.details">This is the IP address of the host from which this comment was made. If you plan to use this information for access limitation, check that it is not a proxy or you can block lots of innocent people.</label>
+			<label index="toctoc_comments_user.description">TocToc Comments User</label>
+			<label index="toctoc_comments_user.details">The TocToc user id in the format IP.0 or 0.0.0.0.FE-UserID</label>
+		</languageKey>
+	</data>
+	<orig_hash type="array">
+	</orig_hash>
+	<orig_text type="array">
+	</orig_text>
+</T3locallang>

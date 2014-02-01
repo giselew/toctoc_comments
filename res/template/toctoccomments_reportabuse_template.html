@@ -1,0 +1,127 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Comments: report bad comment</title>
+<!-- ###HEADER_ADDITIONS### begin -->
+<link href="###SITE_REL_PATH###../toctoc_comments/res/css/toctoccomments_pi1.css" type="text/css"
+	rel="stylesheet" />
+<script type="text/javascript" src="###SITE_REL_PATH###../toctoc_comments/res/js/toctoccomments_pi1.js"></script>
+<script type="text/javascript" src="###SITE_REL_PATH###../toctoc_comments/res/js/jquery.sharrre-1.3.3.js"></script>
+<script type="text/javascript" src="###SITE_REL_PATH###../toctoc_comments/res/js/jquery.elastic-1.6.js"></script>
+<!-- ###HEADER_ADDITIONS### end -->
+</head>
+<body>
+
+<h1>Reporting form</h1>
+
+<!-- ###REPORT_FORM### begin -->
+<div class="toctoc-comments-pi1">
+	<div class="tx-toctoc-comments-pi1" style="padding: 0 0 0 4px;">
+		<div class="tx-toctoc-comments-comment-form-field" style="max-height: 25px; height: 25px;">
+			<span class="tx-toctoc-comments-comment-label">###TEXT_TEXT###</span>
+		</div>
+		<div class="tx-toctoc-comments-comment-box-commenttxt" id="tx-toctoc-comments-formsqueezer-1" style="height: 32px;">
+			<form autocomplete="off" id="cf1" class="tx-toctoc-comments-form-for-newcomment" action="###ACTION###" method="post">
+				<fieldset id="cffs1" class="tx-toctoc-comments-comment-fieldset">
+			
+					<input type="hidden" name="tx_commentsreport_pi1[info]" value="###INFO###" />
+					<script type="text/javascript">
+						jQuery(document).ready(function(){
+							jQuery("#toctoc_comments_pi1_contenttextbox_1").autoGrow();
+						});
+					</script>	
+			
+					<div class="tx-toctoc-comments-comments-form-fieldtextarea" >
+						<div class="tx-toctoc-comments-divtextarea" id="textarea-1" style="margin: 0;min-height: 25px;">
+							<textarea autocomplete="off" class="tx-toctoc-comments-commentinput-textarea" cols="42" rows="1"  tabindex="1"  style="overflow: hidden; height: 20px;"
+							onblur="if ((tctrim(value)=='') && (tctrim('###TEXT###')=='')) {value='###TEXT_TEXT###'; comment_formhider('1', 2, '###TEXT_TEXT###', 0,1);jQuery('#toctoc_comments_pi1_contenttextbox_1').elastic();} else {if ((tctrim(value)!='###TEXT_TEXT###') && (tctrim(value)!='')) {jQuery('#toctoc_comments_pi1_contenttextbox_1').autoGrow();jQuery('#toctoc_comments_pi1_contenttextbox_1').elastic();}};" 
+							onFocus="jQuery('#toctoc_comments_pi1_contenttextbox_1').elastic();if (document.getElementById('toctoc_comments_pi1_submit_1').style.visibility == 'hidden') {value=''; comment_formhider('1', 3, '', 0,1);return};"
+							name="tx_commentsreport_pi1[text]" id="toctoc_comments_pi1_contenttextbox_1">###TEXT_TEXT###</textarea>
+						</div>
+					</div>
+					 ###ERROR_TEXT###
+					<div id="formhider-1" class="tx-toctoc-commentsfh" style="visibility:hidden; height:0; margin:0px 0 0px;">
+				
+						<div class="tx-toctoc-comments-comment-form-field">
+							<label class="tx-toctoc-comments-comment-label" for="tx_commentsreport_pi1[from]">###TEXT_FROM###</label>
+							<input class="tx-toctoc-comments-comment-input" tabindex="2" type="text" name="tx_commentsreport_pi1[from]" value="###FROM###" /> ###ERROR_FROM###
+						</div>
+						<div class="tx-toctoc-comments-comment-form-field">
+							<label class="tx-toctoc-comments-comment-label" for="tx_commentsreport_pi1[frommail]">###TEXT_FROMMAIL###</label>
+							<input class="tx-toctoc-comments-comment-input" tabindex="3" type="text" name="tx_commentsreport_pi1[frommail]" value="###FROMMAIL###" /> ###ERROR_FROMMAIL###
+						</div>
+						###CAPTCHA###
+						
+						<div class="tx-toctoc-comments-div-submit">
+							<input id="toctoc_comments_pi1_submit_1" class="tx-toctoc-comments-comment-submit" type="submit" name="tx_commentsreport_pi1[submit]" 
+							value="###TEXT_SUBMIT###"  style="visibility: hidden;" tabindex="5" />
+						</div>
+						<script type="text/javascript">
+							var strtext = "###TEXT###";
+							var strtext_text = "###TEXT_TEXT###";
+							if (strtext !='') {
+								strtext_text=strtext;
+							}
+							var strtfvalue = document.getElementById('toctoc_comments_pi1_contenttextbox_1');
+				
+							if (strtfvalue && strtfvalue.value != '') {
+								if (strtfvalue.value != strtext_text) {
+									if (document.getElementById('toctoc_comments_pi1_submit_1').style.visibility == 'hidden') {
+										strtfvalue.value=strtext_text;
+										comment_formhider('1', 3, '', 0, 0);
+									};						
+								};
+							};
+						</script>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- ###REPORT_FORM### end -->
+
+
+<h1>Required</h1>
+<!-- ###REQUIRED### begin -->
+<span class="tx-toctoc-comments-required">###TEXT_REQUIRED###</span>
+<!-- ###REQUIRED### end -->
+
+<h1>Error</h1>
+<!-- ###ERROR### begin -->
+<span class="tx-toctoc-comments-required-error"> ###TEXT###</span>
+<!-- ###ERROR### end -->
+
+<h1>Captcha</h1>
+<!-- ###REPORT_CAPTCHA### begin -->
+	<div class="tx-toctoc-comments-comment-form-field">
+		<label class="tx-toctoc-comments-comment-label">###TEXT_CAPTCHA###</label>
+		<span class="tx-toctoc-comments-comment-captcha-area-image">###SR_FREECAP_IMAGE###</span>
+		<input class="tx-toctoc-comments-comment-input" type="text" required="required" 
+		id="tx_comments_pi1-captcha1" tabindex="4" name="tx_commentsreport_pi1[captcha]" value="" />
+		<span class="tx-toctoc-comments-comment-captcha-area-accessible"></span>
+	</div>
+	<div class="tx-toctoc-comments-comment-form-field">
+		<div class="tx-toctoc-comments-comment-captcha-message">###ERROR_CAPTCHA###</div>
+		<div class="tx-toctoc-comments-comment-captcha-area">
+				<div class="tx-toctoc-comments-comment-captcha-area-cantreadit">###SR_FREECAP_CANT_READ###</div>				
+	   </div>
+	</div>
+<!-- ###REPORT_CAPTCHA### end -->
+
+<h1>"Thank you" message</h1>
+<!-- ###THANK_YOU### begin -->
+<div class="tx-toctoc-comments-pi1" style="padding: 0 0 0 4px;">
+	<div class="tx-toctoc-comments-comment-form-field" style="height: 20px; ">
+		<b>###TEXT_THANKYOU###</b>
+	</div>
+</div>
+<!-- ###THANK_YOU### end -->
+
+<h1>Reporting link</h1>
+<!-- ###REPORT_LINK### begin -->
+<a href="###LINK###">###TITLE###</a>
+<!-- ###REPORT_LINK### end -->
+
+</body>
+</html>

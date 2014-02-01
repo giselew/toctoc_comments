@@ -1,0 +1,706 @@
+/* often changed css begin */
+
+/* 1) forced size of the font of the labels in the form */
+.tx-toctoc-commentsfh {
+	font-size: 11px;
+}
+
+/* 2) submit buttons  */
+.tx-toctoc-comments-comment-submit,.tx-toctoc-comments-comment-reset,.tx-toctoc-comments-comment-submit-loggedin
+	{ /* white button: 
+	border: 1px solid #888888;
+	border-radius: 4px 4px 4px 4px;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 0.8em;
+	font-weight: bold;
+	line-height: normal !important;
+	outline: medium none;
+	padding: 4px;
+	text-align: center;
+	text-decoration: none;
+	white-space: nowrap;
+
+
+css for a blue button: */
+ 	background: none repeat scroll 0 0 #5475C8;
+	border: 1px solid #1D16AF;
+	border-radius: 4px 4px 4px 4px;
+	color: #FFFFFF;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 11px;
+	font-weight: bold;
+	line-height: normal !important;
+	outline: medium none;
+	padding: 3px;
+	text-align: center;
+	text-decoration: none;
+	white-space: nowrap; */
+}
+
+.tx-toctoc-comments-comment-captcha-message {
+	color: red;
+	margin-left: 230px;
+	width: 130px;
+}
+
+.tx-toctoc-comments-comments-commentsbrowse { /*  used in code */
+	border-bottom: 1px solid #BDC7D8;
+	height: 24px;
+	margin: 0;
+	line-height: 24px;
+}
+
+.tx-toctoc-comments-comments-commentsbrowse-hide {
+	float: right;
+	margin-bottom: -24px;
+	position: relative;
+	top: -24px;
+line-height: 24px;
+}
+
+.tx-toctoc-comments-pi1 .tx-toctoc-comments-comments-form-fieldtextarea
+	{
+	margin: 0 6px 0 6;
+	padding: 4px 0;
+}
+
+.tx-toctoc-comments-required {
+	color: #000000;
+	font-weight: bold;
+}
+
+.tx-toctoc-comments-comments {
+	font-size: 11px;
+}
+
+.tx-toctoc-comments-comment-uc {
+	font-size: 11px;
+	width: 350px;
+}
+
+.tx-toctoc-comments-comment-uc-text-contact,.tx-toctoc-comments-comment-uc-text-stats,.tx-toctoc-comments-comment-uc-text-ip
+	{
+	width: 246px;
+}
+
+img.tx-toctoc-ucpic {
+	margin-right: 4px;
+	/*float: left;*/
+}
+
+.tx-toctoc-comments-comment-deleteform {
+	float: left;
+}
+.tx-toctoc-comments-comment-denotifyform {
+	float: right;
+	margin: 0 0 0 2px;
+}
+.tx-toctoc-comments-comment-actionforms {
+	display: inline-block;
+    float: right;
+    margin: -3px -18px 0 -33px;
+    padding: 4px;
+}
+
+textarea.tx-toctoc-comments-commentinput-textarea {
+	border-color: #A2A2A2 #A2A2A2 #ADB7C8;
+	border-style: solid;
+	border-width: 1px;
+	font-size: 13px;
+	padding-left: 2px;
+	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+	width: 100%;
+	overflow: hidden;
+	/*
+	see also in 
+	toctoccomments_pi1.js around line 384 (or search for 'elastic.js')
+*/
+	line-height: 20px;
+	margin: 0 2px 0 -2px;
+}
+
+#captcha-wrap { /* black 
+	background: none repeat scroll 0 0 #000000;
+	border: 1px solid #5A5A5A;
+	*/
+	/* white 
+	
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #9A9A9A;
+	*/
+	/* red */
+	border: solid #800000 1px;
+	background: none repeat scroll 0 0 #870500;
+	/* */
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	height: 110px;
+	margin-top: 3px;
+	padding: 3px;
+	text-align: left;
+	width: 270px;
+}
+
+#captcha-wrap .text-box { /* black 
+	background: #040404;
+	border: 1px solid #434343;
+	*/
+	/* white 	
+	background: none repeat scroll 0 0 #FAFAFA;
+    border: 1px solid #BABABA;
+	*/
+	/* red */
+	background: #d79c99;
+	border: solid #dd6c68 1px;
+	/* */
+	-webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	width: 140px;
+	height: 43px;
+	float: left;
+	margin: 4px;
+	border-radius: 7px;
+	text-align: center;
+}
+
+/* often changed css end */
+.tx-toctoc-comments-ratings {
+	left: 0;
+	line-height: 18px;
+	list-style-type: none;
+	margin: 1px 0 0 4px;
+	position: relative;
+	top: 0;
+}
+
+.tx-toctoc-comments-articleratings-display .tx-toctoc-comments-ratings {
+	left: 0;
+	list-style-type: none;
+	margin: 0 0 0 -2px;
+	top: 0;
+}
+
+.tx-toctoc-comments-comment-admin {
+	margin: 10px 20px;
+	background-color: #e0e0e0;
+	padding: 5px 9px;
+	text-align: center;
+}
+
+.tx-toctoc-comments-comment-form BR {
+	clear: left;
+}
+
+.tx-toctoc-comments-comment-name {
+	font-weight: bold;
+}
+
+.tx-toctoc-comments-comment-1,.tx-toctoc-comments-comment-2 {
+	border: 1px solid #e0e0e0;
+	margin-bottom: 10px;
+	padding: 3px 5px;
+}
+
+.tx-toctoc-comments-comment-content {
+	padding: 3px 0;
+	text-align: justify;
+}
+
+.tx-toctoc-comments-required-mark {
+	color: red;
+}
+
+.tx-toctoc-comments-required-error {
+	color: #fa0600;
+	font-weight: bold;
+}
+
+.tx-toctoc-comments-captcha {
+	padding-left: 100px;
+}
+
+.tx-toctoc-comments-captcha IMG {
+	border: 1px solid #d0d0d0;
+	margin-left: 0px;
+}
+
+.tx-toctoc-comments-form-top-message {
+	font-weight: bold;
+	margin-bottom: -8px;
+}
+
+.tx-toctoc-comments-closed {
+	padding: 2px 0 0;
+}
+
+.tx-toctoc-comments-closed IMG {
+	vertical-align: baseline;
+	margin-left: 4px;
+	padding-right: 4px;
+}
+
+.tx-toctoc-comments-comment-report {
+	margin: 0 0 0 46px;
+}
+/* additions v2.0 */
+.tx-toctoc-comments-comment-deletebutton,.tx-toctoc-comments-comment-denotifybutton {
+	border: 0;
+	border-radius: 2px 2px 2px 2px;
+	color: #FFFFFF;
+	cursor: pointer;
+	font-size: 7px;
+	font-weight: bold;
+	height: 16px;
+	line-height: normal !important;
+	text-align: center;
+	text-decoration: none;
+	white-space: nowrap;
+	width: 16px;
+	opacity: 0.6;
+}
+
+form.tx-toctoc-comments-form-for-newcomment {
+	border: 0 none;
+	left: 0;
+	margin: 0;
+	min-height: 32px;
+	padding: 0;
+	top: 0;
+}
+
+.tx-toctoc-comments-comments-commentsbrowse-submit,.tx-toctoc-comments-comments-commentsbrowse-submit-hide
+	{ /*  used in code */
+	border: 0;
+	background: none repeat scroll 0 0 transparent;
+	color: #1d16af;
+	cursor: pointer;
+	font-size: 11px;
+	height: 16px;
+	line-height: normal !important;
+	text-align: left;
+	text-decoration: none;
+	white-space: nowrap;
+	opacity: 0.8;
+	padding: 0 3px;
+}
+
+.tx-toctoc-comments-comment-browseform-hide {
+	margin: 0;
+}
+
+.tx-toctoc-comments-comment-browseform {
+	margin: 0;
+}
+
+.tx-toctoc-comments-divtextarea {
+	position: relative;
+}
+
+div.tx-toctoc-comments-comment-form-field {
+	padding: 4px 0px 4px 0px;
+}
+
+div.tx-toctoc-comments-comment-form-field-recap {
+	padding: 4px 0px 4px 0px;
+}
+
+input.tx-toctoc-comments-comment-input {
+	position: relative;
+	border-color: #A2A2A2 #A2A2A2 #ADB7C8;
+	border-style: solid;
+	border-width: 1px;
+	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+	font-size: 13px;
+}
+
+.tx-toctoc-comments-comment-form-field-captcha input.tx-toctoc-comments-comment-input
+	{
+	margin: 0 0 0 4px;
+}
+
+.tx-toctoc-comments-comment-label {
+	color: #999999;
+	float: left;
+	font-weight: bold;
+	line-height: 20px;
+	width: 134px;
+}
+
+.tx-toctoc-comments-comment-form-field-captcha {
+	margin-bottom: 6px;
+	padding: 4px 0;
+	position: absolute;
+	width: 480px;
+}
+
+.tx-toctoc-comments-comment-captcha-area {
+	
+}
+
+.tx-toctoc-comments-comment-captcha-area-image {
+	float: left;
+	margin: 0 1px 0 0;
+	padding: 0;
+}
+
+.tx-toctoc-comments-comment-captcha-area .tx-toctoc-comments-comment-captcha-area-cantreadit .tx-srfreecap-pi2-cant-read,
+.tx-toctoc-comments-comment-captcha-area-cantread {
+	float: left;
+	margin-left: 138px;
+	padding: 4px 0;
+}
+
+.tx-toctoc-comments-comment-captcha-area-accessible {
+	margin: -9px 0 0 6px;
+	padding: 4px 0;
+	position: absolute;
+	width: 150px;
+}
+
+.tx-toctoc-comments-comment-captcha-area-notice {
+	padding: 4px 0;
+}
+.tx-toctoc-comments-comment-captcha-area .tx-toctoc-comments-comment-captcha-area-cantreadit .tx-srfreecap-pi2-cant-read,
+.tx-toctoc-comments-comment-captcha-area-cantread .tx-srfreecap-pi2-cant-read {
+	color: #0D0909;
+	float: left;
+	margin: 0;
+	position: relative;
+	width: 200px;
+}
+
+span.tx-srfreecap-pi2-accessible {
+	padding: 0 4px;
+}
+
+.tx-toctoc-comments-div-submit {
+	padding: 4px 0px 4px 0px;
+}
+
+.tx-toctoc-comments-comment-box { /*border-bottom: 1px solid #BDC7D8;*/
+	left: 0;
+	padding: 0 18px 0 0;
+	top: 0;
+	min-height: 26px;
+}
+
+.tx-toctoc-comments-text {
+	display: inline-block;
+	font-size: 11px;
+	line-height: 16px;
+	margin: 0;
+	padding: 4px 15px 4px 4px;
+width: 90%;
+
+}
+.tx-toctoc-commentsresponse-text {
+	display: block;
+    font-size: 11px;
+    line-height: 16px;
+    margin: 0 0 0 42px;
+    width: auto;
+}
+.tx-toctoc-commentsresponse-text-title {
+	display: block;
+    font-weight: bold;
+    line-height: 16px;
+}
+
+.tx-toctoc-comments-comment-box-commentpic {
+	min-height: 80px;
+	padding-bottom: 6px;
+	padding-top: 2px;
+	width: 60px;
+}
+
+.tx-toctoc-comments-comment-box-picturecrop32 {
+	height: 25px; /*  margin-left: 4px;
+    margin-top: 5px; */;
+	padding: 4px;
+}
+
+.toctoc-comments-pi1 .tx-toctoc-comments-comments .tx-toctoc-comments-comment-box-commenttxt
+	{
+	margin-left: 42px;
+	margin-top: -88px;
+	min-height: 44px;
+}
+
+.toctoc-comments-pi1 .tx-toctoc-comments-comment-box-commenttxt {
+	
+}
+
+.tx-toctoc-comments-comment-box-commentpic2 {
+	padding-left: 4px;
+	padding-top: 4px;
+	width: 40px;
+}
+
+.tx-toctoc-comments-comment-box-picturecrop322 {
+	
+}
+
+fieldset.tx-toctoc-comments-comment-fieldset {
+	margin-bottom: 0;
+	margin-top: -1px;
+	min-height: 1px;
+	border: 0 none;
+	left: 0;
+	padding: 0;
+	top: 0;
+}
+
+div.tx-toctoc-comments-pi1,.toctoc-comments-pi1 {
+	margin: 0;
+}
+
+.tx-toctoc-comments-comment-form-field-recapcha {
+	padding: 4px 0px 4px 0px;
+	height: 120px;
+}
+
+div.tx-toctoc-comments-rating {
+	border-top: 1px solid #D2D9E7;
+	display: inline-block;
+	margin: 0 -18px 4px 0;
+	width: 100%;
+}
+
+.toctoc-comments-pi1 hr {
+	margin: -1px -18px -2px 1px;
+	background: none repeat scroll 0 0 #D9D9D9;
+	border-width: 0;
+	color: #D9D9D9;
+	height: 1px;
+}
+
+p.tx-toctoc-comments-text img {
+	margin: 0px 0px -2px 0px;
+}
+
+.tx-toctoc-comments-articleratings-commentlink {
+	float: left;
+}
+.tx-toctoc-comments-articleratings-display {
+	white-space: nowrap;
+}
+.tx-toctoc-comments-articleratings-commentlink	{
+	line-height: 18px;
+    margin-top: 1px;
+}
+/*sharrre stuff */
+.sharrre .shrbox {
+	clear: both;
+	float: left;
+	padding: 0 2px 0 2px;
+	position: relative;
+	white-space: nowrap;
+	/*width: auto; */
+}
+
+.sharrre .shrleft,.share {
+	color: #1D16AF;
+	cursor: pointer;
+	display: block;
+	float: left;
+	white-space: nowrap;
+}
+
+.sharrre .shrleft:hover,.share:hover {
+	color: #5475c8;
+}
+
+.sharrre .shrmiddle {
+	background-color: #f6f6f6;
+	border: 1px solid #BBBBBB;
+	border-radius: 3px 3px 3px 3px;
+	overflow: visible;
+	display: inline;
+	padding: 4px;
+	position: absolute;
+	text-align: left;
+	white-space: nowrap;
+}
+
+.sharrre .shrmiddle a {
+	font-weight: bold;
+	padding: 0 4px 0 4px;
+	text-align: center;
+	min-width: 8px;
+}
+
+.sharrre .shrright {
+	float: right;
+	padding: 0 4px;
+	text-align: left;
+}
+
+.sharrre .shrmiddle a:hover {
+	text-decoration: none;
+}
+
+div.sharrre {
+	float: left;
+	line-height: 18px;
+    margin-top: 1px;
+}
+
+.tx-toctoc-capchta-image {
+	border: 1px solid #C4C4C4;
+    border-radius: 4px 4px 4px 4px;
+	float: left;
+	margin: 4px 4px -4px -4px;
+}
+
+img.tx-toctoc-capchta-image-rf {
+	cursor: pointer;
+	margin: 4px -4px -10px 4px;
+}
+/* 
+Recaptcha Style Captcha 
+=======================
+ re-Captcha Style Captcha with php and jQuery 
+ 
+ Created By: Zeeshan Rasool 
+ URL : http://www.99Points.info 
+ 
+ Get JQuery, PHP, AJAX, Codeigniter and MYSQL Tutorials and Demos on Blog
+ */
+#captcha-wrap .captcha-box {
+	-webkit-border-radius: 7px;
+	background: #fff;
+	-moz-border-radius: 7px;
+	border-radius: 7px;
+	text-align: center;
+	border: solid #fff 1px;
+}
+
+#captcha-wrap .text-box input {
+	width: 120px;
+}
+
+#captcha-wrap .text-box label {
+	color: #000000;
+	font-family: helvetica, sans-serif;
+	font-size: 12px;
+	width: 150px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+#captcha-wrap .captcha-action {
+	float: right;
+	width: 117px;
+	background: url(../img/rclogos.jpg) top right no-repeat;
+	height: 44px;
+	margin-top: 3px;
+}
+
+#captcha-wrap .captcha-action img {
+	margin-top: 9px;
+	border: solid #333333 1px;
+	margin-right: 6px;
+	cursor: pointer;
+}
+
+#captcha-wrap .over-text-box {
+	padding-bottom: 3px;
+}
+
+.tx_toctoc_comments_static_ilike {
+	color: #050505;
+}
+
+.tx-toctoc-comments-comment-uc {
+	background: none repeat scroll 0 0 #F9F9F9;
+	border: 1px solid #979797;
+	border-radius: 10px 10px 10px 10px;
+	height: 0;
+	margin: -120px 0 0 8px;
+	opacity: 1;
+	padding: 8px;
+	position: absolute;
+	visibility: hidden;
+	z-index: 60;
+	-moz-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.15);
+	-webkit-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.15);
+	box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.15);
+}
+
+.tx-toctoc-comments-comment-box-picturecrop32 img {
+	cursor: pointer;
+}
+
+.tx-toctoc-comments-comment-uc-pic {
+	float: left;
+	min-height: 120px;
+	width: 96px;
+}
+
+.tx-toctoc-comments-comment-uc-pic img {
+	margin: 0 4px 4px 0;
+}
+
+.tx-toctoc-comments-comment-uc-text {
+	float: left;
+	padding-left: 4px;
+	width: 196px;
+	margin: 0 0px 0px 4px;
+}
+
+.tx-toctoc-comments-comment-uc-fullname {
+	font-weight: bold;
+}
+
+.tx-toctoc-comments-comment-uc-text-contact,.tx-toctoc-comments-comment-uc-text-stats,.tx-toctoc-comments-comment-uc-text-ip
+	{
+	background: none repeat scroll 0 0 #FFFFFF;
+	border-color: #eeeeee #eeeeee #979797;
+	border-radius: 0 4px 2px 4px;
+	border-style: solid;
+	border-width: 1px;
+	box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.05);
+	float: left;
+	margin-bottom: 2px;
+	padding: 2px;
+}
+
+.tx-toctoc-comments-comment-uc-text-stats,.tx-toctoc-comments-comment-uc-text-ip
+	{
+	margin-top: 2px;
+}
+
+.tx-toctoc-comments-comment-uc-fullname_addinfo {
+	font-size: 0.8em;
+}
+
+.tx-toctoc-comments-ratings-display-hide,.tx-toctoc-comments-ratings-text-hide,.tx-toctoc-comments-myratings-myrating-hide, .tx-toctoc-comments-ratings-area-hide
+	{
+	height: 0;
+	width: 0;
+	visibility: hidden;
+	z-index:10;
+	float:right;
+	position:relative;
+	margin: 0;
+	line-height:1px;
+}
+
+/* specific toctoc.ch */
+div.AMainContentMiddle3243 div.sharrre div.shrbox {
+	/*background: none repeat scroll 0 0 #F1F1F1;*/
+	
+}
+
+/* div.AMainContentMiddle3243 .sharrre .shrbox:hover .shrmiddle {
+	width: 72px;
+} */
+div.AMainContentMiddle3243 .sharrre .shrmiddle {
+	/*background-color: #F1F1F1;*/
+	-moz-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.15);
+	-webkit-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.15);
+	box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.15);
+}

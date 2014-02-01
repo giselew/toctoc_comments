@@ -1,0 +1,19 @@
+Comments Template for email notification
+
+Valid Markers:
+
+###SALUTATION###
+###MESSAGE###
+###RECEIVER_LASTNAME###
+###RECEIVER_FIRSTNAME###
+###LINK_TO_COMMENT###
+
+
+<!--###COMMENTS_RECIPENT_MAIL### start-->
+	###SALUTATION### ###RECEIVER_FIRSTNAME###
+
+	###MESSAGE###
+
+	###LINK_TO_COMMENT###
+	
+<!--###COMMENTS_RECIPENT_MAIL### stop-->
