@@ -1,0 +1,32 @@
+2012-08-20  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 2.0.0
+	
+2012-08-21  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 2.0.3
+	* Bugfixes for Multilanguage-Support
+	
+2012-08-22  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 2.0.4
+	* Better Sharing implementation, configuration option to use the old Dateformat added
+	
+2012-08-26  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 2.0.6
+	* fixed E-Mail encryption and bug with stdWrap for required field error and other stdWraps from configuration
+		
+2012-09-09  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 2.0.7
+	* Updated sharing component sharrre to version 1.3.3 which fixes a problem with Google+
+	
+2012-09-12  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 2.1.0
+	* fixed problems with disableIPcheck=0
+	* added 2nd design for sharrre
+	* added option for required comment length
+	* added 4 options to configure the freecap-clone
+	* improved, new templates and css

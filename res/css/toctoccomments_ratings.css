@@ -1,0 +1,250 @@
+/* often changed css begin */
+
+.tx-toctoc-comments-myratings-ilke {
+	float: left;
+	/* margin-top: -2px; */
+}
+
+.tx-toctoc-comments-myratings-disilke {
+	float: left;
+	/* margin-top: -2px; */
+}
+.tx-toctoc-comments-myratings-disilke img {
+	float: left;
+    margin: 2px 0 -2px 2px;
+}
+
+.tx-toctoc-comments-myratings-ilke img {
+	float: left;
+}
+
+.tx-toctoc-comments-ratings-area {
+	float: left;
+	font-size: 11px;
+
+}
+
+
+/* often changed css end */
+
+.tx-toctoc-comments-articleratings-display .tx-toctoc-comments-myratings-myrating
+	{
+	color: #888888;
+	float: right;
+	margin: 0 4px 0 1px;
+	position: relative;
+}
+
+.tx-toctoc-comments-ratings-area {
+	float: left;
+ 	line-height: 18px;
+    margin: 1px 0 0;
+}
+
+.tx-toctoc-comments-ratings-li {
+	float: left;
+}
+
+.tx-toctoc-comments-ratings-li-text {
+	float: left;
+}
+
+.tx-toctoc-comments-ratings-li-text-hide {
+	float: left;
+	height: 0;
+	visibility: hidden;
+	width: 0;
+}
+
+.tx-toctoc-comments-myratings-display {
+	float: left;
+	left: 0;
+	position: relative;
+}
+
+.tx-toctoc-comments-articleratings-ilike-display {
+	float: left;
+	left: 0;
+	position: relative;
+}
+
+.tx-toctoc-comments-articleratingstop-ilike-display {
+	float: left;
+	left: 2px;
+	position: relative;
+}
+
+.tx-toctoc-comments-myratings-myrating {
+	color: #888888;
+	float: left;
+	position: relative;
+	margin: 0 4px 0 1px;
+}
+.tx-toctoc-comments-commentdate {
+	float: left;
+}
+
+.tx-toctoc-comments-myratings-vote-bar {
+	float: left;
+}
+
+.tx-toctoc-comments-myratings-text {
+	color: #888888;
+	margin: -16px 0 0;
+	font-size: 11px;
+}
+
+.tx-toctoc-comments-myratings-gold-bar {
+	position: absolute;
+	left: 0;
+	top: -1px;
+	width: 0px;
+	height: 12px;
+	background: url(toctoc_comments_myrating_star.png) repeat-x 0 0;
+	font-size: 1px;
+	font-size: 1px;
+	z-index: 3;
+}
+
+.tx-toctoc-comments-myratings-vote-bar {
+	position: absolute;
+	left: 0;
+	top: 16px;
+	width: 55px;
+	height: 12px;
+	font-size: 1px;
+}
+
+.tx-toctoc-comments-myratings-vote-bar DIV A {
+	left: 0;
+	top: 16px;
+	width: 11px;
+	height: 12px;
+	border: none;
+	text-decoration: none;
+}
+
+.tx-toctoc-comments-ratings-display {
+	float: left;
+	height: 12px;
+	left: 4px;
+	position: relative;
+	top: 3px;
+	width: 59px;
+}
+
+.tx-toctoc-comments-ratings-grey-bar {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 55px;
+	height: 12px;
+	background: url(toctoc_comments_rating_stars.png) repeat-x;
+	font-size: 1px;
+}
+
+.tx-toctoc-comments-ratings-gold-bar {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 0px;
+	height: 12px;
+	background: url(toctoc_comments_rating_stars.png) repeat-x 0 -12px;
+	font-size: 1px;
+	font-size: 1px;
+}
+
+.tx-toctoc-comments-ratings-vote-bar {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 55px;
+	height: 12px;
+	font-size: 1px;
+}
+
+.tx-toctoc-comments-ratings-vote-bar DIV A {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 11px;
+	height: 12px;
+	border: none;
+	text-decoration: none;
+}
+
+.tx-toctoc-comments-ratings-vote-bar DIV A:hover {
+	background-image: url(toctoc_comments_rating_stars.png);
+	background-position: 0 -24px;
+}
+
+.tx-toctoc-comments-ratings-vote-bar DIV A.tx-toctoc-comments-ratings-star-1
+	{
+	left: 0px;
+	width: 11px;
+	z-index: 5;
+}
+
+.tx-toctoc-comments-ratings-vote-bar DIV A.tx-toctoc-comments-ratings-star-2
+	{
+	left: 0px;
+	width: 22px;
+	z-index: 4;
+}
+
+.tx-toctoc-comments-ratings-vote-bar DIV A.tx-toctoc-comments-ratings-star-3
+	{
+	left: 0px;
+	width: 33px;
+	z-index: 3;
+}
+
+.tx-toctoc-comments-ratings-vote-bar DIV A.tx-toctoc-comments-ratings-star-4
+	{
+	left: 0px;
+	width: 44px;
+	z-index: 2;
+}
+
+.tx-toctoc-comments-ratings-vote-bar DIV A.tx-toctoc-comments-ratings-star-5
+	{
+	left: 0px;
+	width: 55px;
+	z-index: 1;
+}
+
+.tx-toctoc-comments-ratings-cleaner {
+	clear: left;
+}
+
+.tx-toctoc-comments-ratings-text {
+	color: #888888;
+	float: left;
+	margin: 0 4px;
+	position: relative;
+}
+
+.tx-toctoc-comments-articleratings-display .tx-toctoc-comments-ratings-text
+	{
+	color: #888888;
+	float: left;
+	font-size: 11px;
+	margin: 0 4px;
+	position: relative;
+}
+
+.tx-toctoc-comments-rating-display-wrap {
+	float: left;
+	font-size: 11px;
+	height: 16px;
+	left: 0;
+	top: 0;
+	visibility: hidden;
+	width: 0;
+	z-index: 1;
+}
+
+.tx-toctoc-comments-rating-display-wrap IMG {
+	float: left;
+	margin-right: 5px;
+}
