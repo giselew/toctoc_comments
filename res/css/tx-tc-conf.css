@@ -1,0 +1,24 @@
+/* base: userImageSize is 32px */
+/* conf-changed css begin */
+.toctoc-comments-pi1 .tx-tc-cts .tx-tc-ct-box-cttxt {
+    margin-left: 42px;
+}
+.tx-tc-ct-ry-report-line {
+    margin: -4px 0 2px 42px;
+}
+
+.tx-tc-ct-rybox {
+    min-height: 36px;
+}
+.tx-tc-ct-box-picturecrop32 {
+    height: 24px;
+}
+.tx-tcresponse-text {
+    margin: 0 0 0 42px;
+ }
+.tx-tc-ct-form-field-1 {
+   		margin-left: -32px;
+}
+.tx-tc-pi1 .tx-tc-cts-form-fieldtextarea-1 {
+	min-height: 32px;
+}

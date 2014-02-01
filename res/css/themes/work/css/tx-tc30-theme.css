@@ -1,0 +1,257 @@
+.tx-tc-ct-submit, .tx-tc-ct-submit-loggedin {
+ 	background: none repeat scroll 0 0 #5475C8;
+	border: 1px solid #001da0;
+	color: #fefefd;
+}
+.tx-tc-ct-reset{
+	background: none repeat scroll 0 0 #e3e3e3;
+	border: 1px solid #bfc0c2;
+	color: #201e1f;
+
+}
+.tx-tc-cts-ctsbrowse {
+	border-bottom: 1px solid #bdc6da;
+}
+.tx-tc-required {
+	color: #010101; 
+}
+
+.tx-tc-ct-actionforms {
+	margin: -3px -18px 0 -33px; 
+}
+textarea.tx-tc-ctinput-textarea {
+	border-color: #a4a5a7 #a4a5a7 #adbecc;
+	background: none repeat scroll 0 0 #fdfdff;
+	/*color: #030303;*/
+	font-family:"lucida grande",tahoma,sans-serif; 
+	
+}	
+#cap-wrap {	
+	background: none repeat scroll 0 0 #ffffff;
+	border: 1px solid #999b99;
+}
+
+input.tx-tc-ct-input {
+	border-color: #a4a5a7 #a4a5a7 #adbecc;
+	border-style: solid;
+	border-width: 1px;
+	background: none repeat scroll 0 0 #fdfdff;
+	font-family:"lucida grande",tahoma,sans-serif;
+	color:#030303;
+}
+.tx-tc-ct-label-cap {
+	color: #010101;
+}
+.tx-tc-ct-label {
+	color: #959697;
+}
+.tx-tc-ct-box {
+	border-bottom: 1px solid #e3e3e3;
+}
+.tx-tc-ct-uc-text-contact, .tx-tc-ct-uc-text-stats, .tx-tc-ct-uc-text-ip {
+	background: none repeat scroll 0 0 #ffffff;
+	border-color: #e3e3e3 #e3e3e3 #959695;
+	border-radius: 0 4px 2px 4px;
+	box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.05);
+	border-style: solid;
+	border-width: 1px;
+}
+.tx-tc-ct-rybox {
+	background: none repeat scroll 0 0 #ffffff;
+	border: 1px solid #e3e3e3;
+}
+.tx-tc-cts .tx-tc-ct-wpp {
+	background: none repeat scroll 0 0 #ffffff;
+}
+div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-wpp {
+	background: none repeat scroll 0 0 #ffffff;
+
+}
+.tx-tc-recent-cts-article {
+	background: none repeat scroll 0 0 #ffffff;
+	border: 1px solid #e3e3e3;
+}
+.tx-tc-ct-highlight {
+	border: 2px solid #adaeaf;
+}
+.tooltip {
+	background-image: url("../img/tiparrow.png");
+	color: #ffffff;
+}
+.tx-tc-CloseButton {
+	background-image: url("../img/close.png");
+}
+.tx-tc-CloseButtonSmall {
+	background-image: url("../img/closesml.png");
+}
+.tx-tc-CloseButtonHuge {
+	background-image: url("../img/closehuge.png");
+}
+.tx-tc-CloseButtonSmall {
+	background-image: url("../img/closesml.png");
+}
+.tx-tc-CloseButton {
+	background-image: url("../img/close.png");
+}
+.tx-tc-ct-cnt {
+	color: #8b8c90;
+}
+.tx-tc-ct-admin {
+	background-color: #e3e3e3;
+}
+.tx-tc-ct-1, .tx-tc-ct-2 {
+	border: 1px solid #e3e3e3;
+}
+.tx-tc-cts-ctsbrowse-submit, .tx-tc-cts-ctsbrowse-submit-hide {
+	color: #001da0;
+}
+.tx-tc-ct-cap-area .tx-tc-ct-cap-area-cantreadit .tx-srfreecap-pi2-cant-read, .tx-tc-ct-cap-area-cantread .tx-srfreecap-pi2-cant-read {
+	color: #0D0909;
+}
+.toctoc-comments-pi1 hr {
+	color: #d8d8d8;
+	background: none repeat scroll 0 0 #d8d8d8;
+}
+div.tx-tc-rt {
+	border-top: 1px solid #d3d8e5;
+}
+.sharrre .shrleft, .share {
+	color: #001da0;
+}	
+.sharrre .shrleft:hover, .share:hover {
+	color: #5475c8;
+}
+.sharrre .shrmiddle {
+	background-color: #ffffff;
+	border: 1px solid #bdbebf;
+}
+.tx-tc-cap-image {
+	border: 1px solid #bfc0c2;
+}
+.tx-tc-ct-uc {
+	background: none repeat scroll 0 0 #ffffff;
+	box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.15);
+	border: 1px solid #959697;
+}
+div.AMainContentMiddle3243 .sharrre .shrmiddle {
+	-webkit-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.15);
+	box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.15);
+}
+.tx-tc-pvs-prevnext {
+	background: none repeat scroll 0 0 #d8d8d8;
+	border: 1px solid #8b8c90;
+}
+.tx-tc-pvs-nopreviewpic {
+	background: none repeat scroll 0 0 #ffffff;
+}
+.tx-tc-ct-ry-frame {
+	border: 1px solid #e3e3e3;
+}
+.tx-tc-ct-ry-frameover {
+	border: 1px solid #e3e3e3;
+}
+.tx-tc-cts .tx-tc-ct-wpp {
+	border: 1px solid #e3e3e3;
+}
+div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-wpp {
+	border: 1px solid #e3e3e3;
+}
+div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-wpp div.tx-tc-pvs-images {
+	border-right: 1px solid #d8d8d8;
+}
+.tx-tc-atrts-dp .tx-tc-myrts-myrt {
+	color: #8b8c90;
+}
+.tx-tc-myrts-myrt {
+	color: #8b8c90;
+}
+.tx-tc-ctdate, .tx-tc-myrts-vote-bar {
+	color: #8b8c90;
+}
+.tx-tc-myrts-text {
+	color: #8b8c90;
+}
+.tx-tc-rts-text {
+	color: #8b8c90;
+}
+.tx-tc-atrts-dp .tx-tc-rts-text {
+	color: #8b8c90;
+}
+#confirm-container {
+	background: #ffffff;
+	border: 1px solid #cecece;
+}	
+#confirm-container .header {
+	background: none repeat scroll 0 0 #5475C9;
+	border: 1px solid #cecece;
+	color: #ffffff;
+}
+#confirm-container .message {
+	color: #292a2d;
+}
+#confirm-container .buttons div {
+	background: none repeat scroll 0 0 #5475C8;
+	border: 1px solid #001da0;
+	color: #ffffff;
+}
+#confirm-overlay {
+	background-color: #e3e3e3;
+}	
+#confirm-container a.modal-close, #confirm-container a.modal-close:link, #confirm-container a.modal-close:active, #confirm-container a.modal-close:visited {
+	color: #ffffff;
+}
+#confirm-container a.modal-close:hover {
+	color: #cecece;
+}
+.tx-tc-cap IMG {
+	border: 1px solid #bfc0c2;
+}
+.tx-tcresponse-text {
+	background: none repeat scroll 0 0 #ffffff;
+	border: 1px solid #e3e3e3;
+}
+.tx-tc-cap-image {
+	border: 1px solid #bfc0c2;
+}
+#cap-wrap .cap-box {
+	background: #ffffff;
+	border: 1px solid #e3e3e3;
+}
+#cap-wrap .text-box label {
+	color: #010101;
+	font-family:"lucida grande",tahoma,sans-serif;
+}
+#cap-wrap .cap-action img {
+	border: 1px solid #010101;
+}
+#cap-wrap .text-box {
+	background: none repeat scroll 0 0 #ffffff;
+    border: 1px solid #bdc6da;
+}
+.tx-tc-static_ilike {
+	color: #201e1f;
+}
+.tx-tc-pvs-nopreviewpic {
+	border: 1px solid #d8d8d8;
+}
+.tx-tc-ct-form-field-wpp {
+	border-bottom: 1px solid #d8d8d8;
+}
+.tx-tc-myrts-gold-bar {
+	background: url("../img/toctoc_comments_myrating_star.png") repeat-x 0 0;
+}
+.tx-tc-rts-grey-bar {
+	background: url("../img/toctoc_comments_rating_stars.png") repeat-x;
+}
+.tx-tc-rts-gold-bar {
+	background: url("../img/toctoc_comments_rating_stars.png") repeat-x 0 -12px;
+}
+.tx-tc-rts-vote-bar DIV A:hover {
+	background-image: url("../img/toctoc_comments_rating_stars.png");
+}
+.watermark {
+	color: #8b8c90 !important;
+}
+.tx-tc-userpic, .tx-tc-userpicf, .tx-tc-avatarpic, .tx-tc-avatarpicf, .tx-tc-ct-uc-pic .tx-tc-userpic, .tx-tc-ct-uc-pic .tx-tc-userpicf, .tx-tc-ct-box-picturecrop322 img {
+	border: 1px solid #97b0ee;
+}
