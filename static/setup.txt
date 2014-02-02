@@ -127,7 +127,7 @@ plugin.tx_toctoccomments_pi1 {
     squint = -_-
     devil = 3-)
     unsure = :-/ :\ :-\
-    frown = :-( :( :[
+    frown = :-( :(
     cry = :'(
     putnam = :putnam:
     robot = :|]
