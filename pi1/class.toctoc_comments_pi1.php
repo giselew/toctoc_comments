@@ -4233,6 +4233,46 @@ sharrre design 2 and 4, calculated specifics
 
 						$contentdefaultcss = $this->confcss .
 						str_replace('themes/default/', 'themes/' . $this->conf['theme.']['selectedTheme'] . '/', $contentdefaultcss) . "\n" . $this->themeCSS;
+						
+						if ($this->conf['theme.']['boxmodelLineHeightPreserve'] ==1) {
+							$nolineheightarr = array('.tx-tc-recent-cts-entry {',
+													'.tx-tc-recent-cts-title {',
+													'.tx-tc-myrts-ilke {',
+													'.tx-tc-myrts-disilke {',
+													'.tx-tc-rts {',
+													'toctoc-comments-pi1 {',
+													'.tx-tc-text {',
+													'.tx-tc-myrts-ilke {',
+													'.tx-tc-text-top {',
+													'.tx-tc-ct-viewcnt {',
+													'.tx-tc-ftm-text {',
+													'.tx-tcresponse-text {',
+													'.tx-tcresponse-text-title {',
+													'.tx-tc-ct-rybox-title {',
+													'.tx-tc-ct-rybox {',
+													'.tx-tc-ct-cnt {',
+													'.txtc_details {', 
+													'.tx-tc-ct-cnt span, .tx-tc-ct-viewcnt span {',
+													'.tx-tc-ct-prv-frame {',
+													'.tx-tc-ntf-box {',
+													'.tx-tc-scopetitle, .tx-tc-scopetitlebold {',
+													'.tx-tcresponse-text {',
+									);
+							$countnolineheight=count($nolineheightarr);
+							for ($x=0; $x<$countnolineheight; $x++) {
+								$contentdefaultcssarr=explode($nolineheightarr[$x],$contentdefaultcss);
+								$contentdefaultcssarrlineheight=explode('line-height',$contentdefaultcssarr[1]);
+								$contentdefaultcssarrlineheightend=explode(';',$contentdefaultcssarrlineheight[1]);
+								array_shift($contentdefaultcssarrlineheightend);
+								$contentdefaultcssarrlineheight[1]='lnh' . implode(';',$contentdefaultcssarrlineheightend);
+								$contentdefaultcssarr[1]=implode('line-height',$contentdefaultcssarrlineheight);
+								$contentdefaultcss=implode($nolineheightarr[$x],$contentdefaultcssarr);
+								
+								$contentdefaultcss=str_replace('line-heightlnh'."\n",'',$contentdefaultcss);
+								$contentdefaultcss=str_replace('line-heightlnh'."\r\n",'',$contentdefaultcss);
+							}
+						}
+						
 						if (($contentdefaultcss!=$content) || ($this->conf['theme.']['freezeLevelCSS']==0)) {
 							file_put_contents($filenamecss, $contentdefaultcss);
 						}

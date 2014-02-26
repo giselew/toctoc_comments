@@ -527,6 +527,9 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Theme//05; type=int+; label=CSS-Line Height:Lineheight in the plugin, 14 - 40.
 	boxmodelLineHeight = 16
 	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//05; type=boolean; label=CSS-Line Height:Preserve original line-height, saves some lines of CSS, but results with ratingstars and ilike thumbs can be out of mesure.
+	boxmodelLineHeightPreserve = 0
+	
 	# cat=plugin.tx_toctoccomments_pi1: Theme//06; type=boolean; label=Use themeFontFamily as font-family for the entire plugin.
 	usethemeFontFamilyForPlugin = 1
 	

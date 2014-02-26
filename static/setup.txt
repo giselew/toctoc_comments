@@ -538,6 +538,7 @@ plugin.tx_toctoccomments_pi1 {
     
     # Lineheight in the plugin
     boxmodelLineHeight = {$plugin.tx_toctoccomments_pi1.boxmodelLineHeight}
+    boxmodelLineHeightPreserve = {$plugin.tx_toctoccomments_pi1.boxmodelLineHeightPreserve}
     
     # Indent option for comment replies
     boxmodelLevelIndent = {$plugin.tx_toctoccomments_pi1.boxmodelLevelIndent}

@@ -346,7 +346,7 @@
 	
 2014-01-29  Gisèle Wendl  <gisele.wendl@toctoc.ch>
 	* Release of version 5.0.0
-	* Removed all Inline-CSS and Inline-JavaScript, thus reducing radically HTML that is transfered from the server to the client.
+	* Removed all Inline-CSS and Inline-JavaScript, thus reducing radically the size of the HTML transferred from the server to the client.
 	* Added BB-Code Selection Popup, advanced.useBBCodeMenu and advanced.BBCodebbs, a list with allowed BB-codes, configure the feature 
 	* Pluginmode AJAX Login and Signup, new TS-options are available as tx_toctoc_comments_pi2
 	* AJAX Login and Sign up can be used as stand alone plugin or inside toctoc_comments, it's a clone of felogin, all in AJAX
@@ -358,25 +358,35 @@
 	* CSS-Files do no longer include the conf-css, this is now all in the boxmodel-css file
 	* CSS-Comments can be included, showing link to boxmodel.txt-entry
 	* CSS-files can be frozen (no checks for needed changes and regeneration if needed): see TS-Setup-Option theme.freezeLevelCSS
-	* Added 2 fluid ViewHelper for tx_news. With this, tx_news integrates toctoc_comments like tt_news does, features like comments counter in the newslist can be setup in tx_news as well
-	* inclueded entire sharing possibilities from sharrre by adding Pinterest, Digg and Delicious
+	* Added 2 fluid ViewHelper for extension news. With this, news integrates toctoc_comments like tt_news does, features like comments counter in the news list can be setup in news as well
+	* included entire sharing possibilities from sharrre by adding Pinterest, Digg and Delicious
 	* Used form fields are defined now by TS-option useFields (title, firstname, location, homepage, gender), now the template is totally dynamic
 	* TS-option useGenderWithField (lastname) fixes where the gender-selection pictures are placed 
-	* for form fields there are now subtemplates for hidden input, visible field and gender
+	* For form fields there are now subtemplates for hidden input, visible field and gender
 	* Now lastname and e-mail are mandatory
 	* New form field comment title
 	* Subcomments have their own template now
 	* fixed a bug which is rather complicated to explain: UC panels on top of the plugin show wrong user when users are present as likers and dislikers, 
 	  the first uc is ok, but the uc at the same position on the other side (dislikes) showed the same user again
 	* In environments running extensions vhs, fluidpages and flux: page caching is "no longer available by some reason"
-	  Set vmcNoPageCache = 1 to avoid errors when accessing page cache (make an iLike, see an error with getKey? that's it)
-	* table tx_toctoc_comments_prefixtotable is no longer maintained as static table, importing data twice did destabilize the plugin. But initial data still can be imported:
+	  Set vmcNoPageCache = 1 to avoid errors when accessing page cache fails (make an iLike, see an error with getKey? that's it)
+	* Table tx_toctoc_comments_prefixtotable is no longer maintained as static table, importing data twice did destabilize the plugin. But initial data still can be imported:
 	  it's recommended, for fresh installations, that you set Extension option importDataprefixtotable = 1. This imports the initial data which before was maintained as static table data
 	  When you start a plugin in frontend the initial data will be imported. After this set importDataprefixtotable again to 0 to avoid unneeded database access
 	* fixed problems with sharing links in design 0 and 2 (small buttons did not work)
 	* Changed name of function .modal to .txtcmoddlg in library jQuery.simplemodal to avoid conflicts with other jQuery-libraries (Twitter Bootstrap), renamed js-file to jquery.txtc-simplemodal.1.4.3.min.js
-	* Changed names of 4 function in library jQuery.tools to avoid conflicts with other jQuery-libraries (Twitter Bootstrap), .tooltip is now .cooltip and .overlay is .superpose
-	  left filename intact, but a rename to jquery.tctx-tools.min.js is recommended to keep order
+	* Changed names of two functions in library jQuery.tools to avoid conflicts with other jQuery-libraries (Twitter Bootstrap), .tooltip is now .cooltip and .overlay is .superpose
+	  Left filename intact, but a rename to jquery.tctx-tools.min.js is recommended to keep order
 	* jquery.tools.min.js is optimized in size by eliminating unneeded tools-functions
-	* When a userpicture or an avatar picture cannot be found on your server, by whatever reason, an image from toctoc.ch is displayed. It's a text in courier new, black on white: "image not found"
-	* js files are minified now, resulting in 40% reduction of the concerned files size. Uncompressed versions are available in zip-file js.uncompressed.zip
+	* When a user picture or an avatar picture cannot be found on your server, by whatever reason, an image from toctoc.ch is displayed. It's a text in courier new, black on white: "image not found"
+	* JavaScript files are minified now, resulting in 40% reduction of the concerned files size. Uncompressed versions are available in zip-file js.uncompressed.zip
+	
+2015-02-26  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 5.0.1
+	* Fixed JavaScript bug "After edit and save comment, the save comment event is not rebound"
+	* Deleted smilie "frown = :[" from setup.txt. It interacted with BB-Codes
+	* Fixed JavaScript error for AJAX page part refreshs after logins/logouts: "ids on tag that appear in first place in the HTML were not refreshed"
+	* Fixed JavaScript bug "Fill comment with several lines, then <delete> all of them: No resize happens"
+	* Made regular language files for the backend module (compatibility TYPO3-language-server)
+	* Fixed JavaScript bug "Entering comment title and pressing enter, like for form submit, submits the form to page"
+	* Added TS-Option theme.boxmodelLineHeightPreserve for the CSS-line height: Preserve original line-height, it saves some lines of CSS, but results with ratingstars and ilike thumbs can be out of measure. 

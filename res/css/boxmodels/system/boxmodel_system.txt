@@ -54,7 +54,7 @@ Selectors
 Boxmodel
 Line-Height 20 -label additions
 CSS
-+line-height: 20px;
+line-height: 20px;
 line-height: {b26}px;
 Rules
 {b26}=4+{boxmodelTextareaLineHeight}

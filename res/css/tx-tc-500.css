@@ -508,7 +508,7 @@ span.tx-srfreecap-pi2-accessible {
 .tx-tc-text, .tx-tc-text-top {
 	display: inline-block;
 	font-size: 110%;
-	padding: 4px 15px 0 2px;
+	padding: 4px 15px 0 0;
 	word-wrap: break-word;
 }
 .tx-tc-lower-text {
@@ -522,7 +522,6 @@ span.tx-srfreecap-pi2-accessible {
     margin: 0;
     padding: 0 0 0 4px;
 	width: -moz-available;
-}
 }
 .tx-tcresponse-text {
 	display: block;
@@ -1391,11 +1390,9 @@ div.tx-tc-ct-img {
 	padding: 4px;
 }
 .tx-tc-recent-cts-entry {
-	line-height: 14px;
 	word-wrap: break-word;
 }
 .tx-tc-recent-cts-title {
-	line-height: 14px;
 	margin: 2px 0 6px;
 }
 img.tx-tc-rcentpic {
