@@ -1,0 +1,19 @@
+###URL######POINTS###
+
+###USER###
+###REMOTE_ADDR###
+###RESPOND_LINK###
+###TEXTCONTENT###
+--------------------------------------------------------------------------
+###CONTENT### ###ATTACHMENT###
+--------------------------------------------------------------------------
+
+###APPROVE_LINK###
+
+###DELETE_LINK###
+
+###KILL_LINK###
+
+###DELETE_LINK_AND_BLOCK###
+
+###KILL_LINK_AND_BLOCK###
