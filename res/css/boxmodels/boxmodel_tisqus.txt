@@ -303,15 +303,6 @@ div.sharrre
 ***
 
 Boxmodel
-3 Disqus customize for smaller function lines, add line-height
-CSS
-+line-height: 11px;
-Selectors
-.tx-tc-rts-li, .tx-tc-rts-li-text
-.tx-tc-rts-li-text-hide
-***
-
-Boxmodel
 3 sharrre margin
 CSS
 margin: 0;

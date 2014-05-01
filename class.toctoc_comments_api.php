@@ -45,32 +45,37 @@ if (version_compare(TYPO3_version, '6.0', '<')) {
 }
 
 include_once (t3lib_extMgm::extPath('toctoc_comments', 'pi1/toctoc_comment_lib.php'));
+require_once(t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments_common.php'));
 
 /**
  * [CLASS/FUNCTION INDEX of SCRIPT]
  *
  *
  *
- *   81: class toctoc_comments_api
- *  113:     public function __construct()
- *  137:     public function comments_getComments_fe_user($params, $conf)
- *  156:     public function getwebpagepreview($cmd, $cid, $data, $conf)
- *  172:     public function cleanupfup($previewid, $conf, $originalfilename)
- *  186:     public function handleCommentatorNotifications($ref, $conf = NULL, $notfromeID =FALSE, $pid)
- *  203:     public function handleeID($ref, $conf, $messagetodisplay, $returnurl)
- *  223:     public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $commentspics, $scopeid=0)
- *  237:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $commentid)
- *  251:     public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
+ *   86: class toctoc_comments_api
+ *  118:     public function __construct()
+ *  143:     public function comments_getComments_fe_user($params, $conf)
+ *  162:     public function getwebpagepreview($cmd, $cid, $data, $conf)
+ *  178:     public function cleanupfup($previewid, $conf, $originalfilename)
+ *  192:     public function handleCommentatorNotifications($ref, $conf = NULL, $notfromeID =FALSE, $pid)
+ *  209:     public function handleeID($ref, $conf, $messagetodisplay, $returnurl)
+ *  229:     public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $commentspics, $scopeid=0)
+ *  243:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $commentid)
+ *  257:     public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
 			$feuserid = 0, $cmd, $piVars, $cid, $datathis, $AjaxData, $userpic, $commentspics, $check='',
 			$extref='', $tctreestate  = NULL, $commentreplyid=0, $isrefresh=0, $confSess = array())
- *  314:     public function updateComment($conf, $ctid, $content, $pid, $plugincacheid)
- *  326:     public function previewcomment($data, $conf)
- *  340:     public function isVoted($ref, $scopeid, $feuser)
- *  350:     public function initCaches()
- *  361:     public function enableFields($table)
- *  372:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
+ *  320:     public function updateComment($conf, $ctid, $content, $pid, $plugincacheid)
+ *  332:     public function previewcomment($data, $conf)
+ *  346:     public function isVoted($ref, $scopeid, $feuser)
+ *  356:     public function initCaches()
+ *  367:     public function enableFields($table)
+ *  378:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
  *
- * TOTAL FUNCTIONS: 15
+ *              SECTION: needed by class.tx_commentsresponse_hooks.php
+ *  397:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ *  420:     public function createLinks($text, $conf = NULL)
+ *
+ * TOTAL FUNCTIONS: 17
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -116,8 +121,9 @@ class toctoc_comments_api {
 		$this->cObj = t3lib_div::makeInstance('tslib_cObj');
 		$this->cObj->start('', '');
 		$this->lib = new toctoc_comment_lib;
-		session_name('sess_' . $this->extKey);
-		session_start();
+		$this->commonObj = t3lib_div::makeInstance('toctoc_comments_common');
+		$sessionTimeout=3*1440;
+		$this->commonObj->start_toctoccomments_session($sessionTimeout);
 
 		$_SESSION['started'] = (!isset($_SESSION['started']) ? 0 : 1);
 
@@ -373,6 +379,60 @@ class toctoc_comments_api {
 	 */
 	public function setPluginCacheControlTstamp ($external_ref_uid_list) {
 		$this->lib->setPluginCacheControlTstamp($external_ref_uid_list);
+	}
+	/**
+	 * needed by class.tx_commentsresponse_hooks.php
+	 *
+	 *
+	 */
+
+
+	/**
+	 * Applies stdWrap to given text
+	 *
+	 * @param	string		$text	Text to apply stdWrap to
+	 * @param	string		$stdWrapName	Name for the stdWrap in $conf
+	 * @param	array		$conf:  Array with the plugin configuration
+	 * @param	object		$pObj: parent object
+	 * @return	string		Wrapped text
+	 */
+	public function applyStdWrap($text, $stdWrapName, $conf = NULL) {
+		$conf = NULL;
+		$retstr=$text;
+		if (is_array($this->conf[$stdWrapName . '.'])) {
+			if ($this->conf[$stdWrapName. '.']['wrap']) {
+				$arrWrap=explode('|', $this->conf[$stdWrapName. '.']['wrap']);
+				if (is_array($arrWrap)) {
+					$retstr=$arrWrap[0] . $text .$arrWrap[1];
+				}
+
+			}
+
+		}
+
+		return $retstr;
+	}
+	/**
+	 * Creates links from "http://..." or "www...." phrases.
+	 *
+	 * @param	string		$text	Text to search for links
+	 * @param	array		$conf:  Array with the plugin configuration
+	 * @return	string		Text to convert
+	 */
+	public function createLinks($text, $conf = NULL) {
+		$conf = NULL;
+		if ($this->conf['advanced.']['autoConvertLinks']) {
+			$textout=
+			preg_replace('/((https?:\/\/)?((?(2)([^\s]+)|(www\.[^\s]+))))/', '<a href="http://\3" rel="nofollow" class="tx-tc-external-autolink">\1</a>', $text);
+			$textout= str_replace('." rel="nofollow"', '" rel="nofollow"', $textout);
+			$textout= str_replace('," rel="nofollow"', '" rel="nofollow"', $textout);
+			$textout= str_replace(',</a>', '</a>,', $textout);
+			$textout= str_replace('.</a>', '</a>.', $textout);
+		} else {
+			$textout=$text;
+		}
+
+		return $textout;
 	}
 
 }

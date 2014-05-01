@@ -336,7 +336,7 @@ Selectors
 Boxmodel
 disilke img position
 CSS
-margin: 0 0 0 6px;
+margin: 0 4px 0 2px;
 CSS
 +padding: 3px 0 0;
 Selectors
@@ -344,9 +344,16 @@ Selectors
 ***
 
 Boxmodel
-Padding for tag p.tx-tc-text
+Margin of ilikes depends on boxmodelLineHeight16
 CSS
-width: 80%;
+margin: 0px 0 0 2px;
+margin: {boxmodelLineHeightHalf}px 4px 0 2px;
+Selectors
+.tx-tc-myrts-ilke img
+***
+
+Boxmodel
+Padding for tag p.tx-tc-text
 CSS
 +display: block;
 CSS

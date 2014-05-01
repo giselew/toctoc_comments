@@ -38,17 +38,19 @@
  *
  *
  *
- *   61: class toctoc_comments_commentreport extends toctoc_comment_lib
- *   72:     public function generateReport ($content, $conf, $pObj, $piVars)
- *   96:     protected function processReportForm(array &$errors, $conf, $pObj, $piVars)
- *  242:     protected function showReportThanks($pObj)
- *  257:     protected function showReportForm(array $errors, $conf, $pObj, $piVars)
- *  347:     protected function getReportCaptcha($required, $error, $conf, $pObj)
+ *   63: class toctoc_comments_commentreport extends toctoc_comment_lib
+ *   74:     public function generateReport ($content, $conf, $pObj, $piVars)
+ *  103:     protected function processReportForm(&$errors, $conf, $pObj, $piVars)
+ *  267:     protected function showReportThanks($pObj)
+ *  282:     protected function showReportForm($errors, $conf, $pObj, $piVars)
+ *  384:     protected function getReportCaptcha($required, $error, $conf, $pObj)
  *
  * TOTAL FUNCTIONS: 5
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
+
+require_once (t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments_common.php'));
 
 
 /**
@@ -80,7 +82,12 @@ class toctoc_comments_commentreport extends toctoc_comment_lib {
 			$content = $this->showReportThanks($pObj);
 		}
 
-		$retstr = $this->pi_wrapInBaseClass($content);
+		$retstr = $pObj->pi_wrapInBaseClass($content);
+		$retstr = str_replace('class="toctoc-comments-pi1', 'class="toctoc-comments-pi1 tx-tc-reportcomment', $retstr);
+		if ($conf['theme.']['boxmodelLabelInputPreserve']==1) {
+			$retstr = str_replace('class="toctoc-comments-pi1 tx-tc-reportcomment', 'class="toctoc-comments-pi1 tx-tc-reportcomment tx-tc-responsive', $retstr);
+		}
+
 		return $retstr;
 	}
 
@@ -93,31 +100,39 @@ class toctoc_comments_commentreport extends toctoc_comment_lib {
 	 * @param	array		$piVars: the pi-Vars :-)
 	 * @return	boolean		TRUE if successful
 	 */
-	protected function processReportForm(array &$errors, $conf, $pObj, $piVars) {
+	protected function processReportForm(&$errors, $conf, $pObj, $piVars) {
 		$fromAjax=FALSE;
-		if ($piVars['submit']) {
+
+		if ($piVars['from'] != '') {
 			// Check captcha
 			$captchaType = intval($conf['commentsreport.']['useCaptcha']);
-			if ($captchaType == 1 && t3lib_extMgm::isLoaded('captcha')) {
-				session_name('sess_' . $pObj->extKey);
-				@session_start();
-				$captchaStr = $_SESSION['tx_captcha_string'];
-				$_SESSION['tx_captcha_string'] = '';
-				if (!$captchaStr || $piVars['captcha'] !== $captchaStr) {
-					$errors['captcha'] = $this->pi_getLLWrap($pObj, 'error.wrong.captcha', FALSE);
+			if (($captchaType == 1) || ($captchaType == 2)) {
+				if ($piVars['captcha']) {
+					if ($captchaType == 1 && t3lib_extMgm::isLoaded('captcha')) {
+						$this->commonObj = t3lib_div::makeInstance('toctoc_comments_common');
+						$sessionTimeout=3*1440;
+						$this->commonObj->start_toctoccomments_session($sessionTimeout);
+						$captchaStr = $_SESSION['tx_captcha_string'];
+						$_SESSION['tx_captcha_string'] = '';
+						if (!$captchaStr || $piVars['captcha'] !== $captchaStr) {
+							$errors['captcha'] = $this->pi_getLLWrap($pObj, 'error.wrong.captcha', FALSE);
+						}
 
-				}
+					} elseif ($captchaType == 2 && t3lib_extMgm::isLoaded('sr_freecap')) {
+						require_once(t3lib_extMgm::extPath('sr_freecap') . 'pi2/class.tx_srfreecap_pi2.php');
+						$freeCap = t3lib_div::makeInstance('tx_srfreecap_pi2');
+						/* @var $freeCap tx_srfreecap_pi2 */
+						if (!$freeCap->checkWord($piVars['captcha'])) {
+							$errors['captcha'] = $this->pi_getLLWrap($pObj, 'error.wrong.captcha', FALSE);
+						}
 
-			} elseif ($captchaType == 2 && t3lib_extMgm::isLoaded('sr_freecap')) {
-				require_once(t3lib_extMgm::extPath('sr_freecap') . 'pi2/class.tx_srfreecap_pi2.php');
-				$freeCap = t3lib_div::makeInstance('tx_srfreecap_pi2');
-				/* @var $freeCap tx_srfreecap_pi2 */
-				if (!$freeCap->checkWord($piVars['captcha'])) {
+					}
+
+				} else {
 					$errors['captcha'] = $this->pi_getLLWrap($pObj, 'error.wrong.captcha', FALSE);
 				}
 
 			}
-
 			// Check required fields
 			foreach (t3lib_div::trimExplode(',', $conf['commentsreport.']['requiredFields'], TRUE) as $field) {
 				if (trim($piVars[$field]) == '') {
@@ -181,14 +196,24 @@ class toctoc_comments_commentreport extends toctoc_comment_lib {
 
 				$conf['advanced.']['useEmoji']=0;
 				$contentformail = $this->makeemoji($contentformail, $conf, 'processReportForm');
-
 				$conf['advanced.']['useEmoji']=$saveconfemoji;
+				$labelstyle = '';
+				$phdrfrom = '';
+				$phdrfrommail = '';
+				if (intval($conf['advanced.']['watermarkFormFields']) == 1) {
+					$labelstyle = ' tx-tc-nodisp';
+					$phdrfrom = 'placeholder="' . trim(str_replace(':', '', $this->pi_getLLWrap($pObj, 'commentreport.text_from', FALSE))) . '"';
+					$phdrfrommail = 'placeholder="' . trim(str_replace(':', '', $this->pi_getLLWrap($pObj, 'pi1_template.email', FALSE))) . '"';
+				}
 
 				$markerArray = array(
 					'###URL###' => $info['url'],
 					'###UID###' => $comment['uid'],
 					'###FROM###' => $piVars['from'],
+					'###LABELSTYLE###' => $labelstyle,
+					'###PHDR_FROM###' => $phdrfrom,
 					'###FROMMAIL###' => $piVars['frommail'],
+					'###PHDR_FROMMAIL###' => $phdrfrommail,
 					'###USER_TEXT###' => $piVars['text'],
 					'###COMMENT_TEXT###' => $contentformail,
 					'###USER_IP###' => t3lib_div::getIndpEnv('REMOTE_ADDR'),
@@ -254,7 +279,7 @@ class toctoc_comments_commentreport extends toctoc_comment_lib {
 	 * @param	array		$piVars: ...
 	 * @return	string		HTML
 	 */
-	protected function showReportForm(array $errors, $conf, $pObj, $piVars) {
+	protected function showReportForm($errors, $conf, $pObj, $piVars) {
 		$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###REPORT_FORM###');
 		$req_template = $this->t3getSubpart($pObj, $pObj->templateCode, '###REPORT_REQUIRED###');
 		$error_template = $this->t3getSubpart($pObj, $pObj->templateCode, '###REPORT_ERROR###');
@@ -280,11 +305,20 @@ class toctoc_comments_commentreport extends toctoc_comment_lib {
 			}
 
 		}
+		$labelstyle = '';
+		$phdrfrom = '';
+		$phdrfrommail = '';
+		if (intval($conf['advanced.']['watermarkFormFields']) == 1) {
+			$labelstyle = ' tx-tc-nodisp';
+			$phdrfrom = 'placeholder="' . trim(str_replace(':', '', $this->pi_getLLWrap($pObj, 'commentreport.text_from', FALSE))) . '"';
+			$phdrfrommail = 'placeholder="' . trim(str_replace(':', '', $this->pi_getLLWrap($pObj, 'pi1_template.email', FALSE))) . '"';
+		}
 
 		$markers = array(
 				'###ACTION###' => $this->pi_getPageLink($GLOBALS['TSFE']->id),
 				'###INFO###' => $piVars['info'],
 				'###FROM###' => htmlspecialchars($piVars['from']),
+				'###LABELSTYLE###' => $labelstyle,
 				'###FROMMAIL###' => htmlspecialchars($piVars['frommail']),
 				'###ENCTEXT###' => base64_encode(htmlspecialchars($piVars['text'])),
 				'###TEXT###' => htmlspecialchars($piVars['text']),
@@ -308,6 +342,9 @@ class toctoc_comments_commentreport extends toctoc_comment_lib {
 				'###TXTINFO###' => $this->pi_getLLWrap($pObj, 'pi1_template.information', FALSE),
 				'###BADCOMMENT###' => 	$complainedcomment,
 				'###TEXT_YOURCOMPLAINT###' => 	$this->pi_getLLWrap($pObj, 'pi1_template.textyourcomplaint', FALSE),
+				'###PHDR_FROM###' => $phdrfrom,
+				'###PHDR_FROMMAIL###' => $phdrfrommail,
+
 		);
 
 		foreach ($errors as $field => $error) {
@@ -347,15 +384,24 @@ class toctoc_comments_commentreport extends toctoc_comment_lib {
 	protected function getReportCaptcha($required, $error, $conf, $pObj) {
 		$captchaType = intval($conf['commentsreport.']['useCaptcha']);
 
+		$labelstyle = '';
+		$phdrcap = '';
+		if (intval($conf['advanced.']['watermarkFormFields']) == 1) {
+			$labelstyle = ' tx-tc-nodisp';
+			$phdrcap = 'placeholder="' . trim(str_replace(':', '', $this->pi_getLLWrap($pObj, 'pi1_template.enter_code', FALSE))) . '"';
+		}
+
 		if (($captchaType == 1) && (t3lib_extMgm::isLoaded('captcha'))) {
 			$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###REPORT_CAPTCHA###');
 			$code = $this->t3substituteMarkerArray($template, array(
+					'###LABELSTYLE###' => $labelstyle,
 					'###SR_FREECAP_IMAGE###' => '<img src="' . t3lib_extMgm::siteRelPath('captcha') . 'captcha/captcha.php" alt="" />',
 					'###SR_FREECAP_CANT_READ###' => '',
 					'###REQUIRED_CAPTCHA###' => $required,
 					'###ERROR_CAPTCHA###' => $error,
 					'###SITE_REL_PATH###' => $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments'),
 					'###TEXT_CAPTCHA###' => $this->pi_getLLWrap($pObj, 'pi1_template.enter_code', FALSE),
+					'###PDHRT_CAPTCHA###' => $phdrcap,
 			));
 			$retstr = str_replace('<br /><br />', '<br />', $code);
 			return $retstr;
@@ -366,9 +412,11 @@ class toctoc_comments_commentreport extends toctoc_comment_lib {
 			/* @var $freeCap tx_srfreecap_pi2 */
 			$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###REPORT_CAPTCHA###');
 			$retstr = $this->t3substituteMarkerArray($template, array_merge($freeCap->makeCaptcha(), array(
+					'###LABELSTYLE###' => $labelstyle,
 					'###REQUIRED_CAPTCHA###' => $required,
 					'###ERROR_CAPTCHA###' => $error,
 					'###TEXT_CAPTCHA###' => $this->pi_getLLWrap($pObj, 'pi1_template.enter_code', FALSE),
+					'###PDHRT_CAPTCHA###' => $phdrcap,
 			)));
 			return $retstr;
 		}

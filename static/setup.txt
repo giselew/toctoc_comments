@@ -48,7 +48,9 @@ plugin.tx_toctoccomments_pi1 {
   
   # e-mail are sent in HTML-Format or Text format
   HTMLEmail = {$plugin.tx_toctoccomments_pi1.HTMLEmail}  
-  HTMLEmailFontFamily = {$plugin.tx_toctoccomments_pi1.HTMLEmailFontFamily}  
+  HTMLEmailFontFamily = {$plugin.tx_toctoccomments_pi1.HTMLEmailFontFamily} 
+   
+  sessionTimeout = {$plugin.tx_toctoccomments_pi1.sessionTimeout}
   
   optionalRecordId =
   
@@ -174,6 +176,9 @@ plugin.tx_toctoccomments_pi1 {
     
     # Create links inside comment text automatically?
     autoConvertLinks = {$plugin.tx_toctoccomments_pi1.autoConvertLinks}
+    
+    # Cropping of autoconverted links
+    autoConvertLinksCropLength = {$plugin.tx_toctoccomments_pi1.autoConvertLinksCropLength}
     
     # Lets admins give comments on comments (Modified extension comments_response need to be installed)
     adminCommentResponse = {$plugin.tx_toctoccomments_pi1.adminCommentResponse}
@@ -489,7 +494,7 @@ plugin.tx_toctoccomments_pi1 {
     HTMLemailTemplateFile= EXT:toctoc_comments/res/template/toctoccomments_template_reportcomment_email.html
     # Required fields:Comma-separated list of required fields
     requiredFields = from,frommail,text
-    # [None=0,captcha extension=1,sr_freecap extension=2]; Use captcha:Enable captcha  usage. Requires appropriate extension  to be installed
+    # [None=0,captcha extension=1,sr_freecap extension=2]; Use captcha:Enable captcha usage. Requires appropriate extension to be installed
     useCaptcha = 2
     # E-mail to send notifications from
     sourceEmail =
@@ -545,9 +550,12 @@ plugin.tx_toctoccomments_pi1 {
     
     # Width of form labels
     boxmodelLabelWidth =  {$plugin.tx_toctoccomments_pi1.boxmodelLabelWidth}
-    
+    boxmodelLabelInputPreserve = {$plugin.tx_toctoccomments_pi1.boxmodelLabelInputPreserve}
+   
     # Size of Form Inputfields
     boxmodelInputFieldSize =  {$plugin.tx_toctoccomments_pi1.boxmodelInputFieldSize}
+    
+    responsiveSteps = {$plugin.tx_toctoccomments_pi1.responsiveSteps}
     
     # koogled boxmodels have either the word koogle in the name or set this to 1.
     selectedBoxmodelkoogled = 0
@@ -568,6 +576,7 @@ plugin.tx_toctoccomments_pi1 {
     showCSScomments = 0
   }
 }
+
 plugin.tx_toctoccomments_pi2 < plugin.tx_felogin_pi1
 plugin.tx_toctoccomments_pi2 {
   includeLibs = EXT:toctoc_comments/pi2/class.toctoc_comments_felogin_pi1.php

@@ -38,6 +38,27 @@ Selectors
 .tx-tc-ct-submit, .tx-tc-ct-reset, .tx-tc-ct-submit-loggedin
 ***
 
+
+Boxmodel
+line height rating stars top
+CSS
++line-height: 18px;
+line-height: {boxmodelLineHeight}px;
+Selectors
+.tx-tc-cts-dp .tx-tc-text-top .tx-tc-atrts-dp .tx-tc-rts-area .tx-tc-rts-container .tx-tc-rts-li .tx-tc-rts
+***
+
+Boxmodel
+line height rating stars top
+CSS
++line-height: 18px;
+line-height: {22bbggl}px;
+Rules
+{22bbggl}=12+{boxmodelLineHeight}
+Selectors
+.toctoc-comments-pi1 .tx-tc-cts-dp .tx-tc-text-top .tx-tc-atrts-dp .tx-tc-rts-area .tx-tc-rts-container .tx-tc-rts-li .tx-tc-rts
+***
+
 Boxmodel
 Comment "tit"
 CSS
@@ -243,7 +264,7 @@ CSS
 margin-left: 45px;
 margin-left: {505}px;
 Rules
-{505}=48+3*{boxmodelSpacing}+1
+{505}=48+2*{boxmodelSpacing}+2
 Selectors
 .tx-tc-ze
 ***  

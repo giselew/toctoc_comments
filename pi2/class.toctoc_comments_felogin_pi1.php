@@ -58,13 +58,13 @@
  *  923:     protected function generateAndSendHash($user)
  *  989:     protected function changePassword($uid, $piHash)
  * 1111:     protected function showSignon()
- * 1418:     protected function getSignupCaptcha($required, $errcp, $cpval)
- * 1461:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
- * 1488:     protected function processSignupCaptcha($postData)
- * 1519:     protected function loginUser($facebookId)
- * 1545:     protected function storeUser($facebookUserProfile)
- * 1653:     private function copyImageFromFacebook($facebookUserId)
- * 1668:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
+ * 1419:     protected function getSignupCaptcha($required, $errcp, $cpval)
+ * 1462:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ * 1489:     protected function processSignupCaptcha($postData)
+ * 1529:     protected function loginUser($facebookId)
+ * 1555:     protected function storeUser($facebookUserProfile)
+ * 1663:     private function copyImageFromFacebook($facebookUserId)
+ * 1678:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
  *
  * TOTAL FUNCTIONS: 26
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -1282,6 +1282,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 							$record=array();
 							$record['crdate'] = $record['tstamp'] = time();
 							$record['first_name'] = $postData['firstname'];
+							$record['name'] = trim($postData['firstname'] . ' ' . $postData['lastname']);
 							$record['last_name'] = $postData['lastname'];
 							$record['password'] = $postData['password1'];
 							$record['username'] = $postData['user'];
@@ -1489,8 +1490,17 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		$err = '';
 		$captchaType = intval($this->conf['register.']['signupUseCaptcha']);
 		if ($captchaType == 1 && t3lib_extMgm::isLoaded('captcha')) {
-			session_name('sess_toctoc_comments');
-			@session_start();
+
+			$sessionFile = str_replace('/pi2', '/pi1', realpath(dirname(__FILE__))) . '/sessionpath.tmp';
+			$sessionSavePath =  @file_get_contents($sessionFile);
+			$sessionTimeout = 3*1440;
+			if (!(isset($commonObj))) {
+				require_once (str_replace('/pi2', '/pi1', realpath(dirname(__FILE__))) . '/class.toctoc_comments_common.php');
+				$commonObj = new toctoc_comments_common;
+			}
+
+			$commonObj->start_toctoccomments_session($sessionTimeout, $sessionSavePath);
+
 			$captchaStr = $_SESSION['tx_captcha_string'];
 			$_SESSION['tx_captcha_string'] = '';
 			if (!$captchaStr || $postData['captcha'] !== $captchaStr) {

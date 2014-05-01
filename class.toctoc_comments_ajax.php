@@ -39,21 +39,21 @@
  *
  *   90: class toctoc_comments_ajax
  *  142:     public function __construct()
- *  563:     public function main()
- *  602:     public function handleCommentatorNotifications()
- *  613:     protected function updateCommentDisplay()
- *  631:     protected function updateComment()
- *  646:     protected function webpagepreview()
- *  658:     protected function previewcomment()
- *  670:     protected function cleanupfup()
- *  684:     protected function getCaptcha($captchatype, $cid)
- *  818:     protected function chkcaptcha($cid, $code)
- *  845:     protected function getUserCard()
- *  858:     protected function updateCommentsView()
- *  977:     protected function updateRating()
- * 1329:     protected function processDeleteSubmission()
- * 1409:     protected function processDenotifycommentSubmission()
- * 1459:     protected function recentCommentsClearCache()
+ *  599:     public function main()
+ *  638:     public function handleCommentatorNotifications()
+ *  649:     protected function updateCommentDisplay()
+ *  667:     protected function updateComment()
+ *  682:     protected function webpagepreview()
+ *  694:     protected function previewcomment()
+ *  706:     protected function cleanupfup()
+ *  720:     protected function getCaptcha($captchatype, $cid)
+ *  855:     protected function chkcaptcha($cid, $code)
+ *  882:     protected function getUserCard()
+ *  895:     protected function updateCommentsView()
+ * 1014:     protected function updateRating()
+ * 1366:     protected function processDeleteSubmission()
+ * 1446:     protected function processDenotifycommentSubmission()
+ * 1496:     protected function recentCommentsClearCache()
  *
  * TOTAL FUNCTIONS: 16
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -149,6 +149,7 @@ class toctoc_comments_ajax {
 		$GLOBALS['LANG']->includeLLFile('EXT:toctoc_comments/locallang_ajax.xml');
 
 		$this->commonObj = t3lib_div::makeInstance('toctoc_comments_common');
+
 		if (version_compare(TYPO3_version, '4.5', '<')) {
 		// Initialize FE user object:
 			$feUserObj = tslib_eidtools::initFeUser();
@@ -178,7 +179,13 @@ class toctoc_comments_ajax {
 				echo $GLOBALS['LANG']->getLL('bad_conf_value') . ', diffconf in ' .$this->cmd;
 				exit();
 			}
-			$this->conf = $this->commonObj->unmirrorConf($this, $dataconf['conf']);
+			$this->conf = $this->commonObj->unmirrorConf($dataconf['conf']);
+
+			if($this->conf == '') {
+				echo $GLOBALS['LANG']->getLL('session_expired');
+				exit();
+			}
+
 			$this->pluginid = $data['ref'];
 			$this->previewconf = $data;
 		} elseif ($this->cmd == 'gettime') {
@@ -192,7 +199,12 @@ class toctoc_comments_ajax {
 				echo $GLOBALS['LANG']->getLL('bad_conf_value') . ', diffconf in ' .$this->cmd . ', conf: ' . $data['conf'];
 				exit();
 			}
-			$this->conf = $this->commonObj->unmirrorConf($this, $data['conf']);
+			$this->conf = $this->commonObj->unmirrorConf($data['conf']);
+			if($this->conf == '') {
+				echo $GLOBALS['LANG']->getLL('session_expired');
+				exit();
+			}
+
 			if (intval(t3lib_div::_GP('storagepid')) != 0) {
 				$this->conf['storagePid']=intval(t3lib_div::_GP('storagepid'));
 			}
@@ -223,7 +235,11 @@ class toctoc_comments_ajax {
 				echo $GLOBALS['LANG']->getLL('bad_conf_value') . ', diffconf in ' .$this->cmd;
 				exit();
 			}
-			$this->conf=$this->commonObj->unmirrorConf($this, $dataconf['conf']);
+			$this->conf=$this->commonObj->unmirrorConf($dataconf['conf']);
+			if($this->conf == '') {
+				echo $GLOBALS['LANG']->getLL('session_expired');
+				exit();
+			}
 
 			$data_strtmp = t3lib_div::_GP('dataconfatt');
 			$dataconfatt = unserialize(base64_decode($data_strtmp));
@@ -257,10 +273,20 @@ class toctoc_comments_ajax {
 				exit();
 			}
 
-			$this->conf = $this->commonObj->unmirrorConf($this, $data['conf']);
+			$this->conf = $this->commonObj->unmirrorConf($data['conf']);
+			if($this->conf == '') {
+				echo $GLOBALS['LANG']->getLL('session_expired');
+				exit();
+			}
+
 			$this->pluginid = $data['ref'];
 		} elseif($this->cmd == 'handlecn') {
-			$this->conf = $this->commonObj->unmirrorConf($this, $data['conf']);
+			$this->conf = $this->commonObj->unmirrorConf($data['conf']);
+			if($this->conf == '') {
+				echo $GLOBALS['LANG']->getLL('session_expired');
+				exit();
+			}
+
 			$this->pluginid = $data['ref'];
 			$this->pid = $data['pid'];
 			$this->ref = t3lib_div::_GP('ref');
@@ -270,7 +296,12 @@ class toctoc_comments_ajax {
 			}
 
 		} elseif ($this->cmd == 'updatect') {
-			$this->conf = $this->commonObj->unmirrorConf($this, $data['conf']);
+			$this->conf = $this->commonObj->unmirrorConf($data['conf']);
+			if($this->conf == '') {
+				echo $GLOBALS['LANG']->getLL('session_expired');
+				exit();
+			}
+
 			$this->pluginid = $data['ref'];
 			$this->commentid=t3lib_div::_GP('cuid');
 			$content_str = t3lib_div::_GP('content');
@@ -291,7 +322,12 @@ class toctoc_comments_ajax {
 				exit();
 			}
 
-			$this->conf = $this->commonObj->unmirrorConf($this, $data['conf']);
+			$this->conf = $this->commonObj->unmirrorConf($data['conf']);
+			if($this->conf == '') {
+				echo $GLOBALS['LANG']->getLL('session_expired');
+				exit();
+			}
+
 			// Is the configuration array really an array
 			if(!is_array($this->conf)) {
 				echo $GLOBALS['LANG']->getLL('bad_conf_value');
@@ -682,8 +718,9 @@ class toctoc_comments_ajax {
 	 * @return	image
 	 */
 	protected function getCaptcha($captchatype, $cid) {
-		session_name('sess_' . $this->extKey);
-		session_start();
+		$sessionTimeout=3*1440;
+		$this->commonObj->start_toctoccomments_session($sessionTimeout);
+
 		$string = '';
 		$reportstr = '';
 		$dir = 'typo3conf/ext/toctoc_comments/pi1/fonts/';
@@ -816,8 +853,8 @@ class toctoc_comments_ajax {
  * @return	int
  */
 	protected function chkcaptcha($cid, $code) {
-		session_name('sess_' . $this->extKey);
-		session_start();
+		$sessionTimeout=3*1440;
+		$this->commonObj->start_toctoccomments_session($sessionTimeout);
 
 		if($code) {
 			$sessionindex = 'random_number' . $cid . '';

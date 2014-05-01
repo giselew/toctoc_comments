@@ -37,9 +37,9 @@
  *
  *
  *
- *   59: class toctoc_comments_attachmentupload
- *   71:     public function main($files, $post)
- *  418:     protected function create_thumbnail_frompdf($pdffile, $pdffilejpg, $impath)
+ *   63: class toctoc_comments_attachmentupload
+ *   75:     public function main($files, $post)
+ *  428:     protected function create_thumbnail_frompdf($pdffile, $pdffilejpg, $impath)
  *
  * TOTAL FUNCTIONS: 2
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -54,6 +54,10 @@
  * @package TYPO3
  * @subpackage toctoc_comments
  */
+
+
+
+
 $ml = new toctoc_comments_attachmentupload;
 $ml->main($_FILES, $_POST);
 class toctoc_comments_attachmentupload {
@@ -99,9 +103,15 @@ class toctoc_comments_attachmentupload {
 		}
 
 		$retstr = '';
-		$extKey = 'toctoc_comments';
-		session_name('sess_' . $extKey);
-		session_start();
+		$sessionFile = realpath(dirname(__FILE__)) . '/sessionpath.tmp';
+		$sessionSavePath =  @file_get_contents($sessionFile);
+
+		if (!(isset($commonObj))) {
+			require_once ('class.toctoc_comments_common.php');
+			$commonObj = new toctoc_comments_common;
+		}
+		$commonObj->start_toctoccomments_session(3*1440, $sessionSavePath);
+
 		if (!isset($_SESSION['uploadstep'])) {
 			$_SESSION['uploadstep']=0;
 		} else {

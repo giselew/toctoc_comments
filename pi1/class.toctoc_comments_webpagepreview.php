@@ -37,32 +37,43 @@
  *
  *
  *
- *   71: class toctoc_comments_webpagepreview
- *  111:     public function main ($inputurl, $inputcommentid, $inputcid, $lang, $inconf = array(), $pObj = NULL, $pObjParent=NULL)
- *  341:     protected function timepoint($startpoint, $datainfo, $showtotal = FALSE)
- *  367:     protected function check_pvs_url($value)
- *  387:     protected function file_pvs_get_contents_curl($urltofetch, $ext, $savepathfilename = '')
- *  550:     public function saveAndResize($filename, $new_width, $new_height, $pathAndFilename, $ext)
- *  896:     public function previewsite ($pObj=NULL, $pObjParent=NULL)
- * 1481:     private function pvs_fetch_images($strextraction, $iscss, $cssfile='')
- * 1660:     protected function pvs_fetch_css($strextraction,&$strouthtml, $iscss, $cssfile='')
- * 1789:     protected function checklogopattern($strtest)
- * 1821:     protected function checkimagepattern($strtest)
- * 1853:     protected function checkvideocontent($html)
- * 2177:     protected function croptitleordesc($description)
- * 2206:     protected function cleanouttitleordesc($title)
+ *   82: class toctoc_comments_webpagepreview
+ *  123:     public function main ($inputurl, $inputcommentid, $inputcid, $lang, $inconf = array(), $pObj = NULL, $pObjParent=NULL)
+ *  353:     protected function timepoint($startpoint, $datainfo, $showtotal = FALSE)
+ *  379:     protected function check_pvs_url($value)
+ *  399:     protected function file_pvs_get_contents_curl($urltofetch, $ext, $savepathfilename = '')
+ *  562:     public function saveAndResize($filename, $new_width, $new_height, $pathAndFilename, $ext)
+ *  918:     public function previewsite ($pObj=NULL, $pObjParent=NULL)
+ * 1493:     private function pvs_fetch_images($strextraction, $iscss, $cssfile='')
+ * 1672:     protected function pvs_fetch_css($strextraction,&$strouthtml, $iscss, $cssfile='')
+ * 1801:     protected function checklogopattern($strtest)
+ * 1833:     protected function checkimagepattern($strtest)
+ * 1865:     protected function checkvideocontent($html)
+ * 2189:     protected function croptitleordesc($description)
+ * 2218:     protected function cleanouttitleordesc($title)
+ * 2295:     protected function checkandcorrUTF8($strtocheck)
  *
- * TOTAL FUNCTIONS: 13
+ * TOTAL FUNCTIONS: 14
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
-  if ($_GET['url']) {
-	$ml = new toctoc_comments_webpagepreview;
-	session_name('sess_' . 'toctoc_comments');
-	session_start();
 
+if ($_GET['url']) {
+	// debugging mode, you can run the script stand alone, modifs to the code (supressing of messages) must be done in addition
+	$ml = new toctoc_comments_webpagepreview;
+
+	$sessionFile = realpath(dirname(__FILE__)) . '/sessionpath.tmp';
+	$sessionSavePath =  @file_get_contents($sessionFile);
+
+	if (!(isset($commonObj))) {
+		require_once ('class.toctoc_comments_common.php');
+		$commonObj = new toctoc_comments_common;
+	}
+	$commonObj->start_toctoccomments_session(3*1440, $sessionSavePath);
 	$ml->main($_GET['url'], 0, 10033, 'de');
- }
+}
+
+
 
 	/**
 	 * Scans Webpages and fills Session variables for display in toctoc_comments
@@ -71,8 +82,9 @@
 class toctoc_comments_webpagepreview {
 
 // work vars
-	private $dosavepicsintemp=TRUE;
-	private $wrkext='';
+	public $sessionSavePath = '';
+	private $dosavepicsintemp = TRUE;
+	private $wrkext = '';
 	private $savepath='';
 	private $urlhomearrstr = '';
 	private $urlsitestr = '';
@@ -786,7 +798,17 @@ class toctoc_comments_webpagepreview {
 
 				if (intval(3*(($this->selectedpics+1)/$this->conf['attachments.']['webpagePreviewNumberOfImages'])) != $this->commitcounter){
 					session_write_close();
-					session_start();
+
+					if ($this->sessionSavePath == '') {
+						$this->sessionSavePath =  @file_get_contents(realpath(dirname(__FILE__)) . '/sessionpath.tmp');
+					}
+
+					if (!(isset($commonObj))) {
+						require_once ('class.toctoc_comments_common.php');
+						$commonObj = new toctoc_comments_common;
+					}
+					$commonObj->start_toctoccomments_session(3*1440, $this->sessionSavePath);
+
 					$this->commitcounter+= 1;
 				}
 
@@ -894,7 +916,6 @@ class toctoc_comments_webpagepreview {
 	 * @return	void
 	 */
 	public function previewsite ($pObj=NULL, $pObjParent=NULL) {
-
 		$strouthtml='';
 		$starttime=microtime(TRUE);
 		$_SESSION[$this->cid][$this->commentid]['url'] = $this->url;
@@ -1024,6 +1045,9 @@ class toctoc_comments_webpagepreview {
 			if (strpos(strtoupper($html), 'CHARSET=UTF-8') >0 ) {
 				$this->docutf8declared=TRUE;
 			}
+			if (strpos(strtoupper($html), 'CHARSET="UTF-8') >0 ) {
+				$this->docutf8declared=TRUE;
+			}
 
 			$htmlarr=explode('<br>', $html);
 			$html=implode(' ', $htmlarr);
@@ -1060,10 +1084,8 @@ class toctoc_comments_webpagepreview {
 			$strouthtml='<html xml:lang="' . $pObj->pi_getLLWrap($pObjParent, 'pi1_template.xmllang', TRUE) . '" xmlns="http://www.w3.org/1999/xhtml"><head>';
 			} else {
 				$strouthtml='<html xml:lang="EN-en" xmlns="http://www.w3.org/1999/xhtml"><head>';
-
 			}
 
-			//$strouthtml='<html xml:lang="DE-de" xmlns="http://www.w3.org/1999/xhtml"><head>';
 			$this->timepoint(TRUE, '');
 			// parsing begins here:
 			$doc = new DOMDocument();
@@ -1084,9 +1106,9 @@ class toctoc_comments_webpagepreview {
 				$meta = $metas->item($i);
 				if (strtoupper($meta->getAttribute('name')) == 'DC.DESCRIPTION') {
 					$description = $meta->getAttribute('content');
-					if ((strpos($description, '¼') > 0) || (strpos($description, 'Ã') > 0)) {
-						$description=utf8_decode($description);
-					}
+ 					if ((strpos($description, '¼') > 0) || (strpos($description, 'Ã') > 0)) {
+ 						$description=utf8_decode($description);
+ 					}
 
 				}
 
@@ -1099,9 +1121,9 @@ class toctoc_comments_webpagepreview {
 					if (strtoupper($meta->getAttribute('name')) == 'DESCRIPTION') {
 						if (strlen($meta->getAttribute('content'))>$this->conf['attachments.']['webpagePreviewDescriptionMinimalLength']) {
 							$description = $meta->getAttribute('content');
-							if ((strpos($description, '¼') > 0) || (strpos($description, 'Ã') > 0)) {
-								$description=utf8_decode($description);
-							}
+ 							if ((strpos($description, '¼') > 0) || (strpos($description, 'Ã') > 0)) {
+ 								$description=utf8_decode($description);
+ 							}
 
 						}
 
@@ -1113,7 +1135,7 @@ class toctoc_comments_webpagepreview {
 
 			if (strlen($description)<$this->conf['attachments.']['webpagePreviewDescriptionMinimalLength']) {
 				if ($description !='') {
-					$description .='&nbsp;';
+					$description .=' ';
 				}
 
 				$ptags = $doc->getElementsByTagName('p');
@@ -1127,10 +1149,6 @@ class toctoc_comments_webpagepreview {
 							'@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments including CDATA
 									);
 					$descwork = preg_replace($search, '', $descwork);
-					if ((strpos($descwork, '¼') > 0) || (strpos($descwork, 'Ã') > 0)) {
-						$descwork=utf8_decode($descwork);
-					}
-
 					if (strlen($descwork)>$this->conf['attachments.']['webpagePreviewDescriptionPortionLength']) {
 						$description.= $descwork . ' ';
 					}
@@ -1152,9 +1170,6 @@ class toctoc_comments_webpagepreview {
 								'@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments including CDATA
 								);
 						$descwork = preg_replace($search, '', $descwork);
-						if ((strpos($descwork, '¼') > 0) || (strpos($descwork, 'Ã') > 0)) {
-							$descwork=utf8_decode($descwork);
-						}
 
 						if (strlen($descwork)>$this->conf['attachments.']['webpagePreviewDescriptionPortionLength']) {
 							$description.= $descwork . ' ';
@@ -1167,41 +1182,11 @@ class toctoc_comments_webpagepreview {
 			}
 
 			if ($description!=''){
-				if (!$this->docutf8declared) {
-					if ($this->docutf8) {
-						$description = utf8_decode($description);
-					}
-
-					if (mb_detect_encoding($description, 'UTF-8', TRUE) === FALSE) {
-						$description = utf8_encode($description);
-					}
-
-				} else {
-					if (mb_detect_encoding($description, 'UTF-8', TRUE) === FALSE) {
-						$description = utf8_encode($description);
-					}
-
-				}
-
+				$description = $this->cleanouttitleordesc($description);
 			}
 
 			if ($title!=''){
-				if (!$this->docutf8declared) {
-					if ($this->docutf8) {
-						$title = utf8_decode($title);
-					}
-
-					if (mb_detect_encoding($title, 'UTF-8', TRUE) === FALSE) {
-						$title = utf8_encode($title);
-					}
-
-				} else {
-					if (mb_detect_encoding($title, 'UTF-8', TRUE) === FALSE) {
-						$title = utf8_encode($title);
-					}
-
-				}
-
+				$title = $this->cleanouttitleordesc($title);
 			}
 
 			if (strlen($description)>= $this->conf['attachments.']['webpagePreviewDescriptionMinimalLength'])  {
@@ -1229,7 +1214,16 @@ class toctoc_comments_webpagepreview {
 			}
 
 			session_write_close();
-			session_start();
+			if ($this->sessionSavePath == '') {
+				$this->sessionSavePath =  @file_get_contents(realpath(dirname(__FILE__)) . '/sessionpath.tmp');
+			}
+
+			if (!(isset($commonObj))) {
+				require_once ('class.toctoc_comments_common.php');
+				$commonObj = new toctoc_comments_common;
+			}
+			$commonObj->start_toctoccomments_session(3*1440, $this->sessionSavePath);
+
 			// check for ideo content
 			$checkvideocontent=FALSE;
 			if ($this->conf['attachments.']['useWebpageVideoPreview'] == 1) {
@@ -1284,7 +1278,15 @@ class toctoc_comments_webpagepreview {
 				}
 
 				session_write_close();
-				session_start();
+				if ($this->sessionSavePath == '') {
+					$this->sessionSavePath =  @file_get_contents(realpath(dirname(__FILE__)) . '/sessionpath.tmp');
+				}
+
+				if (!(isset($commonObj))) {
+					require_once ('class.toctoc_comments_common.php');
+					$commonObj = new toctoc_comments_common;
+				}
+				$commonObj->start_toctoccomments_session(3*1440, $this->sessionSavePath);
 
 				if ((strlen($description)< $this->conf['attachments.']['webpagePreviewDescriptionMinimalLength']) || ($title =='')){
 					// if title or description is still missing now, call googleli is here
@@ -1350,7 +1352,17 @@ class toctoc_comments_webpagepreview {
 					}
 
 					session_write_close();
-					session_start();
+					if ($this->sessionSavePath == '') {
+						$this->sessionSavePath =  @file_get_contents(realpath(dirname(__FILE__)) . '/sessionpath.tmp');
+					}
+
+					if (!(isset($commonObj))) {
+						require_once ('class.toctoc_comments_common.php');
+						$commonObj = new toctoc_comments_common;
+					}
+
+					$commonObj->start_toctoccomments_session(3*1440, $this->sessionSavePath);
+
 				}
 
 				$strouthtml.='<div class="images">';
@@ -2169,10 +2181,10 @@ class toctoc_comments_webpagepreview {
 	}
 
 	/**
-	 * [Describe function...]
+	 * crops the length of descriptions to webpagePreviewDescriptionLength
 	 *
-	 * @param	[type]		$description: ...
-	 * @return	[type]		...
+	 * @param	string		$description, full length
+	 * @return	string		$description, cropped
 	 */
 	protected function croptitleordesc($description) {
 		if (strlen ($description) > $this->conf['attachments.']['webpagePreviewDescriptionLength']) {
@@ -2198,23 +2210,25 @@ class toctoc_comments_webpagepreview {
 	}
 
 	/**
-	 * [Describe function...]
+	 * cleans out titles and descriptions from unwanted stuff and converts to utf-8
 	 *
-	 * @param	[type]		$title: ...
-	 * @return	[type]		...
+	 * @param	string		$title: string to cleanse
+	 * @return	string		cleansed string
 	 */
 	protected function cleanouttitleordesc($title) {
+		$title = str_replace('&nbsp;', 'ZrGrM', $title);
 		$search = array('@<script[^>]*?>.*?</script>@si',  // Strip out javascript
 				'@<[\/\!]*?[^<>]*?>@si',            // Strip out HTML tags
 				'@<style[^>]*?>.*?</style>@siU',    // Strip style tags properly
 				'@<![\s\S]*?--[ \t\n\r]*>@',         // Strip multi-line comments including CDATA
 		);
 		$titleclean = ' ' . preg_replace($search, '', $title);
+		$searcharr = array();
 		$searcharr = explode('http', $titleclean);
-		$textdedoublespaced= '';
-		if (count($searcharr)>1) {
-			$countstrsrcharr=count($searcharr);
-			for ($d=0;$d<$countstrsrcharr;$d=$d+2) {
+		$textdedoublespaced = '';
+		if (count($searcharr) > 1) {
+			$countstrsrcharr = count($searcharr);
+			for ($d=0; $d<$countstrsrcharr; $d=$d+2) {
 				$textdedoublespaced .= $searcharr[$d];
 				$searcharr2 = explode(' ', $searcharr[$d+1]);
 				unset($searcharr2[0]);
@@ -2223,7 +2237,7 @@ class toctoc_comments_webpagepreview {
 			}
 
 		} else {
-			$textdedoublespaced= trim($titleclean);
+			$textdedoublespaced = trim($titleclean);
 		}
 
 		$title = $textdedoublespaced;
@@ -2231,7 +2245,7 @@ class toctoc_comments_webpagepreview {
 		$textdedoublespaced= '';
 		if (count($cleanspacearr)>1) {
 			$countcleanspacearr=count($cleanspacearr);
-			for ($d=0;$d<$countcleanspacearr;$d++) {
+			for ($d=0; $d<$countcleanspacearr; $d++) {
 				if (trim($cleanspacearr[$d]) != '') {
 					$textdedoublespaced .= trim($cleanspacearr[$d]) . ' ';
 				}
@@ -2239,107 +2253,68 @@ class toctoc_comments_webpagepreview {
 			}
 
 		} else {
-			$textdedoublespaced=$title;
+			$textdedoublespaced = $title;
 		}
 
-		$title=trim($textdedoublespaced);
+		$title = trim($textdedoublespaced);
 		if ($title!=''){
-			$titlearr=explode(' ', $title);
-			if (count($titlearr)>1) {
-				$counttitlearr=count($titlearr);
-				for ($i=0;$i<$counttitlearr;$i++) {
-					$titlearr2=explode('-', $titlearr[$i]);
-					if (count($titlearr2)>1) {
-						$counttitlearr2=count($titlearr2);
-						for ($ti=0;$ti<$counttitlearr2;$ti++) {
-							if (!$this->docutf8declared) {
-								if ((mb_detect_encoding($titlearr2[$ti], 'UTF-8', TRUE) === FALSE) == FALSE) {
-
-									$countrogs= count(explode('?', $titlearr2[$ti]));
-									$titletmp = utf8_decode($titlearr2[$ti]);
-									if (count(explode('?', $titletmp))<=$countrogs) {
-										$titlearr2[$ti]=$titletmp;
-									}
-
-								}
-
-								if (mb_detect_encoding($titlearr2[$ti], 'UTF-8', TRUE) === FALSE) {
-									$titlearr2[$ti] = utf8_encode($titlearr2[$ti]);
-								}
-
-							} else {
-								if (mb_detect_encoding($titlearr2[$ti], 'UTF-8', TRUE) === FALSE) {
-									$titlearr2[$ti] = utf8_encode($titlearr2[$ti]);
-								}
-
-							}
-
-							$counttitlearr2=count($titlearr2);
+			$titlearr = array();
+			$titlearr = explode(' ', $title);
+			if (count($titlearr) > 1) {
+				$counttitlearr = count($titlearr);
+				for ($i=0; $i<$counttitlearr; $i++) {
+					$titlearr2 = array();
+					$titlearr2 = explode('-', $titlearr[$i]);
+					if (count($titlearr2) > 1) {
+						$counttitlearr2 = count($titlearr2);
+						for ($ti=0; $ti<$counttitlearr2; $ti++) {
+							$titlearr2[$ti]=$this->checkandcorrUTF8 ($titlearr2[$ti]);
 						}
-
 						$titlearr[$i]=implode ('-', $titlearr2);
 					} else {
-						if (!$this->docutf8declared) {
-							if ((mb_detect_encoding($titlearr[$i], 'UTF-8', TRUE) === FALSE) == FALSE) {
-								$countrogs= count(explode('?', $titlearr[$i]));
-								$countpms= strlen($titlearr[$i]);
-								$titletmp = utf8_decode($titlearr[$i]);
-								if (count(explode('?', $titletmp))<=$countrogs) {
-									if (strlen($titletmp)<=$countpms) {
-										$titlearr[$i]=$titletmp;
-									}
+						$titlearr[$i]=$this->checkandcorrUTF8($titlearr[$i]);
+ 					}
 
-								}
-
-							}
-
-							if (mb_detect_encoding($titlearr[$i], 'UTF-8', TRUE) === FALSE) {
-								$titlearr[$i] = utf8_encode($titlearr[$i]);
-							}
-
-						} else {
-							if (mb_detect_encoding($titlearr[$i], 'UTF-8', TRUE) === FALSE) {
-								$titlearr[$i] = utf8_encode($titlearr[$i]);
-							}
-
-						}
-
-					}
-
-					$counttitlearr=count($titlearr);
 				}
-
-				$title=implode (' ', $titlearr);
+				$title=implode(' ', $titlearr);
 			} else {
-				if (!$this->docutf8declared) {
-					if ((mb_detect_encoding($title, 'UTF-8', TRUE) === FALSE) == FALSE) {
-						$countrogs= count(explode('?', $title));
-						$titletmp = utf8_decode($title);
-						if (count(explode('?', $titletmp))<=$countrogs) {
-							$title=$titletmp;
-						}
+				$title=$this->checkandcorrUTF8($title);
+			}
 
-					}
+		}
+		$title = str_replace('ZrGrM', '&nbsp;', $title);
+		return $title;
+	}
 
-					if (mb_detect_encoding($title, 'UTF-8', TRUE) === FALSE) {
-						$title = utf8_encode($title);
-					}
-
-				} else {
-					if (mb_detect_encoding($title, 'UTF-8', TRUE) === FALSE) {
-						$title = utf8_encode($title);
-					}
-
+	/**
+	 * Checks a string if it's utf-8 and does the best to output utf-8
+	 *
+	 * @param	string		$strtocheck: string to check
+	 * @return	string		utf-8 formated string
+	 */
+	protected function checkandcorrUTF8($strtocheck) {
+		if ((mb_detect_encoding($strtocheck, 'UTF-8', TRUE) === FALSE) == FALSE) {
+			$countrogs= count(explode('?', $strtocheck));
+			$countpms= strlen($strtocheck);
+			$titletmp = utf8_decode($strtocheck);
+			if (count(explode('?', $titletmp))<=$countrogs) {
+				if (strlen($titletmp)<=$countpms) {
+					$strtocheck=$titletmp;
 				}
 
 			}
 
 		}
 
-		$title=htmlspecialchars_decode($title, ENT_QUOTES);
-		$title=html_entity_decode($title, ENT_NOQUOTES, 'UTF-8');
+		if (mb_detect_encoding($strtocheck, 'UTF-8', TRUE) === FALSE) {
+			$titletmp = utf8_encode($strtocheck);
+			$strtocheck=$titletmp;
+		}
 
-		return $title;
+		$strtocheck = htmlspecialchars_decode($strtocheck, ENT_QUOTES);
+		$strtocheck = html_entity_decode($strtocheck, ENT_NOQUOTES, 'UTF-8');
+
+		return $strtocheck;
 	}
 }
 ?>

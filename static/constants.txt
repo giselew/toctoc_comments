@@ -55,6 +55,9 @@ plugin.tx_toctoccomments_pi1 {
 	
 	# cat=plugin.tx_toctoccomments_pi1: Basic//21; type=string; label=Font Family for HTML E-Mail: Fonts to be used in HTML-E-mails
 	HTMLEmailFontFamily = tahoma,verdana,arial,sans-serif
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic//22; type=int+; label=Timeout for User-Sessions in minutes
+	sessionTimeout = 540
 
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//01; type=string; label=Date format: Date format specification. See PHP date() function for details. If empty, uses TYPO3 date format defined in Install tool
 	dateFormat =
@@ -70,6 +73,9 @@ plugin.tx_toctoccomments_pi1 {
 	
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//05; type=boolean; label=Create links in comments:If enabled, will search comment text for links (using "http://" or "www." as trigger) and create HTML links automatically.
 	autoConvertLinks = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//05; type=int+; label=Crop Length for created links in comments:Autoconverted links will be cropped if they exceed this length (Values: 40 - 150)
+	autoConvertLinksCropLength = 50
 
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//06; type=boolean; label=Admin can give direct comments on comments:When notification mails for new comments come in, the admin can give a direct reply which will be showed under the comment. Requires modified comments_response extension to be installed.
 	adminCommentResponse = 0
@@ -518,29 +524,35 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Theme//03; type=int+; label=Textarea height: Height of textareas of forms, 16 - 30.
 	boxmodelTextareaLineHeight = 20
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//03; type=int+; label=Textarea number of lines: How many lines the textarea contains ? 1 - 6.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//04; type=int+; label=Textarea number of lines: How many lines the textarea contains ? 1 - 6.
 	boxmodelTextareaNbrLines = 1
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//04; type=int+; label=Boxmodel element x-spacing:Horizontal spacing between elements in the boxmodel, 0 - 10.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//05; type=int+; label=Boxmodel element x-spacing:Horizontal spacing between elements in the boxmodel, 0 - 10.
 	boxmodelSpacing = 4
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//05; type=int+; label=CSS-Line Height:Lineheight in the plugin, 14 - 40.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//06; type=int+; label=CSS-Line Height:Lineheight in the plugin, 14 - 40.
 	boxmodelLineHeight = 16
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//05; type=boolean; label=CSS-Line Height:Preserve original line-height, saves some lines of CSS, but results with ratingstars and ilike thumbs can be out of mesure.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//07; type=boolean; label=CSS-Line Height:Preserve original line-height, saves some lines of CSS, but results with ratingstars and ilike thumbs can be out of mesure.
 	boxmodelLineHeightPreserve = 0
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//06; type=boolean; label=Use themeFontFamily as font-family for the entire plugin.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//08; type=boolean; label=Use themeFontFamily as font-family for the entire plugin.
 	usethemeFontFamilyForPlugin = 1
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//07; options[full=1,half=2,third=3,boxmodelSpacing=4]; label=Indent for levels: Indent in fraction of user image size or, if 4, set to boxmodelSpacing
+	# cat=plugin.tx_toctoccomments_pi1: Theme//09; options[full=1,half=2,third=3,boxmodelSpacing=4]; label=Indent for levels: Indent in fraction of user image size or, if 4, set to boxmodelSpacing
 	boxmodelLevelIndent = 2
 		
-	# cat=plugin.tx_toctoccomments_pi1: Theme//08; type=int+; label=Width of labels, 50 - 200.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//10; type=int+; label=Width of labels, 50 - 200.
 	boxmodelLabelWidth = 134
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//09; type=int+; label=Size of Form Inputfields, 12 - 40.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//11; type=int+; label=Size of Form Inputfields, 12 - 40.
 	boxmodelInputFieldSize = 35
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//12; type=boolean; label=Inputfield design: Uses the old default - layouted(0) - or non layouted(1) design for form input field and labels.
+	boxmodelLabelInputPreserve = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//13; type=string; label=responsive Steps in px: This are the window-widths in pixels when toctoc_comments changes the layout to fit in the place on the screen. Defaults are the original values from the CSS-file.
+	responsiveSteps = 350,450
 	
 	# cat=plugin.tx_toctoccomments_pi1: Debug//01; type=boolean; label=Use of debugging features such as show run-times, caching and session resets.
 	useDebug = 0

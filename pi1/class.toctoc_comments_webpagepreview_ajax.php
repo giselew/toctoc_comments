@@ -76,7 +76,7 @@ public $extKey = 'toctoc_comments';
 
 		$data_str = $_POST['dataconf'];
 		$data = unserialize(base64_decode($data_str));
-		$conf = $this->commonObj->unmirrorConf($this, $data['conf']);
+		$conf = $this->commonObj->unmirrorConf($data['conf']);
 
 		$data_str = $_POST['data'];
 		$data = unserialize(base64_decode($data_str));

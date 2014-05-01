@@ -37,10 +37,13 @@
  *
  *
  *
- *   56: class toctoc_comments_common
- *   65:     public function unmirrorConf($pObj, $confDiff)
+ *   59: class toctoc_comments_common
+ *  110:     public function unmirrorConf($confDiff)
+ *  145:     public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '')
+ *  196:     private function getSessionSavePath()
+ *  215:     private function ensureSessionSavePathExists($sessionSavePath)
  *
- * TOTAL FUNCTIONS: 1
+ * TOTAL FUNCTIONS: 4
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -55,29 +58,190 @@
  */
 class toctoc_comments_common {
 	/**
- * adds the conf-difference again to the mirror of the conf
- * and reconstuct the full conf
- *
- * @param	array		$confDiff: ...
- * @param	[type]		$confDiff: ...
- * @return	array		$confout
- */
-	public function unmirrorConf($pObj, $confDiff) {
-		session_name('sess_' . $pObj->extKey);
-		session_start();
-		if ($_SESSION['dontUseMirrorConf'] == 0) {
-			$mirrorconf=array();
-			$mirrorconf=unserialize(base64_decode($_SESSION['mirrorconf']));
-			if (is_array($confDiff)) {
-				$confout = array_replace_recursive($mirrorconf, $confDiff);
+	 * The path to our typo3temp (where we can write our sessions). Set in the
+	 * constructor.
+	 *
+	 * @var string
+	 */
+	private $typo3tempPath;
+
+	/**
+	 * Path where to store our session files in typo3temp. %s will be
+	 * non-guessable.
+	 *
+	 * @var string
+	 */
+	private $sessionPath = 'TocTocCommentsSessions/%s';
+
+	/**
+	 * the cookie to store the session ID of the install tool
+	 *
+	 * @var string
+	 */
+	private $cookieName = 'TocTocComments';
+	private $extKey = 'toctoc_comments';
+	/**
+	 * time (minutes) to expire an ununsed session
+	 *
+	 * @var integer
+	 */
+	private $expireTimeInMinutes = 60;
+
+	/**
+	 * time (minutes) to generate a new session id for our current session
+	 *
+	 * @var integer
+	 */
+	private $regenerateSessionIdTime = 5;
+
+	/**
+	 * part of the referer when the install tool has been called from the backend
+	 *
+	 * @var string
+	 */
+	private $backendFile = 'index.php';
+	/**
+	 * adds the conf-difference again to the mirror of the conf
+	 * and reconstuct the full conf
+	 *
+	 * @param	array		$confDiff: difference to the mirrorconf
+	 * @return	array		$confout: rebuilt conf
+	 */
+	public function unmirrorConf($confDiff) {
+		$this->start_toctoccomments_session(3*1440);
+		if (intval($_SESSION['dontUseMirrorConf']) == 0) {
+			if (isset($_SESSION['mirrorconf'])) {
+				$mirrorconf=array();
+
+				$mirrorconf=unserialize(base64_decode($_SESSION['mirrorconf']));
+				if (is_array($confDiff)) {
+					if (is_array($mirrorconf)) {
+						$confout = array_replace_recursive($mirrorconf, $confDiff);
+					} else {
+						$confout = '';
+					}
+
+				} else {
+					$confout = $mirrorconf;
+				}
+
 			} else {
-				$confout = $mirrorconf;
+				$confout = '';
 			}
 
 			return $confout;
 		} else {
 			return $confDiff;
 		}
+	}
+
+	/**
+	 * Starts and handles Session used
+	 *
+	 * @param	[type]		$expireTimeInMinutes: ...
+	 * @param	[type]		$sessionSavePathSaved: ...
+	 * @return	[type]		...
+	 */
+	public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '') {
+		$this->expireTimeInMinutes=intval($expireTimeInMinutes);
+		$this->typo3tempPath = PATH_site . 'typo3temp/';
+		// Start our PHP session early so that hasSession() works
+		if ($sessionSavePathSaved == '') {
+			if(TYPO3_version == 'TYPO3_version') {
+				$sessionSavePath =  @file_get_contents(realpath(dirname(__FILE__)) . '/sessionpath.tmp');
+				$sessionSavePathSaved = $sessionSavePath;
+			} else {
+				if (version_compare(TYPO3_version, '6.0', '<')) {
+					$sitepath=t3lib_div::getIndpEnv('TYPO3_SITE_PATH');
+				} else {
+					$sitepath=\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('TYPO3_SITE_PATH');
+				}
+
+				$sessionSavePath = $this->getSessionSavePath();
+			}
+
+		} else {
+			$sessionSavePath = $sessionSavePathSaved;
+		}
+
+		session_name('sess_' . $this->extKey);
+		session_save_path($sessionSavePath);
+
+		ini_set('session.gc_probability', 100);
+		ini_set('session.gc_divisor', 100);
+		ini_set('session.gc_maxlifetime', $this->expireTimeInMinutes*60);
+ 		session_start();
+ 		if ($sessionSavePathSaved == '') {
+ 			if (TYPO3_version != 'TYPO3_version') {
+ 				if (!(file_exists(realpath(dirname(__FILE__)) . '/sessionpath.tmp'))) {
+			 		if (version_compare(TYPO3_version, '6.0', '<')) {
+			 			t3lib_div::writeFile(realpath(dirname(__FILE__)) . '/sessionpath.tmp', $sessionSavePath);
+			 		} else	{
+			 			\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile(realpath(dirname(__FILE__)) . '/sessionpath.tmp', $sessionSavePath);
+			 		}
+
+ 				}
+
+ 			}
+
+ 		}
+
+	}
+
+	/**
+	 * Returns the path where to store our session files
+	 *
+	 * @return	[type]		...
+	 */
+	private function getSessionSavePath() {
+		if (version_compare(TYPO3_version, '6.0', '<')) {
+			$sessionSavePath = sprintf($this->typo3tempPath . $this->sessionPath, md5('session:' .	$GLOBALS['TYPO3_CONF_VARS']['BE']['installToolPassword']));
+		} else {
+			$sessionSavePath = sprintf($this->typo3tempPath . $this->sessionPath, \TYPO3\CMS\Core\Utility\GeneralUtility::hmac('session:' .
+						$GLOBALS['TYPO3_CONF_VARS']['BE']['installToolPassword']));
+		}
+
+		$this->ensureSessionSavePathExists($sessionSavePath);
+		return $sessionSavePath;
+	}
+	/**
+	 * Create directories for the session save path
+	 * and throw an exception if that fails.
+	 *
+	 * @param	string		$sessionSavePath The absolute path to the session files
+	 * @return	[type]		...
+	 * @throws \RuntimeException
+	 */
+	private function ensureSessionSavePathExists($sessionSavePath) {
+		$indexContent = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">';
+		$indexContent .= '<HTML><HEAD<TITLE></TITLE><META http-equiv=Refresh Content="0; Url=../../">';
+		$indexContent .= '</HEAD></HTML>';
+		if (!is_dir($sessionSavePath)) {
+			if (version_compare(TYPO3_version, '6.0', '<')) {
+				try {
+					t3lib_div::mkdir_deep($sessionSavePath);
+				} catch (\RuntimeException $exception) {
+					throw new \RuntimeException('Could not create session folder "' . $sessionSavePath . '". Make sure typo3temp/ is writeable!', 1294587484);
+				}
+
+				t3lib_div::writeFile($sessionSavePath . '/.htaccess', 'Order deny, allow' . '
+' . 'Deny from all' . '
+');
+				t3lib_div::writeFile($sessionSavePath . '/index.html', $indexContent);
+			} else {
+				try {
+					\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($sessionSavePath);
+				} catch (\RuntimeException $exception) {
+					throw new \RuntimeException('Could not create session folder in typo3temp/. Make sure it is writeable!', 1294587484);
+				}
+				\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($sessionSavePath . '/.htaccess', 'Order deny, allow' . '
+' . 'Deny from all' . '
+');
+				\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($sessionSavePath . '/index.html', $indexContent);
+			}
+
+		}
+
 	}
 
 }

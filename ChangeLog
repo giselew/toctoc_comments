@@ -381,12 +381,33 @@
 	* When a user picture or an avatar picture cannot be found on your server, by whatever reason, an image from toctoc.ch is displayed. It's a text in courier new, black on white: "image not found"
 	* JavaScript files are minified now, resulting in 40% reduction of the concerned files size. Uncompressed versions are available in zip-file js.uncompressed.zip
 	
-2015-02-26  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+2014-02-26  Gisèle Wendl  <gisele.wendl@toctoc.ch>
 	* Release of version 5.0.1
 	* Fixed JavaScript bug "After edit and save comment, the save comment event is not rebound"
 	* Deleted smilie "frown = :[" from setup.txt. It interacted with BB-Codes
-	* Fixed JavaScript error for AJAX page part refreshs after logins/logouts: "ids on tag that appear in first place in the HTML were not refreshed"
+	* Fixed JavaScript error for AJAX page part refreshs after logins/logouts: "ids on tags that appear in first place in the HTML were not refreshed"
 	* Fixed JavaScript bug "Fill comment with several lines, then <delete> all of them: No resize happens"
 	* Made regular language files for the backend module (compatibility TYPO3-language-server)
 	* Fixed JavaScript bug "Entering comment title and pressing enter, like for form submit, submits the form to page"
 	* Added TS-Option theme.boxmodelLineHeightPreserve for the CSS-line height: Preserve original line-height, it saves some lines of CSS, but results with ratingstars and ilike thumbs can be out of measure. 
+
+2014-05-01  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 5.1.0
+	* Please change to the new template, it changed a little because of improvements in HTML-quality and support for $TYPO3_CONF_VARS['FE']['versionNumberInFilename'].
+	* CSS: Fixed calculation for top-margin of ratingstars and like-button with new entries in boxmodell_system.txt
+	* CSS: added some @media-instructions to assume responsive behaviours of word-breaks, placings of comments and different look for login form
+	* Added TS-Option theme.responsiveSteps (pixel). These are the screen-widths when layouting in toctoc_comments can change.
+	  The two available steps concern the word-breaks and placing of comments and indented element.
+	  The option can be adjusted by page, thus allowing very nice control over the responsive behaviour inside the plugin. 
+	* Added TS-Option advanced.autoConvertLinksCropLength, cropping autoconverted links to a reasonable length (40 - 150)
+	* Fixed PHP-code bug "some servers did output the HTML of the AJAX-Login-Standaloneplugin with an erroneous /div> at the end"
+	* PHP: toctoc_comments-PHP-Sessions are now isolated from other sessions in typo3temp. New TS-Option sessionTimeout allows to fix session life time. Default is 9 hours (540 minutes)
+	* PHP: When the session is expired a message is displayed: "Your PHP-Session has expired. Please reload the page"
+	* CSS: added the missing line-height for scope-titles depending on theme.boxmodelLineHeight (boxmodell_system.txt)
+	* Added TS-Option theme.boxmodelLabelInputPreserve which allows to layout the inputfields and label as in former versions or minimizes the layouting (size and so on), so it's possible to add the CSS classes of toctoc_comments to your custom.css-file (vaild for the design of your site) and change them to your look.
+	* Fixed JavaScript Bug "AJAX pagepartrefreshs after AJAX-Logins left over the outerHTML of ids which should be removed." Now the entire tag is removed properly.
+	* Fixed comments report form
+	* Fixed option theme.boxmodelLabelWidth, added support for boxmodelLabelWidth in the boxmodels
+	* Size of Popup-Picures fully depends on attachments.picUploadMaxDimX. This is the maximal width for the image in the popup. With this width some responsive behaviour of the popups are defined.
+	* Added support for $TYPO3_CONF_VARS['FE']['versionNumberInFilename']
+	* Fixed bug in Backendplugin under TYPO3 6.2.0: "External Prefix (and other fields) shows up as mandatory"

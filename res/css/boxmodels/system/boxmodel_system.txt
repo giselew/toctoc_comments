@@ -1,4 +1,13 @@
 Boxmodel
+padding detail bereich von bilder-popups
+CSS
+padding: 4px;
+padding: {boxmodelSpacing}px;
+Selectors
+.txtc_details
+***
+
+Boxmodel
 Line-Height 20 Textarea
 CSS
 line-height: 20px;
@@ -88,6 +97,16 @@ div.tx-tc-ct-form-field-1, div.tx-tc-ct-form-field-1nl
 ***
 
 Boxmodel
+implement boxmodel Label Width
+CSS
+width: 134px;
+width: {boxmodelLabelWidth}px;
+Selectors
+.tx-tc-ct-label-ntf
+.tx-tc-ct-label, .tx-tc-ct-label-cap
+***
+
+Boxmodel
 Line-Height 16
 CSS
 line-height: 16px;
@@ -104,6 +123,26 @@ Selectors
 .tx-tc-ct-rybox
 .toctoc-comments-pi1
 .tx-tc-ct-cnt span, .tx-tc-ct-viewcnt span
+***
+
+Boxmodel
+width of popup image
+CSS
+max-width: 700px;
+max-width: {picUploadMaxDimX}px;
+Selectors
+.txtc_overlay img.tx-tc-images-img-browse
+***
+
+Boxmodel
+width of popup image box
+CSS
+max-width: 900px;
+max-width: {wboxpopup}px;
+Rules
+{wboxpopup}=({picUploadMaxDimX}+200)
+Selectors
+.txtc_overlay
 ***
 
 Boxmodel
@@ -374,7 +413,22 @@ Selectors
 ***
 
 Boxmodel
-Top 3 (ratings)
+Line-Height 18 (ratings), addition
+CSS
++line-height: 18px;
+line-height: {22bb}px;
+Rules
+{22bb}={boxmodelLineHeight}
+Selectors
+.tx-tc-cts-dp .tx-tc-text-top .tx-tc-atrts-dp .tx-tc-rts-area .tx-tc-rts-container .tx-tc-rts-li .tx-tc-rts
+.tx-tc-text-top .tx-tc-atrts-dp .tx-tc-rts-area .tx-tc-rts-container .tx-tc-firstvote .tx-tc-rts-li .tx-tc-rts
+.tx-tc-text-top .tx-tc-atrts-dp .tx-tc-rts-area .tx-tc-rts-cntrdata .tx-tc-rts-li .tx-tc-rts
+.tx-tc-text-top .tx-tc-scopetitle
+.tx-tc-text-top .tx-tc-scopetitlebold
+***
+
+Boxmodel
+ratings, top of stars
 CSS
 top: 3px;
 top: {24}px;
@@ -383,7 +437,18 @@ Rules
 Selectors
 .tx-tc-rts-dp
 ***
-    
+
+Boxmodel
+Top ratings, top of stars
+CSS
+top: 3px;
+top: {24tr}px;
+Rules
+{24tr}={boxmodelLineHeightHalf}
+Selectors
+.tx-tc-trt-rating-rating-wrap .tx-tc-rts-dp
+***
+
 Boxmodel
 Height 24 ctsbrowse
 CSS
