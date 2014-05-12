@@ -194,6 +194,7 @@ class toctoc_comments_common {
 	 * @return	[type]		...
 	 */
 	private function getSessionSavePath() {
+		
 		if (version_compare(TYPO3_version, '6.0', '<')) {
 			$sessionSavePath = sprintf($this->typo3tempPath . $this->sessionPath, md5('session:' .	$GLOBALS['TYPO3_CONF_VARS']['BE']['installToolPassword']));
 		} else {
@@ -219,7 +220,11 @@ class toctoc_comments_common {
 		if (!is_dir($sessionSavePath)) {
 			if (version_compare(TYPO3_version, '6.0', '<')) {
 				try {
-					t3lib_div::mkdir_deep($sessionSavePath);
+					
+					$subpath = str_replace('/%s','', $this->sessionPath);
+					
+					t3lib_div::mkdir_deep($this->typo3tempPath, $subpath);
+					t3lib_div::mkdir_deep($this->typo3tempPath . '/' . $subpath . '/', md5('session:' .	$GLOBALS['TYPO3_CONF_VARS']['BE']['installToolPassword']));
 				} catch (\RuntimeException $exception) {
 					throw new \RuntimeException('Could not create session folder "' . $sessionSavePath . '". Make sure typo3temp/ is writeable!', 1294587484);
 				}
