@@ -79,10 +79,11 @@ class toctoc_comments_eID {
 	private $clearCacheNeeded = TRUE;
 
 	public function init() {
+		
 		$GLOBALS['LANG'] = t3lib_div::makeInstance('language');
 		require_once(t3lib_extMgm::extPath('toctoc_comments', 'class.toctoc_comments_api.php'));
 		$this->apiObj = t3lib_div::makeInstance('toctoc_comments_api');
-
+		
 		$this->lang = t3lib_div::_GET('lng');
 		if ($this->lang == '') {
 			$GLOBALS['LANG']->init('default');
@@ -119,13 +120,14 @@ class toctoc_comments_eID {
 		}
 		$data_str ='';
 		$data_str_id = t3lib_div::_GET('confenc');
+		
 		if (intval($data_str_id) > 0) {
 			$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('mailconf', 'tx_toctoc_comments_cache_mailconf',
 					'id=' . $data_str_id);
 			if (count($rows) == 1) {
 				$data_str = $rows[0]['mailconf'];
 			}
-
+			
 			if ($data_str == '') {
 				$this->messageinternal .=  str_replace('%s', $data_str_id, $GLOBALS['LANG']->getLL('wrong_conf')) . '<br />';
 			}
@@ -133,8 +135,7 @@ class toctoc_comments_eID {
 		} else {
 			$data_str=$data_str_id;
 		}
-
-		$data = unserialize(base64_decode($data_str));
+		$data = unserialize(base64_decode(rawurldecode($data_str)));
 		$this->conf =$data;
 		$this->processing = t3lib_div::_GET('processing');
 		if (!$this->processing) {
