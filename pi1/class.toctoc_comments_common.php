@@ -41,7 +41,7 @@
  *  110:     public function unmirrorConf($confDiff)
  *  145:     public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '')
  *  196:     private function getSessionSavePath()
- *  215:     private function ensureSessionSavePathExists($sessionSavePath)
+ *  216:     private function ensureSessionSavePathExists($sessionSavePath)
  *
  * TOTAL FUNCTIONS: 4
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -194,7 +194,7 @@ class toctoc_comments_common {
 	 * @return	[type]		...
 	 */
 	private function getSessionSavePath() {
-		
+
 		if (version_compare(TYPO3_version, '6.0', '<')) {
 			$sessionSavePath = sprintf($this->typo3tempPath . $this->sessionPath, md5('session:' .	$GLOBALS['TYPO3_CONF_VARS']['BE']['installToolPassword']));
 		} else {
@@ -220,9 +220,9 @@ class toctoc_comments_common {
 		if (!is_dir($sessionSavePath)) {
 			if (version_compare(TYPO3_version, '6.0', '<')) {
 				try {
-					
-					$subpath = str_replace('/%s','', $this->sessionPath);
-					
+
+					$subpath = str_replace('/%s', '', $this->sessionPath);
+
 					t3lib_div::mkdir_deep($this->typo3tempPath, $subpath);
 					t3lib_div::mkdir_deep($this->typo3tempPath . '/' . $subpath . '/', md5('session:' .	$GLOBALS['TYPO3_CONF_VARS']['BE']['installToolPassword']));
 				} catch (\RuntimeException $exception) {

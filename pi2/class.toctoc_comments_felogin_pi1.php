@@ -399,7 +399,11 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 				$response->data=$content;
 				$response->refresh=trim($this->conf['refreshIdList']);
-				echo json_encode($response);
+				
+				$answerarr = $redirect . 'toctoc-data-sep' . $content . 'toctoc-data-sep' . trim($this->conf['refreshIdList']);
+				$responsedec= base64_encode($answerarr);
+				echo $responsedec;
+				//echo json_encode($response);
 				die();
 			}
 		}

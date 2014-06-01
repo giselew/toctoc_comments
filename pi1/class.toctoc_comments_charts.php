@@ -72,7 +72,22 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 		//specs: $displayfields = 'titlepart1 titlepart2, longertext, linktoimage';
 		$show_uid='showUid';
 		$debug='';
-		$restrictor='';
+
+		if (version_compare(TYPO3_version, '4.6', '<')) {
+			$tmpint = t3lib_div::testInt($conf['storagePid']);
+		} else {
+			$tmpint = t3lib_utility_Math::canBeInterpretedAsInteger($conf['storagePid']);
+		}
+		$pidcond='';
+		if ($tmpint) {
+			$conf['storagePid'] = intval($conf['storagePid']);
+			$pidcond='pid='. $conf['storagePid'] . ' AND ';
+		} else {
+			$conf['storagePid'] = $GLOBALS['TYPO3_DB']->cleanIntList($conf['storagePid']);
+			$pidcond='pid IN (' . $conf['storagePid'] . ') AND ';
+		}
+		//print $conf['storagePid']; exit;
+		$restrictor=$pidcond;
 
 		if ($conf['topRatings.']['topRatingsrestrictToExternalPrefix'] == 'custom') {
 			if ($conf['topRatings.']['topRatingsExternalPrefix']!='') {
@@ -107,17 +122,17 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					$externaltable='tt_content';
 				}
 
-				$restrictor='reference LIKE "'.$externaltable.'%" AND ';
+				$restrictor='reference LIKE "'.$externaltable.'%" AND ' .  $pidcond;
 			}
 
 		} elseif ($conf['topRatings.']['topRatingsrestrictToExternalPrefix'] == 'comments') {
-			$restrictor='reference LIKE "tx_toctoc_comments_comments%" AND ';
+			$restrictor='reference LIKE "tx_toctoc_comments_comments%" AND ' .  $pidcond;
 			$mmtable='tx_toctoc_comments_comments';
 			$externaltable=$mmtable;
 			$conf['topRatings.']['topRatingsExternalPrefix']=$mmtable;
 
 		} elseif ($conf['topRatings.']['topRatingsrestrictToExternalPrefix'] == 'content') {
-			$restrictor='reference LIKE "tt_conten%" AND ';
+			$restrictor='reference LIKE "tt_conten%" AND ' .  $pidcond;
 			$mmtable='tt_content';
 			$externaltable=$mmtable;
 			$conf['topRatings.']['topRatingsExternalPrefix']=$mmtable;
@@ -186,7 +201,8 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					$okdatelikes . ' as okdate,
 					sum(ilike)-sum(idislike) as sumilike,
 					sum(ilike)+sum(idislike) as nbrvotes,
-					'. $conf['ratings.']['maxValue'] . '*((sum(ilike)-sum(idislike))/(sum(ilike)+sum(idislike))) as sumilikedislikevote
+					'. $conf['ratings.']['maxValue'] . '*((sum(ilike)-sum(idislike))/(sum(ilike)+sum(idislike))) as sumilikedislikevote,
+					min(pid) AS pid
 					FROM tx_toctoc_comments_feuser_mm
 					GROUP BY reference, ' . $okdatelikes . ' HAVING ' . $restrictor . 'okdate>0  AND nbrvotes>= ' . $numberofvotesrequired
 					. ' ORDER BY okdate DESC, sumilike DESC, nbrvotes, ref';
@@ -220,7 +236,8 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					$datesince.' THEN 1 ELSE' . $addonsqlforoldratings .'END) as okdate,
 					sum(myrating)/' . $conf['ratings.']['maxValue'] . ' as sumilikedislike,
 					count(uid) as nbrvotes,
-					avg(myrating) as sumilikedislikevote
+					avg(myrating) as sumilikedislikevote,
+					min(pid) AS pid
 					FROM tx_toctoc_comments_feuser_mm
 					GROUP BY reference,
 					(CASE WHEN myrating = 0 THEN 0 ELSE 1 END) *(CASE WHEN deleted = 0 THEN 1 ELSE 0 END) * (CASE WHEN reference_scope = 0 THEN 1 ELSE 0 END) *
@@ -271,7 +288,8 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					0
 					END
 					END) as okdate,
-					sum(myrating/' . $conf['ratings.']['maxValue'] . ') as sumilikedislike, count(uid) as nbrvotes, avg(myrating) as sumilikedislikevote
+					sum(myrating/' . $conf['ratings.']['maxValue'] . ') as sumilikedislike, count(uid) as nbrvotes, avg(myrating) as sumilikedislikevote,
+					min(pid) AS pid
 					FROM tx_toctoc_comments_feuser_mm
 					GROUP BY reference,
 					(CASE WHEN myrating = 0 THEN 0 ELSE 1 END) *
@@ -313,7 +331,8 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							ELSE 0 END
 							END) as okdate,
 					sum(ilike-idislike) as sumilikedislike, count(uid) as nbrvotes, ' . intval($conf['ratings.']['maxValue']) .
-					'*(sum(ilike-idislike)/count(uid))  as sumilikedislikevote
+					'*(sum(ilike-idislike)/count(uid))  as sumilikedislikevote,
+					min(pid) AS pid
 					FROM tx_toctoc_comments_feuser_mm
 					GROUP BY reference,
 					(CASE WHEN deleted = 0 THEN 1 ELSE 0 END) *
@@ -407,7 +426,8 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					count(uid) as nbrvotes,
 					min(tstampseen) as firstview,
 					max(tstampseen) as lastview,
-					sum(seen) as sumilikedislikevote
+					sum(seen) as sumilikedislikevote,
+					min(pid) AS pid
 					FROM tx_toctoc_comments_feuser_mm
 					GROUP BY reference, (CASE WHEN seen = 0 THEN 0 ELSE 1 END) *(CASE WHEN deleted = 0 THEN 1 ELSE 0 END) *
 							(CASE WHEN reference_scope = 0 THEN 1 ELSE 1 END) * (CASE WHEN tstampseen > '.$datesince.' THEN 1 ELSE' . $addonsqlforoldviews .'END)
@@ -524,7 +544,8 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					max(tstamp) as lastview4,
 					sum(seen) as sumseen,
 					sum(seen)+' .
-					intval($conf['advanced.']['activityMultiplicatorRating']) .'*(sum(ilike)+sum(idislike)+sum(CASE WHEN myrating>0 THEN 1 ELSE 0 END)) as sumilikedislikevote
+					intval($conf['advanced.']['activityMultiplicatorRating']) .'*(sum(ilike)+sum(idislike)+sum(CASE WHEN myrating>0 THEN 1 ELSE 0 END)) as sumilikedislikevote,
+							min(pid) AS pid
 					FROM tx_toctoc_comments_feuser_mm
 					GROUP BY reference,
 							(CASE WHEN (seen = 0 AND ilike=0 AND myrating=0) THEN 0 ELSE 1 END) *(CASE WHEN deleted = 0 THEN 1 ELSE 0 END) *  (CASE WHEN tstampseen > '.
@@ -540,7 +561,6 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					if (intval($rowsmerged1['firstview2'])<$date) {
 						$date = intval($rowsmerged1['firstview2']);
 					}
-
 				}
 
 				if (intval($rowsmerged1['firstview3'])>0) {
@@ -1065,7 +1085,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 
 								$testbblen=strlen($textcroppedleft .$textcroppedrightarr[0]);
 
-								$bbterminatorarr= $this->checkbbcrop($text, $testbblen);
+								$bbterminatorarr= $this->checkbbcrop($text, $testbblen, $conf, $pObj);
 
 								$textcroppedleft .=$textcroppedrightarr[0] . $bbterminatorarr[0] . '...';
 								$text =$textcroppedleft;

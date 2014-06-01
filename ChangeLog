@@ -411,3 +411,24 @@
 	* Size of Popup-Picures fully depends on attachments.picUploadMaxDimX. This is the maximal width for the image in the popup. With this width some responsive behaviour of the popups are defined.
 	* Added support for $TYPO3_CONF_VARS['FE']['versionNumberInFilename']
 	* Fixed bug in Backendplugin under TYPO3 6.2.0: "External Prefix (and other fields) shows up as mandatory"
+		
+2014-06-01  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 5.2.0
+	* Please change to the new template
+	* Changed display of youtube-videos to the new embed-style, which allows videos to be seen also on tablets and handy
+	* Fixed CSS display of top rated item entry to "display: table;"
+	* added support for storagePid in top ratings and recent comments, storagePid can be a single folder or a list of folders
+	* E-Mail notifications about new comments to commenters contain now a hot link to the new comment (New comment has a highlight-frame and the webpage is positioned on the comment)
+	* fixed bug with unwanted additional "<" at the end of voting on comments and in shortlikes-style (only visible on LINUX systems)
+	* fixed bug "approving comments from mail sometimes generated a white page, comments were not approved"
+	* In the comments tree when opening collapsed comments from level 3 or deeper, the display of the opened comment box had a problem in display - changed the JavaScript to the correct CSS-values "display: table;" (instead of block)
+	* jquery.tools must no longer be included in page.includeJSlibs, the extension now uses the file jquery.toctoc.tools.min.js. jquery.tools.min.js is identical to this file and by compatibility reasons with former 
+	    versions the old file is still part of the extension. Furthermore, toctoc_comments checks if jquery.tools.min.js is present in page.includeJSlibs (or includeJS) and then suppresses the link to 
+	    jquery.toctoc.tools.min.
+	* removed jQuery 1.7 from jquery.toctoc.tools.min.js. This is important for users of jQuery newer than 1.9, the old version jquery.tools.min.js made it impossible to use another jQuery version than 1.7.
+	    If you encounter JavaScript errors like "b.browser is not defined", this is because you use jQuery newer 1.9 - the "b.browser error" probably comes from another jQuery-library used than those shipped with toctoc_comments.
+	* updated to jQuery.simplemodal 1.4.4.
+	* made jQuery.simplemodal and jQuery.tools compatible jQuery >= 1.9 ($.browser was removed in jQuery and needed to be substituted)
+	* made jQuery.elastic compatible jQuery 1.7 with newer versions, (border-box CSS style is not token in account by jQuery 1.7.2 and lower)
+	* fixed bug (in PHP) "After stand alone login from facebook and if a new userpic was created, user pictures in Plugins on other pages sometimes were missing."
+	* when toctoc_comments is run in useSessionCache = 0 now it's made save that the SESSION is reset. 

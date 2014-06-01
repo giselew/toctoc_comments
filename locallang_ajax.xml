@@ -21,4 +21,8 @@
 			<label index="session_expired">Your PHP-Session has expired. Please reload the page</label>
 		</languageKey>
 	</data>
+	<orig_hash type="array">
+	</orig_hash>
+	<orig_text type="array">
+	</orig_text>
 </T3locallang>

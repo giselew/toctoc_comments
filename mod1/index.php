@@ -62,7 +62,6 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 	 * @return	[type]		...
 	 */
 	public function main()	{
-		//global $BACK_PATH, $TCA_DESCR, $TCA, $CLIENT, $TYPO3_CONF_VARS;
 		$this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['toctoc_comments']);
         $max_records = $this->extConf['max_records'];
 
@@ -232,6 +231,30 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
                 else if($_POST['bulkact'] == '5') {
                   $upd = $GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_comments SET deleted=1 WHERE uid IN ('.$fields_new.')');
                 }
+                if ((intval($_POST['bulkact']) >= 1) && (intval($_POST['bulkact']) <= 5)) {
+                	$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_toctoc_comments_comments', 'uid IN ('.$fields_new.')', '', '');
+                	$num_rows = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
+                	if (intval($num_rows) > 0) {
+                		while($row=$GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+                			$external_ref_uid = $row['external_ref_uid'];
+                			$res2 = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_toctoc_comments_plugincachecontrol', 'external_ref_uid="'.$external_ref_uid.'"', '', '');
+                			$num_rows2 = $GLOBALS['TYPO3_DB']->sql_num_rows($res2);
+                			if ($num_rows2) {
+                				$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_plugincachecontrol SET ' .
+                						'tstamp=' . time() .
+                						' WHERE external_ref_uid_="' . $external_ref_uid . '"');
+                			} else {
+                				$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_plugincachecontrol',
+                						array(
+                								'tstamp' => time(),
+                								'external_ref_uid' => $external_ref_uid,
+                						)
+                				);
+                			}
+                		}
+                	}
+                }
+                
               }
             }
 

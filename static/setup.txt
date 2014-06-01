@@ -683,7 +683,7 @@ plugin.tx_toctoccomments_pi2 {
   }
 }
 
-plugin.tx_toctoccomments_pi2._CSS_DEFAULT_STYLE < plugin.tx_felogin._CSS_DEFAULT_STYLE
+plugin.tx_toctoccomments_pi2._CSS_DEFAULT_STYLE >
 
 plugin.tx_toctoccomments_pi2._LOCAL_LANG.default < plugin.tx_felogin._LOCAL_LANG.default
 

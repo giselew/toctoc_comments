@@ -38,8 +38,8 @@
  *
  *   69: class toctoc_comments_eID
  *   81:     public function init()
- *  155:     public function main()
- *  369:     protected function ipBlock()
+ *  156:     public function main()
+ *  370:     protected function ipBlock()
  *
  * TOTAL FUNCTIONS: 3
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -79,11 +79,11 @@ class toctoc_comments_eID {
 	private $clearCacheNeeded = TRUE;
 
 	public function init() {
-		
+
 		$GLOBALS['LANG'] = t3lib_div::makeInstance('language');
 		require_once(t3lib_extMgm::extPath('toctoc_comments', 'class.toctoc_comments_api.php'));
 		$this->apiObj = t3lib_div::makeInstance('toctoc_comments_api');
-		
+
 		$this->lang = t3lib_div::_GET('lng');
 		if ($this->lang == '') {
 			$GLOBALS['LANG']->init('default');
@@ -120,14 +120,14 @@ class toctoc_comments_eID {
 		}
 		$data_str ='';
 		$data_str_id = t3lib_div::_GET('confenc');
-		
+
 		if (intval($data_str_id) > 0) {
 			$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('mailconf', 'tx_toctoc_comments_cache_mailconf',
 					'id=' . $data_str_id);
 			if (count($rows) == 1) {
 				$data_str = $rows[0]['mailconf'];
 			}
-			
+
 			if ($data_str == '') {
 				$this->messageinternal .=  str_replace('%s', $data_str_id, $GLOBALS['LANG']->getLL('wrong_conf')) . '<br />';
 			}

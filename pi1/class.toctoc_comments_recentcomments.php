@@ -66,8 +66,22 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 	 * @return	string		Generated HTML
 	 */
 	public function mainRecentComments($pObj, $conf, $feuserid) {
-
-		$where = 'tx_toctoc_comments_comments.pid = ' . $conf['storagePid'] . $this->enableFields('tx_toctoc_comments_comments', $pObj);
+		if (version_compare(TYPO3_version, '4.6', '<')) {
+			$tmpint = t3lib_div::testInt($conf['storagePid']);
+		} else {
+			$tmpint = t3lib_utility_Math::canBeInterpretedAsInteger($conf['storagePid']);
+		}
+		
+		$pidcond='';
+		if ($tmpint) {
+			$conf['storagePid'] = intval($conf['storagePid']);
+			$pidcond='pid='. $conf['storagePid'] . ' ';
+		} else {
+			$conf['storagePid'] = $GLOBALS['TYPO3_DB']->cleanIntList($conf['storagePid']);
+			$pidcond='pid IN (' . $conf['storagePid'] . ') ';
+		}
+				
+		$where = 'tx_toctoc_comments_comments.' . $pidcond . $this->enableFields('tx_toctoc_comments_comments', $pObj);
 		$where .= ' AND tx_toctoc_comments_comments.approved =1';
 		$condfeusergroup='';
 		if ($conf['restrictToExternalPrefix'] !='') {

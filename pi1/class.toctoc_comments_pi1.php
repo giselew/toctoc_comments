@@ -25,49 +25,41 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 /**
-* class.toctoc_comments_pi1.php
-*
-* AJAX Social Network Components.
-*
-*
-* @author Gisele Wendl <gisele.wendl@toctoc.ch>
-*/
-/**
  * [CLASS/FUNCTION INDEX of SCRIPT]
  *
  *
  *
- *   99: class tx_toctoccomments_pi1 extends tslib_pibase
- *  174:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
- * 2082:     protected function checkJSLoc()
- * 2296:     protected function checkCSSTheme()
- * 2407:     protected function checkCSSLoc()
- * 2845:     protected function makesharingcss ()
- * 3025:     protected function initprefixToTableMap()
- * 3062:     protected function init()
- * 3652:     protected function mergeConfiguration()
- * 3910:     protected function fetchConfigValue($param)
- * 3938:     protected function ae_detect_ie()
- * 3962:     protected function boxmodel()
- * 4488:     protected function calculate_string( $mathString )
- * 4511:     protected function locationHeaderUrlsubDir()
- * 4530:     protected function currentPageName()
- * 4558:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
- * 4589:     protected function doClearCache ($forceclear=FALSE)
- * 4623:     protected function getPluginCacheControlTstamp ($external_ref_uid)
- * 4647:     protected function getLastUserAdditionTstamp ()
- * 4670:     protected function initLegacyCache ()
- * 4684:     protected function check_scopes()
- * 4842:     protected function initializeprefixtotablemap()
- * 4883:     protected function sharrrejs()
- * 4962:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
- * 5015:     private function resolveBackPath($pathStr)
- * 5050:     private function dirname($path)
- * 5064:     private function revExplode($delimiter, $string, $count = 0)
+ *   91: class tx_toctoccomments_pi1 extends tslib_pibase
+ *  166:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
+ * 2074:     protected function checkJSLoc()
+ * 2288:     protected function checkCSSTheme()
+ * 2399:     protected function checkCSSLoc()
+ * 2837:     protected function makesharingcss ()
+ * 3017:     protected function initprefixToTableMap()
+ * 3054:     protected function init()
+ * 3644:     protected function mergeConfiguration()
+ * 3902:     protected function fetchConfigValue($param)
+ * 3930:     protected function ae_detect_ie()
+ * 3954:     protected function boxmodel()
+ * 4480:     protected function calculate_string( $mathString )
+ * 4503:     protected function locationHeaderUrlsubDir()
+ * 4522:     protected function currentPageName()
+ * 4550:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
+ * 4581:     protected function doClearCache ($forceclear=FALSE)
+ * 4615:     protected function getPluginCacheControlTstamp ($external_ref_uid)
+ * 4639:     protected function getLastUserAdditionTstamp ()
+ * 4662:     protected function initLegacyCache ()
+ * 4676:     protected function check_scopes()
+ * 4834:     protected function initializeprefixtotablemap()
+ * 4875:     protected function sharrrejs()
+ * 4954:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
+ * 5007:     private function resolveBackPath($pathStr)
+ * 5042:     private function dirname($path)
+ * 5056:     private function revExplode($delimiter, $string, $count = 0)
  *
  *              SECTION: needed by class.tx_commentsresponse_hooks.php
- * 5087:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 5110:     public function createLinks($text, $conf = NULL)
+ * 5079:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 5102:     public function createLinks($text, $conf = NULL)
  *
  * TOTAL FUNCTIONS: 28
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -102,7 +94,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '510';
+	public $extVersion = '520';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
 	public $externalUid;						// UID of external record
@@ -263,7 +255,17 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$this->activateClearPageCache=TRUE;
 			$this->conf['advanced.']['useSessionCache'] = 0;
 		}
-
+		
+		if ((($_SESSION['AJAXimagesrefresh'] == TRUE) || ($this->conf['advanced.']['useSessionCache'] == 0)) && (intval($_SESSION['cachepurged'])!=1)) {
+		// clean sessions if on a different page the plugin is call with useSessionCache == 0
+		// is equivalent to ?puge_cache=1
+			$saveactivateClearPageCache=$this->activateClearPageCache;
+			$this->activateClearPageCache=TRUE;
+			$_SESSION=array();
+			$this->doClearCache();
+			$this->activateClearPageCache=$saveactivateClearPageCache;
+			$_SESSION['cachepurged']=1;
+		}
 		if ((intval(t3lib_div::_GP('purge_cache'))==1) && (intval($_SESSION['cachepurged'])!=1)) {
 			$saveactivateClearPageCache=$this->activateClearPageCache;
 			$this->activateClearPageCache=TRUE;
@@ -2177,10 +2179,10 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$tcsc4=substr($tcsc, 299877, 99959);
 
 			$tcsmiliesenchtml='var tcsc1 = \''. $tcsc1.'\';
-							var tcsc2 = \''. $tcsc2.'\';
-							var tcsc3 = \''. $tcsc3.'\';
-							var tcsc4 = \''. $tcsc4.'\';
-							var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
+var tcsc2 = \''. $tcsc2.'\';
+var tcsc3 = \''. $tcsc3.'\';
+var tcsc4 = \''. $tcsc4.'\';
+var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 ';
 			if ($this->showsdebugprint==TRUE) {
 				$starttimedebug22=microtime(TRUE);
@@ -2587,8 +2589,8 @@ div.tx-tc-ct-form-field input, textarea.tx-tc-ctinput-textarea, textarea.tx-tc-c
 		}
 		$marginratingnumber = p;
 		$paddingratingnumber = $this->conf['theme.']['boxmodelSpacing'];
-		$margincontent = $paddingratingnumber; // intval(5.5*($this->conf['theme.']['boxmodelSpacing']))+intval($this->conf['topRatings.']['topratingsnumberwidth'])+intval($this->conf['topRatings.']['topratingsimagesize']);
-		$margincontentnp = $paddingratingnumber; //2*$marginratingnumber+$this->conf['topRatings.']['topratingsnumberwidth']+2*$paddingratingnumber+2;
+		$margincontent = $paddingratingnumber; 
+		$margincontentnp = $paddingratingnumber; 
 
 		$vidmaxwidth=round(intval($this->conf['attachments.']['webpagePreviewHeight'])*(4/3), 0);
 		$picstrvid='.tx-tc-pvs-vid-img-size {
@@ -3374,11 +3376,11 @@ sharrre design 2 and 4, calculated specifics
 				}
 
 				$this->tcchangepasswordcard = '';
-				$locchangePasswordFormhtml= '		var tcpasswordcard ="";
+				$locchangePasswordFormhtml= '	var tcpasswordcard ="";
 ';
 
 				if ((intval($this->conf['advanced.']['loginRequired']) == 0) && ($this->conf['pluginmode'] != 5)) {
-					$locLoginFormhtml= '		var tclogincard ="";
+					$locLoginFormhtml= '	var tclogincard ="";
 ';
 				} else {
 
@@ -3391,7 +3393,7 @@ sharrre design 2 and 4, calculated specifics
 						$this->tcchangepasswordcard =$getChangePasswordForm;
 						$locchangePasswordFormhtmlenc = base64_encode($getChangePasswordForm);
 						$_SESSION['doChangePasswordForm'] = 2;
-						$locchangePasswordFormhtml= '		var tcpasswordcard ="' . $locchangePasswordFormhtmlenc . '";
+						$locchangePasswordFormhtml= '	var tcpasswordcard ="' . $locchangePasswordFormhtmlenc . '";
 ';
 					}
 
@@ -3407,7 +3409,7 @@ sharrre design 2 and 4, calculated specifics
 					$locLoginFormhtml= str_replace('###SIGNON_FORM###', '',
 							$locLoginFormhtml);
 					$loctest= explode('<div class="tx-tc-loginform" id="tx-tc-loginform">', $locLoginFormhtml);
-					if  ($this->conf['pluginmode'] != 5) {
+					if  (intval($this->conf['pluginmode']) != 5) {
 						$locLoginFormhtml= str_replace('<div class="tx-tc-loginform" id="tx-tc-loginform">', '', $locLoginFormhtml);
 						$locLoginFormhtml= substr($locLoginFormhtml, 0, (strlen($locLoginFormhtml)-6));
 						$locLoginFormhtmlarr = explode('<!-- ###LOGIN_FORM### -->', $locLoginFormhtml);
@@ -3418,7 +3420,7 @@ sharrre design 2 and 4, calculated specifics
 						$locLoginFormhtml=implode('', $locLoginFormhtmlarr);
 						$testlogoutarr = explode('formlo', $locLoginFormhtml);
 						$locLoginFormhtml=substr($locLoginFormhtml, 0, strlen($locLoginFormhtml));
-					} elseif (($this->conf['pluginmode'] == 5) && (count($loctest) > 2)){
+					} elseif ((intval($this->conf['pluginmode']) == 5) && (count($loctest) > 2)){
 						$locLoginFormhtml= substr($locLoginFormhtml, strlen('<div class="tx-tc-loginform" id="tx-tc-loginform">'));
 						$locLoginFormhtmlarr = explode('<!-- ###LOGIN_FORM### -->', $locLoginFormhtml);
 						if(count($locLoginFormhtmlarr)>2) {
@@ -3426,7 +3428,7 @@ sharrre design 2 and 4, calculated specifics
 						}
 
 						$locLoginFormhtml=implode('ttt', $locLoginFormhtmlarr);
-					} elseif (($this->conf['pluginmode'] == 5) && (count($loctest)<3)){
+					} elseif ((intval($this->conf['pluginmode']) == 5) && (count($loctest)<3)){
 						$testlogoutarr = explode('formlo', $locLoginFormhtml);
 						$adddiv='</div>';
 						if (count($testlogoutarr) > 1) {
@@ -3465,42 +3467,42 @@ sharrre design 2 and 4, calculated specifics
 
 					$this->tclogincard = str_replace('Youre logged in.', '', $locLoginFormhtml);
 					$locLoginFormhtml = base64_encode($locLoginFormhtml);
-					$locLoginFormhtml = '		var tclogincard ="' . $locLoginFormhtml . '";
+					$locLoginFormhtml = '	var tclogincard ="' . $locLoginFormhtml . '";
 ';
 				}
 
-				$jscontent = $locLoginFormhtml . $locchangePasswordFormhtml;
-				$jscontent .= '		var errCommentRequiredLength = ' . intval($this->conf['minCommentLength']) . ';' . "\n";
-				$jscontent .= '		var maxCommentLength = ' . intval($this->conf['maxCommentLength']) . ';' . "\n";
-				$jscontent .= '		var selectedTheme = "' . $this->conf['theme.']['selectedTheme'] . '";' . "\n";
-				$jscontent .= '		var boxmodelTextareaAreaTotalHeight = ' . intval($this->boxmodelTextareaAreaTotalHeight) . ';' . "\n";
-				$jscontent .= '		var boxmodelTextareaHeight = ' . intval($this->boxmodelTextareaHeight) . ';' . "\n";
+				$jscontent = '	var errCommentRequiredLength = ' . intval($this->conf['minCommentLength']) . ';' . "\n";
+				$jscontent .= '	var maxCommentLength = ' . intval($this->conf['maxCommentLength']) . ';' . "\n";
+				$jscontent .= '	var selectedTheme = "' . $this->conf['theme.']['selectedTheme'] . '";' . "\n";
+				$jscontent .= '	var boxmodelTextareaAreaTotalHeight = ' . intval($this->boxmodelTextareaAreaTotalHeight) . ';' . "\n";
+				$jscontent .= '	var boxmodelTextareaHeight = ' . intval($this->boxmodelTextareaHeight) . ';' . "\n";
 				if ($this->conf['theme.']['boxmodelLabelInputPreserve']==0) {
-					$jscontent .= '		var boxmodelLabelWidth = ' . intval($this->conf['theme.']['boxmodelLabelWidth']) . ';' . "\n";
+					$jscontent .= '	var boxmodelLabelWidth = ' . intval($this->conf['theme.']['boxmodelLabelWidth']) . ';' . "\n";
 				}else {
-					$jscontent .= '		var boxmodelLabelWidth = 0;' . "\n";
+					$jscontent .= '	var boxmodelLabelWidth = 0;' . "\n";
 				}
-				$jscontent .= '		var boxmodelSpacing = ' . intval($this->conf['theme.']['boxmodelSpacing']) . ';' . "\n";
-				$jscontent .= '		var boxmodelLineHeight = ' . intval($this->conf['theme.']['boxmodelLineHeight']) . ';' . "\n";
-				$jscontent .= '		var confpvsheight = ' . intval($this->conf['attachments.']['webpagePreviewHeight']) . ';' . "\n";
-				$jscontent .= '		var confcommentsPerPage = ' . intval($this->conf['advanced.']['commentsPerPage']) . ';' . "\n";
-				$jscontent .= '		var confuserpicsize = ' . intval($this->conf['UserImageSize']) . ';' . "\n";
-				$jscontent .= '		var confuseUserImage = ' . intval($this->conf['useUserImage']) . ';' . "\n";
-				$jscontent .= '		var confreplyModeInline = ' . intval($this->conf['advanced.']['replyModeInline']) . ';' . "\n";
-				$jscontent .= '		var confreplyModeInlineOpenForm = ' . intval($this->conf['advanced.']['replyModeInlineOpenForm']) . ';' . "\n";
-				$jscontent .= '		var textnameCommentSeparator = "' . base64_encode(trim($this->conf['advanced.']['nameCommentSeparator'])) . '";' . "\n";
-				$jscontent .= '		var confuseNameCommentSeparator = ' . intval($this->conf['advanced.']['useNameCommentSeparator']) . ';' . "\n";
+				$jscontent .= '	var boxmodelSpacing = ' . intval($this->conf['theme.']['boxmodelSpacing']) . ';' . "\n";
+				$jscontent .= '	var boxmodelLineHeight = ' . intval($this->conf['theme.']['boxmodelLineHeight']) . ';' . "\n";
+				$jscontent .= '	var confpvsheight = ' . intval($this->conf['attachments.']['webpagePreviewHeight']) . ';' . "\n";
+				$jscontent .= '	var confcommentsPerPage = ' . intval($this->conf['advanced.']['commentsPerPage']) . ';' . "\n";
+				$jscontent .= '	var tcdateformat = ' . $this->conf['advanced.']['dateFormatOldStyle'] . ';' . "\n";
+				$jscontent .= '	var confuserpicsize = ' . intval($this->conf['UserImageSize']) . ';' . "\n";
+				$jscontent .= '	var confuseUserImage = ' . intval($this->conf['useUserImage']) . ';' . "\n";
+				$jscontent .= '	var confreplyModeInline = ' . intval($this->conf['advanced.']['replyModeInline']) . ';' . "\n";
+				$jscontent .= '	var confreplyModeInlineOpenForm = ' . intval($this->conf['advanced.']['replyModeInlineOpenForm']) . ';' . "\n";
+				$jscontent .= '	var textnameCommentSeparator = "' . base64_encode(trim($this->conf['advanced.']['nameCommentSeparator'])) . '";' . "\n";
+				$jscontent .= '	var confuseNameCommentSeparator = ' . intval($this->conf['advanced.']['useNameCommentSeparator']) . ';' . "\n";
 				$starttimedebug22=microtime(TRUE);
 				$jsservervars = '<script type="text/javascript">
-		var tccommnetidstart = ' . $mincommentid  .';
-		var tccommnetidto = ' . $maxcommentid  .';
-		var tcdateformat = ' . $this->conf['advanced.']['dateFormatOldStyle'] .';
-		var pageid = ' . $GLOBALS['TSFE']->id .';
-		var loginRequiredIdLoginForm = "' . $loginRequiredIdLoginForm .'";
-		var loginRequiredRefreshCIDs = "";
-		var loginRequiredRefreshRecs = "";
-		var global_loggedon = '.$tlogon.';
-' . $jscontent . '	</script>';
+	var tccommnetidstart = ' . $mincommentid  .';
+	var tccommnetidto = ' . $maxcommentid  .';
+	var pageid = ' . $GLOBALS['TSFE']->id .';
+	var loginRequiredIdLoginForm = "' . $loginRequiredIdLoginForm .'";
+	var loginRequiredRefreshCIDs = "";
+	var loginRequiredRefreshRecs = "";
+	var global_loggedon = '. $tlogon . ';' . "\n". $locLoginFormhtml . $locchangePasswordFormhtml . "\n". '
+</script>'. "\n". '<script type="text/javascript">
+' . $jscontent . "\n". '</script>';
 
 				$lancode= $_SESSION['activelang'];
 				if ($this->conf['theme.']['selectedBoxmodel'] !='') {
@@ -3534,7 +3536,7 @@ sharrre design 2 and 4, calculated specifics
 
 				$ajaxloginjs='';
 				$freecapjs='';
-				if ((intval($this->conf['advanced.']['loginRequired']) == 1) || ($this->conf['pluginmode'] == 5)) {
+				if ((intval($this->conf['advanced.']['loginRequired']) == 1) || (intval($this->conf['pluginmode']) == 5)) {
 					$filenm = $GLOBALS['TSFE']->tmpl->getFileName('EXT:toctoc_comments/res/js/tx-tc-afl-' . $this->extVersion . '.js');
 					$mod1_file = $this->createVersionNumberedFilename($filenm);
 					$ajaxloginjs='<script type="text/javascript" src="'.$mod1_file.'"></script>';
@@ -3567,10 +3569,59 @@ sharrre design 2 and 4, calculated specifics
 				$mod1_file = $this->createVersionNumberedFilename($filenm);
 				$filenm2 = $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/js/tx-tc-' .$this->extVersion. '.js';
 				$jsmain = $this->createVersionNumberedFilename($filenm2);
-
+				$filenjqt = $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/js/jquery.toctoc.tools.min.js';
+				$jquerytoolsfile = '<script type="text/javascript" src="' . $this->createVersionNumberedFilename($filenjqt) .'"></script>';
+				
+				$arrpagejslibs = ($GLOBALS['TSFE']->pSetup['includeJSlibs.']);
+				$arrpagejs = ($GLOBALS['TSFE']->pSetup['includeJS.']);
+				$arrfooterjs = ($GLOBALS['TSFE']->pSetup['includeJSFooterlibs.']);
+				
+				$jqueryfound = FALSE;
+				$jquerytoolsfound = FALSE;
+				
+				foreach ($arrpagejslibs as $keyofpagesetup => $valueoftext) {
+					$strtest = str_replace('jquery-1', '', $valueoftext);
+					if ($strtest!=$valueoftext) {
+						$jqueryfound = TRUE;
+						
+					}					
+					$strtest = str_replace('jquery.tools.min', '', $valueoftext);
+					if ($strtest!=$valueoftext) {
+						$jquerytoolsfound = TRUE;
+					}
+				}				
+				foreach ($arrpagejs as $keyofpagesetup => $valueoftext) {
+					$strtest = str_replace('jquery-1', '', $valueoftext);
+					if ($strtest!=$valueoftext) {
+						$jqueryfound = TRUE;
+					}
+					$strtest = str_replace('jquery.tools.min', '', $valueoftext);
+					if ($strtest!=$valueoftext) {
+						$jquerytoolsfound = TRUE;
+					}
+				}
+				if (is_array($arrfooterjs)){
+					foreach ($arrfooterjs as $keyofpagesetup => $valueoftext) {
+						$strtest = str_replace('jquery-1', '', $valueoftext);
+						if ($strtest!=$valueoftext) {
+							$jqueryfound = TRUE;
+						}
+					}
+				}
+				
+				// compatibility fix for updates from version 5.1 to 5.1.1
+				if ($jquerytoolsfound == TRUE) {
+					$jquerytoolsfile = '<!-- jquery.tools.min found in page.includeJSlibs, you can delete it from there, the new jquery.toctoc.tools.min.js will then be loaded in this place -->';
+				}
+				
+				if ($jqueryfound == FALSE) {
+					$jquerytoolsfile .= "\n" . '<!-- Warning: jquery not found in page.includeJSlibs, nor includeJS or includeJSFooterlibs -->';
+				}
+				
 				$headerParts = $this->cObj->substituteMarkerArrayCached($headerParts, array(
 						'###SITE_REL_PATH###' => $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments'),
 						'###LANCODE###' => $lancode,
+						'###JQUERYTOOLS###' => $jquerytoolsfile,
 						'###BOXMODEL###' => $mod1_file,
 						'###EMOJICSS###' => $emojicss,
 						'###EMOJIJS###' => $emojijs,
@@ -4956,8 +5007,10 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 	 * = FALSE (BE) / "querystring" (FE) : add timestamp as parameter
 	 *
 	 * @param	string		$file Relative path to file including all potential query parameters (not htmlspecialchared yet)
-	 * @param	boolean		$forceQueryString If settings would suggest to embed in filename, this parameter allows us to force the versioning to occur in the query string. This is needed for scriptaculous.js which cannot have a different filename in order to load its modules (?load=...)
-	 * @return	Relative		path with version filename including the timestamp
+	 * @param	boolean		$forceQueryString If settings would suggest to embed in filename, this parameter allows us to force ...
+	 *                      ...the versioning to occur in the query string. This is needed for scriptaculous.js ...
+	 *                      ...which cannot have a different filename in order to load its modules (?load=...)
+	 * @return	string		Relative path with version filename including the timestamp
 	 */
 	protected function createVersionNumberedFilename($file, $forceQueryString = FALSE) {
 		$lookupFile = explode('?', $file);

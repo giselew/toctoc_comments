@@ -1034,7 +1034,7 @@ class toctoc_comments_ajax {
 
 		}
 
-		if($this->conf['ratings.']['disableIpCheck'] || (!$apiObj->isVoted($this->ref, $scopeid, $this->feuser) || ($ratingsmode=='autostatic')) ||
+		if($this->conf['ratings.']['disableIpCheck'] || (!$apiObj->isVoted($this->ref, $scopeid, $this->feuser, TRUE) || ($ratingsmode=='autostatic')) ||
 				!(($this->cmd == 'vote') || ($this->cmd == 'votearticle'))) {
 			$feusertoinsert = 0;
 			$fetoctocusertoinsert = '';

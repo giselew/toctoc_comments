@@ -1,6 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- ###HEADER_ADDITIONS### begin -->
+###JQUERYTOOLS###
 <link href="###BOXMODEL###" type="text/css" rel="stylesheet" />
 <link href="###SITE_REL_PATH###res/css/flowplayer/functional.css" rel="stylesheet" type="text/css"/>
 ###EMOJICSS###
@@ -10,7 +11,7 @@
 <script type="text/javascript" src="###JSMAIN###"></script>###AJAXLOGINJS###
 <script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.sharrre-1.3.5.js"></script>
 <script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.elastic-1.6.min.js"></script>
-<script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.txtc-simplemodal.1.4.3.min.js"></script>
+<script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.txtc-simplemodal.1.4.4.min.js"></script>
 <script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.watermark.js"></script>
 <script type="text/javascript" src="###SITE_REL_PATH###res/js/flowplayer.min.js"></script>
 ###EMOJIJS###
@@ -500,14 +501,7 @@
 
 <!-- ###SUBFORMATTACHMENTVIDFLASH### begin -->
 <div class="tx-tc-vid-embed tx-tc-nodisp" id="tx-tc-cts-vid-box-###IDPLUS###p###CID###">
-	<object id="tx-tc-cts-vid-flasho-###IDPLUS###p###CID###" width="450" height="300" class="tx-tc-max-width100">
-		<param name="movie" value="###EMBEDURL###"></param>
-		<param name="allowFullScreen" value="true"></param>
-		<param name="allowscriptaccess" value="always"></param>
-		<param name="scale" value="exactfit"></param>
-		<embed id="tx-tc-cts-vid-flash-###IDPLUS###p###CID###" src="###EMBEDURL###" type="application/x-shockwave-flash" scale="exactfit" class="tx-tc-max-width100" width="450" height="300" allowscriptaccess="always" allowfullscreen="true">
-		</embed>
-	</object>
+	<iframe id="tx-tc-cts-vid-flasho-###IDPLUS###p###CID###" width="560" height="315" frameborder="0" src="###EMBEDURL###"></iframe>
 </div>
 <!-- ###SUBFORMATTACHMENTVIDFLASH### end -->
 

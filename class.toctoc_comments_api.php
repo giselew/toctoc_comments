@@ -345,8 +345,8 @@ class toctoc_comments_api {
 	 * @param	int		$feuser: ...
 	 * @return	boolean		TRUE if item was voted
 	 */
-	public function isVoted($ref, $scopeid, $feuser) {
-		$retstr = $this->lib->isVoted($ref, $this, $scopeid, $feuser);
+	public function isVoted($ref, $scopeid, $feuser, $fromAjax) {
+		$retstr = $this->lib->isVoted($ref, $this, $scopeid, $feuser, $fromAjax);
 		return $retstr;
 	}
 
@@ -367,7 +367,8 @@ class toctoc_comments_api {
 	 * @return	string		condition
 	 */
 	public function enableFields($table) {
-		$retstr = $this->lib->enableFields($table, $this);
+		$getFromSession = TRUE;
+		$retstr = $this->lib->enableFields($table, $this, $getFromSession);
 		return $retstr;
 	}
 

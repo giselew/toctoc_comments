@@ -1658,7 +1658,6 @@ label.tx-tc-CloseButton {
 	min-height: 17px;
 }
 .tx-tc-ct-prv-frame {
-	font-size: 110%;
 	line-height: 16px;
 	margin: 0;
 	padding: 0 15px 0 1px;
@@ -1828,11 +1827,18 @@ label.tx-tc-CloseButton {
 	padding: 4px;
 }
 .tx-tc-vid-embed {
-	float: left;
-	height: auto;
-	padding: 4px;
+ 	float: left; 
+/* 	height: auto; */
+/* 	padding: 4px; */
 	max-width: 91%;
 	min-width: 91%;
+}
+.video-container, .tx-tc-vid-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px; 
+    height: 0; 
+    overflow: hidden;
 }
 .tx-tc-cts-vid-formtext .tx-tc-ct-box-ctclose {
 	margin: 4px 4px 0 0;
@@ -1963,6 +1969,7 @@ span.tx-tc-emo-top-nav-on, span.tx-tc-emo-top-nav-off {
 .tx-tc-firstvote {
 	display: inline-block;
 	margin: 1px 0px -2px;
+	width: 100%;
 }
 .tx-tc-trl-rank {
 	font-size: 110%;
@@ -2023,6 +2030,7 @@ span.tx-tc-emo-top-nav-on, span.tx-tc-emo-top-nav-off {
 .tx-tc-trt-entry {
 	padding-bottom: 2px;
 	margin-bottom: 2px;
+	display: table;
 }
 .tx-tc-trt-rating-rating-wrap {
 	line-height: 20px;
@@ -2394,6 +2402,16 @@ div.tx-tc-cts-ct-dp div.tx-tc-ct-box div.tx-tc-ct-box-cttxt p.tx-tc-text {
 }
 .tx-tc-max-hgt0 {
 	max-height:0;
+}
+.tx-tc-vid-embed iframe,
+.tx-tc-vid-embed object,
+.tx-tc-vid-embed embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: 840px;
+    height: 100%;
 }
 .tx-tc-sbinit {
 	float: left; 
