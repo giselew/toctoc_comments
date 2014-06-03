@@ -3578,26 +3578,29 @@ sharrre design 2 and 4, calculated specifics
 				
 				$jqueryfound = FALSE;
 				$jquerytoolsfound = FALSE;
-				
-				foreach ($arrpagejslibs as $keyofpagesetup => $valueoftext) {
-					$strtest = str_replace('jquery-1', '', $valueoftext);
-					if ($strtest!=$valueoftext) {
-						$jqueryfound = TRUE;
-						
-					}					
-					$strtest = str_replace('jquery.tools.min', '', $valueoftext);
-					if ($strtest!=$valueoftext) {
-						$jquerytoolsfound = TRUE;
+				if (is_array($arrpagejslibs)){
+					foreach ($arrpagejslibs as $keyofpagesetup => $valueoftext) {
+						$strtest = str_replace('jquery-1', '', $valueoftext);
+						if ($strtest!=$valueoftext) {
+							$jqueryfound = TRUE;
+							
+						}					
+						$strtest = str_replace('jquery.tools.min', '', $valueoftext);
+						if ($strtest!=$valueoftext) {
+							$jquerytoolsfound = TRUE;
+						}
 					}
-				}				
-				foreach ($arrpagejs as $keyofpagesetup => $valueoftext) {
-					$strtest = str_replace('jquery-1', '', $valueoftext);
-					if ($strtest!=$valueoftext) {
-						$jqueryfound = TRUE;
-					}
-					$strtest = str_replace('jquery.tools.min', '', $valueoftext);
-					if ($strtest!=$valueoftext) {
-						$jquerytoolsfound = TRUE;
+				}
+				if (is_array($arrpagejs)){				
+					foreach ($arrpagejs as $keyofpagesetup => $valueoftext) {
+						$strtest = str_replace('jquery-1', '', $valueoftext);
+						if ($strtest!=$valueoftext) {
+							$jqueryfound = TRUE;
+						}
+						$strtest = str_replace('jquery.tools.min', '', $valueoftext);
+						if ($strtest!=$valueoftext) {
+							$jquerytoolsfound = TRUE;
+						}
 					}
 				}
 				if (is_array($arrfooterjs)){
