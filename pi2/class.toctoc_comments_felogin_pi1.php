@@ -42,29 +42,29 @@
  *  120:     protected function processRedirect()
  *  134:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
  *  236:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  419:     protected function watermark($conf, $content)
- *  457:     protected function showForgot()
- *  537:     protected function showLogout()
- *  569:     protected function showLogin()
- *  707:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
- *  743:     protected function getPreserveGetVars()
- *  771:     protected function generatePassword($len)
- *  791:     protected function getDisplayText($label, $stdWrapArray=array())
- *  803:     protected function getUserFieldMarkers()
- *  823:     protected function validateRedirectUrl($url)
- *  854:     protected function isInCurrentDomain($url)
- *  866:     protected function isInLocalDomain($url)
- *  907:     protected function isRelativeUrl($url)
- *  923:     protected function generateAndSendHash($user)
- *  989:     protected function changePassword($uid, $piHash)
- * 1111:     protected function showSignon()
- * 1419:     protected function getSignupCaptcha($required, $errcp, $cpval)
- * 1462:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
- * 1489:     protected function processSignupCaptcha($postData)
- * 1529:     protected function loginUser($facebookId)
- * 1555:     protected function storeUser($facebookUserProfile)
- * 1663:     private function copyImageFromFacebook($facebookUserId)
- * 1678:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
+ *  423:     protected function watermark($conf, $content)
+ *  461:     protected function showForgot()
+ *  541:     protected function showLogout()
+ *  573:     protected function showLogin()
+ *  711:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
+ *  747:     protected function getPreserveGetVars()
+ *  775:     protected function generatePassword($len)
+ *  795:     protected function getDisplayText($label, $stdWrapArray=array())
+ *  807:     protected function getUserFieldMarkers()
+ *  827:     protected function validateRedirectUrl($url)
+ *  858:     protected function isInCurrentDomain($url)
+ *  870:     protected function isInLocalDomain($url)
+ *  911:     protected function isRelativeUrl($url)
+ *  927:     protected function generateAndSendHash($user)
+ *  993:     protected function changePassword($uid, $piHash)
+ * 1115:     protected function showSignon()
+ * 1423:     protected function getSignupCaptcha($required, $errcp, $cpval)
+ * 1466:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ * 1493:     protected function processSignupCaptcha($postData)
+ * 1533:     protected function loginUser($facebookId)
+ * 1559:     protected function storeUser($facebookUserProfile)
+ * 1667:     private function copyImageFromFacebook($facebookUserId)
+ * 1682:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
  *
  * TOTAL FUNCTIONS: 26
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -399,7 +399,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 				$response->data=$content;
 				$response->refresh=trim($this->conf['refreshIdList']);
-				
+
 				$answerarr = $redirect . 'toctoc-data-sep' . $content . 'toctoc-data-sep' . trim($this->conf['refreshIdList']);
 				$responsedec= base64_encode($answerarr);
 				echo $responsedec;

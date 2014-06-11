@@ -66,14 +66,14 @@ require_once(t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments
 			$extref='', $tctreestate  = NULL, $commentreplyid=0, $isrefresh=0, $confSess = array())
  *  320:     public function updateComment($conf, $ctid, $content, $pid, $plugincacheid)
  *  332:     public function previewcomment($data, $conf)
- *  346:     public function isVoted($ref, $scopeid, $feuser)
+ *  346:     public function isVoted($ref, $scopeid, $feuser, $fromAjax)
  *  356:     public function initCaches()
  *  367:     public function enableFields($table)
- *  378:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
+ *  379:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
  *
  *              SECTION: needed by class.tx_commentsresponse_hooks.php
- *  397:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- *  420:     public function createLinks($text, $conf = NULL)
+ *  398:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ *  421:     public function createLinks($text, $conf = NULL)
  *
  * TOTAL FUNCTIONS: 17
  * (This index is automatically created/updated by the extension "extdeveval")

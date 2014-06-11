@@ -254,7 +254,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
                 		}
                 	}
                 }
-                
+
               }
             }
 

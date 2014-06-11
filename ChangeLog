@@ -432,3 +432,12 @@
 	* made jQuery.elastic compatible jQuery 1.7 with newer versions, (border-box CSS style is not token in account by jQuery 1.7.2 and lower)
 	* fixed bug (in PHP) "After stand alone login from facebook and if a new userpic was created, user pictures in Plugins on other pages sometimes were missing."
 	* when toctoc_comments is run in useSessionCache = 0 now it's made save that the SESSION is reset. 
+	
+2014-06-10  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 5.2.1
+	* Fixed PHP Warning that appeared when page.IncludeJS or page.IncludeJSLibs is not set
+	* removed console.log print out from jquery.elastic
+	* fixed wrong conversion of BB-Code [bq] when editing comments
+	* Set PHP compatibility to 5.2.0-5.5.99
+	
+	

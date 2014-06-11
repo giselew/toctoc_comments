@@ -31,35 +31,35 @@
  *
  *   91: class tx_toctoccomments_pi1 extends tslib_pibase
  *  166:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
- * 2074:     protected function checkJSLoc()
- * 2288:     protected function checkCSSTheme()
- * 2399:     protected function checkCSSLoc()
- * 2837:     protected function makesharingcss ()
- * 3017:     protected function initprefixToTableMap()
- * 3054:     protected function init()
- * 3644:     protected function mergeConfiguration()
- * 3902:     protected function fetchConfigValue($param)
- * 3930:     protected function ae_detect_ie()
- * 3954:     protected function boxmodel()
- * 4480:     protected function calculate_string( $mathString )
- * 4503:     protected function locationHeaderUrlsubDir()
- * 4522:     protected function currentPageName()
- * 4550:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
- * 4581:     protected function doClearCache ($forceclear=FALSE)
- * 4615:     protected function getPluginCacheControlTstamp ($external_ref_uid)
- * 4639:     protected function getLastUserAdditionTstamp ()
- * 4662:     protected function initLegacyCache ()
- * 4676:     protected function check_scopes()
- * 4834:     protected function initializeprefixtotablemap()
- * 4875:     protected function sharrrejs()
- * 4954:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
- * 5007:     private function resolveBackPath($pathStr)
- * 5042:     private function dirname($path)
- * 5056:     private function revExplode($delimiter, $string, $count = 0)
+ * 2084:     protected function checkJSLoc()
+ * 2308:     protected function checkCSSTheme()
+ * 2419:     protected function checkCSSLoc()
+ * 2857:     protected function makesharingcss ()
+ * 3037:     protected function initprefixToTableMap()
+ * 3074:     protected function init()
+ * 3716:     protected function mergeConfiguration()
+ * 3974:     protected function fetchConfigValue($param)
+ * 4002:     protected function ae_detect_ie()
+ * 4026:     protected function boxmodel()
+ * 4552:     protected function calculate_string( $mathString )
+ * 4575:     protected function locationHeaderUrlsubDir()
+ * 4594:     protected function currentPageName()
+ * 4622:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
+ * 4653:     protected function doClearCache ($forceclear=FALSE)
+ * 4687:     protected function getPluginCacheControlTstamp ($external_ref_uid)
+ * 4711:     protected function getLastUserAdditionTstamp ()
+ * 4734:     protected function initLegacyCache ()
+ * 4748:     protected function check_scopes()
+ * 4906:     protected function initializeprefixtotablemap()
+ * 4947:     protected function sharrrejs()
+ * 5029:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
+ * 5082:     private function resolveBackPath($pathStr)
+ * 5117:     private function dirname($path)
+ * 5131:     private function revExplode($delimiter, $string, $count = 0)
  *
  *              SECTION: needed by class.tx_commentsresponse_hooks.php
- * 5079:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 5102:     public function createLinks($text, $conf = NULL)
+ * 5154:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 5177:     public function createLinks($text, $conf = NULL)
  *
  * TOTAL FUNCTIONS: 28
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -94,7 +94,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '520';
+	public $extVersion = '521';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
 	public $externalUid;						// UID of external record
@@ -255,7 +255,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$this->activateClearPageCache=TRUE;
 			$this->conf['advanced.']['useSessionCache'] = 0;
 		}
-		
+
 		if ((($_SESSION['AJAXimagesrefresh'] == TRUE) || ($this->conf['advanced.']['useSessionCache'] == 0)) && (intval($_SESSION['cachepurged'])!=1)) {
 		// clean sessions if on a different page the plugin is call with useSessionCache == 0
 		// is equivalent to ?puge_cache=1
@@ -2194,14 +2194,24 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 ';
 		}
 
+		$countbbs =0;
 		$locBBhtmlarr= $this->lib->getBBCard($this->conf, $this, TRUE, TRUE);
+		if (is_array($locBBhtmlarr)) {
+			if (is_array($locBBhtmlarr['html'])) {
+				$countbbs = count($locBBhtmlarr['html']);
+
+			}
+		}
 
 		$varbbshtml='var BBs = [];' . "\n";
-		$bbi=0;
-		foreach($locBBhtmlarr as $locBBhtml) {
-			$varbbshtml .= 'BBs['. $bbi. '] = ' . "'" . $locBBhtml . "'" . ';' . "\n";
-			$bbi++;
+		for($i = 0; $i < $countbbs; $i++) {
+			$varbbshtml .= 'BBs['. $i. '] = ' . "'" . $locBBhtmlarr['html'][$i] . "'" . ';' . "\n";
 		}
+		$varbbshtml .= 'var BBsBBs = [];' . "\n";
+		for($i = 0; $i < $countbbs; $i++) {
+			$varbbshtml .= 'BBsBBs['. $i. '] = ' . "'" . $locBBhtmlarr['bb'][$i] . "'" . ';' . "\n";
+		}
+
 		$confpi2 = $this->lib->getDefaultConfig('tx_toctoccomments_pi2');
 		$scopefb = '';
 		$confpi2appId = '';
@@ -2589,8 +2599,8 @@ div.tx-tc-ct-form-field input, textarea.tx-tc-ctinput-textarea, textarea.tx-tc-c
 		}
 		$marginratingnumber = p;
 		$paddingratingnumber = $this->conf['theme.']['boxmodelSpacing'];
-		$margincontent = $paddingratingnumber; 
-		$margincontentnp = $paddingratingnumber; 
+		$margincontent = $paddingratingnumber;
+		$margincontentnp = $paddingratingnumber;
 
 		$vidmaxwidth=round(intval($this->conf['attachments.']['webpagePreviewHeight'])*(4/3), 0);
 		$picstrvid='.tx-tc-pvs-vid-img-size {
@@ -3571,11 +3581,11 @@ sharrre design 2 and 4, calculated specifics
 				$jsmain = $this->createVersionNumberedFilename($filenm2);
 				$filenjqt = $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/js/jquery.toctoc.tools.min.js';
 				$jquerytoolsfile = '<script type="text/javascript" src="' . $this->createVersionNumberedFilename($filenjqt) .'"></script>';
-				
+
 				$arrpagejslibs = ($GLOBALS['TSFE']->pSetup['includeJSlibs.']);
 				$arrpagejs = ($GLOBALS['TSFE']->pSetup['includeJS.']);
 				$arrfooterjs = ($GLOBALS['TSFE']->pSetup['includeJSFooterlibs.']);
-				
+
 				$jqueryfound = FALSE;
 				$jquerytoolsfound = FALSE;
 				if (is_array($arrpagejslibs)){
@@ -3583,15 +3593,15 @@ sharrre design 2 and 4, calculated specifics
 						$strtest = str_replace('jquery-1', '', $valueoftext);
 						if ($strtest!=$valueoftext) {
 							$jqueryfound = TRUE;
-							
-						}					
+
+						}
 						$strtest = str_replace('jquery.tools.min', '', $valueoftext);
 						if ($strtest!=$valueoftext) {
 							$jquerytoolsfound = TRUE;
 						}
 					}
 				}
-				if (is_array($arrpagejs)){				
+				if (is_array($arrpagejs)){
 					foreach ($arrpagejs as $keyofpagesetup => $valueoftext) {
 						$strtest = str_replace('jquery-1', '', $valueoftext);
 						if ($strtest!=$valueoftext) {
@@ -3611,16 +3621,16 @@ sharrre design 2 and 4, calculated specifics
 						}
 					}
 				}
-				
+
 				// compatibility fix for updates from version 5.1 to 5.1.1
 				if ($jquerytoolsfound == TRUE) {
 					$jquerytoolsfile = '<!-- jquery.tools.min found in page.includeJSlibs, you can delete it from there, the new jquery.toctoc.tools.min.js will then be loaded in this place -->';
 				}
-				
+
 				if ($jqueryfound == FALSE) {
 					$jquerytoolsfile .= "\n" . '<!-- Warning: jquery not found in page.includeJSlibs, nor includeJS or includeJSFooterlibs -->';
 				}
-				
+
 				$headerParts = $this->cObj->substituteMarkerArrayCached($headerParts, array(
 						'###SITE_REL_PATH###' => $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments'),
 						'###LANCODE###' => $lancode,
@@ -5009,10 +5019,11 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 	 * = TRUE (BE) / "embed" (FE) : modify filename
 	 * = FALSE (BE) / "querystring" (FE) : add timestamp as parameter
 	 *
-	 * @param	string		$file Relative path to file including all potential query parameters (not htmlspecialchared yet)
-	 * @param	boolean		$forceQueryString If settings would suggest to embed in filename, this parameter allows us to force ...
 	 *                      ...the versioning to occur in the query string. This is needed for scriptaculous.js ...
 	 *                      ...which cannot have a different filename in order to load its modules (?load=...)
+	 *
+	 * @param	string		$file Relative path to file including all potential query parameters (not htmlspecialchared yet)
+	 * @param	boolean		$forceQueryString If settings would suggest to embed in filename, this parameter allows us to force ...
 	 * @return	string		Relative path with version filename including the timestamp
 	 */
 	protected function createVersionNumberedFilename($file, $forceQueryString = FALSE) {

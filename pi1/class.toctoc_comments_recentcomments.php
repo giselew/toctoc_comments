@@ -39,8 +39,8 @@
  *
  *   58: class toctoc_comments_recentcomments extends toctoc_comment_lib
  *   68:     public function mainRecentComments($pObj, $conf, $feuserid)
- *  132:     public function comments_getRecentComments($rows, $conf, $pObj)
- *  447:     protected function createRCLinks($text, $refID, $commentID, $prefix, $externalprefix, $singlePid, $conf, $show_uid, $okrowsi)
+ *  146:     public function comments_getRecentComments($rows, $conf, $pObj)
+ *  461:     protected function createRCLinks($text, $refID, $commentID, $prefix, $externalprefix, $singlePid, $conf, $show_uid, $okrowsi)
  *
  * TOTAL FUNCTIONS: 3
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -71,7 +71,7 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 		} else {
 			$tmpint = t3lib_utility_Math::canBeInterpretedAsInteger($conf['storagePid']);
 		}
-		
+
 		$pidcond='';
 		if ($tmpint) {
 			$conf['storagePid'] = intval($conf['storagePid']);
@@ -80,7 +80,7 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 			$conf['storagePid'] = $GLOBALS['TYPO3_DB']->cleanIntList($conf['storagePid']);
 			$pidcond='pid IN (' . $conf['storagePid'] . ') ';
 		}
-				
+
 		$where = 'tx_toctoc_comments_comments.' . $pidcond . $this->enableFields('tx_toctoc_comments_comments', $pObj);
 		$where .= ' AND tx_toctoc_comments_comments.approved =1';
 		$condfeusergroup='';
