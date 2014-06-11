@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for extension 'ratings'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="bad_rating_value">Error: bad rating value</label>
+			<label index="wrong_check_value">Error: bad check value</label>
+			<label index="bad_ref_value">Error: bad reference value</label>
+			<label index="bad_feuser_value">Error: bad value for feuserid</label>
+			<label index="bad_cmd_value">Error: bad cmd value</label>
+			<label index="bad_conf_value">Error: bad configuration value</label>
+			<label index="bad_pid_value">Error: bad pid value</label>
+			<label index="bad_cid_value">Error: bad cid value</label>
+			<label index="bad_piVars_value">Error: bad piVars</label>
+			<label index="bad_commentid_value">Error: bad value for commentid</label>
+			<label index="forcomment">for comment</label>
+			<label index="bad_commentspics_value">Error: Cached images missing in the received AJAX Array</label>
+			<label index="session_expired">Your PHP-Session has expired. Please reload the page</label>
+		</languageKey>
+	</data>
+</T3locallang>
