@@ -1,0 +1,17 @@
+###TXTINAPPRO###:
+
+###TXTPAGE###: ###URL####tx-tc-ct-###UID###
+
+
+###TEXT_COMMENT###
+-----------------------
+###COMMENT_TEXT###
+-----------------------
+
+###TXTFROM### ###FROM### , ###TEXT_FROMMAIL###: ###FROMMAIL### (###USER_IP###)
+
+###TEXT_COMPLAINT###:
+-----------------------
+###USER_TEXT###
+-----------------------
+
