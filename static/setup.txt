@@ -52,6 +52,9 @@ plugin.tx_toctoccomments_pi1 {
    
   sessionTimeout = {$plugin.tx_toctoccomments_pi1.sessionTimeout}
   
+  # comments are hidden from search engines, if you want searchengines to index all your comments set this option to 1 (useful for single website previews)
+  dontSkipSearchEngines = 0
+    
   optionalRecordId =
   
   preventDuplicatePosts = 1
@@ -556,6 +559,8 @@ plugin.tx_toctoccomments_pi1 {
     boxmodelInputFieldSize =  {$plugin.tx_toctoccomments_pi1.boxmodelInputFieldSize}
     
     responsiveSteps = {$plugin.tx_toctoccomments_pi1.responsiveSteps}
+    
+    crunchCSS = {$plugin.tx_toctoccomments_pi1.crunchCSS}    
     
     # koogled boxmodels have either the word koogle in the name or set this to 1.
     selectedBoxmodelkoogled = 0

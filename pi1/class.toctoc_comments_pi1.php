@@ -29,39 +29,40 @@
  *
  *
  *
- *   91: class tx_toctoccomments_pi1 extends tslib_pibase
- *  166:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
- * 2084:     protected function checkJSLoc()
- * 2308:     protected function checkCSSTheme()
- * 2419:     protected function checkCSSLoc()
- * 2857:     protected function makesharingcss ()
- * 3037:     protected function initprefixToTableMap()
- * 3074:     protected function init()
- * 3716:     protected function mergeConfiguration()
- * 3974:     protected function fetchConfigValue($param)
- * 4002:     protected function ae_detect_ie()
- * 4026:     protected function boxmodel()
- * 4552:     protected function calculate_string( $mathString )
- * 4575:     protected function locationHeaderUrlsubDir()
- * 4594:     protected function currentPageName()
- * 4622:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
- * 4653:     protected function doClearCache ($forceclear=FALSE)
- * 4687:     protected function getPluginCacheControlTstamp ($external_ref_uid)
- * 4711:     protected function getLastUserAdditionTstamp ()
- * 4734:     protected function initLegacyCache ()
- * 4748:     protected function check_scopes()
- * 4906:     protected function initializeprefixtotablemap()
- * 4947:     protected function sharrrejs()
- * 5029:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
- * 5082:     private function resolveBackPath($pathStr)
- * 5117:     private function dirname($path)
- * 5131:     private function revExplode($delimiter, $string, $count = 0)
+ *   92: class tx_toctoccomments_pi1 extends tslib_pibase
+ *  167:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
+ * 2115:     protected function checkJSLoc()
+ * 2339:     protected function checkCSSTheme()
+ * 2450:     protected function checkCSSLoc()
+ * 2888:     protected function makesharingcss ()
+ * 3068:     protected function initprefixToTableMap()
+ * 3105:     protected function init()
+ * 3749:     protected function mergeConfiguration()
+ * 4007:     protected function fetchConfigValue($param)
+ * 4035:     protected function ae_detect_ie()
+ * 4059:     protected function boxmodel()
+ * 4587:     protected function crunchcss($buffer)
+ * 4612:     protected function calculate_string( $mathString )
+ * 4635:     protected function locationHeaderUrlsubDir()
+ * 4654:     protected function currentPageName()
+ * 4682:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
+ * 4713:     protected function doClearCache ($forceclear=FALSE)
+ * 4747:     protected function getPluginCacheControlTstamp ($external_ref_uid)
+ * 4771:     protected function getLastUserAdditionTstamp ()
+ * 4794:     protected function initLegacyCache ()
+ * 4808:     protected function check_scopes()
+ * 4966:     protected function initializeprefixtotablemap()
+ * 5007:     protected function sharrrejs()
+ * 5089:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
+ * 5142:     private function resolveBackPath($pathStr)
+ * 5177:     private function dirname($path)
+ * 5191:     private function revExplode($delimiter, $string, $count = 0)
  *
  *              SECTION: needed by class.tx_commentsresponse_hooks.php
- * 5154:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 5177:     public function createLinks($text, $conf = NULL)
+ * 5214:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 5237:     public function createLinks($text, $conf = NULL)
  *
- * TOTAL FUNCTIONS: 28
+ * TOTAL FUNCTIONS: 29
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -94,7 +95,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '521';
+	public $extVersion = '522';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
 	public $externalUid;						// UID of external record
@@ -174,6 +175,24 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 		$loginreset=FALSE;
 		$sdebugprintli='';
+		// give a reply to search enignes and avoid indexing of comments
+		$interestingCrawlers = array('google', 'yahoo', 'baidu', 'msnbot', 'bingbot', 'spider', 'bot.htm', 'yandex', 'jeevez' );
+		$numMatches = 0;
+		$countinterestingCrawlers =count($interestingCrawlers);
+
+		for ($i=0;$i<$countinterestingCrawlers;$i++){
+			if (str_replace(strtolower($interestingCrawlers[$i]), '', strtolower($_SERVER['HTTP_USER_AGENT'])) != strtolower($_SERVER['HTTP_USER_AGENT'])) {
+				$numMatches++;
+			}
+		}
+		if($numMatches > 0) {
+			// Found a match
+			if (intval($this->conf['dontSkipSearchEngines']) == 0) {
+				return 'botMessage_' . $this->extKey . '_' . $this->extVersion;
+			}
+			$this->conf['advanced.']['useSessionCache'] = 0;
+		}
+		// end exclude search enignes and avoid indexing of comments
 
 		if ($this->conf['debug.']['useDebugFeUserIds']!='') {
 			$dbuarr=explode(',', $this->conf['debug.']['useDebugFeUserIds']);
@@ -414,6 +433,10 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				$this->conf['advanced.']['autoConvertLinksCropLength'] = 150;
 			}
 		}
+		// disable Delicios for the text-letter Popup-Designs
+		if (($this->conf['advanced.']['dontUseSharingDelicious'] ==1) && (($this->conf['advanced.']['useSharingDesign'] == 0) || ($this->conf['advanced.']['useSharingDesign'] == 2))) {
+			$this->conf['advanced.']['dontUseSharingDelicious'] = 0;
+		}
 
 		if (!is_array(explode(',', $this->conf['theme.']['responsiveSteps']))) {
 			$this->arrResponsiveSteps[0]=350;
@@ -443,6 +466,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		$this->conf['theme.']['boxmodelLabelWidth'] =intval($this->conf['theme.']['boxmodelLabelWidth']);
 		$this->conf['theme.']['boxmodelInputFieldSize'] =intval($this->conf['theme.']['boxmodelInputFieldSize']);
 		$this->conf['theme.']['boxmodelLabelInputPreserve'] =intval($this->conf['theme.']['boxmodelLabelInputPreserve']);
+
 		if (!$this->conf['HTMLEmail']) {
 			unset($this->conf['spamProtect.']['emailTemplatecoiHTML']);
 			unset($this->conf['spamProtect.']['emailTemplateHTML']);
@@ -844,6 +868,13 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		if (($_SESSION['feuserid'] == '')) {
 			// init of session var holding fe_userid to integer value
 			$_SESSION['feuserid'] = 0;
+		}
+		$strCurrentIP = $this->lib->getCurrentIp();
+
+		if (intval($GLOBALS['TSFE']->fe_user->user['uid']) === 0) {
+			$_SESSION['toctoc_user'] = '' . $strCurrentIP . '.0';
+		} else {
+			$_SESSION['toctoc_user'] = '0.0.0.0.' . $GLOBALS['TSFE']->fe_user->user['uid'];
 		}
 
 		$_SESSION['confAJAXlogin']=array();
@@ -1424,7 +1455,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 							$idmatchtable[$olduid]=$newuid;
 
 							// check the toctoc_comments_user
-							$dataWhereuser = 'pid=' . $row['pid'] .
+							$dataWhereuser = 'deleted=0 AND pid=' . $row['pid'] .
 							' AND toctoc_comments_user = ' . $fetoctocusertoquery . '';
 							list($rowusr) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS tusr',
 									'tx_toctoc_comments_user', $dataWhereuser);
@@ -1448,7 +1479,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 								$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_user', $record);
 							}
 
-							$dataWhereStats = 'pid=' . intval($this->conf['storagePid']) .
+							$dataWhereStats = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) .
 							' AND toctoc_comments_user="' . $fetoctocusertoinsert . '"';
 
 							$sqlstr = 'SELECT COUNT(uid) AS nbrentries FROM tx_toctoc_comments_comments WHERE ' . $dataWhereStats;
@@ -3463,6 +3494,7 @@ sharrre design 2 and 4, calculated specifics
 					$locLoginFormhtml = str_replace('<!--', '', $locLoginFormhtml);
 					$locLoginFormhtml = str_replace('User login', '', $locLoginFormhtml);
 					$locLoginFormhtml = str_replace('-->', '', $locLoginFormhtml);
+
 					$locLoginFormhtml = trim($locLoginFormhtml);
 					$locLoginFormhtmlarr = explode('</form>', $locLoginFormhtml);
 					$locLoginFormhtmlarr[1] = trim($locLoginFormhtmlarr[1]);
@@ -3549,6 +3581,7 @@ sharrre design 2 and 4, calculated specifics
 				if ((intval($this->conf['advanced.']['loginRequired']) == 1) || (intval($this->conf['pluginmode']) == 5)) {
 					$filenm = $GLOBALS['TSFE']->tmpl->getFileName('EXT:toctoc_comments/res/js/tx-tc-afl-' . $this->extVersion . '.js');
 					$mod1_file = $this->createVersionNumberedFilename($filenm);
+
 					$ajaxloginjs='<script type="text/javascript" src="'.$mod1_file.'"></script>';
 					if (t3lib_extMgm::isLoaded('sr_freecap')) {
 						$confpi2 = $this->lib->getDefaultConfig('tx_toctoccomments_pi2');
@@ -4517,6 +4550,9 @@ sharrre design 2 and 4, calculated specifics
 						$contentdefaultcss = str_replace('@media (max-width: 350px)', '@media (max-width: '.$this->arrResponsiveSteps[0].'px)', $contentdefaultcss);
 						$contentdefaultcss = str_replace('@media (min-width: 350px)', '@media (min-width: '.$this->arrResponsiveSteps[0].'px)', $contentdefaultcss);
 
+						if (intval($this->conf['theme.']['crunchCSS']) == 1) {
+							$contentdefaultcss = $this->crunchcss($contentdefaultcss);
+						}
 						if (($contentdefaultcss != $content) || ($this->conf['theme.']['freezeLevelCSS'] == 0)) {
 							file_put_contents($filenamecss, $contentdefaultcss);
 						}
@@ -4541,6 +4577,30 @@ sharrre design 2 and 4, calculated specifics
 		}
 
 		return '';
+	}
+	/**
+	 * Crunches CSS
+	 *
+	 * @param	string		$buffer: ...
+	 * @return	string		...
+	 */
+	protected function crunchcss($buffer) {
+		/* remove comments */
+		$buffer = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer);
+		/* remove tabs, spaces, new lines, etc. */
+		$buffer = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $buffer);
+		/* remove unnecessary spaces */
+		$buffer = str_replace('{ ', '{', $buffer);
+		$buffer = str_replace(' }', '}', $buffer);
+		$buffer = str_replace('; ', ';', $buffer);
+		$buffer = str_replace(', ', ',', $buffer);
+		$buffer = str_replace(' {', '{', $buffer);
+		$buffer = str_replace('} ', '}', $buffer);
+		$buffer = str_replace(': ', ':', $buffer);
+		$buffer = str_replace(' ,', ',', $buffer);
+		$buffer = str_replace(' ;', ';', $buffer);
+
+		return $buffer;
 	}
 
 	/**

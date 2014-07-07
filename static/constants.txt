@@ -554,6 +554,9 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Theme//13; type=string; label=responsive Steps in px: This are the window-widths in pixels when toctoc_comments changes the layout to fit in the place on the screen. Defaults are the original values from the CSS-file.
 	responsiveSteps = 350,450
 	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//14; type=boolean; label=cruch CSS (1) or leave CSS uncompressed (0)
+	crunchCSS = 1
+	
 	# cat=plugin.tx_toctoccomments_pi1: Debug//01; type=boolean; label=Use of debugging features such as show run-times, caching and session resets.
 	useDebug = 0
 	

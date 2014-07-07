@@ -81,10 +81,10 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 		$pidcond='';
 		if ($tmpint) {
 			$conf['storagePid'] = intval($conf['storagePid']);
-			$pidcond='pid='. $conf['storagePid'] . ' AND ';
+			$pidcond='deleted=0 AND pid='. $conf['storagePid'] . ' AND ';
 		} else {
 			$conf['storagePid'] = $GLOBALS['TYPO3_DB']->cleanIntList($conf['storagePid']);
-			$pidcond='pid IN (' . $conf['storagePid'] . ') AND ';
+			$pidcond='deleted=0 AND pid IN (' . $conf['storagePid'] . ') AND ';
 		}
 		//print $conf['storagePid']; exit;
 		$restrictor=$pidcond;
@@ -202,7 +202,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					sum(ilike)-sum(idislike) as sumilike,
 					sum(ilike)+sum(idislike) as nbrvotes,
 					'. $conf['ratings.']['maxValue'] . '*((sum(ilike)-sum(idislike))/(sum(ilike)+sum(idislike))) as sumilikedislikevote,
-					min(pid) AS pid
+					min(pid) AS pid, min(deleted) AS deleted
 					FROM tx_toctoc_comments_feuser_mm
 					GROUP BY reference, ' . $okdatelikes . ' HAVING ' . $restrictor . 'okdate>0  AND nbrvotes>= ' . $numberofvotesrequired
 					. ' ORDER BY okdate DESC, sumilike DESC, nbrvotes, ref';
@@ -237,7 +237,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					sum(myrating)/' . $conf['ratings.']['maxValue'] . ' as sumilikedislike,
 					count(uid) as nbrvotes,
 					avg(myrating) as sumilikedislikevote,
-					min(pid) AS pid
+					min(pid) AS pid, min(deleted) AS deleted
 					FROM tx_toctoc_comments_feuser_mm
 					GROUP BY reference,
 					(CASE WHEN myrating = 0 THEN 0 ELSE 1 END) *(CASE WHEN deleted = 0 THEN 1 ELSE 0 END) * (CASE WHEN reference_scope = 0 THEN 1 ELSE 0 END) *
@@ -289,7 +289,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					END
 					END) as okdate,
 					sum(myrating/' . $conf['ratings.']['maxValue'] . ') as sumilikedislike, count(uid) as nbrvotes, avg(myrating) as sumilikedislikevote,
-					min(pid) AS pid
+					min(pid) AS pid, min(deleted) AS deleted
 					FROM tx_toctoc_comments_feuser_mm
 					GROUP BY reference,
 					(CASE WHEN myrating = 0 THEN 0 ELSE 1 END) *
@@ -332,7 +332,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							END) as okdate,
 					sum(ilike-idislike) as sumilikedislike, count(uid) as nbrvotes, ' . intval($conf['ratings.']['maxValue']) .
 					'*(sum(ilike-idislike)/count(uid))  as sumilikedislikevote,
-					min(pid) AS pid
+					min(pid) AS pid, min(deleted) AS deleted
 					FROM tx_toctoc_comments_feuser_mm
 					GROUP BY reference,
 					(CASE WHEN deleted = 0 THEN 1 ELSE 0 END) *
@@ -427,7 +427,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					min(tstampseen) as firstview,
 					max(tstampseen) as lastview,
 					sum(seen) as sumilikedislikevote,
-					min(pid) AS pid
+					min(pid) AS pid, min(deleted) AS deleted
 					FROM tx_toctoc_comments_feuser_mm
 					GROUP BY reference, (CASE WHEN seen = 0 THEN 0 ELSE 1 END) *(CASE WHEN deleted = 0 THEN 1 ELSE 0 END) *
 							(CASE WHEN reference_scope = 0 THEN 1 ELSE 1 END) * (CASE WHEN tstampseen > '.$datesince.' THEN 1 ELSE' . $addonsqlforoldviews .'END)
@@ -545,7 +545,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					sum(seen) as sumseen,
 					sum(seen)+' .
 					intval($conf['advanced.']['activityMultiplicatorRating']) .'*(sum(ilike)+sum(idislike)+sum(CASE WHEN myrating>0 THEN 1 ELSE 0 END)) as sumilikedislikevote,
-							min(pid) AS pid
+							min(pid) AS pid, min(deleted) AS deleted
 					FROM tx_toctoc_comments_feuser_mm
 					GROUP BY reference,
 							(CASE WHEN (seen = 0 AND ilike=0 AND myrating=0) THEN 0 ELSE 1 END) *(CASE WHEN deleted = 0 THEN 1 ELSE 0 END) *  (CASE WHEN tstampseen > '.
@@ -783,7 +783,6 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 				$prefix=substr($pageidrecord, 0, $posbeforeid);
 				$mmtable=substr($pageidrecord, 0, $posbeforeid-1);
 				$refID = substr($pageidrecord, $posbeforeid);
-
 				if (!is_array($_SESSION['prefixes'])) {
 					$displayfieldsareset = FALSE;
 					$topratingsimagesfolderset = FALSE;
@@ -899,6 +898,10 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					$_SESSION['prefixes']['tt_content']['displayfields'] = 'header crdate image sys_language_uid, bodytext';
 					$_SESSION['prefixes']['tt_content']['show_uid'] = '';
 					$_SESSION['prefixes']['tt_content']['topratingsimagesfolder'] = $conf['advanced.']['FeUserImagePath'];
+					if (version_compare(TYPO3_version, '4.99', '>')) {
+						$_SESSION['prefixes']['tt_content']['topratingsimagesfolder'] = 'fileadmin/_migrated/pics/';
+						//print 'fileadmin/_migrated/pics/'; exit;
+					}
 					$_SESSION['prefixes']['tbltt_content']['pi1_table'] ='tt_content';
 					$_SESSION['prefixes']['tbltt_content']['pi1_key'] ='tt_content';
 
@@ -978,6 +981,10 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 				$rowsdisplaycompressed = array();
 				// Create link text, cropping texts to topRatingsTextCropLength chars max
 				if (count($rowsdisplay)>0) {
+					if ($mmtable=='tt_content') {
+						$tt_contentUid = $rowsdisplay[0]['uid'];
+						$syslanid = $rowsdisplay[0]['sys_language_uid'];
+					}
 					$k=0;
 					$rowsdisplaycompressed = array();
 					foreach($rowsdisplay[0] as $key=>$val) {
@@ -985,7 +992,30 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 						if (($key== 'crdate') || ($key== 'tstamp') || ($key== 'datetime') || ($key== 'start_date')) {
 							$rowsdisplaycompressed[4] = $this->formatDate($val, $pObj, FALSE, $conf);
 						} elseif ((substr($key, 0, 5)== 'image') || (substr($key, 0, 5)== 'photo') || ($key== 'picture')) {
-							$rowsdisplaycompressed[3] = $val;
+							if (intval($val) == 0) {
+								$rowsdisplaycompressed[3] = $val;
+							} else {
+								$dataWhereContentPic = 'sys_file_reference.tablenames="tt_content" AND sys_file_reference.uid_foreign=tt_content.uid ' .
+														'AND sys_file_reference.deleted=0 AND sys_file_reference.uid_local=sys_file.uid ' .
+														'AND sys_file_reference.sys_language_uid=' .$syslanid .' AND tt_content.uid = ' . $tt_contentUid;
+
+								$sqlstr = 'SELECT sys_file_reference.uid, sys_file_reference.uid, sys_file_reference.pid, sys_file_reference.uid_foreign,
+											sys_file_reference.uid_local,sys_file.name AS image6, tt_content.image FROM ' .
+											'tt_content, sys_file_reference , sys_file WHERE ' . $dataWhereContentPic;
+								$resultContentPic = $GLOBALS['TYPO3_DB']->sql_query($sqlstr);
+								$rowStats = array();
+								$rowStats = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultContentPic);
+								if (count($rowStats) >0) {
+									if ($rowStats['image6']) {
+										$rowsdisplaycompressed[3] = $rowStats['image6'];
+									} else {
+										$rowsdisplaycompressed[3] = $rowStats[0]['image6'];
+									}
+								} else {
+									$rowsdisplaycompressed[3] = '';
+								}
+
+							}
 						} elseif ($key== 'sys_language_uid') {
 							$rowsdisplaycompressed[2] = $val;
 						} elseif ($key== 'uid') {
@@ -1023,7 +1053,30 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							if (($key== 'crdate') || ($key== 'tstamp') || ($key== 'datetime') || ($key== 'start_date')) {
 								$rowsdisplaycompressed[4] = $this->formatDate($val, $pObj, FALSE, $conf);
 							} elseif ((substr($key, 0, 5)== 'image') || (substr($key, 0, 5)== 'photo') || ($key== 'picture')) {
-								$rowsdisplaycompressed[3] = $val;
+								if (intval($val) == 0) {
+									$rowsdisplaycompressed[3] = $val;
+								} else {
+									$dataWhereContentPic = 'sys_file_reference.tablenames="tt_content" AND sys_file_reference.uid_foreign=tt_content.uid ' .
+															'AND sys_file_reference.deleted=0 AND sys_file_reference.uid_local=sys_file.uid ' .
+															'AND sys_file_reference.sys_language_uid=' .$syslanid .' AND tt_content.uid = ' . $tt_contentUid;
+
+									$sqlstr = 'SELECT sys_file_reference.uid, sys_file_reference.uid, sys_file_reference.pid, sys_file_reference.uid_foreign,
+												sys_file_reference.uid_local,sys_file.name AS image6, tt_content.image FROM ' .
+												'tt_content, sys_file_reference , sys_file WHERE ' . $dataWhereContentPic;
+									$resultContentPic = $GLOBALS['TYPO3_DB']->sql_query($sqlstr);
+									$rowStats = array();
+									$rowStats = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultContentPic);
+									if (count($rowStats) >0) {
+										if ($rowStats['image6']) {
+											$rowsdisplaycompressed[3] = $rowStats['image6'];
+										} else {
+											$rowsdisplaycompressed[3] = $rowStats[0]['image6'];
+										}
+									} else {
+										$rowsdisplaycompressed[3] = '';
+									}
+
+								}
 							} elseif ($key== 'sys_language_uid') {
 								$rowsdisplaycompressed[2] = $val;
 							} elseif ($key== 'uid') {
@@ -1526,7 +1579,11 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							$row['nbrvotes']='';
 						} else {
 							if ($conf['topRatings.']['topRatingsMode']<4){
-								$row['nbrvotes']='(' . $row['nbrvotes'] . ' ' . $this->pi_getLLWrap($pObj, 'api_rating.votes', FALSE) . ')';
+								if ($row['nbrvotes'] != 1) {
+									$row['nbrvotes']='(' . $row['nbrvotes'] . ' ' . $this->pi_getLLWrap($pObj, 'api_rating.votes', FALSE) . ')';
+								} else {
+									$row['nbrvotes']='(' . $row['nbrvotes'] . ' ' . $this->pi_getLLWrap($pObj, 'api_rating.vote', FALSE) . ')';
+								}
 							} else {
 								if ($conf['topRatings.']['topRatingsMode']==4){
 									$row['nbrvotes']=', ' . $row['nbrvotes'] . ' ' . $this->pi_getLLWrap($pObj, 'pi1_template.text_count', FALSE) . ' ' .

@@ -38,35 +38,36 @@
  *
  *
  *
- *   96: class tx_toctoccomments_pi2 extends tslib_pibase
- *  120:     protected function processRedirect()
- *  134:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  236:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  423:     protected function watermark($conf, $content)
- *  461:     protected function showForgot()
- *  541:     protected function showLogout()
- *  573:     protected function showLogin()
- *  711:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
- *  747:     protected function getPreserveGetVars()
- *  775:     protected function generatePassword($len)
- *  795:     protected function getDisplayText($label, $stdWrapArray=array())
- *  807:     protected function getUserFieldMarkers()
- *  827:     protected function validateRedirectUrl($url)
- *  858:     protected function isInCurrentDomain($url)
- *  870:     protected function isInLocalDomain($url)
- *  911:     protected function isRelativeUrl($url)
- *  927:     protected function generateAndSendHash($user)
- *  993:     protected function changePassword($uid, $piHash)
- * 1115:     protected function showSignon()
- * 1423:     protected function getSignupCaptcha($required, $errcp, $cpval)
- * 1466:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
- * 1493:     protected function processSignupCaptcha($postData)
- * 1533:     protected function loginUser($facebookId)
- * 1559:     protected function storeUser($facebookUserProfile)
- * 1667:     private function copyImageFromFacebook($facebookUserId)
- * 1682:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
+ *   97: class tx_toctoccomments_pi2 extends tslib_pibase
+ *  121:     protected function processRedirect()
+ *  135:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  237:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  422:     protected function watermark($conf, $content)
+ *  460:     protected function showForgot()
+ *  540:     protected function showLogout()
+ *  575:     protected function showLogin()
+ *  721:     protected function getRSAKeyPair()
+ *  758:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
+ *  794:     protected function getPreserveGetVars()
+ *  822:     protected function generatePassword($len)
+ *  842:     protected function getDisplayText($label, $stdWrapArray=array())
+ *  854:     protected function getUserFieldMarkers()
+ *  889:     protected function validateRedirectUrl($url)
+ *  920:     protected function isInCurrentDomain($url)
+ *  932:     protected function isInLocalDomain($url)
+ *  973:     protected function isRelativeUrl($url)
+ *  989:     protected function generateAndSendHash($user)
+ * 1055:     protected function changePassword($uid, $piHash)
+ * 1177:     protected function showSignon()
+ * 1485:     protected function getSignupCaptcha($required, $errcp, $cpval)
+ * 1528:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ * 1555:     protected function processSignupCaptcha($postData)
+ * 1595:     protected function loginUser($facebookId)
+ * 1621:     protected function storeUser($facebookUserProfile)
+ * 1729:     private function copyImageFromFacebook($facebookUserId)
+ * 1744:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
  *
- * TOTAL FUNCTIONS: 26
+ * TOTAL FUNCTIONS: 27
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -237,6 +238,11 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 		$prefix=$this->prefixId;
 		$this->conf = $conf;
+
+		if (t3lib_div::_GP('getrsahash')) {
+			//
+			$this->getRSAKeyPair();
+		}
 		if (!isset($this->cObj)) {
 			$this->cObj = t3lib_div::makeInstance('tslib_cObj');
 			$this->cObj->start('', '');
@@ -390,20 +396,13 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 		if($_POST['tx_toctoccomments_pi2']['ajax']){
 			if (t3lib_div::_GP('refreshcontent') != 'refresh') {
-				$response = new stdClass();
-				$response->redirect=$redirect;
 
-				$search = array('@<![\s\S]*?--[ \t\n\r]*>@',         // Strip multi-line comments including CDATA
+				$search = array('@<![\s\S]*?--[ \t\n\r]*>@',
 				);
 				$content = preg_replace($search, '', $content);
-
-				$response->data=$content;
-				$response->refresh=trim($this->conf['refreshIdList']);
-
 				$answerarr = $redirect . 'toctoc-data-sep' . $content . 'toctoc-data-sep' . trim($this->conf['refreshIdList']);
 				$responsedec= base64_encode($answerarr);
 				echo $responsedec;
-				//echo json_encode($response);
 				die();
 			}
 		}
@@ -543,7 +542,10 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		$subpartArray = $linkpartArray = array();
 
 		$markerArray['###STATUS_HEADER###'] = $this->getDisplayText('status_header', $this->conf['logoutHeader_stdWrap.']);
-		$markerArray['###STATUS_MESSAGE###'] = $this->getDisplayText('success_message', $this->conf['successMessage_stdWrap.']);
+
+		$tmpStatusMessage = $this->getDisplayText('success_message', $this->conf['successMessage_stdWrap.']);
+		$tmpStatusMessage = str_replace ('\'', '', $tmpStatusMessage);
+		$markerArray['###STATUS_MESSAGE###'] = $tmpStatusMessage;
 		$markerArray['###LEGEND###'] = $this->pi_getLL('logout', '', 1);
 		$markerArray['###ACTION_URI###'] = $this->getPageLink('', array(), TRUE);
 		$markerArray['###LOGOUT_LABEL###'] = $this->pi_getLL('logout', '', 1);
@@ -636,9 +638,18 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 				}
 			}
 		}
+		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['loginFormOnSubmitFuncs'])) {
+			$_params = array();
+			foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['loginFormOnSubmitFuncs'] as $funcRef) {
+				list($onSub, $hid) = t3lib_div::callUserFunction($funcRef, $_params, $this);
+				$onSubmitAr[] = $onSub;
+				$extraHiddenAr[] = $hid;
+			}
+		}
 
 		if (count($onSubmitAr)) {
 			$onSubmit = implode('; ', $onSubmitAr).'; return TRUE;';
+			$onSubmit = str_replace('; return TRUE;', '', $onSubmit);
 		}
 		if (count($extraHiddenAr)) {
 			$extraHidden = implode(LF, $extraHiddenAr);
@@ -699,6 +710,42 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			}
 		}
 		return $ret;
+	}
+	/**
+	 * Generates the RSA hiddenextra Filed and the onSubmit-Code
+	 * Used by an AJAX-call that makes sure the RSA-Key is fresh when submitting a login
+	 * returns by 'die after echo'
+	 *
+	 * @return	string		$responsedec Encodes string with $onSubmit and
+	 */
+	protected function getRSAKeyPair() {
+		$onSubmit = '';
+		$extraHidden = '';
+		$onSubmitAr = array();
+		$extraHiddenAr = array();
+
+		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['loginFormOnSubmitFuncs'])) {
+			$_params = array();
+			foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['loginFormOnSubmitFuncs'] as $funcRef) {
+				list($onSub, $hid) = t3lib_div::callUserFunction($funcRef, $_params, $this);
+				$onSubmitAr[] = $onSub;
+				$extraHiddenAr[] = $hid;
+			}
+		}
+
+		if (count($onSubmitAr)) {
+			$onSubmit = implode('; ', $onSubmitAr).'; return TRUE;';
+			$onSubmit = str_replace('; return TRUE;', '', $onSubmit);
+		}
+
+		if (count($extraHiddenAr)) {
+			$extraHidden = implode(LF, $extraHiddenAr);
+		}
+
+		$answerarr = $onSubmit . 'toctoc-data-sep' . $extraHidden;
+		$responsedec= base64_encode($answerarr);
+		echo $responsedec;
+		die();
 	}
 	/**
 	 * Generate link with typolink function
@@ -813,7 +860,22 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 				$marker['###FEUSER_' . t3lib_div::strtoupper($field) . '###'] = $this->cObj->stdWrap($value, $this->conf['userfields.'][$field . '.']);
 			}
 			// add ###USER### for compatibility
-			$marker['###USER###'] = $marker['###FEUSER_USERNAME###'];
+			$tempFeUserName = $marker['###FEUSER_USERNAME###'];
+			$firstname = $marker['###FEUSER_FIRST_NAME###'];
+			$lastname = $marker['###FEUSER_LAST_NAME###'];
+			$fullname = trim($firstname . ' ' . $lastname);
+			if (str_replace('facebook', '', $tempFeUserName) != $tempFeUserName) {
+				$fblink = '(<a href="' . $marker['###FEUSER_TX_TOCTOC_COMMENTS_FACEBOOK_LINK###'] . '">facebook</a>)';
+				$marker['###USER###'] = trim($fullname . ' ' . $fblink);
+			} else {
+				if ($fullname != '') {
+					$marker['###USER###'] = $marker['###FEUSER_USERNAME###'] . ' (' . $fullname . ')';
+				} else {
+					$marker['###USER###'] = $marker['###FEUSER_USERNAME###'];
+				}
+
+			}
+
 		}
 		return $marker;
 	}

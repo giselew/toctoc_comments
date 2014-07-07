@@ -17,6 +17,16 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
 // Page module hook
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['list_type_Info']['toctoc_comments_pi1'][] = 'EXT:toctoc_comments/class.user_toctoc_comments_cms_layout.php:user_toctoc_comments_cms_layout->getExtensionSummary';
 
+// Add a hook to the login form
+if (t3lib_extMgm::isLoaded('rsaauth')) {
+	if (version_compare(TYPO3_version, '6.1', '>')) {
+		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['loginFormOnSubmitFuncs']['rsaauth'] = 'TYPO3\\CMS\\Rsaauth\\Hook\\FrontendLoginHook->loginFormHook';
+	} elseif (version_compare(TYPO3_version, '4.9', '>')) {
+		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['loginFormOnSubmitFuncs']['rsaauth'] = 'EXT:rsaauth/hooks/class.tx_rsaauth_feloginhook.php:TYPO3\\CMS\\Rsaauth\\Hook\\FrontendLoginHook->loginFormHook';
+	} else {
+		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['loginFormOnSubmitFuncs']['rsaauth'] = 'EXT:rsaauth/hooks/class.tx_rsaauth_feloginhook.php:tx_rsaauth_feloginhook->loginFormHook';
+	}
+}
 // eID
 $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['toctoc_comments'] = 'EXT:toctoc_comments/class.toctoc_comments_eID.php';
 $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['toctoc_comments_ajax'] = 'EXT:toctoc_comments/class.toctoc_comments_ajax.php';

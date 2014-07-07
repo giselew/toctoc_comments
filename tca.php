@@ -45,7 +45,7 @@ $TCA['tx_toctoc_comments_comments'] = array (
 			'config' => array (
 				'type' => 'input',
 				'size' => 15,
-				'eval' => 'trim,alphanum_x',
+				'eval' => 'trim,alphanum_x,required',
 				'readOnly' => 1,
 			),
 		),
@@ -106,8 +106,9 @@ $TCA['tx_toctoc_comments_comments'] = array (
 			'config' => array (
 				'type' => 'text',
 				'wrap' => 'virtual',
-				'cols' > 48,	// full form width
+				'cols' > 48,
 				'rows' => 15,
+				'eval' => 'trim,required',
 			),
 		),
 		'remote_addr' => array (
@@ -174,7 +175,7 @@ $TCA['tx_toctoc_comments_comments'] = array (
 $TCA['tx_toctoc_comments_feuser_mm'] = array (
 	'ctrl' => $TCA['tx_toctoc_comments_feuser_mm']['ctrl'],
 	'interface' => array (
-		'showRecordFieldList' => 'reference,toctoc_comments_user,ilike,idislike,myrating,remote_addr,tstampilike,pagetstampilike,tstampidislike,'.
+		'showRecordFieldList' => 'reference,reference_scope,toctoc_comments_user,ilike,idislike,myrating,remote_addr,tstampilike,pagetstampilike,tstampidislike,'.
 			'pagetstampidislike,tstampmyrating,pagetstampmyrating,seen,tstampseen,pagetstampseen',
 		'maxDBListItems' => 50,
 		'readOnly' => 1,
@@ -200,11 +201,10 @@ $TCA['tx_toctoc_comments_feuser_mm'] = array (
 			'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_feuser_mm.myrating',
 			'config' => array (
 				'type' => 'input',
-				'size' => '4',
-				'max'      => '4',
-				'eval'     => 'int',
-				'checkbox' => '0',
-				'default' => 0,
+				'size' => '6',
+				'eval' => 'trim,double12',
+				'max' => '20',
+				'readOnly' => 1,
 			),
 		),
 		'remote_addr' => array (
@@ -227,6 +227,16 @@ $TCA['tx_toctoc_comments_feuser_mm'] = array (
 			'minitems' => 1,
 			'maxitems' => 1,
 			'readOnly' => 1,
+			)
+		),
+		'reference_scope' => array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_ratings_data.reference_scope',
+			'config' => array (
+				'type' => 'input',
+				'eval'     => 'int',
+				'default' => 0,
+				'readOnly' => 1,			
 			)
 		),
 		'toctoc_comments_user' => array (
@@ -348,7 +358,7 @@ $TCA['tx_toctoc_comments_feuser_mm'] = array (
 		),
 	),
 	'types' => array (
-		0 => array ('showitem' => 'hidden;;;;1,reference;;;;2-2-2,toctoc_comments_user,toctoc_commentsfeuser_feuser;;;;3-3-3,ilike,idislike,myrating,'.
+		0 => array ('showitem' => 'hidden;;;;1,reference,reference_scope;;;;2-2-2,toctoc_comments_user,toctoc_commentsfeuser_feuser;;;;3-3-3,ilike,idislike,myrating,'.
 				'seen,remote_addr,tstampilike,pagetstampilike,tstampidislike,pagetstampidislike,tstampmyrating,pagetstampmyrating,tstampseen,pagetstampseen'),
 	),
 );
@@ -513,7 +523,7 @@ $TCA['tx_toctoc_comments_user'] = array (
 						'config' => array (
 								'type' => 'input',
 								'size' => '6',
-								'eval' => 'trim,double2',
+								'eval' => 'trim,double12',
 								'max' => '20',
 								'readOnly' => 1,
 						)
@@ -528,8 +538,8 @@ $TCA['tx_toctoc_comments_user'] = array (
 								'eval'     => 'int',
 								'checkbox' => '0',
 								'range'    => array (
-										'upper' => '1000',
-										'lower' => '10'
+									'upper' => '10000000',
+									'lower' => '0'
 								),
 								'readOnly' => 1,
 								'default' => 0
@@ -545,8 +555,8 @@ $TCA['tx_toctoc_comments_user'] = array (
 								'eval'     => 'int',
 								'checkbox' => '0',
 								'range'    => array (
-										'upper' => '1000',
-										'lower' => '10'
+									'upper' => '10000000',
+									'lower' => '0'
 								),
 								'readOnly' => 1,
 								'default' => 0
@@ -562,8 +572,8 @@ $TCA['tx_toctoc_comments_user'] = array (
 								'eval'     => 'int',
 								'checkbox' => '0',
 								'range'    => array (
-										'upper' => '1000',
-										'lower' => '10'
+									'upper' => '10000000',
+									'lower' => '0'
 								),
 								'readOnly' => 1,
 								'default' => 0
@@ -579,8 +589,8 @@ $TCA['tx_toctoc_comments_user'] = array (
 								'eval'     => 'int',
 								'checkbox' => '0',
 								'range'    => array (
-										'upper' => '1000',
-										'lower' => '10'
+										'upper' => '1000000',
+										'lower' => '0'
 								),
 								'default' => 0,
 								'readOnly' => 1,
@@ -725,7 +735,7 @@ $TCA['tx_toctoc_comments_urllog'] = array (
 $TCA['tx_toctoc_ratings_data'] = array (
 	'ctrl' => $TCA['tx_toctoc_ratings_data']['ctrl'],
 	'interface' => array (
-			'showRecordFieldList' => 'reference,url,rating,vote_count',
+			'showRecordFieldList' => 'reference,reference_scope,url,rating,vote_count',
 			'maxDBListItems' => 50,
 	),
 	'columns' => array (
@@ -741,6 +751,16 @@ $TCA['tx_toctoc_ratings_data'] = array (
 				'maxitems' => 1,
 			)
 		),
+		'reference_scope' => array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_ratings_data.reference_scope',
+			'config' => array (
+				'type' => 'input',
+				'eval'     => 'int',
+				'default' => 0,
+				'readOnly' => 1,			
+			)
+		),
 		'rating' => array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_ratings_data.rating',
@@ -751,8 +771,8 @@ $TCA['tx_toctoc_ratings_data'] = array (
 				'eval'     => 'int',
 				'checkbox' => '0',
 				'range'    => array (
-					'upper' => '1000',
-					'lower' => '10'
+					'upper' => '10000000',
+					'lower' => '0'
 				),
 				'default' => 0
 			)
@@ -767,15 +787,15 @@ $TCA['tx_toctoc_ratings_data'] = array (
 				'eval'     => 'int',
 				'checkbox' => '0',
 				'range'    => array (
-					'upper' => '1000',
-					'lower' => '10'
+					'upper' => '10000000',
+					'lower' => '0'
 				),
 				'default' => 0
 			)
 		),
 	),
 	'types' => array (
-		'0' => array ('showitem' => 'reference;;;;1-1-1, rating, vote_count')
+		'0' => array ('showitem' => 'reference,reference_scope;;;;1-1-1, rating, vote_count')
 	),
 );
 
@@ -794,6 +814,16 @@ $TCA['tx_toctoc_ratings_iplog'] = array (
 				'maxitems' => 1,
 				'readOnly' => 1,
 			)
+		),
+		'reference_scope' => array (
+					'exclude' => 1,
+					'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_ratings_data.reference_scope',
+					'config' => array (
+							'type' => 'input',
+							'eval'     => 'int',
+							'default' => 0,
+							'readOnly' => 1,
+					)
 		),
 		'crdate' => array (
 			'exclude' => 1,
@@ -818,7 +848,7 @@ $TCA['tx_toctoc_ratings_iplog'] = array (
 		),
 	),
 	'types' => array (
-		'0' => array ('showitem' => 'reference;;;;1-1-1, crdate, ip')
+		'0' => array ('showitem' => 'reference,reference_scope;;;;1-1-1, crdate, ip')
 	),
 
 );
@@ -843,7 +873,7 @@ $TCA['tx_toctoc_comments_spamwords'] = array (
 						'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_spamwords.spamword',
 						'config' => array (
 							'type' => 'input',
-							'eval' => 'trim',
+							'eval' => 'trim,required',
 						),
 				),
 				'spamvalue' => array (
@@ -853,7 +883,7 @@ $TCA['tx_toctoc_comments_spamwords'] = array (
 								'type'     => 'input',
 								'size'     => '2',
 								'max'      => '2',
-								'eval'     => 'int',
+								'eval'     => 'int,required',
 								'checkbox' => '0',
 								'range'    => array (
 										'upper' => '10',
@@ -894,7 +924,7 @@ $TCA['tx_toctoc_comments_attachment'] = array (
 								'type' => 'input',
 								'size' => '4',
 								'max'      => '4',
-								'eval'     => 'int',
+								'eval'     => 'int,required',
 								'checkbox' => '0',
 								'default' => 0,
 								'readOnly' => 1,
@@ -943,7 +973,7 @@ $TCA['tx_toctoc_comments_attachment'] = array (
 						'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_attachment.title',
 						'config' => array (
 							'type' => 'input',
-							'eval' => 'trim',
+							'eval' => 'trim,required',
 						),
 				),
 				'description' => array (
@@ -965,8 +995,8 @@ $TCA['tx_toctoc_comments_attachment'] = array (
 								'eval'     => 'int',
 								'checkbox' => '0',
 								'range'    => array (
-										'upper' => '1000',
-										'lower' => '10'
+									'upper' => '10000000',
+									'lower' => '1'
 								),
 								'default' => 0
 						)
@@ -990,14 +1020,14 @@ $TCA['tx_toctoc_comments_prefixtotable'] = array (
 						'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_prefixtotable.pi1_key',
 						'config' => array (
 								'type' => 'input',
-								'eval' => 'trim',
+								'eval' => 'trim,required',
 						)
 				),
 				'pi1_table' => array (
 						'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_prefixtotable.pi1_table',
 						'config' => array (
 								'type' => 'input',
-								'eval' => 'trim',
+								'eval' => 'trim,required',
 						),
 				),
 				'show_uid' => array (
@@ -1203,6 +1233,7 @@ $TCA['tx_toctoc_ratings_scope'] = array (
 								'type' => 'input',
 								'size' => '32',
 								'max' => '128',
+								'eval' => 'trim,required',
 						)
 				),
 				'scope_description' => array (
@@ -1212,6 +1243,7 @@ $TCA['tx_toctoc_ratings_scope'] = array (
 								'type' => 'text',
 								'cols' => '40',
 								'rows' => '4',
+								'eval' => 'trim,required',							
 						)
 				),
 

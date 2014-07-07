@@ -51,9 +51,9 @@
  *  882:     protected function getUserCard()
  *  895:     protected function updateCommentsView()
  * 1014:     protected function updateRating()
- * 1366:     protected function processDeleteSubmission()
- * 1446:     protected function processDenotifycommentSubmission()
- * 1496:     protected function recentCommentsClearCache()
+ * 1368:     protected function processDeleteSubmission()
+ * 1448:     protected function processDenotifycommentSubmission()
+ * 1498:     protected function recentCommentsClearCache()
  *
  * TOTAL FUNCTIONS: 16
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -1083,11 +1083,11 @@ class toctoc_comments_ajax {
 				list($row) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS t', 'tx_toctoc_ratings_data', $dataWhere);
 
 				// vote of the user
-				$dataWheremm = 'toctoc_comments_user = ' . $fetoctocusertoquery . '' . ' AND reference="' . $this->ref . '" AND reference_scope=' . $scopeid;
+				$dataWheremm = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user = ' . $fetoctocusertoquery . '' . ' AND reference="' . $this->ref . '" AND reference_scope=' . $scopeid;
 				list($rowmm) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS tmm, SUM(ilike) AS ilike, SUM(idislike) AS idislike',
 						'tx_toctoc_comments_feuser_mm', $dataWheremm);
 
-				$dataWhereuser = 'pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user = ' . $fetoctocusertoquery . '';
+				$dataWhereuser = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user = ' . $fetoctocusertoquery . '';
 				list($rowusr) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS tusr', 'tx_toctoc_comments_user', $dataWhereuser);
 			}
 
@@ -1124,17 +1124,19 @@ class toctoc_comments_ajax {
 			if($rowmm['tmm'] > 0) {
 				if(($this->cmd == 'vote') || ($this->cmd == 'votearticle')) {
 					//select all scopes avgs if overallscope
+					$voteround=9;
 					if ($this->overallvote==1) {
-						$whereloc = 'toctoc_comments_user = ' . $fetoctocusertoquery . '' . ' AND reference="' . $this->ref . '" AND reference_scope > 0';
+						$whereloc = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user = ' . $fetoctocusertoquery . '' . ' AND reference="' . $this->ref . '" AND reference_scope > 0';
 						list($rowavg) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('AVG(myrating) as avgmyrating, COUNT(reference_scope) as countreference',
 								'tx_toctoc_comments_feuser_mm', $whereloc);
 						if (count($rowavg)>0) {
-							$locrating=((($this->rating/$this->votes)+ ($rowavg['countreference']*$rowavg['avgmyrating']))/($rowavg['countreference']+1));
+							$locrating=$rowavg['avgmyrating'];
 						}
 
+						$voteround=9;
 					}
 
-					$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET ' . 'myrating=' . round($locrating, 0) . ', pagetstampmyrating=' .
+					$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET ' . 'myrating=' . round($locrating, $voteround) . ', pagetstampmyrating=' .
 							$pageid . ', tstampmyrating=' . time() . ', tstamp=' . time() . ', remote_addr="' . $strCurrentIP . '" WHERE ' . $dataWheremm);
 				} elseif($this->cmd === 'unlike') {
 					if($rowmm['idislike'] > 0) {
@@ -1249,7 +1251,7 @@ class toctoc_comments_ajax {
 				));
 			}
 
-			$dataWhereStats = 'pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user="' . $fetoctocusertoinsert . '"';
+			$dataWhereStats = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user="' . $fetoctocusertoinsert . '"';
 
 			$sqlstr = 'SELECT SUM(CASE WHEN myrating+ilike+idislike > 0 THEN 1 ELSE 0 END) AS nbrentries, SUM(ilike) AS sumilike, SUM(idislike) AS sumidislike, SUM(myrating) AS summyrating,
 					SUM(CASE WHEN myrating > 0 THEN 1 ELSE 0 END) AS nbrmyrating FROM tx_toctoc_comments_feuser_mm WHERE ' . $dataWhereStats;
@@ -1264,7 +1266,7 @@ class toctoc_comments_ajax {
 
 			$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_user SET ' . 'vote_count=' . $rowStats['nbrentries'] . ', current_ip="' . $strCurrentIP .
 					'", like_count=' . intval($rowStats['sumilike']) . ', dislike_count=' . intval($rowStats['sumidislike']) . ', average_rating=' .
-					round((intval($rowStats['summyrating']) / intval($rowStats['nbrmyrating'])), 2) . ', tstamp_lastupdate=' . time() . ' WHERE ' .
+					round((intval($rowStats['summyrating']) / intval($rowStats['nbrmyrating'])), 9) . ', tstamp_lastupdate=' . time() . ' WHERE ' .
 					$dataWhereStats);
 
 			// Call hook if ratings is updated

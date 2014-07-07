@@ -441,10 +441,10 @@ Selectors
 Boxmodel
 Top ratings, top of stars
 CSS
-top: 3px;
+top: 2px;
 top: {24tr}px;
 Rules
-{24tr}={boxmodelLineHeightHalf}
+{24tr}=(2*{boxmodelLineHeightHalf} + ({boxmodelLineHeightHalf}-2)*3)
 Selectors
 .tx-tc-trt-rating-rating-wrap .tx-tc-rts-dp
 ***
@@ -458,6 +458,26 @@ Rules
 {10}=8+{boxmodelLineHeight}
 Selectors
 .tx-tc-cts-ctsbrowse
+***
+
+Boxmodel
+Height top rating div elements
+CSS
+line-height: 20px;
+line-height: {10trt}px;
+Rules
+{10trt}=4+{boxmodelLineHeight}
+Selectors
+.tx-tc-trt-rating-rating-wrap
+***
+
+Boxmodel
+Height top rating div element for stars
+CSS
+height: 20px;
+height: {10trt}px;
+Selectors
+.tx-tc-trt-rating-rating-wrap .tx-tc-rts-container .tx-tc-rts-li
 ***
 
 Boxmodel

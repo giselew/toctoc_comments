@@ -440,4 +440,20 @@
 	* fixed wrong conversion of BB-Code [bq] when editing comments
 	* Set PHP compatibility to 5.2.0-5.5.99
 	
-	
+2014-07-07  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 5.2.2
+	* CSS by toctoc_comments is now compressed by default. New option theme.crunchCSS enables (default) or disables the compression
+	* Username for logged in facebook users is displayed now as first- and lastname with link to the facebook profile page
+	* Changed Comment Browsing: When showing new comments, the entire comments list was refreshed, now only new comments are added.
+	* AJAX-Login now works with extension rsaauth enabled, former version worked only in 'normal'-mode
+	* fixed missing tiptext for the "others like this" in the commentslist
+	* fixed problems with storagePid when working with more than 1 storagePid for voting and ilikes
+	* Backend-Plugin: storagePid is visible in all plugin-modes now, not only in mode 'normal'- apart from AJAX-Login.
+	* TCA: Adjusted range values, some of them were to narrow, resulting in errors on saves in the backend
+	* TCA: Some mandatory input fields where missing, for example the description of a rating scope is mandatory now.
+	* SEO: Comments and ratings are no longer visible to major search engines with new TS-Option dontSkipSearchEngines = 0
+	* PHP-Sessions: No more Session-creation for Search Engines
+	* PHP-Sessions: Moved toctoc_comments-Sessions from typo3temp to typo3conf/ext/toctoc_comments/pi1/sessionTemp, this allows better control over session files.
+	* Charts: Fixed image-display for tt_content-items on TYPO3 >= 6.0
+	* Ratings: Changed data type of average rating fields from int or decimal(19,2) to decimal(19,8), charts on scoped ratings had rounding errors with the former "2 decimal places"-system   
+	* Database Update required in TYPO3 4.x

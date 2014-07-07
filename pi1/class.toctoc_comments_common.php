@@ -40,8 +40,8 @@
  *   59: class toctoc_comments_common
  *  110:     public function unmirrorConf($confDiff)
  *  145:     public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '')
- *  196:     private function getSessionSavePath()
- *  216:     private function ensureSessionSavePathExists($sessionSavePath)
+ *  211:     private function getSessionSavePath()
+ *  231:     private function ensureSessionSavePathExists($sessionSavePath)
  *
  * TOTAL FUNCTIONS: 4
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -143,8 +143,23 @@ class toctoc_comments_common {
 	 * @return	[type]		...
 	 */
 	public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '') {
+		// no sessions for bots
+		$interestingCrawlers = array('google', 'yahoo', 'baidu', 'msnbot', 'bingbot', 'spider', 'bot.htm', 'yandex', 'jeevez');
+		$numMatches = 0;
+		$countinterestingCrawlers = count($interestingCrawlers);
+		for ($i=0; $i<$countinterestingCrawlers; $i++){
+			if (str_replace(strtolower($interestingCrawlers[$i]), '', strtolower($_SERVER['HTTP_USER_AGENT'])) != strtolower($_SERVER['HTTP_USER_AGENT'])) {
+				$numMatches++;
+			}
+		}
+		if($numMatches > 0) {
+			return;
+		}
+		// end
+
 		$this->expireTimeInMinutes=intval($expireTimeInMinutes);
-		$this->typo3tempPath = PATH_site . 'typo3temp/';
+		$this->typo3tempPath = PATH_site . 'typo3conf/ext/toctoc_comments/pi1/sessionTemp/';
+
 		// Start our PHP session early so that hasSession() works
 		if ($sessionSavePathSaved == '') {
 			if(TYPO3_version == 'TYPO3_version') {

@@ -138,8 +138,8 @@ class toctoc_comments_api {
 	/**
 	 * Returns a list of markers with fe_user properties
 	 *
-	 * @param	[type]		$params: ...
-	 * @param	[type]		$conf: ...
+	 * @param	array		$params: ...
+	 * @param	array		$conf: ...
 	 * @return	array
 	 */
 	public function comments_getComments_fe_user($params, $conf) {
@@ -225,7 +225,7 @@ class toctoc_comments_api {
 	 * @param	string		$cmd: Command that needs to be executed
 	 * @param	int		$cid: content element id.
 	 * @param	[type]		$commentspics: ...
-	 * @param	[type]		$scopeid: ...
+	 * @param	int		$scopeid: ...
 	 * @return	string		Generated HTML
 	 */
 	public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $commentspics, $scopeid=0) {
@@ -363,7 +363,7 @@ class toctoc_comments_api {
 	/**
 	 * wrapper for enableFields calls from AJAX
 	 *
-	 * @param	[type]		$table: ...
+	 * @param	string		$table: ...
 	 * @return	string		condition
 	 */
 	public function enableFields($table) {
@@ -375,7 +375,7 @@ class toctoc_comments_api {
 	/**
 	 * Set the timestamp of plugins of $external_ref_uid_list in table tx_toctoc_comments_plugincachecontrol to current value.
 	 *
-	 * @param	[type]		$external_ref_uid_list: ...
+	 * @param	string		$external_ref_uid_list: ...
 	 * @return	void
 	 */
 	public function setPluginCacheControlTstamp ($external_ref_uid_list) {

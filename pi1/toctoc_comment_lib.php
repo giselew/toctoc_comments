@@ -134,82 +134,82 @@
  * 8671:     public function getRatingDisplay($ref, $conf = NULL, $fromAjax = 0, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd = 'vote',
 			$pObj = NULL, $cid, $fromcomments, $commentspics = array(), $scopeid=0)
  * 8729:     public function isVoted($ref, $pObj, $scopeid=0, $feuserid=0, $fromAjax)
- * 8767:     public function getBarWidth($rating, $conf)
- * 8783:     protected function getRatingInfo($ref, $pObj, $feuserid=-1, $conf, $scopeid=0, $fromAjax)
- * 8925:     protected function generateRatingContent($ref, $template, $conf, $fromAjax, $pid, $returnasarray, $feuserid, $pObj, $cmd, $cid, $fromcomments,
+ * 8766:     public function getBarWidth($rating, $conf)
+ * 8782:     protected function getRatingInfo($ref, $pObj, $feuserid=-1, $conf, $scopeid=0, $fromAjax)
+ * 8941:     protected function generateRatingContent($ref, $template, $conf, $fromAjax, $pid, $returnasarray, $feuserid, $pObj, $cmd, $cid, $fromcomments,
 	$commentspics, $scopeid = 0)
- * 9850:     private function makeiLikeText($conf, $pObj, $cmd, $ref, $fromAjax, $myrating = array(), $mylikeval, $mydis='', $template, $cid, $commentspics, $extpreffortext)
+ * 9866:     private function makeiLikeText($conf, $pObj, $cmd, $ref, $fromAjax, $myrating = array(), $mylikeval, $mydis='', $template, $cid, $commentspics, $extpreffortext)
  *
  *              SECTION: TYPO3 workarounds
- * 10290:     public function enableFields($tableName, $pObj, $getFromSession = FALSE)
- * 10312:     public function pi_getLLWrap($pObj, $llkey, $fromAjax)
- * 10352:     protected function t3getSubpart ($pObj, $templateCode, $templateMarker)
- * 10376:     protected function t3substituteMarkerArray ($content, $markContentArray)
- * 10398:     protected function t3substituteMarker ($template, $marker, $markContent)
- * 10412:     protected function t3fileResource ($pObj, $usetemplateFile)
- * 10429:     protected function getcheck ($ref, $i, $ratingscheck)
- * 10453:     protected function formatDate($date, $pObj, $fromAjax, $conf)
- * 10589:     protected function getPageURL($fromAjax = FALSE, $pid = 0)
- * 10611:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
- * 10636:     protected function getCleanHTML ($html)
- * 10659:     public function getLoginForm()
- * 10689:     public function getChangePasswordForm($uid = 0, $piHash = '')
- * 10720:     public function getBBCard($conf, $pObj, $buildthisbb = FALSE, $returnbbarray = FALSE)
+ * 10306:     public function enableFields($tableName, $pObj, $getFromSession = FALSE)
+ * 10328:     public function pi_getLLWrap($pObj, $llkey, $fromAjax)
+ * 10368:     protected function t3getSubpart ($pObj, $templateCode, $templateMarker)
+ * 10392:     protected function t3substituteMarkerArray ($content, $markContentArray)
+ * 10414:     protected function t3substituteMarker ($template, $marker, $markContent)
+ * 10428:     protected function t3fileResource ($pObj, $usetemplateFile)
+ * 10445:     protected function getcheck ($ref, $i, $ratingscheck)
+ * 10469:     protected function formatDate($date, $pObj, $fromAjax, $conf)
+ * 10605:     protected function getPageURL($fromAjax = FALSE, $pid = 0)
+ * 10627:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ * 10652:     protected function getCleanHTML ($html)
+ * 10675:     public function getLoginForm()
+ * 10705:     public function getChangePasswordForm($uid = 0, $piHash = '')
+ * 10736:     public function getBBCard($conf, $pObj, $buildthisbb = FALSE, $returnbbarray = FALSE)
  *
  *              SECTION: Usercards
- * 10823:     public function getSmiliesCard($conf)
- * 11087:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $pObj, $commentid)
+ * 10839:     public function getSmiliesCard($conf)
+ * 11103:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $pObj, $commentid)
  *
  *              SECTION: Mail functions
- * 11459:     protected function getMailTo($mailAddress, $linktxt = '', $initP = '?')
- * 11506:     protected function encryptEmail($string, $back=0)
- * 11548:     protected function encryptCharcode($n, $start, $end, $offset)
- * 11572:     public function send_mail ($toEMail, $subject, $message, $html, $fromEMail, $fromName, $attachment='')
- * 11743:     protected function slashName ($name, $apostrophe='"')
+ * 11489:     protected function getMailTo($mailAddress, $linktxt = '', $initP = '?')
+ * 11536:     protected function encryptEmail($string, $back=0)
+ * 11578:     protected function encryptCharcode($n, $start, $end, $offset)
+ * 11602:     public function send_mail ($toEMail, $subject, $message, $html, $fromEMail, $fromName, $attachment='')
+ * 11773:     protected function slashName ($name, $apostrophe='"')
  *
  *              SECTION: Commentator-Notification functions
- * 11767:     public function handleCommentatorNotifications($uid, $conf, $pObj, $fromeID = FALSE, $pid=0, $fromAjax=1)
+ * 11797:     public function handleCommentatorNotifications($uid, $conf, $pObj, $fromeID = FALSE, $pid=0, $fromAjax=1)
  *
  *              SECTION: Administrator comment response functions
- * 11994:     protected function getCommentsReponse(&$params, $conf)
+ * 12024:     protected function getCommentsReponse(&$params, $conf)
  *
  *              SECTION: Website preview functions
- * 12037:     public function cleanupfup($uploadedfile, $conf, $originalfilename)
- * 12056:     public function getwebpagepreview($cmd, $pObj, $cid, $data, $conf)
- * 12099:     protected function getpreviewinit($cid, $data, $conf)
- * 12150:     protected function savewebpagepreviewtodb($pcid, $pObj, $pcommentid, $conf)
- * 12389:     protected function cleanupdbandfiles($conf, $uploadedfile='', $originalfilename='')
- * 12541:     protected function getwebpagecache($pcid, $pObj, $pcommentid, $conf, $url='', $isbeforefetch = FALSE)
- * 12708:     protected function read_dir($dir, $array = array())
- * 12737:     protected function commentShowWebpagepreview ($rowattachmentid, $rowattachment_subid, $conf, $pObj, $cid, $topwebsitepreview, $fromAjax,
+ * 12067:     public function cleanupfup($uploadedfile, $conf, $originalfilename)
+ * 12086:     public function getwebpagepreview($cmd, $pObj, $cid, $data, $conf)
+ * 12129:     protected function getpreviewinit($cid, $data, $conf)
+ * 12180:     protected function savewebpagepreviewtodb($pcid, $pObj, $pcommentid, $conf)
+ * 12419:     protected function cleanupdbandfiles($conf, $uploadedfile='', $originalfilename='')
+ * 12571:     protected function getwebpagecache($pcid, $pObj, $pcommentid, $conf, $url='', $isbeforefetch = FALSE)
+ * 12738:     protected function read_dir($dir, $array = array())
+ * 12767:     protected function commentShowWebpagepreview ($rowattachmentid, $rowattachment_subid, $conf, $pObj, $cid, $topwebsitepreview, $fromAjax,
 			$row = array(), $isforemailnotification = FALSE)
- * 13234:     protected function makeAttachementPicture($picturefilename, $conf, $descriptionbyuser, $originalfilename, $firstname,
+ * 13264:     protected function makeAttachementPicture($picturefilename, $conf, $descriptionbyuser, $originalfilename, $firstname,
 			$lastname, $fetoctocusertoinsert)
  *
  *              SECTION: eID-Interface functions
- * 13414:     public function handleeID($uid, $conf, $pObj, $messagetodisplay, $refreshurl)
+ * 13444:     public function handleeID($uid, $conf, $pObj, $messagetodisplay, $refreshurl)
  *
  *              SECTION: Reply on comments functions
- * 13516:     protected function getCommentBoxDisplay($commentid, $conf, $level, $fromAjax, $triggeredlevel=0, $levelexpandoverride=0)
- * 13592:     protected function getCommentBoxChildrenDisplayIsCollapsed($commentschildrenids, $conf, $level, $fromAjax, $triggeredlevel=0, $levelexpandoverride=0)
+ * 13546:     protected function getCommentBoxDisplay($commentid, $conf, $level, $fromAjax, $triggeredlevel=0, $levelexpandoverride=0)
+ * 13622:     protected function getCommentBoxChildrenDisplayIsCollapsed($commentschildrenids, $conf, $level, $fromAjax, $triggeredlevel=0, $levelexpandoverride=0)
  *
  *              SECTION: Fe-usergroup functions
- * 13664:     public function usersGroupmembers($pObj, $fromAjax, $conf, $communitybuddies = FALSE)
- * 13745:     protected function isUserOnline($feuser_uid)
+ * 13694:     public function usersGroupmembers($pObj, $fromAjax, $conf, $communitybuddies = FALSE)
+ * 13775:     protected function isUserOnline($feuser_uid)
  *
  *              SECTION: Recent comments functions
- * 13784:     public function getRecentComments($pObj, $conf, $feuserid)
- * 13799:     protected function trimContent($text, $conf, $maxChars=0, $dospecialChars=TRUE)
+ * 13814:     public function getRecentComments($pObj, $conf, $feuserid)
+ * 13829:     protected function trimContent($text, $conf, $maxChars=0, $dospecialChars=TRUE)
  *
  *              SECTION: Report comments functions
- * 13843:     protected function getCommentsReportLink($params, &$pObj, $fromAjax, $pid)
- * 13891:     public function mainReport($content, $conf, $pObj, $piVars)
+ * 13873:     protected function getCommentsReportLink($params, &$pObj, $fromAjax, $pid)
+ * 13921:     public function mainReport($content, $conf, $pObj, $piVars)
  *
  *              SECTION: Debug function
- * 13918:     protected function trackdebug ($trackingfunction)
+ * 13948:     protected function trackdebug ($trackingfunction)
  *
  *              SECTION: Top ratings functions
- * 13945:     public function showtopRatings($conf, $pObj)
+ * 13975:     public function showtopRatings($conf, $pObj)
  *
  * TOTAL FUNCTIONS: 122
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -783,8 +783,8 @@ class toctoc_comment_lib extends tslib_pibase {
 
 			if ($conf['advanced.']['countViews'] ==1) {
 				$querymerged='SELECT SUM(seen) AS views, MIN(tstampseen) AS firstview
- FROM tx_toctoc_comments_feuser_mm
- WHERE deleted= 0 AND pid='.$conf['storagePid']. ' AND seen>0 AND reference = "'.$_SESSION['commentListRecord'].'"';
+				 FROM tx_toctoc_comments_feuser_mm
+				 WHERE deleted= 0 AND pid='.$conf['storagePid']. ' AND seen>0 AND reference = "'.$_SESSION['commentListRecord'].'"';
 
 				$resultmerged= $GLOBALS['TYPO3_DB']->sql_query($querymerged);
 				$date='';
@@ -6129,7 +6129,7 @@ class toctoc_comment_lib extends tslib_pibase {
 
 				}
 
-				$record = array(
+				$record = array (
 						'pid' => intval($conf['storagePid']),
 						'external_ref' => $external_ref,
 						'external_prefix' => trim($conf['externalPrefix']),
@@ -6299,11 +6299,11 @@ class toctoc_comment_lib extends tslib_pibase {
 							}
 
 							// check the toctoc_comments_user
-							$dataWhereStats = 'pid=' . intval($conf['storagePid']) .
+							$dataWhereStats = 'deleted= 0 AND pid=' . intval($conf['storagePid']) .
 							' AND toctoc_comments_user="' . $fetoctocusertoinsert . '"';
 							$dataWhereStatsEnable = ' AND approved=1 AND deleted=0 AND hidden=0';
 
-								$dataWhereuser = 'pid=' . intval($conf['storagePid']) .
+								$dataWhereuser = 'deleted= 0 AND pid=' . intval($conf['storagePid']) .
 								' AND toctoc_comments_user = ' . $fetoctocusertoquery . '';
 								list($rowusr) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS tusr',
 										'tx_toctoc_comments_user', $dataWhereuser);
@@ -8754,7 +8754,6 @@ class toctoc_comment_lib extends tslib_pibase {
 				$fetoctocusertoquery ='"0.0.0.0.' . $feuserid . '"';
 				$fetoctocusertoinsert ='0.0.0.0.' . $feuserid;
 			}
-
 			$feusertoquery =  intval($feuserid);
 			$recs['myrecs'] = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('myrating AS myrating',
 					'tx_toctoc_comments_feuser_mm',
@@ -8795,12 +8794,17 @@ class toctoc_comment_lib extends tslib_pibase {
 			$scopeidtxt= ' AND (reference_scope=0) ';
 			$scopeidtxtfeuser_mm= ' AND (tx_toctoc_comments_feuser_mm.reference_scope=0) ';
 		}
-
+		if (version_compare(TYPO3_version, '4.6', '<')) {
+			$tmpint = t3lib_div::testInt($conf['storagePid']);
+		} else {
+			$tmpint = t3lib_utility_Math::canBeInterpretedAsInteger($conf['storagePid']);
+		}
 		if ($feuserid==-1) {
 
 			$recs = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('rating,vote_count',
 					'tx_toctoc_ratings_data',
-					'pid=' . intval($conf['storagePid']) .
+					($tmpint ?
+						'pid=' . $conf['storagePid'] : 'pid IN (' . $conf['storagePid'] . ')') .
 					$scopeidtxt . ' AND reference=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($ref, 'tx_toctoc_ratings_data') .
 					$this->enableFields('tx_toctoc_ratings_data', $pObj, $fromAjax));
 			$retstr = (count($recs) ? $recs[0] : array('rating' => 0, 'vote_count' => 0));
@@ -8823,7 +8827,8 @@ class toctoc_comment_lib extends tslib_pibase {
 			$feusertoquery =  intval($feuserid);
 			$recs['myrecs'] = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('myrating AS myrating, ilike AS ilike, idislike AS idislike ',
 					'tx_toctoc_comments_feuser_mm',
-					'((toctoc_commentsfeuser_feuser = ' . $feusertoquery . ' AND toctoc_commentsfeuser_feuser > 0) OR (toctoc_comments_user = ' .
+					($tmpint ?
+						'pid=' . $conf['storagePid'] : 'pid IN (' . $conf['storagePid'] . ')') . ' AND ((toctoc_commentsfeuser_feuser = ' . $feusertoquery . ' AND toctoc_commentsfeuser_feuser > 0) OR (toctoc_comments_user = ' .
 					$fetoctocusertoquery . ' AND toctoc_commentsfeuser_feuser = 0))' .
 					$scopeidtxtfeuser_mm . ' AND reference="' . $ref . '"'. $this->enableFields('tx_toctoc_comments_feuser_mm', $pObj, $fromAjax));
 
@@ -8831,7 +8836,8 @@ class toctoc_comment_lib extends tslib_pibase {
 
 			$recs['allrecs'] = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('SUM(ilike) AS totalilikes, SUM(idislike) AS totalidislikes ',
 					'tx_toctoc_comments_feuser_mm',
-					'reference="' . $ref . '"'. $scopeidtxtfeuser_mm . $this->enableFields('tx_toctoc_comments_feuser_mm', $pObj, $fromAjax));
+					($tmpint ?
+						'pid=' . $conf['storagePid'] : 'pid IN (' . $conf['storagePid'] . ')') . ' AND reference="' . $ref . '"'. $scopeidtxtfeuser_mm . $this->enableFields('tx_toctoc_comments_feuser_mm', $pObj, $fromAjax));
 
 			$commentidcandidate=str_replace('tx_toctoc_comments_comments_', '', $ref);
 			if (version_compare(TYPO3_version, '4.6', '<')) {
@@ -8845,12 +8851,14 @@ class toctoc_comment_lib extends tslib_pibase {
 
 				$recs['comment'] = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('crdate AS commentdate, uid as commentuid',
 						'tx_toctoc_comments_comments',
-						'pid=' . intval($conf['storagePid']) .
+						($tmpint ?
+						'pid=' . $conf['storagePid'] : 'pid IN (' . $conf['storagePid'] . ')') .
 						' AND uid=' . $commentidcandidate . $this->enableFields('tx_toctoc_comments_comments', $pObj, $fromAjax));
 				if ($conf['advanced.']['showCountCommentViews'] ==1){
 					$recs['commentviews'] = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('SUM(seen) AS commentviews',
 							'tx_toctoc_comments_feuser_mm',
-							'pid=' . intval($conf['storagePid']) .
+							($tmpint ?
+						'pid=' . $conf['storagePid'] : 'pid IN (' . $conf['storagePid'] . ')') .
 							' AND seen>0 AND reference="tx_toctoc_comments_comments_' . $commentidcandidate . '" '.
 							$this->enableFields('tx_toctoc_comments_feuser_mm', $pObj, $fromAjax));
 				} else {
@@ -8868,7 +8876,11 @@ class toctoc_comment_lib extends tslib_pibase {
 
 			$recs['ilikeusers'] = array();
 			if (($recs['allrecs'][0]['totalilikes']>1) || (($recs['allrecs'][0]['totalilikes']>0) && ($recs['allrecs'][0]['ilike']==0))) {
-				$userswhere ='tx_toctoc_comments_user.deleted=0 AND tx_toctoc_comments_user.toctoc_comments_user=tx_toctoc_comments_feuser_mm.toctoc_comments_user';
+				$userswhere =($tmpint ?
+						'tx_toctoc_comments_feuser_mm.pid=' . $conf['storagePid'] : 'tx_toctoc_comments_feuser_mm.pid IN (' . $conf['storagePid'] . ')') .
+						' AND tx_toctoc_comments_feuser_mm.pid=tx_toctoc_comments_user.pid AND ' . ($tmpint ?
+						'tx_toctoc_comments_user.pid=' . $conf['storagePid'] : 'tx_toctoc_comments_user.pid IN (' . $conf['storagePid'] . ')') .
+				' AND tx_toctoc_comments_user.deleted=0 AND tx_toctoc_comments_user.toctoc_comments_user=tx_toctoc_comments_feuser_mm.toctoc_comments_user';
 				$userswhere .=' AND NOT ((tx_toctoc_comments_feuser_mm.toctoc_commentsfeuser_feuser = ' . $feusertoquery .
 				' AND tx_toctoc_comments_feuser_mm.toctoc_commentsfeuser_feuser > 0) OR (tx_toctoc_comments_feuser_mm.toctoc_comments_user = ' .
 				$fetoctocusertoquery . ' AND tx_toctoc_comments_feuser_mm.toctoc_commentsfeuser_feuser = 0))';
@@ -8888,7 +8900,11 @@ class toctoc_comment_lib extends tslib_pibase {
 
 			$recs['idislikeusers'] = array();
 			if (($recs['allrecs'][0]['totalidislikes']>1) || (($recs['allrecs'][0]['totalidislikes']>0) && ($recs['allrecs'][0]['idislike']==0))) {
-				$userswhere =' tx_toctoc_comments_user.deleted=0 AND tx_toctoc_comments_user.toctoc_comments_user=tx_toctoc_comments_feuser_mm.toctoc_comments_user';
+				$userswhere =($tmpint ?
+						'tx_toctoc_comments_feuser_mm.pid=' . $conf['storagePid'] : 'tx_toctoc_comments_feuser_mm.pid IN (' . $conf['storagePid'] . ')') .
+						' AND tx_toctoc_comments_feuser_mm.pid=tx_toctoc_comments_user.pid AND ' . ($tmpint ?
+						'tx_toctoc_comments_user.pid=' . $conf['storagePid'] : 'tx_toctoc_comments_user.pid IN (' . $conf['storagePid'] . ')') .
+				' AND tx_toctoc_comments_user.deleted=0 AND tx_toctoc_comments_user.toctoc_comments_user=tx_toctoc_comments_feuser_mm.toctoc_comments_user';
 				$userswhere .=' AND NOT ((tx_toctoc_comments_feuser_mm.toctoc_commentsfeuser_feuser = ' . $feusertoquery .
 				' AND tx_toctoc_comments_feuser_mm.toctoc_commentsfeuser_feuser > 0) OR (tx_toctoc_comments_feuser_mm.toctoc_comments_user = ' . $fetoctocusertoquery .
 				' AND tx_toctoc_comments_feuser_mm.toctoc_commentsfeuser_feuser = 0))';
@@ -11128,10 +11144,24 @@ class toctoc_comment_lib extends tslib_pibase {
 		$ucnametitle='';
 
 		if ($conf['userContactUC']) {
-			$dataWhereuser = 'pid=' . intval($conf['storagePid']) .
+			$dataWhereuser = 'deleted= 0 AND pid=' . intval($conf['storagePid']) .
 			' AND toctoc_comments_user = "' . $toctocuid . '"';
 			list($rowusr) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*',
 					'tx_toctoc_comments_user', $dataWhereuser);
+
+			// vote of the user
+			$dataWhereusersum = 'deleted=0 AND toctoc_comments_user = "' . $toctocuid . '"';
+			list($rowusrsum) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('MIN(tstamp) AS tstamp, MIN(pid) AS pid, MIN(uid) AS uid,
+SUM(comment_count) AS comment_count,
+SUM(vote_count*average_rating)/SUM(vote_count) AS average_rating,
+SUM(vote_count) AS vote_count,
+SUM(like_count) AS like_count,
+SUM(dislike_count) AS dislike_count,
+MAX(tstamp_lastupdate) AS tstamp_lastupdate',
+					'tx_toctoc_comments_user', $dataWhereusersum);
+
+			//return $dataWhereusersum . '   ' . $rowusrsum['comment_count'] . '  ' . count($rowusrsum);
+
 			$pizzateile = explode('.', $toctocuid);
 			$feuserid = $pizzateile[4];
 			$dataWherefeuser = 'uid=' . intval($feuserid);
@@ -11312,58 +11342,58 @@ class toctoc_comment_lib extends tslib_pibase {
 		if ($conf['userStatsUC']) {
 			// homepage on the User Card
 			$ucstats='';
-			if (($rowusr['comment_count'] != '') && ($rowusr['comment_count'] != '0')) {
-				$ucstats.=$this->pi_getLLWrap($pObj, 'pi1_template.uc.comments', TRUE) . ' ' . $rowusr['comment_count'];
+			if (($rowusrsum['comment_count'] != '') && ($rowusrsum['comment_count'] != '0')) {
+				$ucstats.=$this->pi_getLLWrap($pObj, 'pi1_template.uc.comments', TRUE) . ' ' . $rowusrsum['comment_count'];
 			}
 
-			if (($rowusr['vote_count'] != '') && ($rowusr['vote_count'] != '0')) {
+			if (($rowusrsum['vote_count'] != '') && ($rowusrsum['vote_count'] != '0')) {
 				if ($ucstats != '') {
 					$ucstats .= ', ';
 				}
 
-				$ucstats.=$this->pi_getLLWrap($pObj, 'pi1_template.uc.rateditems', TRUE) . ' ' . $rowusr['vote_count'];
+				$ucstats.=$this->pi_getLLWrap($pObj, 'pi1_template.uc.rateditems', TRUE) . ' ' . $rowusrsum['vote_count'];
 			}
 
-			if (($rowusr['average_rating'] != '') && ($rowusr['average_rating'] != '0.00')) {
+			if (($rowusrsum['average_rating'] != '') && (round($rowusrsum['average_rating'], 2) != '0.00')) {
 				if ($ucstats != '') {
 					$ucstats .= '<br />';
 				}
 
-				$ucstats.=$this->pi_getLLWrap($pObj, 'pi1_template.uc.averagerating', TRUE) . ' ' . $rowusr['average_rating'];
+				$ucstats .= $this->pi_getLLWrap($pObj, 'pi1_template.uc.averagerating', TRUE) . ' ' . round($rowusrsum['average_rating'], 2);
 			}
 
-			if (($rowusr['like_count'] != '') && ($rowusr['like_count'] != '0')) {
+			if (($rowusrsum['like_count'] != '') && ($rowusrsum['like_count'] != '0')) {
 				if ($ucstats != '') {
 					$ucstats .= ', ';
 				}
 
-				$ucstats.=$this->pi_getLLWrap($pObj, 'pi1_template.uc.likes', TRUE) . ' ' . $rowusr['like_count'];
+				$ucstats.=$this->pi_getLLWrap($pObj, 'pi1_template.uc.likes', TRUE) . ' ' . $rowusrsum['like_count'];
 			}
 
-			if (($rowusr['dislike_count'] != '') && ($rowusr['dislike_count'] != '0')) {
+			if (($rowusrsum['dislike_count'] != '') && ($rowusrsum['dislike_count'] != '0')) {
 				if ($ucstats != '') {
 					$ucstats .= ', ';
 				}
 
-				$ucstats.=$this->pi_getLLWrap($pObj, 'pi1_template.uc.dislikes', TRUE) . ' ' . $rowusr['dislike_count'];
+				$ucstats.=$this->pi_getLLWrap($pObj, 'pi1_template.uc.dislikes', TRUE) . ' ' . $rowusrsum['dislike_count'];
 			}
 
-			if ($rowusr['tstamp'] != '') {
+			if ($rowusrsum['tstamp'] != '') {
 				if ($ucstats != '') {
 					$ucstats .= '<br />';
 				}
 
-				$ucstats.=$this->pi_getLLWrap($pObj, 'pi1_template.uc.joined', TRUE) . ' ' . $this->formatDate($rowusr['tstamp'], $pObj, TRUE, $conf);
+				$ucstats.=$this->pi_getLLWrap($pObj, 'pi1_template.uc.joined', TRUE) . ' ' . $this->formatDate($rowusrsum['tstamp'], $pObj, TRUE, $conf);
 			}
 
-			if ($rowusr['tstamp_lastupdate'] != '') {
-				if ($rowusr['tstamp_lastupdate'] != $rowusr['tstamp'] ) {
+			if ($rowusrsum['tstamp_lastupdate'] != '') {
+				if ($rowusrsum['tstamp_lastupdate'] != $rowusrsum['tstamp'] ) {
 					if ($ucstats != '') {
 						$ucstats .= '<br />';
 					}
 
 					$ucstats.=$this->pi_getLLWrap($pObj, 'pi1_template.uc.lastactivity', TRUE) . ' ' .
-					$this->formatDate($rowusr['tstamp_lastupdate'], $pObj, TRUE, $conf);
+					$this->formatDate($rowusrsum['tstamp_lastupdate'], $pObj, TRUE, $conf);
 				}
 
 			}
