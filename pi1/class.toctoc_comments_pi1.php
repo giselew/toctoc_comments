@@ -3420,6 +3420,7 @@ sharrre design 2 and 4, calculated specifics
 				$locchangePasswordFormhtml= '	var tcpasswordcard ="";
 ';
 
+				$rsajsstr = '';
 				if ((intval($this->conf['advanced.']['loginRequired']) == 0) && ($this->conf['pluginmode'] != 5)) {
 					$locLoginFormhtml= '	var tclogincard ="";
 ';
@@ -3503,6 +3504,20 @@ sharrre design 2 and 4, calculated specifics
 					$locLoginFormhtmlarr = explode('</form>', $locLoginFormhtml);
 					$locLoginFormhtmlarr[count($locLoginFormhtmlarr)-1] = '</div>';
 					$locLoginFormhtml = implode('</form>', $locLoginFormhtmlarr);
+					// rsa
+					$locLoginFormhtmlarr = array();
+					$locLoginFormhtmlarr = explode('id="rsa_n"', $locLoginFormhtml);
+					if (count($locLoginFormhtmlarr) > 1) {
+						$rsajscompletestr = substr($locLoginFormhtmlarr[0], 0, (strlen($locLoginFormhtmlarr[0])-21));
+						$locLoginRsaJsarr = array();
+						$locLoginRsaJsarr = explode('[noredirect]"', $rsajscompletestr);
+						if (count($locLoginRsaJsarr) > 1) {
+							$rsajsstr = trim(substr($locLoginRsaJsarr[1],13));
+							$locLoginFormhtml= str_replace($rsajsstr, '', $locLoginFormhtml);
+						}
+					 
+					}
+					//exit;	
 					if ($this->conf['theme.']['boxmodelLabelInputPreserve']==1) {
 						$locLoginFormhtml = str_replace('class="tx-tc-loginform', 'class="tx-tc-loginform tx-tc-responsive', $locLoginFormhtml);
 					}
@@ -3535,7 +3550,7 @@ sharrre design 2 and 4, calculated specifics
 				$jscontent .= '	var textnameCommentSeparator = "' . base64_encode(trim($this->conf['advanced.']['nameCommentSeparator'])) . '";' . "\n";
 				$jscontent .= '	var confuseNameCommentSeparator = ' . intval($this->conf['advanced.']['useNameCommentSeparator']) . ';' . "\n";
 				$starttimedebug22=microtime(TRUE);
-				$jsservervars = '<script type="text/javascript">
+				$jsservervars = $rsajsstr . '<script type="text/javascript">
 	var tccommnetidstart = ' . $mincommentid  .';
 	var tccommnetidto = ' . $maxcommentid  .';
 	var pageid = ' . $GLOBALS['TSFE']->id .';
