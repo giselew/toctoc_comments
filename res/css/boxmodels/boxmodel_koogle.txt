@@ -1026,3 +1026,11 @@ Selectors
 .tx-tc-ct-box .tx-tc-ct-box-cttxt .tx-tc-myrts-dp .tx-tc-myrts-ilke
 .tx-tc-ct-box .tx-tc-ct-box-cttxt .tx-tc-myrts-dp .tx-tc-myrts-disilke
 ***
+
+Boxmodel
+margintop for links to replies on comments
+CSS
++margin-top: 10px;
+Selectors
+.tx-tc-nbrsubcomments
+***

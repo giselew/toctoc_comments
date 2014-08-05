@@ -457,3 +457,21 @@
 	* Charts: Fixed image-display for tt_content-items on TYPO3 >= 6.0
 	* Ratings: Changed data type of average rating fields from int or decimal(19,2) to decimal(19,8), charts on scoped ratings had rounding errors with the former "2 decimal places"-system   
 	* Database Update required in TYPO3 4.x
+		
+2014-07-27  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 5.3.0
+	* Added gravatar user pictures with TypoScript option advanced.gravatarEnable. 
+	* Max shown gravatar-rating can be configured with advanced.gravatarRating
+	* Defaultpictures in "gravatar"-mode remain existing user-pictures. 
+	* To prevent errors when gravatar.com tries to access the user-pictures on servers that are not accessible to gravatar.com you can set advanced.gravatarLocalHost to a default gravatar
+	* Added TypoScript option theme.useLessToolTips = 0. When set to 1, then on devices smaller than 768 less tooltips are shown, if set to 2 it's regardless from screen width.
+	* Added TypoScript option theme.emojiNoToolTips = 0. When set to 1, then smiles and emojis have no tool tips
+	* Added TypoScript option for sendernames in emails from the commenting system: advanced.notificationForCommentatorEmailName and spamProtect.fromEmailName
+	* Added TypoScript option that allows configuring the "middot" in the commenting forms. This separator is set to a custom value with advanced.midDot
+	* Added TypoScript option UCUserStatsByEmail, stats on the user are made using email instead of IP (or UserId) if enabled
+	* Added TypoScript option advanced.dontuseGIFBUILDER, if you do not want to use GIFBUILDER for generation of the userpics. Default is 0.
+	* Tuned up 1st start of the extension by some 100%. A MySQL-LIMIT created a query with long execution times as soon as 1 of the 2 linked tables became bigger.
+	* Fixed bug: AJAX-Login fails with rsaauth enabled in comment-lists
+	* Fixed bug: AJAX-Login fails on pages with GET-Parameters containing brackets "[" and "]"
+	* Fixed bug: comments browsing fails with advanced.invertBrowser = 0 or advanced.reverseSorting = 0
+	* Changed recent comments URLs in links to comments to absolute URLs. Same in Charts

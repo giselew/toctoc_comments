@@ -39,21 +39,21 @@
  *
  *   90: class toctoc_comments_ajax
  *  142:     public function __construct()
- *  599:     public function main()
- *  638:     public function handleCommentatorNotifications()
- *  649:     protected function updateCommentDisplay()
- *  667:     protected function updateComment()
- *  682:     protected function webpagepreview()
- *  694:     protected function previewcomment()
- *  706:     protected function cleanupfup()
- *  720:     protected function getCaptcha($captchatype, $cid)
- *  855:     protected function chkcaptcha($cid, $code)
- *  882:     protected function getUserCard()
- *  895:     protected function updateCommentsView()
- * 1014:     protected function updateRating()
- * 1368:     protected function processDeleteSubmission()
- * 1448:     protected function processDenotifycommentSubmission()
- * 1498:     protected function recentCommentsClearCache()
+ *  603:     public function main()
+ *  641:     public function handleCommentatorNotifications()
+ *  652:     protected function updateCommentDisplay()
+ *  670:     protected function updateComment()
+ *  685:     protected function webpagepreview()
+ *  697:     protected function previewcomment()
+ *  709:     protected function cleanupfup()
+ *  723:     protected function getCaptcha($captchatype, $cid)
+ *  858:     protected function chkcaptcha($cid, $code)
+ *  885:     protected function getUserCard()
+ *  898:     protected function updateCommentsView()
+ * 1017:     protected function updateRating()
+ * 1371:     protected function processDeleteSubmission()
+ * 1451:     protected function processDenotifycommentSubmission()
+ * 1501:     protected function recentCommentsClearCache()
  *
  * TOTAL FUNCTIONS: 16
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -560,7 +560,11 @@ class toctoc_comments_ajax {
 
 				// from a logged in user the pic - we need it after the insert
 				// in the form
-				$this->userpic = t3lib_div::_GP('userpic');
+				$this->userpic = base64_decode(t3lib_div::_GP('userpic'));
+				if (str_replace('>', '', $this->userpic) == $this->userpic) {
+					$this->userpic .= '>';
+				}
+
 				if(($this->cmd === 'showcomments') || (strpos($this->cmd, 'rowse') !== FALSE)) {
 					// for comments and browser we need the commentimgs, this is
 					// in the 3rd Ajaxarray
@@ -602,9 +606,8 @@ class toctoc_comments_ajax {
 		} elseif ($this->cmd == 'commentsview') {
 			$this->updateCommentsView();
 		} elseif($this->cmd == 'getuc') {
-			$this->getUserCard();		}
-
-		elseif($this->cmd == 'handlecn') {
+			$this->getUserCard();
+		} elseif($this->cmd == 'handlecn') {
 			$this->handleCommentatorNotifications();
 		} elseif(($this->cmd == 'getcap')) {
 			$this->getCaptcha($this->captchatype, $this->cid);

@@ -35,7 +35,7 @@ Selectors
 Boxmodel
 margin comment date
 CSS
-margin: -1.5px 0 0 0;
+margin: -1.5px 4px 0 0;
 Selectors
 .tx-tc-ctdate
 ***
@@ -291,7 +291,7 @@ Selectors
 Boxmodel
 Padding overrating-date in comments
 CSS
-+margin: 0;
++margin: 0 4px 0 0;
 Selectors
 .tx-tc-overrating-date .tx-tc-ctdate
 .tx-tc-overrating-date .tx-tc-commentviews
@@ -452,6 +452,8 @@ Boxmodel
 Put comments report to the right
 CSS
 float: right;
+CSS
+padding: 0;
 Selectors
 .tx-tc-ct-report
 ***

@@ -41,31 +41,31 @@
  *   97: class tx_toctoccomments_pi2 extends tslib_pibase
  *  121:     protected function processRedirect()
  *  135:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  237:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  422:     protected function watermark($conf, $content)
- *  460:     protected function showForgot()
- *  540:     protected function showLogout()
- *  575:     protected function showLogin()
- *  721:     protected function getRSAKeyPair()
- *  758:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
- *  794:     protected function getPreserveGetVars()
- *  822:     protected function generatePassword($len)
- *  842:     protected function getDisplayText($label, $stdWrapArray=array())
- *  854:     protected function getUserFieldMarkers()
- *  889:     protected function validateRedirectUrl($url)
- *  920:     protected function isInCurrentDomain($url)
- *  932:     protected function isInLocalDomain($url)
- *  973:     protected function isRelativeUrl($url)
- *  989:     protected function generateAndSendHash($user)
- * 1055:     protected function changePassword($uid, $piHash)
- * 1177:     protected function showSignon()
- * 1485:     protected function getSignupCaptcha($required, $errcp, $cpval)
- * 1528:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
- * 1555:     protected function processSignupCaptcha($postData)
- * 1595:     protected function loginUser($facebookId)
- * 1621:     protected function storeUser($facebookUserProfile)
- * 1729:     private function copyImageFromFacebook($facebookUserId)
- * 1744:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
+ *  236:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  421:     protected function watermark($conf, $content)
+ *  459:     protected function showForgot()
+ *  539:     protected function showLogout()
+ *  574:     protected function showLogin()
+ *  720:     protected function getRSAKeyPair()
+ *  757:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
+ *  793:     protected function getPreserveGetVars()
+ *  821:     protected function generatePassword($len)
+ *  841:     protected function getDisplayText($label, $stdWrapArray=array())
+ *  853:     protected function getUserFieldMarkers()
+ *  888:     protected function validateRedirectUrl($url)
+ *  919:     protected function isInCurrentDomain($url)
+ *  931:     protected function isInLocalDomain($url)
+ *  972:     protected function isRelativeUrl($url)
+ *  988:     protected function generateAndSendHash($user)
+ * 1054:     protected function changePassword($uid, $piHash)
+ * 1176:     protected function showSignon()
+ * 1484:     protected function getSignupCaptcha($required, $errcp, $cpval)
+ * 1527:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ * 1554:     protected function processSignupCaptcha($postData)
+ * 1594:     protected function loginUser($facebookId)
+ * 1620:     protected function storeUser($facebookUserProfile)
+ * 1728:     private function copyImageFromFacebook($facebookUserId)
+ * 1743:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
  *
  * TOTAL FUNCTIONS: 27
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -218,7 +218,6 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 				$link = $this->pi_getPageLink($GLOBALS['TSFE']->id);
 			}
 
-			t3lib_utility_Http::redirect($link);
 		}
 
 		return $content;
@@ -464,7 +463,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 		if ($postData['forgot_email']) {
 
-			// get hashes for compare
+			//  hashes for compare
 			$postedHash = $postData['forgot_hash'];
 			$hashData = $GLOBALS['TSFE']->fe_user->getKey('ses', 'forgot_hash');
 
@@ -763,8 +762,8 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 				$additionalParams .= '&' . $key . '=' . $val;
 			}
 		}
-		// should GETvars be preserved?
-		if ($this->conf['preserveGETvars'])	{
+		// should vars be preserved?
+		if ($this->conf['preservevars'])	{
 			$additionalParams .= $this->getPreserveGetVars();
 		}
 
@@ -784,7 +783,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 	}
 
 	/**
-	 * Add additional parameters for links according to TS setting preserveGETvars.
+	 * Add additional parameters for links according to TS setting preservevars.
 	 * Possible values are "all" or a comma separated list of allowed GET-vars.
 	 * Supports multi-dimensional GET-vars.
 	 * Some hardcoded values are dropped.

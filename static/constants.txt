@@ -43,6 +43,9 @@ plugin.tx_toctoccomments_pi1 {
 
 	# cat=plugin.tx_toctoccomments_pi1: Basic//16; type=boolean; label=Display statistics on usercards:This option enables display of statistics in usercards
 	userStatsUC = 1	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic//16; type=boolean; label=Make statistics using email:The stats are based on toctoc_userid by default (0), enabling stats by email links together toctoc_userids with same initial or current email 
+	UCUserStatsByEmail = 0
 
 	# cat=plugin.tx_toctoccomments_pi1: Basic//17; type=boolean; label=Display IP information on usercards:This option enables display IP information about the user in usercards
 	userIPUC = 0
@@ -98,8 +101,11 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//12; type=boolean; label=commentator of former comments are identified by their IP:If enabled, the commentators are identified as per their IP address if they are not logged in. If disabled commentators who are not logged in can't disable E-Mail notification on new comments.
 	commentatorNotifybyIP = 1
 	
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//13; type=string; label=Information e-mail for commentator of former comments:Information e-mail when a new comment is posted for commentator of former comments is sent from this address
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//130; type=string; label=Information e-mail for commentator of former comments:Information e-mail when a new comment is posted for commentator of former comments is sent from this address
 	notificationForCommentatorEmail =
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//131; type=string; label=Name used in information e-mail for commentator of former comments
+	notificationForCommentatorEmailName = %site% - Commentingsystem
 	
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//14; type=string; label=HTML E-mail template for commentator of former comments:HTML Template to use for notification email to commentator of former comments
 	notificationForCommentatorHTMLEmailTemplate = EXT:toctoc_comments/res/template/toctoccomments_template_commentator_email.html
@@ -268,6 +274,18 @@ plugin.tx_toctoccomments_pi1 {
 
     # cat=plugin.tx_toctoccomments_pi1: Advanced//66;  type=string; label=string and sequence of available bb-codes: The available bb-codes are defined here, the initial setup hold all possible bb-codes. bold(b), italic(i), code(code), q(inlinbe quote), bq(blockquote) and ct(citation)
 	BBCodebbs = b, i, code, q, ct, bq
+   
+    # cat=plugin.tx_toctoccomments_pi1: Advanced//67;  type=string; label=string for the separator between links iLike and iDislike (and more)
+	midDot = &middot;
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//70;  type=boolean; label=Show Gravatar Icon if present for fe_users: If no gravatar is found, the local userpicture is shown (if your site is accessble from the internet)
+	gravatarEnable = 0	
+ 	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//71;  type=options[G,PG,R,X]; label=Gravatar Rating: Maximum allowed Gravatar rating to show. G - suitable for display on all websites with any audience type, PG - may contain rude gestures, provocatively dressed individuals, the lesser swear words, or mild violence, R - may contain such things as harsh profanity, intense violence, nudity, or hard drug use. X: may contain hardcore sexual imagery or extremely disturbing violence.
+	gravatarRating = G
+	
+    # cat=plugin.tx_toctoccomments_pi1: Advanced//72;  options[0, mm,identicon,monsterid,wavatar,retro]; label=when your site is not connected to the web, select the type of local user picture if no gravatar is found: 0, use normal userpicture on my server (it's connected to web) - mm, (mystery-man) a simple, cartoon-style silhouetted outline of a person (does not vary by email hash) - identicon, a geometric pattern based on an email hash - monsterid, a generated 'monster' with different colors, faces, etc - wavatar, generated faces with differing features and backgrounds - retro, awesome generated, 8-bit arcade-style pixelated faces	
+    gravatarLocalHost = 0
   	
 	# cat=plugin.tx_toctoccomments_pi1: Spam protection//01; type=boolean; label=Require approval:Comments must be approved by moderator before showing them to other users
 	requireApproval = 1
@@ -301,6 +319,9 @@ plugin.tx_toctoccomments_pi1 {
 
 	# cat=plugin.tx_toctoccomments_pi1: Spam protection//11; type=string; label=From e-mail:Notification to administrator about posted comment is sent from this e-mail
 	fromEmail =
+	
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//11; type=string; label=From e-mail Sendername:Notification to administrator about posted comment is sent from this name. %site% is replaced by your sitename
+	fromEmailName = %site% - Administrator
 
 	# cat=plugin.tx_toctoccomments_pi1: Spam protection//12; type=string; label=HTML-E-mail template for approval and notification:HTML-Template to use for approval needed-notification email (as well as simple notification mails) to administrator
 	emailTemplateHTML = EXT:toctoc_comments/res/template/toctoccomments_template_email.html
@@ -554,8 +575,14 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Theme//13; type=string; label=responsive Steps in px: This are the window-widths in pixels when toctoc_comments changes the layout to fit in the place on the screen. Defaults are the original values from the CSS-file.
 	responsiveSteps = 350,450
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//14; type=boolean; label=cruch CSS (1) or leave CSS uncompressed (0)
+	# cat=plugin.tx_toctoccomments_pi1: Theme//14; type=boolean; label=crunch CSS (1) or leave CSS uncompressed (0)
 	crunchCSS = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//15; type=int+; label=when set to 1, then on devices smaller than 768 less tooltips are shown, if set to 2 its regardless from screen width.
+	useLessToolTips = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//16; type=boolean; label=when set to 1, then smiles and emojis have no tooltips
+	emojiNoToolTips = 0
 	
 	# cat=plugin.tx_toctoccomments_pi1: Debug//01; type=boolean; label=Use of debugging features such as show run-times, caching and session resets.
 	useDebug = 0

@@ -86,7 +86,6 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 			$conf['storagePid'] = $GLOBALS['TYPO3_DB']->cleanIntList($conf['storagePid']);
 			$pidcond='deleted=0 AND pid IN (' . $conf['storagePid'] . ') AND ';
 		}
-		//print $conf['storagePid']; exit;
 		$restrictor=$pidcond;
 
 		if ($conf['topRatings.']['topRatingsrestrictToExternalPrefix'] == 'custom') {
@@ -1292,6 +1291,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							'parameter'        => $paramtl,
 							'additionalParams' => $params,
 							'ATagParams' => 'rel="nofollow"',
+							'forceAbsoluteUrl' => 1,
 					);
 					$rowsmerged[$i]['linktext']=$text;
 					$text = $this->cObj->typoLink($text, $conflink);
@@ -1716,9 +1716,9 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							$voteingstr . $row['voting']. ' ';
 						} elseif ($conf['topRatings.']['topRatingsMode']==2){
 							$topratings_ilike_vote= $this->pi_getLLWrap($pObj, 'pi1_template.text_topratings_rating', FALSE) . ':&nbsp;' .
-							$voteingstr . $row['voting'] . '  &middot; ' . $mylike . ' ' . $row['likecount'] . ' ';
+							$voteingstr . $row['voting'] . '  ' . $this->middotchar . ' ' . $mylike . ' ' . $row['likecount'] . ' ';
 						} elseif ($conf['topRatings.']['topRatingsMode']==3){
-							$topratings_ilike_vote='&nbsp;' . $mylike . '<b> ' . round($row['likecount'], 1) . '</b> &middot; ' .
+							$topratings_ilike_vote='&nbsp;' . $mylike . '<b> ' . round($row['likecount'], 1) . '</b> ' . $this->middotchar . ' ' .
 							$this->pi_getLLWrap($pObj, 'pi1_template.text_topratings_rating', FALSE) . ':&nbsp;' . $voteingstr . $row['voting'] . ' ';
 						} elseif ($conf['topRatings.']['topRatingsMode']==4){
 							$topratings_ilike_vote='' . $mylike . '&nbsp;<b> ' . round($row['likecount'], 1) . '</b>' . $row['datefirstview'];

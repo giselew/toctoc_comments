@@ -1356,6 +1356,9 @@ div.tx-tc-ct-img {
 	border-width: 1px;
 	border-style: solid;
 }
+.simpletxtcmoddlg-wrap {
+	overflow: hidden !important;
+}
 #confirm-container .header {
 	height: 26px;
 	line-height: 26px;
@@ -2069,6 +2072,9 @@ span.tx-tc-emo-top-nav-on, span.tx-tc-emo-top-nav-off {
 	float: right;
 	margin: 0 0 -22px;
 	padding: 2px 0 0;
+}
+.tx-tc-ct-box-cttxt .tx-tc-overrating {
+	margin: 0;
 }
 .tx-tc-overrating-date {
 	display: inline;

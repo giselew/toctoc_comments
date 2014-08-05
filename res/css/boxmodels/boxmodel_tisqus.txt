@@ -53,6 +53,21 @@ CSS
 +margin-top: 2px;
 Selectors
 .tx-tc-trt-cts-article .tx-tc-rts-container
+
+Boxmodel
+voting text
+CSS
+margin: 0 4px 0 0;
+Selectors
+.tx-tc-rts-text
+***
+
+Boxmodel
+voting text on top and stars
+CSS
++margin: 2px 0 -2px 0;
+Selectors
+.tx-tc-text-top .tx-tc-atrts-dp .tx-tc-rts-area .tx-tc-rts-container .tx-tc-rts-li
 ***
 
 Boxmodel

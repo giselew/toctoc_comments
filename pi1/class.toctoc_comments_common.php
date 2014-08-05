@@ -37,13 +37,15 @@
  *
  *
  *
- *   59: class toctoc_comments_common
- *  110:     public function unmirrorConf($confDiff)
- *  145:     public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '')
- *  211:     private function getSessionSavePath()
- *  231:     private function ensureSessionSavePathExists($sessionSavePath)
+ *   61: class toctoc_comments_common
+ *  113:     public function unmirrorConf($confDiff)
+ *  148:     public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '')
+ *  214:     private function getSessionSavePath()
+ *  235:     private function ensureSessionSavePathExists($sessionSavePath, $dohtaccess = TRUE)
+ *  287:     public function substGifbuilder ($contentdir, $filename, $imgsize)
+ *  413:     private function getGifBuilderSavePath()
  *
- * TOTAL FUNCTIONS: 4
+ * TOTAL FUNCTIONS: 6
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -72,6 +74,7 @@ class toctoc_comments_common {
 	 * @var string
 	 */
 	private $sessionPath = 'TocTocCommentsSessions/%s';
+	private $picsPath = 'TocTocCommentsSessions/%s';
 
 	/**
 	 * the cookie to store the session ID of the install tool
@@ -156,9 +159,18 @@ class toctoc_comments_common {
 			return;
 		}
 		// end
-
-		$this->expireTimeInMinutes=intval($expireTimeInMinutes);
-		$this->typo3tempPath = PATH_site . 'typo3conf/ext/toctoc_comments/pi1/sessionTemp/';
+		
+		//check if pic is in temp and them move the 2 pics in attachments
+		
+		$repstr= str_replace('/', DIRECTORY_SEPARATOR, '/typo3conf/ext/toctoc_comments/pi1');
+		$PATH_site = str_replace($repstr, '', dirname(__FILE__)) . DIRECTORY_SEPARATOR;
+		if (DIRECTORY_SEPARATOR == '\\') {
+			// windows
+			$PATH_site = str_replace(DIRECTORY_SEPARATOR, '/', $PATH_site);
+		}
+				
+		$this->expireTimeInMinutes = intval($expireTimeInMinutes);
+		$this->typo3tempPath = $PATH_site . 'typo3conf/ext/toctoc_comments/pi1/sessionTemp/';
 
 		// Start our PHP session early so that hasSession() works
 		if ($sessionSavePathSaved == '') {
@@ -225,10 +237,11 @@ class toctoc_comments_common {
 	 * and throw an exception if that fails.
 	 *
 	 * @param	string		$sessionSavePath The absolute path to the session files
+	 * @param	[type]		$dohtaccess: ...
 	 * @return	[type]		...
 	 * @throws \RuntimeException
 	 */
-	private function ensureSessionSavePathExists($sessionSavePath) {
+	private function ensureSessionSavePathExists($sessionSavePath, $dohtaccess = TRUE) {
 		$indexContent = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">';
 		$indexContent .= '<HTML><HEAD<TITLE></TITLE><META http-equiv=Refresh Content="0; Url=../../">';
 		$indexContent .= '</HEAD></HTML>';
@@ -236,32 +249,194 @@ class toctoc_comments_common {
 			if (version_compare(TYPO3_version, '6.0', '<')) {
 				try {
 
-					$subpath = str_replace('/%s', '', $this->sessionPath);
+					if ($dohtaccess == FALSE) {
+						$subpath = str_replace('/%s', '', $this->picsPath);
+					} else {
+						$subpath = str_replace('/%s', '', $this->sessionPath);
+					}
 
 					t3lib_div::mkdir_deep($this->typo3tempPath, $subpath);
 					t3lib_div::mkdir_deep($this->typo3tempPath . '/' . $subpath . '/', md5('session:' .	$GLOBALS['TYPO3_CONF_VARS']['BE']['installToolPassword']));
 				} catch (\RuntimeException $exception) {
 					throw new \RuntimeException('Could not create session folder "' . $sessionSavePath . '". Make sure typo3temp/ is writeable!', 1294587484);
 				}
-
-				t3lib_div::writeFile($sessionSavePath . '/.htaccess', 'Order deny, allow' . '
+				if ($dohtaccess == TRUE) {
+					t3lib_div::writeFile($sessionSavePath . '/.htaccess', 'Order deny, allow' . '
 ' . 'Deny from all' . '
 ');
-				t3lib_div::writeFile($sessionSavePath . '/index.html', $indexContent);
+					t3lib_div::writeFile($sessionSavePath . '/index.html', $indexContent);
+				}
+
 			} else {
 				try {
 					\TYPO3\CMS\Core\Utility\GeneralUtility::mkdir_deep($sessionSavePath);
 				} catch (\RuntimeException $exception) {
 					throw new \RuntimeException('Could not create session folder in typo3temp/. Make sure it is writeable!', 1294587484);
 				}
-				\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($sessionSavePath . '/.htaccess', 'Order deny, allow' . '
+				if ($dohtaccess == TRUE) {
+					\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($sessionSavePath . '/.htaccess', 'Order deny, allow' . '
 ' . 'Deny from all' . '
 ');
-				\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($sessionSavePath . '/index.html', $indexContent);
+					\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($sessionSavePath . '/index.html', $indexContent);
+				}
 			}
 
 		}
 
+	}
+	/**
+	 * Substitute for slow GIFBUILDER, just for scaling .
+	 *
+	 * @param	string		$contentdir
+	 * @param	string		$filename
+	 * @param	int		$imgsize
+	 * @return	[type]		...
+	 * @throws \RuntimeException
+	 */
+	public function substGifbuilder ($contentdir, $filename, $imgsize) {
+		$targetwidth = $imgsize;
+		$targetheight = $imgsize;
+		$txdirname= str_replace('/', DIRECTORY_SEPARATOR, $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . $contentdir);
+		$savepathfilename = $txdirname . $filename;
+		$ext = substr($filename, 1+strrpos($filename, '.'));
+
+		list($width, $height, $typeimg, $attr) = getimagesize($savepathfilename);
+
+		if (isset($typeimg) && in_array($typeimg, array(
+				IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF, IMAGETYPE_WBMP))) {
+			if ($typeimg==3) {
+				$ext = 'png';
+			} elseif ($typeimg==2) {
+				$ext = 'jpg';
+			}elseif ($typeimg==1) {
+				$ext = 'gif';
+			}elseif ($typeimg==4) {
+				$ext = 'bmp';
+			} else  {
+				return FALSE;
+			}
+			
+		} else  {
+			return FALSE;
+		}
+
+		if ((strtoupper($ext) == 'JPG') || (strtoupper($ext) == 'JPEG')) {
+			$image = imagecreatefromjpeg($savepathfilename);
+		} elseif (strtoupper($ext) == 'GIF') {
+			$image = imagecreatefromgif($savepathfilename);
+		} elseif (strtoupper($ext) == 'PNG') {
+			$image = imagecreatefrompng($savepathfilename);
+		} elseif (strtoupper($ext) == 'BMP') {
+			$image = imagecreatefromwbmp ($savepathfilename);
+		} else {
+			return FALSE;
+		}
+
+		if ($image) {
+			$txdirname= $this->getGifBuilderSavePath();
+			$savepathfilename= $txdirname . DIRECTORY_SEPARATOR . $filename;
+			$image_p = imagecreatetruecolor($targetwidth, $targetheight);
+
+			// handle transparancy
+			if ((strtoupper($ext) == 'GIF') || (strtoupper($ext) == 'PNG')) {
+				$trnprt_indx = imagecolortransparent($image);
+				// If we have a specific transparent color
+				if (($trnprt_indx >= 0) && ($trnprt_indx < 254)) {
+					// Get the original image's transparent color's RGB values
+					$nmbr_color  = imagecolorstotal($image);					
+					$trnprt_color  = imagecolorsforindex($image, $trnprt_indx);					
+					// Allocate the same color in the new image resource
+					if ($trnprt_color) {
+						$trnprt_indx = imagecolorallocate($image_p, $trnprt_color['red'], $trnprt_color['green'], $trnprt_color['blue']);
+						// Completely fill the background of the new image with allocated color.
+						imagefill($image_p, 0, 0, $trnprt_indx);
+						// Set the background color for new image to transparent
+						imagecolortransparent($image_p, $trnprt_indx);
+					}
+
+				} elseif (strtoupper($ext) =='PNG') {
+					// Turn off transparency blending (temporarily)
+					imagealphablending($image_p, FALSE);
+					// Create a new transparent color for image
+					$tspcolor = imagecolorallocatealpha($image_p, 0, 0, 0, 127);
+					// Completely fill the background of the new image with allocated color.
+					imagefill($image_p, 0, 0, $tspcolor);
+					// Restore transparency blending
+					imagesavealpha($image_p, TRUE);
+				}
+
+			}
+			$sizerel = $width/$height;
+			if ($sizerel > 1) {
+				$srcy = 0;
+				$dimdiff = $width-$height;
+				$srcx = round(($dimdiff/2), 0);
+			} else {
+				$srcx = 0;
+				$dimdiff = $height-$width;
+				$srcy = round(($dimdiff/2), 0);
+			}
+
+			imagecopyresampled($image_p, $image, 0, 0, $srcx, $srcy, $targetwidth, $targetheight, $width-2*$srcx, $height-2*$srcy);
+			switch(strtolower($ext)) {
+				case 'gif':
+					imagegif($image_p, $savepathfilename);
+					break;
+				case 'png':
+					imagepng($image_p, $savepathfilename, 0);
+					break;
+				case 'bmp':
+					imagewbmp($image_p, $savepathfilename);
+					break;
+				case 'jpg':
+					imagejpeg($image_p, $savepathfilename, 100);
+					break;
+				case 'jpeg':
+					imagejpeg($image_p, $savepathfilename, 100);
+					break;
+				default:
+					return FALSE;
+
+			}
+			if (file_exists($savepathfilename) == FALSE) {
+				print 'Error in userpicturefile generation: no file_exists for ' . $savepathfilename; 
+				exit;
+			}
+			imagedestroy($image_p);
+		}
+		
+		$savepathfilename = str_replace(DIRECTORY_SEPARATOR, '/', (str_replace($_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR, '', $savepathfilename)));
+		return $savepathfilename;
+	}
+	/**
+	 * Returns the full-path where to store our user pictures
+	 *
+	 * @return	[type]		...
+	 */
+	private function getGifBuilderSavePath() {
+		$repstr= str_replace('/', DIRECTORY_SEPARATOR, '/typo3conf/ext/toctoc_comments/pi1');
+		$PATH_site =str_replace($repstr, '', dirname(__FILE__)) . DIRECTORY_SEPARATOR;
+		if (DIRECTORY_SEPARATOR == '\\') {
+			// windows
+			$PATH_site= str_replace(DIRECTORY_SEPARATOR, '/', $PATH_site);
+		}
+		
+		$typo3tempPath = $PATH_site . 'typo3temp/';
+		$UserimagesPath = 'TocTocCommentsUserimages/%s';
+		$this->picsPath = $UserimagesPath;
+		$this->typo3tempPath = $PATH_site . 'typo3temp/';
+
+		if (version_compare(TYPO3_version, '6.0', '<')) {
+			$sessionSavePath = sprintf($typo3tempPath . $UserimagesPath, md5('session:' .	$GLOBALS['TYPO3_CONF_VARS']['BE']['installToolPassword']));
+		} else {
+			$sessionSavePath = sprintf($typo3tempPath . $UserimagesPath, \TYPO3\CMS\Core\Utility\GeneralUtility::hmac('session:' .
+					$GLOBALS['TYPO3_CONF_VARS']['BE']['installToolPassword']));
+		}
+
+		$this->ensureSessionSavePathExists($sessionSavePath, FALSE);
+		$sessionSavePath = str_replace('/', DIRECTORY_SEPARATOR, $sessionSavePath);
+
+		return $sessionSavePath;
 	}
 
 }

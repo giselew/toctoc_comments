@@ -30,37 +30,37 @@
  *
  *
  *   92: class tx_toctoccomments_pi1 extends tslib_pibase
- *  167:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
- * 2115:     protected function checkJSLoc()
- * 2339:     protected function checkCSSTheme()
- * 2450:     protected function checkCSSLoc()
- * 2888:     protected function makesharingcss ()
- * 3068:     protected function initprefixToTableMap()
- * 3105:     protected function init()
- * 3749:     protected function mergeConfiguration()
- * 4007:     protected function fetchConfigValue($param)
- * 4035:     protected function ae_detect_ie()
- * 4059:     protected function boxmodel()
- * 4587:     protected function crunchcss($buffer)
- * 4612:     protected function calculate_string( $mathString )
- * 4635:     protected function locationHeaderUrlsubDir()
- * 4654:     protected function currentPageName()
- * 4682:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
- * 4713:     protected function doClearCache ($forceclear=FALSE)
- * 4747:     protected function getPluginCacheControlTstamp ($external_ref_uid)
- * 4771:     protected function getLastUserAdditionTstamp ()
- * 4794:     protected function initLegacyCache ()
- * 4808:     protected function check_scopes()
- * 4966:     protected function initializeprefixtotablemap()
- * 5007:     protected function sharrrejs()
- * 5089:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
- * 5142:     private function resolveBackPath($pathStr)
- * 5177:     private function dirname($path)
- * 5191:     private function revExplode($delimiter, $string, $count = 0)
+ *  168:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
+ * 2150:     protected function checkJSLoc()
+ * 2375:     protected function checkCSSTheme()
+ * 2486:     protected function checkCSSLoc()
+ * 2924:     protected function makesharingcss ()
+ * 3104:     protected function initprefixToTableMap()
+ * 3141:     protected function init()
+ * 3803:     protected function mergeConfiguration()
+ * 4061:     protected function fetchConfigValue($param)
+ * 4089:     protected function ae_detect_ie()
+ * 4113:     protected function boxmodel()
+ * 4641:     protected function crunchcss($buffer)
+ * 4666:     protected function calculate_string( $mathString )
+ * 4689:     protected function locationHeaderUrlsubDir()
+ * 4708:     protected function currentPageName()
+ * 4736:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
+ * 4767:     protected function doClearCache ($forceclear=FALSE)
+ * 4801:     protected function getPluginCacheControlTstamp ($external_ref_uid)
+ * 4825:     protected function getLastUserAdditionTstamp ()
+ * 4848:     protected function initLegacyCache ()
+ * 4862:     protected function check_scopes()
+ * 5020:     protected function initializeprefixtotablemap()
+ * 5061:     protected function sharrrejs()
+ * 5143:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
+ * 5196:     private function resolveBackPath($pathStr)
+ * 5231:     private function dirname($path)
+ * 5245:     private function revExplode($delimiter, $string, $count = 0)
  *
  *              SECTION: needed by class.tx_commentsresponse_hooks.php
- * 5214:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 5237:     public function createLinks($text, $conf = NULL)
+ * 5268:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 5291:     public function createLinks($text, $conf = NULL)
  *
  * TOTAL FUNCTIONS: 29
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -95,7 +95,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '522';
+	public $extVersion = '530';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
 	public $externalUid;						// UID of external record
@@ -151,6 +151,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	protected $arrResponsiveSteps = array();
 
 	public $ignorequerystring= FALSE;
+	private $middotchar = '&middot;';
 
 
 
@@ -275,28 +276,41 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$this->conf['advanced.']['useSessionCache'] = 0;
 		}
 
-		if ((($_SESSION['AJAXimagesrefresh'] == TRUE) || ($this->conf['advanced.']['useSessionCache'] == 0)) && (intval($_SESSION['cachepurged'])!=1)) {
+		if (trim($this->conf['advanced.']['gravatarLocalHost']) != '0') {
+			$gravatarLocalHost = 'mm';
+			if ((trim($this->conf['advanced.']['gravatarLocalHost']) == 'mm') || (trim($this->conf['advanced.']['gravatarLocalHost']) == 'identicon') ||
+					(trim($this->conf['advanced.']['gravatarLocalHost']) == 'monsterid') || (trim($this->conf['advanced.']['gravatarLocalHost']) == 'wavatar') ||
+					(trim($this->conf['advanced.']['gravatarLocalHost']) == 'retro')) {
+				$gravatarLocalHost = trim($this->conf['advanced.']['gravatarLocalHost']);
+			}
+			$this->conf['advanced.']['gravatarLocalHost']=$gravatarLocalHost;
+
+		}
+
+		if (((intval($_SESSION['AJAXimagesrefresh']) == TRUE) || ($this->conf['advanced.']['useSessionCache'] == 0)) && (intval($_SESSION['cachepurged'])!=1)) {
 		// clean sessions if on a different page the plugin is call with useSessionCache == 0
 		// is equivalent to ?puge_cache=1
 			$saveactivateClearPageCache=$this->activateClearPageCache;
 			$this->activateClearPageCache=TRUE;
-			$_SESSION=array();
+			$_SESSION = array();
 			$this->doClearCache();
 			$this->activateClearPageCache=$saveactivateClearPageCache;
 			$_SESSION['cachepurged']=1;
 		}
-		if ((intval(t3lib_div::_GP('purge_cache'))==1) && (intval($_SESSION['cachepurged'])!=1)) {
+
+		if ((intval(t3lib_div::_GP('purge_cache'))==1) && (intval($_SESSION['cachepurged'])!=1 )) {
 			$saveactivateClearPageCache=$this->activateClearPageCache;
 			$this->activateClearPageCache=TRUE;
-			$_SESSION=array();
+			$_SESSION = array();
 			$this->doClearCache();
 			$this->activateClearPageCache=$saveactivateClearPageCache;
 			$_SESSION['cachepurged']=1;
-		} elseif (($loginreset==TRUE) && (intval($_SESSION['cachepurgedlogin'])!=1)) {
-
+			$sdebugprintli .= '<br />'. 'purge_cache = 1, page-id ' .$GLOBALS['TSFE']->id. '<br />';
+		} else {
+			if (($loginreset==TRUE) && (intval($_SESSION['cachepurgedlogin'])!=1)) {
 				$saveactivateClearPageCache=$this->activateClearPageCache;
 				$this->activateClearPageCache=TRUE;
-				$_SESSION=array();
+				$_SESSION = array();
 				$this->doClearCache();
 				$this->activateClearPageCache=$saveactivateClearPageCache;
 
@@ -313,12 +327,15 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				$_SESSION['cachepurgedlogin']=1;
 				$sdebugprintli .= '<br />'. 'Init Sessionvariables because of logout/in on page id ' .$GLOBALS['TSFE']->id. '<br />';
 
-		} elseif (intval(t3lib_div::_GP('purge_cache'))==1) {
-			$sdebugprintli.= '<br />'. 'No more Init Sessionvariables because of logout/in or purge_cache on page id ' .$GLOBALS['TSFE']->id. '<br />';
+			} else {
+				if (intval(t3lib_div::_GP('purge_cache'))==1) {
 
-		} else {
-			$_SESSION['cachepurged']=0;
-			$_SESSION['cachepurgedlogin']=0;
+					$sdebugprintli.= '<br />'. 'No more Init Sessionvariables because of logout/in or purge_cache ('.intval($_SESSION['cachepurged']).') on page id ' .$GLOBALS['TSFE']->id. '<br />';
+				} else {
+					$_SESSION['cachepurged']=0;
+					$_SESSION['cachepurgedlogin']=0;
+				}
+			}
 		}
 
 		$postDatapi2 = t3lib_div::_GET('tx_toctoccomments_pi2');
@@ -432,12 +449,9 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			if (intval($this->conf['advanced.']['autoConvertLinksCropLength']) > 150) {
 				$this->conf['advanced.']['autoConvertLinksCropLength'] = 150;
 			}
+			
 		}
-		// disable Delicios for the text-letter Popup-Designs
-		if (($this->conf['advanced.']['dontUseSharingDelicious'] ==1) && (($this->conf['advanced.']['useSharingDesign'] == 0) || ($this->conf['advanced.']['useSharingDesign'] == 2))) {
-			$this->conf['advanced.']['dontUseSharingDelicious'] = 0;
-		}
-
+				
 		if (!is_array(explode(',', $this->conf['theme.']['responsiveSteps']))) {
 			$this->arrResponsiveSteps[0]=350;
 			$this->arrResponsiveSteps[1]=450;
@@ -456,6 +470,18 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			}
 
 		}
+
+		if ($this->conf['advanced.']['midDot'] != '') {
+			$this->middotchar = $this->conf['advanced.']['midDot'];
+		}
+
+		if ((($this->conf['advanced.']['gravatarRating'] == 'G') ||
+			($this->conf['advanced.']['gravatarRating'] == 'PG') ||
+				($this->conf['advanced.']['gravatarRating'] == 'R') ||
+				($this->conf['advanced.']['gravatarRating'] == 'X')) == FALSE ) {
+			$this->conf['advanced.']['gravatarRating'] = 'G';
+		}
+
 		$this->arrResponsiveSteps[2]=intval($this->conf['attachments.']['picUploadMaxDimX'])+200;
 
 		// make sure value are int because of eval in boxmodeller
@@ -1569,6 +1595,8 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$_SESSION['renderedplugins']=0;
 			if ((($this->lhookTablePrefix!='') && ($this->lhookId!=0))==FALSE) {
 				$this->sdebugprint .= 'Finishing rendering '. count($_SESSION['tv_comments_cid']). ' plugins from internal list<br />';
+				$_SESSION['cachepurged']=0;
+				$_SESSION['cachepurgedlogin']=0;
 				$_SESSION['indexOfSortedCommentsCidList']=0;
 
 			}
@@ -1860,6 +1888,8 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 				if ($_SESSION['renderingdone']==TRUE) {
 					$_SESSION['activeBoxmodel']=$this->conf['theme.']['selectedBoxmodel'];
+					$_SESSION['cachepurged']=0;
+					$_SESSION['cachepurgedlogin']=0;
 				}
 
 			}
@@ -2029,6 +2059,8 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				$_SESSION['edgeTime']=$_SESSION['edgeTime']-10;
 				$_SESSION['indexOfSortedCommentsCidList']=0;
 				$_SESSION['doChangePasswordForm'] = 0;
+				$_SESSION['cachepurged']=0;
+				$_SESSION['cachepurgedlogin']=0;
 
 			}
 
@@ -2275,6 +2307,7 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 		$jscontent .= 'var textCancelEditComment = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.canceleditcomment', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textEditComment = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.editlink', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textAddComment = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.add_comment', FALSE)) . '";' . "\n";
+		$jscontent .= 'var textReplyToComment = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.replytocomment', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textAddComplaint = "' . base64_encode($this->lib->pi_getLLWrap($this, 'commentreport.text_text', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textAddemoji = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.add_emoji', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textCloseemoji = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.close_emoji', FALSE)) . '";' . "\n";
@@ -2852,7 +2885,6 @@ if (intval($this->conf['ratings.']['useLikeDislikeStyle']) == 1) {
 		}';
 }
 
-		//print $this->showCSScomments;exit;
 	$csscontent .= 	$this->makesharingcss();
 if (intval($this->showCSScomments) == 1) {
 	$csscontent .= '/*
@@ -3512,12 +3544,12 @@ sharrre design 2 and 4, calculated specifics
 						$locLoginRsaJsarr = array();
 						$locLoginRsaJsarr = explode('[noredirect]"', $rsajscompletestr);
 						if (count($locLoginRsaJsarr) > 1) {
-							$rsajsstr = trim(substr($locLoginRsaJsarr[1],13));
+							$rsajsstr = trim(substr($locLoginRsaJsarr[1], 13));
 							$locLoginFormhtml= str_replace($rsajsstr, '', $locLoginFormhtml);
 						}
-					 
+
 					}
-					//exit;	
+					//exit;
 					if ($this->conf['theme.']['boxmodelLabelInputPreserve']==1) {
 						$locLoginFormhtml = str_replace('class="tx-tc-loginform', 'class="tx-tc-loginform tx-tc-responsive', $locLoginFormhtml);
 					}
@@ -3545,6 +3577,9 @@ sharrre design 2 and 4, calculated specifics
 				$jscontent .= '	var tcdateformat = ' . $this->conf['advanced.']['dateFormatOldStyle'] . ';' . "\n";
 				$jscontent .= '	var confuserpicsize = ' . intval($this->conf['UserImageSize']) . ';' . "\n";
 				$jscontent .= '	var confuseUserImage = ' . intval($this->conf['useUserImage']) . ';' . "\n";
+				$jscontent .= '	var showlesstooltips = ' . intval($this->conf['theme.']['useLessToolTips']) . ';' . "\n";
+				$jscontent .= '	var emojinotooltips = ' . intval($this->conf['theme.']['emojiNoToolTips']) . ';' . "\n";
+				$jscontent .= ' var middotchar = \'' . $this->middotchar .'\'' . "\n";
 				$jscontent .= '	var confreplyModeInline = ' . intval($this->conf['advanced.']['replyModeInline']) . ';' . "\n";
 				$jscontent .= '	var confreplyModeInlineOpenForm = ' . intval($this->conf['advanced.']['replyModeInlineOpenForm']) . ';' . "\n";
 				$jscontent .= '	var textnameCommentSeparator = "' . base64_encode(trim($this->conf['advanced.']['nameCommentSeparator'])) . '";' . "\n";

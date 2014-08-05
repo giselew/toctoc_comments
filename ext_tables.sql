@@ -47,7 +47,7 @@ CREATE TABLE tx_toctoc_comments_feuser_mm (
 	deleted tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	ilike int(1) DEFAULT '0' NOT NULL,
 	idislike int(1) DEFAULT '0' NOT NULL,
-	myrating decimal(19,8) DEFAULT '0.00' NOT NULL,
+	myrating decimal(19,8) DEFAULT '0.00000000' NOT NULL,
 	seen int(11) DEFAULT '0' NOT NULL,
 	remote_addr varchar(255) DEFAULT '' NOT NULL,
 	toctoc_commentsfeuser_feuser int(11) DEFAULT '0' NOT NULL,	
@@ -88,7 +88,7 @@ CREATE TABLE tx_toctoc_comments_user (
 	initial_homepage varchar(255) DEFAULT '' NOT NULL,
 	initial_location varchar(255) DEFAULT '' NOT NULL,
 	comment_count int(11) DEFAULT '0' NOT NULL,
-	average_rating decimal(19,8) DEFAULT '0.00' NOT NULL,
+	average_rating decimal(19,8) DEFAULT '0.00000000' NOT NULL,
 	vote_count int(11) DEFAULT '0' NOT NULL,
 	like_count int(11) DEFAULT '0' NOT NULL,
 	dislike_count int(11) DEFAULT '0' NOT NULL,
@@ -156,7 +156,7 @@ CREATE TABLE tx_toctoc_ratings_iplog (
 	reference_scope int(11) DEFAULT '0' NOT NULL,
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY ip_check (reference, reference_scope,ip)
+	KEY ip_check (reference, reference_scope, ip)
 );
 
 #

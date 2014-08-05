@@ -36,8 +36,10 @@ plugin.tx_toctoccomments_pi1 {
   userContactUC = {$plugin.tx_toctoccomments_pi1.userContactUC}  
   userHomepageUC = {$plugin.tx_toctoccomments_pi1.userHomepageUC}  
   userEmailUC = {$plugin.tx_toctoccomments_pi1.userEmailUC}  
-  userLocationUC = {$plugin.tx_toctoccomments_pi1.userLocationUC}    
+  userLocationUC = {$plugin.tx_toctoccomments_pi1.userLocationUC} 
+     
   userStatsUC = {$plugin.tx_toctoccomments_pi1.userStatsUC}
+  UCUserStatsByEmail = {$plugin.tx_toctoccomments_pi1.UCUserStatsByEmail}
   
   # Display IP information about the user in User Cards
   userIPUC = {$plugin.tx_toctoccomments_pi1.userIPUC}  
@@ -205,6 +207,7 @@ plugin.tx_toctoccomments_pi1 {
     
     # Information e-mail when a new comment is posted for commentator of former comments is sent from this address
     notificationForCommentatorEmail = {$plugin.tx_toctoccomments_pi1.notificationForCommentatorEmail}
+    notificationForCommentatorEmailName = {$plugin.tx_toctoccomments_pi1.notificationForCommentatorEmailName}
     
     # E-mail template for commentator of former comments:Template to use for notification email to commentator of former comments
     notificationForCommentatorEmailTemplate = {$plugin.tx_toctoccomments_pi1.notificationForCommentatorEmailTemplate}
@@ -308,7 +311,14 @@ plugin.tx_toctoccomments_pi1 {
     allowHTMLTagsInComments = {$plugin.tx_toctoccomments_pi1.allowHTMLTagsInComments}
     useBBCodeMenu = {$plugin.tx_toctoccomments_pi1.useBBCodeMenu}
     BBCodebbs = {$plugin.tx_toctoccomments_pi1.BBCodebbs}
+    midDot = {$plugin.tx_toctoccomments_pi1.midDot}
     
+    gravatarEnable = {$plugin.tx_toctoccomments_pi1.gravatarEnable}	
+	gravatarRating = {$plugin.tx_toctoccomments_pi1.gravatarRating}
+	gravatarLocalHost ={$plugin.tx_toctoccomments_pi1.gravatarLocalHost}
+	
+	# if you dont want to use GIFBUILDER for userpics then set this to 1
+    dontuseGIFBUILDER = 0
     # set this to 1 only for debugging when you need to display entire conf in Frontend
     dontUseMirrorConf = 0
 
@@ -326,6 +336,7 @@ plugin.tx_toctoccomments_pi1 {
     
     notificationEmail = {$plugin.tx_toctoccomments_pi1.notificationEmail}
     fromEmail = {$plugin.tx_toctoccomments_pi1.fromEmail}
+    fromEmailName = {$plugin.tx_toctoccomments_pi1.fromEmailName}
     
     emailTemplate = {$plugin.tx_toctoccomments_pi1.emailTemplate}
     emailTemplateInfo = {$plugin.tx_toctoccomments_pi1.emailTemplateInfo}
@@ -561,14 +572,19 @@ plugin.tx_toctoccomments_pi1 {
     responsiveSteps = {$plugin.tx_toctoccomments_pi1.responsiveSteps}
     
     crunchCSS = {$plugin.tx_toctoccomments_pi1.crunchCSS}    
+   
+    # 0 keeps all tooltips (default), 1 removes most tooltips on smaller devices, = 2 regardless of device
+    useLessToolTips = {$plugin.tx_toctoccomments_pi1.useLessToolTips}
     
+    emojiNoToolTips= {$plugin.tx_toctoccomments_pi1.emojiNoToolTips}
+      
     # koogled boxmodels have either the word koogle in the name or set this to 1.
     selectedBoxmodelkoogled = 0
     
     # set this to 0 if you want to force CSS-generation, 1 for normal mode (changes in boxmodel or conf trigger refreshs)
     # or 2 for frozen CSS (files must exist!)
     freezeLevelCSS = 1
-    
+ 
   }
   
   debug {

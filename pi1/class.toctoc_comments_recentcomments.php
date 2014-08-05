@@ -494,6 +494,7 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
         		'parameter'        => $singlePid.$conf['recentcomments.']['anchorPre'].$commentID,
         		'additionalParams' => t3lib_div::implodeArrayForUrl('', $params, '', 1),
 				'ATagParams' => 'rel="nofollow"',
+ 				'forceAbsoluteUrl' => 1,
         	);
         	$text = $this->cObj->typoLink($text, $conf);
         	$text = str_replace('href="', 'href="javascript:recentct(0, ' . $okrowsi . ', ' . $singlePid . ', \'', $text);
