@@ -1,0 +1,522 @@
+Boxmodel
+padding detail bereich von bilder-popups
+CSS
+padding: 4px;
+padding: {boxmodelSpacing}px;
+Selectors
+.txtc_details
+***
+
+Boxmodel
+Line-Height 20 Textarea
+CSS
+line-height: 20px;
+line-height: {boxmodelTextareaLineHeight}px;
+Selectors
+textarea.tx-tc-ctinput-textarea, textarea.tx-tc-ctinput-textarea-rq
+***
+
+Boxmodel
+Height 20 Form input
+CSS
+min-height: 20px;
+min-height: {minhinput}px;
+Rules
+{minhinput} = 2+{boxmodelTextareaLineHeight}
+Selectors
+input.tx-tc-ct-input
+***
+
+Boxmodel
+boxmodelLineHeight for people have seen field
+CSS
+line-height: 16px;
+line-height: {boxmodelLineHeight}px;
+Selectors
+.tx-tc-ct-viewcnt
+.tx-tc-ct-cnt
+***
+
+Boxmodel
+Height 24 Formfield
+CSS
+min-height: 20px;
+min-height: {226}px;
+Rules
+{226}=4+{boxmodelTextareaLineHeight}
+Selectors
+div.tx-tc-ct-form-field
+***
+
+Boxmodel
+Line-Height 20 -label
+CSS
+line-height: 20px;
+line-height: {26}px;
+Rules
+{26}=4+{boxmodelTextareaLineHeight}
+Selectors
+.tx-tc-ct-label-ntf
+.tx-tc-ct-label, .tx-tc-ct-label-cap
+***
+
+Boxmodel
+Line-Height 20 -label additions
+CSS
+line-height: 20px;
+line-height: {b26}px;
+Rules
+{b26}=4+{boxmodelTextareaLineHeight}
+Selectors
+div.tx-tc-ct-form-field-1, div.tx-tc-ct-form-field-1nl
+.tx-tc-ct-form-field-cap
+***
+
+Boxmodel
+min-Height 20 -label
+CSS
+min-height: 20px;
+min-height: {27}px;
+Rules
+{27}={26}
+Selectors
+.tx-tc-ct-label, .tx-tc-ct-label-cap
+.tx-tc-ct-form-field-cap
+.tx-tc-ct-label-ntf
+***
+
+Boxmodel
+min-Height 20 -label addition
+CSS
++min-height: 20px;
+min-height: {b27}px;
+Rules
+{b27}={26}
+Selectors
+div.tx-tc-ct-form-field-1, div.tx-tc-ct-form-field-1nl
+***
+
+Boxmodel
+implement boxmodel Label Width
+CSS
+width: 134px;
+width: {boxmodelLabelWidth}px;
+Selectors
+.tx-tc-ct-label-ntf
+.tx-tc-ct-label, .tx-tc-ct-label-cap
+***
+
+Boxmodel
+Line-Height 16
+CSS
+line-height: 16px;
+line-height: {boxmodelLineHeight}px;
+Selectors
+.tx-tc-ct-prv-frame
+.tx-tc-text
+.tx-tc-text-top
+.tx-tc-ftm-text
+.tx-tcresponse-text
+.tx-tcresponse-text-title
+.txtc_details
+.tx-tc-ct-rybox-title
+.tx-tc-ct-rybox
+.toctoc-comments-pi1
+.tx-tc-ct-cnt span, .tx-tc-ct-viewcnt span
+***
+
+Boxmodel
+width of popup image
+CSS
+max-width: 700px;
+max-width: {picUploadMaxDimX}px;
+Selectors
+.txtc_overlay img.tx-tc-images-img-browse
+***
+
+Boxmodel
+width of popup image box
+CSS
+max-width: 900px;
+max-width: {wboxpopup}px;
+Rules
+{wboxpopup}=({picUploadMaxDimX}+200)
+Selectors
+.txtc_overlay
+***
+
+Boxmodel
+margin top 0 -> f(boxmodelLineHeight)
+CSS
+margin: 0px 0 0 0;
+margin: {230}px 0 0 0;
+Rules
+{230}=({boxmodelLineHeight}-16)/2
+Selectors
+.tx-tc-userpic, .tx-tc-userpicf, .tx-tc-ct-box-picturecrop322 img
+***
+
+Boxmodel
+margin top 2 -> f(boxmodelLineHeight) + 2
+CSS
+margin: 2px 7px 0 1px;
+margin: {231}px 7px 0 1px;
+Rules
+{231}=2+({boxmodelLineHeight}-16)/2
+Selectors
+.tx-tc-ct-rybox .tx-tc-userpic, .tx-tc-ct-rybox .tx-tc-userpicf
+***
+
+
+Boxmodel
+padding: 0px top 0 -> f(boxmodelLineHeight) + 0
+CSS
+padding: 0px 0 0;
+padding: {232}px 0 0;
+Rules
+{232}=({boxmodelLineHeight}-16)/2
+Selectors
+.tx-tc-ct-report
+***
+
+Boxmodel
+Line-Height 17
+CSS
+line-height: 17px;
+line-height: {bn21}px;
+Rules
+{bn21}={boxmodelLineHeight}
+Selectors
+.tx-tc-myrts-disilke
+.tx-tc-myrts-ilke
+***
+
+Boxmodel
+Margin of ilikes depends on boxmodelLineHeight16
+CSS
+margin: 0px 0 0 2px;
+margin: {boxmodelLineHeightHalf}px 0 0 2px;
+Selectors
+.tx-tc-myrts-ilke img
+***
+
+Boxmodel
+Margin of ilikes depends on boxmodelLineHeight16
+CSS
+margin: 2px 0 -2px 2px;
+margin: {mrtsdl}px 0 0 2px;
+Rules
+{mrtsdl}=2+{boxmodelLineHeightHalf}
+Selectors
+.tx-tc-myrts-disilke img
+***
+
+Boxmodel
+Min-Height 17
+CSS
+min-height: 17px;
+min-height: {227}px;
+Rules
+{227}=1+{boxmodelLineHeight}
+Selectors
+.tx-tc-ct-ry-report-line
+.tx-tc-form-top-message
+***
+
+Boxmodel
+Padding base 17 0
+CSS
++padding: 0px 0 0;
+padding: {228}px 0 0;
+Rules
+{228}={boxmodelLineHeightHalf}
+Selectors
+.tx-tc-ct-ry-report-line
+.tx-tc-form-top-message
+***
+
+Boxmodel
+Min-Height 32
+CSS
+min-height: 32px;
+Selectors
+form.tx-tc-form-for-newcomment
+***
+
+Boxmodel
+Min-Height 25
+CSS
+min-height: 25px;
+Selectors
+.tx-tc-ct-box
+***
+
+Boxmodel
+width: 11 (RATINGS base)
+CSS
+width: 11px;
+width: {ratingImageWidth}px;
+Selectors
+.tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-1, .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-1
+.tx-tc-rts-vote-bar span A.tx-tc-rts-star-1, .tx-tc-rts-vote-bar span span.tx-tc-rts-star-1
+.tx-tc-myrts-vote-bar DIV A
+.tx-tc-myrts-vote-bar span A
+.tx-tc-rts-vote-bar DIV A, .tx-tc-rts-vote-bar DIV span
+.tx-tc-rts-vote-bar span A, .tx-tc-rts-vote-bar span span
+***
+
+Boxmodel
+height: 12 (ratings)
+CSS
+height: 12px;
+height: {s600}px;
+Rules
+{s600}=1+{ratingImageWidth}
+Selectors
+.tx-tc-myrts-gold-bar
+.tx-tc-myrts-vote-bar
+.tx-tc-myrts-vote-bar DIV A
+.tx-tc-myrts-vote-bar span A
+.tx-tc-rts-grey-bar
+.tx-tc-rts-gold-bar
+.tx-tc-rts-vote-bar
+.tx-tc-rts-vote-bar DIV A, .tx-tc-rts-vote-bar DIV span
+.tx-tc-rts-vote-bar span A, .tx-tc-rts-vote-bar span span
+***
+
+Boxmodel
+width: 55 (RATINGS 5 stars)
+CSS
+width: 55px;
+width: {s615}px;
+Rules
+{s615}=5*{ratingImageWidth}
+Selectors
+.tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-5, .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-5
+.tx-tc-rts-vote-bar span A.tx-tc-rts-star-5, .tx-tc-rts-vote-bar span span.tx-tc-rts-star-5
+.tx-tc-rts-grey-bar
+.tx-tc-rts-vote-bar
+***
+
+Boxmodel
+width: 55 (RATINGS 5 stars) additions
+CSS
++width: 55px;
+width: {bs615}px;
+Rules
+{bs615}=5*{ratingImageWidth}
+Selectors
+.tx-tc-myrts-vote-bar
+***
+
+Boxmodel
+width: 44 (RATINGS 4 stars)
+CSS
+width: 44px;
+width: {s614}px;
+Rules
+{s614}=4*{ratingImageWidth}
+Selectors
+.tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-4, .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-4
+.tx-tc-rts-vote-bar span A.tx-tc-rts-star-4, .tx-tc-rts-vote-bar span span.tx-tc-rts-star-4
+***
+
+Boxmodel
+width: 33 (RATINGS 3 stars)
+CSS
+width: 33px;
+width: {s613}px;
+Rules
+{s613}=3*{ratingImageWidth}
+Selectors
+.tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-3, .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-3
+.tx-tc-rts-vote-bar span A.tx-tc-rts-star-3, .tx-tc-rts-vote-bar span span.tx-tc-rts-star-3
+***
+
+Boxmodel
+width: 22 (RATINGS 2 stars)
+CSS
+width: 22px;
+width: {s612}px;
+Rules
+{s612}=2*{ratingImageWidth}
+Selectors
+.tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-2, .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-2
+.tx-tc-rts-vote-bar span A.tx-tc-rts-star-2, .tx-tc-rts-vote-bar span span.tx-tc-rts-star-2
+***
+
+Boxmodel
+background-position: 0 -24px (RATINGS animation position)
+CSS
+background-position: 0 -24px;
+background-position: 0 {s620}px;
+Rules
+{s620}=-(2*{ratingImageWidth}+2)
+Selectors
+.tx-tc-rts-vote-bar DIV A:hover
+.tx-tc-rts-vote-bar span A:hover
+***
+
+Boxmodel
+width: 59px (RATINGS area)
+CSS
+width: 59px;
+width: {s621}px;
+Rules
+{s621}=4+5*{ratingImageWidth}
+Selectors
+.tx-tc-rts-dp
+***
+
+Boxmodel
+width: 56px (RATINGS area)
+CSS
+width: 56px;
+width: {sc621}px;
+Rules
+{sc621}=1+5*{ratingImageWidth}
+Selectors
+.tx-tc-trt-cts-article .tx-tc-rts-dp
+***
+
+Boxmodel
+width: 63px (RATINGS area in top ratings)
+CSS
+width: 63px;;
+width: {sb621}px;
+Rules
+{sb621}=8+5*{ratingImageWidth}
+Selectors
+.tx-tc-trt-cts-article .tx-tc-rts
+***
+
+Boxmodel
+background: for rating stars
+CSS
+background: url("../themes/default/img/toctoc_comments_rating_stars.png") repeat-x 0 -12px;
+background: url("../themes/default/img/toctoc_comments_rating_stars.png") repeat-x scroll 0 -{s622}px transparent;
+Rules
+{s622}=1+{ratingImageWidth}
+Selectors
+.tx-tc-rts-gold-bar
+***
+
+Boxmodel
+Line-Height 18 (ratings), addition
+CSS
++line-height: 18px;
+line-height: {22}px;
+Rules
+{22}=2+{boxmodelLineHeight}
+Selectors
+.tx-tc-rts
+***
+
+Boxmodel
+Line-Height 18 (ratings), addition
+CSS
++line-height: 18px;
+line-height: {22bb}px;
+Rules
+{22bb}={boxmodelLineHeight}
+Selectors
+.tx-tc-cts-dp .tx-tc-text-top .tx-tc-atrts-dp .tx-tc-rts-area .tx-tc-rts-container .tx-tc-rts-li .tx-tc-rts
+.tx-tc-text-top .tx-tc-atrts-dp .tx-tc-rts-area .tx-tc-rts-container .tx-tc-firstvote .tx-tc-rts-li .tx-tc-rts
+.tx-tc-text-top .tx-tc-atrts-dp .tx-tc-rts-area .tx-tc-rts-cntrdata .tx-tc-rts-li .tx-tc-rts
+.tx-tc-text-top .tx-tc-scopetitle
+.tx-tc-text-top .tx-tc-scopetitlebold
+***
+
+Boxmodel
+ratings, top of stars
+CSS
+top: 3px;
+top: {24}px;
+Rules
+{24}=3+{boxmodelLineHeightHalf}
+Selectors
+.tx-tc-rts-dp
+***
+
+Boxmodel
+Top ratings, top of stars
+CSS
+top: 2px;
+top: {24tr}px;
+Rules
+{24tr}=(2*{boxmodelLineHeightHalf} + ({boxmodelLineHeightHalf}-2)*3)
+Selectors
+.tx-tc-trt-rating-rating-wrap .tx-tc-rts-dp
+***
+
+Boxmodel
+Height 24 ctsbrowse
+CSS
+height: 24px;
+height: {10}px;
+Rules
+{10}=8+{boxmodelLineHeight}
+Selectors
+.tx-tc-cts-ctsbrowse
+***
+
+Boxmodel
+Height top rating div elements
+CSS
+line-height: 20px;
+line-height: {10trt}px;
+Rules
+{10trt}=4+{boxmodelLineHeight}
+Selectors
+.tx-tc-trt-rating-rating-wrap
+***
+
+Boxmodel
+Height top rating div element for stars
+CSS
+height: 20px;
+height: {10trt}px;
+Selectors
+.tx-tc-trt-rating-rating-wrap .tx-tc-rts-container .tx-tc-rts-li
+***
+
+Boxmodel
+Height 24 ctsbrowse, addition
+CSS
++height: 24px;
+height: {10}px;
+Rules
+{10}=8+{boxmodelLineHeight}
+Selectors
+.tx-tc-cts-ctsbrowse-hide
+***
+
+Boxmodel
+Line-Height 24 ctsbrowse
+CSS
+line-height: 24px;
+line-height: {10}px;
+Selectors
+.tx-tc-cts-ctsbrowse
+.tx-tc-cts-ctsbrowse-hide
+***
+
+Boxmodel
+margin-bottom -24 ctsbrowse-hide
+CSS
+margin-bottom: -24px;
+margin-bottom: {11}px;
+Rules
+{11}=-{10}
+Selectors
+.tx-tc-cts-ctsbrowse-hide
+***
+
+Boxmodel
+top -24 ctsbrowse-hide
+CSS
+top: -24px;
+top: {11}px;
+Selectors
+.tx-tc-cts-ctsbrowse-hide
+***
