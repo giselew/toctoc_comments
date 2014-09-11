@@ -4,7 +4,7 @@ if (!defined ('TYPO3_MODE')) die('Access denied.');
 $TCA['tx_toctoc_comments_comments'] = array (
 	'ctrl' => $TCA['tx_toctoc_comments_comments']['ctrl'],
 	'interface' => array (
-		'showRecordFieldList' => 'content,commenttitle,firstname,lastname,email,location,homepage,remote_addr,toctoc_comments_user,external_ref,,external_ref_uid',
+		'showRecordFieldList' => 'content,commenttitle,firstname,lastname,email,location,homepage,remote_addr,toctoc_comments_user,external_ref,external_ref_uid,tx_commentsresponse_response',
 		'maxDBListItems' => 50,
 	),
 	'columns' => array (
@@ -165,10 +165,20 @@ $TCA['tx_toctoc_comments_comments'] = array (
 				'eval' => 'trim',
 			),
 		),
+		'tx_commentsresponse_response' => array (    
+			'exclude' => 0,    
+			'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.tx_commentsresponse_response',    
+			'config' => array (
+				'type' => 'text',
+				'wrap' => 'virtual',
+			  	'cols' => 48,  
+			      	'rows' => 15,
+			)
+		),
 	),
 	'types' => array (
 		0 => array ('showitem' => 'hidden;;;;1,approved;;;;2-2-2,firstname,lastname,commenttitle;;;;3-3-3,toctoc_comments_user,toctoc_commentsfeuser_feuser,'.
-				'remote_addr;;;;4-4-4,email,homepage,location,content,tx_commentsnotify_notify;;;;5-5-5,external_prefix,external_ref,external_ref_uid'),
+				'remote_addr;;;;4-4-4,email,homepage,location,content,tx_commentsnotify_notify;;;;5-5-5,external_prefix,external_ref,external_ref_uid,tx_commentsresponse_response'),
 	),
 );
 

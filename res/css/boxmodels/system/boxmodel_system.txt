@@ -8,6 +8,15 @@ Selectors
 ***
 
 Boxmodel
+padding administrator antworten
+CSS
+padding: 4px;
+padding: {boxmodelSpacingHalf}px;
+Selectors
+.tx-tcresponse-text
+***
+
+Boxmodel
 Line-Height 20 Textarea
 CSS
 line-height: 20px;

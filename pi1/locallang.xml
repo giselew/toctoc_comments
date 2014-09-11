@@ -84,6 +84,8 @@
 			<label index="tt_content.toctoc_comments_pi1.numberrecentcomments">Number of recent comments to display:</label>
 			<label index="tt_content.toctoc_comments_pi1.initialViewsCount">initial value for view counter</label>
 			<label index="tt_content.toctoc_comments_pi1.initialViewsDate">initial value for views since</label>
+			<label index="tt_content.toctoc_comments_pi1.shareUsersTotalText">Text to show after total of users who shared the page</label>
+			<label index="tt_content.toctoc_comments_pi1.shareDataText">Text to show in social networks sharing window</label>
 			<label index="tt_content.toctoc_comments_pi1.PreviewPictureNumber">Index of preview picture (must exist, default is 0)</label>
 			<label index="tt_content.toctoc_comments_pi1.useWebpagePreview">Use attachment type webpage preview:</label>
 			<label index="tt_content.toctoc_comments_pi1.topwebpagepreviewlink">Optional webpage preview on top:</label>
@@ -202,6 +204,12 @@
 			<label index="pi1_template.commentsbrowse.hide_older_rows_text">Hide older comments</label>
 			<label index="pi1_template.commentsbrowse.show_older_rows_linktext">Show older comments</label>
 			<label index="pi1_template.commentsbrowse.hide_older_rows_linktext">Hide</label>
+			<label index="pi1_template.commentsbrowse.lesspopular_rows_available">less popular comments</label>
+			<label index="pi1_template.commentsbrowse.lesspopular_row_available">less popular comment</label>
+			<label index="pi1_template.commentsbrowse.show_lesspopular_rows_text">Show</label>
+			<label index="pi1_template.commentsbrowse.hide_lesspopular_rows_text">Hide less popular comments</label>
+			<label index="pi1_template.commentsbrowse.show_lesspopular_rows_linktext">Show less popular comments</label>
+			<label index="pi1_template.commentsbrowse.hide_lesspopular_rows_linktext">Hide</label>
 			<label index="pi1_template.captchaInputNeeded">Please resolve this Captcha</label>
 			<label index="pi1_template.captchaInputNeededErrMsg">Please enter the letters from the picture</label>
 			<label index="pi1_template.captcha_cant_read">Click here if you want a new captcha</label>
@@ -265,6 +273,7 @@
 			<label index="pi1_template.awaitgoogle">Awaiting reply from Google</label>
 			<label index="pi1_template.xmllang">de-DE</label>
 			<label index="pi1_template.loadingpreview">Loading preview ...</label>
+			<label index="pi1_template.loadingsharing">Loading sharing component ...</label>
 			<label index="pi1_template.notitle">Title not available</label>
 			<label index="pi1_template.nodecription">No description available</label>
 			<label index="pi1_template.closeimageupload">Cancel image upload</label>
@@ -280,7 +289,9 @@
 			<label index="pi1_template.pdfdescribe">Describe pdf</label>
 			<label index="pi1_template.textyourcomplaint">This is the bad comment you want to report</label>
 			<label index="pi1_template.notificationforcommentator">Email Notification:</label>
-			<label index="pi1_template.notificationforcommentator_desc">Notify me on new comments</label>
+			<label index="pi1_template.notificationforcommentator_desc">Notify me on all new comments</label>
+			<label index="pi1_template.notificationforcommentator_desc_answers">Notify me on new answers</label>
+			<label index="pi1_template.notificationforcommentator_desc_answersandsame">Notify me on new answers and follow-up comments</label>
 			<label index="pi1_template.commentsavailable">comments available</label>
 			<label index="pi1_template.commentavailable">comment available</label>
 			<label index="pi1_template.postsavailable">main comments available</label>
@@ -324,6 +335,7 @@
 			<label index="pi1_template.viewslong">people saw this</label>
 			<label index="pi1_template.activity">activity</label>
 			<label index="pi1_template.activities">activities</label>
+			<label index="pi1_template.popularity">popularity</label>
 			<label index="pi1_template.since">since</label>
 			<label index="pi1_template.lastseen">last time seen</label>
 			<label index="pi1_template.lastactivity">last activity</label>
@@ -337,6 +349,10 @@
 			<label index="pi1_template.bb_q">Small inline quotation</label>
 			<label index="pi1_template.bb_del">Delete</label>
 			<label index="pi1_template.welcome">Welcome! :-)</label>
+			<label index="pi1_template.titlesortmenu">Sort comments</label>
+			<label index="pi1_template.titlesortdown">New comments first</label>
+			<label index="pi1_template.titlesortup">Old comments first</label>
+			<label index="pi1_template.titlesortpopularity">Sort popularity</label>
 			<label index="eid_template.titleprocessing">Processing</label>
 			<label index="eid_template.pleasewaitprocessing">Please wait, processing ...</label>
 			<label index="eid_template.processingdone">Processing finished</label>
@@ -344,8 +360,9 @@
 			<label index="text_no_comments">No comments</label>
 			<label index="text_share">Share</label>
 			<label index="text_share_on">Share on</label>
-			<label index="text_share_this_page">Share this page</label>
-			<label index="text_share_datatext">Found this comments on</label>
+			<label index="text_share_this_page">shares</label>
+			<label index="text_share_datatext_comments">Found these comments on page</label>
+			<label index="text_share_datatext">Found this on page</label>
 			<label index="text_share_title">Share this on your social network</label>
 			<label index="api_rating.vote">vote</label>
 			<label index="api_rating">%1$.1f of %2$d</label>

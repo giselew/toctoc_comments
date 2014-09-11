@@ -814,9 +814,9 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 						// make an initial set of displayfields in the db and reload
 						if ($displayfieldsareset==FALSE) {
 							$GLOBALS['TYPO3_DB']->sql_query("UPDATE tx_toctoc_comments_prefixtotable SET
-									displayfields='title datetime image sys_language_uid, short' WHERE pi1_key='tx_ttnews'");
+									displayfields='title tstamp image sys_language_uid, short' WHERE pi1_key='tx_ttnews'");
 							$GLOBALS['TYPO3_DB']->sql_query("UPDATE tx_toctoc_comments_prefixtotable SET
-									displayfields='title crdate image, subtitle' WHERE pi1_key='tt_products'");
+									displayfields='title image, subtitle' WHERE pi1_key='tt_products'");
 							$GLOBALS['TYPO3_DB']->sql_query("UPDATE tx_toctoc_comments_prefixtotable SET
 									displayfields='full_name start_date photo_main sys_language_uid, biography' WHERE pi1_key='tx_rouge'");
 							$GLOBALS['TYPO3_DB']->sql_query("UPDATE tx_toctoc_comments_prefixtotable SET

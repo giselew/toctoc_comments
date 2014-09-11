@@ -208,6 +208,10 @@ div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-wpp div.tx-tc-pvs-images {
 	background: #ffffff;
 	border-color: #e3e3e3;
 }
+.cap-wrap .cap-action {
+	background: url(../img/rclogos.jpg) top right no-repeat;
+}
+
 .cap-wrap .text-box label {
 	color: #010101;
 }
@@ -455,6 +459,12 @@ span.tx-tc-emo-top-nav-off {
 .tx-tc-ct-denotifybutton {
 	background-image: url("../img/denotifycommentfe.png");
 }
+.tx-tc-shareicon {
+	background-image: url("../img/share.png");
+}
+.tx-tc-working-s {
+	background-image: url("../img/workingslides.gif");
+}
 .tx-tc-indent-subcmt {
 	border-left-color: #d8d8d8;
 }
@@ -471,3 +481,17 @@ span.tx-tc-emo-top-nav-off {
 .tx-tc-rank3 {
 	background-color:#CD7F32;
 }
+.tx-tc-sortlistpanel {
+	background: none repeat scroll 0 0 #ffffff;
+	border-color: #cecece;
+}
+.tx-tc-sortlistmenu {
+	border-color: #cecece;
+}
+.tx-tc-sortlistlink-ind-selected {
+	color: #010101;
+}
+.tx-tc-sortpopular {
+	border-color: #d8d8d8;
+}
+

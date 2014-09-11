@@ -41,6 +41,7 @@
     This subpart formats comments
 -->
     ###REPLYONCOMMENTTOP###
+    ###COMMENTSMENU###
     <div id="uid0###UID######CID###" class="tx-tc-cts">
         <div id="tx-tc-cts-###REFCSS###">
             <!-- ###COMMENT_LISTAJAX### begin -->
@@ -52,6 +53,7 @@
 					          
                     <!-- ###SINGLE_COMMENT### begin -->
                     <div id="tx-tc-cts-ct-tx-tc-cts_###COMMENT_ID###" class="tx-tc-cts-ct-box###STYLECOMMENTBOX###">
+                        <div class="tx-tc-sortinfo tx-tc-nodisp" id="tx-tc-sortinfos_###CID###__0###COMMENT_ID###__0###SORTING###__0###SORTPOPULAR###__0###SQNUMBER###__0###POPNUMBER###"></div> 
                         <div id="tx-tc-cts-ct-dp-tx-tc-cts_###COMMENT_ID###" ###HIGHLIGHTSTYLE###>
                             <div class="tx-tc-cts-ct-dp">
                                 <div class="tx-tc-ct-box">
@@ -79,12 +81,13 @@
                                             </div>
                                         </div>
                                     </div>
+                                    ###COMMENT_RESPONSE_START######COMMENT_RESPONSE######COMMENT_RESPONSE_END###
                                     ###LINE_COMMENTSREPORTREPLYSTART### 
                                         ###TX_COMMENTSREPORT### 
                                         ###TX_COMMENTSREPLY### 
                                         ###TXTHASCHILDREN###
                                     ###LINE_COMMENTSREPORTREPLYEND###     
-                                    ###COMMENT_RESPONSE_START######COMMENT_RESPONSE######COMMENT_RESPONSE_END###
+                                    
                                 </div>
                             </div>
                         </div>
@@ -105,6 +108,7 @@
 <hr />
 <!-- ###SINGLE_SUBCOMMENT### begin -->
 <div id="tx-tc-cts-ct-tx-tc-cts_###COMMENT_ID###" class="tx-tc-cts-ct-box###STYLECOMMENTBOX###  tx-tc-cts-ct-box-sc">
+	<div class="tx-tc-sortinfo tx-tc-nodisp" id="tx-tc-sortinfos_###CID###__0###COMMENT_ID###__0###SORTING###__0###SORTPOPULAR###__0###SQNUMBER###__0###POPNUMBER###"></div> 
     <div id="tx-tc-cts-ct-dp-tx-tc-cts_###COMMENT_ID###" ###HIGHLIGHTSTYLE###>
         <div class="tx-tc-cts-ct-dp tx-tc-cts-ct-dp-sc">
             <div class="tx-tc-ct-box tx-tc-ct-box-sc">
@@ -133,12 +137,13 @@
                         </div>
                     </div>
                 </div>
+                ###COMMENT_RESPONSE_START######COMMENT_RESPONSE######COMMENT_RESPONSE_END###
                 ###LINE_COMMENTSREPORTREPLYSTART### 
                 ###TX_COMMENTSREPORT### 
                 ###TX_COMMENTSREPLY### 
                 ###TXTHASCHILDREN###
                 ###LINE_COMMENTSREPORTREPLYEND###     
-                ###COMMENT_RESPONSE_START######COMMENT_RESPONSE######COMMENT_RESPONSE_END###
+                
             </div>
         </div>
     </div>
@@ -856,9 +861,9 @@
 <h1>Component sharrre and addthis. see www.sharrre.com and www.addthis.com</h1>
 <!-- ###SHARRRE### begin -->
 
-<div id="shareme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###"></div>
+<div id="shareme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###"></div>
 <script type="text/javascript">
-    var thetemplate###CID### = String('<div id="sharebox###CID###" class="shrbox"><div class="shrleft">###ARTICLESHARE###</div><div class="shrmiddle shrd1" id="sharrremiddle###CID###">###SHAREHTML_FACEBOOK######SHAREHTML_TWITTER######SHAREHTML_GOOGLE######SHAREHTML_LINKEDIN######SHAREHTML_STUMBLEUPON######SHAREHTML_PINTEREST######SHAREHTML_DIGG######SHAREHTML_DELICIOUS###</div><div id="shareright###CID###" class="shrright">{total}</div></div>'); 
+    var thetemplate###CID### = String('<div id="sharebox###CID###" class="shrbox"><div class="shrleft">###ARTICLESHARE###</div><div class="shrmiddle shrd1" id="sharrremiddle###CID###">###SHAREHTML_FACEBOOK######SHAREHTML_TWITTER######SHAREHTML_GOOGLE######SHAREHTML_LINKEDIN######SHAREHTML_STUMBLEUPON######SHAREHTML_PINTEREST######SHAREHTML_DIGG######SHAREHTML_DELICIOUS###</div><div id="shareright###CID###" class="shrright">###SHAREICON###{total}</div></div>'); 
     $('#shareme###CID###').sharrre({
 	    share: {
 	        ###SHARELIST_TWITTER######SHARELIST_FACEBOOK######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON######SHARELIST_PINTEREST######SHARELIST_DIGG######SHARELIST_DELICIOUS###
@@ -877,7 +882,8 @@
 <!-- ###SHARRREDESIGN2### begin -->
 
 <div id="sharemearea###CID###" class="tx-tc-sharrrearea-popup">
-    <div id="shareme###CID###" class="shrdes2" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###"></div>
+    ###SHAREICON###<div id="shareme###CID###" class="shrdes2" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###">
+    <span class="tx-tc-working-s" title="###TXTLOADING###"></span></div>
 </div>
 <script type="text/javascript">
 	var googlenodie###CID###=0;
@@ -943,9 +949,9 @@
 <!-- ###SHARRREDESIGNADDTHIS### end -->
 
 <!-- ###SHARRREDESIGN3### begin -->
-<div id="shareme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###"></div>
+<div id="shareme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###"></div>
 <script type="text/javascript">
-	var thetemplate###CID### = '<div id="sharebox###CID###" class="shrboxopen"><div class="shrleft">###ARTICLESHARE###</div><div class="shrmiddleopen" id="sharrremiddle###CID###">###SHAREHTML_FACEBOOK######SHAREHTML_TWITTER######SHAREHTML_GOOGLE######SHAREHTML_LINKEDIN######SHAREHTML_STUMBLEUPON######SHAREHTML_PINTEREST######SHAREHTML_DIGG######SHAREHTML_DELICIOUS###</div><div id="shareright###CID###" class="shrrightopen">{total}</div></div>';
+	var thetemplate###CID### = '<div id="sharebox###CID###" class="shrboxopen"><div class="shrleft">###ARTICLESHARE###</div><div class="shrmiddleopen" id="sharrremiddle###CID###">###SHAREHTML_FACEBOOK######SHAREHTML_TWITTER######SHAREHTML_GOOGLE######SHAREHTML_LINKEDIN######SHAREHTML_STUMBLEUPON######SHAREHTML_PINTEREST######SHAREHTML_DIGG######SHAREHTML_DELICIOUS###</div><div id="shareright###CID###" class="shrrightopen">###SHAREICON###{total}</div></div>';
     $('#shareme###CID###').sharrre({
 	    share: {
 	        ###SHARELIST_TWITTER######SHARELIST_FACEBOOK######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON######SHARELIST_PINTEREST######SHARELIST_DIGG######SHARELIST_DELICIOUS###
@@ -958,6 +964,7 @@
 	        window.setTimeout("tttip('t101', '#sharrremiddle###CID### .tx-tc-textlink[title]')", 200);
 	    }
     });
+    
 </script>    
 <!-- ###SHARRREDESIGN3### end -->
 
@@ -974,9 +981,28 @@
 		},
 		enableHover: false,
 		enableCounter: false,
-		enableTracking: false
+		enableTracking: true
 		}); 
-	</script>    
+	</script>     
+</div>
+<div id="sharemecntarea###CID###" class="shrdes4 shrdes4cnt">
+	<div id="sharecntme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###"></div>
+	<script type="text/javascript">
+		var thetemplateshrdes4###CID### = '<div id="shrdes4right###CID###" class="shrdes4right">###SHAREICON###{total}</div>';
+		$('#sharecntme###CID###').sharrre({
+		share: {
+			###SHARELIST_FACEBOOK######SHARELIST_TWITTER######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON######SHARELIST_PINTEREST######SHARELIST_DIGG######SHARELIST_DELICIOUS###
+		},
+		buttons: {
+			###SHAREBUTTON_FACEBOOK######SHAREBUTTON_TWITTER######SHAREBUTTON_GOOGLE######SHAREBUTTON_LINKEDIN######SHAREBUTTON_STUMBLEUPON######SHAREBUTTON_PINTEREST######SHAREBUTTON_DIGG######SHAREBUTTON_DELICIOUS###
+		},
+		template: thetemplateshrdes4###CID###,
+		enableHover: false,
+		enableCounter: true,
+		enableTracking: false
+		});
+				
+	</script>  
 </div>
 <!-- ###SHARRREDESIGN4### end -->
 </body>

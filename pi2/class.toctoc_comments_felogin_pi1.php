@@ -41,14 +41,14 @@
  *   97: class tx_toctoccomments_pi2 extends tslib_pibase
  *  121:     protected function processRedirect()
  *  135:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  236:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  421:     protected function watermark($conf, $content)
- *  459:     protected function showForgot()
- *  539:     protected function showLogout()
- *  574:     protected function showLogin()
- *  720:     protected function getRSAKeyPair()
- *  757:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
- *  793:     protected function getPreserveGetVars()
+ *  234:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  419:     protected function watermark($conf, $content)
+ *  457:     protected function showForgot()
+ *  537:     protected function showLogout()
+ *  572:     protected function showLogin()
+ *  718:     protected function getRSAKeyPair()
+ *  755:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
+ *  791:     protected function getPreserveGetVars()
  *  821:     protected function generatePassword($len)
  *  841:     protected function getDisplayText($label, $stdWrapArray=array())
  *  853:     protected function getUserFieldMarkers()
@@ -211,9 +211,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		$this->redirhtml = '';
 		if (t3lib_div::_GP('refreshcontent') == 'refresh') {
 			if (intval($this->conf['pageTypeRefreshs']) != 0) {
-
 				$link = 'index.php?id=' . $GLOBALS['TSFE']->id . '&type=' . $this->conf['pageTypeRefreshs'] . '&' . http_build_query($_GET);
-
 			}  else {
 				$link = $this->pi_getPageLink($GLOBALS['TSFE']->id);
 			}
@@ -756,7 +754,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 	 */
 	protected function getPageLink($label, $piVars, $returnUrl = FALSE) {
 		$additionalParams = '';
-
+		$this->conf['preservevars']=1;
 		if (count($piVars)) {
 			foreach($piVars as $key=>$val) {
 				$additionalParams .= '&' . $key . '=' . $val;
@@ -798,6 +796,8 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 				$getVars['logintype'],
 				$getVars['redirect_url'],
 				$getVars['cHash'],
+				$getVars['toctoc_comments_pi1']['anchor'],
+				$getVars['toctoc_comments_pi1'],
 				$getVars[$this->prefixId]
 		);
 		if ($this->conf['preserveGETvars'] === 'all') {

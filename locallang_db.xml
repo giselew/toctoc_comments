@@ -34,6 +34,7 @@
 			<label index="tx_toctoc_comments_comments.toctoc_comments_user">Internal user identification</label>
 			<label index="tx_toctoc_comments_comments.tx_commentsnotify_notify">Notification for new comments:</label>
 			<label index="tx_toctoc_comments_comments.tx_commentsnotify_notify.I.0">Notification active</label>
+			<label index="tx_toctoc_comments_comments.tx_commentsresponse_response">Administrator response:</label>
 			<label index="tx_toctoc_comments_urllog">URL Log for comments</label>
 			<label index="tx_toctoc_comments_urllog.url">URL:</label>
 			<label index="tx_toctoc_comments_feuser_mm.toctoc_commentsfeuser_feuser">Frontend User UID</label>

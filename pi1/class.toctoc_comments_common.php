@@ -40,10 +40,10 @@
  *   61: class toctoc_comments_common
  *  113:     public function unmirrorConf($confDiff)
  *  148:     public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '')
- *  214:     private function getSessionSavePath()
- *  235:     private function ensureSessionSavePathExists($sessionSavePath, $dohtaccess = TRUE)
- *  287:     public function substGifbuilder ($contentdir, $filename, $imgsize)
- *  413:     private function getGifBuilderSavePath()
+ *  223:     private function getSessionSavePath()
+ *  244:     private function ensureSessionSavePathExists($sessionSavePath, $dohtaccess = TRUE)
+ *  307:     public function substGifbuilder ($contentdir, $filename, $imgsize)
+ *  427:     private function getGifBuilderSavePath()
  *
  * TOTAL FUNCTIONS: 6
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -147,7 +147,7 @@ class toctoc_comments_common {
 	 */
 	public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '') {
 		// no sessions for bots
-		$interestingCrawlers = array('google', 'yahoo', 'baidu', 'msnbot', 'bingbot', 'spider', 'bot.htm', 'yandex', 'jeevez');
+		$interestingCrawlers = array('googlebot', 'yahoo', 'baidu', 'msnbot', 'bingbot', 'spider', 'bot.htm', 'yandex', 'jeevez');
 		$numMatches = 0;
 		$countinterestingCrawlers = count($interestingCrawlers);
 		for ($i=0; $i<$countinterestingCrawlers; $i++){
@@ -159,16 +159,16 @@ class toctoc_comments_common {
 			return;
 		}
 		// end
-		
+
 		//check if pic is in temp and them move the 2 pics in attachments
-		
+
 		$repstr= str_replace('/', DIRECTORY_SEPARATOR, '/typo3conf/ext/toctoc_comments/pi1');
 		$PATH_site = str_replace($repstr, '', dirname(__FILE__)) . DIRECTORY_SEPARATOR;
 		if (DIRECTORY_SEPARATOR == '\\') {
 			// windows
 			$PATH_site = str_replace(DIRECTORY_SEPARATOR, '/', $PATH_site);
 		}
-				
+
 		$this->expireTimeInMinutes = intval($expireTimeInMinutes);
 		$this->typo3tempPath = $PATH_site . 'typo3conf/ext/toctoc_comments/pi1/sessionTemp/';
 
@@ -254,11 +254,22 @@ class toctoc_comments_common {
 					} else {
 						$subpath = str_replace('/%s', '', $this->sessionPath);
 					}
-
-					t3lib_div::mkdir_deep($this->typo3tempPath, $subpath);
-					t3lib_div::mkdir_deep($this->typo3tempPath . '/' . $subpath . '/', md5('session:' .	$GLOBALS['TYPO3_CONF_VARS']['BE']['installToolPassword']));
+					if (version_compare(TYPO3_version, '4.5.99', '>')) {
+						t3lib_div::mkdir_deep($this->typo3tempPath, $subpath);
+						t3lib_div::mkdir_deep($this->typo3tempPath . '/' . $subpath . '/', md5('session:' .	$GLOBALS['TYPO3_CONF_VARS']['BE']['installToolPassword']));
+					} else {
+						if (!is_dir($this->typo3tempPath)) {
+							mkdir($this->typo3tempPath);
+						}
+						if (!is_dir($this->typo3tempPath . '/' . $subpath)) {
+							mkdir($this->typo3tempPath . '/' . $subpath);
+						}
+						if (!is_dir($this->typo3tempPath . '/' . $subpath . '/' . md5('session:' .	$GLOBALS['TYPO3_CONF_VARS']['BE']['installToolPassword']))) {
+							mkdir($this->typo3tempPath . '/' . $subpath . '/' . md5('session:' .	$GLOBALS['TYPO3_CONF_VARS']['BE']['installToolPassword']));
+						}
+					}
 				} catch (\RuntimeException $exception) {
-					throw new \RuntimeException('Could not create session folder "' . $sessionSavePath . '". Make sure typo3temp/ is writeable!', 1294587484);
+					throw new \RuntimeException('Could not create session folder "' . $sessionSavePath . '". Make sure toctoc_comments/pi1/ is writeable!', 1294587484);
 				}
 				if ($dohtaccess == TRUE) {
 					t3lib_div::writeFile($sessionSavePath . '/.htaccess', 'Order deny, allow' . '
@@ -315,7 +326,7 @@ class toctoc_comments_common {
 			} else  {
 				return FALSE;
 			}
-			
+
 		} else  {
 			return FALSE;
 		}
@@ -343,8 +354,8 @@ class toctoc_comments_common {
 				// If we have a specific transparent color
 				if (($trnprt_indx >= 0) && ($trnprt_indx < 254)) {
 					// Get the original image's transparent color's RGB values
-					$nmbr_color  = imagecolorstotal($image);					
-					$trnprt_color  = imagecolorsforindex($image, $trnprt_indx);					
+					$nmbr_color  = imagecolorstotal($image);
+					$trnprt_color  = imagecolorsforindex($image, $trnprt_indx);
 					// Allocate the same color in the new image resource
 					if ($trnprt_color) {
 						$trnprt_indx = imagecolorallocate($image_p, $trnprt_color['red'], $trnprt_color['green'], $trnprt_color['blue']);
@@ -399,12 +410,12 @@ class toctoc_comments_common {
 
 			}
 			if (file_exists($savepathfilename) == FALSE) {
-				print 'Error in userpicturefile generation: no file_exists for ' . $savepathfilename; 
+				print 'Error in userpicturefile generation: no file_exists for ' . $savepathfilename;
 				exit;
 			}
 			imagedestroy($image_p);
 		}
-		
+
 		$savepathfilename = str_replace(DIRECTORY_SEPARATOR, '/', (str_replace($_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR, '', $savepathfilename)));
 		return $savepathfilename;
 	}
@@ -420,7 +431,7 @@ class toctoc_comments_common {
 			// windows
 			$PATH_site= str_replace(DIRECTORY_SEPARATOR, '/', $PATH_site);
 		}
-		
+
 		$typo3tempPath = $PATH_site . 'typo3temp/';
 		$UserimagesPath = 'TocTocCommentsUserimages/%s';
 		$this->picsPath = $UserimagesPath;

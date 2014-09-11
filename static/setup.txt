@@ -185,7 +185,7 @@ plugin.tx_toctoccomments_pi1 {
     # Cropping of autoconverted links
     autoConvertLinksCropLength = {$plugin.tx_toctoccomments_pi1.autoConvertLinksCropLength}
     
-    # Lets admins give comments on comments (Modified extension comments_response need to be installed)
+    # Let admins give comments on comments:When enabled a link is shown in notification emails opening a webpage where admins can give a direct reply on the comment
     adminCommentResponse = {$plugin.tx_toctoccomments_pi1.adminCommentResponse}
     
     # Users can reply on comments:Number of Levels of comments on comments, values from 0 (none) to 20 are allowed
@@ -201,6 +201,8 @@ plugin.tx_toctoccomments_pi1 {
     
     # If enabled, the commentator can chose if he wants to be informed on new comments and receives e-mail when new comments are approved.
     commentatorNotify = {$plugin.tx_toctoccomments_pi1.commentatorNotify}
+    notificationLevel = {$plugin.tx_toctoccomments_pi1.notificationLevel}
+    notificationValidDays = {$plugin.tx_toctoccomments_pi1.notificationValidDays}
     
     # If enabled, the commentators are identified as per their IP address if they are not logged in. If disabled commentators who are not logged in can't disable E-Mail notification on new comments.
     commentatorNotifybyIP = {$plugin.tx_toctoccomments_pi1.commentatorNotifybyIP}
@@ -248,6 +250,9 @@ plugin.tx_toctoccomments_pi1 {
     dontUseSharingDelicious = {$plugin.tx_toctoccomments_pi1.dontUseSharingDelicious}
     dontUseSharingAddThisMore = {$plugin.tx_toctoccomments_pi1.dontUseSharingAddThisMore}
     AddThisID = {$plugin.tx_toctoccomments_pi1.AddThisID}
+    shareUsersTotalText = {$plugin.tx_toctoccomments_pi1.shareUsersTotalText}
+    shareDataText = {$plugin.tx_toctoccomments_pi1.shareDataText}
+    useShareIcon = {$plugin.tx_toctoccomments_pi1.useShareIcon}
     
     recentcommentsPluginpages = {$plugin.tx_toctoccomments_pi1.recentcommentsPluginpages}
     recentcommentsPluginRecords = {$plugin.tx_toctoccomments_pi1.recentcommentsPluginRecords}
@@ -259,6 +264,10 @@ plugin.tx_toctoccomments_pi1 {
     
     # If set, reverses sortng to show last comments first
     reverseSorting = {$plugin.tx_toctoccomments_pi1.reverseSorting}
+    sortMostPopular = {$plugin.tx_toctoccomments_pi1.sortMostPopular}
+    useMostPopular = {$plugin.tx_toctoccomments_pi1.useMostPopular}
+    useSortMenu = {$plugin.tx_toctoccomments_pi1.useSortMenu}
+    showSortMostPopularIcon = 1
     invertBrowser = {$plugin.tx_toctoccomments_pi1.invertBrowser}
     
     wallExtension = {$plugin.tx_toctoccomments_pi1.wallExtension}
@@ -583,8 +592,7 @@ plugin.tx_toctoccomments_pi1 {
     
     # set this to 0 if you want to force CSS-generation, 1 for normal mode (changes in boxmodel or conf trigger refreshs)
     # or 2 for frozen CSS (files must exist!)
-    freezeLevelCSS = 1
- 
+    freezeLevelCSS = 1 
   }
   
   debug {
@@ -604,8 +612,7 @@ plugin.tx_toctoccomments_pi2 {
   templateFile = typo3conf/ext/toctoc_comments/res/template/toctoccomments_template_felogin_pi1.html
   
   userFunc = tx_toctoccomments_pi2->main
-  # over write fe_login setup here
-  
+  # over write fe_login setup here: make sure that feloginBaseURL and storagePid are set to correct values  
  
   # CSS-ids that should be refreshed outside the plugin after logouts logins
   refreshIdList=

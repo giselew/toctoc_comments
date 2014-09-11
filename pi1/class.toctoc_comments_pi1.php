@@ -29,40 +29,41 @@
  *
  *
  *
- *   92: class tx_toctoccomments_pi1 extends tslib_pibase
- *  168:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
- * 2150:     protected function checkJSLoc()
- * 2375:     protected function checkCSSTheme()
- * 2486:     protected function checkCSSLoc()
- * 2924:     protected function makesharingcss ()
- * 3104:     protected function initprefixToTableMap()
- * 3141:     protected function init()
- * 3803:     protected function mergeConfiguration()
- * 4061:     protected function fetchConfigValue($param)
- * 4089:     protected function ae_detect_ie()
- * 4113:     protected function boxmodel()
- * 4641:     protected function crunchcss($buffer)
- * 4666:     protected function calculate_string( $mathString )
- * 4689:     protected function locationHeaderUrlsubDir()
- * 4708:     protected function currentPageName()
- * 4736:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
- * 4767:     protected function doClearCache ($forceclear=FALSE)
- * 4801:     protected function getPluginCacheControlTstamp ($external_ref_uid)
- * 4825:     protected function getLastUserAdditionTstamp ()
- * 4848:     protected function initLegacyCache ()
- * 4862:     protected function check_scopes()
- * 5020:     protected function initializeprefixtotablemap()
- * 5061:     protected function sharrrejs()
- * 5143:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
- * 5196:     private function resolveBackPath($pathStr)
- * 5231:     private function dirname($path)
- * 5245:     private function revExplode($delimiter, $string, $count = 0)
+ *   93: class tx_toctoccomments_pi1 extends tslib_pibase
+ *  176:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
+ * 2233:     protected function checkJSLoc()
+ * 2458:     protected function checkCSSTheme()
+ * 2569:     protected function checkCSSLoc()
+ * 3005:     protected function makesharingcss ()
+ * 3182:     protected function initprefixToTableMap()
+ * 3219:     protected function init()
+ * 3882:     protected function mergeConfiguration()
+ * 4142:     protected function fetchConfigValue($param)
+ * 4170:     protected function ae_detect_ie()
+ * 4194:     protected function boxmodel()
+ * 4778:     protected function crunchcss($buffer)
+ * 4803:     protected function calculate_string( $mathString )
+ * 4826:     protected function locationHeaderUrlsubDir()
+ * 4845:     protected function currentPageName()
+ * 4873:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
+ * 4904:     protected function doClearCache ($forceclear=FALSE)
+ * 4938:     protected function getPluginCacheControlTstamp ($external_ref_uid)
+ * 4962:     protected function getLastUserAdditionTstamp ()
+ * 4985:     protected function initLegacyCache ()
+ * 4999:     protected function check_scopes()
+ * 5157:     protected function initializeprefixtotablemap()
+ * 5197:     protected function sharrrejs()
+ * 5279:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
+ * 5332:     private function resolveBackPath($pathStr)
+ * 5367:     private function dirname($path)
+ * 5381:     private function revExplode($delimiter, $string, $count = 0)
  *
  *              SECTION: needed by class.tx_commentsresponse_hooks.php
- * 5268:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 5291:     public function createLinks($text, $conf = NULL)
+ * 5404:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 5427:     public function createLinks($text, $conf = NULL)
+ * 5449:     protected function getGETVars($arrVars)
  *
- * TOTAL FUNCTIONS: 29
+ * TOTAL FUNCTIONS: 30
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -95,7 +96,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '530';
+	public $extVersion = '540';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
 	public $externalUid;						// UID of external record
@@ -152,6 +153,13 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 	public $ignorequerystring= FALSE;
 	private $middotchar = '&middot;';
+	// when generating cHashes for Links to new comments - used in notification mails
+	// there's a problem with AJAX
+	// so here we fix the estimated number of new comments that could be entered in the system until a user
+	// saves his comment.
+	// rise this value if you have many new comments and notification emails don't contain hotlinks anymore.
+	private $potentialNewCommentsCHashes = 4;
+
 
 
 
@@ -177,7 +185,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		$loginreset=FALSE;
 		$sdebugprintli='';
 		// give a reply to search enignes and avoid indexing of comments
-		$interestingCrawlers = array('google', 'yahoo', 'baidu', 'msnbot', 'bingbot', 'spider', 'bot.htm', 'yandex', 'jeevez' );
+		$interestingCrawlers = array('googlebot', 'yahoo', 'baidu', 'msnbot', 'bingbot', 'spider', 'bot.htm', 'yandex', 'jeevez' );
 		$numMatches = 0;
 		$countinterestingCrawlers =count($interestingCrawlers);
 
@@ -259,6 +267,10 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		$this->boxmodelcss ='tx-tc-' . $this->extVersion . '.css';
 		$this->pi_initPIflexForm();
 		$isPlugin=0;
+		if (intval($this->conf['advanced.']['sortMostPopular']) == 1) {
+			$this->conf['advanced.']['reverseSorting'] = 1;
+		}
+
 		if (intval($this->conf['ratings.']['maxValue'])>11) {
 			$this->conf['ratings.']['maxValue']=11;
 		}
@@ -307,7 +319,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$_SESSION['cachepurged']=1;
 			$sdebugprintli .= '<br />'. 'purge_cache = 1, page-id ' .$GLOBALS['TSFE']->id. '<br />';
 		} else {
-			if (($loginreset==TRUE) && (intval($_SESSION['cachepurgedlogin'])!=1)) {
+			if (($loginreset==TRUE) && (intval($_SESSION['cachepurgedlogin'])!=1) && (intval($_SESSION['cachepurged'])!=1)) {
 				$saveactivateClearPageCache=$this->activateClearPageCache;
 				$this->activateClearPageCache=TRUE;
 				$_SESSION = array();
@@ -322,7 +334,6 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				$_SESSION['commentsPageId'] = $GLOBALS['TSFE']->id;
 				$_SESSION['curPageName'] = $this->currentPageName();
 				$_SESSION['activelang'] = $GLOBALS['TSFE']->lang;
-				$_SESSION['commentsSorting'] = $this->conf['advanced.']['reverseSorting'];
 
 				$_SESSION['cachepurgedlogin']=1;
 				$sdebugprintli .= '<br />'. 'Init Sessionvariables because of logout/in on page id ' .$GLOBALS['TSFE']->id. '<br />';
@@ -332,7 +343,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 					$sdebugprintli.= '<br />'. 'No more Init Sessionvariables because of logout/in or purge_cache ('.intval($_SESSION['cachepurged']).') on page id ' .$GLOBALS['TSFE']->id. '<br />';
 				} else {
-					$_SESSION['cachepurged']=0;
+					//$_SESSION['cachepurged']=0;
 					$_SESSION['cachepurgedlogin']=0;
 				}
 			}
@@ -449,9 +460,9 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			if (intval($this->conf['advanced.']['autoConvertLinksCropLength']) > 150) {
 				$this->conf['advanced.']['autoConvertLinksCropLength'] = 150;
 			}
-			
+
 		}
-				
+
 		if (!is_array(explode(',', $this->conf['theme.']['responsiveSteps']))) {
 			$this->arrResponsiveSteps[0]=350;
 			$this->arrResponsiveSteps[1]=450;
@@ -808,8 +819,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		 * 2. In the languagemenu the user changes from one lang to another.
 		 * 3. The user logs in as a different user
 		 */
-		$_SESSION['commentsPageIds'][$GLOBALS['TSFE']->id] = t3lib_div::getIndpEnv('TYPO3_REQUEST_URL');
-		$_SESSION['commentsPageTitles'][$GLOBALS['TSFE']->id] = $GLOBALS['TSFE']->page['title'];
+
 		$this->sdebugprint='<div class="tx-tc-debug">';
 		$sessionreseted=TRUE;
 		$_SESSION['debugprintlib']='';
@@ -824,20 +834,17 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$this->lib->resetSessionVars(0);
 			$this->doClearCache();
 			$this->sdebugprint .= 'Init Sessionvariables because of new page id ' .$GLOBALS['TSFE']->id. '<br />';
-
 		} elseif ($_SESSION['curPageName'] != $slcurrentPageName) {
 			// language change
 			$this->lib->resetSessionVars(0);
 			$this->doClearCache();
 			$this->sdebugprint .= 'Init Sessionvariables because of new curPageName ' . $slcurrentPageName . '<br />';
 			$_SESSION['curPageName'] = $slcurrentPageName;
-
 		} elseif ($_SESSION['activelang'] != $GLOBALS['TSFE']->lang) {
 			// language change
 			$this->lib->resetSessionVars(0);
 				$this->doClearCache();
 			$this->sdebugprint .= 'Init Sessionvariables because of new language ' .$GLOBALS['TSFE']->lang . '<br />';
-
 		} elseif ($_SESSION['feuserid'] != $GLOBALS['TSFE']->fe_user->user['uid']) {
 			// User has made a logon or logout
 
@@ -846,14 +853,6 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			}
 
 			$this->sdebugprint .= 'feuserid, no total init of Sessionvariables ' .$clearCacheIds. '<br />';
-
-		} elseif ($_SESSION['commentsSorting'] != $this->conf['advanced.']['reverseSorting']) {
-			// Admin made change in TS-Setup, here just clear the cache if not already done
-
-			$this->lib->resetSessionVars(0);
-				$this->doClearCache();
-			$this->sdebugprint .= 'Init Sessionvariables because of new comments sorting, ' . $this->conf['advanced.']['reverseSorting']. '<br />';
-
 		}  else {
 			$sessionreseted=FALSE;
 			$this->pi_USER_INT_obj = 0;
@@ -1003,6 +1002,82 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		}
 
 		$communitydisplaylist = $this->init();
+
+		// preparing for notifications
+		$gettemp= $_GET;
+		unset ($gettemp['toctoc_comments_pi1']['anchor']);
+		unset ($gettemp['no_cache']);
+		unset ($gettemp['purge_cache']);
+		unset ($gettemp['id']);
+		unset ($gettemp['cHash']);
+
+		if (count($gettemp['toctoc_comments_pi1']) == 0) {
+			unset ($gettemp['toctoc_comments_pi1']);
+		}
+
+		$conflink = array(
+				'useCacheHash' => FALSE,
+				// Link to current page
+				'parameter' => $GLOBALS['TSFE']->id,
+				// Set additional parameters
+				'additionalParams' => t3lib_div::implodeArrayForUrl('', $gettemp, '', 1),
+				// We must add cHash because we use parameters ... hmmm - not that sure!
+				// We want link only
+				'returnLast' => 'url',
+				'ATagParams' => '',
+				'forceAbsoluteUrl' => 1,
+		);
+		$commentsPageIdPage = $this->cObj->typoLink('', $conflink);
+		$_SESSION['commentsPageIdsClean'][$GLOBALS['TSFE']->id] = $commentsPageIdPage;
+
+		$_SESSION['commentsPageIdsTypolinks'][$GLOBALS['TSFE']->id] = array();
+		$gettemp['toctoc_comments_pi1']= array();
+		$lastcommentid=0;
+
+		$rowstt2 = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+				'MAX(tx_toctoc_comments_comments.uid) AS uid',
+				'tx_toctoc_comments_comments',
+				''
+		);
+		if (count($rowstt2)>0) {
+			if ($rowstt2[0]['uid'] !='') {
+				$lastcommentid=$rowstt2[0]['uid'];
+
+			}
+		}
+		$useCacheHashNeeded = intval($GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError']);
+		$no_cacheflag = 0;
+		if (intval($GLOBALS['TYPO3_CONF_VARS']['FE']['disableNoCacheParameter']) ==0) {
+			if ($useCacheHashNeeded == 1) {
+				$no_cacheflag = 1;
+			}
+		}
+
+		for ($i=($lastcommentid+1); $i<($lastcommentid + $this->potentialNewCommentsCHashes +1);$i++)  {
+			$gettemp['toctoc_comments_pi1']['anchor'] =  substr($conf['recentcomments.']['anchorPre'], 1) . $i;
+			$conflink = array(
+					'useCacheHash' => $useCacheHashNeeded,
+					'no_cache'         => $no_cacheflag,
+					// Link to current page
+					'parameter' => $GLOBALS['TSFE']->id. $this->conf['recentcomments.']['anchorPre'].$i,
+					// Set additional parameters
+					'additionalParams' => t3lib_div::implodeArrayForUrl('', $gettemp, '', 1),
+					// We must add cHash because we use parameters ... hmmm - not that sure!
+					// We want link only
+					'returnLast' => 'url',
+					'ATagParams' => '',
+					'forceAbsoluteUrl' => 1,
+			);
+			$commentsPageIdPage = $this->cObj->typoLink('', $conflink);
+			$_SESSION['commentsPageIdsTypolinks'][$GLOBALS['TSFE']->id][$i] = $commentsPageIdPage;
+
+		}
+
+		$_SESSION['commentsPageIds'][$GLOBALS['TSFE']->id] = t3lib_div::getIndpEnv('TYPO3_REQUEST_URL');
+		$_SESSION['commentsPageTitles'][$GLOBALS['TSFE']->id] = $GLOBALS['TSFE']->page['title'];
+
+		// end preparing for notifications
+
 		if ($this->conf['additionalClearCachePagesLocal'] != '') {
 			$arraddpgTS=explode(',', $this->conf['additionalClearCachePagesLocal'] );
 			$arraddpg=explode(',', $this->conf['additionalClearCachePages'] );
@@ -1371,12 +1446,6 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 						$this->lib->pi_getLLWrap($this, 'error.automaticcidfail', FALSE)  .
 						'</p></div>', $this->conf['advanced.']['UseMainColPos'], $this->conf['advanced.']['UseTemplavoilaField']) . $debugnocidfoundtext;
 				return $retstr;
-			}
-
-			if ($_SESSION['commentsSorting'] != $this->conf['advanced.']['reverseSorting']) {
-				// clear the sort array of the cid
-				$_SESSION['commentsSorting'] = $this->conf['advanced.']['reverseSorting'];
-				unset($_SESSION['commentListIndex']['cid' . $_SESSION['commentListRecord']]);
 			}
 
 			if ($this->showsdebugprint==TRUE) {
@@ -1980,6 +2049,20 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				}
 
 			}
+			if ($_SESSION['commentsSorting']['mcp' . $_SESSION['commentListRecord']] != $this->conf['advanced.']['reverseSorting']) {
+				// Admin made change in TS-Setup, here just clear the cache if not already done
+				$_SESSION['commentsSorting']['mcp' . $_SESSION['commentListRecord']] = $this->conf['advanced.']['reverseSorting'];
+				unset($_SESSION['commentListIndex']['cid' . $_SESSION['commentListRecord']]);
+				$domemcache=FALSE;
+			}
+
+			if ($_SESSION['sortMostPopular']['mcp' . $_SESSION['commentListRecord']] != $this->conf['advanced.']['sortMostPopular']) {
+				// Admin made change in TS-Setup, here just clear the cache if not already done
+				$_SESSION['sortMostPopular']['mcp' . $_SESSION['commentListRecord']] = $this->conf['advanced.']['sortMostPopular'];
+				unset($_SESSION['commentListIndex']['cid' . $_SESSION['commentListRecord']]);
+				$_SESSION['sortMostPopular']['mcp' . $_SESSION['commentListRecord']] = $this->conf['advanced.']['sortMostPopular'];
+				$domemcache=FALSE;
+			}
 
 			$outmlmemcache='';
 			if ($this->showsdebugprint) {
@@ -2053,6 +2136,10 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				}
 
 			}
+			//check imagelinks on https:
+			if (@$_SERVER['HTTPS'] == 'on') {
+				$outmlmemcache = str_replace('src="http://', 'src="https://', $outmlmemcache);
+			}
 
 			$_SESSION['edgeTime'] = microtime(TRUE);
 			if ($_SESSION['renderingdone']==TRUE) {
@@ -2061,7 +2148,6 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				$_SESSION['doChangePasswordForm'] = 0;
 				$_SESSION['cachepurged']=0;
 				$_SESSION['cachepurgedlogin']=0;
-
 			}
 
 			$_SESSION['activeBoxmodel'] = $this->conf['theme.']['selectedBoxmodel'];
@@ -2524,7 +2610,6 @@ div.tx-tc-ct-form-field, .tx-tc-ct-ntf-wrap {
 	float: left;
 	font-size: 100%;
 	margin-right: inherit !important;
-	margin-top: '.$this->conf['theme.']['boxmodelSpacing'].'px;
 	margin-bottom: '.$this->conf['theme.']['boxmodelSpacing'].'px;
 	min-height: inherit !important;
 	padding: inherit !important;
@@ -3062,9 +3147,6 @@ sharrre design 2 and 4, calculated specifics
 			}
 
 			$retcss .= '
-.shrdes2 .count {
-	border-right: 1px solid #' . $this->conf['theme.']['shareCountborderColor'] . ';
-}
 .shrdes2 .buttons {
 	background: none repeat scroll 0 0 #' . $this->conf['theme.']['shareBackgroundColor'] . ';
 	border-color: #' . $this->conf['theme.']['shareborderColor2'] . ' #' . $this->conf['theme.']['shareborderColor2'] . ' #' .
@@ -3564,6 +3646,7 @@ sharrre design 2 and 4, calculated specifics
 				$jscontent .= '	var maxCommentLength = ' . intval($this->conf['maxCommentLength']) . ';' . "\n";
 				$jscontent .= '	var selectedTheme = "' . $this->conf['theme.']['selectedTheme'] . '";' . "\n";
 				$jscontent .= '	var boxmodelTextareaAreaTotalHeight = ' . intval($this->boxmodelTextareaAreaTotalHeight) . ';' . "\n";
+
 				$jscontent .= '	var boxmodelTextareaHeight = ' . intval($this->boxmodelTextareaHeight) . ';' . "\n";
 				if ($this->conf['theme.']['boxmodelLabelInputPreserve']==0) {
 					$jscontent .= '	var boxmodelLabelWidth = ' . intval($this->conf['theme.']['boxmodelLabelWidth']) . ';' . "\n";
@@ -3908,6 +3991,8 @@ sharrre design 2 and 4, calculated specifics
 		$this->fetchConfigValue('advanced.dontUseSharingStumbleupon');
 		$this->fetchConfigValue('advanced.initialViewsCount');
 		$this->fetchConfigValue('advanced.initialViewsDate');
+		$this->fetchConfigValue('advanced.shareUsersTotalText');
+		$this->fetchConfigValue('advanced.shareDataText');
 
 		$this->fetchConfigValue('ratings.enableRatings');
 		$this->fetchConfigValue('ratings.ratingsTemplateFile');
@@ -4109,15 +4194,43 @@ sharrre design 2 and 4, calculated specifics
 	protected function boxmodel() {
 		$dirsep=DIRECTORY_SEPARATOR;
 		$repstr= str_replace('/', $dirsep, '/typo3conf/ext/toctoc_comments/pi1');
-
+		$runboxmodel = FALSE;
 		$filenameboxmodel=$this->conf['theme.']['selectedBoxmodel']; //'boxmodel.txt'
 
 		$txdirnameboxmodel= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep .
 				t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/css/boxmodels/' );
 		$filenameboxmodel=$txdirnameboxmodel . $filenameboxmodel;
+
+		if ($this->conf['theme.']['selectedBoxmodel'] != '') {
+			if (file_exists($filenameboxmodel)) {
+				$filetime = @filemtime($filenameboxmodel);
+				if (!isset($_SESSION['fileTimeSelectedBoxModel'])) {
+					$runboxmodel = TRUE;
+					$_SESSION['fileTimeSelectedBoxModel'] = $filetime;
+				} else {
+					if ($_SESSION['fileTimeSelectedBoxModel']  != $filetime) {
+						$runboxmodel = TRUE;
+						$_SESSION['fileTimeSelectedBoxModel'] = $filetime;
+					}
+
+				}
+			}
+		}
+
 		$txdirnameboxmodelsystem= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep .
 									t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/css/boxmodels/system/' );
 		$filenameboxmodelsystem=$txdirnameboxmodelsystem . 'boxmodel_system.txt';
+		$filetime = @filemtime($filenameboxmodelsystem);
+		if (!isset($_SESSION['fileTimeBoxModelSystem'])) {
+			$runboxmodel = TRUE;
+			$_SESSION['fileTimeBoxModelSystem'] = $filetime;
+		} else {
+			if ($_SESSION['fileTimeBoxModelSystem']  != $filetime) {
+				$runboxmodel = TRUE;
+				$_SESSION['fileTimeBoxModelSystem'] = $filetime;
+			}
+
+		}
 
 		$filenamecssfile='tx-tc-' . $this->extVersion . '.css';
 		$httpsid='';
@@ -4143,17 +4256,42 @@ sharrre design 2 and 4, calculated specifics
 		$filenamecss=$txdirname . $filenamecssoutfile;
 
 		if (file_exists($filenamecss)) {
+			$filetime = @filemtime($filenamecss);
+			if (!isset($_SESSION['fileTimeCSS'])) {
+				$runboxmodel = TRUE;
+				$_SESSION['fileTimeCSS'] = $filetime;
+			} else {
+				if ($_SESSION['fileTimeCSS'] != $filetime) {
+					$runboxmodel = TRUE;
+					$_SESSION['fileTimeCSS'] = $filetime;
+				}
+
+			}
+
 			if (!$this->processcssandjsfiles) {
 				$this->boxmodelcss ='temp/' . $filenamecssoutfile;
 				return '';
 			}
 
+		} else {
+			$runboxmodel = TRUE;
 		}
 
 		$txdirnamedefault= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep . t3lib_extMgm::siteRelPath('toctoc_comments') .
 							'res/css/' );
 		$filenamedefaultcss=$txdirnamedefault . $filenamecssfile;
 
+		$filetime = @filemtime($filenamedefaultcss);
+		if (!isset($_SESSION['fileTimeDefaultCSS'])) {
+			$runboxmodel = TRUE;
+			$_SESSION['fileTimeDefaultCSS'] = $filetime;
+		} else {
+			if ($_SESSION['fileTimeDefaultCSS'] != $filetime) {
+				$runboxmodel = TRUE;
+				$_SESSION['fileTimeDefaultCSS'] = $filetime;
+			}
+
+		}
 		$printstr='';
 		$content ='';
 		$bmcsslastmodif=0;
@@ -4169,463 +4307,466 @@ sharrre design 2 and 4, calculated specifics
 			$_SESSION['AJAXimages'] = array();
 		}
 
-		if (file_exists($filenamecss)) {
-			// boxmodel.css file found
-			$content = file_get_contents($filenamecss);
-			$bmcsslastmodif = filemtime($filenamecss);
-		}
-		$contentconfidarr= explode('6g9', $content);
+		if ($runboxmodel ==TRUE) {
+			if (file_exists($filenamecss)) {
+				// boxmodel.css file found
+				$content = file_get_contents($filenamecss);
+				$bmcsslastmodif = filemtime($filenamecss);
+			}
+			$contentconfidarr= explode('6g9', $content);
 
-		if (($contentconfidarr[1] != $this->confid) || ($this->conf['theme.']['freezeLevelCSS'] == 0)) {
-			$forceregenerate=TRUE;
+			if (($contentconfidarr[1] != $this->confid) || ($this->conf['theme.']['freezeLevelCSS'] == 0)) {
+				$forceregenerate=TRUE;
 
-		}
-		if ($this->conf['theme.']['freezeLevelCSS'] < 2) {
-			if (file_exists($filenameboxmodelsystem)) {
-				//boxmodel_system.txt found
-				$bmtxtlastmodif = filemtime($filenameboxmodelsystem);
-				$boxmodelarr = file($filenameboxmodelsystem);
-				$nbrfilestoprocess=1;
-				if ((file_exists($filenameboxmodel)) && ($this->conf['theme.']['selectedBoxmodel'] !='')) {
-					// use boxmodel.txt found, so iteration will be done twice
-					$nbrfilestoprocess=2;
-					$bmtxtlastmodif = filemtime($filenameboxmodel);
-				}
+			}
+			if ($this->conf['theme.']['freezeLevelCSS'] < 2) {
+				if (file_exists($filenameboxmodelsystem)) {
+					//boxmodel_system.txt found
+					$bmtxtlastmodif = filemtime($filenameboxmodelsystem);
+					$boxmodelarr = file($filenameboxmodelsystem);
+					$nbrfilestoprocess=1;
+					if ((file_exists($filenameboxmodel)) && ($this->conf['theme.']['selectedBoxmodel'] !='')) {
+						// use boxmodel.txt found, so iteration will be done twice
+						$nbrfilestoprocess=2;
+						$bmtxtlastmodif = filemtime($filenameboxmodel);
+					}
 
-				if (file_exists($filenamedefaultcss)) {
-					// tx-tc' . $this->extVersion . '.css is present
-					$contentdefaultcss = file_get_contents($filenamedefaultcss);
-					$basecsslastmodif = filemtime($filenamedefaultcss);
-					if (($forceregenerate==TRUE) || ($bmcsslastmodif<$bmtxtlastmodif) || ($bmcsslastmodif<$basecsslastmodif)) {
+					if (file_exists($filenamedefaultcss)) {
+						// tx-tc' . $this->extVersion . '.css is present
+						$contentdefaultcss = file_get_contents($filenamedefaultcss);
+						$basecsslastmodif = filemtime($filenamedefaultcss);
+						if (($forceregenerate==TRUE) || ($bmcsslastmodif<$bmtxtlastmodif) || ($bmcsslastmodif<$basecsslastmodif)) {
 
-						for ($ifile=0; $ifile<$nbrfilestoprocess; $ifile++) {
-							//*// // first system-boxmodel, then possible normal box-model
-							//*// // output will be one file, so both resuls are merge into the rest.
+							for ($ifile=0; $ifile<$nbrfilestoprocess; $ifile++) {
+								//*// // first system-boxmodel, then possible normal box-model
+								//*// // output will be one file, so both resuls are merge into the rest.
 
-							if ($ifile==1) {
-								$currentfilename = $this->conf['theme.']['selectedBoxmodel'];
-								$boxmodelarr = file($filenameboxmodel);
-							} else {
-								$currentfilename = 'boxmodel_system.txt';
-							}
-
-							$boxmodelcssarr = array();
-							$boxmodelsrulesarr = array();
-							$i_rules=0;
-							$i_boxmodel=-1;
-							$parsestate = '';
-							$countboxmodelarr=count($boxmodelarr);
-							for ($i=0; $i<$countboxmodelarr; $i++) {
-
-								if (trim($boxmodelarr[$i])== 'Boxmodel') {
-									$i_boxmodel++;
-									$i_boxmodelCSS=-2;
-									$boxmodelcssarr[$i_boxmodel] = array();
-
-									$boxmodelcssarr[$i_boxmodel]['selectorCSSkey']= array();
-									$parsestate = '';
-									$i_selector=0;
-								} elseif (trim($boxmodelarr[$i])== 'CSS') {
-									$parsestate = 'CSS';
-								} elseif (trim($boxmodelarr[$i])== 'Selectors') {
-									$parsestate = 'Selectors';
-								} elseif (trim($boxmodelarr[$i])== 'Rules') {
-									$parsestate = 'Rules';
-								} elseif (trim($boxmodelarr[$i])== '***') {
-									$parsestate = '';
-								} elseif (trim($boxmodelarr[$i])== '') {
-									$parsestate = '';
-								} elseif (($parsestate== 'CSS')) {
-
-									$i_boxmodelCSS=$i_boxmodelCSS+2;
-									$boxmodelcssarrtmp=explode(':', $boxmodelarr[$i]);
-									$boxmodelcssarr[$i_boxmodel]['CSS'][$i_boxmodelCSS]=$boxmodelcssarrtmp[0];
-									$boxmodelcssarr[$i_boxmodel]['CSS'][$i_boxmodelCSS+1]=$boxmodelcssarrtmp[1];
-									$parsestate = 'CSS2';
-								} elseif ($parsestate== 'CSS2') {
-
-									$boxmodelcssarr[$i_boxmodel]['CSS2']=explode(':', $boxmodelarr[$i]);
-
-									$boxmodelsrulesarr[$i_boxmodel]=array();
-									$boxmodelsrulesarr[$i_boxmodel]['boxmodel'] =$i_boxmodel;
-									$boxmodelsrulesarr[$i_boxmodel]['fullrule'] =$boxmodelcssarr[$i_boxmodel]['CSS2'][$i_boxmodelCSS+1]; // {2}px
-									$boxmodelsrulesarr[$i_boxmodel]['selector'] =$boxmodelcssarr[$i_boxmodel]['CSS2'][$i_boxmodelCSS]; // border-width
-									$boxmodelsrulesarr[$i_boxmodel]['fullruleeval'] ='';
-									$parsestate = 'CSS';
-
-									$i_rules++;
-								} elseif ($parsestate== 'Rules') {
-									$boxmodelsrulesarr[$i_boxmodel]=array();
-									$boxmodelsrulesarr[$i_boxmodel]['boxmodel'] =$i_boxmodel;
-									$boxmodelsrulesarr[$i_boxmodel]['fullruleeval'] =$boxmodelarr[$i]; //{3} = {1} + {2}+ 30
-									$i_rules++;
-
-								} elseif ($parsestate== 'Selectors') {
-									$boxmodelcssarr[$i_boxmodel]['selectorCSSkey'][$i_selector]=$boxmodelarr[$i];
-									$boxmodelcssarr[$i_boxmodel]['CSSComment'][$i_selector]='
-	/*
-	change for ' . $boxmodelarr[$i] . ' on line ' . $i . ' in ' . $currentfilename .'
-	*/
-	';
-									$i_selector++;
-
-								}
-
-							}
-
-							//now the 2 boxmodel arrays are there: one with rules, the other with data to process
-
-							// 1. apply rules on data-array
-							$countboxmodelsrulesarr=count($boxmodelsrulesarr);
-							for ($i=0; $i<$countboxmodelsrulesarr; $i++) {
-
-								// get the value to replace
-								$replrightarr= explode('}', $boxmodelcssarr[$boxmodelsrulesarr[$i]['boxmodel']]['CSS2'][1]);  // xxx{2, px;
-								$replright=$replrightarr[1]; // px;
-								$replleftarr= explode('{', $boxmodelcssarr[$boxmodelsrulesarr[$i]['boxmodel']]['CSS2'][1]);   // xxx   2}px;
-								$replleft=$replrightarr[0]; // xxx
-								if ($replright !='') {
-									$varrighttrimedarr= explode($replright, $boxmodelcssarr[$boxmodelsrulesarr[$i]['boxmodel']]['CSS'][1]); // xxx170 ,
-									$varrighttrimed=implode($varrighttrimedarr); // xxx170
+								if ($ifile==1) {
+									$currentfilename = $this->conf['theme.']['selectedBoxmodel'];
+									$boxmodelarr = file($filenameboxmodel);
 								} else {
-									$varrighttrimed=$boxmodelcssarr[$boxmodelsrulesarr[$i]['boxmodel']]['CSS'][1];
+									$currentfilename = 'boxmodel_system.txt';
 								}
 
-								$vartrimed=intval($varrighttrimed); // if not int -> 0
+								$boxmodelcssarr = array();
+								$boxmodelsrulesarr = array();
+								$i_rules=0;
+								$i_boxmodel=-1;
+								$parsestate = '';
+								$countboxmodelarr=count($boxmodelarr);
+								for ($i=0; $i<$countboxmodelarr; $i++) {
 
-								if ($replleft !='') {
-									// xxx
-									$varlefttrimedarr= explode($replleft, $varrighttrimed); // xxx170
-									$vartrimed=$varlefttrimedarr[0];		// 170
+									if (trim($boxmodelarr[$i])== 'Boxmodel') {
+										$i_boxmodel++;
+										$i_boxmodelCSS=-2;
+										$boxmodelcssarr[$i_boxmodel] = array();
+
+										$boxmodelcssarr[$i_boxmodel]['selectorCSSkey']= array();
+										$parsestate = '';
+										$i_selector=0;
+									} elseif (trim($boxmodelarr[$i])== 'CSS') {
+										$parsestate = 'CSS';
+									} elseif (trim($boxmodelarr[$i])== 'Selectors') {
+										$parsestate = 'Selectors';
+									} elseif (trim($boxmodelarr[$i])== 'Rules') {
+										$parsestate = 'Rules';
+									} elseif (trim($boxmodelarr[$i])== '***') {
+										$parsestate = '';
+									} elseif (trim($boxmodelarr[$i])== '') {
+										$parsestate = '';
+									} elseif (($parsestate== 'CSS')) {
+
+										$i_boxmodelCSS=$i_boxmodelCSS+2;
+										$boxmodelcssarrtmp=explode(':', $boxmodelarr[$i]);
+										$boxmodelcssarr[$i_boxmodel]['CSS'][$i_boxmodelCSS]=$boxmodelcssarrtmp[0];
+										$boxmodelcssarr[$i_boxmodel]['CSS'][$i_boxmodelCSS+1]=$boxmodelcssarrtmp[1];
+										$parsestate = 'CSS2';
+									} elseif ($parsestate== 'CSS2') {
+
+										$boxmodelcssarr[$i_boxmodel]['CSS2']=explode(':', $boxmodelarr[$i]);
+
+										$boxmodelsrulesarr[$i_boxmodel]=array();
+										$boxmodelsrulesarr[$i_boxmodel]['boxmodel'] =$i_boxmodel;
+										$boxmodelsrulesarr[$i_boxmodel]['fullrule'] =$boxmodelcssarr[$i_boxmodel]['CSS2'][$i_boxmodelCSS+1]; // {2}px
+										$boxmodelsrulesarr[$i_boxmodel]['selector'] =$boxmodelcssarr[$i_boxmodel]['CSS2'][$i_boxmodelCSS]; // border-width
+										$boxmodelsrulesarr[$i_boxmodel]['fullruleeval'] ='';
+										$parsestate = 'CSS';
+
+										$i_rules++;
+									} elseif ($parsestate== 'Rules') {
+										$boxmodelsrulesarr[$i_boxmodel]=array();
+										$boxmodelsrulesarr[$i_boxmodel]['boxmodel'] =$i_boxmodel;
+										$boxmodelsrulesarr[$i_boxmodel]['fullruleeval'] =$boxmodelarr[$i]; //{3} = {1} + {2}+ 30
+										$i_rules++;
+
+									} elseif ($parsestate== 'Selectors') {
+										$boxmodelcssarr[$i_boxmodel]['selectorCSSkey'][$i_selector]=$boxmodelarr[$i];
+										$boxmodelcssarr[$i_boxmodel]['CSSComment'][$i_selector]='
+		/*
+		change for ' . $boxmodelarr[$i] . ' on line ' . $i . ' in ' . $currentfilename .'
+		*/
+		';
+										$i_selector++;
+
+									}
+
 								}
 
-								$boxmodelsrulesarr[$i]['varval']=$vartrimed;
-								$varnamearr= explode('{', $boxmodelcssarr[$boxmodelsrulesarr[$i]['boxmodel']]['CSS2'][1]);  // xxx  2}px;
-								$varnamearr2=explode('}', $varnamearr[1]); // 2   px;
-								$boxmodelsrulesarr[$i]['varname']=trim($varnamearr2[0]);
-								if (intval($boxmodelsrulesarr[$i]['varname'])==0) {
-									if ($boxmodelsrulesarr[$i]['varname']=='boxmodelTextareaLineHeight') {
-										$boxmodelsrulesarr[$i]['varval']=$this->conf['theme.']['boxmodelTextareaLineHeight'];
+								//now the 2 boxmodel arrays are there: one with rules, the other with data to process
+
+								// 1. apply rules on data-array
+								$countboxmodelsrulesarr=count($boxmodelsrulesarr);
+								for ($i=0; $i<$countboxmodelsrulesarr; $i++) {
+
+									// get the value to replace
+									$replrightarr= explode('}', $boxmodelcssarr[$boxmodelsrulesarr[$i]['boxmodel']]['CSS2'][1]);  // xxx{2, px;
+									$replright=$replrightarr[1]; // px;
+									$replleftarr= explode('{', $boxmodelcssarr[$boxmodelsrulesarr[$i]['boxmodel']]['CSS2'][1]);   // xxx   2}px;
+									$replleft=$replrightarr[0]; // xxx
+									if ($replright !='') {
+										$varrighttrimedarr= explode($replright, $boxmodelcssarr[$boxmodelsrulesarr[$i]['boxmodel']]['CSS'][1]); // xxx170 ,
+										$varrighttrimed=implode($varrighttrimedarr); // xxx170
+									} else {
+										$varrighttrimed=$boxmodelcssarr[$boxmodelsrulesarr[$i]['boxmodel']]['CSS'][1];
 									}
 
-									if ($boxmodelsrulesarr[$i]['varname']=='boxmodelTextareaHeight') {
-										$boxmodelsrulesarr[$i]['varval']=$this->boxmodelTextareaHeight;
+									$vartrimed=intval($varrighttrimed); // if not int -> 0
+
+									if ($replleft !='') {
+										// xxx
+										$varlefttrimedarr= explode($replleft, $varrighttrimed); // xxx170
+										$vartrimed=$varlefttrimedarr[0];		// 170
 									}
 
-									if ($boxmodelsrulesarr[$i]['varname']=='boxmodelSpacing') {
-										$boxmodelsrulesarr[$i]['varval']=intval($this->conf['theme.']['boxmodelSpacing']);
-									}
-
-									if ($boxmodelsrulesarr[$i]['varname']=='boxmodelLineHeight') {
-										$boxmodelsrulesarr[$i]['varval']=$this->conf['theme.']['boxmodelLineHeight'];
-									}
-
-									if ($boxmodelsrulesarr[$i]['varname']=='boxmodelLineHeightHalf') {
-										$boxmodelsrulesarr[$i]['varval']=round(($this->conf['theme.']['boxmodelLineHeight']-16)/2, 0);
-									}
-
-									if ($boxmodelsrulesarr[$i]['varname']=='boxmodelSpacingHalf') {
-										$boxmodelsrulesarr[$i]['varval']=round(($this->conf['theme.']['boxmodelSpacing'])/2, 0);
-									}
-
-									if ($boxmodelsrulesarr[$i]['varname']=='ratingImageWidth') {
-										$boxmodelsrulesarr[$i]['varval']=$this->conf['ratings.']['ratingImageWidth'];
-									}
-
-									if ($boxmodelsrulesarr[$i]['varname']=='picUploadMaxDimX') {
-										$boxmodelsrulesarr[$i]['varval']=$this->conf['attachments.']['picUploadMaxDimX'];
-									}
-
-									if ($boxmodelsrulesarr[$i]['varname']=='boxmodelLabelWidth') {
-										$boxmodelsrulesarr[$i]['varval']=intval($this->conf['theme.']['boxmodelLabelWidth']);
-									}
-
-									if ($boxmodelsrulesarr[$i]['varname']=='userImageSize') {
-										$boxmodelsrulesarr[$i]['varval']=intval($this->conf['userImageSize']);
-									}
-
-								}
-
-								if ($boxmodelsrulesarr[$i]['fullruleeval'] != '') {
-									// set the values in the formula
-									$rulevarnamepartevalpartarr= explode('=', $boxmodelsrulesarr[$i]['fullruleeval'] );
-									$varpart=  trim($rulevarnamepartevalpartarr[0]); // {3}
-
-									$evalpart=  trim($rulevarnamepartevalpartarr[1]); // {1} + {2} + 30
-									$countjjboxmodelsrulesarr=count($boxmodelsrulesarr);
-									for ($j=0; $j<$countjjboxmodelsrulesarr; $j++) {
-										if ($boxmodelsrulesarr[$j]['varname']=='boxmodelTextareaLineHeight') {
-											$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->conf['theme.']['boxmodelTextareaLineHeight'],
-													$evalpart);
-										} elseif ($boxmodelsrulesarr[$j]['varname']=='boxmodelTextareaHeight') {
-											$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->boxmodelTextareaHeight, $evalpart);
-										} elseif ($boxmodelsrulesarr[$j]['varname']=='boxmodelSpacing') {
-											$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', intval($this->conf['theme.']['boxmodelSpacing']),
-													$evalpart);
-										} elseif ($boxmodelsrulesarr[$j]['varname']=='boxmodelLineHeight') {
-											$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->conf['theme.']['boxmodelLineHeight'], $evalpart);
-										} elseif ($boxmodelsrulesarr[$j]['varname']=='boxmodelLineHeightHalf') {
-											$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}',
-													round(($this->conf['theme.']['boxmodelLineHeight']-16)/2, 0), $evalpart);
-										} elseif ($boxmodelsrulesarr[$j]['varname']=='ratingImageWidth') {
-											$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->conf['ratings.']['ratingImageWidth'],
-													$evalpart);
-										} elseif ($boxmodelsrulesarr[$j]['varname']=='boxmodelLabelWidth') {
-											$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', intval($this->conf['theme.']['boxmodelLabelWidth']),
-													$evalpart);
-										} elseif ($boxmodelsrulesarr[$j]['varname']=='picUploadMaxDimX') {
-											$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->conf['attachments.']['picUploadMaxDimX'],
-															$evalpart);
-										} elseif ($boxmodelsrulesarr[$j]['varname']=='userImageSize') {
-											$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->conf['userImageSize'],
-															$evalpart);
-										} elseif ($boxmodelsrulesarr[$j]['varname']=='boxmodelSpacingHalf') {
-											$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', round(($this->conf['theme.']['boxmodelSpacing'])/2, 0),
-													$evalpart);
-										} else {
-											$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $boxmodelsrulesarr[$j]['varval'], $evalpart);
+									$boxmodelsrulesarr[$i]['varval']=$vartrimed;
+									$varnamearr= explode('{', $boxmodelcssarr[$boxmodelsrulesarr[$i]['boxmodel']]['CSS2'][1]);  // xxx  2}px;
+									$varnamearr2=explode('}', $varnamearr[1]); // 2   px;
+									$boxmodelsrulesarr[$i]['varname']=trim($varnamearr2[0]);
+									if (intval($boxmodelsrulesarr[$i]['varname'])==0) {
+										if ($boxmodelsrulesarr[$i]['varname']=='boxmodelTextareaLineHeight') {
+											$boxmodelsrulesarr[$i]['varval']=$this->conf['theme.']['boxmodelTextareaLineHeight'];
 										}
 
+										if ($boxmodelsrulesarr[$i]['varname']=='boxmodelTextareaHeight') {
+											$boxmodelsrulesarr[$i]['varval']=$this->boxmodelTextareaHeight;
+										}
+
+										if ($boxmodelsrulesarr[$i]['varname']=='boxmodelSpacing') {
+											$boxmodelsrulesarr[$i]['varval']=intval($this->conf['theme.']['boxmodelSpacing']);
+										}
+
+										if ($boxmodelsrulesarr[$i]['varname']=='boxmodelLineHeight') {
+											$boxmodelsrulesarr[$i]['varval']=$this->conf['theme.']['boxmodelLineHeight'];
+										}
+
+										if ($boxmodelsrulesarr[$i]['varname']=='boxmodelLineHeightHalf') {
+											$boxmodelsrulesarr[$i]['varval']=round(($this->conf['theme.']['boxmodelLineHeight']-16)/2, 0);
+										}
+
+										if ($boxmodelsrulesarr[$i]['varname']=='boxmodelSpacingHalf') {
+											$boxmodelsrulesarr[$i]['varval']=round(($this->conf['theme.']['boxmodelSpacing'])/2, 0);
+										}
+
+										if ($boxmodelsrulesarr[$i]['varname']=='ratingImageWidth') {
+											$boxmodelsrulesarr[$i]['varval']=$this->conf['ratings.']['ratingImageWidth'];
+										}
+
+										if ($boxmodelsrulesarr[$i]['varname']=='picUploadMaxDimX') {
+											$boxmodelsrulesarr[$i]['varval']=$this->conf['attachments.']['picUploadMaxDimX'];
+										}
+
+										if ($boxmodelsrulesarr[$i]['varname']=='boxmodelLabelWidth') {
+											$boxmodelsrulesarr[$i]['varval']=intval($this->conf['theme.']['boxmodelLabelWidth']);
+										}
+
+										if ($boxmodelsrulesarr[$i]['varname']=='userImageSize') {
+											$boxmodelsrulesarr[$i]['varval']=intval($this->conf['userImageSize']);
+										}
+
+									}
+
+									if ($boxmodelsrulesarr[$i]['fullruleeval'] != '') {
+										// set the values in the formula
+										$rulevarnamepartevalpartarr= explode('=', $boxmodelsrulesarr[$i]['fullruleeval'] );
+										$varpart=  trim($rulevarnamepartevalpartarr[0]); // {3}
+
+										$evalpart=  trim($rulevarnamepartevalpartarr[1]); // {1} + {2} + 30
 										$countjjboxmodelsrulesarr=count($boxmodelsrulesarr);
-									}// 170 + 40 + 30
-									$boxmodelsrulesarr[$i]['varname']=str_replace('{', '', str_replace('}', '', $varpart)); // 3
-									$boxmodelsrulesarr[$i]['varval']= $this->calculate_string($evalpart);  //240
+										for ($j=0; $j<$countjjboxmodelsrulesarr; $j++) {
+											if ($boxmodelsrulesarr[$j]['varname']=='boxmodelTextareaLineHeight') {
+												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->conf['theme.']['boxmodelTextareaLineHeight'],
+														$evalpart);
+											} elseif ($boxmodelsrulesarr[$j]['varname']=='boxmodelTextareaHeight') {
+												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->boxmodelTextareaHeight, $evalpart);
+											} elseif ($boxmodelsrulesarr[$j]['varname']=='boxmodelSpacing') {
+												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', intval($this->conf['theme.']['boxmodelSpacing']),
+														$evalpart);
+											} elseif ($boxmodelsrulesarr[$j]['varname']=='boxmodelLineHeight') {
+												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->conf['theme.']['boxmodelLineHeight'], $evalpart);
+											} elseif ($boxmodelsrulesarr[$j]['varname']=='boxmodelLineHeightHalf') {
+												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}',
+														round(($this->conf['theme.']['boxmodelLineHeight']-16)/2, 0), $evalpart);
+											} elseif ($boxmodelsrulesarr[$j]['varname']=='ratingImageWidth') {
+												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->conf['ratings.']['ratingImageWidth'],
+														$evalpart);
+											} elseif ($boxmodelsrulesarr[$j]['varname']=='boxmodelLabelWidth') {
+												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', intval($this->conf['theme.']['boxmodelLabelWidth']),
+														$evalpart);
+											} elseif ($boxmodelsrulesarr[$j]['varname']=='picUploadMaxDimX') {
+												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->conf['attachments.']['picUploadMaxDimX'],
+																$evalpart);
+											} elseif ($boxmodelsrulesarr[$j]['varname']=='userImageSize') {
+												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->conf['userImageSize'],
+																$evalpart);
+											} elseif ($boxmodelsrulesarr[$j]['varname']=='boxmodelSpacingHalf') {
+												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', round(($this->conf['theme.']['boxmodelSpacing'])/2, 0),
+														$evalpart);
+											} else {
+												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $boxmodelsrulesarr[$j]['varval'], $evalpart);
+											}
+
+											$countjjboxmodelsrulesarr=count($boxmodelsrulesarr);
+										}// 170 + 40 + 30
+										$boxmodelsrulesarr[$i]['varname']=str_replace('{', '', str_replace('}', '', $varpart)); // 3
+										$boxmodelsrulesarr[$i]['varval']= $this->calculate_string($evalpart);  //240
+									}
+
+									$countboxmodelsrulesarr=count($boxmodelsrulesarr);
 								}
 
-								$countboxmodelsrulesarr=count($boxmodelsrulesarr);
-							}
+								// not the values in the data-array are set and calculated
+								// replace the vars in CSS2 with varvals and replace CSS with CSS2
+								$countiboxmodelcssarr=count($boxmodelcssarr);
+								for ($i=0; $i<$countiboxmodelcssarr; $i++) {
+									$countboxmodelsrulesarrj=count($boxmodelsrulesarr);
+									for ($j=0; $j<$countboxmodelsrulesarrj; $j++) {
+										$countboxmodelcssarriCSS2=count($boxmodelcssarr[$i]['CSS2']);
+										for ($c=1; $c<$countboxmodelcssarriCSS2; $c=$c+2) {
+											$boxmodelcssarr[$i]['CSS2'][$c]=str_replace('{' . $boxmodelsrulesarr[$j]['varname'] .
+													'}', $boxmodelsrulesarr[$j]['varval'], $boxmodelcssarr[$i]['CSS2'][$c]);
+											// width: 200px; becomes width: 240px if CSS2= width: {3}px;
+											$countboxmodelcssarriCSS2=count($boxmodelcssarr[$i]['CSS2']);
+										}
 
-							// not the values in the data-array are set and calculated
-							// replace the vars in CSS2 with varvals and replace CSS with CSS2
-							$countiboxmodelcssarr=count($boxmodelcssarr);
-							for ($i=0; $i<$countiboxmodelcssarr; $i++) {
-								$countboxmodelsrulesarrj=count($boxmodelsrulesarr);
-								for ($j=0; $j<$countboxmodelsrulesarrj; $j++) {
+									}
+
 									$countboxmodelcssarriCSS2=count($boxmodelcssarr[$i]['CSS2']);
 									for ($c=1; $c<$countboxmodelcssarriCSS2; $c=$c+2) {
-										$boxmodelcssarr[$i]['CSS2'][$c]=str_replace('{' . $boxmodelsrulesarr[$j]['varname'] .
-												'}', $boxmodelsrulesarr[$j]['varval'], $boxmodelcssarr[$i]['CSS2'][$c]);
-										// width: 200px; becomes width: 240px if CSS2= width: {3}px;
+										if ($boxmodelcssarr[$i]['CSS2'][$c]!='') {
+											$boxmodelcssarr[$i]['CSS'][$c]=$boxmodelcssarr[$i]['CSS2'][$c];
+										}
+
 										$countboxmodelcssarriCSS2=count($boxmodelcssarr[$i]['CSS2']);
 									}
 
+									$countiboxmodelcssarr=count($boxmodelcssarr);
 								}
 
-								$countboxmodelcssarriCSS2=count($boxmodelcssarr[$i]['CSS2']);
-								for ($c=1; $c<$countboxmodelcssarriCSS2; $c=$c+2) {
-									if ($boxmodelcssarr[$i]['CSS2'][$c]!='') {
-										$boxmodelcssarr[$i]['CSS'][$c]=$boxmodelcssarr[$i]['CSS2'][$c];
-									}
-
-									$countboxmodelcssarriCSS2=count($boxmodelcssarr[$i]['CSS2']);
-								}
-
+								// So now all the CSS  in the data-array are ready to be checked against the CSS file
+								//spilt CSS on seletor and subsequent '}'
 								$countiboxmodelcssarr=count($boxmodelcssarr);
-							}
-
-							// So now all the CSS  in the data-array are ready to be checked against the CSS file
-							//spilt CSS on seletor and subsequent '}'
-							$countiboxmodelcssarr=count($boxmodelcssarr);
-							for ($i=0; $i<$countiboxmodelcssarr; $i++) {
-								$countboxmodelcssarrselectorCSSkey=count($boxmodelcssarr[$i]['selectorCSSkey']);
-								for ($j=0; $j<$countboxmodelcssarrselectorCSSkey; $j++) {
-								// - checking every css-selector in the boxmodel-entry
-									$dolbrk=TRUE;
-									$selectorCSSkey= rtrim($boxmodelcssarr[$i]['selectorCSSkey'][$j]) . ' {';
-									// - selectorCSSkey looks like for example "tx-tc-goodguy {"
-									$countcboxmodelcssarriCSS=count($boxmodelcssarr[$i]['CSS']);
-									for ($c=0; $c<$countcboxmodelcssarriCSS; $c=$c+2) {
-									// - for every CSS-property to be assigned to the  current selectorCSSKey. $c holds search value, $d replace with value
-										$d=$c+1;
-										// take the selector to work on and isolate it from default CSS
-										$contentdefaultcssarr = explode("\n". $selectorCSSkey, $contentdefaultcss);
-										// - the entire default CSS gets splitet on the selectorCSSKey
-										if (count($contentdefaultcssarr) >1) {
-											// -if splitting was successful
-											$contentdefaultcssarr2= explode('}', $contentdefaultcssarr[1]);
-											// -make an array with the part after the selectorCSSKey
-											$selectorsscss= $contentdefaultcssarr2[0];
-											// -setting selectorcss to the css-properies of the selectorCSSKey
-										} else {
-											// - if splitting wasn't successful'
-											$selectorsscss= '';
-											// -selectors CSS is empty
-											$contentdefaultcssarr2=array();
-											$contentdefaultcssarr2[0]='';
-											$contentdefaultcssarr2[1]='';
-										}
-
-										// isolation done
-										// find property $boxmodelcssarr[$i]['CSS2'][0] in the selector
-										$boxmodelcssarr[$i]['CSS'][$d]=str_replace(';', '', $boxmodelcssarr[$i]['CSS'][$d]);
-										// -remove ";" from new CSS-Property-line
-										$selectorsscssarr= explode("\t" . $boxmodelcssarr[$i]['CSS'][$c] . ':', $selectorsscss);
-										// - Now we split the found CSS-Properties on the Property whose value we want to replace
-										//   EX1: splitting such the array will be so: (height)
-										//      width: 34px;   height: 45px; top: 0px;->  [0]:   width: 34px; [1]: 45px: top: 0px;
-										//   is empty if $selectorsscss=''
-										if (count($selectorsscssarr)>1) {
-											// property was found now we replace its content
-
-											$selectorsscssarr2= explode(';', $selectorsscssarr[1]);
-											// - EX1: we isolate the "45 px", it's in element [0]
-											$selectorsscssarr2[0]=$boxmodelcssarr[$i]['CSS'][$d];
-											// - here we filled in the new value 79px
-											//and implode back
-
-											$selectorsscssarr[1]=implode(';', $selectorsscssarr2);
-											// - [1] has now the new value inside
-											$selectorsscssarr[1]=str_replace("\r\n" . ';', ';', $selectorsscssarr[1]);
-											$selectorsscssarr[1]=str_replace("\n" . ';', ';', $selectorsscssarr[1]);
-											// - replaced the new lines in the "79px-string" [1]
-											$selectorsscss=implode( "\t".$boxmodelcssarr[$i]['CSS'][$c] .':', $selectorsscssarr);
-											// - restored the selectors entire CSS properties
-											$contentdefaultcssarr2[0]="\t". $selectorsscss;
-											// - prepend a tab and write it back to the originating array element
-											$contentdefaultcssarr[1]=implode('}', $contentdefaultcssarr2);
-
-											// - rebuild the originating array element
-										} else {
-											// property was not, we check for a leading '+' in the property string
-											// if present we add the property (without the '+' to the selector
-
-											if (substr($boxmodelcssarr[$i]['CSS'][$c], 0, 1) == '+') {
-
-												$selectorsscssplus = "\t" . substr($boxmodelcssarr[$i]['CSS'][$c], 1). ':' . $boxmodelcssarr[$i]['CSS'][$d] . ";\n";
-												$selectorsscssplus =str_replace("\r\n" . ';', ';', $selectorsscssplus);
-												$selectorsscssplus =str_replace("\n" . ';', ';', $selectorsscssplus);
-												// - new CSS Property with value set up
-												$selectorsscss .= $selectorsscssplus;
-												// appending new stuff to existing selectorscss
-
-												$contentdefaultcssarr2[0]=$selectorsscss;
-												if ($dolbrk) {
-													$contentdefaultcssarr[1]="\r\n" .implode('}', $contentdefaultcssarr2);
-													$dolbrk=FALSE;
-												} else {
-													$contentdefaultcssarr[1]=implode('}', $contentdefaultcssarr2);
-												}
-
+								for ($i=0; $i<$countiboxmodelcssarr; $i++) {
+									$countboxmodelcssarrselectorCSSkey=count($boxmodelcssarr[$i]['selectorCSSkey']);
+									for ($j=0; $j<$countboxmodelcssarrselectorCSSkey; $j++) {
+									// - checking every css-selector in the boxmodel-entry
+										$dolbrk=TRUE;
+										$selectorCSSkey= rtrim($boxmodelcssarr[$i]['selectorCSSkey'][$j]) . ' {';
+										// - selectorCSSkey looks like for example "tx-tc-goodguy {"
+										$countcboxmodelcssarriCSS=count($boxmodelcssarr[$i]['CSS']);
+										for ($c=0; $c<$countcboxmodelcssarriCSS; $c=$c+2) {
+										// - for every CSS-property to be assigned to the  current selectorCSSKey. $c holds search value, $d replace with value
+											$d=$c+1;
+											// take the selector to work on and isolate it from default CSS
+											$contentdefaultcssarr = explode("\n". $selectorCSSkey, $contentdefaultcss);
+											// - the entire default CSS gets splitet on the selectorCSSKey
+											if (count($contentdefaultcssarr) >1) {
+												// -if splitting was successful
+												$contentdefaultcssarr2= explode('}', $contentdefaultcssarr[1]);
+												// -make an array with the part after the selectorCSSKey
+												$selectorsscss= $contentdefaultcssarr2[0];
+												// -setting selectorcss to the css-properies of the selectorCSSKey
 											} else {
-												if (($dropprotokollon) && ($this->showsdebugprint==TRUE)) {
-													$this->sdebuginitprint.= 'DROP: '. json_encode($boxmodelcssarr[$i]). '<br />';
+												// - if splitting wasn't successful'
+												$selectorsscss= '';
+												// -selectors CSS is empty
+												$contentdefaultcssarr2=array();
+												$contentdefaultcssarr2[0]='';
+												$contentdefaultcssarr2[1]='';
+											}
+
+											// isolation done
+											// find property $boxmodelcssarr[$i]['CSS2'][0] in the selector
+											$boxmodelcssarr[$i]['CSS'][$d]=str_replace(';', '', $boxmodelcssarr[$i]['CSS'][$d]);
+											// -remove ";" from new CSS-Property-line
+											$selectorsscssarr= explode("\t" . $boxmodelcssarr[$i]['CSS'][$c] . ':', $selectorsscss);
+											// - Now we split the found CSS-Properties on the Property whose value we want to replace
+											//   EX1: splitting such the array will be so: (height)
+											//      width: 34px;   height: 45px; top: 0px;->  [0]:   width: 34px; [1]: 45px: top: 0px;
+											//   is empty if $selectorsscss=''
+											if (count($selectorsscssarr)>1) {
+												// property was found now we replace its content
+
+												$selectorsscssarr2= explode(';', $selectorsscssarr[1]);
+												// - EX1: we isolate the "45 px", it's in element [0]
+												$selectorsscssarr2[0]=$boxmodelcssarr[$i]['CSS'][$d];
+												// - here we filled in the new value 79px
+												//and implode back
+
+												$selectorsscssarr[1]=implode(';', $selectorsscssarr2);
+												// - [1] has now the new value inside
+												$selectorsscssarr[1]=str_replace("\r\n" . ';', ';', $selectorsscssarr[1]);
+												$selectorsscssarr[1]=str_replace("\n" . ';', ';', $selectorsscssarr[1]);
+												// - replaced the new lines in the "79px-string" [1]
+												$selectorsscss=implode( "\t".$boxmodelcssarr[$i]['CSS'][$c] .':', $selectorsscssarr);
+												// - restored the selectors entire CSS properties
+												$contentdefaultcssarr2[0]="\t". $selectorsscss;
+												// - prepend a tab and write it back to the originating array element
+												$contentdefaultcssarr[1]=implode('}', $contentdefaultcssarr2);
+
+												// - rebuild the originating array element
+											} else {
+												// property was not, we check for a leading '+' in the property string
+												// if present we add the property (without the '+' to the selector
+
+												if (substr($boxmodelcssarr[$i]['CSS'][$c], 0, 1) == '+') {
+
+													$selectorsscssplus = "\t" . substr($boxmodelcssarr[$i]['CSS'][$c], 1). ':' . $boxmodelcssarr[$i]['CSS'][$d] . ";\n";
+													$selectorsscssplus =str_replace("\r\n" . ';', ';', $selectorsscssplus);
+													$selectorsscssplus =str_replace("\n" . ';', ';', $selectorsscssplus);
+													// - new CSS Property with value set up
+													$selectorsscss .= $selectorsscssplus;
+													// appending new stuff to existing selectorscss
+
+													$contentdefaultcssarr2[0]=$selectorsscss;
+													if ($dolbrk) {
+														$contentdefaultcssarr[1]="\r\n" .implode('}', $contentdefaultcssarr2);
+														$dolbrk=FALSE;
+													} else {
+														$contentdefaultcssarr[1]=implode('}', $contentdefaultcssarr2);
+													}
+
+												} else {
+													if (($dropprotokollon) && ($this->showsdebugprint==TRUE)) {
+														$this->sdebuginitprint.= 'DROP: '. json_encode($boxmodelcssarr[$i]). '<br />';
+													}
+
 												}
 
 											}
+											if (intval($this->showCSScomments) == 1) {
+												$contentdefaultcss=implode(trim($boxmodelcssarr[$i]['CSSComment'][$j]) . "\n". $selectorCSSkey, $contentdefaultcssarr);
+												$contentdefaultcss=str_replace('*//*', '', $contentdefaultcss);
+											} else {
+												$contentdefaultcss=implode("\n". $selectorCSSkey, $contentdefaultcssarr);
 
+											}
+											$countcboxmodelcssarriCSS=count($boxmodelcssarr[$i]['CSS']);
 										}
-										if (intval($this->showCSScomments) == 1) {
-											$contentdefaultcss=implode(trim($boxmodelcssarr[$i]['CSSComment'][$j]) . "\n". $selectorCSSkey, $contentdefaultcssarr);
-											$contentdefaultcss=str_replace('*//*', '', $contentdefaultcss);
-										} else {
-											$contentdefaultcss=implode("\n". $selectorCSSkey, $contentdefaultcssarr);
 
-										}
-										$countcboxmodelcssarriCSS=count($boxmodelcssarr[$i]['CSS']);
+										$countboxmodelcssarrselectorCSSkey=count($boxmodelcssarr[$i]['selectorCSSkey']);
 									}
 
-									$countboxmodelcssarrselectorCSSkey=count($boxmodelcssarr[$i]['selectorCSSkey']);
+									$countiboxmodelcssarr=count($boxmodelcssarr);
 								}
 
-								$countiboxmodelcssarr=count($boxmodelcssarr);
+							}
+
+							// and apply the correct path to the theme in the rating stars url
+
+							$contentdefaultcss = $this->confcss .
+							str_replace('themes/default/', 'themes/' . $this->conf['theme.']['selectedTheme'] . '/', $contentdefaultcss) . "\n" . $this->themeCSS;
+
+							if ($this->conf['theme.']['boxmodelLineHeightPreserve'] ==1) {
+								$nolineheightarr = array('.tx-tc-recent-cts-entry {',
+														'.tx-tc-recent-cts-title {',
+														'.tx-tc-myrts-ilke {',
+														'.tx-tc-myrts-disilke {',
+														'.tx-tc-rts {',
+														'toctoc-comments-pi1 {',
+														'.tx-tc-text {',
+														'.tx-tc-myrts-ilke {',
+														'.tx-tc-text-top {',
+														'.tx-tc-ct-viewcnt {',
+														'.tx-tc-ftm-text {',
+														'.tx-tcresponse-text {',
+														'.tx-tcresponse-text-title {',
+														'.tx-tc-ct-rybox-title {',
+														'.tx-tc-ct-rybox {',
+														'.tx-tc-ct-cnt {',
+														'.txtc_details {',
+														'.tx-tc-ct-cnt span, .tx-tc-ct-viewcnt span {',
+														'.tx-tc-ct-prv-frame {',
+														'.tx-tc-ntf-box {',
+														'.tx-tc-scopetitle, .tx-tc-scopetitlebold {',
+														'.tx-tcresponse-text {',
+										);
+								$countnolineheight = count($nolineheightarr);
+								for ($x=0; $x < $countnolineheight; $x++) {
+									$contentdefaultcssarr = explode($nolineheightarr[$x], $contentdefaultcss);
+									$contentdefaultcssarrlineheight = explode('line-height', $contentdefaultcssarr[1]);
+									$contentdefaultcssarrlineheightend = explode(';', $contentdefaultcssarrlineheight[1]);
+									array_shift($contentdefaultcssarrlineheightend);
+									$contentdefaultcssarrlineheight[1] = 'lnh' . implode(';', $contentdefaultcssarrlineheightend);
+									$contentdefaultcssarr[1] = implode('line-height', $contentdefaultcssarrlineheight);
+									$contentdefaultcss = implode($nolineheightarr[$x], $contentdefaultcssarr);
+
+									$contentdefaultcss = str_replace('line-heightlnh'."\n", '', $contentdefaultcss);
+									$contentdefaultcss = str_replace('line-heightlnh'."\r\n", '', $contentdefaultcss);
+								}
+							}
+
+							// remove button CSS if boxmodelLabelInputPreserve is forced
+							if ($this->conf['theme.']['boxmodelLabelInputPreserve'] == 1) {
+								$nolineheightarr = array('.tx-tc-ct-submit, .tx-tc-ct-submit-loggedin {',
+										'.tx-tc-ct-submit, .tx-tc-ct-reset, .tx-tc-ct-submit-loggedin {',
+										);
+								$countnolineheight = count($nolineheightarr);
+								for ($x=0; $x < $countnolineheight; $x++) {
+									$contentdefaultcssarr = explode($nolineheightarr[$x], $contentdefaultcss);
+									$contentdefaultcssarrlineheight = explode('}', $contentdefaultcssarr[1]);
+									$contentdefaultcssarrlineheight[0] = '';
+									$contentdefaultcssarr[1] = implode('}', $contentdefaultcssarrlineheight);
+									$contentdefaultcss = implode($nolineheightarr[$x], $contentdefaultcssarr);
+
+								}
+							}
+
+							// @media-widths
+							$contentdefaultcss = str_replace('@media (max-width: 950px)', '@media (max-width: '.$this->arrResponsiveSteps[2].'px)', $contentdefaultcss);
+							$contentdefaultcss = str_replace('@media (min-width: 950px)', '@media (min-width: '.$this->arrResponsiveSteps[2].'px)', $contentdefaultcss);
+							$contentdefaultcss = str_replace('@media (max-width: 450px)', '@media (max-width: '.$this->arrResponsiveSteps[1].'px)', $contentdefaultcss);
+							$contentdefaultcss = str_replace('@media (min-width: 450px)', '@media (min-width: '.$this->arrResponsiveSteps[1].'px)', $contentdefaultcss);
+							$contentdefaultcss = str_replace('@media (max-width: 350px)', '@media (max-width: '.$this->arrResponsiveSteps[0].'px)', $contentdefaultcss);
+							$contentdefaultcss = str_replace('@media (min-width: 350px)', '@media (min-width: '.$this->arrResponsiveSteps[0].'px)', $contentdefaultcss);
+
+							if (intval($this->conf['theme.']['crunchCSS']) == 1) {
+								$contentdefaultcss = $this->crunchcss($contentdefaultcss);
+							}
+							if (($contentdefaultcss != $content) || ($this->conf['theme.']['freezeLevelCSS'] == 0)) {
+								file_put_contents($filenamecss, $contentdefaultcss);
 							}
 
 						}
 
-						// and apply the correct path to the theme in the rating stars url
-
-						$contentdefaultcss = $this->confcss .
-						str_replace('themes/default/', 'themes/' . $this->conf['theme.']['selectedTheme'] . '/', $contentdefaultcss) . "\n" . $this->themeCSS;
-
-						if ($this->conf['theme.']['boxmodelLineHeightPreserve'] ==1) {
-							$nolineheightarr = array('.tx-tc-recent-cts-entry {',
-													'.tx-tc-recent-cts-title {',
-													'.tx-tc-myrts-ilke {',
-													'.tx-tc-myrts-disilke {',
-													'.tx-tc-rts {',
-													'toctoc-comments-pi1 {',
-													'.tx-tc-text {',
-													'.tx-tc-myrts-ilke {',
-													'.tx-tc-text-top {',
-													'.tx-tc-ct-viewcnt {',
-													'.tx-tc-ftm-text {',
-													'.tx-tcresponse-text {',
-													'.tx-tcresponse-text-title {',
-													'.tx-tc-ct-rybox-title {',
-													'.tx-tc-ct-rybox {',
-													'.tx-tc-ct-cnt {',
-													'.txtc_details {',
-													'.tx-tc-ct-cnt span, .tx-tc-ct-viewcnt span {',
-													'.tx-tc-ct-prv-frame {',
-													'.tx-tc-ntf-box {',
-													'.tx-tc-scopetitle, .tx-tc-scopetitlebold {',
-													'.tx-tcresponse-text {',
-									);
-							$countnolineheight = count($nolineheightarr);
-							for ($x=0; $x < $countnolineheight; $x++) {
-								$contentdefaultcssarr = explode($nolineheightarr[$x], $contentdefaultcss);
-								$contentdefaultcssarrlineheight = explode('line-height', $contentdefaultcssarr[1]);
-								$contentdefaultcssarrlineheightend = explode(';', $contentdefaultcssarrlineheight[1]);
-								array_shift($contentdefaultcssarrlineheightend);
-								$contentdefaultcssarrlineheight[1] = 'lnh' . implode(';', $contentdefaultcssarrlineheightend);
-								$contentdefaultcssarr[1] = implode('line-height', $contentdefaultcssarrlineheight);
-								$contentdefaultcss = implode($nolineheightarr[$x], $contentdefaultcssarr);
-
-								$contentdefaultcss = str_replace('line-heightlnh'."\n", '', $contentdefaultcss);
-								$contentdefaultcss = str_replace('line-heightlnh'."\r\n", '', $contentdefaultcss);
-							}
-						}
-
-						// remove button CSS if boxmodelLabelInputPreserve is forced
-						if ($this->conf['theme.']['boxmodelLabelInputPreserve'] == 1) {
-							$nolineheightarr = array('.tx-tc-ct-submit, .tx-tc-ct-submit-loggedin {',
-									'.tx-tc-ct-submit, .tx-tc-ct-reset, .tx-tc-ct-submit-loggedin {',
-									);
-							$countnolineheight = count($nolineheightarr);
-							for ($x=0; $x < $countnolineheight; $x++) {
-								$contentdefaultcssarr = explode($nolineheightarr[$x], $contentdefaultcss);
-								$contentdefaultcssarrlineheight = explode('}', $contentdefaultcssarr[1]);
-								$contentdefaultcssarrlineheight[0] = '';
-								$contentdefaultcssarr[1] = implode('}', $contentdefaultcssarrlineheight);
-								$contentdefaultcss = implode($nolineheightarr[$x], $contentdefaultcssarr);
-
-							}
-						}
-
-						// @media-widths
-						$contentdefaultcss = str_replace('@media (max-width: 950px)', '@media (max-width: '.$this->arrResponsiveSteps[2].'px)', $contentdefaultcss);
-						$contentdefaultcss = str_replace('@media (min-width: 950px)', '@media (min-width: '.$this->arrResponsiveSteps[2].'px)', $contentdefaultcss);
-						$contentdefaultcss = str_replace('@media (max-width: 450px)', '@media (max-width: '.$this->arrResponsiveSteps[1].'px)', $contentdefaultcss);
-						$contentdefaultcss = str_replace('@media (min-width: 450px)', '@media (min-width: '.$this->arrResponsiveSteps[1].'px)', $contentdefaultcss);
-						$contentdefaultcss = str_replace('@media (max-width: 350px)', '@media (max-width: '.$this->arrResponsiveSteps[0].'px)', $contentdefaultcss);
-						$contentdefaultcss = str_replace('@media (min-width: 350px)', '@media (min-width: '.$this->arrResponsiveSteps[0].'px)', $contentdefaultcss);
-
-						if (intval($this->conf['theme.']['crunchCSS']) == 1) {
-							$contentdefaultcss = $this->crunchcss($contentdefaultcss);
-						}
-						if (($contentdefaultcss != $content) || ($this->conf['theme.']['freezeLevelCSS'] == 0)) {
-							file_put_contents($filenamecss, $contentdefaultcss);
-						}
-
+						//sets active css to boxmodell css
+						$this->boxmodelcss ='temp/' . $filenamecssoutfile;
+					} else {
+						$retstr =$this->pi_wrapInBaseClass($this->lib->pi_getLLWrap($this, 'error', FALSE) . ': ' .
+								$this->lib->pi_getLLWrap($this, 'error.no.css.defaultcss', FALSE)) . ': ' . $filenamedefaultcss;
+						return $retstr;
 					}
 
-					//sets active css to boxmodell css
-					$this->boxmodelcss ='temp/' . $filenamecssoutfile;
 				} else {
 					$retstr =$this->pi_wrapInBaseClass($this->lib->pi_getLLWrap($this, 'error', FALSE) . ': ' .
-							$this->lib->pi_getLLWrap($this, 'error.no.css.defaultcss', FALSE)) . ': ' . $filenamedefaultcss;
-					return $retstr;
+							$this->lib->pi_getLLWrap($this, 'error.no.css.boxmodeltxt', FALSE)) . ': ' . $filenameboxmodel;
+				    return $retstr;
 				}
-
 			} else {
-				$retstr =$this->pi_wrapInBaseClass($this->lib->pi_getLLWrap($this, 'error', FALSE) . ': ' .
-						$this->lib->pi_getLLWrap($this, 'error.no.css.boxmodeltxt', FALSE)) . ': ' . $filenameboxmodel;
-			    return $retstr;
+				$this->boxmodelcss ='temp/' . $filenamecssoutfile;
 			}
 		} else {
 			$this->boxmodelcss ='temp/' . $filenamecssoutfile;
 		}
-
 		return '';
 	}
 	/**
@@ -4796,19 +4937,19 @@ sharrre design 2 and 4, calculated specifics
 	 */
 	protected function getPluginCacheControlTstamp ($external_ref_uid) {
 
-		$rowsrf = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
-				'tstamp',
-				'tx_toctoc_comments_plugincachecontrol',
-				 'external_ref_uid="' . $external_ref_uid .'"',
-				'',
-				'',
-				''
-		);
-		$tstamp=0;
-		if (count($rowsrf)>0) {
-			$tstamp=$rowsrf[0]['tstamp'];
-		}
-
+// 		$rowsrf = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+// 				'tstamp',
+// 				'tx_toctoc_comments_plugincachecontrol',
+// 				 'external_ref_uid="' . $external_ref_uid .'"',
+// 				'',
+// 				'',
+// 				''
+// 		);
+// 		$tstamp=0;
+// 		if (count($rowsrf)>0) {
+// 			$tstamp=$rowsrf[0]['tstamp'];
+// 		}
+		$tstamp=$this->lib->getPluginCacheControlTstamp($external_ref_uid);
 		return $tstamp;
 	}
 
@@ -5022,29 +5163,28 @@ sharrre design 2 and 4, calculated specifics
 				'',
 				''
 		);
+
 		if (count($rowsrf)==0) {
-			$GLOBALS['TYPO3_DB']->sql_query("INSERT INTO tx_toctoc_comments_prefixtotable VALUES ('1', '" . $this->conf['storagePid'] .
-					"', '1355437070', '1355437070', '0', 'tx_album3x_pi1', 'tx_album3x_images', '')");
-			$GLOBALS['TYPO3_DB']->sql_query("INSERT INTO tx_toctoc_comments_prefixtotable VALUES ('2', '" . $this->conf['storagePid'] .
-					"', '1355437094', '1355437094', '0', 'tx_commerce_pi1', 'tx_commerce_products', '')");
-			$GLOBALS['TYPO3_DB']->sql_query("INSERT INTO tx_toctoc_comments_prefixtotable VALUES ('3', '" . $this->conf['storagePid'] .
-					"', '1355437111', '1355437111', '0', 'tx_irfaq_pi1', 'tx_irfaq_q', '')");
-			$GLOBALS['TYPO3_DB']->sql_query("INSERT INTO tx_toctoc_comments_prefixtotable VALUES ('4', '" . $this->conf['storagePid'] .
-					"', '1355437124', '1355437124', '0', 'tx_mininews_pi1', 'tx_mininews_news', '')");
-			$GLOBALS['TYPO3_DB']->sql_query("INSERT INTO tx_toctoc_comments_prefixtotable VALUES ('5', '" . $this->conf['storagePid'] .
-					"', '1355437154', '1355437154', '0', 'tx_ttnews', 'tt_news', 'tt_news')");
-			$GLOBALS['TYPO3_DB']->sql_query("INSERT INTO tx_toctoc_comments_prefixtotable VALUES ('6', '" . $this->conf['storagePid'] .
-					"', '1355437173', '1355437173', '0', 'tt_products', 'tt_products', 'product')");
-			$GLOBALS['TYPO3_DB']->sql_query("INSERT INTO tx_toctoc_comments_prefixtotable VALUES ('7', '" . $this->conf['storagePid'] .
-					"', '1355437183', '1355437183', '0', 'tx_rouge', 'tx_wecstaffdirectory_info', 'idgirl')");
-			$GLOBALS['TYPO3_DB']->sql_query("INSERT INTO tx_toctoc_comments_prefixtotable VALUES ('8', '" . $this->conf['storagePid'] .
-					"', '1355437188', '1355437188', '0', 'tx_wecstaffdirectory_pi1', 'tx_wecstaffdirectory_info', '')");
-			$GLOBALS['TYPO3_DB']->sql_query("INSERT INTO tx_toctoc_comments_prefixtotable VALUES ('9', '" . $this->conf['storagePid'] .
-					"', '1359197720', '1359197720', '0', 'tx_community', 'fe_users', 'user')");
-			$GLOBALS['TYPO3_DB']->sql_query("INSERT INTO tx_toctoc_comments_prefixtotable VALUES ('10', '" . $this->conf['storagePid'] .
-					"', '1359299671', '1359299671', '0', 'tx_cwtcommunity_pi1', 'fe_users', 'action=getviewprofile&uid')");
-			$GLOBALS['TYPO3_DB']->sql_query("INSERT INTO tx_toctoc_comments_prefixtotable VALUES ('11', '" . $this->conf['storagePid'] .
-					"', '1360836115', '1360836115', '0', 'tx_news_pi1', 'tx_news_domain_model_news', 'news')");
+			$GLOBALS['TYPO3_DB']->sql_query('INSERT INTO tx_toctoc_comments_prefixtotable VALUES (1, ' . $this->conf['storagePid'] .
+					", 1355437070, 1355437070, 0, 'tx_album3x_pi1', 'tx_album3x_images', '', '', '', 0)");
+			$GLOBALS['TYPO3_DB']->sql_query('INSERT INTO tx_toctoc_comments_prefixtotable VALUES (2, ' . $this->conf['storagePid'] .
+					", 1355437094, 1355437094, 0, 'tx_commerce_pi1', 'tx_commerce_products', '', '', '', 0)");
+			$GLOBALS['TYPO3_DB']->sql_query('INSERT INTO tx_toctoc_comments_prefixtotable VALUES (3, ' . $this->conf['storagePid'] .
+					", 1355437111, 1355437111, 0, 'tx_irfaq_pi1', 'tx_irfaq_q', '', '', '', 0)");
+			$GLOBALS['TYPO3_DB']->sql_query('INSERT INTO tx_toctoc_comments_prefixtotable VALUES (4, ' . $this->conf['storagePid'] .
+					", 1355437124, 1355437124, 0, 'tx_mininews_pi1', 'tx_mininews_news', '', '', '', 0)");
+			$GLOBALS['TYPO3_DB']->sql_query('INSERT INTO tx_toctoc_comments_prefixtotable VALUES (5, ' . $this->conf['storagePid'] .
+					", 1355437154, 1355437154, 0, 'tx_ttnews', 'tt_news', 'tt_news', '', '', 0)");
+			$GLOBALS['TYPO3_DB']->sql_query('INSERT INTO tx_toctoc_comments_prefixtotable VALUES (6, ' . $this->conf['storagePid'] .
+					", 1355437173, 1355437173, 0, 'tt_products', 'tt_products', 'product', '', '', 0)");
+			$GLOBALS['TYPO3_DB']->sql_query('INSERT INTO tx_toctoc_comments_prefixtotable VALUES (8, ' . $this->conf['storagePid'] .
+					", 1355437188, 1355437188, 0, 'tx_wecstaffdirectory_pi1', 'tx_wecstaffdirectory_info', '', '', '', 0)");
+			$GLOBALS['TYPO3_DB']->sql_query('INSERT INTO tx_toctoc_comments_prefixtotable VALUES (9, ' . $this->conf['storagePid'] .
+					", 1359197720, 1359197720, 0, 'tx_community', 'fe_users', 'user', '', '', 0)");
+			$GLOBALS['TYPO3_DB']->sql_query('INSERT INTO tx_toctoc_comments_prefixtotable VALUES (10, ' . $this->conf['storagePid'] .
+					", 1359299671, 1359299671, 0, 'tx_cwtcommunity_pi1', 'fe_users', 'action=getviewprofile&uid', '', '', 0)");
+			$GLOBALS['TYPO3_DB']->sql_query('INSERT INTO tx_toctoc_comments_prefixtotable VALUES (11, ' . $this->conf['storagePid'] .
+					", 1360836115, 1360836115, 0, 'tx_news_pi1', 'tx_news_domain_model_news', 'news', '', '', 0)");
 		}
 
 	}
@@ -5298,6 +5438,19 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 		}
 
 		return $textout;
+	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$arrVars: ...
+	 * @return	[type]		...
+	 */
+	protected function getGETVars($arrVars){
+
+		$queryString = http_build_query($arrVars, '', '&');
+		return $queryString;
+
 	}
 }
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/toctoc_comments/pi1/class.toctoc_comments_pi1.php']) {

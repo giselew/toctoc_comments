@@ -52,12 +52,12 @@ require_once(t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments
  *
  *
  *
- *   86: class toctoc_comments_api
- *  118:     public function __construct()
- *  143:     public function comments_getComments_fe_user($params, $conf)
- *  162:     public function getwebpagepreview($cmd, $cid, $data, $conf)
- *  178:     public function cleanupfup($previewid, $conf, $originalfilename)
- *  192:     public function handleCommentatorNotifications($ref, $conf = NULL, $notfromeID =FALSE, $pid)
+ *   85: class toctoc_comments_api
+ *  117:     public function __construct()
+ *  142:     public function comments_getComments_fe_user($params, $conf)
+ *  161:     public function getwebpagepreview($cmd, $cid, $data, $conf)
+ *  177:     public function cleanupfup($previewid, $conf, $originalfilename)
+ *  191:     public function handleCommentatorNotifications($ref, $conf = NULL, $notfromeID =FALSE, $pid)
  *  209:     public function handleeID($ref, $conf, $messagetodisplay, $returnurl)
  *  229:     public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $commentspics, $scopeid=0)
  *  243:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $commentid)
@@ -70,12 +70,11 @@ require_once(t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments
  *  356:     public function initCaches()
  *  367:     public function enableFields($table)
  *  379:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
+ *  388:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ *  403:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ *  426:     public function createLinks($text, $conf = NULL)
  *
- *              SECTION: needed by class.tx_commentsresponse_hooks.php
- *  398:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- *  421:     public function createLinks($text, $conf = NULL)
- *
- * TOTAL FUNCTIONS: 17
+ * TOTAL FUNCTIONS: 18
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -196,6 +195,7 @@ class toctoc_comments_api {
 	 	if (!$notfromeID) {
 	 		return $html;
 	 	}
+	 	return $html;
 
 	}
 
@@ -384,9 +384,14 @@ class toctoc_comments_api {
 	/**
 	 * needed by class.tx_commentsresponse_hooks.php
 	 *
-	 *
+	 * @param	[type]		$withleadingslash: ...
+	 * @return	[type]		...
 	 */
+	public function locationHeaderUrlsubDir($withleadingslash = TRUE) {
+		$ret = $this->lib->locationHeaderUrlsubDir($withleadingslash);
+		return $ret;
 
+	}
 
 	/**
 	 * Applies stdWrap to given text

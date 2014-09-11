@@ -36,12 +36,13 @@
  *
  *
  *
- *   69: class toctoc_comments_eID
- *   81:     public function init()
- *  156:     public function main()
- *  370:     protected function ipBlock()
+ *   70: class toctoc_comments_eID
+ *   84:     public function init()
+ *  176:     public function main()
+ *  395:     protected function processReponseOutput()
+ *  488:     protected function ipBlock()
  *
- * TOTAL FUNCTIONS: 3
+ * TOTAL FUNCTIONS: 4
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -77,6 +78,8 @@ class toctoc_comments_eID {
 	private $notificationscoi;
 	private $messageinternal = '';
 	private $clearCacheNeeded = TRUE;
+	private $cObj;
+	private $data;
 
 	public function init() {
 
@@ -115,9 +118,10 @@ class toctoc_comments_eID {
 		}
 
 		$this->command = t3lib_div::_GET('cmd');
-		if (!t3lib_div::inList('denotify,approve,approvecoi,delete,kill', $this->command)) {
+		if (!t3lib_div::inList('respond,denotify,approve,approvecoi,delete,kill', $this->command)) {
 			$this->messageinternal .=  $GLOBALS['LANG']->getLL('wrong_cmd') . '<br />';
 		}
+
 		$data_str ='';
 		$data_str_id = t3lib_div::_GET('confenc');
 
@@ -133,17 +137,33 @@ class toctoc_comments_eID {
 			}
 
 		} else {
-			$data_str=$data_str_id;
+			$data_str = $data_str_id;
 		}
 		$data = unserialize(base64_decode(rawurldecode($data_str)));
-		$this->conf =$data;
-		$this->processing = t3lib_div::_GET('processing');
-		if (!$this->processing) {
-			$returnurl=$_SERVER['REQUEST_URI'] . '&processing=1';
-			echo $this->apiObj->handleeID($this->uid, $this->conf, $rtecho, $returnurl);
-			exit;
-		}
+		$this->conf = $data;
 
+		if ($this->command != 'respond') {
+			$this->processing = t3lib_div::_GET('processing');
+			if (!$this->processing) {
+				$returnurl=$_SERVER['REQUEST_URI'] . '&processing=1';
+				echo $this->apiObj->handleeID($this->uid, $this->conf, $rtecho, $returnurl);
+				exit;
+			}
+		} else {
+			$this->data = array_pop(
+					$GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+							'content as comment, tx_commentsresponse_response AS response',
+							'tx_toctoc_comments_comments',
+							'uid=' . $this->uid
+					)
+			);
+
+			if (empty($this->data)) {
+
+				echo $GLOBALS['LANG']->getLL('comment_does_not_exist');
+				exit;
+			}
+		}
 		$this->notifications = t3lib_div::_GET('notifications');
 		$this->notificationscoi = t3lib_div::_GET('notificationscoi');
 	}
@@ -159,182 +179,242 @@ class toctoc_comments_eID {
 		}
 
 		$rtecho = '';
-		if ($this->notifications) {
-			$rtecho .= htmlspecialchars($GLOBALS['LANG']->getLL('comment_approved')) . '<br />' .
-			$this->apiObj->handleCommentatorNotifications($this->uid, $this->conf, FALSE, $this->conf['storagePid']);
-		} elseif ($this->notificationscoi) {
-			$rtecho .= htmlspecialchars($GLOBALS['LANG']->getLL('comment_approvedcoi')) . '<br />';
-		} else {
 
-			$sendmailok = 0;
-			$coiok=0;
-			if ($this->messageinternal =='') {
-				$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS t', 'tx_toctoc_comments_comments', 'uid=' . $this->uid);
+		if ($this->command != 'respond') {
+			if ($this->notifications) {
+				$rtecho .= htmlspecialchars($GLOBALS['LANG']->getLL('comment_approved')) . '<br />' .
+				$this->apiObj->handleCommentatorNotifications($this->uid, $this->conf, FALSE, $this->conf['storagePid']);
+			} elseif ($this->notificationscoi) {
+				$rtecho .= htmlspecialchars($GLOBALS['LANG']->getLL('comment_approvedcoi')) . '<br />';
+			} else {
 
-				if ($rows[0]['t'] == 0) {
-					$rtecho .= $GLOBALS['LANG']->getLL('comment_does_not_exist');
-					$this->clearCacheNeeded=FALSE;
+				$sendmailok = 0;
+				$coiok=0;
+				if ($this->messageinternal =='') {
+					$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS t', 'tx_toctoc_comments_comments', 'uid=' . $this->uid);
 
-				} else {
-					 switch ($this->command) {
-						case 'denotify':
-							$rowsa = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'tx_toctoc_comments_comments', 'uid=' . $this->uid);
-							$triggeredplugin= $rowsa[0]['external_ref_uid'];
-							$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_toctoc_comments_comments', 'toctoc_comments_user="' .
-									$this->conf['toctoc_comments_user'] . '" AND external_ref_uid="' .
-									$triggeredplugin . '"', array('tx_commentsnotify_notify' => 0));
-							$rtecho .=  htmlspecialchars(sprintf($GLOBALS['LANG']->getLL('comment_denotified'), $this->conf['email']))
-							 . '<br />';
-							$sendmailok=0;
-							break;
-						case 'approvecoi':
-							$rowsa = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS t', 'tx_toctoc_comments_comments', 'uid=' . $this->uid . ' AND hidden = 1');
+					if ($rows[0]['t'] == 0) {
+						$rtecho .= $GLOBALS['LANG']->getLL('comment_does_not_exist');
+						$this->clearCacheNeeded=FALSE;
 
-							if ($rowsa[0]['t'] == 0) {
-								$rtecho .= $GLOBALS['LANG']->getLL('comment_alreadycoi');
-								$this->clearCacheNeeded=FALSE;
-
-							} else {
-								$rowsa = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS t, toctoc_comments_user As tuser', 'tx_toctoc_comments_comments', 'uid=' .
-										$this->uid . ' AND approved = 1');
+					} else {
+						 switch ($this->command) {
+							case 'denotify':
+								$rowsa = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'tx_toctoc_comments_comments', 'uid=' . $this->uid);
+								$triggeredplugin= $rowsa[0]['external_ref_uid'];
+								$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_toctoc_comments_comments', 'toctoc_comments_user="' .
+										$this->conf['toctoc_comments_user'] . '" AND external_ref_uid="' .
+										$triggeredplugin . '"', array('tx_commentsnotify_notify' => 0));
+								$rtecho .=  htmlspecialchars(sprintf($GLOBALS['LANG']->getLL('comment_denotified'), $this->conf['email']))
+								 . '<br />';
+								$sendmailok=0;
+								break;
+							case 'approvecoi':
+								$rowsa = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS t', 'tx_toctoc_comments_comments', 'uid=' . $this->uid . ' AND hidden = 1');
 
 								if ($rowsa[0]['t'] == 0) {
-									$rtecho .= $GLOBALS['LANG']->getLL('comment_notyetapproved');
-									$coiok=2;
+									$rtecho .= $GLOBALS['LANG']->getLL('comment_alreadycoi');
 									$this->clearCacheNeeded=FALSE;
 
 								} else {
-									$rtecho .=  htmlspecialchars($GLOBALS['LANG']->getLL('comment_coi')) . '<br />';
-									$coiok=1;
-									$rowsb = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS count_comments', 'tx_toctoc_comments_comments',
-											'toctoc_comments_user="' . $rowsa[0]['tuser'] . '" AND approved = 1 AND deleted = 0 and hidden=0');
-									$commentcount = intval($rowsb[0]['count_comments'])+1;
-									$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_toctoc_comments_user', 'toctoc_comments_user="' . $rowsa[0]['tuser'] . '"
-											AND deleted = 0 and pid=' . $this->conf['storagePid'] . '', array('comment_count' => $commentcount));
+									$rowsa = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS t, toctoc_comments_user As tuser', 'tx_toctoc_comments_comments', 'uid=' .
+											$this->uid . ' AND approved = 1');
+
+									if ($rowsa[0]['t'] == 0) {
+										$rtecho .= $GLOBALS['LANG']->getLL('comment_notyetapproved');
+										$coiok=2;
+										$this->clearCacheNeeded=FALSE;
+
+									} else {
+										$rtecho .=  htmlspecialchars($GLOBALS['LANG']->getLL('comment_coi')) . '<br />';
+										$coiok=1;
+										$rowsb = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS count_comments', 'tx_toctoc_comments_comments',
+												'toctoc_comments_user="' . $rowsa[0]['tuser'] . '" AND approved = 1 AND deleted = 0 and hidden=0');
+										$commentcount = intval($rowsb[0]['count_comments'])+1;
+										$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_toctoc_comments_user', 'toctoc_comments_user="' . $rowsa[0]['tuser'] . '"
+												AND deleted = 0 and pid=' . $this->conf['storagePid'] . '', array('comment_count' => $commentcount));
+									}
+
 								}
 
-							}
+								break;
+							case 'approve':
+								$rowsa = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS t, toctoc_comments_user As tuser', 'tx_toctoc_comments_comments',
+									'uid=' . $this->uid . ' AND approved = 0');
 
-							break;
-						case 'approve':
-							$rowsa = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS t, toctoc_comments_user As tuser', 'tx_toctoc_comments_comments',
-								'uid=' . $this->uid . ' AND approved = 0');
-
-							if ($rowsa[0]['t'] == 0) {
-								$rtecho .= $GLOBALS['LANG']->getLL('comment_alreadyapproved');
-								$this->clearCacheNeeded=FALSE;
-
-							} else {
-
-								$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_toctoc_comments_comments', 'uid=' . $this->uid, array('approved' => 1));
-
-								$rowscoi = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS t', 'tx_toctoc_comments_comments', 'uid=' . $this->uid .
-										' AND hidden = 0');
-								if ($rowscoi[0]['t'] != 0) {
-
-									$rowsb = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS count_comments', 'tx_toctoc_comments_comments',
-											'toctoc_comments_user="' . $rowsa[0]['tuser'] . '" AND approved = 1 AND deleted = 0 and hidden=0');
-									$commentcount = intval($rowsb[0]['count_comments']);
-									$sendmailok=1;
-									$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_toctoc_comments_user', 'toctoc_comments_user="' . $rowsa[0]['tuser'] .
-											'" AND deleted = 0 and pid=' . $this->conf['storagePid'] . '', array('comment_count' => $commentcount));
-								} else {
-									$sendmailok=0;
-									$rtecho .= $GLOBALS['LANG']->getLL('comment_notyetcoi') . '<br />';
+								if ($rowsa[0]['t'] == 0) {
+									$rtecho .= $GLOBALS['LANG']->getLL('comment_alreadyapproved');
 									$this->clearCacheNeeded=FALSE;
+
+								} else {
+
+									$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_toctoc_comments_comments', 'uid=' . $this->uid, array('approved' => 1));
+
+									$rowscoi = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS t', 'tx_toctoc_comments_comments', 'uid=' . $this->uid .
+											' AND hidden = 0');
+									if ($rowscoi[0]['t'] != 0) {
+
+										$rowsb = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS count_comments', 'tx_toctoc_comments_comments',
+												'toctoc_comments_user="' . $rowsa[0]['tuser'] . '" AND approved = 1 AND deleted = 0 and hidden=0');
+										$commentcount = intval($rowsb[0]['count_comments']);
+										$sendmailok=1;
+										$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_toctoc_comments_user', 'toctoc_comments_user="' . $rowsa[0]['tuser'] .
+												'" AND deleted = 0 and pid=' . $this->conf['storagePid'] . '', array('comment_count' => $commentcount));
+									} else {
+										$sendmailok=0;
+										$rtecho .= $GLOBALS['LANG']->getLL('comment_notyetcoi') . '<br />';
+										$this->clearCacheNeeded=FALSE;
+									}
+
+									$rtecho .=  htmlspecialchars($GLOBALS['LANG']->getLL('comment_approved')) . '<br />';
+
 								}
 
-								$rtecho .=  htmlspecialchars($GLOBALS['LANG']->getLL('comment_approved')) . '<br />';
+								break;
+							case 'delete':
 
-							}
+								$rowsa = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('toctoc_comments_user As tuser', 'tx_toctoc_comments_comments', 'uid=' . $this->uid . '');
 
-							break;
-						case 'delete':
+								$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_toctoc_comments_comments', 'uid=' . $this->uid, array('deleted' => 1));
+								$rowsb = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS count_comments', 'tx_toctoc_comments_comments',
+										'toctoc_comments_user="' . $rowsa[0]['tuser'] . '" AND approved = 1 AND deleted = 0 and hidden=0');
+								$commentcount = intval($rowsb[0]['count_comments']);
+								$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_toctoc_comments_user', 'toctoc_comments_user="' . $rowsa[0]['tuser'] .
+										'" AND deleted = 0 and pid=' . $this->conf['storagePid'] . '', array('comment_count' => $commentcount));
 
-							$rowsa = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('toctoc_comments_user As tuser', 'tx_toctoc_comments_comments', 'uid=' . $this->uid . '');
+								$rtecho .= htmlspecialchars($GLOBALS['LANG']->getLL('comment_deleted'));
+								break;
+							case 'kill':
+								$rowsa = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('toctoc_comments_user As tuser', 'tx_toctoc_comments_comments',
+								'uid=' . $this->uid . '');
 
-							$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_toctoc_comments_comments', 'uid=' . $this->uid, array('deleted' => 1));
-							$rowsb = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS count_comments', 'tx_toctoc_comments_comments',
-									'toctoc_comments_user="' . $rowsa[0]['tuser'] . '" AND approved = 1 AND deleted = 0 and hidden=0');
-							$commentcount = intval($rowsb[0]['count_comments']);
-							$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_toctoc_comments_user', 'toctoc_comments_user="' . $rowsa[0]['tuser'] .
-									'" AND deleted = 0 and pid=' . $this->conf['storagePid'] . '', array('comment_count' => $commentcount));
+								$GLOBALS['TYPO3_DB']->exec_DELETEquery('tx_toctoc_comments_comments', 'uid=' . $this->uid);
+								$rowsb = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS count_comments', 'tx_toctoc_comments_comments', 'toctoc_comments_user="' .
+										$rowsa[0]['tuser'] . '" AND approved = 1 AND deleted = 0 and hidden=0');
+								$commentcount = intval($rowsb[0]['count_comments']);
+								$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_toctoc_comments_user', 'toctoc_comments_user="' .
+										$rowsa[0]['tuser'] . '" AND deleted = 0 and pid=' . $this->conf['storagePid'] . '', array('comment_count' => $commentcount));
 
-							$rtecho .= htmlspecialchars($GLOBALS['LANG']->getLL('comment_deleted'));
-							break;
-						case 'kill':
-							$rowsa = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('toctoc_comments_user As tuser', 'tx_toctoc_comments_comments',
-							'uid=' . $this->uid . '');
-
-							$GLOBALS['TYPO3_DB']->exec_DELETEquery('tx_toctoc_comments_comments', 'uid=' . $this->uid);
-							$rowsb = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS count_comments', 'tx_toctoc_comments_comments', 'toctoc_comments_user="' .
-									$rowsa[0]['tuser'] . '" AND approved = 1 AND deleted = 0 and hidden=0');
-							$commentcount = intval($rowsb[0]['count_comments']);
-							$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_toctoc_comments_user', 'toctoc_comments_user="' .
-									$rowsa[0]['tuser'] . '" AND deleted = 0 and pid=' . $this->conf['storagePid'] . '', array('comment_count' => $commentcount));
-
-							$rtecho .= htmlspecialchars($GLOBALS['LANG']->getLL('comment_killed'));
-							break;
-					}
-
-					if ($this->command=='approve') {
-					// check commentator notifications
-						if ($sendmailok==1) {
-							if (!$this->notifications) {
-								$returnurl=$_SERVER['REQUEST_URI'] . '&notifications=1';
-								$rtecho .=  htmlspecialchars($GLOBALS['LANG']->getLL('nowsendemailnotification')) . '<br />';
-								echo $this->apiObj->handleeID($this->uid, $this->conf, $rtecho, $returnurl);
-								exit;
-							}
-
+								$rtecho .= htmlspecialchars($GLOBALS['LANG']->getLL('comment_killed'));
+								break;
 						}
 
-					}
-
-					if ($this->command=='approvecoi') {
+						if ($this->command=='approve') {
 						// check commentator notifications
-						if ($coiok>=1) {
-							if (!$this->notifications) {
-								$returnurl='tocomment';
-								if ($coiok>=2) {
-									$returnurl='tocomment' . $_SERVER['REQUEST_URI'] . '&notificationscoi=1';
-								} else {
+							if ($sendmailok==1) {
+								if (!$this->notifications) {
+									$returnurl=$_SERVER['REQUEST_URI'] . '&notifications=1';
 									$rtecho .=  htmlspecialchars($GLOBALS['LANG']->getLL('nowsendemailnotification')) . '<br />';
+									echo $this->apiObj->handleeID($this->uid, $this->conf, $rtecho, $returnurl);
+									exit;
 								}
 
-								echo $this->apiObj->handleeID($this->uid, $this->conf, $rtecho, $returnurl);
-								exit;
+							}
+
+						}
+
+						if ($this->command=='approvecoi') {
+							// check commentator notifications
+							if ($coiok>=1) {
+								if (!$this->notifications) {
+									$returnurl='tocomment';
+									if ($coiok>=2) {
+										$returnurl='tocomment' . $_SERVER['REQUEST_URI'] . '&notificationscoi=1';
+									} else {
+										$rtecho .=  htmlspecialchars($GLOBALS['LANG']->getLL('nowsendemailnotification')) . '<br />';
+									}
+
+									echo $this->apiObj->handleeID($this->uid, $this->conf, $rtecho, $returnurl);
+									exit;
+								}
+
+							}
+
+						}
+
+						//t3lib_div::callUserFunction($userFunc, $params, $this);
+						$rtecho .=  $this->ipBlock();
+						// Call hooks
+						if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['eID_postProc'])) {
+							foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['eID_postProc'] as $userFunc) {
+								$params = array(
+									'pObj' => $this,
+								);
+								t3lib_div::callUserFunction($userFunc, $params, $this);
 							}
 
 						}
 
 					}
 
-					//t3lib_div::callUserFunction($userFunc, $params, $this);
-					$rtecho .=  $this->ipBlock();
-					// Call hooks
-					if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['eID_postProc'])) {
-						foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['eID_postProc'] as $userFunc) {
-							$params = array(
-								'pObj' => $this,
-							);
-							t3lib_div::callUserFunction($userFunc, $params, $this);
+				} else {
+					$rtecho = $this->messageinternal;
+				}
+
+			}
+
+			/* @var $apiObj toctoc_comments_api */
+			echo $this->apiObj->handleeID($this->uid, $this->conf, $rtecho, '');
+			// Clear cache
+			if ($this->clearCacheNeeded) {
+				$pidList = t3lib_div::intExplode(',', t3lib_div::_GET('clearCache'));
+				$pidList=array_unique($pidList);
+				if (version_compare(TYPO3_version, '6.0', '<')) {
+					t3lib_div::requireOnce(PATH_t3lib . 'class.t3lib_tcemain.php');
+				} else {
+					require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/DataHandling/DataHandler.php';
+				}
+
+				$tce = t3lib_div::makeInstance('t3lib_TCEmain');
+
+				/* @var $tce t3lib_TCEmain */
+				foreach ($pidList as $pid) {
+					if ($pid != 0) {
+						if (intval($this->conf['vmcNPC'])==0) {
+							$tce->clear_cacheCmd($pid);
 						}
 
 					}
 
 				}
 
-			} else {
-				$rtecho = $this->messageinternal;
+				$this->apiObj->setPluginCacheControlTstamp($this->conf['plugin']);
 			}
+		} else {
 
+			echo $this->processReponseOutput();
 		}
 
-		/* @var $apiObj toctoc_comments_api */
-		echo $this->apiObj->handleeID($this->uid, $this->conf, $rtecho, '');
-		// Clear cache
-		if ($this->clearCacheNeeded) {
+	}
+
+	/**
+	 * Generation of the output of the eID script for admin responses
+	 *
+	 * @return	string		The output
+	 */
+	protected function processReponseOutput() {
+		if (!isset($this->cObj)) {
+			$this->cObj = t3lib_div::makeInstance('tslib_cObj');
+			$this->cObj->start('', '');
+		}
+		$content = '';
+		$this->template = file_get_contents(
+				t3lib_extMgm::extPath('toctoc_comments', '/res/template/toctoccomments_template_response_eid.html')
+		);
+		if (t3lib_div::_POST('response')) {
+
+			$GLOBALS['TYPO3_DB']->exec_UPDATEquery(
+					'tx_toctoc_comments_comments',
+					'uid=' . $this->uid,
+					array('tx_commentsresponse_response' => t3lib_div::_POST('response'))
+			);
+
+			$message = $this->cObj->getSubpart($this->template, '###MESSAGE###');
+			$messageMarkers = array(
+					'###STATUS_MESSAGE###' => $GLOBALS['LANG']->getLL('response_saved')
+			);
+
+			// Clear page cache
 			$pidList = t3lib_div::intExplode(',', t3lib_div::_GET('clearCache'));
 			$pidList=array_unique($pidList);
 			if (version_compare(TYPO3_version, '6.0', '<')) {
@@ -350,15 +430,53 @@ class toctoc_comments_eID {
 				if ($pid != 0) {
 					if (intval($this->conf['vmcNPC'])==0) {
 						$tce->clear_cacheCmd($pid);
+						$messageMarkers = array(
+							'###STATUS_MESSAGE###' => $GLOBALS['LANG']->getLL('response_saved_cache_cleared')
+						);
 					}
 
 				}
 
 			}
 
-			$this->apiObj->setPluginCacheControlTstamp($this->conf['plugin']);
+			$content = $this->cObj->substituteMarkerArray($message, $messageMarkers);
+		} else {
+			$form = $this->cObj->getSubpart($this->template, '###FORM###');
+			$formMarkers = array(
+					'###COMMENT_LABEL###' => $GLOBALS['LANG']->getLL('comment'),
+					'###COMMENT###' => htmlspecialchars($this->data['comment']),
+					'###RESPONSE_LABEL###' => $GLOBALS['LANG']->getLL('tx_commentsresponse_response'),
+					'###RESPONSE###' => htmlspecialchars($this->data['response']),
+					'###SUBMIT_LABEL###' => $GLOBALS['LANG']->getLL('submit_label'),
+			);
+
+			$content = $this->cObj->substituteMarkerArray($form, $formMarkers);
 		}
 
+		$document = $this->cObj->getSubpart($this->template, '###DOCUMENT###');
+
+		$myhomepagelinkarr=explode('//', t3lib_div::locationHeaderUrl(''));
+		$myhomepagelink=$myhomepagelinkarr[1];
+		$pageTitle=$this->conf['pageTitle'];
+		$linktocomment = $this->conf['pageURL'];
+		$documentMarkers = array(
+				'###MESSAGE###' => '',
+				'###WAITTEXT###' => '',
+				'###LINK_TO_COMMENT###' => $linktocomment,
+				'###REFRESHURL###' =>'',
+				'###MESSAGEDISPLAY###'  => '',
+				'###INFOSLEFT###'  => '',
+				'###INFOSRIGHT###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
+				'###MYHOMEPAGE###'  => $myhomepagelink,
+				'###SITE_REL_PATH###' => $this->apiObj->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments'),
+				'###MYHOMEPAGELINK###'  => t3lib_div::locationHeaderUrl(''),
+				'###MYFONTFAMILY###'  => $this->conf['HTMLEmailFontFamily'],
+				'###MYHOMEPAGETITLE###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
+				'###TITLE###' => $GLOBALS['LANG']->getLL('title'),
+				'###CONTENT###' => $content,
+		);
+		$rettext = $this->cObj->substituteMarkerArray($document, $documentMarkers);
+		return $rettext;
 	}
 
 
@@ -379,7 +497,7 @@ class toctoc_comments_eID {
 						'ipaddr' => $ip,
 						'comment' => '',
 				));
-				$retstr = htmlspecialchars($GLOBALS['LANG']->getLL('ip_blocked')) . ' ' . $ip . '<br />';
+				$retstr = '<br />' . htmlspecialchars($GLOBALS['LANG']->getLL('ip_blocked')) . ' ' . $ip . '<br />';
 				return $retstr;
 			}
 
@@ -394,6 +512,9 @@ if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/toctoc_
 }
 
 // Make instance:
+if (isset($SOBE)) {
+	unset($SOBE);
+}
 $SOBE = t3lib_div::makeInstance('toctoc_comments_eID');
 $SOBE->init();
 $SOBE->main();

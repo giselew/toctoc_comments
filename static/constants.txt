@@ -98,6 +98,12 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//11; type=boolean; label=commentator of former comments can be notified about new, approved comments:If enabled, the commentator can chose if he wants to be informed on new comments and receives e-mail when new comments are approved.
 	commentatorNotify = 1
 	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//11; type=boolean; label=Scope for commentators that must be notified: 0: All commentators in the comments-list, 1: Only if the new comment is a reply, 2: like 1 but also if the comment is a subsequent comment on the same parent comment
+	notificationLevel = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//11; type=int+; label=Notification validity in days: 0: no limit, >= 1. Number of days for notification after a commentator left a comment
+	notificationValidDays = 0
+	
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//12; type=boolean; label=commentator of former comments are identified by their IP:If enabled, the commentators are identified as per their IP address if they are not logged in. If disabled commentators who are not logged in can't disable E-Mail notification on new comments.
 	commentatorNotifybyIP = 1
 	
@@ -169,6 +175,15 @@ plugin.tx_toctoccomments_pi1 {
 	
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//31; type=string; label=Add This:Your ID string for Add This, like ra-41230c846b24bb7c
 	AddThisID= 
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//31; type=string; label=optional title for sharing line, it replaces text "share this page" after the total number of users who shared
+	shareUsersTotalText =
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//31; type=boolean; label=use an icon in the sharing line
+	useShareIcon = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//31; type=string; label=optional text for shared item on Twitter, as shown in the share-message of the social network sharers
+	shareDataText =	
 			
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//32; type=string; label=Pages with a record to display :When a plugin is linked to a content element on a page, but the page displays records you should indicate the page-ids here as a comma separated list. Used by recent comments and report bad comments forms. 
 	recentcommentsPluginpages =
@@ -187,6 +202,15 @@ plugin.tx_toctoccomments_pi1 {
 	
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//37; type=boolean; label=Show last comments first :Reverses sorting order to show last comments on level 0 first
     reverseSorting = 1
+    
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//37; type=boolean; label=Show most popular comments first
+    sortMostPopular = 0
+    
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//37; type=boolean; label=If you use popularity then sorting by popularity is enabled in the comments list
+    useMostPopular = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//37; type=boolean; label=use a menu for sorting of comments in the frontend 
+   	useSortMenu = 1
     
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//38; type=boolean; label=Invert comment browser position :Puts commentsbrowser on top or bottom of commentslist.
     invertBrowser = 1

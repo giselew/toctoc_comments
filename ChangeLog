@@ -475,3 +475,31 @@
 	* Fixed bug: AJAX-Login fails on pages with GET-Parameters containing brackets "[" and "]"
 	* Fixed bug: comments browsing fails with advanced.invertBrowser = 0 or advanced.reverseSorting = 0
 	* Changed recent comments URLs in links to comments to absolute URLs. Same in Charts
+		
+2014-09-11  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 5.4.0
+	* Minor changes in the template, please update, users of TYPO3 4.x please run database update in extension manager
+	* Added hotlink to notification emails on already approved comments
+	* Added TypoScript option advanced.notificationLevel: email-notifications on new comments regard all new comments in the plugin (option 0, (old) default)
+	* Added TypoScript option advanced.notificationValidDays: Notification validity in days: 0: no limit, >= 1. Number of days for notification after a commentator left a comment
+	  option 1 enables notification only for replies on a comment, option 2 is like option 1, but subsequent comments on the same level also trigger notification
+	* Added TypoScript option advanced.sortMostPopular: Comments are sorted according popularity score, which calculates as follows:
+		Number of views + advanced.activityMultiplicatorRating * (count(ilikes+idislikes+votes) + advanced.activityMultiplicatorComments * count(Subcomments) 
+		Popularity sort only sorts the first level of comments
+	* Added TypoScript option advanced.showSortMostPopularIcon (Setup only): Shows an Icon with a tip text indicating the popularity score
+	* Added TypoScript option advanced.useSortMenu, default = 1: use a menu for sorting of comments in the frontend. Sorting only affects displayed comments
+	  Remark: when current sorting is different from original sorting and older comments shall display, then they display in original sorting 
+	* Added TypoScript option advanced.useMostPopular. If you use popularity then sorting by popularity is enabled in the comments list, default = 1
+	* Added Session-Caching for data behind comment lists - it speeds up comment browsing
+	* For administrator responses on comments the old extension comments_response is no longer needed - it's inside toctoc_comments now
+	  Set TypoScript option advanced.adminCommentResponse = 1 to enable the feature (default 0)
+	  When the admin receives an information or approval-mail there's a new link "Response to the comment as administrator"
+	* Fixed problems with sharing delicious and digg (they changed the call for sharing counts)
+	* Fixed problem with hotlinks from pages that already were hotlinked (double hotlink)
+	* Fixed problem with AJAX-Login on pages that were hotlinked and/or contained cHash-Parameter in URL
+	* Fixed missing tooltips after comments browsing on iLikes
+	* Fixed Import of Plugin-to-Tablemaps using Extension configuration option importDataprefixtotable in EM (did not import)
+	* Fixed display error on Nexus-Androidbrowser. It was identified as search engines because of string "google" in the useragent. 
+	  Now string "googlebot" in useragent is filtered - if search engine filtering is active. (dontSkipSearchEngines = 0)
+	* Fixed a JavaScript bug that caused an error message after successful insert of a subsequent second comment (length of comment must not be 0)
+	

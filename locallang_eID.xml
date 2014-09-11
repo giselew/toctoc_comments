@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <T3locallang>
 	<meta type="array">
-		<description>Language labels for comments eID script</description>
+		<description>Language labels for toctoc_comments eID script</description>
 		<type>module</type>
 		<csh_table></csh_table>
 		<fileId>EXT:toctoc_comments/locallang_eID.xml</fileId>
@@ -27,6 +27,12 @@
 			<label index="comment_coi">Confirmation ok, redirecting to comment</label>
 			<label index="comment_denotified">%s: Email notifications for new comments on the subscribed comment has been disabled</label>
 			<label index="comment_notyetcoi">The comment will only appear on the site, after the user confirmed his email</label>
+			<label index="comment">Comment:</label>
+			<label index="title">Respond to comment</label>
+			<label index="tx_commentsresponse_response">Your response:</label>
+			<label index="submit_label">Save response</label>
+			<label index="response_saved">Response saved.</label>
+			<label index="response_saved_cache_cleared">Response saved and cache cleared.</label>
 		</languageKey>
 	</data>
 	<orig_hash type="array">

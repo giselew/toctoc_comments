@@ -28,6 +28,7 @@ CREATE TABLE tx_toctoc_comments_comments (
 	attachment_id int(11) DEFAULT '0' NOT NULL,
 	attachment_subid  int(11) DEFAULT '0' NOT NULL,
 	parentuid int(11) unsigned DEFAULT '0' NOT NULL, 
+	tx_commentsresponse_response text NOT NULL,
 	PRIMARY KEY (uid),
 	KEY parent (pid),
 	KEY fastaccess (deleted,hidden,approved,pid,external_ref_uid,crdate),

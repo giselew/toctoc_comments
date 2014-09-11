@@ -51,9 +51,9 @@
  *  885:     protected function getUserCard()
  *  898:     protected function updateCommentsView()
  * 1017:     protected function updateRating()
- * 1371:     protected function processDeleteSubmission()
- * 1451:     protected function processDenotifycommentSubmission()
- * 1501:     protected function recentCommentsClearCache()
+ * 1374:     protected function processDeleteSubmission()
+ * 1454:     protected function processDenotifycommentSubmission()
+ * 1504:     protected function recentCommentsClearCache()
  *
  * TOTAL FUNCTIONS: 16
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -640,8 +640,8 @@ class toctoc_comments_ajax {
 	 */
 	public function handleCommentatorNotifications() {
 		$apiObj = t3lib_div::makeInstance('toctoc_comments_api');
-		$apiObj->handleCommentatorNotifications($this->ref, $this->conf, TRUE, $this->pid);
-		return '';
+		$ret=$apiObj->handleCommentatorNotifications($this->ref, $this->conf, TRUE, $this->pid);
+		echo $ret;
 	}
 
 	/**
@@ -1086,7 +1086,8 @@ class toctoc_comments_ajax {
 				list($row) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS t', 'tx_toctoc_ratings_data', $dataWhere);
 
 				// vote of the user
-				$dataWheremm = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user = ' . $fetoctocusertoquery . '' . ' AND reference="' . $this->ref . '" AND reference_scope=' . $scopeid;
+				$dataWheremm = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user = ' . $fetoctocusertoquery . '' .
+								' AND reference="' . $this->ref . '" AND reference_scope=' . $scopeid;
 				list($rowmm) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS tmm, SUM(ilike) AS ilike, SUM(idislike) AS idislike',
 						'tx_toctoc_comments_feuser_mm', $dataWheremm);
 
@@ -1129,7 +1130,8 @@ class toctoc_comments_ajax {
 					//select all scopes avgs if overallscope
 					$voteround=9;
 					if ($this->overallvote==1) {
-						$whereloc = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user = ' . $fetoctocusertoquery . '' . ' AND reference="' . $this->ref . '" AND reference_scope > 0';
+						$whereloc = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user = ' . $fetoctocusertoquery . '' .
+						' AND reference="' . $this->ref . '" AND reference_scope > 0';
 						list($rowavg) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('AVG(myrating) as avgmyrating, COUNT(reference_scope) as countreference',
 								'tx_toctoc_comments_feuser_mm', $whereloc);
 						if (count($rowavg)>0) {
@@ -1256,7 +1258,8 @@ class toctoc_comments_ajax {
 
 			$dataWhereStats = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user="' . $fetoctocusertoinsert . '"';
 
-			$sqlstr = 'SELECT SUM(CASE WHEN myrating+ilike+idislike > 0 THEN 1 ELSE 0 END) AS nbrentries, SUM(ilike) AS sumilike, SUM(idislike) AS sumidislike, SUM(myrating) AS summyrating,
+			$sqlstr = 'SELECT SUM(CASE WHEN myrating+ilike+idislike > 0 THEN 1 ELSE 0 END) AS nbrentries, SUM(ilike) AS sumilike, SUM(idislike) AS sumidislike,
+					SUM(myrating) AS summyrating,
 					SUM(CASE WHEN myrating > 0 THEN 1 ELSE 0 END) AS nbrmyrating FROM tx_toctoc_comments_feuser_mm WHERE ' . $dataWhereStats;
 			$resultcount = $GLOBALS['TYPO3_DB']->sql_query($sqlstr);
 			$rowStats = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultcount);

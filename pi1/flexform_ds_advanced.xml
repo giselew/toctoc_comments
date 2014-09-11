@@ -184,6 +184,28 @@
 				</config>
 				</TCEforms> 
 			</dontUseSharingStumbleupon>
+			<shareUsersTotalText>
+				<TCEforms>
+				<label>LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.shareUsersTotalText</label>
+				<config>
+					<type>input</type>
+					<default></default>
+					<eval>trim</eval>
+					<size>30</size>
+				</config>
+				</TCEforms>
+			</shareUsersTotalText>
+			<shareDataText>
+				<TCEforms>
+				<label>LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.shareDataText</label>
+				<config>
+					<type>input</type>
+					<default></default>
+					<eval>trim</eval>
+					<size>90</size>
+				</config>
+				</TCEforms>
+			</shareDataText>
 			<initialViewsCount>
 				<TCEforms>
 				<label>LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.initialViewsCount</label>
