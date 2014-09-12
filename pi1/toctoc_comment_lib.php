@@ -6833,6 +6833,7 @@ class toctoc_comment_lib extends tslib_pibase {
 						'homepage' => trim($piVars['homepage']),
 						'content' => trim($piVars['content']),
 						'external_ref_uid' => $testedexternal_ref_uid,
+						'tx_commentsresponse_response' => '',
 						'remote_addr' => $strCurrentIP,
 				);
 
