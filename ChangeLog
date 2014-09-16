@@ -503,3 +503,6 @@
 	  Now string "googlebot" in useragent is filtered - if search engine filtering is active. (dontSkipSearchEngines = 0)
 	* Fixed a JavaScript bug that caused an error message after successful insert of a subsequent second comment (length of comment must not be 0)
 	
+2014-09-12  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 5.4.1
+	* Fixed bug comment insertion fails with MySQL 5.5.+

@@ -7630,23 +7630,30 @@ class toctoc_comment_lib extends tslib_pibase {
 		}
 
 		$fromEmail = $conf['spamProtect.']['fromEmail'];
-		$attachmentinfoHTML='';
+		$attachmentinfoHTML = '';
+		$hasattachement = TRUE;
 		if ($attachment_id != 0) {
-			$attachmentinfoHTML= $this->commentShowWebpagepreview ($attachment_id, $attachment_subid, $conf, $pObj, $uid, FALSE, $fromAjax, array(), TRUE);
-			if ($attachmentinfoHTML=='') {
-				$attachmentinfoHTML= $this->pi_getLLWrap($pObj, 'email.attachment_mmnotfounderror', $fromAjax) . ' ' . $attachment_id;
+			$attachmentinfoHTML = $this->commentShowWebpagepreview ($attachment_id, $attachment_subid, $conf, $pObj, $uid, FALSE, $fromAjax, array(), TRUE);
+			if ($attachmentinfoHTML == '') {
+				$attachmentinfoHTML = $this->pi_getLLWrap($pObj, 'email.attachment_mmnotfounderror', $fromAjax) . ' ' . $attachment_id;
+				$hasattachement = FALSE;
 			}
 
 		} else {
 			$attachmentinfoHTML = $this->pi_getLLWrap($pObj, 'email.noattachmentforcomment', $fromAjax);
+			$hasattachement = FALSE;
 		}
 
-		if ($attachmentinfoHTML!='') {
-			if (!$conf['HTMLEmail']) {
+
+		if (!$conf['HTMLEmail']) {
+			if ($hasattachement == TRUE) {
 				$attachmentinfoHTML = $this->pi_getLLWrap($pObj, 'email.commenthasattachment', $fromAjax);
+			} else {
+				$attachmentinfoHTML = $this->pi_getLLWrap($pObj, 'email.noattachmentforcomment', $fromAjax);
 			}
-
+			
 		}
+
  		$clearCacheIds = $this->getClearCacheIds($conf, $pid, FALSE);
 		$clearCachePlugins = $plugincacheid;
 
@@ -7683,7 +7690,9 @@ class toctoc_comment_lib extends tslib_pibase {
 						'optinemail' => $optinemail,
 						'optin_ip' => t3lib_div::getIndpEnv('REMOTE_ADDR'),
 						'plugin' => $plugincacheid,
-
+						'notificationLevel' => $conf['advanced.']['notificationLevel'],
+						'notificationValidDays' => $conf['advanced.']['notificationValidDays'],
+						
 				);
 			} else {
 				$confencarrcoi =array(
@@ -7701,6 +7710,8 @@ class toctoc_comment_lib extends tslib_pibase {
 						'optinemail' => $optinemail,
 						'optin_ip' => t3lib_div::getIndpEnv('REMOTE_ADDR'),
 						'plugin' => $plugincacheid,
+						'notificationLevel' => $conf['advanced.']['notificationLevel'],
+						'notificationValidDays' => $conf['advanced.']['notificationValidDays'],
 				);
 			}
 
@@ -7730,6 +7741,8 @@ class toctoc_comment_lib extends tslib_pibase {
 					'HTMLEmailFontFamily' => $conf['HTMLEmailFontFamily'],
 					'plugin' => $plugincacheid,
 					'vmcNPC' => intval($conf['vmcNoPageCache']),
+					'notificationLevel' => $conf['advanced.']['notificationLevel'],
+					'notificationValidDays' => $conf['advanced.']['notificationValidDays'],
 			);
 		} else {
 			$confencarr =array(
@@ -7746,6 +7759,8 @@ class toctoc_comment_lib extends tslib_pibase {
 					'HTMLEmail' => $conf['HTMLEmail'],
 					'plugin' => $plugincacheid,
 					'vmcNPC' => intval($conf['vmcNoPageCache']),
+					'notificationLevel' => $conf['advanced.']['notificationLevel'],
+					'notificationValidDays' => $conf['advanced.']['notificationValidDays'],
 			);
 		}
 
@@ -12648,14 +12663,21 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 					'deleted = 0 AND hidden = 0 AND approved = 1 AND pid='. $conf['storagePid'].' AND uid='.$uid
 					);
 		$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-
+		if ($fromeID) {
+			$confnotificationLevel = intval($conf['notificationLevel']);	
+			$confnotificationValidDays = intval($conf['notificationValidDays']);
+		} else {
+			$confnotificationLevel = intval($conf['advanced.']['notificationLevel']);
+			$confnotificationValidDays = intval($conf['advanced.']['notificationValidDays']);
+		}
+		
 		$ressnd = array();
 		$ri = 0;
 		$msg = 'LOG start '. $uid;
 		if (empty($row)) return 'row empty, storagePid: '. $conf['storagePid'] . ', uid: '.  $uid;
 		//we don't need to send a notificationEmail because the new comment is not yet approved
 		$msg .= ' - LOG ' . $conf['advanced.']['notificationLevel'];
-		if ($conf['advanced.']['notificationLevel'] == 0) {
+		if ($confnotificationLevel == 0) {
 			$ressnddata = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 					'DISTINCT firstname,lastname,email,toctoc_comments_user,crdate',
 					'tx_toctoc_comments_comments',
@@ -12725,7 +12747,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 			}
 		}
 
-		if ($conf['advanced.']['notificationLevel'] == 2) {
+		if ($confnotificationLevel == 2) {
 			$parentuid = $row['parentuid'];
 			$resreplys = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 					'firstname,lastname,email,toctoc_comments_user,tx_commentsnotify_notify,parentuid,uid,crdate',
@@ -12819,8 +12841,8 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 
      	$infoleft='';
 		$crdateAdmitted = 0;
-		if (intval($conf['advanced.']['notificationValidDays']) > 0) {
-			$crdateAdmitted = time() - (intval($conf['advanced.']['notificationValidDays']) * 24 * 60 * 60);
+		if (intval($confnotificationValidDays) > 0) {
+			$crdateAdmitted = time() - (intval($confnotificationValidDays) * 24 * 60 * 60);
 		}
 
 		$myhomepagelinkarr=explode('//', t3lib_div::locationHeaderUrl(''));
