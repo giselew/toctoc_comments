@@ -120,6 +120,8 @@
 			<label index="fe_users.toctoc_comments_link">Facebook User Link</label>
 			<label index="fe_users.toctoc_comments_gender">Facebook Gender</label>
 			<label index="fe_users.toctoc_comments_email">Facebook E-Mail</label>
+			<label index="fe_users.tx_toctoc_comments_facebook_locale">Facebook locale</label>
+			<label index="fe_users.tx_toctoc_comments_facebook_updated_time">Facebook updated time</label>
 		</languageKey>
 	</data>
 	<orig_hash type="array">
