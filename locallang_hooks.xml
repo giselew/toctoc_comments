@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<description>Language labels for hooks</description>
+		<type>module</type>
+		<csh_table></csh_table>
+		<fileId>EXT:toctoc_comments/locallang_hooks.xml</fileId>
+		<labelContext type="array">
+		</labelContext>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="comments_number">%d comments</label>
+			<label index="comments_number_one">1 comment</label>
+			<label index="comments_number_none">No comments</label>
+		</languageKey>
+	</data>
+	<orig_hash type="array">
+	</orig_hash>
+	<orig_text type="array">
+	</orig_text>
+</T3locallang>
