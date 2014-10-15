@@ -1191,7 +1191,7 @@ class toctoc_comments_ajax {
 						));
 					}
 
-				} elseif($this->cmd === 'unlike') {
+				} elseif($this->cmd == 'unlike') {
 					if(($feusertoinsert > 0) || ($fetoctocusertoinsert !== '0.0.0.0.' . $feusertoinsert)) {
 						$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_feuser_mm', array(
 								'crdate' => time(),

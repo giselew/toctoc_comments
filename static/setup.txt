@@ -54,7 +54,7 @@ plugin.tx_toctoccomments_pi1 {
    
   sessionTimeout = {$plugin.tx_toctoccomments_pi1.sessionTimeout}
   
-  # comments are hidden from search engines, if you want searchengines to index all your comments set this option to 1 (useful for single website previews)
+  # comments are hidden from search engines, if you want search engines to index all your comments set this option to 1
   dontSkipSearchEngines = 0
     
   optionalRecordId =
@@ -325,6 +325,8 @@ plugin.tx_toctoccomments_pi1 {
     gravatarEnable = {$plugin.tx_toctoccomments_pi1.gravatarEnable}	
 	gravatarRating = {$plugin.tx_toctoccomments_pi1.gravatarRating}
 	gravatarLocalHost ={$plugin.tx_toctoccomments_pi1.gravatarLocalHost}
+	
+	acceptTermsCondsOnSubmit ={$plugin.tx_toctoccomments_pi1.acceptTermsCondsOnSubmit}
 	
 	# if you dont want to use GIFBUILDER for userpics then set this to 1
     dontuseGIFBUILDER = 0
@@ -603,6 +605,16 @@ plugin.tx_toctoccomments_pi1 {
     # Inconsistent entries in a boxmodel get dropped. Here you can turn on the protocol to see the drops
     showDropsfromBoxmodel = 0
     showCSScomments = 0
+  }
+  
+  dataProtect {
+  	setCookie = {$plugin.tx_toctoccomments_pi1.setCookie}
+  	cookieLifetime = {$plugin.tx_toctoccomments_pi1.cookieLifetime}
+  	useDisclaimer = {$plugin.tx_toctoccomments_pi1.useDisclaimer}
+  	useDisclaimerInRatingsOnly = {$plugin.tx_toctoccomments_pi1.useDisclaimerInRatingsOnly}
+	disclaimerPageID = {$plugin.tx_toctoccomments_pi1.disclaimerPageID}
+	disclaimerSystemCheck = {$plugin.tx_toctoccomments_pi1.disclaimerSystemCheck}
+	disclaimerFromTocToc= {$plugin.tx_toctoccomments_pi1.disclaimerFromTocToc}
   }
 }
 

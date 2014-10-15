@@ -310,6 +310,9 @@ plugin.tx_toctoccomments_pi1 {
 	
     # cat=plugin.tx_toctoccomments_pi1: Advanced//72;  options[0, mm,identicon,monsterid,wavatar,retro]; label=when your site is not connected to the web, select the type of local user picture if no gravatar is found: 0, use normal userpicture on my server (it's connected to web) - mm, (mystery-man) a simple, cartoon-style silhouetted outline of a person (does not vary by email hash) - identicon, a geometric pattern based on an email hash - monsterid, a generated 'monster' with different colors, faces, etc - wavatar, generated faces with differing features and backgrounds - retro, awesome generated, 8-bit arcade-style pixelated faces	
     gravatarLocalHost = 0
+    
+ 	# cat=plugin.tx_toctoccomments_pi1: Advanced//74; type=int+; label=ID of your page with term and conditions, link below submit button in commenting forms
+    acceptTermsCondsOnSubmit = 
   	
 	# cat=plugin.tx_toctoccomments_pi1: Spam protection//01; type=boolean; label=Require approval:Comments must be approved by moderator before showing them to other users
 	requireApproval = 1
@@ -622,5 +625,25 @@ plugin.tx_toctoccomments_pi1 {
 
     # cat=plugin.tx_toctoccomments_pi1: Facebook//04; type=string; label=Facebook language
     facebookLanguage=en_US	
+ 
+	# cat=plugin.tx_toctoccomments_pi1: dataProtect//01; type=boolean; label=Set (1) or don't set (0) a cookie with data of not logged in commenters.
+	setCookie = 1
 	
+	# cat=plugin.tx_toctoccomments_pi1: dataProtect//02; type=int+; label=Lifetime in days for a cookie, minimum is 7 days
+	cookieLifetime = 31
+	
+	# cat=plugin.tx_toctoccomments_pi1: dataProtect//04; type=boolean; label=Shows a Disclaimer menu point above the comments list. (1)
+	useDisclaimer = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: dataProtect//05; type=boolean; label=Shows a Disclaimer menu point when only ratings are shown (ratings.ratingsOnly=1)
+	useDisclaimerInRatingsOnly = 0
+	
+ 	# cat=plugin.tx_toctoccomments_pi1: dataProtect//08; type=int+; label=ID of your page with additional policy for data protection, link shown in disclaimer menu
+	disclaimerPageID = 
+		
+	# cat=plugin.tx_toctoccomments_pi1: dataProtect//12; type=boolean; label=Checks if database is on same server, checks if https is enabled and then shows a security rating of the site.
+	disclaimerSystemCheck = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: dataProtect//16; type=boolean; label=Shows the software creators disclaimer in the disclaimer
+	disclaimerFromTocToc = 1	
 }

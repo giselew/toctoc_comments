@@ -31,3 +31,5 @@ Color of highlighted Comment: ff6414 a1bbe4
 Ranking, 1st place: FFD700 FFD700
 Ranking, 2nd place: C0C0C0 C0C0C0
 Ranking, 3rd place: CD7F32 CD7F32
+Info message (Disclaimer): 9bb0d0 345A91
+OK Message (Disclaimer): 5ec24f 398B2E

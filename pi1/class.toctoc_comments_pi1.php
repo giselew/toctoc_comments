@@ -31,37 +31,37 @@
  *
  *   93: class tx_toctoccomments_pi1 extends tslib_pibase
  *  176:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
- * 2233:     protected function checkJSLoc()
- * 2458:     protected function checkCSSTheme()
- * 2569:     protected function checkCSSLoc()
- * 3005:     protected function makesharingcss ()
- * 3182:     protected function initprefixToTableMap()
- * 3219:     protected function init()
- * 3882:     protected function mergeConfiguration()
- * 4142:     protected function fetchConfigValue($param)
- * 4170:     protected function ae_detect_ie()
- * 4194:     protected function boxmodel()
- * 4778:     protected function crunchcss($buffer)
- * 4803:     protected function calculate_string( $mathString )
- * 4826:     protected function locationHeaderUrlsubDir()
- * 4845:     protected function currentPageName()
- * 4873:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
- * 4904:     protected function doClearCache ($forceclear=FALSE)
- * 4938:     protected function getPluginCacheControlTstamp ($external_ref_uid)
- * 4962:     protected function getLastUserAdditionTstamp ()
- * 4985:     protected function initLegacyCache ()
- * 4999:     protected function check_scopes()
- * 5157:     protected function initializeprefixtotablemap()
- * 5197:     protected function sharrrejs()
- * 5279:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
- * 5332:     private function resolveBackPath($pathStr)
- * 5367:     private function dirname($path)
- * 5381:     private function revExplode($delimiter, $string, $count = 0)
+ * 2276:     protected function checkJSLoc()
+ * 2516:     protected function checkCSSTheme()
+ * 2627:     protected function checkCSSLoc()
+ * 3063:     protected function makesharingcss ()
+ * 3240:     protected function initprefixToTableMap()
+ * 3277:     protected function init()
+ * 3940:     protected function mergeConfiguration()
+ * 4200:     protected function fetchConfigValue($param)
+ * 4228:     protected function ae_detect_ie()
+ * 4252:     protected function boxmodel()
+ * 4836:     protected function crunchcss($buffer)
+ * 4861:     protected function calculate_string( $mathString )
+ * 4884:     protected function locationHeaderUrlsubDir()
+ * 4903:     protected function currentPageName()
+ * 4931:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
+ * 4962:     protected function doClearCache ($forceclear=FALSE)
+ * 4996:     protected function getPluginCacheControlTstamp ($external_ref_uid)
+ * 5020:     protected function getLastUserAdditionTstamp ()
+ * 5043:     protected function initLegacyCache ()
+ * 5057:     protected function check_scopes()
+ * 5215:     protected function initializeprefixtotablemap()
+ * 5255:     protected function sharrrejs()
+ * 5337:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
+ * 5390:     private function resolveBackPath($pathStr)
+ * 5425:     private function dirname($path)
+ * 5439:     private function revExplode($delimiter, $string, $count = 0)
  *
  *              SECTION: needed by class.tx_commentsresponse_hooks.php
- * 5404:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 5427:     public function createLinks($text, $conf = NULL)
- * 5449:     protected function getGETVars($arrVars)
+ * 5462:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 5485:     public function createLinks($text, $conf = NULL)
+ * 5507:     protected function getGETVars($arrVars)
  *
  * TOTAL FUNCTIONS: 30
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -96,7 +96,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '540';
+	public $extVersion = '550';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
 	public $externalUid;						// UID of external record
@@ -267,6 +267,11 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		$this->boxmodelcss ='tx-tc-' . $this->extVersion . '.css';
 		$this->pi_initPIflexForm();
 		$isPlugin=0;
+
+		if (intval($this->conf['dataProtect.']['cookieLifetime'])<7) {
+			$this->conf['dataProtect.']['cookieLifetime']=7;
+		}
+
 		if (intval($this->conf['advanced.']['sortMostPopular']) == 1) {
 			$this->conf['advanced.']['reverseSorting'] = 1;
 		}
@@ -348,7 +353,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				}
 			}
 		}
-
+		$_SESSION['activelangid'] = $GLOBALS['TSFE']->sys_language_uid;
 		$postDatapi2 = t3lib_div::_GET('tx_toctoccomments_pi2');
 		if ($postDatapi2['forgothash'] != '') {
 			if (isset($_SESSION['doChangePasswordForm']) == FALSE) {
@@ -528,6 +533,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		if  ($this->extConf['importDataprefixtotable']) {
 			$this->initializeprefixtotablemap();
 		}
+		
 		if (intval($this->conf['externalPrefix'])>0) {
 			if ($this->conf['externalPrefix']!='') {
 				$where = 'uid=' . $this->conf['externalPrefix'];
@@ -665,6 +671,15 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$hookTablePrefix = '';
 		}
 
+		$useCacheHashNeeded = intval($GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError']);
+		$no_cacheflag = 0;
+		if (intval($GLOBALS['TYPO3_CONF_VARS']['FE']['disableNoCacheParameter']) ==0) {
+			if ($useCacheHashNeeded == 1) {
+				$no_cacheflag = 1;
+			}
+
+		}
+
 		if ($this->conf['commentsreport.']['active']) {
 			$conftx_commentsreport = $this->conf['commentsreport.'];
 			$this->conf['tx_commentsreport_pi1.']['reportPid']=$conftx_commentsreport['reportPid'];
@@ -673,14 +688,43 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 					'parameter' => $conftx_commentsreport['reportPid'],
 					// Set additional parameters
 					'additionalParams' => '',
-					// We must add cHash because we use parameters ... hmmm - not that sure!
-					'useCashHash' => TRUE,
+					'useCacheHash' => $useCacheHashNeeded,
+					'no_cache'  => $no_cacheflag,
 					// We want link only
 					'returnLast' => 'url',
 					'ATagParams' => 'rel="nofollow"',
 			);
 			$reportpage = $this->cObj->typoLink('', $conflink);
 			$_SESSION['reportpage'] = $reportpage;
+		}
+
+		if (intval($this->conf['dataProtect.']['disclaimerPageID']) > 0) {
+			$conflink = array(
+					// Link to current page
+					'parameter' => intval($this->conf['dataProtect.']['disclaimerPageID']),
+					// Set additional parameters
+					'additionalParams' => '',
+					'useCacheHash' => $useCacheHashNeeded,
+					'no_cache' => $no_cacheflag,
+					'ATagParams' => 'rel="nofollow"',
+			);
+			$policypage = $this->cObj->typoLink($this->lib->pi_getLLWrap($this, 'pi1_template.disclaimerpagetextreplacelinktext', FALSE), $conflink);
+			$_SESSION['policypage'] = $policypage;
+		}
+
+		if(intval($this->conf['advanced.']['acceptTermsCondsOnSubmit']) > 0) {
+
+			$conflink = array(
+					// Link to current page
+					'parameter' => intval($this->conf['advanced.']['acceptTermsCondsOnSubmit']),
+					// Set additional parameters
+					'additionalParams' => '',
+					'useCacheHash' => $useCacheHashNeeded,
+					'no_cache' => $no_cacheflag,
+					'ATagParams' => 'rel="nofollow" target="_terms"',
+			);
+			$TermsCondspage = $this->cObj->typoLink($this->lib->pi_getLLWrap($this, 'pi1_template.termscondspagelinktext', FALSE), $conflink);
+			$_SESSION['TermsCondspage'] = $TermsCondspage;
 		}
 
 		//conf-ckecks
@@ -1098,7 +1142,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 		if (!$this->foreignTableName) {
 			$retstr = sprintf('<div class="tx-tc-form-top-message tx-tc-required-error"><p>' .
-						$this->lib->pi_getLLWrap($this, 'error.undefined.foreign.table', FALSE) . '</p></div>', $this->prefixId, $this->conf['externalPrefix']);
+						$this->lib->pi_getLLWrap($this, 'error.undefined.foreign.table', FALSE) . '</p></div>', $this->conf['externalPrefix']);
 			return $retstr;
 		}
 
@@ -2383,11 +2427,19 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 			$scopefb = 'email';
 		}
 
+		if(intval($this->conf['advanced.']['acceptTermsCondsOnSubmit']) > 0) {
+			$termscond = 1;
+		} else {
+			$termscond = 0;
+		}
+
 		$jscontent .= $tcsmiliesenchtml . "\n";
 		$jscontent .= $tcbbenchtml . "\n";
 		$jscontent .= $varbbshtml . "\n";
 		$jscontent .= 'var textErrCommentLength = "' . base64_encode($strtexterrorlength) . '";' . "\n";
+		$jscontent .= 'var confagbchck = ' . $termscond . ';' . "\n";
 		$jscontent .= 'var activelang = "' . $_SESSION['activelang'] . '";' . "\n";
+		$jscontent .= 'var cookieLifetime = ' . intval($this->conf['dataProtect.']['cookieLifetime']) . ';' . "\n";
 		$jscontent .= 'var textErrCommentNull = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.texterrornull', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textSaveComment = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.savecomment', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textCancelEditComment = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.canceleditcomment', FALSE)) . '";' . "\n";
@@ -2400,6 +2452,13 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 		$jscontent .= 'var confuseEmoji = ' . intval($this->conf['advanced.']['useEmoji']) . ';' . "\n";
     	$jscontent .= 'var textLoading = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.loadingpreview', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textDeleteConfirm = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.deletecommentconfirm', FALSE)) . '";' . "\n";
+		$jscontent .= 'var textCookieConfirm = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.cookiecommentconfirm', FALSE)) . '";' . "\n";
+		$jscontent .= 'var texttermscond = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.termscondconfirm', FALSE)) . '";' . "\n";
+		$jscontent .= 'var textdisclaimernohttps = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.disclaimersafetyreporthttp', FALSE)) . '";' . "\n";
+		$jscontent .= 'var textdisclaimerhttps = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.disclaimersafetyreporthttps', FALSE)) . '";' . "\n";
+		$jscontent .= 'var textdisclaimersafetyreportminimal = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.disclaimersafetyreportminimal', FALSE)) . '";' . "\n";
+		$jscontent .= 'var textdisclaimersafetyreportcouldbebetter = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.disclaimersafetyreportcouldbebetter', FALSE)) . '";' . "\n";
+		$jscontent .= 'var textdisclaimersafetyreportlooksgood = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.disclaimersafetyreportlooksgood', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textDgClose = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.dialogboxclose', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textPicFileToBig = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.imageuploadfiletobig', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textPdfFileToBig = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.pdfuploadfiletobig', FALSE)) . '";' . "\n";
@@ -2597,7 +2656,15 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 			$levelindent=round($this->conf['theme.']['boxmodelSpacing']);
 		}
 		$cssreplyindents='';
-
+		$margincheck = 0;
+		if (intval($this->conf['theme.']['boxmodelLineHeight']) > 16) {
+			$margincheck = intval(0.9*(intval($this->conf['theme.']['boxmodelLineHeight']) - 16));
+		}
+		$sortind=0;
+		if (intval($this->conf['theme.']['boxmodelLineHeight']) > 17) {
+			$sortind = intval((intval($this->conf['theme.']['boxmodelLineHeight']) - 16)/2);
+		}		
+		
 		$marginleftcommentingform = 0;
 		if ($this->conf['useUserImage'] == 1) {
 			$marginleftcommentingform = 9;
@@ -2606,11 +2673,20 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 		$marginhalfbm = intval($this->conf['theme.']['boxmodelSpacing']);
 		if ($this->conf['theme.']['boxmodelLabelInputPreserve']==1) {
 			$cssforminputspreserved='
-div.tx-tc-ct-form-field, .tx-tc-ct-ntf-wrap {
+div.tx-tc-ct-form-field {
 	float: left;
-	font-size: 100%;
 	margin-right: inherit !important;
-	margin-bottom: '.$this->conf['theme.']['boxmodelSpacing'].'px;
+	margin-bottom: ' . round(intval($this->conf['theme.']['boxmodelSpacing'])/2, 0) . 'px;
+	margin-top: ' . round(intval($this->conf['theme.']['boxmodelSpacing'])/2, 0) . 'px;
+	min-height: inherit !important;
+	padding: inherit !important;
+	-webkit-box-sizing: border-box !important;
+	-moz-box-sizing: border-box !important;
+	box-sizing: border-box !important;
+}
+.tx-tc-ct-ntf-wrap {
+	float: left;
+	margin-right: inherit !important;
 	min-height: inherit !important;
 	padding: inherit !important;
 	-webkit-box-sizing: border-box !important;
@@ -2653,7 +2729,7 @@ div.tx-tc-ct-form-field input, textarea.tx-tc-ctinput-textarea, textarea.tx-tc-c
 }
 
 ';
-			$marginhalfbm = intval(0.5*$this->conf['theme.']['boxmodelSpacing']);
+			//$marginhalfbm = intval(0.5*$this->conf['theme.']['boxmodelSpacing']);
 		}
 		for ($f=0; $f <= 20; $f++) {
 
@@ -2876,6 +2952,14 @@ textarea.tx-tc-ctinput-textarea, textarea.tx-tc-ctinput-textarea-rq, input.tx-tc
 }
 .tx-tc-hhalfbm {
 	margin-left: '. $marginhalfbm .'px;
+	font-weight: bold;
+}
+.tx-tc-ntf-check {
+    margin: '. $margincheck .'px 8px 0 0 !important;
+    line-height:'.intval($this->conf['theme.']['boxmodelLineHeight']).'px !important;
+}
+.tx-tc-sortind {
+	margin-top: '. $sortind .'px;
 }
 .tx-tc-uimgsize {
 	width: ' . intval($this->conf['UserImageSize']) . 'px;

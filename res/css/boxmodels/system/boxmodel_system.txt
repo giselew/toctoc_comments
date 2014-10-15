@@ -47,6 +47,54 @@ Selectors
 ***
 
 Boxmodel
+Menu height depending boxmodelLineHeight
+CSS
+height: 22px;
+height: {blh2}px;
+Rules
+{blh2}=2+{boxmodelLineHeight}
+Selectors
+.tx-tc-sortlistmenu
+.tx-tc-sortlistmenutitle, .tx-tc-dsclmrlistmenutitle
+***
+
+Boxmodel
+Line height depending boxmodelLineHeight
+CSS
++line-height: 22px;
+line-height: {blh2}px;
+Selectors
+.tx-tc-sortlistmenutitle, .tx-tc-dsclmrlistmenutitle
+***
+
+Boxmodel
+Menu top  depending boxmodelLineHeight
+CSS
+top: 22px;
+top: {blh2}px;
+Selectors
+.tx-tc-sortlistpanel, .tx-tc-dsclmrlistpanel
+***
+
+Boxmodel
+termscondtext margin-top
+CSS
+margin: 4px 0 0 0;
+margin: {boxmodelSpacingHalf}px 0 0 0;
+Selectors
+.tx-tc-termscondtext
+***
+
+Boxmodel
+MArgin top depending boxmodelLineHeight
+CSS
+top: 22px;
+top: {blh2}px;
+Selectors
+.tx-tc-sortlistpanel, .tx-tc-dsclmrlistpanel
+***
+
+Boxmodel
 Height 24 Formfield
 CSS
 min-height: 20px;
@@ -65,7 +113,6 @@ line-height: {26}px;
 Rules
 {26}=4+{boxmodelTextareaLineHeight}
 Selectors
-.tx-tc-ct-label-ntf
 .tx-tc-ct-label, .tx-tc-ct-label-cap
 ***
 
@@ -77,7 +124,7 @@ line-height: {b26}px;
 Rules
 {b26}=4+{boxmodelTextareaLineHeight}
 Selectors
-div.tx-tc-ct-form-field-1, div.tx-tc-ct-form-field-1nl
+div.tx-tc-ct-form-field-1
 .tx-tc-ct-form-field-cap
 ***
 
@@ -91,18 +138,6 @@ Rules
 Selectors
 .tx-tc-ct-label, .tx-tc-ct-label-cap
 .tx-tc-ct-form-field-cap
-.tx-tc-ct-label-ntf
-***
-
-Boxmodel
-min-Height 20 -label addition
-CSS
-+min-height: 20px;
-min-height: {b27}px;
-Rules
-{b27}={26}
-Selectors
-div.tx-tc-ct-form-field-1, div.tx-tc-ct-form-field-1nl
 ***
 
 Boxmodel

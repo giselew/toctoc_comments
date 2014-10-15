@@ -60,7 +60,7 @@
                                    <div class="tx-tc-ct-uc" id="tx-tc-cts-uc-###COMMENT_ID###">
 	                                    <div class="tx-tc-ct-uc-pic2" id="tx-tc-cts-uc-pic2-###COMMENT_ID###">###PCEHDRPIC###</div>
 	                                    <div class="tx-tc-ct-box-ctclose">
-											<span id="tx-tc-cts-uc-cls-###COMMENT_ID###" class="tx-tc-ucclose tx-tc-CloseButton tx-tc-CloseButtonSmall" title="###TXTCLOSE###"></span>
+											<span id="tx-tc-cts-uc-cls-###COMMENT_ID###" class="tx-tc-ucclose tx-tc-CloseButton" title="###TXTCLOSE###"></span>
 										</div>
 										<div class="tx-tc-ucinner" id="tx-tc-cts-uc-inner-###COMMENT_ID###"></div>
                                     </div>
@@ -115,7 +115,7 @@
                 <div class="tx-tc-ct-uc" id="tx-tc-cts-uc-###COMMENT_ID###">
 	                <div class="tx-tc-ct-uc-pic2" id="tx-tc-cts-uc-pic2-###COMMENT_ID###">###PCEHDRPIC###</div>
 	                <div class="tx-tc-ct-box-ctclose">
-						<span id="tx-tc-cts-uc-cls-###COMMENT_ID###" class="tx-tc-ucclose tx-tc-CloseButton tx-tc-CloseButtonSmall" title="###TXTCLOSE###"></span>
+						<span id="tx-tc-cts-uc-cls-###COMMENT_ID###" class="tx-tc-ucclose tx-tc-CloseButton" title="###TXTCLOSE###"></span>
 					</div>
 					<div class="tx-tc-ucinner" id="tx-tc-cts-uc-inner-###COMMENT_ID###">
 	                </div>
@@ -333,7 +333,8 @@
 			</div>
 		###FORMPICUPLOAD###
 	    ###FIELDSHTML###
-	    ###TEXT_REQUIRED_HINT###                                    
+	    ###TEXT_REQUIRED_HINT###
+	    ###COOKIEACCEPT###                                
 	    ###SUBFORMCOMMENTATORNOTIFYPART###
 	    ###CAPTCHA###
 	    <input type="hidden" name="toctoc_comments_pi1[cid]" id="toctoc_comments_pi1_###CID###cid" value="###CID###" />
@@ -345,6 +346,7 @@
 	    id="toctoc_comments_pi1_submit_###CID###" value="###TEXT_SUBMIT###" />
 	    ###PRVCT###
 	    <!-- &nbsp;&nbsp;<input type="reset" value="###TEXT_RESET###" class="tx-tc-ct-reset tx-tc-marginreset" />   -->
+	    ###AGBACCEPTED###
 	</div>
 	<span class="tx-tc-frmerrhndl tx-tc-nodisp" id="tx-tc-frmerrhndl###ERRCODE###__0###CID###"></span> 
 	
@@ -390,6 +392,7 @@
 	    
 	    ###PRVCT###
 	   <!-- &nbsp;&nbsp;<input type="reset" value="###TEXT_RESET###" class="tx-tc-ct-reset tx-tc-marginreset" />   -->
+	   ###AGBACCEPTED###
 	   <span class="tx-tc-frmerrhndl tx-tc-nodisp" id="tx-tc-frmerrhndl###ERRCODE###__0###CID###"></span> 
 <!-- ###SUBFORMUSER### end -->
    
@@ -420,6 +423,7 @@
 	    id="toctoc_comments_pi1_submit_###CID###" value="###TEXT_SUBMIT###" />
 	    ###PRVCT###
 	    <!-- &nbsp;&nbsp;<input type="reset" value="###TEXT_RESET###" class="tx-tc-ct-reset tx-tc-marginreset" /> -->
+	    ###AGBACCEPTED###
 	</div>
 	<span class="tx-tc-frmerrhndl tx-tc-nodisp" id="tx-tc-frmerrhndl###ERRCODE###__0###CID###"></span> 
 	</div>
@@ -465,7 +469,7 @@
  
 <!-- ###SUBFORMCOMMENTATORNOTIFY### begin -->
 	<div class="tx-tc-ct-ntf-wrap">
-		<div class="tx-tc-ct-form-field-ntf" id="tx-tc-ct-form-field-ntf-###CID###">###DIVSHOW_NOTIFICATION###<label class="tx-tc-ct-label-ntf" for="toctoc_comments_pi1[notify]">###TEXT_NOTIFICATION###</label>
+		<div class="tx-tc-ct-form-field-ntf" id="tx-tc-ct-form-field-ntf-###CID###">###DIVSHOW_NOTIFICATION###<label class="tx-tc-ct-label-ntf tx-tc-ct-label-notify" for="toctoc_comments_pi1[notify]">###TEXT_NOTIFICATION###</label>
 	    	<input type="checkbox" name="toctoc_comments_pi1[notify]" title="###TEXT_NOTIFICATION_DESC###" class="tx-tc-ntf-check" id="toctoc_comments_pi1_###CID###notify" value="1" />
 	    </div>
 	</div>
@@ -519,7 +523,7 @@
 			</div>
 			###SUBVIDEOEMBED###
 			<div class="tx-tc-ct-box-ctclose tx-tc-nodisp" id="tx-tc-ct-box-ctclose###IDPLUS###p###CID###">
-  					<span id="playerclose###IDPLUS###p###CID######HTML5FLAG###" class="tx-tc-vidclose tx-tc-CloseButton tx-tc-CloseButtonSmall" title="###TXTCLOSE###"></span>			
+  					<span id="playerclose###IDPLUS###p###CID######HTML5FLAG###" class="tx-tc-vidclose tx-tc-CloseButton" title="###TXTCLOSE###"></span>			
 			</div>
 			<div class="tx-tc-vid-video" id="tx-tc-cts-vid-title-###IDPLUS###p###CID###">
 				<a href="###VIDEOURL###" rel="nofollow" title="###DESCTITLE###">###TITLE###</a>
@@ -586,7 +590,7 @@
 	<div class="tx-tc-form-top-message" id="tx-tc-cts-ftm-###CID###">
 	    <p class="tx-tc-ftm-text">###MESSAGE###</p>
 	 	<div class="tx-tc-ct-box-ctclose">
-			<span id="tx-tc-topmsg-cls-###CID###" class="tx-tc-topmsgcls tx-tc-CloseButton tx-tc-CloseButtonSmall" title="###TXTCLOSE###"></span>
+			<span id="tx-tc-topmsg-cls-###CID###" class="tx-tc-topmsgcls tx-tc-CloseButton" title="###TXTCLOSE###"></span>
 		</div>
 	</div>
 <!-- ###FORM_TOP_MESSAGE### end -->
@@ -674,7 +678,7 @@
 <div class="tx-tc-ct-uc" id="tx-tc-cts-uc-###COMMENT_ID###">
 	<div class="tx-tc-ct-uc-pic2" id="tx-tc-cts-uc-pic2-###COMMENT_ID###">###PCEHDRPIC###</div>
 	<div class="tx-tc-ct-box-ctclose">
-		<span id="tx-tc-cts-uc-cls-###COMMENT_ID###" class="tx-tc-ucclose tx-tc-CloseButton tx-tc-CloseButtonSmall" title="###TXTCLOSE###"></span>
+		<span id="tx-tc-cts-uc-cls-###COMMENT_ID###" class="tx-tc-ucclose tx-tc-CloseButton" title="###TXTCLOSE###"></span>
 	</div>
 	<div class="tx-tc-ucinner" id="tx-tc-cts-uc-inner-###COMMENT_ID###">
 	</div>

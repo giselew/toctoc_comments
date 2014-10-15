@@ -375,6 +375,12 @@ div.tx-tc-ct-form-field {
 	font-size: 100%;
 	float: left;
 }
+div.tx-tc-ct-form-text {
+	margin-right: 4px;
+	padding: 4px 0px 4px 0px;
+	font-size: 100%;
+	float: left;
+}
 #tx_toctoccomments_pi2_formso div.tx-tc-login-form-field {
 	width: 95%;
 }
@@ -399,9 +405,12 @@ div.tx-tc-login-form-field-fr {
     padding: 0;
     width: 20px;
 }
-div.tx-tc-ct-form-field-1, div.tx-tc-ct-form-field-1nl {
+div.tx-tc-ct-form-field-1 {
 	padding: 4px 0px 4px 0px;
-	line-height: 20px;
+	display: initial;
+}
+div.tx-tc-ct-form-field-1nl {
+	padding: 4px 0px 4px 0px;
 	display: initial;
 }
 div.tx-tc-ct-form-field-recap {
@@ -522,6 +531,7 @@ span.tx-srfreecap-pi2-accessible {
     margin: 0;
     padding: 0 0 0 4px;
 	width: -moz-available;
+	width: 100%;
 }
 .tx-tcresponse-text {
 	display: block;
@@ -619,9 +629,6 @@ span.emoji {
 	padding: 0 2px 0 2px;
 	position: relative;
 	white-space: nowrap;
-
-
-	/*width: auto;*/
 }
 .sharrre .shrbox:hover .shrmiddle {
 	height: auto;
@@ -634,7 +641,6 @@ span.emoji {
 	float: left;
 	position: relative;
 	white-space: nowrap;
-	/*width: auto; */
 }
 .sharrre .shrleft, .share {
 	cursor: pointer;
@@ -1525,7 +1531,7 @@ img.tx-tc-rcentpic {
 	word-wrap: break-word;
 	text-align: center;
 }
-.tx-tc-CloseButton {
+.tx-tc-CloseButton, .tx-tc-DropDownButton {
 	cursor: pointer;
 	display: inline-block;
 	margin: 0;
@@ -1535,16 +1541,16 @@ img.tx-tc-rcentpic {
 	height: 30px;
 	width: 30px;
 }
-label.tx-tc-CloseButton {
+label.tx-tc-CloseButton, label.tx-tc-DropDownButton {
 	overflow: hidden;
 }
-.tx-tc-CloseButton input {
+.tx-tc-CloseButton input, .tx-tc-DropDownButton input {
 	cursor: pointer;
 	opacity: 0;
 	outline: medium none;
 	padding: 18px;
 }
-.tx-tc-CloseButton {
+.tx-tc-CloseButton, .tx-tc-DropDownButton {
 	background-repeat: no-repeat;
 	height: 15px;
 	width: 15px;
@@ -1559,10 +1565,10 @@ label.tx-tc-CloseButton {
 .tx-tc-CloseButtonDark {
 	background-position: left -16px;
 }
-.tx-tc-CloseButton:hover, .tx-tc-CloseButton:focus {
+.tx-tc-CloseButton:hover, .tx-tc-CloseButton:focus, .tx-tc-DropDownButton:hover, .tx-tc-DropDownButton:focus {
 	background-position: left -32px;
 }
-.tx-tc-CloseButton:active {
+.tx-tc-CloseButton:active, .tx-tc-DropDownButton:active {
 	background-position: left -48px;
 }
 .tx-tc-CloseButtonSmallDark {
@@ -1579,9 +1585,6 @@ label.tx-tc-CloseButton {
 	margin: 0 0 0 4px;
 }
 
-label.tx-tc-CloseButton {
-	overflow: hidden;
-}
 .tx-tc-ucclose, .tx-tc-topmsgcls, .tx-tc-vidclose {
 	float: right;
 	margin: 14px 5px 0;
@@ -1591,7 +1594,7 @@ label.tx-tc-CloseButton {
 	width: 11px;
 	margin-top: 1px;
 }
-.tx-tc-CloseButton {
+.tx-tc-CloseButton, .tx-tc-DropDownButton {
 	background-repeat: no-repeat;
 	height: 15px;
 	width: 15px;
@@ -1807,7 +1810,6 @@ label.tx-tc-CloseButton {
 	width: 50%;
 }
 .tx-tc-ntf-check {
-	margin: 6px 8px 0 0;
 	float: left;
 }
 .tx-tc-ct-form-field-ntf {
@@ -1819,11 +1821,8 @@ label.tx-tc-CloseButton {
 .tx-tc-ct-label-ntf {
 	float: left;
 	font-weight: bold;
-	line-height: 22px;
 	margin: 0 4px 0 8px;
-	min-height: 22px;
 	overflow: hidden;
-	white-space: nowrap;
 }
 .tx-tc-ct-ntf-wrap {
 	float: left;
@@ -2077,6 +2076,8 @@ span.tx-tc-emo-top-nav-on, span.tx-tc-emo-top-nav-off {
 }
 .tx-tc-trt-rating-like {
  	position: relative;
+	width: 16px;
+	height: auto;
 }
 .tx-tc-trt-rating-like-only {
     float: left;
@@ -2402,7 +2403,6 @@ div.tx-tc-cts-ct-dp div.tx-tc-ct-box div.tx-tc-ct-box-cttxt p.tx-tc-text {
 	}
 	.tx-tc-ct-label-ntf {
 		word-break: break-all;
-		white-space: nowrap;
 		font-size: 95%;
 	}
 	.tx-tc-smilie-popup {
@@ -2657,16 +2657,24 @@ div.facebookuiGrid {
 }
 
 .tx-tc-sortlistmenu {
-	padding: 2px 4px;
+	padding: 0 4px;
 	border-top-style: solid;
     border-top-width: 1px;
 	border-bottom-style: solid;
     border-bottom-width: 1px;
 	text-align: right !important;
 	position: relative;
+	height: 22px;
 }
-.tx-tc-sortlistmenutitle {
-	
+.tx-tc-sortlistmenutitle, .tx-tc-dsclmrlistmenutitle {
+	border-left-style: solid;
+    border-left-width: 1px;
+    float: right;
+    padding: 0 4px;
+	height: 22px;	
+}
+.tx-tc-menutitle-hilight, .tx-tc-sortlistmenutitle:hover, .tx-tc-dsclmrlistmenutitle:hover, .tx-tc-sortlistmenutitle:focus, .tx-tc-dsclmrlistmenutitle:focus {
+	border-radius: 4px 4px 0px 0px;
 }
 .tx-tc-sortind {
 	width: 14px;
@@ -2684,17 +2692,29 @@ div.facebookuiGrid {
 .tx-tc-sortind-pop {
 	background: url("../themes/default/img/commentsort.png") repeat-x scroll 0 -36px transparent;
 }
-.tx-tc-sortlistpanel {
+.tx-tc-sortlistpanel, .tx-tc-dsclmrlistpanel {
 	border-style: solid;
     border-width: 1px;
-    padding: 4px;
     position: absolute;
-    right: 5px;
-    z-index: 999;
+    z-index: 5;
 	box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
 	border-radius: 0 0 4px 4px;
 	float: right;
 	text-align: left !important;
+	top: 22px;
+}
+.tx-tc-sortlistpanel {
+	 right: 20px;
+}
+.tx-tc-dsclmrlistpanel {
+	 right: 4px;
+}
+.tx-tc-sortlistpanel {
+	padding: 4px;
+}
+.tx-tc-dsclmrlistpanel {
+	max-width: 320px;
+ 	margin: 0 0 10px 0;
 }
 .tx-tc-sortlistlinkbox {
 }
@@ -2703,10 +2723,8 @@ div.facebookuiGrid {
     border-top-width: 1px;
 }
 .tx-tc-sortlistlink {
-	
 }
 .tx-tc-sortlistlink-selected {
-
 }
 .tx-tc-sortlistlink-ind-selected {
     float: right;
@@ -2717,4 +2735,50 @@ div.facebookuiGrid {
 .tx-tc-sortlistlink-ind-notselected {
 	float: right;
 	width: 0px;
+}
+.tx-tc-title {
+	font-size: 110%;
+	font-weight: 700;
+	margin: 0px;
+	padding: 4px;
+}
+.tx-tc-subtitle {
+	font-weight: 700;
+	border-bottom-style: solid;
+    border-bottom-width: 1px;
+	border-top-style: solid;
+    border-top-width: 1px;
+	margin: 0px 0px 4px 0px;
+	padding: 4px;
+}
+.tx-tc-dsclmrcheck {
+    display: table;
+    font-size: 90%;
+    margin: 0 4px 4px 16px;
+    width: 92%;
+}
+.tx-tc-dsclmrtext {
+	margin: 0px 4px 4px 4px;
+ 	font-size: 90%;
+}
+.tx-tc-dsclmrcheckresult {
+	font-weight: bold;
+	margin: 0px 4px 4px 4px;
+}
+.tx-tc-dropuppanel .tx-tc-ct-box-ctclose, .tx-tc-dropup .tx-tc-ct-box-ctclose {
+	margin-top: 4px;
+}
+.tx-tc-cookiemessage {
+	padding: 0 4px 0 0;
+}
+.tx-tc-cookieaccept {
+	padding: 0 4px 0 0;
+}
+.tx-tc-termscondtext {
+	float: left;
+    width: 100%;
+	margin: 4px 0 0 0;
+}
+.tx-tc-termscondtext .tx-tc-ct-label-ntf, .tx-tc-ct-form-text .tx-tc-label-cookie, .tx-tc-ct-form-field-1nl .tx-tc-ct-label-notify, .tx-tc-ct-form-field-1 .tx-tc-ct-label-notify {
+	font-weight: normal;
 }

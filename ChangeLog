@@ -491,6 +491,9 @@
 	  Remark: when current sorting is different from original sorting and older comments shall display, then they display in original sorting 
 	* Added TypoScript option advanced.useMostPopular. If you use popularity then sorting by popularity is enabled in the comments list, default = 1
 	* Added Session-Caching for data behind comment lists - it speeds up comment browsing
+	* Added TypoScript option advanced.shareUsersTotalText: optional title for sharing line, it replaces text "share this page" after the total number of users who shared
+	* Added TypoScript option advanced.useShareIcon: use an icon in the sharing line. Default is 1.
+	* Added TypoScript option advanced.shareDataText: optional text for shared item on Twitter, as shown in the share-message of the social network sharers
 	* For administrator responses on comments the old extension comments_response is no longer needed - it's inside toctoc_comments now
 	  Set TypoScript option advanced.adminCommentResponse = 1 to enable the feature (default 0)
 	  When the admin receives an information or approval-mail there's a new link "Response to the comment as administrator"
@@ -506,3 +509,27 @@
 2014-09-12  Gisèle Wendl  <gisele.wendl@toctoc.ch>
 	* Release of version 5.4.1
 	* Fixed bug comment insertion fails with MySQL 5.5.+
+	
+2014-10-14  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 5.5.0
+	* Minor changes in the template for data protection features, please update
+	* Cookies from not logged in users are no longer stored in clear text
+	* With TypoScript-option advanced.acceptTermsCondsOnSubmit specify an ID of your page with term and conditions, the link shows up beside the submit button in commenting forms
+	  when the ID is specified the terms and conditions must be accepted before submitting a comment
+	* An entire TypoScript-options section dataProtect has been created - it implements options regarding data protection and for instance hold 7 new options
+	* dataProtect.setCookie = 1 : Set (1) or don't set (0) a cookie with form data of not logged in commenters
+	* dataProtect.cookieLifetime = 31 : Lifetime in days for a cookie, minimum is 7 days
+	* dataProtect.useDisclaimer = 1 : Shows a disclaimer menu point above the comments list. (1)
+	* dataProtect.useDisclaimerInRatingsOnly = 0 : Shows a disclaimer menu point when only ratings are shown (ratings.ratingsOnly=1)
+ 	* dataProtect.disclaimerPageID = : ID of your page with additional policy for data protection, link shown in disclaimer menu
+	* dataProtect.disclaimerSystemCheck = 1 : Checks if database is on same server, checks if https is enabled and then shows a security rating of the site.
+	* dataProtect.disclaimerFromTocToc = 1 : Shows the software creators disclaimer in the disclaimer popup
+	* added TCA for the fields toctoc_comments adds in fe_users (facebook login). There is a new toctoc_comments tab in the fe_users-records in TYPO3-Backend
+	* Redesigned the backend module "Comments" and a new option for user administration has been added
+	* In the new user administration users data can be deleted or erased from the database 
+	* In the new user administration users can be merged into a specified user
+	* New status messages after bulk actions report what has been processed (comments or users)
+	* Fixed bug "add a comment on level 0 and after this you try add another comment, again on level 0. The events remain unbound, nothing moves and the 2nd comment can only be added after reloading the page."
+	* Fixed bug "Notification Text-E-Mails says there is an attachment when there is none"
+	* Fixed bug "New notification options only work if user posts comment logged in, it does not work after approval by Admin-E-Mails"
+	* Fixed bug "Comment rating with ratings.useLikeDislikeStyle = 1 left over an "<" at the end of the AJAX reply, but only under UNIX/LINUX hosts" 
