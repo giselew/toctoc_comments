@@ -1,0 +1,15 @@
+createstaticdata.php is a php script which must be run from command line.
+
+Before you run it please have a look inside and 
+adjust the value of $storagePid to the pid of your TYPO3 comments folder.
+
+The script generates the file "ext_tables_static+adt.sql" in the folder where 
+createstaticdata.php is located. (or depending the current path you have when you execute php from command line)
+The data is fetched from http://www.spamhaus.org/DROP/drop.lasso
+
+if you overwrite on the extensions root level the file with the same filename
+(ext_tables_static+adt.sql) you will be able to import the new static data into the static IP Block list.
+This must be done in the last step in TYPO3 Backend -> Extensionmanager -> toctoc_comments -> Database update.
+
+The data imported by the extension on install dates from 10/17/2014.
+

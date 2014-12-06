@@ -1,0 +1,487 @@
+Boxmodel
+Overall font-size
+CSS
+font-size: 132%;
+CSS
+line-height: 22px;
+Selectors
+.toctoc-comments-pi1
+***
+
+Boxmodel
+text of comment seen and date
+CSS
++float: left;
+Selectors
+.tx-tc-text .tx-tc-overrating-date .tx-tc-rts-li
+***
+
+Boxmodel
+margin of commentnr icon
+CSS
+margin: 4px 4px -4px 0;
+Selectors
+.tx-tc-commentnricon
+***
+
+Boxmodel
+margin comment date
+CSS
++margin: 0;
+CSS
++top: 0;
+Selectors
+.tx-tc-ct-box .tx-tc-text-top .tx-tc-rts-dp
+***
+
+Boxmodel
+Topratings margins rating stars2
+CSS
++left: 0;
+Selectors
+.tx-tc-trt-cts-article .tx-tc-rts
+***
+
+Boxmodel
+top margin nr of comments
+CSS
+margin: 0px 4px 0 8px;
+CSS
+padding: 0;
+Selectors
+.tx-tc-ct-cnt
+***
+
+Boxmodel
+tooltip font
+CSS
+font-weight: bold;
+CSS
+font-size:110%;
+Selectors
+.tx-tc-tooltip
+.tx-tc-tooltip2
+.tx-tc-tooltipemoji
+***
+
+Boxmodel   
+toctoc_comments_rating_stars.png link
+CSS
+background: url("../themes/windows/img/toctoc_comments_rating_stars.png") repeat-x scroll 0 -20px transparent;
+CSS
+height: 22px;
+Selectors 
+.tx-tc-rts-gold-bar
+***
+
+Boxmodel
+margin comment views
+CSS
+margin-top: 0px;
+CSS
+font-size: 100%;
+CSS
+margin-bottom: 0px;
+Selectors
+.tx-tc-ct-viewcnt
+***
+
+Boxmodel
+input font-size
+CSS
++font-size: 100%;
+Selectors
+input.tx-tc-ct-input
+***    
+    
+Boxmodel
+Borderradius small
+CSS
+border-radius: 0;
+Selectors
+.tx-tc-ct-box-picturecrop322 img
+.tx-tc-userpic, .tx-tc-userpicf, .tx-tc-defuserpic
+.txtc_details
+.tx-tc-ct-editbutton, .tx-tc-ct-deletebutton, .tx-tc-ct-denotifybutton
+***
+
+Boxmodel
+Borderradius big
+CSS
+border-radius: 0;
+Selectors
+.txtc_overlay
+.tx-tc-ct-highlight
+.tx-tc-recent-cts-article
+#confirm-container .buttons div
+.tx-tc-pvs-nopreviewpic
+.tx-tc-cap-image
+.tx-tc-ct-uc
+.tx-tc-ct-submit, .tx-tc-ct-reset, .tx-tc-ct-submit-loggedin
+***
+
+Boxmodel
+Previewcomment margin
+CSS
+margin: 0 10px 0 0;
+Selectors
+.tx-tc-ct-prv-icon-dp
+***
+
+Boxmodel
+size defuserpic
+CSS
+height: 22px;
+CSS
+width: 22px;
+Selectors
+.tx-tc-defuserpic
+***
+
+Boxmodel
+Button Font
+CSS
++font-size: 14px;
+CSS
++height: 2.142em;
+CSS
++min-width: 6em;
+CSS
++padding: 3px 12px 5px;
+CSS
++font-family: "Segoe UI Semibold","Segoe UI Web Semibold","Segoe UI Web Regular","Segoe UI","Segoe UI Symbol","HelveticaNeue-Medium","Helvetica Neue",Arial,sans-serif;
+Selectors
+.tx-tc-ct-fieldset .tx-tc-ct-submit, .tx-tc-ct-fieldset .tx-tc-ct-reset, .tx-tc-ct-fieldset .tx-tc-ct-submit-loggedin, .tx-tc-ct-fieldset .tx-tc-cts-ctsbrowse-submit-hide, .tx-tc-ct-fieldset .tx-tc-cts-ctsbrowse-submit
+***
+
+Boxmodel
+font from hotmail 1
+CSS
++font-family: "Segoe UI Web Light";
+CSS
++font-style: normal;
+CSS
++font-weight: 100;
+CSS
++src: local("Segoe UI Light"), local("Segoe UI"), local("HelveticaNeue-Light");
+CSS
++unicode-range: U+0000-00FF, U+0300-036F;
+Selectors
+@font-face
+***
+
+Boxmodel
+font from hotmail 2
+CSS
++font-family: "Segoe UI Web Regular";
+CSS
++font-style: normal;
+CSS
++font-weight: normal;
+CSS
++src: local("Segoe UI"), local("Helvetica Neue");
+CSS
++unicode-range: U+0000-00FF, U+0300-036F;
+Selectors
+@font-face
+***
+
+Boxmodel
+font from hotmail 3
+CSS
++font-family: "Segoe UI Web Semibold";
+CSS
++font-style: normal;
+CSS
++font-weight: bold;
+CSS
++src: local("Segoe UI Semibold"), local("Segoe UI Bold"), local("Segoe UI"), local("HelveticaNeue-Medium");
+CSS
++unicode-range: U+0000-00FF, U+0300-036F;
+Selectors
+@font-face
+***
+
+Boxmodel
+Borderradius middle
+CSS
+border-radius: 0;
+Selectors
+.sharrre .shrmiddle
+.tx-tcresponse-text
+div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-wpp, div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-img
+.tx-tc-cts .tx-tc-ct-wpp
+.tx-tc-ct-rybox
+.tx-tc-ct-ry-frameover
+.tx-tc-ct-ry-frame
+.tx-tc-pvs-prevnext
+***
+
+Boxmodel
+Float of attachment images
+CSS
++float: left;
+Selectors
+div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-img
+div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-wpp
+***
+
+Boxmodel
+Padding for tag p
+CSS
+padding: 2px 15px 0 2px;
+CSS
+font-size: 100%;
+Selectors
+.tx-tc-text, .tx-tc-text-top
+***
+
+Boxmodel
+Padding overrating-date in comments
+CSS
++margin: 0 4px 0 0;
+Selectors
+.tx-tc-overrating-date .tx-tc-ctdate
+.tx-tc-overrating-date .tx-tc-commentviews
+
+Boxmodel
+Padding for tag p
+CSS
+width: 84%;
+Selectors
+.tx-tc-text
+***
+
+Boxmodel
+Action forms frame position
+CSS
+margin: 0;
+CSS
+padding: 0;
+Selectors
+.tx-tc-ct-actionforms
+***
+
+Boxmodel
+Commentsbox ilike margin
+CSS
+margin-top: 1px;
+Selectors
+.tx-tc-ct-box .tx-tc-ct-box-cttxt .tx-tc-myrts-dp .tx-tc-myrts-ilke
+.tx-tc-ct-box .tx-tc-ct-box-cttxt .tx-tc-myrts-dp .tx-tc-myrts-disilke
+***
+
+Boxmodel
+Padding for tag p.tx-tc-text
+CSS
++display: block;
+CSS
+padding: 0 33px 0 0;
+Selectors
+div.tx-tc-cts-ct-dp div.tx-tc-ct-box div.tx-tc-ct-box-cttxt p.tx-tc-text
+***
+
+Boxmodel
+ctlink
+CSS
++font-family: 'Segoe UI Web Light','Segoe UI Light','Segoe UI Web Regular','Segoe UI','Helvetica Neue UltraLight',Arial;
+CSS
++font-size: 30px;
+CSS
++line-height: 30px;
+CSS
++padding-bottom: 6px;
+CSS
++padding-top: 0px;
+CSS
++width: 96%;
+CSS
++float: left;
+Selectors
+.tx-tc-atrts-ctlink
+.tx-tc-trt-listtitle
+***
+
+Boxmodel
+uc title
+CSS
++font-family: 'Segoe UI Web Light','Segoe UI Light','Segoe UI Web Regular','Segoe UI','Helvetica Neue UltraLight',Arial;
+CSS
++font-size: 30px;
+CSS
++font-weight: bold;
+CSS
++line-height: 30px;
+CSS
++text-align: center;
+Selectors
+.tx-tc-ct-uc-text-contact-title
+***
+
+Boxmodel
+uc boxes
+CSS
+padding: 0 2px 6px 2px;
+Selectors
+.tx-tc-ct-uc-text-contact, .tx-tc-ct-uc-text-stats, .tx-tc-ct-uc-text-ip, .tx-tc-ct-uc-text-contact-title
+***
+
+Boxmodel
+box for commentdates
+CSS
+display: inline-block;
+CSS
+padding: 0;
+Selectors
+.tx-tc-overrating-date
+***
+
+Boxmodel
+box for ilikes
+CSS
+padding: 0px;
+Selectors
+.tx-tc-overrating
+***
+
+Boxmodel
+Put the number of subcomments to the right
+CSS
+float: right;
+CSS
+padding: 0 8px 0 0;
+Selectors
+.tx-tc-nbrsubcomments
+***
+
+Boxmodel
+Put the replylink to the right
+CSS
+float: right;
+Selectors
+.tx-tc-ct-ry
+***
+
+Boxmodel
+Put submitbutton to the right
+CSS
+width: auto;
+CSS
++float: right;
+Selectors
+.tx-tc-div-submit
+***
+
+Boxmodel
+Put comments report to the right
+CSS
+float: right;
+CSS
+margin: -26px 4px;
+CSS
+opacity: 0.3;
+Selectors
+.tx-tc-ct-report
+***
+    
+Boxmodel
+eye for comments preview, right margin
+CSS
++margin-right: 8px;
+Selectors
+.tx-tc-ct-prv-icon-login-dp
+***
+
+Boxmodel
+top ilikes on the right
+CSS
+margin-bottom: -4px;
+CSS
+margin-top: 1px;
+Selectors
+.tx-tc-rts-li, .tx-tc-rts-li-text
+***
+
+Boxmodel
+reviews on the left
+CSS
+float: left;
+CSS
++float: left;
+Selectors
+.tx-tc-rws-area .tx-tc-rts-li
+***
+
+Boxmodel
+no border under comment
+CSS
+border-style: none;
+CSS
++border-style: none;
+Selectors  
+div.tx-tc-rt
+.tx-tc-ct-box-cttxt-reply
+.tx-tc-userpic, .tx-tc-userpicf, .tx-tc-defuserpic
+.tx-tc-ct-uc-pic .tx-tc-userpic, .tx-tc-ct-uc-pic .tx-tc-userpicf
+.tx-tc-cts
+***
+
+Boxmodel
+adjust remaning line-hights to 22px
+CSS
+line-height: 22px;
+CSS
+font-size: 100%;
+Selectors 
+.tx-tc-nameclasslink
+.tx-tc-rts
+.tx-tc-ct-cnt
+.tx-tc-ntf-box
+***
+
+Boxmodel
+margin-top
+CSS
+margin-top: 4px;
+Selectors 
+.tx-tc-myrts-dp, .tx-tc-atrts-ilike-dp
+*** 
+
+Boxmodel
+sharrre area
+CSS
+margin: 0;
+Selectors
+.tx-tc-sharrrearea-popup
+***
+
+Boxmodel
+Margin of ilikes depends on ratingMarginTop
+CSS
+margin: 0px 0 0 2px;
+margin: 1+{ratingMarginTop}px 6px 0;
+Selectors
+.tx-tc-myrts-ilke img, .tx-tc-myrts-ilke .tx_toctoc_comments_static_ilike img, img.tx-tc-trt-rating-like-only
+***
+
+Boxmodel
+Margin of ilikes depends on ratingMarginTop
+CSS
+margin: 0px 0 0 2px;
+margin: {mrtsdlko}px 6px 0 0;
+Rules
+{mrtsdlko}=1+{ratingMarginTop}
+Selectors
+.tx-tc-myrts-ilke img, .tx-tc-myrts-ilke .tx_toctoc_comments_static_ilike img, img.tx-tc-trt-rating-like-only
+***
+
+Boxmodel
+Margin of ilikes depends on ratingMarginTop
+CSS
+margin: 2px 0 -2px 0;
+margin: {mrtsdl}px 6px 0;
+Rules
+{mrtsdl}=3+{ratingMarginTop}
+Selectors
+.tx-tc-myrts-disilke img, .tx-tc-myrts-disilke .tx_toctoc_comments_static_ilike img
+***
