@@ -46,10 +46,10 @@
 			<label index="fromEmail.description">Defines the email address from which emails are sent.</label>
 			<label index="useWebpagePreview.description">Use Attachment Feature Webpagepreview</label>
 			<label index="useWebpagePreview.details">if the Attachment feature Webpagepreview is enabled, then webpagepreviews are shown and users can generate new previews.</label>
-			<label index="useSharing.description">Use of Share-Links</label>
-			<label index="useSharing.details">Use of Share-Links for social networks like Facebook, Google and Twitter</label>
-			<label index="dontUseSharingFacebook.description">Share-Link for Facebook is suppressed</label>
-			<label index="dontUseSharingFacebook.details">Use of Share-Link for Facebook is suppressed. Similar options exist for other social networks</label>
+			<label index="useSharingV2.description">Use of Share-Links</label>
+			<label index="useSharingV2.details">Use of Share-Links for social networks like Facebook, Google and Twitter</label>
+			<label index="dontUseSharingFacebookV2.description">Share-Link for Facebook is suppressed</label>
+			<label index="dontUseSharingFacebookV2.details">Use of Share-Link for Facebook is suppressed. Similar options exist for other social networks</label>
 			<label index="commentingClosed.description">Stop Commenting</label>
 			<label index="commentingClosed.details">Commenting can be totally suppressed, 0 (default) or 1</label>
 			<label index="ratingsOnly.description">Enable only ratings</label>

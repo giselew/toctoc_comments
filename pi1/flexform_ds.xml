@@ -10,6 +10,7 @@
 		<sRatings>EXT:toctoc_comments/pi1/flexform_ds_ratings.xml</sRatings>
 		<sSpamProtect>EXT:toctoc_comments/pi1/flexform_ds_spamprotect.xml</sSpamProtect>
 		<sAttachments>EXT:toctoc_comments/pi1/flexform_ds_attachments.xml</sAttachments>
+		<sSharing>EXT:toctoc_comments/pi1/flexform_ds_sharing.xml</sSharing>
 		</sheets>
 	
 	

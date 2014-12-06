@@ -529,7 +529,59 @@
 	* In the new user administration users data can be deleted or erased from the database 
 	* In the new user administration users can be merged into a specified user
 	* New status messages after bulk actions report what has been processed (comments or users)
-	* Fixed bug "add a comment on level 0 and after this you try add another comment, again on level 0. The events remain unbound, nothing moves and the 2nd comment can only be added after reloading the page."
+	* Fixed bug "add a comment on level 0 and after this you try adding another comment, again on level 0. The events remain unbound, nothing moves and the 2nd comment can only be added after reloading the page."
 	* Fixed bug "Notification Text-E-Mails says there is an attachment when there is none"
 	* Fixed bug "New notification options only work if user posts comment logged in, it does not work after approval by Admin-E-Mails"
 	* Fixed bug "Comment rating with ratings.useLikeDislikeStyle = 1 left over an "<" at the end of the AJAX reply, but only under UNIX/LINUX hosts" 
+
+2014-12-06  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 6.0.0	
+	* Added TypoScript option advanced.commentReviews. When set to 1, then commenting is considered as reviewing: A review is a rating with a comment.
+	  Only logged in users can write reviews. Reviews can be commented and rated like normal comments. 
+	  At the base reviews comments work like normal comments, but the rules how they are handled are different.
+	* For reviews you can specify a different crop length for the texts than for comments. Default is at 512 characters. TypoScript option advanced.reviewCropLength
+	* Existing comment streams can be redefined as reviews
+	* The review comment can be edited or deleted. (the vote can't be deleted)
+	* In reviewComment-mode the comment of the current user is always displayed on top of the list.
+	* Added pluginmode 6: user center. The user center shows all comments and ratings by the current user (must be logged in)
+	* TypoScript-Setup options section usercenter holds options regarding the new user center
+	* TypoScript option usercenter.uCLists = : Lists to be distinguished in user center. comma-separated list. Possible values: Reviews, Plugintotablemap, Commentsoncomments
+	* TypoScript option usercenter.commentsPerUCList = 3: Comments per list: Number of comments shown in the plugin in Usercenter per list
+	* TypoScript option usercenter.userCenterPageID = : ID of your page with userCenter, link shown in menu on comments list
+	* TypoScript option usercenter.maxItemsPerUCList = 50: Items per list: Maximal number of items shown per list
+	* TypoScript option maxItemAgeUCList = 365: Maximal age of items shown in list: Items older than this number (in days) won't be shown in the lists
+	* ratings.disableIPcheck behaves different now. If disabled, then users can change their votes, subsequent votes are not taken as new votes, but as change of the existing vote
+	* With this we added a feature to protect the site from "vote attacks": 3 TypoScript options allow to specify:
+	  1. How long the user is prevented from rating once he exceeded the allowed limit (in minutes): ratings.allowedNumberOfRatingsExceededBlocktime = 13
+	  2. The number of ratings that can exceed the limit: ratings.allowedNumberOfRatings = 10
+	  3. The time to be considered (in minutes): ratings.timeForAllowedNumberOfRatings = 2
+	  You can say: If a user made 10 ratings in 2 minutes, then he will be blocked for the next 13 minutes from rating.	  
+	* ratings.ratingImageWidth is no longer needed. It's determined now automatically from file toctoc_comments_myrating_star.png in the current themes img directory
+	* In commentReview-mode disableIPcheck is set to 1 in background, so the vote on an existing review can be changed by the user. 
+	* sharing.sharePageURL = : URL of page you like to share, useful if current page sometimes is loaded with different URL-Parameters, or http/https. 
+	  With this you can fix the page to share to a fixed value. Available in Plugin.
+	* The sharing options in TypoScript option section advanced is depreciated. The sharing options are now all in new section sharing. 
+	  Existing options under advanced will still work, if they differ from the default value they will be token into account.	
+	* In the backend plugin the sharing options have an own section now, section advanced is cleaned out. On updates the old values remain in the plugin, even if one does not see them in the backend. 
+	  They are overwritten by new values from section sharing if the new values differ from TypoScript default-setup. 
+	* Updated list of the static IP-Block list. (10/17/2014)
+	* Revised the boxmodels. Basic logics for the rating stars in now in boxmodel_system.txt and does not need to be touched anymore for different displays of rating stars in user-boxmodels.
+	* Added Review stars, they are a bit bigger than the rating stars but they have the same designs like the rating stars
+	* Changing number of rating stars as well as ratingImageWidth are carried out now totally thru code (boxmodel_system.txt). 
+	  Make sure the according theme-options are setup correctly as well for a proper display of the rating system.
+	* New Icons for popularity sort
+	* Added commenttitle to comment edit
+	* Added option theme.boxmodelButtonPreserve = 0. It's for Button design: Uses the old default - layouted(0) - or non layouted(1) design for form buttons.
+	* Removed Gravatars for anonymous users (does not yet work properly), gravatars for logged in users did not change.
+	* Removed pdf-Manual from TER-distribution, it's available on https://www.toctoc.ch/toctoc_comments_doc.html
+	* Added TypoScript-Setup-option requiredMark = *, dropped Subpart ###REQUIRED_FIELD###
+	* Fixed JS errors in IE when sorting comments and on comments browse: Background: The tag attributes order in DOM differs from the order in HTML under IE,
+      this made fail some JavaScript-functions (split), because the split argument did not match the DOM. example: var.split('<div id="') fails if class attribute is present, 
+      because in the DOM the HTML is represented as '<div class="xxx" id="' even if original HTML is like '<div id="'.
+	* Fixed missing margin in sharing design 0 and 1s total counter
+	* Fixed problem with DB Compare (DROP Index and then ADD Index again for 2 or 3 tables) 
+	* Fixed SQL-Error when advanced.showCountCommentViews = 1, no comments present and [SYS][sqlDebug] = 1
+	* Fixed tca definition of table tx_toctoccomments_plugincachecontrol, it caused the search of TYPO3 backend to make SQL errors
+	* Fixed missing rsa-JS-files when using AJAX-login and a page was opened in loggedin mode, on the page the logout works, but relogin can fail.
+	* Fixed problems with editing comments: double space from "show more" is eliminated. Cropped links were not retransformed in full links.
+	

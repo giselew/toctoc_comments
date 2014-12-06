@@ -29,6 +29,7 @@ CREATE TABLE tx_toctoc_comments_comments (
 	attachment_subid  int(11) DEFAULT '0' NOT NULL,
 	parentuid int(11) unsigned DEFAULT '0' NOT NULL, 
 	tx_commentsresponse_response text NOT NULL,
+	isreview int(1) DEFAULT '0' NOT NULL,
 	PRIMARY KEY (uid),
 	KEY parent (pid),
 	KEY fastaccess (deleted,hidden,approved,pid,external_ref_uid,crdate),
@@ -63,6 +64,7 @@ CREATE TABLE tx_toctoc_comments_feuser_mm (
 	pagetstampidislike int(11) unsigned DEFAULT '0' NOT NULL,
 	pagetstampmyrating int(11) unsigned DEFAULT '0' NOT NULL,
 	pagetstampseen int(11) unsigned DEFAULT '0' NOT NULL,
+	isreview int(1) DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (reference,reference_scope,toctoc_comments_user,pid),
 	KEY uid (uid),
@@ -138,9 +140,10 @@ CREATE TABLE tx_toctoc_ratings_data (
 	rating decimal(19,6) DEFAULT '0.000000' NOT NULL,
 	vote_count decimal(19,6) DEFAULT '0.000000' NOT NULL,
 	reference_scope int(11) DEFAULT '0' NOT NULL,
+	isreview int(1) DEFAULT '0' NOT NULL,
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY reference (reference, reference_scope)
+	KEY reference (reference,reference_scope)
 );
 
 #
@@ -157,7 +160,7 @@ CREATE TABLE tx_toctoc_ratings_iplog (
 	reference_scope int(11) DEFAULT '0' NOT NULL,
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY ip_check (reference, reference_scope, ip)
+	KEY ip_check (reference,reference_scope,ip)
 );
 
 #
@@ -305,7 +308,7 @@ CREATE TABLE tx_toctoc_comments_ipbl_static (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY ipaddr (ipaddr)
+	KEY ipaddr (ipaddr(22))
 );
 
 #

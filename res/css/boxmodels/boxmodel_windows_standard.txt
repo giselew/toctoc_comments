@@ -9,17 +9,9 @@ Selectors
 ***
 
 Boxmodel
-Linehight ratings zone
-CSS
-line-height: 16px;
-Selectors
-.tx-tc-rts
-***
-
-Boxmodel
 text of comment seen and date
 CSS
-+float:left;
++float: left;
 Selectors
 .tx-tc-text .tx-tc-overrating-date .tx-tc-rts-li
 ***
@@ -33,14 +25,6 @@ Selectors
 ***
 
 Boxmodel
-margin firstvote
-CSS
-margin: 0 0 -4px;
-Selectors
-.tx-tc-firstvote
-***
-
-Boxmodel
 margin comment date
 CSS
 +margin: 0;
@@ -51,29 +35,11 @@ Selectors
 ***
 
 Boxmodel
-margin rating stars
-CSS
-top: 0;
-Selectors
-.tx-tc-rts-dp
-***
-
-Boxmodel
 Topratings margins rating stars2
 CSS
 +left: 0;
-CSS
-margin: -6px 0 0;
 Selectors
 .tx-tc-trt-cts-article .tx-tc-rts
-***
-
-Boxmodel
-Margin of voting stars if design 1 is active
-CSS
-+margin: -7px 0 0;
-Selectors
-.tx-tc-overrating-voting .tx-tc-rts-dp
 ***
 
 Boxmodel
@@ -96,24 +62,6 @@ Selectors
 .tx-tc-tooltip
 .tx-tc-tooltip2
 .tx-tc-tooltipemoji
-***
-
-Boxmodel
-line-height scopetitle
-CSS
-line-height: 22px;
-Selectors
-.tx-tc-scopetitle, .tx-tc-scopetitlebold
-***
-
-Boxmodel
-Margin of voting stars if design 1 is active
-CSS
-+margin: 1px 0 0;
-CSS
-+float: left;
-Selectors
-div.tx-tc-ct-box div.tx-tc-text-top div.tx-tc-atrts-dp div.tx-tc-rts-area div.tx-tc-rts-container div.tx-tc-rts-li
 ***
 
 Boxmodel   
@@ -270,7 +218,7 @@ div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-wpp, div.tx-tc-ct-box div.t
 ***
 
 Boxmodel
-Float of atachement images
+Float of attachment images
 CSS
 +float: left;
 Selectors
@@ -291,7 +239,7 @@ Selectors
 Boxmodel
 Padding overrating-date in comments
 CSS
-+margin: 0;
++margin: 0 4px 0 0;
 Selectors
 .tx-tc-overrating-date .tx-tc-ctdate
 .tx-tc-overrating-date .tx-tc-commentviews
@@ -321,35 +269,6 @@ margin-top: 1px;
 Selectors
 .tx-tc-ct-box .tx-tc-ct-box-cttxt .tx-tc-myrts-dp .tx-tc-myrts-ilke
 .tx-tc-ct-box .tx-tc-ct-box-cttxt .tx-tc-myrts-dp .tx-tc-myrts-disilke
-***
-
-Boxmodel
-Commentsbox ilike margin
-CSS
-margin: 0;
-Selectors
-.tx-tc-myrts-ilke
-.tx-tc-myrts-disilke
-***
-
-
-Boxmodel
-disilke img position
-CSS
-margin: 0 4px 0 2px;
-CSS
-+padding: 3px 0 0;
-Selectors
-.tx-tc-myrts-disilke img
-***
-
-Boxmodel
-Margin of ilikes depends on boxmodelLineHeight16
-CSS
-margin: 0px 0 0 2px;
-margin: {boxmodelLineHeightHalf}px 4px 0 2px;
-Selectors
-.tx-tc-myrts-ilke img
 ***
 
 Boxmodel
@@ -484,6 +403,16 @@ Selectors
 ***
 
 Boxmodel
+reviews on the left
+CSS
+float: left;
+CSS
++float: left;
+Selectors
+.tx-tc-rws-area .tx-tc-rts-li
+***
+
+Boxmodel
 no border under comment
 CSS
 border-style: none;
@@ -519,16 +448,6 @@ Selectors
 *** 
 
 Boxmodel
-display of ratings zone
-CSS
-margin: 0 0 0 -2px;
-CSS
-+line-height: 23px;
-Selectors
-.tx-tc-atrts-dp .tx-tc-rts
-***
-
-Boxmodel
 sharrre area
 CSS
 margin: 0;
@@ -537,26 +456,32 @@ Selectors
 ***
 
 Boxmodel
--? margin of my ratings text
+Margin of ilikes depends on ratingMarginTop
 CSS
-margin: -22px;
+margin: 0px 0 0 2px;
+margin: 1+{ratingMarginTop}px 6px 0;
 Selectors
-.tx-tc-myrts-text
+.tx-tc-myrts-ilke img, .tx-tc-myrts-ilke .tx_toctoc_comments_static_ilike img, img.tx-tc-trt-rating-like-only
 ***
 
 Boxmodel
--? margin of my ratings text
+Margin of ilikes depends on ratingMarginTop
 CSS
-height: 22px;
+margin: 0px 0 0 2px;
+margin: {mrtsdlko}px 6px 0 0;
+Rules
+{mrtsdlko}=1+{ratingMarginTop}
 Selectors
-.tx-tc-rt-dp-wrap
+.tx-tc-myrts-ilke img, .tx-tc-myrts-ilke .tx_toctoc_comments_static_ilike img, img.tx-tc-trt-rating-like-only
 ***
 
 Boxmodel
--? margin of my ratings text
+Margin of ilikes depends on ratingMarginTop
 CSS
-margin: -1px 0 0 1px;
+margin: 2px 0 -2px 0;
+margin: {mrtsdl}px 6px 0;
+Rules
+{mrtsdl}=3+{ratingMarginTop}
 Selectors
-.tx-tc-rt-dp-wrap
-.tx-tc-atrts-dp .tx-tc-myrts-myrt
+.tx-tc-myrts-disilke img, .tx-tc-myrts-disilke .tx_toctoc_comments_static_ilike img
 ***

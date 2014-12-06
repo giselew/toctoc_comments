@@ -3,7 +3,7 @@ additional css for the reply line
 CSS
 +display: table;
 CSS
-+width: 100%;
++width: 99%;
 CSS
 +margin: -4px 4px 2px;
 Selectors
@@ -26,14 +26,6 @@ CSS
 line-height: 22px;
 Selectors
 .toctoc-comments-pi1
-***
-
-Boxmodel
-Linehight ratings zone
-CSS
-line-height: 16px;
-Selectors
-.tx-tc-rts
 ***
 
 Boxmodel
@@ -61,14 +53,6 @@ Selectors
 ***
 
 Boxmodel
-margin firstvote
-CSS
-margin: 0 0 -4px;
-Selectors
-.tx-tc-firstvote
-***
-
-Boxmodel
 margin comment date
 CSS
 +margin: 0;
@@ -76,24 +60,6 @@ CSS
 +top: 0;
 Selectors
 .tx-tc-ct-box .tx-tc-text-top .tx-tc-rts-dp
-***
-
-Boxmodel
-Topratings margins rating stars2
-CSS
-+left: 0;
-CSS
-margin: -6px 0 0;
-Selectors
-.tx-tc-trt-cts-article .tx-tc-rts
-***
-
-Boxmodel
-Margin of voting stars if design 1 is active
-CSS
-+margin: -7px 0 0;
-Selectors
-.tx-tc-overrating-voting .tx-tc-rts-dp
 ***
 
 Boxmodel
@@ -118,18 +84,9 @@ Selectors
 .tx-tc-tooltipemoji
 ***
 
-Boxmodel
-line-height scopetitle
-CSS
-line-height: 22px;
-Selectors
-.tx-tc-scopetitle, .tx-tc-scopetitlebold
-***
 
 Boxmodel
 Margin of voting stars if design 1 is active
-CSS
-+margin: 1px 0 0;
 CSS
 +float: left;
 Selectors
@@ -485,8 +442,6 @@ Selectors
 Boxmodel
 top ilikes on the right
 CSS
-float: right;
-CSS
 margin-bottom: -4px;
 CSS
 margin-top: 1px;
@@ -522,14 +477,6 @@ Selectors
 ***
 
 Boxmodel
-margin-top
-CSS
-margin-top: 4px;
-Selectors 
-.tx-tc-myrts-dp, .tx-tc-atrts-ilike-dp
-*** 
-
-Boxmodel
 display of ratings zone
 CSS
 margin: 0 0 0 -2px;
@@ -548,26 +495,29 @@ Selectors
 ***
 
 Boxmodel
--? margin of my ratings text
+UC Panel width area
 CSS
-margin: -22px;
+max-width: 240px;
 Selectors
-.tx-tc-myrts-text
+.tx-tc-ct-uc
 ***
 
 Boxmodel
--? margin of my ratings text
+Margin of ilikes depends on ratingMarginTop
 CSS
-height: 22px;
+margin: 2px 0 -2px 0;
+margin: {ratingMarginTop}px 0 0 0;
 Selectors
-.tx-tc-rt-dp-wrap
+.tx-tc-myrts-disilke img, .tx-tc-myrts-disilke .tx_toctoc_comments_static_ilike img
 ***
 
 Boxmodel
--? margin of my ratings text
+Margin of ilikes depends on ratingMarginTop
 CSS
-margin: -1px 0 0 1px;
+margin: 2px 0 -2px 0;
+margin: {mrtsdisl}px 0 0 0;
+Rules
+{mrtsdisl}=-3+{ratingMarginTop}
 Selectors
-.tx-tc-rt-dp-wrap
-.tx-tc-atrts-dp .tx-tc-myrts-myrt
+.tx-tc-myrts-disilke img, .tx-tc-myrts-disilke .tx_toctoc_comments_static_ilike img
 ***

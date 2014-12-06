@@ -72,6 +72,7 @@
                                     <div class="tx-tc-ct-box-cttxt###TIPPJS###">
                                         ###DENOTIFY_LINK######DELETE_LINK######EDIT_LINK###
                                         <a id="tx-tc-ct-id-###COMMENT_ID###" name="tx-tc-ct-###COMMENT_ID###"></a>
+                                        ###COMMENTREVIEW###
                                         ###OVERCOMMENTRATINGS###<p id="tx-tc-ct-box-cttxt-###COMMENT_ID###" class="tx-tc-text###STYLEBOX###">###NAMEPART######BROVERCOMMENTRATINGS######COMMENT_CONTENT###</p>
                                         ###ATTACHMENT###
                                         <div class="tx-tc-rt">
@@ -107,7 +108,7 @@
 
 <hr />
 <!-- ###SINGLE_SUBCOMMENT### begin -->
-<div id="tx-tc-cts-ct-tx-tc-cts_###COMMENT_ID###" class="tx-tc-cts-ct-box###STYLECOMMENTBOX###  tx-tc-cts-ct-box-sc">
+<div id="tx-tc-cts-ct-tx-tc-cts_###COMMENT_ID###" class="tx-tc-cts-ct-box###STYLECOMMENTBOX### tx-tc-cts-ct-box-sc">
 	<div class="tx-tc-sortinfo tx-tc-nodisp" id="tx-tc-sortinfos_###CID###__0###COMMENT_ID###__0###SORTING###__0###SORTPOPULAR###__0###SQNUMBER###__0###POPNUMBER###"></div> 
     <div id="tx-tc-cts-ct-dp-tx-tc-cts_###COMMENT_ID###" ###HIGHLIGHTSTYLE###>
         <div class="tx-tc-cts-ct-dp tx-tc-cts-ct-dp-sc">
@@ -236,7 +237,7 @@
 
 <h4>Comment form subpart</h4>
 <!-- ###COMMENT_FORM### begin -->
-	<div class="tx-tc-pi1">
+	<div id="tx-tc-pi1-form-###REF###" class="tx-tc-pi1###REVIEWSTYLE###">
 	    <span class="tx-tc-initpreviewvrs tx-tc-nodisp" id="tx-tc-initpreviewvrs-###CID###"></span>
         <div id="tx-tc-form-###REF###" class="tx-tc-state-###LOGGEDIN###">
         <!-- ###COMMENT_FORMAJAX### start -->
@@ -266,12 +267,6 @@
         </div>
     </div>
 <!-- ###COMMENT_FORM### end -->
-
-<hr size="1" />
-<h4>Required field mark</h4>
-<!-- ###REQUIRED_FIELD### begin -->
-*
-<!-- ###REQUIRED_FIELD### end -->
 
 <hr size="1" />
 <h4>single form field</h4>
@@ -360,6 +355,7 @@
 	        <textarea autocomplete="off" class="tx-tc-ctinput-textarea" cols="42" rows="1" placeholder="###TEXT_ADD_COMMENT###" name="toctoc_comments_pi1[content]" id="toctoc_comments_pi1_contenttextbox_###CID###">###CONTENT###</textarea>
 			###SMILIESSELECTOR###
 			<span class="tx-tc-wtrmrk-tcnt tx-tc-nodisp" id="tx-tc-wtrmrk-tcnt-###CID###__0###ENCTEXT_ADD_COMMENT###"></span>
+			###REVIEWACTION###
 		</div>
 	</div>
 	<div class="tx-tcfh32 tx-tc-nodisp" id="formhider-###CID###">
@@ -664,6 +660,20 @@
         rel="nofollow" class="tx-tc-count">###COMMENTS_COUNT_NONE###</a></span>
 <!-- ###TTNEWS_COMMENT_NONE_SUB### end -->
 
+<h4>Comment counter for use in tx_news, with text</h4>
+<!-- ###TXNEWS_COMMENT_COUNT_SUB### begin -->
+    <span class="tx-tc-count-wrap"><a
+        href="###COMMENTS_LINK####tx-tc-cts-atx_news_domain_model_news_###UID###"
+        rel="nofollow" class="tx-tc-count">###COMMENTS_COUNT###</a></span>
+<!-- ###TXNEWS_COMMENT_COUNT_SUB### end -->
+
+<h4>Comment counter for use in tx_news, no text</h4>
+<!-- ###TXNEWS_COMMENT_NONE_SUB### begin -->
+    <span class="tx-tc-count-wrap"><a
+        href="###COMMENTS_LINK####tx-tc-cts-atx_news_domain_model_news_###UID###"
+        rel="nofollow" class="tx-tc-count">###COMMENTS_COUNT_NONE###</a></span>
+<!-- ###TXNEWS_COMMENT_NONE_SUB### end -->
+
 <h4>Display of Erros</h4>   
 <!-- ###ERROR_SUB### begin -->
     <div class="tx-tc-errors">
@@ -728,6 +738,44 @@
 	<!-- ###SINGLE_RECENTCOMMENT### end -->
 </div>
 <!-- ###RECENTCOMMENT_LIST### end -->
+
+<!-- ###USERCENTER### begin -->
+<div class="tx-tc-title tx-tc-title-usercenter">###USERCENTEROFTITLE### ###USERCENTERUSER###</div>
+###USERCENTERCONTENT###
+<!-- ###USERCENTER### end -->
+
+<!-- ###USERCENTER_DROP_DOWN### begin -->
+<div class="tx-tc-dropdown tx-tc-width100 tx-tc-textlink" id="tx-tc-dropdown_###DROPDOWNID###" title="###DROPDOWNTIPTEXT###">
+	<div class="tx-tc-fleft tx-tc-width88 tx-tc-dropdowntitle">###TITLE###</div>
+		<div class="tx-tc-ct-box-ctclose">
+			<span id="tx-tc-dropupdown_###DROPDOWNID###" class="tx-tc-dropupdown tx-tc-Drop###DROPUPORDOWN###Button">
+			</span>
+		</div>
+	</div>
+<div class="tx-tc-opendropdown tx-tc-width100" id="tx-tc-dropupdown_###DROPDOWNID###-content">###CONTENT###</div>
+<!-- ###USERCENTER_DROP_DOWN### end -->	
+
+<!-- ###USERCENTER_DROPDOWNSHOWMORE### begin -->
+<div class="tx-tc-opendropdown tx-tc-width100" id="tx-tc-dropupdown_rc###DROPDOWNID###-content" style="display: none;">###CONTENT###</div>
+<div class="tx-tc-dropdown tx-tc-width100 tx-tc-textlink" id="tx-tc-dropdown_rc###DROPDOWNID###" title="###DROPDOWNTIPTEXT###">
+	<div class="tx-tc-fleft tx-tc-width88 tx-tc-showmore" id="tx-tc-dropdownshowmore_rc###DROPDOWNID###">###TITLE###</div>
+	<div class="tx-tc-ct-box-ctclose">
+		<span class="tx-tc-dropupdown tx-tc-Drop###DROPUPORDOWN###Button" id="tx-tc-dropupdown_rc###DROPDOWNID###">
+		</span>
+	</div>
+</div>
+<!-- ###USERCENTER_DROPDOWNSHOWMORE### end -->			
+
+<!-- ###USERCENTERCOMMENT_LIST### begin -->
+<div class="tx-tc-box-recent-cts">
+	<!-- ###SINGLE_USERCENTERCOMMENT### begin -->
+	<div class="tx-tc-recent-cts-article" id="tx-tc-recent-cts-article-###RCID###">
+		<div class="tx-tc-recent-cts-entry">###REVIEW######AUTHOR######COMMENT_CONTENT######RATING###</div>
+		<div class="tx-tc-recent-cts-title">###TITLE### &#124; ###COMMENT_DATE###</div>
+	</div>
+	<!-- ###SINGLE_USERCENTERCOMMENT### end -->
+</div>
+<!-- ###USERCENTERCOMMENT_LIST### end -->
 
 <!-- ###RECENTNO_COMMENTS### begin -->
 <div class="tx-tc-box-recent-cts">
@@ -885,7 +933,7 @@
 
 <!-- ###SHARRREDESIGN2### begin -->
 
-<div id="sharemearea###CID###" class="tx-tc-sharrrearea-popup">
+<div id="sharemearea###CID###" class="tx-tc-sharrrearea-popup###ISREVIEWCLASS###">
     ###SHAREICON###<div id="shareme###CID###" class="shrdes2" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###">
     <span class="tx-tc-working-s" title="###TXTLOADING###"></span></div>
 </div>

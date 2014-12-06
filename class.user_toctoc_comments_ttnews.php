@@ -112,7 +112,7 @@ class user_toctoc_comments_ttnews {
 		}
 
 		if ($poscommentscount > 0) {
-			$markerArray['###TX_COMMENTS_COUNT###'] = 'poscommentscount: '.$poscommentscount . ' $beginlist: '.$beginlist. ' $$endlist: '.$endlist;
+			$markerArray['###TX_COMMENTS_COUNT###'] = 'poscommentscount: '.$poscommentscount . ' $beginlist: '.$beginlist. ' $endlist: '.$endlist;
 				if (($poscommentscount > $beginlist) && ($poscommentscount < $endlist)) {
 				switch ($pObj->theCode) {
 					case 'LATEST':

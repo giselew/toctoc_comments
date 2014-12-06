@@ -40,51 +40,12 @@ Selectors
 ***
 
 Boxmodel
-Height of voting stars
-CSS
-+height: 26px;
-Selectors
-.tx-tc-cts-dp .tx-tc-cts-ct-dp .tx-tc-ct-box .tx-tc-ct-box-cttxt .tx-tc-rt .tx-tc-rts-area .tx-tc-rts-container .tx-tc-rts-li .tx-tc-rts .tx-tc-rts-dp
-***
-
-Boxmodel
-Margin of top ratings voting stars
-CSS
-+margin-top: 2px;
-Selectors
-.tx-tc-trt-cts-article .tx-tc-rts-container
-
-Boxmodel
-voting text
-CSS
-margin: 0 4px 0 0;
-Selectors
-.tx-tc-rts-text
-***
-
-Boxmodel
-voting text on top and stars
-CSS
-+margin: 2px 0 -2px 0;
-Selectors
-.tx-tc-text-top .tx-tc-atrts-dp .tx-tc-rts-area .tx-tc-rts-container .tx-tc-rts-li
-***
-
-Boxmodel
 Push atrtstop-ilike-dp
 CSS
 margin: 0;
 Selectors
 .tx-tc-atrtstop-ilike-dp
 .tx-tc-atrtstop-ilike-dp-static
-***
-
-Boxmodel
-Margin of votingstars in top ratings
-CSS
-+top: 3px;
-Selectors
-.tx-tc-trt-rating-detail div.tx-tc-trt-rating-rating-wrap div.tx-tc-rts-container div.tx-tc-rts-li div.tx-tc-rts div.tx-tc-rts-dp
 ***
 
 Boxmodel
@@ -326,16 +287,6 @@ Selectors
 ***
 
 Boxmodel
-3 sharrre
-CSS
-+line-height: 26px;
-Selectors
-.tx-tc-atrtstop-ilike-dp-static
-.tx-tc-atrtstop-ilike-dp
-div.sharrre
-***
-
-Boxmodel
 3 Disqus customize for smaller function lines, change line-height
 CSS
 line-height: 11px;
@@ -348,19 +299,9 @@ Boxmodel
 CSS
 +font-size: 78%;
 CSS
-+line-height: 26px;
-CSS
 margin: 0;
 Selectors
 .tx-tc-atrts-ctlink
-***
-
-Boxmodel
-lineheight of ratings line in comments
-CSS
-line-height: 26px;
-Selectors
-.tx-tc-ct-box .tx-tc-ct-box-cttxt .tx-tc-rt .tx-tc-rts-area .tx-tc-rts-container .tx-tc-rts-li .tx-tc-rts
 ***
 
 Boxmodel
@@ -591,14 +532,6 @@ div.tx-tc-text-top div.tx-tc-myrts-dp
 ***
 
 Boxmodel
-Topratings margins rating stars2
-CSS
-margin: -3px 0 0;
-Selectors
-.tx-tc-trt-cts-article .tx-tc-rts
-***
-
-Boxmodel
 Minimal height of an Item entry
 CSS
 +min-height: 40px;
@@ -610,18 +543,8 @@ Boxmodel
 Topratings left rating stars2
 CSS
 +left: 0;
-CSS
-margin: 1px 0 0 4px;
 Selectors
 .tx-tc-trt-cts-article .tx-tc-rts
-***
-
-Boxmodel
-Margins ratingstars
-CSS
-margin: -1px 0 0;
-Selectors
-.tx-tc-rts-dp
 ***
 
 Boxmodel
@@ -638,14 +561,6 @@ CSS
 line-height: 1.4em;
 Selectors
 .tx-tc-secondbr-articlerating
-***
-
-Boxmodel
-Margin of voting stars if design 1 is active
-CSS
-+margin: -2px 0 0;
-Selectors
-.tx-tc-overrating-voting .tx-tc-rts-dp
 ***
 
 Boxmodel
@@ -725,4 +640,24 @@ Selectors
 .tx-tc-tooltip
 .tx-tc-tooltip2
 .tx-tc-tooltipemoji
+***
+
+Boxmodel
+Margin of ilikes depends on ratingMarginTop
+CSS
+margin: 2px 0 -2px 0;
+margin: {ratingMarginTop}px 0 0 0;
+Selectors
+.tx-tc-myrts-disilke img, .tx-tc-myrts-disilke .tx_toctoc_comments_static_ilike img
+***
+
+Boxmodel
+Margin of ilikes depends on ratingMarginTop
+CSS
+margin: 2px 0 -2px 0;
+margin: {mrtsdisl}px 0 0 0;
+Rules
+{mrtsdisl}=-3+{ratingMarginTop}
+Selectors
+.tx-tc-myrts-disilke img, .tx-tc-myrts-disilke .tx_toctoc_comments_static_ilike img
 ***

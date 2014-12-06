@@ -59,20 +59,20 @@ require_once(t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments
  *  177:     public function cleanupfup($previewid, $conf, $originalfilename)
  *  191:     public function handleCommentatorNotifications($ref, $conf = NULL, $notfromeID =FALSE, $pid)
  *  209:     public function handleeID($ref, $conf, $messagetodisplay, $returnurl)
- *  229:     public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $commentspics, $scopeid=0)
- *  243:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $commentid)
- *  257:     public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
+ *  230:     public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $commentspics, $scopeid=0, $isReview = 0)
+ *  251:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $commentid)
+ *  265:     public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
 			$feuserid = 0, $cmd, $piVars, $cid, $datathis, $AjaxData, $userpic, $commentspics, $check='',
 			$extref='', $tctreestate  = NULL, $commentreplyid=0, $isrefresh=0, $confSess = array())
- *  320:     public function updateComment($conf, $ctid, $content, $pid, $plugincacheid)
- *  332:     public function previewcomment($data, $conf)
- *  346:     public function isVoted($ref, $scopeid, $feuser, $fromAjax)
- *  356:     public function initCaches()
- *  367:     public function enableFields($table)
- *  379:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
- *  388:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
- *  403:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- *  426:     public function createLinks($text, $conf = NULL)
+ *  329:     public function updateComment($conf, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
+ *  341:     public function previewcomment($data, $conf)
+ *  355:     public function isVoted($ref, $scopeid, $feuser, $fromAjax)
+ *  365:     public function initCaches()
+ *  376:     public function enableFields($table)
+ *  388:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
+ *  397:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ *  412:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ *  435:     public function createLinks($text, $conf = NULL)
  *
  * TOTAL FUNCTIONS: 18
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -226,10 +226,18 @@ class toctoc_comments_api {
 	 * @param	int		$cid: content element id.
 	 * @param	[type]		$commentspics: ...
 	 * @param	int		$scopeid: ...
+	 * @param	[type]		$isReview: ...
 	 * @return	string		Generated HTML
 	 */
-	public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $commentspics, $scopeid=0) {
-		$html = $this->lib->getRatingDisplay($ref, $conf, $fromAjax, $pid, $returnasarray, $feuserid, $cmd, $this, $cid, FALSE, $commentspics, $scopeid);
+	public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $commentspics, $scopeid=0, $isReview = 0) {
+
+		$fromcomments= FALSE;
+
+		if ((str_replace('tx_toctoc_comments_', '', $ref) != $ref)) {
+			$fromcomments= TRUE;
+		}
+
+		$html = $this->lib->getRatingDisplay($ref, $conf, $fromAjax, $pid, $returnasarray, $feuserid, $cmd, $this, $cid, $fromcomments, $commentspics, $scopeid, $isReview);
 		return $html;
 	}
 
@@ -317,10 +325,11 @@ class toctoc_comments_api {
 	 * @param	int		$pid: page id
 	 * @param	int		$plugincacheid: ...
 	 * @param	[type]		$plugincacheid: ...
+	 * @param	[type]		$commenttitle: ...
 	 * @return	boolean		TRUE if item was voted
 	 */
-	public function updateComment($conf, $ctid, $content, $pid, $plugincacheid) {
-		$retstr = $this->lib->updateComment($conf, $this, $ctid, $content, $pid, $plugincacheid);
+	public function updateComment($conf, $ctid, $content, $pid, $plugincacheid, $commenttitle = '') {
+		$retstr = $this->lib->updateComment($conf, $this, $ctid, $content, $pid, $plugincacheid, $commenttitle);
 		return $retstr;
 	}
 

@@ -11,7 +11,7 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Basic//04; type=string; label=Template file: Template file for commenting system
 	templateFile = EXT:toctoc_comments/res/template/toctoccomments_template.html
 
-	# cat=plugin.tx_toctoccomments_pi1: Basic//05; type=int+; label=Comments per page: Number of comments
+	# cat=plugin.tx_toctoccomments_pi1: Basic//05; type=int+; label=Comments per plugin: Number of comments shown in the plugin in COMMENTS
 	commentsPerPage = 3
 	
 	# cat=plugin.tx_toctoccomments_pi1: Basic//06; type=int+; label=RequiredComment length: Required length for a comment
@@ -22,6 +22,9 @@ plugin.tx_toctoccomments_pi1 {
 	
 	# cat=plugin.tx_toctoccomments_pi1: Basic//08; type=int+; label=Comment cropping: After this length a comment is cropped at initial display
 	commentCropLength = 256
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic//09; type=int+; label=Review-comment cropping: After this length a comment used as a review is cropped at initial display
+	reviewCropLength = 512
 	
 	# cat=plugin.tx_toctoccomments_pi1: Basic//10; type=int+; label=Size for user images: Size of user image in pixels. Image will be cropped from the center of the original image (square), 18 to 96 is allowed.
 	UserImageSize = 32	
@@ -67,7 +70,10 @@ plugin.tx_toctoccomments_pi1 {
 
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//02; type=options[date()=date,strftime()=strftime]; label=Date format mode:If "date()", use date() PHP function (traditional default). If "strftime()", use strftime() function (better international support)
 	dateFormatMode = date
-
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//04; type=boolean; label=Commenting works in Review mode (read manual about Reviews)
+	commentReview = 0
+	
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//03; type=string; label=Closes Commenting after some time:Comments can be automatically closed after X months, days or hours. Specify integer number followed by m, d or h. Empty means "no limit"
 	closeCommentsAfter = 
 
@@ -131,43 +137,43 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//19; type=string; label=TemplaVoila-field with comments:Name of the field defined in templavoila (if used) where the comments-plugins goes. Check your templavoila page-template.
 	UseTemplavoilaField = field_content
 	
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//20; type=int; label=colPos for the plugin:Columnposition (colPos) where the plugins are inserted. Important if no templavoila used. Can be left on 0, most of the times.
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//00; type=int; label=colPos for the plugin:Columnposition (colPos) where the plugins are inserted. Important if no templavoila used. Can be left on 0, most of the times.
 	UseMainColPos = 0
 
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//21; type=string; label=Path to feuser-images:Path where the feuser-images are stored. Normally uploads/pics/.
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//01; type=string; label=Path to feuser-images:Path where the feuser-images are stored. Normally uploads/pics/.
 	FeUserImagePath = uploads/pics/
 	
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//22; type=string; label=db field for the user picture:Database field in fe_users where toctoc_comments should look for a user pic.
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//02; type=string; label=db field for the user picture:Database field in fe_users where toctoc_comments should look for a user pic.
 	FeUserDbField = image
 
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//23; type=boolean; label=Use Sharing:Use of Share-Link for Facebook, Google and Twitter
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//03; type=boolean; label=Use Sharing:Use of Share-Link for Facebook, Google and Twitter
 	useSharing = 1
 	
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//24; type=options[Default popup=0,Buttons popup=1,Default open=2,Buttons open=3,Add This small=4]; label=Use Sharingdesign: Use Design with (default) or without buttons
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//04; type=options[Default popup=0,Buttons popup=1,Default open=2,Buttons open=3,Add This small=4]; label=Use Sharingdesign: Use Design with (default) or without buttons
 	useSharingDesign = 0
 	
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//25; type=boolean; label=Don't Use facebook sharing :Use of Share-Link for Facebook is suppressed
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//05; type=boolean; label=Don't Use facebook sharing :Use of Share-Link for Facebook is suppressed
 	dontUseSharingFacebook = 0
 
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//26; type=boolean; label=Don't Use Googleplus sharing :Use of Share-Link for Google+ is suppressed
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//06; type=boolean; label=Don't Use Googleplus sharing :Use of Share-Link for Google+ is suppressed
 	dontUseSharingGoogle = 0
 
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//27; type=boolean; label=Don't Use Twitter sharing :Use of Share-Link for Twitter is suppressed
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//07; type=boolean; label=Don't Use Twitter sharing :Use of Share-Link for Twitter is suppressed
 	dontUseSharingTwitter = 0
 
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//28; type=boolean; label=Don't Use LinkedIn sharing :Use of Share-Link for LinkedIn is suppressed
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//08; type=boolean; label=Don't Use LinkedIn sharing :Use of Share-Link for LinkedIn is suppressed
 	dontUseSharingLinkedIn = 0
 
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//29; type=boolean; label=Don't Use Stumbleupon sharing :Use of Share-Link for Stumbleupon is suppressed
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//09; type=boolean; label=Don't Use Stumbleupon sharing :Use of Share-Link for Stumbleupon is suppressed
 	dontUseSharingStumbleupon =0
 	
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//29; type=boolean; label=Don't Use PInterest sharing :Use of Share-Link for PInterest is suppressed
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//09; type=boolean; label=Don't Use PInterest sharing :Use of Share-Link for PInterest is suppressed
 	dontUseSharingPinterest = 0
 	
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//29; type=boolean; label=Don't Use Digg sharing :Use of Share-Link for Digg is suppressed
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//09; type=boolean; label=Don't Use Digg sharing :Use of Share-Link for Digg is suppressed
 	dontUseSharingDigg = 0
 	
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//29; type=boolean; label=Don't Use Delicious sharing :Use of Share-Link for Delicious is suppressed
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//09; type=boolean; label=Don't Use Delicious sharing :Use of Share-Link for Delicious is suppressed
 	dontUseSharingDelicious = 0
 	
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//30; type=boolean; label=Don't Use Add This more button :Use of additional Share-Links with Add This is suppressed
@@ -184,6 +190,9 @@ plugin.tx_toctoccomments_pi1 {
 	
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//31; type=string; label=optional text for shared item on Twitter, as shown in the share-message of the social network sharers
 	shareDataText =	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//31; type=string; label=Page URL you want to share. If left empty the current URL will be shared
+	sharePageURL =	
 			
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//32; type=string; label=Pages with a record to display :When a plugin is linked to a content element on a page, but the page displays records you should indicate the page-ids here as a comma separated list. Used by recent comments and report bad comments forms. 
 	recentcommentsPluginpages =
@@ -389,9 +398,6 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Ratings//04; type=int; label=Maximal rating value: Warning! this value must not be changed after ratings start working or results will be incorrect! Maximum value is 11
 	maxValue = 5
 	
-	# cat=plugin.tx_toctoccomments_pi1: Ratings//05; type=int+; label=Rating image width: The width of a rating star in pixels
-	ratingImageWidth = 11
-	
 	# cat=plugin.tx_toctoccomments_pi1: Ratings//06; type=options[Auto=auto,Force static=static]; label=Display mode: Force static display of ratings
 	mode = auto
 	
@@ -451,6 +457,15 @@ plugin.tx_toctoccomments_pi1 {
 	
 	# cat=plugin.tx_toctoccomments_pi1: Ratings//25; type=boolean; label=Show short form for Like and Dislike Features on top of the plugin: Like and Dislike on top of the plugin are displayed in short form
 	useShortTopLikes = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//30; type=int+; label=Maximum number of ratings allowed in a certain time: After this number of ratings the system checks if they have been made in the time allowed for this. If it was faster than this time, the user is prevented from making ratings for some time
+	allowedNumberOfRatings = 10	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//31; type=int+; label=Time in minutes that is allowed for the allowed number of ratings: If more ratings than allowed have been made in this time, the user will be prevented from placing new ratings for a certain time
+	timeForAllowedNumberOfRatings = 2	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//32; type=int+; label=Time in minutes that a user is blocked if he made to many ratings - the wait penalty: After the last rating made the user has to wait for this time until he will be able to make more ratings or change his ratings
+	allowedNumberOfRatingsExceededBlocktime = 13	
 	
 	# cat=plugin.tx_toctoccomments_pi1: Attachments//01; type=boolean; label=Use Attachment Feature Webpage preview: Webpage previews are allowed
 	useWebpagePreview = 1
@@ -596,8 +611,11 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Theme//11; type=int+; label=Size of Form Inputfields, 12 - 40.
 	boxmodelInputFieldSize = 35
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//12; type=boolean; label=Inputfield design: Uses the old default - layouted(0) - or non layouted(1) design for form input field and labels.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//120; type=boolean; label=Inputfield design: Uses the old default - layouted(0) - or non layouted(1) design for form input field and labels.
 	boxmodelLabelInputPreserve = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//121; type=boolean; label=Button design: Uses the old default - layouted(0) - or non layouted(1) design for form buttons.
+	boxmodelButtonPreserve = 0
 	
 	# cat=plugin.tx_toctoccomments_pi1: Theme//13; type=string; label=responsive Steps in px: This are the window-widths in pixels when toctoc_comments changes the layout to fit in the place on the screen. Defaults are the original values from the CSS-file.
 	responsiveSteps = 350,450
@@ -645,5 +663,72 @@ plugin.tx_toctoccomments_pi1 {
 	disclaimerSystemCheck = 1
 	
 	# cat=plugin.tx_toctoccomments_pi1: dataProtect//16; type=boolean; label=Shows the software creators disclaimer in the disclaimer
-	disclaimerFromTocToc = 1	
+	disclaimerFromTocToc = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//03; type=boolean; label=Use Sharing:Use of Share-Link for Facebook, Google and Twitter
+	useSharing = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//04; type=options[Default popup=0,Buttons popup=1,Default open=2,Buttons open=3,Add This small=4]; label=Use Sharingdesign: Use Design with (default) or without buttons
+	useSharingDesign = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//05; type=boolean; label=Don't Use facebook sharing :Use of Share-Link for Facebook is suppressed
+	dontUseSharingFacebook = 0
+
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//06; type=boolean; label=Don't Use Googleplus sharing :Use of Share-Link for Google+ is suppressed
+	dontUseSharingGoogle = 0
+
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//07; type=boolean; label=Don't Use Twitter sharing :Use of Share-Link for Twitter is suppressed
+	dontUseSharingTwitter = 0
+
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//08; type=boolean; label=Don't Use LinkedIn sharing :Use of Share-Link for LinkedIn is suppressed
+	dontUseSharingLinkedIn = 0
+
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//09; type=boolean; label=Don't Use Stumbleupon sharing :Use of Share-Link for Stumbleupon is suppressed
+	dontUseSharingStumbleupon =0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//09; type=boolean; label=Don't Use PInterest sharing :Use of Share-Link for PInterest is suppressed
+	dontUseSharingPinterest = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//09; type=boolean; label=Don't Use Digg sharing :Use of Share-Link for Digg is suppressed
+	dontUseSharingDigg = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//09; type=boolean; label=Don't Use Delicious sharing :Use of Share-Link for Delicious is suppressed
+	dontUseSharingDelicious = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//10; type=boolean; label=Don't Use Add This more button :Use of additional Share-Links with Add This is suppressed
+	dontUseSharingAddThisMore = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//11; type=string; label=Add This:Your ID string for Add This, like ra-41230c846b24bb7c
+	AddThisID= 
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//11; type=string; label=optional title for sharing line, it replaces text "share this page" after the total number of users who shared
+	shareUsersTotalText =
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//11; type=boolean; label=use an icon in the sharing line
+	useShareIcon = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//11; type=string; label=optional text for shared item on Twitter, as shown in the share-message of the social network sharers
+	shareDataText =	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//11; type=string; label=Page URL you want to share. If left empty the current URL will be shared
+	sharePageURL =	
+		
+	# cat=plugin.tx_toctoccomments_pi1: userCenter//01; type=string; label=Comment-Lists to be distinguished in user center. comma-separated list. Possible values: Reviews, Plugintotablemap, Commentsoncomments. Normal comments are always shown as a list, also iLikes und Votings will always have their lists.
+	uCLists = Reviews, Plugintotablemap, Commentsoncomments
+	
+	# cat=plugin.tx_toctoccomments_pi1: userCenter//03;  type=int+; label=Comments per list: Number of visible comments shown per list
+	commentsPerUCList = 3
+	
+	# cat=plugin.tx_toctoccomments_pi1: userCenter//06; type=int+; label=ID of your page with userCenter, link shown in menu on comments list
+	userCenterPageID = 
+		
+	# cat=plugin.tx_toctoccomments_pi1: userCenter//08;  type=int+; label=Items per list: Maximal number of items shown per list
+	maxItemsPerUCList = 50
+		
+	# cat=plugin.tx_toctoccomments_pi1: userCenter//08;  type=int+; label=Maximal age of items shown in list: Items older than this number (in days) won't be shown in the lists
+	maxItemAgeUCList = 365
+	
+	
+			
+		
 }

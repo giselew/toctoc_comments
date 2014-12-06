@@ -38,7 +38,7 @@
  *
  *
  *   56: class toctoc_comments_charts extends toctoc_comment_lib
- *   64:     protected function topratings ($conf, $pObj)
+ *   65:     public function topratings ($conf, $pObj, $fromusercenterid = 0)
  *
  * TOTAL FUNCTIONS: 1
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -59,35 +59,72 @@ class toctoc_comments_charts extends toctoc_comment_lib {
  *
  * @param	[type]		$conf: ...
  * @param	[type]		$pObj: ...
+ * @param	[type]		$fromusercenterid: ...
  * @return	string		...
  */
-	protected function topratings ($conf, $pObj) {
+	public function topratings ($conf, $pObj, $fromusercenterid = 0) {
 		$this->cObj = t3lib_div::makeInstance('tslib_cObj');
 		$this->cObj->start('', '');
 		$siteRelPath = $this->locationHeaderUrlsubDir() . t3lib_extMgm::siteRelPath('toctoc_comments');
-		//$conf['topRatings.']['topRatingsMode']=4;
+		if (version_compare(TYPO3_version, '4.6', '<')) {
+			$tmpint = t3lib_div::testInt($conf['storagePid']);
+		} else {
+			$tmpint = t3lib_utility_Math::canBeInterpretedAsInteger($conf['storagePid']);
+		}
+
+		$pidcond='';
+		if ($tmpint) {
+			$conf['storagePid'] = intval($conf['storagePid']);
+			$pidcond = 'deleted=0 AND pid='. $conf['storagePid'] . ' AND ';
+		} else {
+			$conf['storagePid'] = $GLOBALS['TYPO3_DB']->cleanIntList($conf['storagePid']);
+			$pidcond = 'deleted=0 AND pid IN (' . $conf['storagePid'] . ') AND ';
+		}
+
+		$pidonlycond = ($tmpint ?
+		'pid=' . $conf['storagePid'] : 'pid IN (' . $conf['storagePid'] . ')');
+		$restrictor = $pidcond;
+		$feusersql = '';
+		$feusersort = '';
+		$feusergroupby = '';
+		$shownbritemsinusercenter=0;
+		if ($fromusercenterid != 0) {
+			$shownbritemsinusercenter = intval($conf['userCenter.']['commentsPerUCList']);
+			$conf['topRatings.']['topRatingsMode']=$fromusercenterid-1;
+			$conf['topRatings.']['RatingsDays']=$conf['userCenter.']['maxItemAgeUCList'];
+			$conf['topRatings.']['RatedItemsListCount']=$conf['userCenter.']['maxItemsPerUCList'];
+			$conf['topRatings.']['NumberOfVotesRequired']=0.5;
+			$conf['topRatings.']['AlignResultsWithMaxVotesAndAvgVote'] = 0;
+			$conf['topRatings.']['showMinimumVotesinTitle'] = 0;
+			$conf['topRatings.']['showAlignCommentinTitle'] = 0;
+			$conf['topRatings.']['showCountTopViewsLastView'] = 0;
+			$pidonlycond = '';
+			$restrictor = 'deleted=0 AND ';
+			$restrictor .= 'toctoc_commentsfeuser_feuser=' . $GLOBALS['TSFE']->fe_user->user['uid'] . ' AND ';
+
+			if ($fromusercenterid == 2) {
+				$feusergroupby = ', isreview, (CASE WHEN tstampmyrating = 0 THEN tstamp ELSE tstampmyrating END), toctoc_commentsfeuser_feuser';
+
+				$feusersort = '(CASE WHEN tstampmyrating = 0 THEN tstamp ELSE tstampmyrating END) DESC, ';
+				$feusersql = ', isreview AS isreview, toctoc_commentsfeuser_feuser AS toctoc_commentsfeuser_feuser,
+						(CASE WHEN tstampmyrating = 0 THEN tstamp ELSE tstampmyrating END) AS ratedate';
+				$restrictor .= 'isreview<>1 AND ';
+			} else {
+				$feusergroupby = ', (CASE WHEN tstampidislike = 0 THEN CASE WHEN tstampilike = 0 THEN tstamp ELSE tstampilike END ELSE tstampidislike END), toctoc_commentsfeuser_feuser';
+
+				$feusersort = '(CASE WHEN tstampidislike = 0 THEN CASE WHEN tstampilike = 0 THEN tstamp ELSE tstampilike END ELSE tstampidislike END) DESC, ';
+				$feusersql = ', toctoc_commentsfeuser_feuser AS toctoc_commentsfeuser_feuser,
+						(CASE WHEN tstampidislike = 0 THEN CASE WHEN tstampilike = 0 THEN tstamp ELSE tstampilike END ELSE tstampidislike END) AS ratedate';
+			}
+
+		}
+
 		$daysago=$conf['topRatings.']['RatingsDays'];
 		$limitrows=$conf['topRatings.']['RatedItemsListCount'];
 		$displayfields='';
 		//specs: $displayfields = 'titlepart1 titlepart2, longertext, linktoimage';
 		$show_uid='showUid';
 		$debug='';
-
-		if (version_compare(TYPO3_version, '4.6', '<')) {
-			$tmpint = t3lib_div::testInt($conf['storagePid']);
-		} else {
-			$tmpint = t3lib_utility_Math::canBeInterpretedAsInteger($conf['storagePid']);
-		}
-		$pidcond='';
-		if ($tmpint) {
-			$conf['storagePid'] = intval($conf['storagePid']);
-			$pidcond='deleted=0 AND pid='. $conf['storagePid'] . ' AND ';
-		} else {
-			$conf['storagePid'] = $GLOBALS['TYPO3_DB']->cleanIntList($conf['storagePid']);
-			$pidcond='deleted=0 AND pid IN (' . $conf['storagePid'] . ') AND ';
-		}
-		$restrictor=$pidcond;
-
 		if ($conf['topRatings.']['topRatingsrestrictToExternalPrefix'] == 'custom') {
 			if ($conf['topRatings.']['topRatingsExternalPrefix']!='') {
 				//then we have mismach between $this->conf['externalPrefix'] and the record
@@ -183,7 +220,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 						                     ELSE
 						                     	0
 						                     END
-						                END
+						             END
 						      ELSE 0 END
 						END)';
 
@@ -201,10 +238,10 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					sum(ilike)-sum(idislike) as sumilike,
 					sum(ilike)+sum(idislike) as nbrvotes,
 					'. $conf['ratings.']['maxValue'] . '*((sum(ilike)-sum(idislike))/(sum(ilike)+sum(idislike))) as sumilikedislikevote,
-					min(pid) AS pid, min(deleted) AS deleted
+					min(pid) AS pid, min(deleted) AS deleted'. $feusersql . '
 					FROM tx_toctoc_comments_feuser_mm
-					GROUP BY reference, ' . $okdatelikes . ' HAVING ' . $restrictor . 'okdate>0  AND nbrvotes>= ' . $numberofvotesrequired
-					. ' ORDER BY okdate DESC, sumilike DESC, nbrvotes, ref';
+					GROUP BY reference, ' . $okdatelikes . $feusergroupby . ' HAVING ' . $restrictor . 'okdate>0  AND nbrvotes>= ' . $numberofvotesrequired
+					. ' ORDER BY '.$feusersort.'okdate DESC, sumilike DESC, nbrvotes, ref';
 			$resultmerged1= $GLOBALS['TYPO3_DB']->sql_query($querymerged);
 			while ($rowsmerged1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultmerged1)) {
 				// reorder fields
@@ -216,6 +253,9 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 				$rowsmerged[$i]['pageid'] = $rowsmerged1['pageid'];
 				$rowsmerged[$i]['sumilikedislike'] = $rowsmerged1['sumilike'];
 				$rowsmerged[$i]['sumilikedislikevote'] = $rowsmerged1['sumilikedislikevote'];
+				if ($fromusercenterid != 0) {
+					$rowsmerged[$i]['ratedate'] = $rowsmerged1['ratedate'];
+				}
 				if ($rowsmerged[$i]['nbrvotes'] > $maxvotesfound) {
 					$maxvotesfound=$rowsmerged[$i]['nbrvotes'];
 				}
@@ -236,14 +276,14 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					sum(myrating)/' . $conf['ratings.']['maxValue'] . ' as sumilikedislike,
 					count(uid) as nbrvotes,
 					avg(myrating) as sumilikedislikevote,
-					min(pid) AS pid, min(deleted) AS deleted
+					min(pid) AS pid, min(deleted) AS deleted'. $feusersql . '
 					FROM tx_toctoc_comments_feuser_mm
 					GROUP BY reference,
 					(CASE WHEN myrating = 0 THEN 0 ELSE 1 END) *(CASE WHEN deleted = 0 THEN 1 ELSE 0 END) * (CASE WHEN reference_scope = 0 THEN 1 ELSE 0 END) *
 					(CASE WHEN tstampmyrating > '.
-					$datesince.' THEN 1 ELSE' . $addonsqlforoldratings .'END)
+					$datesince.' THEN 1 ELSE' . $addonsqlforoldratings .'END)' . $feusergroupby . '
 					HAVING ' . $restrictor . 'okdate>0  AND nbrvotes>= ' . $numberofvotesrequired
-					. ' ORDER BY okdate DESC, sumilikedislikevote DESC, nbrvotes DESC, ref';
+					. ' ORDER BY '.$feusersort.'okdate DESC, sumilikedislikevote DESC, nbrvotes DESC, ref';
 			$resultmerged1= $GLOBALS['TYPO3_DB']->sql_query($querymerged);
 			while ($rowsmerged1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultmerged1)) {
 				// reorder fields
@@ -254,7 +294,9 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 				$rowsmerged[$i]['pageid'] = $rowsmerged1['pageid'];
 				$rowsmerged[$i]['sumilikedislike'] = $rowsmerged1['sumilikedislike'];
 				$rowsmerged[$i]['sumilikedislikevote'] = $rowsmerged1['sumilikedislikevote'];
-
+				if ($fromusercenterid != 0) {
+					$rowsmerged[$i]['ratedate'] = $rowsmerged1['ratedate'];
+				}
 				if ($rowsmerged[$i]['nbrvotes'] > $maxvotesfound) {
 					$maxvotesfound=$rowsmerged[$i]['nbrvotes'];
 				}
@@ -288,7 +330,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					END
 					END) as okdate,
 					sum(myrating/' . $conf['ratings.']['maxValue'] . ') as sumilikedislike, count(uid) as nbrvotes, avg(myrating) as sumilikedislikevote,
-					min(pid) AS pid, min(deleted) AS deleted
+					min(pid) AS pid, min(deleted) AS deleted'. $feusersql . '
 					FROM tx_toctoc_comments_feuser_mm
 					GROUP BY reference,
 					(CASE WHEN myrating = 0 THEN 0 ELSE 1 END) *
@@ -306,7 +348,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							ELSE
 							0
 							END
-							END)
+							END)'. $feusergroupby . '
 							HAVING ' . $restrictor . 'okdate>0
 			) UNION (
 					SELECT DISTINCT MAX(CASE WHEN pagetstampilike = 0 THEN pagetstampidislike ELSE pagetstampilike END) as pageid,
@@ -331,7 +373,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							END) as okdate,
 					sum(ilike-idislike) as sumilikedislike, count(uid) as nbrvotes, ' . intval($conf['ratings.']['maxValue']) .
 					'*(sum(ilike-idislike)/count(uid))  as sumilikedislikevote,
-					min(pid) AS pid, min(deleted) AS deleted
+					min(pid) AS pid, min(deleted) AS deleted'. $feusersql . '
 					FROM tx_toctoc_comments_feuser_mm
 					GROUP BY reference,
 					(CASE WHEN deleted = 0 THEN 1 ELSE 0 END) *
@@ -351,9 +393,9 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							END
 							END
 							ELSE 0 END
-							END)
+							END)'. $feusergroupby . '
 					HAVING ' . $restrictor . 'okdate>0 )
-					order BY okdate DESC, ref, sumilikedislike DESC, nbrvotes, ref';
+					order BY '.$feusersort.'okdate DESC, ref, sumilikedislike DESC, nbrvotes, ref';
 			$resultmerged= $GLOBALS['TYPO3_DB']->sql_query($querymerged);
 			$currentref='';
 			$rowsmergedout=array();
@@ -446,8 +488,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					$wherecommunity =' AND parentuid=0';
 				}
 
-				$tmpwhere=' approved=1 AND ' . ($tmpint ?
-						'pid=' . $conf['storagePid'] : 'pid IN (' . $conf['storagePid'] . ')') .
+				$tmpwhere=' approved=1 AND ' . $pidonlycond .
 						$this->enableFields('tx_toctoc_comments_comments', $pObj) . $whereplus . $wherecommunity . ' AND tstamp > '.$datesince.'';
 				$querymergedc='SELECT COUNT(*) AS counter, MIN(tstamp) AS firstcommentview
 					FROM tx_toctoc_comments_comments
@@ -460,9 +501,6 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 				}
 
 				$viewscounter=intval($rowsmerged1['sumilikedislikevote']);
-				//if ($viewscounter<$commentscounter) {
-				//$viewscounter=$viewscounter+$commentscounter;
-				//}
 
 				// reorder fields
 				$rowsmerged[$i]['voting'] = $viewscounter;
@@ -613,8 +651,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					}
 
 					// counting comments
-					$tmpwhere=' approved=1 AND ' . ($tmpint ?
-								'pid=' . $conf['storagePid'] : 'pid IN (' . $conf['storagePid'] . ')') .
+					$tmpwhere=' approved=1 AND ' . $pidonlycond .
 								$this->enableFields('tx_toctoc_comments_comments', $pObj) . $whereplus . $wherecommunity . ' AND tstamp > '.$datesince.'';
 					$querymergedc='SELECT COUNT(*) AS counter, MIN(tstamp) AS firstcommentview, MAX(tstamp) AS lastcommentview
 						FROM tx_toctoc_comments_comments
@@ -638,8 +675,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					$refarr=explode('_', $rowsmerged1['ref']);
 					$refid=$refarr[count($refarr)-1];
 
-					$tmpwhere=' parentuid=' .$refid .'  AND approved=1 AND ' . ($tmpint ?
-							'pid=' . $conf['storagePid'] : 'pid IN (' . $conf['storagePid'] . ')') .
+					$tmpwhere=' parentuid=' .$refid .'  AND approved=1 AND ' . $pidonlycond .
 							$this->enableFields('tx_toctoc_comments_comments', $pObj) . $whereplus . ' AND tstamp > '.$datesince.'';
 					$querymergedc='SELECT COUNT(*) AS counter, MIN(tstamp) AS firstcommentview, MAX(tstamp) AS lastcommentview
 						FROM tx_toctoc_comments_comments
@@ -775,7 +811,8 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 			for ($i=0; $i<$countrowsmergedout3; $i++) {
 				// from $rowsmerged[$i]['ref'] get the table name and id
 
-				$pageidrecord=$rowsmerged[$i]['ref']; // zb tt_news_21
+				$pageidrecord=$rowsmerged[$i]['ref'];
+				// zb tt_news_21
 				$prefix=$pageidrecord;
 				$posbeforeid = strrpos($pageidrecord, '_')+1;
 
@@ -899,8 +936,8 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					$_SESSION['prefixes']['tt_content']['topratingsimagesfolder'] = $conf['advanced.']['FeUserImagePath'];
 					if (version_compare(TYPO3_version, '4.99', '>')) {
 						$_SESSION['prefixes']['tt_content']['topratingsimagesfolder'] = 'fileadmin/_migrated/pics/';
-						//print 'fileadmin/_migrated/pics/'; exit;
 					}
+
 					$_SESSION['prefixes']['tbltt_content']['pi1_table'] ='tt_content';
 					$_SESSION['prefixes']['tbltt_content']['pi1_key'] ='tt_content';
 
@@ -1563,7 +1600,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							$img['file.']['10.']['file.']['height'] = $userimgsize .'c';
 							$img['params'] = 'class="' . $profileimgclass . '" title="'.$row['linktext']. '"';
 							$tmpimgstr = '<div class="tx-tc-trt-rating-img">'.str_replace($row['linktext'], $pObj->cObj->IMAGE($img), $row['link']) .'</div>';
-							$styleheight=' tx-tx-trt-userisz';
+							$styleheight=' tx-tc-trt-userisz';
 							$stylemargincontent = $userimgsize+2*intval($conf['theme.']['boxmodelSpacing']);
 							if ($conf['theme.']['selectedBoxmodelkoogled'] == 1) {
 								$stylemargincontent = $stylemargincontent - 6;
@@ -1578,20 +1615,24 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 						if ($conf['ratings.']['useNumberOfVotes'] != 1) {
 							$row['nbrvotes']='';
 						} else {
-							if ($conf['topRatings.']['topRatingsMode']<4){
-								if ($row['nbrvotes'] != 1) {
-									$row['nbrvotes']='(' . $row['nbrvotes'] . ' ' . $this->pi_getLLWrap($pObj, 'api_rating.votes', FALSE) . ')';
+							if ($fromusercenterid == 0) {
+								if ($conf['topRatings.']['topRatingsMode']<4){
+									if ($row['nbrvotes'] != 1) {
+										$row['nbrvotes']='(' . $row['nbrvotes'] . ' ' . $this->pi_getLLWrap($pObj, 'api_rating.votes', FALSE) . ')';
+									} else {
+										$row['nbrvotes']='(' . $row['nbrvotes'] . ' ' . $this->pi_getLLWrap($pObj, 'api_rating.vote', FALSE) . ')';
+									}
 								} else {
-									$row['nbrvotes']='(' . $row['nbrvotes'] . ' ' . $this->pi_getLLWrap($pObj, 'api_rating.vote', FALSE) . ')';
+									if ($conf['topRatings.']['topRatingsMode']==4){
+										$row['nbrvotes']=', ' . $row['nbrvotes'] . ' ' . $this->pi_getLLWrap($pObj, 'pi1_template.text_count', FALSE) . ' ' .
+										$this->pi_getLLWrap($pObj, 'pi1_template.text_views_viewcount', FALSE) . '';
+									} else {
+										$row['nbrvotes']='';
+									}
+
 								}
 							} else {
-								if ($conf['topRatings.']['topRatingsMode']==4){
-									$row['nbrvotes']=', ' . $row['nbrvotes'] . ' ' . $this->pi_getLLWrap($pObj, 'pi1_template.text_count', FALSE) . ' ' .
-									$this->pi_getLLWrap($pObj, 'pi1_template.text_views_viewcount', FALSE) . '';
-								} else {
-									$row['nbrvotes']='';
-								}
-
+								$row['nbrvotes']='(' . $this->formatDate($row['ratedate'], $pObj, FALSE, $conf) . ')';
 							}
 
 						}
@@ -1710,7 +1751,9 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							$topratings_ilike_vote= '&nbsp;' . str_replace('tx-tc-trt-rating-like', 'tx-tc-trt-rating-like-only', $mylike) . '<b>'.
 							$row['likecount']. '</b> ';
 							$addbr='<br />';
-							$row['nbrvotes']='';
+							if ($fromusercenterid == 0) {
+								$row['nbrvotes']='';
+							}
 						} elseif ($conf['topRatings.']['topRatingsMode']==1){
 							$topratings_ilike_vote=$this->pi_getLLWrap($pObj, 'pi1_template.text_topratings_rating', FALSE) . ':&nbsp;' .
 							$voteingstr . $row['voting']. ' ';
@@ -1795,9 +1838,37 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 
 		// output the entire plugin
 		// Merge
+		if (intval($fromusercenterid)==0) {
+			$retstr = implode($entries);
+		} else {
+			$cntentries = count($entries);
+			for ($i=0; (($i<$shownbritemsinusercenter) && ($i<$cntentries)); $i++) {
+				$retstr .= $entries[$i];
+			}
+
+			for ($i=$shownbritemsinusercenter; $i<$cntentries; $i++) {
+				$retstrinner .= $entries[$i];
+			}
+
+			if ($retstrinner !='') {
+				$retstr .= $this->t3substituteMarkerArray($this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTER_DROPDOWNSHOWMORE###'),
+						array(
+								'###DROPDOWNID###' => ($fromusercenterid+$fromusercenterid*10),
+								'###DROPDOWNTIPTEXT###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercenter_showmoreorless', FALSE),
+								'###DROPUPORDOWN###' => 'Down',
+								'###TITLE###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercenter_showmore', FALSE),
+								'###CONTENT###' => $retstrinner,
+
+						)
+				);
+			}
+
+		}
+
 		$subParts = array(
-			'###SINGLE_TOPRATINGS###' => implode($entries),
+			'###SINGLE_TOPRATINGS###' => $retstr,
 		);
+		$retstr='';
 		$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###TOPRATINGS_LIST###');
 		$markers = array(
 			'###TOPRATINGS_CONFIG_TITLE###' => $text_topratings . '<br />',

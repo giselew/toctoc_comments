@@ -36,11 +36,11 @@
  *
  *
  *
- *   70: class toctoc_comments_eID
- *   84:     public function init()
- *  176:     public function main()
- *  395:     protected function processReponseOutput()
- *  488:     protected function ipBlock()
+ *   67: class toctoc_comments_eID
+ *   81:     public function init()
+ *  173:     public function main()
+ *  392:     protected function processReponseOutput()
+ *  485:     protected function ipBlock()
  *
  * TOTAL FUNCTIONS: 4
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -56,9 +56,6 @@ if (version_compare(TYPO3_version, '6.0', '<')) {
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/Utility/MathUtility.php';
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('lang') . 'Classes/LanguageService.php';
 }
-
-
-
 
 /**
  * AJAX Social Network Components

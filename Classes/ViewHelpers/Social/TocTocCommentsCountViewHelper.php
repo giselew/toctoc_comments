@@ -218,7 +218,7 @@ class Tx_News_ViewHelpers_Social_TocTocCommentsCountViewHelper extends Tx_Fluid_
 			$conftc = array_replace_recursive($conftc, $tsSettings['toctoc_comments.']);
 		}
 
-		$templateName = $commentCount ? '###TTNEWS_COMMENT_COUNT_SUB###' : '###TTNEWS_COMMENT_NONE_SUB###';
+		$templateName = $commentCount ? '###TXNEWS_COMMENT_COUNT_SUB###' : '###TXNEWS_COMMENT_NONE_SUB###';
 
 		if (($template = $this->getTemplate($templateName, $conftc))) {
 			$lang = t3lib_div::makeInstance('language');

@@ -50,10 +50,10 @@
  *  858:     protected function chkcaptcha($cid, $code)
  *  885:     protected function getUserCard()
  *  898:     protected function updateCommentsView()
- * 1017:     protected function updateRating()
- * 1374:     protected function processDeleteSubmission()
- * 1454:     protected function processDenotifycommentSubmission()
- * 1504:     protected function recentCommentsClearCache()
+ * 1021:     protected function updateRating()
+ * 1548:     protected function processDeleteSubmission()
+ * 1628:     protected function processDenotifycommentSubmission()
+ * 1678:     protected function recentCommentsClearCache()
  *
  * TOTAL FUNCTIONS: 16
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -303,10 +303,11 @@ class toctoc_comments_ajax {
 			}
 
 			$this->pluginid = $data['ref'];
-			$this->commentid=t3lib_div::_GP('cuid');
+			$this->commentid = t3lib_div::_GP('cuid');
 			$content_str = t3lib_div::_GP('content');
-			$updatearr= unserialize(base64_decode($content_str));
-			$this->content=  $updatearr['content'];
+			$updatearr = unserialize(base64_decode($content_str));
+			$this->content = $updatearr['content'];
+			$this->commenttitle = $updatearr['commenttitle'];
 			$this->pid = t3lib_div::_GP('pid');
 		} elseif ($this->cmd == 'rcclearcache') {
 				$this->pid = t3lib_div::_GP('pid');
@@ -371,7 +372,6 @@ class toctoc_comments_ajax {
 				$this->rating=$ratingarr[0]/$ratingarr[1];
 				$this->votes =1/$ratingarr[1];
 				$chkrating=$ratingarr[0];
-
 			}
 
 			if(version_compare(TYPO3_version, '4.6', '<')) {
@@ -381,7 +381,7 @@ class toctoc_comments_ajax {
 			}
 
 			if(!$tmpint) {
-				echo $GLOBALS['LANG']->getLL('bad_rating_value');
+				echo $GLOBALS['LANG']->getLL('bad_rating_value') . ': ' . $this->rating;
 				exit();
 			}
 
@@ -674,7 +674,7 @@ class toctoc_comments_ajax {
 			$apiObj->initCaches();
 		}
 
-		echo $apiObj->updateComment($this->conf, $this->commentid, $this->content, $this->pid, $this->pluginid);
+		echo $apiObj->updateComment($this->conf, $this->commentid, $this->content, $this->pid, $this->pluginid, $this->commenttitle);
 	}
 
 	/**
@@ -937,6 +937,10 @@ class toctoc_comments_ajax {
 
 		} else {
 			$action='insert';
+			$GLOBALS['TYPO3_DB']->exec_DELETEquery('tx_toctoc_comments_feuser_mm',
+					'deleted=1 AND pid=' . intval($this->conf['storagePid']) . ' AND reference="' . $pluginid . '" AND toctoc_comments_user=' .
+						$fetoctocusertoquery .'');
+
 			$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_feuser_mm', array(
 					'crdate' => time(),
 					'tstampseen' => time(),
@@ -1020,7 +1024,7 @@ class toctoc_comments_ajax {
 		if(version_compare(TYPO3_version, '4.6', '<')) {
 			$apiObj->initCaches();
 		}
-
+		$saveratingsdisableIpCheck = $this->conf['ratings.']['disableIpCheck'];
 		$pageid= $this->pageid;
 		$ratingarr=explode('-', $this->ref);
 		$scopeid =0;
@@ -1036,8 +1040,14 @@ class toctoc_comments_ajax {
 			}
 
 		}
+		$isReview = 0;
+		if ((str_replace('tx_toctoc_comments_', '', $this->ref) == $this->ref) && ($this->conf['advanced.']['commentReview'] == 1) && ($this->feuser > 0)) {
+			$this->conf['ratings.']['disableIpCheck'] = 1;
+			$isReview = 1;
+		}
+		$alreadyvoted = $apiObj->isVoted($this->ref, $scopeid, $this->feuser, TRUE);
 
-		if($this->conf['ratings.']['disableIpCheck'] || (!$apiObj->isVoted($this->ref, $scopeid, $this->feuser, TRUE) || ($ratingsmode=='autostatic')) ||
+		if($this->conf['ratings.']['disableIpCheck'] || ($alreadyvoted == FALSE) || ($ratingsmode=='autostatic') ||
 				!(($this->cmd == 'vote') || ($this->cmd == 'votearticle'))) {
 			$feusertoinsert = 0;
 			$fetoctocusertoinsert = '';
@@ -1067,9 +1077,8 @@ class toctoc_comments_ajax {
 						'markers' => $markerArray,
 						'row' => $rowfe,
 				);
-				$tempMarkers = $apiObj->comments_getComments_fe_user($params, $conf);
+				$tempMarkers = $apiObj->comments_getComments_fe_user($params, $this->conf);
 				if (is_array($tempMarkers)) {
-
 					$newlastname=$tempMarkers['###LASTNAME###'];
 					$newfirstname=$tempMarkers['###FIRSTNAME###'];
 					$newemail=$tempMarkers['###EMAILADR###'];
@@ -1078,8 +1087,20 @@ class toctoc_comments_ajax {
 				}
 
 			}
-
 			$feusertoinsert = intval($this->feuser);
+			$allowedNumberOfRatingsExceededBlocktimeMessage = '';
+			if (!(isset($_SESSION['allowedNumberOfRatings']))) {
+				$_SESSION['allowedNumberOfRatings'] = 0;
+			}
+
+			if (!(isset($_SESSION['unBlockTime']))) {
+				$_SESSION['unBlockTime'] = 0;
+			}
+
+			if (!(isset($_SESSION['ratingtimes']))) {
+				$_SESSION['ratingtimes'] = array();
+			}
+
 			if(($this->cmd == 'vote') || ($this->cmd == 'votearticle') || (strpos($this->cmd, 'ike') !== FALSE)) {
 
 				$dataWhere = 'pid=' . intval($this->conf['storagePid']) . ' AND reference="' . $this->ref . '" AND reference_scope=' . $scopeid;
@@ -1088,32 +1109,149 @@ class toctoc_comments_ajax {
 				// vote of the user
 				$dataWheremm = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user = ' . $fetoctocusertoquery . '' .
 								' AND reference="' . $this->ref . '" AND reference_scope=' . $scopeid;
-				list($rowmm) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS tmm, SUM(ilike) AS ilike, SUM(idislike) AS idislike',
+				list($rowmm) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS tmm, SUM(ilike) AS ilike, SUM(idislike) AS idislike, AVG(myrating) as avgmyrating',
 						'tx_toctoc_comments_feuser_mm', $dataWheremm);
+				if (($scopeid==0) && ($this->overallvote==1) || ($scopeid!=0)) {
+					// for scopred ratings we need some more data, we need the values of the scoped entries for calulation of the average in ratings_data
+					$dataWheremmscp = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user = ' . $fetoctocusertoquery . '' .
+							' AND reference="' . $this->ref . '" AND reference_scope!=0';
+					list($rowmmscp) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS tmm, SUM(ilike) AS ilike, SUM(idislike) AS idislike,
+							AVG(myrating) as avgmyrating, SUM(myrating) as summyrating',
+							'tx_toctoc_comments_feuser_mm', $dataWheremmscp);
+					if ($scopeid!=0) {
+						// storing initial number of voted scopes and their avarage rating in SESSION
+						if($rowmmscp['tmm'] > 0) {
+							$_SESSION['vctrlinitialvotedscopes' . intval($this->conf['storagePid']) . $this->ref] =
+							round(($rowmmscp['summyrating']/$rowmmscp['avgmyrating']), 0);
+							$_SESSION['vctrlinitialrating' . intval($this->conf['storagePid']) . $this->ref] = $rowmmscp['avgmyrating'];
+
+						} else {
+							$_SESSION['vctrlinitialvotedscopes' . intval($this->conf['storagePid']) . $this->ref] = 0;
+							$_SESSION['vctrlinitialrating' . intval($this->conf['storagePid']) . $this->ref] = 0;
+						}
+					} else {
+						// now in the 2nd AJAX call the overall will be done, we pick up the current values
+						$vctrcurrentvotedscopes = round(($rowmmscp['summyrating']/$rowmmscp['avgmyrating']), 0);
+						$vctrcurrentrating = $rowmmscp['avgmyrating'];
+					}
+				}
 
 				$dataWhereuser = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user = ' . $fetoctocusertoquery . '';
 				list($rowusr) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS tusr', 'tx_toctoc_comments_user', $dataWhereuser);
+
 			}
 
-			if($row['t'] > 0) {
-				if(($this->cmd == 'vote') || ($this->cmd == 'votearticle')) {
-					$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_ratings_data SET vote_count=vote_count+'.$this->votes .
-							',rating=rating+' . $this->rating . ', tstamp=' . time() . ' WHERE ' . $dataWhere);
+			if(($this->cmd == 'vote') || ($this->cmd == 'votearticle')) {
+				if (intval($_SESSION['unBlockTime']) > 1000*(microtime(TRUE))) {
+					$waittime = intval(((intval($_SESSION['unBlockTime'])-1000*(microtime(TRUE)))/60000));
+					$toomanyratings = $GLOBALS['LANG']->getLL('made_toomanyratings');
+					if ($waittime > 1) {
+						$allowedNumberOfRatingsExceededBlocktimeMessage = $toomanyratings . '. ' . $GLOBALS['LANG']->getLL('next_rating_in') . ' ' .
+							$waittime . ' ' . $GLOBALS['LANG']->getLL('next_rating_minutes');
+					} else {
+						$allowedNumberOfRatingsExceededBlocktimeMessage = $toomanyratings . '. ' . $GLOBALS['LANG']->getLL('next_rating_inaminute');
+					}
+				} else {
+					$countratingtimes = count($_SESSION['ratingtimes']);
+					$_SESSION['ratingtimes'][$countratingtimes] = 1000*(microtime(TRUE));
+					$_SESSION['allowedNumberOfRatings'] = $_SESSION['allowedNumberOfRatings']+1;
+					//echo ' <br> ' . $_SESSION['allowedNumberOfRatings'] . ' allowedNumberOfRatings ' . intval($this->conf['ratings.']['allowedNumberOfRatings']);
+					if ($_SESSION['allowedNumberOfRatings'] > intval($this->conf['ratings.']['allowedNumberOfRatings'])) {
+						$timecompare = $_SESSION['ratingtimes'][($countratingtimes-$this->conf['ratings.']['allowedNumberOfRatings'])];
+						$timediff = (1000*microtime(TRUE))/60 - $timecompare/60;
+						$timediff = $timediff/1000;
+						intval($this->conf['ratings.']['timeForAllowedNumberOfRatings']) . ' index of compare ' .
+						($countratingtimes-$this->conf['ratings.']['allowedNumberOfRatings']);
+						if (intval($timediff) < intval($this->conf['ratings.']['timeForAllowedNumberOfRatings'])) {
+							if ($_SESSION['unBlockTime'] == 0) {
+								$_SESSION['unBlockTime'] = 1000*(microtime(TRUE)) + 60*1000*(intval($this->conf['ratings.']['allowedNumberOfRatingsExceededBlocktime']));
+							}
+						}
+					}
+					if ($_SESSION['unBlockTime'] > 1000*(microtime(TRUE))) {
+						$waittime = intval(((intval($_SESSION['unBlockTime'])-intval(1000*(microtime(TRUE))))/60000));
+						$toomanyratings = $GLOBALS['LANG']->getLL('made_toomanyratings');
+						if ($waittime > 1) {
+							$allowedNumberOfRatingsExceededBlocktimeMessage = $toomanyratings . '. ' . $GLOBALS['LANG']->getLL('next_rating_in') . ' ' .
+							$waittime . ' ' . $GLOBALS['LANG']->getLL('next_rating_minutes');
+						} else {
+							$allowedNumberOfRatingsExceededBlocktimeMessage = $toomanyratings . '. ' . $GLOBALS['LANG']->getLL('next_rating_inaminute');
+						}
+					} else {
+						if ($_SESSION['unBlockTime'] > 0) {
+							$_SESSION['unBlockTime'] = 0;
+						}
+					}
 				}
+			}
+			if ($allowedNumberOfRatingsExceededBlocktimeMessage == '') {
+				if($row['t'] > 0) {
+					if(($this->cmd == 'vote') || ($this->cmd == 'votearticle')) {
+						if ($this->conf['ratings.']['disableIpCheck']) {
+							if ($alreadyvoted)  {
+								$thevotes = 0;
+								$therating = 0;
+								if($rowmm['tmm'] > 0) {
+									if (($scopeid==0) && ($this->overallvote==1)) {
+										// here we need to decide what to add to the ratings table
+										// for this we use the SESSION variables we've loaded just before when the vote on the scope passed thru this pghp-file
+										$thevotes = ($vctrcurrentvotedscopes-
+												$_SESSION['vctrlinitialvotedscopes' . intval($this->conf['storagePid']) . $this->ref])*$this->votes;
 
-			} else {
-				if(($this->cmd == 'vote') || ($this->cmd == 'votearticle')) {
-					$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_ratings_data', array(
+										if ($thevotes == 0) {
+											$therating = ($vctrcurrentrating -
+													$_SESSION['vctrlinitialrating' . intval($this->conf['storagePid']) . $this->ref])*
+													($_SESSION['vctrlinitialvotedscopes' . intval($this->conf['storagePid']) . $this->ref]*$this->votes);
+										} else {
+											// need to add the rating, new scope was voted first time
+											$therating = $this->rating;
+										}
+										// we can unset the session varibles, they are not needed to be present for instance
+										unset($_SESSION['vctrlinitialvotedscopes' . intval($this->conf['storagePid']) . $this->ref]);
+										unset( $_SESSION['vctrlinitialrating' . intval($this->conf['storagePid']) . $this->ref]);
+									} else {
+										// it's a vote on a scope, the rating value to add is just the difference to the existing value,
+										// maybe negative if its a downvote
+										$therating = $this->rating - $rowmm['avgmyrating'];
+									}
+
+								} else {
+									// case should not occur sice data can only be present if item has already been voted.
+									$thevotes = $this->votes;
+									$therating = $this->rating;
+
+								}
+							} else {
+								// not yet voted
+								$thevotes = $this->votes;
+								$therating = $this->rating;
+
+							}
+						} else {
+							// has already some votes, IPCheck enabled
+							$thevotes = $this->votes;
+							$therating = $this->rating;
+						}
+
+						$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_ratings_data SET isreview='. $isReview . ', vote_count=vote_count+'.$thevotes .
+								',rating=rating+' . $therating . ', tstamp=' . time() . ' WHERE ' . $dataWhere);
+					}
+
+				} else {
+					if(($this->cmd == 'vote') || ($this->cmd == 'votearticle')) {
+						$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_ratings_data', array(
 							'pid' => $this->conf['storagePid'],
 							'crdate' => time(),
 							'tstamp' => time(),
 							'reference' => $this->ref,
 							'vote_count' => $this->votes,
 							'rating' => $this->rating,
-							'reference_scope' => $scopeid
-					));
-				}
+							'reference_scope' => $scopeid,
+							'isreview' => $isReview,
+						));
+					}
 
+				}
 			}
 
 			if ($this->votes==0) {
@@ -1128,21 +1266,23 @@ class toctoc_comments_ajax {
 			if($rowmm['tmm'] > 0) {
 				if(($this->cmd == 'vote') || ($this->cmd == 'votearticle')) {
 					//select all scopes avgs if overallscope
-					$voteround=9;
-					if ($this->overallvote==1) {
-						$whereloc = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user = ' . $fetoctocusertoquery . '' .
-						' AND reference="' . $this->ref . '" AND reference_scope > 0';
-						list($rowavg) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('AVG(myrating) as avgmyrating, COUNT(reference_scope) as countreference',
-								'tx_toctoc_comments_feuser_mm', $whereloc);
-						if (count($rowavg)>0) {
-							$locrating=$rowavg['avgmyrating'];
+					if ($allowedNumberOfRatingsExceededBlocktimeMessage == '') {
+						$voteround=9;
+						if ($this->overallvote==1) {
+							$whereloc = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user = ' . $fetoctocusertoquery . '' .
+							' AND reference="' . $this->ref . '" AND reference_scope > 0';
+							list($rowavg) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('AVG(myrating) as avgmyrating, COUNT(reference_scope) as countreference',
+									'tx_toctoc_comments_feuser_mm', $whereloc);
+							if (count($rowavg)>0) {
+								$locrating=$rowavg['avgmyrating'];
+							}
+
+							$voteround=9;
 						}
 
-						$voteround=9;
+						$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET isreview='. $isReview . ', myrating=' . round($locrating, $voteround) . ', pagetstampmyrating=' .
+								$pageid . ', tstampmyrating=' . time() . ', tstamp=' . time() . ', remote_addr="' . $strCurrentIP . '" WHERE ' . $dataWheremm);
 					}
-
-					$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET ' . 'myrating=' . round($locrating, $voteround) . ', pagetstampmyrating=' .
-							$pageid . ', tstampmyrating=' . time() . ', tstamp=' . time() . ', remote_addr="' . $strCurrentIP . '" WHERE ' . $dataWheremm);
 				} elseif($this->cmd === 'unlike') {
 					if($rowmm['idislike'] > 0) {
 						$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET ' . 'idislike=0, pagetstampidislike=' . $pageid .
@@ -1170,25 +1310,31 @@ class toctoc_comments_ajax {
 				}
 
 			} else {
+				$GLOBALS['TYPO3_DB']->exec_DELETEquery('tx_toctoc_comments_feuser_mm',
+										'deleted=1 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user = ' . $fetoctocusertoquery . '' .
+										' AND reference="' . $this->ref . '"');
 
 				if(($this->cmd == 'vote') || ($this->cmd == 'votearticle')) {
-					if(($feusertoinsert > 0) || ($fetoctocusertoinsert !== '0.0.0.0.' . $feusertoinsert)) {
+					if ($allowedNumberOfRatingsExceededBlocktimeMessage == '') {
 
-						$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_feuser_mm', array(
-								'crdate' => time(),
-								'tstampmyrating' => time(),
-								'pagetstampmyrating' => $pageid,
-								'tstamp' => time(),
-								'ilike' => 0,
-								'pid' => $this->conf['storagePid'],
-								'idislike' => 0,
-								'myrating' => $locrating,
-								'toctoc_commentsfeuser_feuser' => $feusertoinsert,
-								'toctoc_comments_user' => $fetoctocusertoinsert,
-								'reference' => $this->ref,
-								'reference_scope' => $scopeid,
-								'remote_addr' => $strCurrentIP
-						));
+						if(($feusertoinsert > 0) || ($fetoctocusertoinsert !== '0.0.0.0.' . $feusertoinsert)) {
+							$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_feuser_mm', array(
+									'crdate' => time(),
+									'tstampmyrating' => time(),
+									'pagetstampmyrating' => $pageid,
+									'tstamp' => time(),
+									'ilike' => 0,
+									'pid' => $this->conf['storagePid'],
+									'idislike' => 0,
+									'myrating' => $locrating,
+									'toctoc_commentsfeuser_feuser' => $feusertoinsert,
+									'toctoc_comments_user' => $fetoctocusertoinsert,
+									'reference' => $this->ref,
+									'reference_scope' => $scopeid,
+									'isreview' => $isReview,
+									'remote_addr' => $strCurrentIP
+							));
+						}
 					}
 
 				} elseif($this->cmd == 'unlike') {
@@ -1241,6 +1387,9 @@ class toctoc_comments_ajax {
 
 			if(intval($rowusr['tusr']) === 0) {
 				$strCurrentIPres = gethostbyaddr($strCurrentIP);
+				$GLOBALS['TYPO3_DB']->exec_DELETEquery('tx_toctoc_comments_user',
+						'deleted=1 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user = ' . $fetoctocusertoquery);
+
 				$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_user', array(
 						'crdate' => time(),
 						'tstamp' => time(),
@@ -1255,111 +1404,136 @@ class toctoc_comments_ajax {
 						'initial_location' => $newloc,
 				));
 			}
+			if ($allowedNumberOfRatingsExceededBlocktimeMessage == '') {
+				$dataWhereStats = 'reference_scope = 0 AND deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user="' .
+				$fetoctocusertoinsert . '"';
+				$upddataWhereStats = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user="' . $fetoctocusertoinsert . '"';
 
-			$dataWhereStats = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user="' . $fetoctocusertoinsert . '"';
+				$sqlstr = 'SELECT SUM(CASE WHEN myrating+ilike+idislike > 0 THEN 1 ELSE 0 END) AS nbrentries, SUM(ilike) AS sumilike, SUM(idislike) AS sumidislike,
+						SUM(myrating) AS summyrating,
+						SUM(CASE WHEN myrating > 0 THEN 1 ELSE 0 END) AS nbrmyrating FROM tx_toctoc_comments_feuser_mm WHERE ' . $dataWhereStats;
+				$resultcount = $GLOBALS['TYPO3_DB']->sql_query($sqlstr);
+				$rowStats = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultcount);
 
-			$sqlstr = 'SELECT SUM(CASE WHEN myrating+ilike+idislike > 0 THEN 1 ELSE 0 END) AS nbrentries, SUM(ilike) AS sumilike, SUM(idislike) AS sumidislike,
-					SUM(myrating) AS summyrating,
-					SUM(CASE WHEN myrating > 0 THEN 1 ELSE 0 END) AS nbrmyrating FROM tx_toctoc_comments_feuser_mm WHERE ' . $dataWhereStats;
-			$resultcount = $GLOBALS['TYPO3_DB']->sql_query($sqlstr);
-			$rowStats = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultcount);
-
-			if(intval($rowStats['nbrmyrating']) === 0) {
-				// which should not be, but if results in a difff/0 just
-				// after, so we avoid this at least...
-				$rowStats['nbrmyrating'] = 1;
-			}
-
-			$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_user SET ' . 'vote_count=' . $rowStats['nbrentries'] . ', current_ip="' . $strCurrentIP .
-					'", like_count=' . intval($rowStats['sumilike']) . ', dislike_count=' . intval($rowStats['sumidislike']) . ', average_rating=' .
-					round((intval($rowStats['summyrating']) / intval($rowStats['nbrmyrating'])), 9) . ', tstamp_lastupdate=' . time() . ' WHERE ' .
-					$dataWhereStats);
-
-			// Call hook if ratings is updated
-			if(is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['updateRatings'])) {
-				foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['updateRatings'] as $userFunc) {
-					$params = array(
-							'pObj' => $this,
-							'pid' => $this->pid,
-							'ref' => $this->ref,
-							'reference_scope' => $scopeid
-					);
-					t3lib_div::callUserFunction($userFunc, $params, $this);
+				if(intval($rowStats['nbrmyrating']) === 0) {
+					// which should not be, but if results in a difff/0 just
+					// after, so we avoid this at least...
+					$rowStats['nbrmyrating'] = 1;
 				}
 
-			}
+				$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_user SET ' . 'vote_count=' . $rowStats['nbrmyrating'] . ', current_ip="' . $strCurrentIP .
+						'", like_count=' . intval($rowStats['sumilike']) . ', dislike_count=' . intval($rowStats['sumidislike']) . ', average_rating=' .
+						round((intval($rowStats['summyrating']) / intval($rowStats['nbrmyrating'])), 9) . ', tstamp_lastupdate=' . time() . ' WHERE ' .
+						$upddataWhereStats);
 
-			if(($this->conf['advanced.']['enableUrlLog']) || (!($this->conf['ratings.']['disableIpCheck']))) {
-				if((strpos($this->cmd, 'ote') !== FALSE)) {
-					if ($ratingsmode == '') {
-						$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_ratings_iplog', array(
-								'pid' => $this->conf['storagePid'],
-								'crdate' => time(),
-								'tstamp' => time(),
-								'reference' => $this->ref,
-								'reference_scope' => $scopeid,
-								'ip' => $strCurrentIP
-						));
+				// Call hook if ratings is updated
+				if(is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['updateRatings'])) {
+					foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['updateRatings'] as $userFunc) {
+						$params = array(
+								'pObj' => $this,
+								'pid' => $this->pid,
+								'ref' => $this->ref,
+								'reference_scope' => $scopeid
+						);
+						t3lib_div::callUserFunction($userFunc, $params, $this);
 					}
 
 				}
 
-			}
+				if(($this->conf['advanced.']['enableUrlLog']) || (!($this->conf['ratings.']['disableIpCheck']))) {
+					if((strpos($this->cmd, 'ote') !== FALSE)) {
+						if ($ratingsmode == '') {
+							$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_ratings_iplog', array(
+									'pid' => $this->conf['storagePid'],
+									'crdate' => time(),
+									'tstamp' => time(),
+									'reference' => $this->ref,
+									'reference_scope' => $scopeid,
+									'ip' => $strCurrentIP
+							));
+						}
 
-			// Clear cache
-			$cacheidlist = strval($this->pid);
-			if ($_SESSION['commentsPageOrigId']!=0) {
-				$cacheidlist .= ', ' .$_SESSION['commentsPageOrigId'];
-			}
-
-			$pidList = t3lib_div::intExplode(',', $cacheidlist);
-			$pidList=array_unique($pidList);
-			if (version_compare(TYPO3_version, '6.0', '<')) {
-				t3lib_div::requireOnce(PATH_t3lib . 'class.t3lib_tcemain.php');
-			} else {
-				require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/DataHandling/DataHandler.php';
-			}
-
-			$tce = t3lib_div::makeInstance('t3lib_TCEmain');
-			/* @var $tce t3lib_TCEmain */
-
-			foreach($pidList as $pid) {
-				if($pid != 0) {
-					if (intval($_SESSION['vmcNoPageCache'])==0) {
-						$tce->clear_cacheCmd($pid);
 					}
 
 				}
 
-			}
+				// Clear cache
+				$cacheidlist = strval($this->pid);
+				if ($_SESSION['commentsPageOrigId']!=0) {
+					$cacheidlist .= ', ' .$_SESSION['commentsPageOrigId'];
+				}
 
-			$apiObj->setPluginCacheControlTstamp($this->pluginid);
+				$pidList = t3lib_div::intExplode(',', $cacheidlist);
+				$pidList=array_unique($pidList);
+				if (version_compare(TYPO3_version, '6.0', '<')) {
+					t3lib_div::requireOnce(PATH_t3lib . 'class.t3lib_tcemain.php');
+				} else {
+					require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/DataHandling/DataHandler.php';
+				}
+
+				$tce = t3lib_div::makeInstance('t3lib_TCEmain');
+				/* @var $tce t3lib_TCEmain */
+
+				foreach($pidList as $pid) {
+					if($pid != 0) {
+						if (intval($_SESSION['vmcNoPageCache'])==0) {
+							$tce->clear_cacheCmd($pid);
+						}
+
+					}
+
+				}
+
+				$apiObj->setPluginCacheControlTstamp($this->pluginid);
+			}
 		}
-
+		if ($allowedNumberOfRatingsExceededBlocktimeMessage == '') {
 		// Get rating display
-		$saveconfstaticmode= $this->conf['ratings.']['mode'];
-		if (intval($this->conf['ratings.']['enableOverallScopeForVote'])==0) {
-			if ($this->overallvote==1) {
-				$this->conf['ratings.']['mode']='autostatic';
+			$saveconfstaticmode= $this->conf['ratings.']['mode'];
+			$saveconfstaticmodeplus= $this->conf['ratings.']['mode'];
+			if (intval($this->conf['ratings.']['enableOverallScopeForVote'])==0) {
+				if ($this->overallvote==1) {
+					$this->conf['ratings.']['modeplus']='autostatic';
+				}
+
+			}
+			if ($isReview != 0) {
+				$savuseMyVote = $this->conf['ratings.']['useMyVote'];
+				$savuseVotes = $this->conf['ratings.']['useVotes'];
+				$this->conf['ratings.']['useMyVote'] = 1;
+				$this->conf['ratings.']['useVotes'] = 1;
 			}
 
-		}
+			$content = $apiObj->getAjaxRatingDisplay($this->ref, $this->conf, TRUE, $this->pid, FALSE, $this->feuser, $this->cmd, $this->cid,
+					$this->commentspics, $scopeid, $isReview);
 
-		$content = $apiObj->getAjaxRatingDisplay($this->ref, $this->conf, TRUE, $this->pid, FALSE, $this->feuser, $this->cmd, $this->cid, $this->commentspics, $scopeid);
-
-		if ($scopeid != 0) {
-			if ((intval($this->conf['ratings.']['useShortTopLikes']) == 1) || (intval($this->conf['ratings.']['useLikeDislikeStyle']) == 1)) {
-				$externalrefscope=$this->ref.'-'.$scopeid;
-				$repl='id="tx-tc-myrts-dp-'.$externalrefscope . '" class="tx-tc-rts-area';
-				$replw='class="tx-tc-nodisp" id="tx-tc-myrts-dp-'.$externalrefscope. '" class="tx-tc-rts-area tx-tc-nodisp';
-				$wrkareaHTML=str_replace('id="tx-tc-myrtstop-'.$externalrefscope.'" class="tx-tc-rts-area', 'id="tx-tc-myrtstop-'.$externalrefscope.
-					'" class="tx-tc-rts-area tx-tc-nodisp', $content);
-				$content=str_replace($repl, $replw, $wrkareaHTML);
+			if ($isReview != 0) {
+				$this->conf['ratings.']['useMyVote'] = $savuseMyVote;
+				$this->conf['ratings.']['useVotes'] = $savuseVotes;
 			}
 
-		}
+			if ($scopeid != 0) {
+				if ((intval($this->conf['ratings.']['useShortTopLikes']) == 1) || (intval($this->conf['ratings.']['useLikeDislikeStyle']) == 1)) {
+					$externalrefscope=$this->ref.'-'.$scopeid;
+					$repl='id="tx-tc-myrts-dp-'.$externalrefscope . '" class="tx-tc-rts-area';
+					$replw='class="tx-tc-nodisp" id="tx-tc-myrts-dp-'.$externalrefscope. '" class="tx-tc-rts-area tx-tc-nodisp';
+					$wrkareaHTML=str_replace('id="tx-tc-myrtstop-'.$externalrefscope.'" class="tx-tc-rts-area', 'id="tx-tc-myrtstop-'.$externalrefscope.
+						'" class="tx-tc-rts-area tx-tc-nodisp', $content);
+					$content=str_replace($repl, $replw, $wrkareaHTML);
+				}
 
-		$this->conf['ratings.']['mode']=$saveconfstaticmode;
+			}
+
+			if ($isReview != 0) {
+				$content = '<div class="tx-tc-rws-area">' . $content . '</div>';
+			}
+
+			$this->conf['ratings.']['mode']= $saveconfstaticmode;
+			$this->conf['ratings.']['modeplus']= $saveconfstaticmodeplus;
+			$this->conf['ratings.']['disableIpCheck'] = $saveratingsdisableIpCheck;
+		} else {
+			$content = '<div class="tx-tc-warn tx-tc-sysmessage">' . $allowedNumberOfRatingsExceededBlocktimeMessage . '</div>';
+		}
 		echo $content;
 
 	}

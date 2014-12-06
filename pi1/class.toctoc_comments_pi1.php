@@ -29,41 +29,42 @@
  *
  *
  *
- *   93: class tx_toctoccomments_pi1 extends tslib_pibase
- *  176:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
- * 2276:     protected function checkJSLoc()
- * 2516:     protected function checkCSSTheme()
- * 2627:     protected function checkCSSLoc()
- * 3063:     protected function makesharingcss ()
- * 3240:     protected function initprefixToTableMap()
- * 3277:     protected function init()
- * 3940:     protected function mergeConfiguration()
- * 4200:     protected function fetchConfigValue($param)
- * 4228:     protected function ae_detect_ie()
- * 4252:     protected function boxmodel()
- * 4836:     protected function crunchcss($buffer)
- * 4861:     protected function calculate_string( $mathString )
- * 4884:     protected function locationHeaderUrlsubDir()
- * 4903:     protected function currentPageName()
- * 4931:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
- * 4962:     protected function doClearCache ($forceclear=FALSE)
- * 4996:     protected function getPluginCacheControlTstamp ($external_ref_uid)
- * 5020:     protected function getLastUserAdditionTstamp ()
- * 5043:     protected function initLegacyCache ()
- * 5057:     protected function check_scopes()
- * 5215:     protected function initializeprefixtotablemap()
- * 5255:     protected function sharrrejs()
- * 5337:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
- * 5390:     private function resolveBackPath($pathStr)
- * 5425:     private function dirname($path)
- * 5439:     private function revExplode($delimiter, $string, $count = 0)
+ *   94: class tx_toctoccomments_pi1 extends tslib_pibase
+ *  177:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
+ * 2363:     protected function checkJSLoc()
+ * 2614:     protected function checkCSSTheme()
+ * 2725:     protected function checkCSSLoc()
+ * 3188:     protected function makesharingcss ()
+ * 3365:     protected function initprefixToTableMap()
+ * 3402:     protected function init()
+ * 4071:     protected function mergeConfiguration()
+ * 4454:     protected function fetchConfigValue($param)
+ * 4482:     protected function ae_detect_ie()
+ * 4506:     protected function boxmodel()
+ * 5178:     protected function crunchcss($buffer)
+ * 5203:     protected function calculate_string( $mathString )
+ * 5226:     protected function locationHeaderUrlsubDir()
+ * 5245:     protected function currentPageName()
+ * 5273:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
+ * 5304:     protected function doClearCache ($forceclear=FALSE)
+ * 5338:     protected function getPluginCacheControlTstamp ($external_ref_uid)
+ * 5362:     protected function getLastUserAdditionTstamp ()
+ * 5385:     protected function initLegacyCache ()
+ * 5399:     protected function check_scopes()
+ * 5557:     protected function initializeprefixtotablemap()
+ * 5597:     protected function sharrrejs()
+ * 5679:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
+ * 5732:     private function resolveBackPath($pathStr)
+ * 5767:     private function dirname($path)
+ * 5781:     private function revExplode($delimiter, $string, $count = 0)
  *
  *              SECTION: needed by class.tx_commentsresponse_hooks.php
- * 5462:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 5485:     public function createLinks($text, $conf = NULL)
- * 5507:     protected function getGETVars($arrVars)
+ * 5804:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 5827:     public function createLinks($text, $conf = NULL)
+ * 5849:     protected function getGETVars($arrVars)
+ * 5862:     protected function getThemeTmageDimension($filename, $returnindex)
  *
- * TOTAL FUNCTIONS: 30
+ * TOTAL FUNCTIONS: 31
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -96,7 +97,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '550';
+	public $extVersion = '600';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
 	public $externalUid;						// UID of external record
@@ -309,7 +310,12 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		// is equivalent to ?puge_cache=1
 			$saveactivateClearPageCache=$this->activateClearPageCache;
 			$this->activateClearPageCache=TRUE;
+			$tempblocktime = 0;
+			if (isset($_SESSION['unBlockTime'])) {
+				$tempblocktime = $_SESSION['unBlockTime'];
+			}
 			$_SESSION = array();
+			$_SESSION['unBlockTime'] = $tempblocktime;
 			$this->doClearCache();
 			$this->activateClearPageCache=$saveactivateClearPageCache;
 			$_SESSION['cachepurged']=1;
@@ -318,7 +324,12 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		if ((intval(t3lib_div::_GP('purge_cache'))==1) && (intval($_SESSION['cachepurged'])!=1 )) {
 			$saveactivateClearPageCache=$this->activateClearPageCache;
 			$this->activateClearPageCache=TRUE;
+			$tempblocktime = 0;
+			if (isset($_SESSION['unBlockTime'])) {
+				$tempblocktime = $_SESSION['unBlockTime'];
+			}
 			$_SESSION = array();
+			$_SESSION['unBlockTime'] = $tempblocktime;
 			$this->doClearCache();
 			$this->activateClearPageCache=$saveactivateClearPageCache;
 			$_SESSION['cachepurged']=1;
@@ -327,7 +338,12 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			if (($loginreset==TRUE) && (intval($_SESSION['cachepurgedlogin'])!=1) && (intval($_SESSION['cachepurged'])!=1)) {
 				$saveactivateClearPageCache=$this->activateClearPageCache;
 				$this->activateClearPageCache=TRUE;
+				$tempblocktime = 0;
+				if (isset($_SESSION['unBlockTime'])) {
+					$tempblocktime = $_SESSION['unBlockTime'];
+				}
 				$_SESSION = array();
+				$_SESSION['unBlockTime'] = $tempblocktime;
 				$this->doClearCache();
 				$this->activateClearPageCache=$saveactivateClearPageCache;
 
@@ -360,6 +376,21 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				$_SESSION['doChangePasswordForm'] = 2;
 			} elseif ($_SESSION['doChangePasswordForm'] == 0) {
 				$_SESSION['doChangePasswordForm'] = 2;
+			}
+
+			if (($_SESSION['doChangePasswordForm'] == 2) && (intval($_SESSION['cachepurged'])!=1 )) {
+				$saveactivateClearPageCache=$this->activateClearPageCache;
+				$this->activateClearPageCache=TRUE;
+				$tempblocktime = 0;
+				if (isset($_SESSION['unBlockTime'])) {
+					$tempblocktime = $_SESSION['unBlockTime'];
+				}
+				$_SESSION = array();
+				$_SESSION['unBlockTime'] = $tempblocktime;
+				$this->doClearCache();
+				$this->activateClearPageCache=$saveactivateClearPageCache;
+				$_SESSION['cachepurged']=1;
+				$sdebugprintli .= '<br />'. 'purge_cache on reset password, page-id ' .$GLOBALS['TSFE']->id. '<br />';
 			}
 		}
 
@@ -451,8 +482,9 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		}
 
 		if (intval($this->conf['advanced.']['wallExtension']) != 0) {
-			// on cummunity page login required is not possible
+			// on cummunity page reviews and login required is not possible
 			$this->conf['advanced.']['loginRequired'] = 0;
+			$this->conf['advanced.']['commentReview'] = 0;
 		}
 
 		if (intval($this->conf['sessionTimeout']) < 2) {
@@ -467,6 +499,23 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			}
 
 		}
+
+		if (intval($this->conf['userCenter.']['commentsPerUCList']) < 1) {
+			$this->conf['userCenter.']['commentsPerUCList'] = 1;
+		}
+
+		if (intval($this->conf['userCenter.']['maxItemsPerUCList']) <= intval($this->conf['userCenter.']['commentsPerUCList'])) {
+			$this->conf['userCenter.']['maxItemsPerUCList'] = intval($this->conf['userCenter.']['commentsPerUCList'])+1;
+		}
+
+		if (intval($this->conf['userCenter.']['maxItemAgeUCList']) < 1) {
+			$this->conf['userCenter.']['maxItemAgeUCList'] = 1;
+		}
+
+		$filename = 'toctoc_comments_myrating_star.png';
+		$this->conf['ratings.']['ratingImageWidth'] = $this->getThemeTmageDimension($filename, 0);
+		$filename = 'toctoc_comments_myreview_star.png';
+		$this->conf['ratings.']['reviewImageWidth'] = $this->getThemeTmageDimension($filename, 0);
 
 		if (!is_array(explode(',', $this->conf['theme.']['responsiveSteps']))) {
 			$this->arrResponsiveSteps[0]=350;
@@ -533,7 +582,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		if  ($this->extConf['importDataprefixtotable']) {
 			$this->initializeprefixtotablemap();
 		}
-		
+
 		if (intval($this->conf['externalPrefix'])>0) {
 			if ($this->conf['externalPrefix']!='') {
 				$where = 'uid=' . $this->conf['externalPrefix'];
@@ -727,6 +776,21 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$_SESSION['TermsCondspage'] = $TermsCondspage;
 		}
 
+		if ((intval($conf['userCenter.']['userCenterPageID']) != 0) && (intval($GLOBALS['TSFE']->fe_user->user['uid']) > 0)) {
+			$conflink = array(
+					// Link to current page
+					'parameter' => intval($this->conf['userCenter.']['userCenterPageID']),
+					// Set additional parameters
+					'additionalParams' => '',
+					'useCacheHash' => $useCacheHashNeeded,
+					'no_cache' => $no_cacheflag,
+					'ATagParams' => 'rel="nofollow"',
+			);
+			$TermsCondspage = $this->cObj->typoLink($this->lib->pi_getLLWrap($this, 'pi1_template.userCenterpagelinktext', FALSE), $conflink);
+			$_SESSION['userCenterPage'] = $TermsCondspage;
+
+		}
+
 		//conf-ckecks
 		if ($this->conf['advanced.']['userCommentResponseLevels'] > 20) {
 			$this->conf['advanced.']['userCommentResponseLevels'] = 20;
@@ -869,9 +933,12 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		$_SESSION['debugprintlib']='';
 		$_SESSION['debugprintlib']=array();
 		$_SESSION['debugprintlib']['debugtext']=$strdebugprintlib;
+
 		$this->feuserid=intval($GLOBALS['TSFE']->fe_user->user['uid']);
 		$_SESSION['currentfeuserid']=$this->feuserid;
+
 		$this->pi_USER_INT_obj = 0;
+
 		if ($_SESSION['commentsPageId'] != $GLOBALS['TSFE']->id) {
 			// new page
 			// store request url for eID
@@ -940,7 +1007,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		}
 		$strCurrentIP = $this->lib->getCurrentIp();
 
-		if (intval($GLOBALS['TSFE']->fe_user->user['uid']) === 0) {
+		if (intval($GLOBALS['TSFE']->fe_user->user['uid']) == 0) {
 			$_SESSION['toctoc_user'] = '' . $strCurrentIP . '.0';
 		} else {
 			$_SESSION['toctoc_user'] = '0.0.0.0.' . $GLOBALS['TSFE']->fe_user->user['uid'];
@@ -1776,7 +1843,18 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			}
 
 		}
-		//$_SESSION['AJAXimages']=array();
+
+		if ($this->feuserid == 0) {
+			if (($this->conf['advanced.']['commentReview'] == 1) && ($this->conf['advanced.']['loginRequired'] == 0)) {
+				$this->conf['code'] = 'COMMENTS';
+				$this->conf['ratings.']['mode'] = 'static';
+			}
+
+		}
+		if ($this->conf['advanced.']['commentReview'] == 1) {
+			$this->conf['ratings.']['useTopVotes'] = 1;
+		}
+
 		if (intval($this->conf['pluginmode'])==0) {
 			if ($this->getLastUserAdditionTstamp() > intval($_SESSION['AJAXimagesTimeStamp'])) {
 				// if exeptionally a new user has been added since the last caching time, then the user pics need an update
@@ -2263,6 +2341,14 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			}
 			return $retstr;
 
+		} elseif (($this->conf['pluginmode'] == 6)) {
+
+			$this->pi_USER_INT_obj = 1;    // Configuring so caching is not expected. This value means that no cHash params are ever set.
+			                               //We do this, because it's a USER_INT object!
+			$_SESSION['edgeTime'] = microtime(TRUE);
+			$retstr = $this->lib->showuserCenter($this->conf, $this);
+			return $retstr;
+
 		} else {
 			return '';
 		}
@@ -2432,16 +2518,25 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 		} else {
 			$termscond = 0;
 		}
+		if ($this->conf['RequiredMark'] == '') {
+			$this->conf['RequiredMark'] = '*';
+		}
 
 		$jscontent .= $tcsmiliesenchtml . "\n";
 		$jscontent .= $tcbbenchtml . "\n";
 		$jscontent .= $varbbshtml . "\n";
 		$jscontent .= 'var textErrCommentLength = "' . base64_encode($strtexterrorlength) . '";' . "\n";
+		$jscontent .= 'var textErrNotReviewed = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.textmakefirstreview', FALSE)) . '";' . "\n";
 		$jscontent .= 'var confagbchck = ' . $termscond . ';' . "\n";
 		$jscontent .= 'var activelang = "' . $_SESSION['activelang'] . '";' . "\n";
 		$jscontent .= 'var cookieLifetime = ' . intval($this->conf['dataProtect.']['cookieLifetime']) . ';' . "\n";
 		$jscontent .= 'var textErrCommentNull = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.texterrornull', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textSaveComment = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.savecomment', FALSE)) . '";' . "\n";
+		$jscontent .= 'var textCommenttitle = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.commenttitle', FALSE)) . '";' . "\n";
+		$requiredFields = t3lib_div::trimExplode(',', $this->conf['requiredFields'], TRUE);
+		$requiredcommenttitle =in_array('commenttitle', $requiredFields) ? base64_encode($this->conf['RequiredMark']) : '';
+		$jscontent .= 'var textrequiredcommenttitle = "' . $requiredcommenttitle . '";' . "\n";
+		$jscontent .= 'var textcommentTitleStdWrap = "' . base64_encode($this->conf['commentTitle_stdWrap.']['wrap']) . '";' . "\n";
 		$jscontent .= 'var textCancelEditComment = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.canceleditcomment', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textEditComment = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.editlink', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textAddComment = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.add_comment', FALSE)) . '";' . "\n";
@@ -2470,6 +2565,8 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 		$jscontent .= 'var textimagedescribe = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.imagedescribe', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textclosepdfupload = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.closepdfupload', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textclosepicupload = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.closeimageupload', FALSE)) . '";' . "\n";
+		$jscontent .= 'var textshowmore = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.text_usercenter_showmore', FALSE)) . '";' . "\n";
+		$jscontent .= 'var texthideshowmore = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.text_usercenter_showless', FALSE)) . '";' . "\n";
 		$jscontent .= 'var pathim = "' . base64_encode($GLOBALS['TYPO3_CONF_VARS']['GFX']['im_path']) . '";' . "\n";
 		$jscontent .= 'var textmessagecannotdelete = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.textmessagecannotdelete', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textmessagecannotinsert = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.textmessagecannotinsert', FALSE)) . '";' . "\n";
@@ -2663,8 +2760,13 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 		$sortind=0;
 		if (intval($this->conf['theme.']['boxmodelLineHeight']) > 17) {
 			$sortind = intval((intval($this->conf['theme.']['boxmodelLineHeight']) - 16)/2);
-		}		
-		
+		}
+
+		$boxmodelLineHeightorReviewlineHeight = intval($this->conf['theme.']['boxmodelLineHeight']);
+		if (intval($this->conf['ratings.']['reviewImageWidth']) > $boxmodelLineHeightorReviewlineHeight) {
+			$boxmodelLineHeightorReviewlineHeight = intval($this->conf['ratings.']['reviewImageWidth']);
+		}
+
 		$marginleftcommentingform = 0;
 		if ($this->conf['useUserImage'] == 1) {
 			$marginleftcommentingform = 9;
@@ -2822,10 +2924,6 @@ div.tx-tc-ct-form-field input, textarea.tx-tc-ctinput-textarea, textarea.tx-tc-c
 		if ($this->conf['theme.']['selectedBoxmodelkoogled']==1) {
 			$stylemargincontent=$stylemargincontent-6;
 		}
-		$marginratingnumber = p;
-		$paddingratingnumber = $this->conf['theme.']['boxmodelSpacing'];
-		$margincontent = $paddingratingnumber;
-		$margincontentnp = $paddingratingnumber;
 
 		$vidmaxwidth=round(intval($this->conf['attachments.']['webpagePreviewHeight'])*(4/3), 0);
 		$picstrvid='.tx-tc-pvs-vid-img-size {
@@ -2848,10 +2946,10 @@ div.tx-tc-ct-form-field input, textarea.tx-tc-ctinput-textarea, textarea.tx-tc-c
 										intval($this->conf['attachments.']['webpagePreviewHeight']) .
 										base64_encode(trim($this->conf['theme.']['themeFontFamily'])) .
 										intval($this->conf['topRatings.']['topratingsnumberwidth']) .
-										$this->conf['advanced.']['dontUseSharingFacebook'] . $this->conf['advanced.']['dontUseSharingTwitter'] .
-										$this->conf['advanced.']['dontUseSharingGoogle'] . $this->conf['advanced.']['dontUseSharingLinkedIn'] .
-										$this->conf['advanced.']['dontUseSharingStumbleupon'] . $this->conf['advanced.']['dontUseSharingPinterest'] .
-										$this->conf['advanced.']['dontUseSharingDigg'] . $this->conf['advanced.']['dontUseSharingDelicious'] .
+										$this->conf['sharing.']['dontUseSharingFacebook'] . $this->conf['sharing.']['dontUseSharingTwitter'] .
+										$this->conf['sharing.']['dontUseSharingGoogle'] . $this->conf['sharing.']['dontUseSharingLinkedIn'] .
+										$this->conf['sharing.']['dontUseSharingStumbleupon'] . $this->conf['sharing.']['dontUseSharingPinterest'] .
+										$this->conf['sharing.']['dontUseSharingDigg'] . $this->conf['sharing.']['dontUseSharingDelicious'] .
 										$this->conf['theme.']['shareCountborderColor'] . $this->conf['theme.']['shareBackgroundColor'] .
 										$this->conf['theme.']['shareborderColor1'] . $this->conf['theme.']['shareborderColor2'] .
 										$this->conf['theme.']['borderColor'] . intval($this->showCSScomments) .
@@ -2922,7 +3020,7 @@ textarea.tx-tc-ctinput-textarea, textarea.tx-tc-ctinput-textarea-rq, input.tx-tc
    	margin-left: -' . (intval($useUserImageSize)) .'px;
 }
 .tx-tc-trt-rating {
-    margin: 0 '.(intval($this->conf['theme.']['boxmodelSpacing'])).'px 0;
+    margin: 0 '.(intval($this->conf['theme.']['boxmodelSpacing'])).'px 0 0;
     padding: 0 '.$this->conf['theme.']['boxmodelSpacing'].'px;
  }
 .tx-tc-trl-rank {
@@ -3024,17 +3122,17 @@ textarea.tx-tc-ctinput-textarea, textarea.tx-tc-ctinput-textarea-rq {
 form.tx-tc-form-for-newcomment {
     padding: 0 0 ' .intval((3/2)*$this->conf['theme.']['boxmodelSpacing']) . 'px;
 }
-.tx-tx-margleftbms {
-	margin: 0 0 0 ' .intval(15+$this->conf['theme.']['boxmodelSpacing']) . 'px;
-}
-.tx-tx-trt-userisz {
+.tx-tc-trt-userisz {
 	min-height: ' . intval($this->conf['topRatings.']['topratingsimagesize']) . 'px;
 }
 .tx-tc-mrgcnt-left {
-	margin-left: ' . $margincontent. 'px;
+	margin-left: ' .  intval($this->conf['theme.']['boxmodelSpacing']) . 'px;
 }
-.tx-tc-mrgcntnp-left {
-	margin-left: ' . $margincontentnp. 'px;
+.tx-tc-trt-rating-img + .tx-tc-trt-rating-detail .tx-tc-mrgcntnp-left {
+	margin-left: ' . intval($this->conf['theme.']['boxmodelSpacing']). 'px;
+}
+.tx-tc-text-top {
+	line-height: ' . $boxmodelLineHeightorReviewlineHeight . 'px;
 }
 ' .
 $cssctpicform .
@@ -3074,6 +3172,7 @@ Variables used in the boxmodel.txt-files res/css/boxmodels/system/boxmodel-syste
 	picUploadMaxDimX: ' . $this->conf['attachments.']['picUploadMaxDimX'] . ',
 	userImageSize: ' . $this->conf['userImageSize'] . ',
 	ratingImageWidth: ' . $this->conf['ratings.']['ratingImageWidth'] . '
+	reviewImageWidth: ' . $this->conf['ratings.']['reviewImageWidth'] . '
 */';
 }
 
@@ -3088,15 +3187,15 @@ Variables used in the boxmodel.txt-files res/css/boxmodels/system/boxmodel-syste
 	 */
 	protected function makesharingcss () {
 		$retcss = '';
-		$confdontUseSharingStumbleupon = $this->conf['advanced.']['dontUseSharingStumbleupon'];
-		$confdontUseSharingDigg = $this->conf['advanced.']['dontUseSharingDigg'];
+		$confdontUseSharingStumbleupon = $this->conf['sharing.']['dontUseSharingStumbleupon'];
+		$confdontUseSharingDigg = $this->conf['sharing.']['dontUseSharingDigg'];
 		if (@$_SERVER['HTTPS'] == 'on') {
 			// on https StumbleUpon and Digg fail
 			$confdontUseSharingStumbleupon = 1;
 			$confdontUseSharingDigg = 1;
 
 		}
-		if ($this->conf['advanced.']['sharingNoCalculatedCSS'] == 0) {
+		if ($this->conf['sharing.']['sharingNoCalculatedCSS'] == 0) {
 			$hasValidSharingItems = 0;
 			$golang= $_SESSION['activelang'];
 
@@ -3174,25 +3273,25 @@ Variables used in the boxmodel.txt-files res/css/boxmodels/system/boxmodel-syste
 			$leftpxst=0;
 			$leftpxpi=0;
 			$leftpxdi=0;
-			if ($this->conf['advanced.']['dontUseSharingFacebook'] !=1 ) {
+			if ($this->conf['sharing.']['dontUseSharingFacebook'] !=1 ) {
 				$hasValidSharingItems++;
 				$leftpxfb = 4;
 				$accumulatedwidth += 60 + $fbminwidthcorr;
 			}
 
-			if ($this->conf['advanced.']['dontUseSharingTwitter'] !=1 ) {
+			if ($this->conf['sharing.']['dontUseSharingTwitter'] !=1 ) {
 				$hasValidSharingItems++;
 				$leftpxtw = 4 + $accumulatedwidth;
 				$accumulatedwidth += 64 + $twminwidthcorr;
 			}
 
-			if ($this->conf['advanced.']['dontUseSharingGoogle'] !=1 ) {
+			if ($this->conf['sharing.']['dontUseSharingGoogle'] !=1 ) {
 				$hasValidSharingItems++;
 				$leftpxgo= 4 + $accumulatedwidth;
 				$accumulatedwidth += 55;
 			}
 
-			if ($this->conf['advanced.']['dontUseSharingLinkedIn'] !=1 ) {
+			if ($this->conf['sharing.']['dontUseSharingLinkedIn'] !=1 ) {
 				$hasValidSharingItems++;
 				$leftpxli = 4 + $accumulatedwidth;
 				$accumulatedwidth += 72;
@@ -3204,7 +3303,7 @@ Variables used in the boxmodel.txt-files res/css/boxmodels/system/boxmodel-syste
 				$accumulatedwidth += 56;
 			}
 
-			if ($this->conf['advanced.']['dontUseSharingPinterest'] !=1 ) {
+			if ($this->conf['sharing.']['dontUseSharingPinterest'] !=1 ) {
 				$hasValidSharingItems++;
 				$leftpxpi = 4 + $accumulatedwidth;
 				$accumulatedwidth += 48;
@@ -3216,7 +3315,7 @@ Variables used in the boxmodel.txt-files res/css/boxmodels/system/boxmodel-syste
 				$accumulatedwidth += 62;
 			}
 
-			if ($this->conf['advanced.']['dontUseSharingDelicious'] !=1 ) {
+			if ($this->conf['sharing.']['dontUseSharingDelicious'] !=1 ) {
 				$hasValidSharingItems++;
 				$leftpxde = 4 + $accumulatedwidth;
 				$accumulatedwidth += 54;
@@ -3618,10 +3717,16 @@ sharrre design 2 and 4, calculated specifics
 				$locchangePasswordFormhtml= '	var tcpasswordcard ="";
 ';
 
-				$rsajsstr = '';
+				$rsajsstr = '<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/resources/jsbn/jsbn.js"></script>
+						<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/resources/jsbn/prng4.js"></script>
+						<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/resources/jsbn/rng.js"></script>
+						<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/resources/jsbn/rsa.js"></script>
+						<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/resources/jsbn/base64.js"></script>
+						<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/resources/rsaauth_min.js"></script>';
 				if ((intval($this->conf['advanced.']['loginRequired']) == 0) && ($this->conf['pluginmode'] != 5)) {
 					$locLoginFormhtml= '	var tclogincard ="";
 ';
+					$rsajsstr = '';
 				} else {
 
 					$postDatapi2 =  t3lib_div::_GET('tx_toctoccomments_pi2');
@@ -3710,12 +3815,11 @@ sharrre design 2 and 4, calculated specifics
 						$locLoginRsaJsarr = array();
 						$locLoginRsaJsarr = explode('[noredirect]"', $rsajscompletestr);
 						if (count($locLoginRsaJsarr) > 1) {
-							$rsajsstr = trim(substr($locLoginRsaJsarr[1], 13));
-							$locLoginFormhtml= str_replace($rsajsstr, '', $locLoginFormhtml);
+							$rsajsstroff = trim(substr($locLoginRsaJsarr[1], 13));
+							$locLoginFormhtml= str_replace($rsajsstroff, '', $locLoginFormhtml);
 						}
 
 					}
-					//exit;
 					if ($this->conf['theme.']['boxmodelLabelInputPreserve']==1) {
 						$locLoginFormhtml = str_replace('class="tx-tc-loginform', 'class="tx-tc-loginform tx-tc-responsive', $locLoginFormhtml);
 					}
@@ -3737,6 +3841,7 @@ sharrre design 2 and 4, calculated specifics
 				}else {
 					$jscontent .= '	var boxmodelLabelWidth = 0;' . "\n";
 				}
+				$jscontent .= '	var dolabel = ' . intval($this->conf['advanced.']['watermarkFormFields']) . ';' . "\n";
 				$jscontent .= '	var boxmodelSpacing = ' . intval($this->conf['theme.']['boxmodelSpacing']) . ';' . "\n";
 				$jscontent .= '	var boxmodelLineHeight = ' . intval($this->conf['theme.']['boxmodelLineHeight']) . ';' . "\n";
 				$jscontent .= '	var confpvsheight = ' . intval($this->conf['attachments.']['webpagePreviewHeight']) . ';' . "\n";
@@ -4064,7 +4169,7 @@ sharrre design 2 and 4, calculated specifics
 		}
 
 		$this->fetchConfigValue('userStats');
-
+		$this->fetchConfigValue('advanced.commentReview');
 		$this->fetchConfigValue('advanced.commentingClosed');
 		$this->fetchConfigValue('advanced.closeCommentsAfter');
 		$this->fetchConfigValue('advanced.useSharing');
@@ -4077,6 +4182,129 @@ sharrre design 2 and 4, calculated specifics
 		$this->fetchConfigValue('advanced.initialViewsDate');
 		$this->fetchConfigValue('advanced.shareUsersTotalText');
 		$this->fetchConfigValue('advanced.shareDataText');
+		$this->fetchConfigValue('advanced.sharePageURL');
+
+		$this->fetchConfigValue('sharing.useSharingV2');
+		$this->fetchConfigValue('sharing.dontUseSharingFacebookV2');
+		$this->fetchConfigValue('sharing.dontUseSharingGoogleV2');
+		$this->fetchConfigValue('sharing.dontUseSharingTwitterV2');
+		$this->fetchConfigValue('sharing.dontUseSharingLinkedInV2');
+		$this->fetchConfigValue('sharing.dontUseSharingStumbleuponV2');
+		$this->fetchConfigValue('sharing.shareUsersTotalTextV2');
+		$this->fetchConfigValue('sharing.shareDataTextV2');
+		$this->fetchConfigValue('sharing.sharePageURLV2');
+
+		if (isset($this->conf['sharing.']['useSharingV2'])) {
+			if ($this->conf['sharing.']['useSharingV2'] != '') {
+				$this->conf['sharing.']['useSharing']=$this->conf['sharing.']['useSharingV2'];
+			}
+			unset($this->conf['sharing.']['useSharingV2']);
+		} elseif ($this->conf['advanced.']['useSharing'] != 1) {
+			$this->conf['sharing.']['useSharing']=$this->conf['advanced.']['useSharing'];
+		}
+
+		if (isset($this->conf['sharing.']['dontUseSharingFacebookV2'])) {
+			if ($this->conf['sharing.']['dontUseSharingFacebookV2'] != '') {
+				$this->conf['sharing.']['dontUseSharingFacebook']=$this->conf['sharing.']['dontUseSharingFacebookV2'];
+			}
+			unset($this->conf['sharing.']['dontUseSharingFacebookV2']);
+		} elseif ($this->conf['advanced.']['dontUseSharingFacebook'] != 0) {
+			$this->conf['sharing.']['dontUseSharingFacebook']=$this->conf['advanced.']['dontUseSharingFacebook'];
+		}
+
+		if (isset($this->conf['sharing.']['dontUseSharingGoogleV2'])) {
+			if ($this->conf['sharing.']['dontUseSharingGoogleV2'] != '') {
+				$this->conf['sharing.']['dontUseSharingGoogle']=$this->conf['sharing.']['dontUseSharingGoogleV2'];
+			}
+			unset($this->conf['sharing.']['dontUseSharingGoogleV2']);
+		} elseif ($this->conf['advanced.']['dontUseSharingGoogle'] != 0) {
+			$this->conf['sharing.']['dontUseSharingGoogle']=$this->conf['advanced.']['dontUseSharingGoogle'];
+		}
+
+		if (isset($this->conf['sharing.']['dontUseSharingTwitterV2'])) {
+			if ($this->conf['sharing.']['dontUseSharingTwitterV2'] != '') {
+				$this->conf['sharing.']['dontUseSharingTwitter']=$this->conf['sharing.']['dontUseSharingTwitterV2'];
+			}
+			unset($this->conf['sharing.']['dontUseSharingTwitterV2']);
+		} elseif ($this->conf['advanced.']['dontUseSharingTwitter'] != 0) {
+			$this->conf['sharing.']['dontUseSharingTwitter']=$this->conf['advanced.']['dontUseSharingTwitter'];
+		}
+
+		if (isset($this->conf['sharing.']['dontUseSharingLinkedInV2'])) {
+			if ($this->conf['sharing.']['dontUseSharingLinkedInV2'] != '') {
+				$this->conf['sharing.']['dontUseSharingLinkedIn']=$this->conf['sharing.']['dontUseSharingLinkedInV2'];
+			}
+			unset($this->conf['sharing.']['dontUseSharingLinkedInV2']);
+		} elseif ($this->conf['advanced.']['dontUseSharingLinkedIn'] != 0) {
+			$this->conf['sharing.']['dontUseSharingLinkedIn']=$this->conf['advanced.']['dontUseSharingLinkedIn'];
+		}
+
+		if (isset($this->conf['sharing.']['dontUseSharingStumbleuponV2'])) {
+			if ($this->conf['sharing.']['dontUseSharingStumbleuponV2'] != '') {
+				$this->conf['sharing.']['dontUseSharingStumbleupon']=$this->conf['sharing.']['dontUseSharingStumbleuponV2'];
+			}
+			unset($this->conf['sharing.']['dontUseSharingStumbleuponV2']);
+		} elseif ($this->conf['advanced.']['dontUseSharingStumbleupon'] != 0) {
+			$this->conf['sharing.']['dontUseSharingStumbleupon']=$this->conf['advanced.']['dontUseSharingStumbleupon'];
+		}
+
+		if (isset($this->conf['sharing.']['shareUsersTotalTextV2'])) {
+			if ($this->conf['sharing.']['shareUsersTotalTextV2'] != '') {
+				$this->conf['sharing.']['shareUsersTotalText']=$this->conf['sharing.']['shareUsersTotalTextV2'];
+			}
+			unset($this->conf['sharing.']['shareUsersTotalTextV2']);
+		} elseif ($this->conf['advanced.']['shareUsersTotalText'] != '') {
+			$this->conf['sharing.']['shareUsersTotalText']=$this->conf['advanced.']['shareUsersTotalText'];
+		}
+
+		if (isset($this->conf['sharing.']['shareDataTextV2'])) {
+			if ($this->conf['sharing.']['shareDataTextV2'] != '') {
+				$this->conf['sharing.']['shareDataText']=$this->conf['sharing.']['shareDataTextV2'];
+			}
+			unset($this->conf['sharing.']['shareDataTextV2']);
+		} elseif ($this->conf['advanced.']['shareDataText'] != '') {
+			$this->conf['sharing.']['shareDataText']=$this->conf['advanced.']['shareDataText'];
+		}
+		if (isset($this->conf['sharing.']['sharePageURLV2'])) {
+			if ($this->conf['sharing.']['sharePageURLV2'] != '') {
+				$this->conf['sharing.']['sharePageURL']=$this->conf['sharing.']['sharePageURLV2'];
+			}
+			unset($this->conf['sharing.']['sharePageURLV2']);
+		} elseif ($this->conf['advanced.']['sharePageURL'] != '') {
+			$this->conf['sharing.']['sharePageURL']=$this->conf['advanced.']['sharePageURL'];
+		}
+
+		if ($this->conf['advanced.']['sharingNoCalculatedCSS'] != 0) {
+			$this->conf['sharing.']['sharingNoCalculatedCSS']=$this->conf['advanced.']['sharingNoCalculatedCSS'];
+		}
+
+		if ($this->conf['advanced.']['useSharingDesign'] != 0) {
+			$this->conf['sharing.']['useSharingDesign']=$this->conf['advanced.']['useSharingDesign'];
+		}
+
+		if ($this->conf['advanced.']['dontUseSharingPinterest'] != 0) {
+			$this->conf['sharing.']['dontUseSharingPinterest']=$this->conf['advanced.']['dontUseSharingPinterest'];
+		}
+
+		if ($this->conf['advanced.']['dontUseSharingDigg'] != 0) {
+			$this->conf['sharing.']['dontUseSharingDigg']=$this->conf['advanced.']['dontUseSharingDigg'];
+		}
+
+		if ($this->conf['advanced.']['dontUseSharingDelicious'] != 0) {
+			$this->conf['sharing.']['dontUseSharingDelicious']=$this->conf['advanced.']['dontUseSharingDelicious'];
+		}
+
+		if ($this->conf['advanced.']['useShareIcon'] != 1) {
+			$this->conf['sharing.']['useShareIcon']=$this->conf['advanced.']['useShareIcon'];
+		}
+
+		if ($this->conf['advanced.']['dontUseSharingAddThisMore'] != 0) {
+			$this->conf['sharing.']['dontUseSharingAddThisMore']=$this->conf['advanced.']['dontUseSharingAddThisMore'];
+		}
+
+		if ($this->conf['advanced.']['AddThisID'] != '') {
+			$this->conf['sharing.']['AddThisID']=$this->conf['advanced.']['AddThisID'];
+		}
 
 		$this->fetchConfigValue('ratings.enableRatings');
 		$this->fetchConfigValue('ratings.ratingsTemplateFile');
@@ -4301,6 +4529,30 @@ sharrre design 2 and 4, calculated specifics
 			}
 		}
 
+		$reviewlineheight = $this->conf['ratings.']['reviewImageWidth'];
+		if ($reviewlineheight < $this->conf['theme.']['boxmodelLineHeight'] ) {
+			$reviewlineheight = $this->conf['theme.']['boxmodelLineHeight'];
+		}
+
+		$ratinglineheight = $this->conf['ratings.']['ratingImageWidth'];
+		if ($ratinglineheight < $this->conf['theme.']['boxmodelLineHeight'] ) {
+			$ratinglineheight = $this->conf['theme.']['boxmodelLineHeight'];
+		}
+
+		$reviewTextMargin = intval(0.5*(intval($this->conf['ratings.']['reviewImageWidth'])-intval($this->conf['theme.']['boxmodelLineHeight'])));
+
+		if (($this->conf['ratings.']['reviewImageWidth']-$this->conf['theme.']['boxmodelLineHeight'])>0) {
+			$reviewTextMargin = intval(0.5*($this->conf['ratings.']['reviewImageWidth']-$this->conf['theme.']['boxmodelLineHeight']));
+		}
+
+		$ratingTextMargin=0;
+		if (($this->conf['ratings.']['ratingImageWidth']-$this->conf['theme.']['boxmodelLineHeight'])>0) {
+			$ratingTextMargin = $this->conf['ratings.']['ratingImageWidth']-$this->conf['theme.']['boxmodelLineHeight'];
+		}
+
+		$reviewMarginTop = intval((intval($this->conf['theme.']['boxmodelLineHeight'])-intval($this->conf['ratings.']['reviewImageWidth']))/2);
+		$ratingMarginTop = intval((intval($this->conf['theme.']['boxmodelLineHeight'])-intval($this->conf['ratings.']['ratingImageWidth']))/2);
+
 		$txdirnameboxmodelsystem= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep .
 									t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/css/boxmodels/system/' );
 		$filenameboxmodelsystem=$txdirnameboxmodelsystem . 'boxmodel_system.txt';
@@ -4320,7 +4572,7 @@ sharrre design 2 and 4, calculated specifics
 		$httpsid='';
 		if (@$_SERVER['HTTPS'] == 'on') {
 			// on https StumbleUpon and Digg fail
-			if (($this->conf['advanced.']['dontUseSharingStumbleupon'] == 0) || ($this->conf['advanced.']['dontUseSharingDigg'] == 0)) {
+			if (($this->conf['sharing.']['dontUseSharingStumbleupon'] == 0) || ($this->conf['sharing.']['dontUseSharingDigg'] == 0)) {
 				$httpsid='-https';
 			}
 		}
@@ -4376,6 +4628,8 @@ sharrre design 2 and 4, calculated specifics
 			}
 
 		}
+		$nbrofstars= intval($this->conf['ratings.']['maxValue']) - intval($this->conf['ratings.']['minValue']) + 1;
+
 		$printstr='';
 		$content ='';
 		$bmcsslastmodif=0;
@@ -4555,6 +4809,38 @@ sharrre design 2 and 4, calculated specifics
 											$boxmodelsrulesarr[$i]['varval']=$this->conf['ratings.']['ratingImageWidth'];
 										}
 
+										if ($boxmodelsrulesarr[$i]['varname']=='reviewImageWidth') {
+											$boxmodelsrulesarr[$i]['varval']=$this->conf['ratings.']['reviewImageWidth'];
+										}
+
+										if ($boxmodelsrulesarr[$i]['varname']=='reviewLineHeight') {
+											$boxmodelsrulesarr[$i]['varval']=$reviewlineheight;
+										}
+
+										if ($boxmodelsrulesarr[$i]['varname']=='ratingLineHeight') {
+											$boxmodelsrulesarr[$i]['varval']=$ratinglineheight;
+										}
+
+										if ($boxmodelsrulesarr[$i]['varname']=='reviewTextMargin') {
+											$boxmodelsrulesarr[$i]['varval']=$reviewTextMargin;
+										}
+
+										if ($boxmodelsrulesarr[$i]['varname']=='ratingTextMargin') {
+											$boxmodelsrulesarr[$i]['varval']=$ratingTextMargin;
+										}
+
+										if ($boxmodelsrulesarr[$i]['varname']=='reviewMarginTop') {
+											$boxmodelsrulesarr[$i]['varval']=$reviewMarginTop;
+										}
+
+										if ($boxmodelsrulesarr[$i]['varname']=='ratingMarginTop') {
+											$boxmodelsrulesarr[$i]['varval']=$ratingMarginTop;
+										}
+
+										if ($boxmodelsrulesarr[$i]['varname']=='ratingNbrStars') {
+											$boxmodelsrulesarr[$i]['varval']=$nbrofstars;
+										}
+
 										if ($boxmodelsrulesarr[$i]['varname']=='picUploadMaxDimX') {
 											$boxmodelsrulesarr[$i]['varval']=$this->conf['attachments.']['picUploadMaxDimX'];
 										}
@@ -4576,6 +4862,7 @@ sharrre design 2 and 4, calculated specifics
 
 										$evalpart=  trim($rulevarnamepartevalpartarr[1]); // {1} + {2} + 30
 										$countjjboxmodelsrulesarr=count($boxmodelsrulesarr);
+
 										for ($j=0; $j<$countjjboxmodelsrulesarr; $j++) {
 											if ($boxmodelsrulesarr[$j]['varname']=='boxmodelTextareaLineHeight') {
 												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->conf['theme.']['boxmodelTextareaLineHeight'],
@@ -4592,6 +4879,30 @@ sharrre design 2 and 4, calculated specifics
 														round(($this->conf['theme.']['boxmodelLineHeight']-16)/2, 0), $evalpart);
 											} elseif ($boxmodelsrulesarr[$j]['varname']=='ratingImageWidth') {
 												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->conf['ratings.']['ratingImageWidth'],
+														$evalpart);
+											} elseif ($boxmodelsrulesarr[$j]['varname']=='ratingNbrStars') {
+												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $nbrofstars,
+														$evalpart);
+											} elseif ($boxmodelsrulesarr[$j]['varname']=='reviewImageWidth') {
+												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->conf['ratings.']['reviewImageWidth'],
+														$evalpart);
+											} elseif ($boxmodelsrulesarr[$j]['varname']=='reviewLineHeight') {
+												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $reviewlineheight,
+														$evalpart);
+											} elseif ($boxmodelsrulesarr[$j]['varname']=='ratingLineHeight') {
+												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $ratinglineheight,
+														$evalpart);
+											} elseif ($boxmodelsrulesarr[$j]['varname']=='reviewTextMargin') {
+												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $reviewTextMargin,
+														$evalpart);
+											} elseif ($boxmodelsrulesarr[$j]['varname']=='ratingTextMargin') {
+												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $ratingTextMargin,
+														$evalpart);
+											} elseif ($boxmodelsrulesarr[$j]['varname']=='reviewMarginTop') {
+												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $reviewMarginTop,
+														$evalpart);
+											} elseif ($boxmodelsrulesarr[$j]['varname']=='ratingMarginTop') {
+												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $ratingMarginTop,
 														$evalpart);
 											} elseif ($boxmodelsrulesarr[$j]['varname']=='boxmodelLabelWidth') {
 												$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', intval($this->conf['theme.']['boxmodelLabelWidth']),
@@ -4610,7 +4921,8 @@ sharrre design 2 and 4, calculated specifics
 											}
 
 											$countjjboxmodelsrulesarr=count($boxmodelsrulesarr);
-										}// 170 + 40 + 30
+										}
+
 										$boxmodelsrulesarr[$i]['varname']=str_replace('{', '', str_replace('}', '', $varpart)); // 3
 										$boxmodelsrulesarr[$i]['varval']= $this->calculate_string($evalpart);  //240
 									}
@@ -4801,9 +5113,13 @@ sharrre design 2 and 4, calculated specifics
 
 							// remove button CSS if boxmodelLabelInputPreserve is forced
 							if ($this->conf['theme.']['boxmodelLabelInputPreserve'] == 1) {
-								$nolineheightarr = array('.tx-tc-ct-submit, .tx-tc-ct-submit-loggedin {',
+								if ($this->conf['theme.']['boxmodelButtonPreserve'] == 1) {
+									$nolineheightarr = array('.tx-tc-ct-submit, .tx-tc-ct-submit-loggedin {',
 										'.tx-tc-ct-submit, .tx-tc-ct-reset, .tx-tc-ct-submit-loggedin {',
 										);
+								} else {
+									$nolineheightarr = array();
+								}
 								$countnolineheight = count($nolineheightarr);
 								for ($x=0; $x < $countnolineheight; $x++) {
 									$contentdefaultcssarr = explode($nolineheightarr[$x], $contentdefaultcss);
@@ -4887,7 +5203,7 @@ sharrre design 2 and 4, calculated specifics
 	protected function calculate_string( $mathString )    {
 		$mathString = trim($mathString);     // trim white spaces
 		$mathString = preg_replace('~[^0-9\(\)\-\+\*\/]~', '', $mathString);    // remove any non-numbers chars; exception for math operators
-
+	//print $mathString . '<br>';
 		try
 		{
 			$compute = create_function('', 'return (' . $mathString . ');' );
@@ -5284,7 +5600,7 @@ sharrre design 2 and 4, calculated specifics
 			$httpsid='';
 			if (@$_SERVER['HTTPS'] == 'on') {
 				// on https StumbleUpon and Digg fail
-				if (($this->conf['advanced.']['dontUseSharingStumbleupon'] == 0) || ($this->conf['advanced.']['dontUseSharingDigg'] == 0)) {
+				if (($this->conf['sharing.']['dontUseSharingStumbleupon'] == 0) || ($this->conf['sharing.']['dontUseSharingDigg'] == 0)) {
 					$httpsid='-https';
 				}
 			}
@@ -5326,7 +5642,7 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 			$httpsid='';
 			if (@$_SERVER['HTTPS'] == 'on') {
 				// on https StumbleUpon and Digg fail
-				if (($this->conf['advanced.']['dontUseSharingStumbleupon'] == 0) || ($this->conf['advanced.']['dontUseSharingDigg'] == 0)) {
+				if (($this->conf['sharing.']['dontUseSharingStumbleupon'] == 0) || ($this->conf['sharing.']['dontUseSharingDigg'] == 0)) {
 					$httpsid='-https';
 				}
 			}
@@ -5534,6 +5850,28 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 
 		$queryString = http_build_query($arrVars, '', '&');
 		return $queryString;
+
+	}
+	/**
+	 * returns height of a image in the current themes img directory
+	 *
+	 * @param	string		$filename: ...
+	 * @param	int		$returnindex: 0 width, 1 height
+	 * @return	int
+	 */
+	protected function getThemeTmageDimension($filename, $returnindex){
+		$selectedTheme = trim($this->conf['theme.']['selectedTheme']);
+		if (trim($this->conf['theme.']['selectedTheme']) == '') {
+			$selectedTheme = 'default';
+		}
+
+		$repstr= str_replace('/', DIRECTORY_SEPARATOR, '/typo3conf/ext/toctoc_comments/pi1');
+		$txdirname= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . DIRECTORY_SEPARATOR . t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/css/themes/');
+		$filename=$txdirname . $selectedTheme . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . $filename;
+		$size = getimagesize($filename);
+		$ret = $size[$returnindex];
+
+		return $ret;
 
 	}
 }

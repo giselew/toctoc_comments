@@ -59,6 +59,16 @@ $TCA['tx_toctoc_comments_comments'] = array (
 				'default' => 0,
 			),
 		),
+		'isreview' => array (
+					'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.isreview',
+					'config' => array (
+							'type' => 'check',
+							'items' => array (
+									array ('LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.isreview.I.0', '')
+							),
+							'default' => 0,
+					),
+		),
 		'commenttitle' => array (
 			'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.commenttitle',
 			'config' => array (
@@ -248,6 +258,16 @@ $TCA['tx_toctoc_comments_feuser_mm'] = array (
 				'default' => 0,
 				'readOnly' => 1,			
 			)
+		),
+		'isreview' => array (
+				'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.isreview',
+				'config' => array (
+						'type' => 'check',
+						'items' => array (
+								array ('LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.isreview.I.0', '')
+						),
+						'default' => 0,
+				),
 		),
 		'toctoc_comments_user' => array (
 			'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.toctoc_comments_user',
@@ -1170,23 +1190,6 @@ $TCA['tx_toctoc_comments_ipbl_static'] = array (
 	'palettes' => array (
 		'1' => array ('showitem' => '')
 	)
-);
-
-
-$TCA['tx_toctoc_comments_plugincachecontrol'] = array (
-		'ctrl' => $TCA['tx_toctoc_comments_plugincachecontrol']['ctrl'],
-		'interface' => array (
-				'showRecordFieldList' => ''
-		),
-		'feInterface' => $TCA['tx_toctoc_comments_plugincachecontrol']['feInterface'],
-		'columns' => array (
-		),
-		'types' => array (
-
-		),
-		'palettes' => array (
-
-		)
 );
 
 $TCA['tx_toctoc_ratings_scope'] = array (

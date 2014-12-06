@@ -19,6 +19,8 @@
 			<label index="tx_toctoc_comments_comments.external_prefix">External prefix for this comment:</label>
 			<label index="tx_toctoc_comments_comments.approved">Approval state:</label>
 			<label index="tx_toctoc_comments_comments.approved.I.0">Approved</label>
+			<label index="tx_toctoc_comments_comments.review">Review:</label>
+			<label index="tx_toctoc_comments_comments.review.I.0">Is a review</label>
 			<label index="tx_toctoc_comments_comments.firstname">First name:</label>
 			<label index="tx_toctoc_comments_comments.lastname">Last name:</label>
 			<label index="tx_toctoc_comments_comments.email">Email:</label>

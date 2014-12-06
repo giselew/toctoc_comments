@@ -1039,7 +1039,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 					  	}
 
 					} elseif($_POST['bulkactuser'] == '3') {
-						$newuser=$_POST['mergeuser'];
+						$newuser=trim($_POST['mergeuser']);
 						$newusercheck = explode('.', $newuser);
 						if (count($newusercheck) == 5) {
 							$feuseruid = str_replace('0.0.0.0.', '', $newuser);
@@ -1143,32 +1143,32 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 														if ($rowd2['current_location'] != '') {
 															$current_location = $rowd2['current_location'];
 														}
-														
+
 														if ($rowd2['current_ip'] != '') {
 															$current_ip = $rowd2['current_ip'];
 														}
-														
+
 													} else {
 														if ($current_firstname == '') {
 															$current_firstname = $rowd2['current_firstname'];
 														}
-														
+
 														if ($current_lastname == '') {
 															$current_lastname = $rowd2['current_lastname'];
 														}
-														
+
 														if ($current_email == '') {
 															$current_email = $rowd2['current_email'];
 														}
-														
+
 														if ($current_homepage == '') {
 															$current_homepage = $rowd2['current_homepage'];
 														}
-														
+
 														if ($current_location == '') {
 															$current_location = $rowd2['current_location'];
 														}
-														
+
 														if ($current_ip == '') {
 															$current_ip = $rowd2['current_ip'];
 														}

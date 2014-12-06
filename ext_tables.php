@@ -259,12 +259,6 @@ $TCA['tx_toctoc_comments_ipbl_static'] = array (
 t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_comments_ipbl_static');
 t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_comments_ipbl_static', 'EXT:toctoc_comments/locallang_csh.xml');
 
-$TCA['tx_toctoc_comments_plugincachecontrol'] = array(
-		'ctrl' => array (
-				'hideTable'=> 1,
-		)
-);
-
 // facebook connect
 $tempColumns = array (
 		'tx_toctoc_comments_facebook_id' => array (

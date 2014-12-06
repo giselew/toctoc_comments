@@ -33,3 +33,4 @@ Ranking, 2nd place: C0C0C0 C0C0C0
 Ranking, 3rd place: CD7F32 CD7F32
 Info message (Disclaimer): 345A91 345A91
 OK Message (Disclaimer): 398B2E 398B2E
+Review highlight border: f3af1c 4e8fe0
