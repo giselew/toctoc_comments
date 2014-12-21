@@ -52,13 +52,17 @@ class user_toctoc_comments_cms_layout {
  * @return	string		Information about pi1 plugin
  */
 	public function getExtensionSummary($params, &$pObj) {
+		if (version_compare(TYPO3_version, '6.3', '>')) {
+			(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
+		}
 
-		$result = '';
+		$result = '<b>' . $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.list_type_pi1') . '</b><br />';
 		if ($params['row']['list_type'] == 'toctoc_comments_pi1') {
 			$data = t3lib_div::xml2array($params['row']['pi_flexform']);
 
 			if (is_array($data)) {
 				$mode = $data['data']['sDEF']['lDEF']['pluginmode']['vDEF'];
+				$result .= $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.code') . ' ';
 				if ($mode =='') {
 					$result .= $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.usets');
 				} elseif ($mode =='0') {
@@ -76,15 +80,15 @@ class user_toctoc_comments_cms_layout {
 				}
 
 				if (($mode =='') || ($mode =='0')) {
-
+					$result .= '<br />';
 					$tpfx = $data['data']['sDEF']['lDEF']['externalPrefix']['vDEF'];
 					if ($tpfx !='') {
-						$result .= $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.trigger.prefix') . ': ' .$tpfx;
-						$result .= ', ';
+						$result .= ucfirst($GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.trigger.prefix')) . ': ' .$tpfx;
+						$result .= '<br />';
 					}
 
 					$useshr = $data['data']['sAdvanced']['lDEF']['useSharing']['vDEF'];
-					$result .= $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.useSharing') . ' ';
+					$result .= ucfirst($GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.useSharing')) . ' ';
 					if ($useshr =='') {
 						$result .= $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.usets');
 					} elseif ($useshr ==1) {
@@ -93,9 +97,9 @@ class user_toctoc_comments_cms_layout {
 						$result .= $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.useno');
 					}
 
-					$result .= ', ';
+					$result .= '<br />';
 					$usert = $data['data']['sRatings']['lDEF']['ratingsOnly']['vDEF'];
-					$result .= $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.ratingsOnly') . ' ';
+					$result .= ucfirst($GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.ratingsOnly')) . ' ';
 					if ($usert =='') {
 						$result .= $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.usets');
 					} elseif ($usert ==1) {
@@ -104,9 +108,9 @@ class user_toctoc_comments_cms_layout {
 						$result .= $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.useno');
 					}
 
-					$result.= ', ';
+					$result.= '<br />';
 					$enart = $data['data']['sRatings']['lDEF']['enableRatings']['vDEF'];
-					$result .= $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.enableRatings') . ' ';
+					$result .= ucfirst($GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.enableRatings')) . ' ';
 					if ($enart =='') {
 						$result .= $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.usets');
 					} elseif ($enart ==1) {
@@ -117,7 +121,8 @@ class user_toctoc_comments_cms_layout {
 
 					$useTopWebpagePreview = $data['data']['sAttachments']['lDEF']['useTopWebpagePreview']['vDEF'];
 					if ($useTopWebpagePreview != '') {
-						$result .= ', ' . $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.topwebpagepreviewlink') . ' ' . $useTopWebpagePreview;
+						$result .= '<br />' . ucfirst($GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.topwebpagepreviewlink')) .
+						' ' . $useTopWebpagePreview;
 
 					}
 				}

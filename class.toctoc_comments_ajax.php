@@ -37,23 +37,23 @@
  *
  *
  *
- *   90: class toctoc_comments_ajax
- *  142:     public function __construct()
- *  603:     public function main()
- *  641:     public function handleCommentatorNotifications()
- *  652:     protected function updateCommentDisplay()
- *  670:     protected function updateComment()
- *  685:     protected function webpagepreview()
- *  697:     protected function previewcomment()
- *  709:     protected function cleanupfup()
- *  723:     protected function getCaptcha($captchatype, $cid)
- *  858:     protected function chkcaptcha($cid, $code)
- *  885:     protected function getUserCard()
- *  898:     protected function updateCommentsView()
- * 1021:     protected function updateRating()
- * 1548:     protected function processDeleteSubmission()
- * 1628:     protected function processDenotifycommentSubmission()
- * 1678:     protected function recentCommentsClearCache()
+ *   91: class toctoc_comments_ajax
+ *  143:     public function __construct()
+ *  613:     public function main()
+ *  651:     public function handleCommentatorNotifications()
+ *  662:     protected function updateCommentDisplay()
+ *  680:     protected function updateComment()
+ *  695:     protected function webpagepreview()
+ *  707:     protected function previewcomment()
+ *  719:     protected function cleanupfup()
+ *  733:     protected function getCaptcha($captchatype, $cid)
+ *  868:     protected function chkcaptcha($cid, $code)
+ *  895:     protected function getUserCard()
+ *  908:     protected function updateCommentsView()
+ * 1031:     protected function updateRating()
+ * 1558:     protected function processDeleteSubmission()
+ * 1638:     protected function processDenotifycommentSubmission()
+ * 1688:     protected function recentCommentsClearCache()
  *
  * TOTAL FUNCTIONS: 16
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -72,12 +72,13 @@ if (version_compare(TYPO3_version, '6.0', '<')) {
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/Utility/MathUtility.php';
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('lang') . 'Classes/LanguageService.php';
 }
+if (version_compare(TYPO3_version, '6.3', '>')) {
+	(class_exists('t3lib_extMgm', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Utility\ExtensionManagementUtility', 't3lib_extMgm');
+}
+
 require_once(t3lib_extMgm::extPath('toctoc_comments', 'class.toctoc_comments_api.php'));
 require_once(t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments_common.php'));
-$_EXTKEY = 'toctoc_comments';
-require_once(t3lib_extMgm::extPath('toctoc_comments', 'ext_tables.php'));
-unset($_EXTKEY);
-require_once(t3lib_extMgm::extPath('toctoc_comments', 'tca.php'));
+
 
 
 /**
@@ -140,6 +141,13 @@ class toctoc_comments_ajax {
 	 * @return	void
 	 */
 	public function __construct() {
+		if (version_compare(TYPO3_version, '6.3', '>')) {
+			(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
+			(class_exists('language', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Lang\LanguageService', 'language');
+			(class_exists('t3lib_utility_Math', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\MathUtility', 't3lib_utility_Math');
+			(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
+			(class_exists('tslib_eidtools', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\Utility\EidUtility', 'tslib_eidtools');
+		}
 
 		$data_str = t3lib_div::_GP('data');
 		$data = unserialize(base64_decode($data_str));
@@ -154,7 +162,9 @@ class toctoc_comments_ajax {
 		// Initialize FE user object:
 			$feUserObj = tslib_eidtools::initFeUser();
 		}
-		tslib_eidtools::connectDB();
+		if (version_compare(TYPO3_version, '6.1', '<')) {
+			tslib_eidtools::connectDB();
+		}
 
 		// is there any possible valid cmd what the script shall do?
 		$this->cmd = t3lib_div::_GP('cmd');
@@ -988,12 +998,14 @@ class toctoc_comments_ajax {
 				} else {
 					require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/DataHandling/DataHandler.php';
 				}
-
-				$tce = t3lib_div::makeInstance('t3lib_TCEmain');
-				if (intval($_SESSION['vmcNoPageCache'])==0) {
-					$tce->clear_cacheCmd($pageid);
-					$action .= ' cleared page cache for id ' . $pageid;
+				// the $GLOBALS['TCA']-Patch for eID and FLUX
+				if (!(isset($GLOBALS['TCA']))) {
+					$GLOBALS['TCA'] = array();
+					$GLOBALS['TCA']['tt_content'] = array();
 				}
+				$tce = t3lib_div::makeInstance('t3lib_TCEmain');
+				$tce->clear_cacheCmd($pageid);
+				$action .= ' cleared page cache for id ' . $pageid;
 
 			}
 
@@ -1473,13 +1485,14 @@ class toctoc_comments_ajax {
 
 				$tce = t3lib_div::makeInstance('t3lib_TCEmain');
 				/* @var $tce t3lib_TCEmain */
-
+				// the $GLOBALS['TCA']-Patch for eID and FLUX
+				if (!(isset($GLOBALS['TCA']))) {
+					$GLOBALS['TCA'] = array();
+					$GLOBALS['TCA']['tt_content'] = array();
+				}
 				foreach($pidList as $pid) {
 					if($pid != 0) {
-						if (intval($_SESSION['vmcNoPageCache'])==0) {
-							$tce->clear_cacheCmd($pid);
-						}
-
+						$tce->clear_cacheCmd($pid);
 					}
 
 				}
@@ -1601,14 +1614,15 @@ class toctoc_comments_ajax {
 			}
 
 			$tce = t3lib_div::makeInstance('t3lib_TCEmain');
-
+			// the $GLOBALS['TCA']-Patch for eID and FLUX
+			if (!(isset($GLOBALS['TCA']))) {
+				$GLOBALS['TCA'] = array();
+				$GLOBALS['TCA']['tt_content'] = array();
+			}
 			/* @var $tce t3lib_TCEmain */
 			foreach($pidListarr as $pid) {
 				if($pid != 0) {
-					if (intval($_SESSION['vmcNoPageCache'])==0) {
-						$tce->clear_cacheCmd($pid);
-					}
-
+					$tce->clear_cacheCmd($pid);
 				}
 
 			}
@@ -1653,14 +1667,15 @@ class toctoc_comments_ajax {
 		}
 
 		$tce = t3lib_div::makeInstance('t3lib_TCEmain');
-
+		// the $GLOBALS['TCA']-Patch for eID and FLUX
+		if (!(isset($GLOBALS['TCA']))) {
+			$GLOBALS['TCA'] = array();
+			$GLOBALS['TCA']['tt_content'] = array();
+		}
 		/* @var $tce t3lib_TCEmain */
 		foreach($pidListarr as $pid) {
 			if($pid != 0) {
-				if (intval($_SESSION['vmcNoPageCache'])==0) {
-					$tce->clear_cacheCmd($pid);
-				}
-
+				$tce->clear_cacheCmd($pid);
 			}
 
 		}
@@ -1690,9 +1705,13 @@ class toctoc_comments_ajax {
 		}
 
 		$tce = t3lib_div::makeInstance('t3lib_TCEmain');
-		if (intval($_SESSION['vmcNoPageCache'])==0) {
-			$tce->clear_cacheCmd($this->pid);
+		// the $GLOBALS['TCA']-Patch for eID and FLUX
+		if (!(isset($GLOBALS['TCA']))) {
+			$GLOBALS['TCA'] = array();
+			$GLOBALS['TCA']['tt_content'] = array();
 		}
+		
+		$tce->clear_cacheCmd($this->pid);
 
 		echo $this->pid;
 
@@ -1704,6 +1723,10 @@ if(defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/toctoc_c
 }
 
 // Make instance:
+if (version_compare(TYPO3_version, '6.3', '>')) {
+	(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
+}
+
 $SOBE = t3lib_div::makeInstance('toctoc_comments_ajax');
 $SOBE->main();
 

@@ -584,4 +584,13 @@
 	* Fixed tca definition of table tx_toctoccomments_plugincachecontrol, it caused the search of TYPO3 backend to make SQL errors
 	* Fixed missing rsa-JS-files when using AJAX-login and a page was opened in loggedin mode, on the page the logout works, but relogin can fail.
 	* Fixed problems with editing comments: double space from "show more" is eliminated. Cropped links were not retransformed in full links.
-	
+
+2014-12-21  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 7.0.0
+	* Compatibility TYPO3 7 without EXT:compatibility6 needed, compatibility now covers TYPO3 versions 4.3 up to 7.0
+	* Compatibility PHP 5.6
+	* Fixed JS-error and wrong height of website-previews window when using captcha to confirm comment
+	* Beautified plugin-display in TYPO3 page-module
+	* Removed some useless includes in PHP
+	* Removed TypoScript Setup-option vmcNoPageCache, it's no longer needed
+	* Added templates for news using toctoc_comments in folder Classes

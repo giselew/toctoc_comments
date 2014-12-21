@@ -57,6 +57,11 @@ class user_toctoc_comments_tcemain {
 	 * @return	void		Nothing
 	 */
 	public function processCmdmap_postProcess($command, $table, $id, $value, &$pObj) {
+		if (version_compare(TYPO3_version, '6.3', '>')) {
+			(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
+			(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
+			(class_exists('t3lib_BEfunc', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Backend\Utility\BackendUtility', 't3lib_BEfunc');
+		}
 		/* @var $pObj t3lib_TCEmain */
 		if ($command == 'delete' && $table != 'tx_toctoc_comments_comments') {
 			$cmdmap = array();

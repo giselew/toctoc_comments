@@ -114,8 +114,7 @@ plugin.tx_toctoccomments_pi1 {
   crdate_stdWrap.wrap = |
   author_stdWrap.wrap = |&nbsp;-&nbsp;
   recentComment_stdWrap.wrap = |
-  # set this to 1 if your system does crash on pagecache requests
-  vmcNoPageCache = 0
+
   smiliePath = EXT:toctoc_comments/res/smilie
   fileExt = png
   smilies {

@@ -40,10 +40,10 @@
  *   61: class toctoc_comments_common
  *  113:     public function unmirrorConf($confDiff)
  *  148:     public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '')
- *  223:     private function getSessionSavePath()
- *  244:     private function ensureSessionSavePathExists($sessionSavePath, $dohtaccess = TRUE)
- *  307:     public function substGifbuilder ($contentdir, $filename, $imgsize)
- *  427:     private function getGifBuilderSavePath()
+ *  226:     private function getSessionSavePath()
+ *  247:     private function ensureSessionSavePathExists($sessionSavePath, $dohtaccess = TRUE)
+ *  310:     public function substGifbuilder ($contentdir, $filename, $imgsize)
+ *  430:     private function getGifBuilderSavePath()
  *
  * TOTAL FUNCTIONS: 6
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -161,12 +161,15 @@ class toctoc_comments_common {
 		// end
 
 		//check if pic is in temp and them move the 2 pics in attachments
-
 		$repstr= str_replace('/', DIRECTORY_SEPARATOR, '/typo3conf/ext/toctoc_comments/pi1');
 		$PATH_site = str_replace($repstr, '', dirname(__FILE__)) . DIRECTORY_SEPARATOR;
 		if (DIRECTORY_SEPARATOR == '\\') {
 			// windows
 			$PATH_site = str_replace(DIRECTORY_SEPARATOR, '/', $PATH_site);
+		}
+
+		if (!defined('TYPO3_version')) {
+			define('TYPO3_version', 'TYPO3_version');
 		}
 
 		$this->expireTimeInMinutes = intval($expireTimeInMinutes);

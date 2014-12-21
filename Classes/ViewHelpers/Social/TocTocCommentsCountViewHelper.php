@@ -194,6 +194,11 @@ class Tx_News_ViewHelpers_Social_TocTocCommentsCountViewHelper extends Tx_Fluid_
 	 * @return	[type]		...
 	 */
 	public function render(Tx_News_Domain_Model_News $newsItem) {
+		if (version_compare(TYPO3_version, '6.3', '>')) {
+			(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
+			(class_exists('language', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Lang\LanguageService', 'language');
+			(class_exists('tslib_cObj', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer', 'tslib_cObj');
+		}
 		$settings = array();
 		$uriOnly = FALSE;
 		$configuration = array();

@@ -41,12 +41,7 @@ input.tx-tc-ct-input {
 	background: none repeat scroll 0 0 #ffffff;
 	border-color: #e3e3e3;
 }
-.tx-tc-cts .tx-tc-ct-wpp {
-	background: none repeat scroll 0 0 #ffffff;
-}
-div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-wpp, div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-img, .tx-tc-ct-video {
-	background: none repeat scroll 0 0 #ffffff;
-}
+
 .tx-tc-sharrrearea-popup {
 }
 .tx-tc-recent-cts-article {

@@ -57,6 +57,12 @@ class Tx_News_ViewHelpers_Social_TocTocCommentsViewHelper extends Tx_Fluid_Core_
 	 * @return	string
 	 */
 	public function render(Tx_News_Domain_Model_News $newsItem) {
+		if (version_compare(TYPO3_version, '6.3', '>')) {
+			(class_exists('t3lib_extMgm', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Utility\ExtensionManagementUtility', 't3lib_extMgm');
+			(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
+			(class_exists('tslib_cObj', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer', 'tslib_cObj');
+		}
+
 		$tsSettings = $this->pluginSettingsService->getSettings();
 		include_once (t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments_pi1.php'));
 		$lib = new tx_toctoccomments_pi1;

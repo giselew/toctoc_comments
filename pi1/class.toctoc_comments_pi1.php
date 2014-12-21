@@ -29,60 +29,74 @@
  *
  *
  *
- *   94: class tx_toctoccomments_pi1 extends tslib_pibase
- *  177:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
- * 2363:     protected function checkJSLoc()
- * 2614:     protected function checkCSSTheme()
- * 2725:     protected function checkCSSLoc()
- * 3188:     protected function makesharingcss ()
- * 3365:     protected function initprefixToTableMap()
- * 3402:     protected function init()
- * 4071:     protected function mergeConfiguration()
- * 4454:     protected function fetchConfigValue($param)
- * 4482:     protected function ae_detect_ie()
- * 4506:     protected function boxmodel()
- * 5178:     protected function crunchcss($buffer)
- * 5203:     protected function calculate_string( $mathString )
- * 5226:     protected function locationHeaderUrlsubDir()
- * 5245:     protected function currentPageName()
- * 5273:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
- * 5304:     protected function doClearCache ($forceclear=FALSE)
- * 5338:     protected function getPluginCacheControlTstamp ($external_ref_uid)
- * 5362:     protected function getLastUserAdditionTstamp ()
- * 5385:     protected function initLegacyCache ()
- * 5399:     protected function check_scopes()
- * 5557:     protected function initializeprefixtotablemap()
- * 5597:     protected function sharrrejs()
- * 5679:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
- * 5732:     private function resolveBackPath($pathStr)
- * 5767:     private function dirname($path)
- * 5781:     private function revExplode($delimiter, $string, $count = 0)
+ *  101: class tx_toctoccomments_pi1 extends tslib_pibase
+ *  172:     public function __construct()
+ *  192:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
+ * 2378:     protected function checkJSLoc()
+ * 2629:     protected function checkCSSTheme()
+ * 2740:     protected function checkCSSLoc()
+ * 3203:     protected function makesharingcss ()
+ * 3380:     protected function initprefixToTableMap()
+ * 3417:     protected function init()
+ * 4086:     protected function mergeConfiguration()
+ * 4469:     protected function fetchConfigValue($param)
+ * 4497:     protected function ae_detect_ie()
+ * 4521:     protected function boxmodel()
+ * 5193:     protected function crunchcss($buffer)
+ * 5218:     protected function calculate_string( $mathString )
+ * 5241:     protected function locationHeaderUrlsubDir()
+ * 5260:     protected function currentPageName()
+ * 5288:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
+ * 5319:     protected function doClearCache ($forceclear=FALSE)
+ * 5353:     protected function getPluginCacheControlTstamp ($external_ref_uid)
+ * 5377:     protected function getLastUserAdditionTstamp ()
+ * 5400:     protected function initLegacyCache ()
+ * 5414:     protected function check_scopes()
+ * 5572:     protected function initializeprefixtotablemap()
+ * 5612:     protected function sharrrejs()
+ * 5694:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
+ * 5747:     private function resolveBackPath($pathStr)
+ * 5782:     private function dirname($path)
+ * 5796:     private function revExplode($delimiter, $string, $count = 0)
  *
  *              SECTION: needed by class.tx_commentsresponse_hooks.php
- * 5804:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 5827:     public function createLinks($text, $conf = NULL)
- * 5849:     protected function getGETVars($arrVars)
- * 5862:     protected function getThemeTmageDimension($filename, $returnindex)
+ * 5819:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 5842:     public function createLinks($text, $conf = NULL)
+ * 5864:     protected function getGETVars($arrVars)
+ * 5877:     protected function getThemeTmageDimension($filename, $returnindex)
  *
- * TOTAL FUNCTIONS: 31
+ * TOTAL FUNCTIONS: 32
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
 
 if (version_compare(TYPO3_version, '6.0', '<')) {
-	require_once(PATH_t3lib . 'class.t3lib_befunc.php');
+	//require_once(PATH_t3lib . 'class.t3lib_befunc.php');
 	require_once(PATH_tslib . 'class.tslib_pibase.php');
 	if (!version_compare(TYPO3_version, '4.6', '<')) {
 		require_once(PATH_t3lib . 'utility/class.t3lib_utility_math.php');
 	}
 } else {
-	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('backend') . 'Classes/Utility/BackendUtility.php';
+	//require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('backend') . 'Classes/Utility/BackendUtility.php';
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('frontend') . 'Classes/Plugin/AbstractPlugin.php';
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/Utility/MathUtility.php';
 }
 
+if (version_compare(TYPO3_version, '6.3', '>')) {
+	(class_exists('t3lib_extMgm', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Utility\ExtensionManagementUtility', 't3lib_extMgm');
+	(class_exists('tslib_pibase', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\Plugin\AbstractPlugin', 'tslib_pibase');
+	(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
+	(class_exists('t3lib_utility_Math', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\MathUtility', 't3lib_utility_Math');
+	(class_exists('tslib_cObj', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer', 'tslib_cObj');
+	if (!t3lib_extMgm::isLoaded('compatibility6')) {
+		(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
+	}
+		
+}
+
 require_once (t3lib_extMgm::extPath('toctoc_comments', 'pi1/toctoc_comment_lib.php'));
 require_once (t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments_common.php'));
+
 
 /**
  * AJAX Social Network Components
@@ -97,7 +111,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '600';
+	public $extVersion = '700';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
 	public $externalUid;						// UID of external record
@@ -160,8 +174,6 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	// saves his comment.
 	// rise this value if you have many new comments and notification emails don't contain hotlinks anymore.
 	private $potentialNewCommentsCHashes = 4;
-
-
 
 
 	/**
@@ -369,6 +381,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				}
 			}
 		}
+		
 		$_SESSION['activelangid'] = $GLOBALS['TSFE']->sys_language_uid;
 		$postDatapi2 = t3lib_div::_GET('tx_toctoccomments_pi2');
 		if ($postDatapi2['forgothash'] != '') {
@@ -468,13 +481,6 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		if (intval($this->conf['ratings.']['dlikeCtsNotifLvl'])>99) {
 			$this->conf['ratings.']['dlikeCtsNotifLvl'] =99;
 		}
-
-		// 	set this to 1 if your system does crash on pagecache requests
-		if (intval($this->conf['vmcNoPageCache']) != 1) {
-			$this->conf['vmcNoPageCache'] = 0;
-		}
-
-		$_SESSION['vmcNoPageCache'] = $this->conf['vmcNoPageCache'];
 
 		if (intval($this->conf['ratings.']['useLikeDislikeStyle']) == 1) {
 			// force top likes to be short if dislikestyle = 1 - inverse is possible
@@ -5279,10 +5285,14 @@ sharrre design 2 and 4, calculated specifics
 
 			$tce = t3lib_div::makeInstance('t3lib_TCEmain');
 			/* @var $tce t3lib_TCEmain */
-			if (intval($_SESSION['vmcNoPageCache'])==0) {
-				$tce->clear_cacheCmd($pid);
+			// the $GLOBALS['TCA']-Patch for eID and FLUX
+			if (!(isset($GLOBALS['TCA']))) {
+				$GLOBALS['TCA'] = array();
+				$GLOBALS['TCA']['tt_content'] = array();
 			}
-
+			
+			$tce->clear_cacheCmd($pid);
+			
 			$this->sdebugprint .= 'tt clear page cache for page ' . $pid. ' triggered by "' . $debugstr . '"<br />';
 		}
 
@@ -5309,15 +5319,16 @@ sharrre design 2 and 4, calculated specifics
 				$pidListarr = t3lib_div::intExplode(',', $clearCacheIds);
 				$pidListarr=array_unique($pidListarr);
 				$tce = t3lib_div::makeInstance('t3lib_TCEmain');
-
+				// the $GLOBALS['TCA']-Patch for eID and FLUX
+				if (!(isset($GLOBALS['TCA']))) {
+					$GLOBALS['TCA'] = array();
+					$GLOBALS['TCA']['tt_content'] = array();
+				}
+				
 				/* @var $tce t3lib_TCEmain */
 				foreach($pidListarr as $spid) {
 					if($spid != 0) {
-						if (intval($_SESSION['vmcNoPageCache'])==0) {
-
-							$tce->clear_cacheCmd($spid);
-						}
-
+						$tce->clear_cacheCmd($spid);
 					}
 
 				}
@@ -5336,19 +5347,6 @@ sharrre design 2 and 4, calculated specifics
 	 * @return	int		timestamp or 0
 	 */
 	protected function getPluginCacheControlTstamp ($external_ref_uid) {
-
-// 		$rowsrf = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
-// 				'tstamp',
-// 				'tx_toctoc_comments_plugincachecontrol',
-// 				 'external_ref_uid="' . $external_ref_uid .'"',
-// 				'',
-// 				'',
-// 				''
-// 		);
-// 		$tstamp=0;
-// 		if (count($rowsrf)>0) {
-// 			$tstamp=$rowsrf[0]['tstamp'];
-// 		}
 		$tstamp=$this->lib->getPluginCacheControlTstamp($external_ref_uid);
 		return $tstamp;
 	}

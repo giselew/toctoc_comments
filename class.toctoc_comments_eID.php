@@ -38,9 +38,9 @@
  *
  *   67: class toctoc_comments_eID
  *   81:     public function init()
- *  173:     public function main()
- *  392:     protected function processReponseOutput()
- *  485:     protected function ipBlock()
+ *  183:     public function main()
+ *  402:     protected function processReponseOutput()
+ *  495:     protected function ipBlock()
  *
  * TOTAL FUNCTIONS: 4
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -79,6 +79,15 @@ class toctoc_comments_eID {
 	private $data;
 
 	public function init() {
+		if (version_compare(TYPO3_version, '6.3', '>')) {
+			(class_exists('t3lib_extMgm', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Utility\ExtensionManagementUtility', 't3lib_extMgm');
+			(class_exists('t3lib_utility_Math', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\MathUtility', 't3lib_utility_Math');
+			(class_exists('tslib_cObj', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer', 'tslib_cObj');
+			(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
+			(class_exists('language', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Lang\LanguageService', 'language');
+			(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
+			(class_exists('tslib_eidtools', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\Utility\EidUtility', 'tslib_eidtools');
+		}
 
 		$GLOBALS['LANG'] = t3lib_div::makeInstance('language');
 		require_once(t3lib_extMgm::extPath('toctoc_comments', 'class.toctoc_comments_api.php'));
@@ -92,8 +101,9 @@ class toctoc_comments_eID {
 		}
 
 		$GLOBALS['LANG']->includeLLFile('EXT:toctoc_comments/locallang_eID.xml');
-
-		tslib_eidtools::connectDB();
+		if (version_compare(TYPO3_version, '6.1', '<')) {
+			tslib_eidtools::connectDB();
+		}
 
 		// Sanity check
 		$this->uid = t3lib_div::_GET('uid');
@@ -363,13 +373,16 @@ class toctoc_comments_eID {
 				}
 
 				$tce = t3lib_div::makeInstance('t3lib_TCEmain');
-
+				// the $GLOBALS['TCA']-Patch for eID and FLUX
+				if (!(isset($GLOBALS['TCA']))) {
+					$GLOBALS['TCA'] = array();
+					$GLOBALS['TCA']['tt_content'] = array();
+				}
+				
 				/* @var $tce t3lib_TCEmain */
 				foreach ($pidList as $pid) {
 					if ($pid != 0) {
-						if (intval($this->conf['vmcNPC'])==0) {
 							$tce->clear_cacheCmd($pid);
-						}
 
 					}
 
@@ -425,12 +438,16 @@ class toctoc_comments_eID {
 			/* @var $tce t3lib_TCEmain */
 			foreach ($pidList as $pid) {
 				if ($pid != 0) {
-					if (intval($this->conf['vmcNPC'])==0) {
+					// the $GLOBALS['TCA']-Patch for eID and FLUX
+					if (!(isset($GLOBALS['TCA']))) {
+						$GLOBALS['TCA'] = array();
+						$GLOBALS['TCA']['tt_content'] = array();
+					}
+					
 						$tce->clear_cacheCmd($pid);
 						$messageMarkers = array(
 							'###STATUS_MESSAGE###' => $GLOBALS['LANG']->getLL('response_saved_cache_cleared')
 						);
-					}
 
 				}
 
@@ -512,6 +529,10 @@ if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/toctoc_
 if (isset($SOBE)) {
 	unset($SOBE);
 }
+if (version_compare(TYPO3_version, '6.3', '>')) {
+	(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
+}
+
 $SOBE = t3lib_div::makeInstance('toctoc_comments_eID');
 $SOBE->init();
 $SOBE->main();

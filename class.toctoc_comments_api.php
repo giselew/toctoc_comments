@@ -23,28 +23,16 @@
 ***************************************************************/
 
 if (version_compare(TYPO3_version, '6.0', '<')) {
-	require_once(PATH_t3lib . 'class.t3lib_refindex.php');
-	require_once(PATH_tslib . 'class.tslib_pibase.php');
-	require_once(PATH_t3lib . 'class.t3lib_befunc.php');
-	if (!version_compare(TYPO3_version, '4.6', '<')) {
-		require_once(PATH_t3lib . 'utility/class.t3lib_utility_math.php');
-	}
-
-	require_once(t3lib_extMgm::extPath('lang', 'lang.php'));
-	require_once(PATH_t3lib . 'class.t3lib_page.php');
 	require_once(t3lib_extMgm::extPath('cms', 'tslib/class.tslib_content.php'));
 } else {
-	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('backend') . 'Classes/Utility/BackendUtility.php';
-	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('frontend') . 'Classes/Plugin/AbstractPlugin.php';
-	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/Database/ReferenceIndex.php';
-	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/Utility/MathUtility.php';
-	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('lang') . 'Classes/LanguageService.php';
-	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('frontend') . 'Classes/Page/PageRepository.php';
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('frontend') . 'Classes/ContentObject/ContentObjectRenderer.php';
-
 }
 
-include_once (t3lib_extMgm::extPath('toctoc_comments', 'pi1/toctoc_comment_lib.php'));
+if (version_compare(TYPO3_version, '6.3', '>')) {
+	(class_exists('t3lib_extMgm', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Utility\ExtensionManagementUtility', 't3lib_extMgm');
+}
+
+require_once(t3lib_extMgm::extPath('toctoc_comments', 'pi1/toctoc_comment_lib.php'));
 require_once(t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments_common.php'));
 
 /**
@@ -52,27 +40,27 @@ require_once(t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments
  *
  *
  *
- *   85: class toctoc_comments_api
- *  117:     public function __construct()
- *  142:     public function comments_getComments_fe_user($params, $conf)
- *  161:     public function getwebpagepreview($cmd, $cid, $data, $conf)
- *  177:     public function cleanupfup($previewid, $conf, $originalfilename)
- *  191:     public function handleCommentatorNotifications($ref, $conf = NULL, $notfromeID =FALSE, $pid)
- *  209:     public function handleeID($ref, $conf, $messagetodisplay, $returnurl)
- *  230:     public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $commentspics, $scopeid=0, $isReview = 0)
- *  251:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $commentid)
- *  265:     public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
+ *   73: class toctoc_comments_api
+ *  105:     public function __construct()
+ *  135:     public function comments_getComments_fe_user($params, $conf)
+ *  154:     public function getwebpagepreview($cmd, $cid, $data, $conf)
+ *  170:     public function cleanupfup($previewid, $conf, $originalfilename)
+ *  184:     public function handleCommentatorNotifications($ref, $conf = NULL, $notfromeID =FALSE, $pid)
+ *  202:     public function handleeID($ref, $conf, $messagetodisplay, $returnurl)
+ *  223:     public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $commentspics, $scopeid=0, $isReview = 0)
+ *  244:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $commentid)
+ *  258:     public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
 			$feuserid = 0, $cmd, $piVars, $cid, $datathis, $AjaxData, $userpic, $commentspics, $check='',
 			$extref='', $tctreestate  = NULL, $commentreplyid=0, $isrefresh=0, $confSess = array())
- *  329:     public function updateComment($conf, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
- *  341:     public function previewcomment($data, $conf)
- *  355:     public function isVoted($ref, $scopeid, $feuser, $fromAjax)
- *  365:     public function initCaches()
- *  376:     public function enableFields($table)
- *  388:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
- *  397:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
- *  412:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- *  435:     public function createLinks($text, $conf = NULL)
+ *  322:     public function updateComment($conf, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
+ *  334:     public function previewcomment($data, $conf)
+ *  348:     public function isVoted($ref, $scopeid, $feuser, $fromAjax)
+ *  358:     public function initCaches()
+ *  369:     public function enableFields($table)
+ *  381:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
+ *  390:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ *  405:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ *  428:     public function createLinks($text, $conf = NULL)
  *
  * TOTAL FUNCTIONS: 18
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -117,6 +105,11 @@ class toctoc_comments_api {
 	 * @return	void
 	 */
 	public function __construct() {
+		if (version_compare(TYPO3_version, '6.3', '>')) {
+			(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
+			(class_exists('tslib_cObj', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer', 'tslib_cObj');
+		}
+
 		$this->cObj = t3lib_div::makeInstance('tslib_cObj');
 		$this->cObj->start('', '');
 		$this->lib = new toctoc_comment_lib;

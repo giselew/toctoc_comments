@@ -31,7 +31,14 @@ if (version_compare(TYPO3_version, '6.0', '<')) {
 
 $GLOBALS['BE_USER']->modAccess($MCONF, 1);	// This checks permissions and exits if the users has no permission for entry.
 	// DEFAULT initialization of a module [END]
+if (version_compare(TYPO3_version, '6.3', '>')) {
+	(class_exists('t3lib_SCbase', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Backend\Module\BaseScriptClass', 't3lib_SCbase');
+}
 
+	/**
+	 * [Describe function...]
+	 *
+	 */
 class  toctoc_comments_module1 extends t3lib_SCbase {
 	private $pageinfo;
 
@@ -44,7 +51,12 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 	private $showcachemessage = FALSE;
 
 	public function init()	{
-		// $BACK_PATH, $TCA_DESCR, $TCA, $CLIENT, $TYPO3_CONF_VARS;
+		if (version_compare(TYPO3_version, '6.3', '>')) {
+			(class_exists('bigDoc', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Backend\Template\DocumentTemplate', 'bigDoc');
+			(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
+			(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
+		}
+
 		parent::init();
 	}
 
@@ -68,16 +80,19 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 	 * @return	[type]		...
 	 */
 	public function main()	{
+
 		$this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['toctoc_comments']);
 		$max_records = $this->extConf['max_records'];
-
+		if (version_compare(TYPO3_version, '6.3', '>')) {
+			(class_exists('t3lib_BEfunc', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Backend\Utility\BackendUtility', 't3lib_BEfunc');
+			(class_exists('t3lib_iconWorks', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Backend\Utility\IconUtility', 't3lib_iconWorks');
+		}
 		// Access check!
 		// The page will show only if there is a valid page and if this page may be viewed by the user
 		$this->pageinfo = t3lib_BEfunc::readPageAccess($this->id, $this->perms_clause);
 		$access = is_array($this->pageinfo) ? 1 : 0;
 
 		if (($this->id && $access) || ($GLOBALS['BE_USER']->user['admin'] && !$this->id))	{
-
 			// Draw the header.
 			$this->doc = t3lib_div::makeInstance('bigDoc');
 			$this->doc->styleSheetFile2=$GLOBALS['temp_modPath'].'../typo3conf/ext/toctoc_comments/mod1/css/bemodule.css';
@@ -182,7 +197,6 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 			$this->content.=$this->doc->spacer(10);
 		} else {
 				// If no access or if ID == zero
-
 			$this->doc = t3lib_div::makeInstance('bigDoc');
 			$this->doc->backPath = $BACK_PATH;
 
@@ -1872,6 +1886,10 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/toctoc_comments/mod1/index.php'])	{
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/toctoc_comments/mod1/index.php']);
+}
+
+if (version_compare(TYPO3_version, '6.3', '>')) {
+	(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
 }
 
 // Make instance:

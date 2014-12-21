@@ -32,9 +32,9 @@
  *
  *   56: class user_toctoc_comments_ttnews
  *   66:     public function extraItemMarkerProcessor($markerArray, $row, $lConf, &$pObj)
- *  221:     private function getNumberOfComments($newsUid, &$pObj)
- *  240:     private function getTemplate($section, $conf, &$pObj)
- *  274:     private function getItemLink($itemUid, &$pObj)
+ *  227:     private function getNumberOfComments($newsUid, &$pObj)
+ *  246:     private function getTemplate($section, $conf, &$pObj)
+ *  280:     private function getItemLink($itemUid, &$pObj)
  *
  * TOTAL FUNCTIONS: 4
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -65,6 +65,13 @@ class user_toctoc_comments_ttnews {
  */
 	public function extraItemMarkerProcessor($markerArray, $row, $lConf, &$pObj) {
 		/* @var $pObj tx_ttnews */
+		if (version_compare(TYPO3_version, '6.3', '>')) {
+			(class_exists('t3lib_extMgm', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Utility\ExtensionManagementUtility', 't3lib_extMgm');
+			(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
+			(class_exists('language', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Lang\LanguageService', 'language');
+			(class_exists('tslib_cObj', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer', 'tslib_cObj');
+		}
+
 		$beginlist =0;
 		$endlist =0;
 		$poscommentscount=0;

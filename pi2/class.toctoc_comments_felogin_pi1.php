@@ -38,57 +38,70 @@
  *
  *
  *
- *   97: class tx_toctoccomments_pi2 extends tslib_pibase
- *  121:     protected function processRedirect()
- *  135:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  234:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  419:     protected function watermark($conf, $content)
- *  457:     protected function showForgot()
- *  537:     protected function showLogout()
- *  572:     protected function showLogin()
- *  718:     protected function getRSAKeyPair()
- *  755:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
- *  791:     protected function getPreserveGetVars()
- *  821:     protected function generatePassword($len)
- *  841:     protected function getDisplayText($label, $stdWrapArray=array())
- *  853:     protected function getUserFieldMarkers()
- *  888:     protected function validateRedirectUrl($url)
- *  919:     protected function isInCurrentDomain($url)
- *  931:     protected function isInLocalDomain($url)
- *  972:     protected function isRelativeUrl($url)
- *  988:     protected function generateAndSendHash($user)
- * 1054:     protected function changePassword($uid, $piHash)
- * 1176:     protected function showSignon()
- * 1484:     protected function getSignupCaptcha($required, $errcp, $cpval)
- * 1527:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
- * 1554:     protected function processSignupCaptcha($postData)
- * 1594:     protected function loginUser($facebookId)
- * 1620:     protected function storeUser($facebookUserProfile)
- * 1728:     private function copyImageFromFacebook($facebookUserId)
- * 1743:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
+ *  103: class tx_toctoccomments_pi2 extends tslib_pibase
+ *  121:     public function __construct()
+ *  135:     protected function processRedirect()
+ *  149:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  248:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  433:     protected function watermark($conf, $content)
+ *  471:     protected function showForgot()
+ *  551:     protected function showLogout()
+ *  586:     protected function showLogin()
+ *  732:     protected function getRSAKeyPair()
+ *  769:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
+ *  805:     protected function getPreserveGetVars()
+ *  835:     protected function generatePassword($len)
+ *  855:     protected function getDisplayText($label, $stdWrapArray=array())
+ *  867:     protected function getUserFieldMarkers()
+ *  902:     protected function validateRedirectUrl($url)
+ *  933:     protected function isInCurrentDomain($url)
+ *  945:     protected function isInLocalDomain($url)
+ *  986:     protected function isRelativeUrl($url)
+ * 1002:     protected function generateAndSendHash($user)
+ * 1068:     protected function changePassword($uid, $piHash)
+ * 1190:     protected function showSignon()
+ * 1498:     protected function getSignupCaptcha($required, $errcp, $cpval)
+ * 1541:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ * 1568:     protected function processSignupCaptcha($postData)
+ * 1608:     protected function loginUser($facebookId)
+ * 1634:     protected function storeUser($facebookUserProfile)
+ * 1742:     private function copyImageFromFacebook($facebookUserId)
+ * 1757:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
  *
- * TOTAL FUNCTIONS: 27
+ * TOTAL FUNCTIONS: 28
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
+
 if (version_compare(TYPO3_version, '6.0', '<')) {
 	require_once(t3lib_extMgm::extPath('lang', 'lang.php'));
-} else {
-	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('lang') . 'Classes/LanguageService.php';
-}
-if (version_compare(TYPO3_version, '6.0', '<')) {
-	require_once(PATH_t3lib . 'class.t3lib_befunc.php');
+	//require_once(PATH_t3lib . 'class.t3lib_befunc.php');
 	require_once(PATH_tslib . 'class.tslib_pibase.php');
 	if (!version_compare(TYPO3_version, '4.6', '<')) {
 		require_once(PATH_t3lib . 'utility/class.t3lib_utility_math.php');
 	}
 } else {
-	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('backend') . 'Classes/Utility/BackendUtility.php';
+	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('lang') . 'Classes/LanguageService.php';
+	//require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('backend') . 'Classes/Utility/BackendUtility.php';
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('frontend') . 'Classes/Plugin/AbstractPlugin.php';
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/Utility/MathUtility.php';
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/Utility/GeneralUtility.php';
 }
+
+if (version_compare(TYPO3_version, '6.3', '>')) {
+	(class_exists('t3lib_extMgm', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Utility\ExtensionManagementUtility', 't3lib_extMgm');
+	(class_exists('tslib_pibase', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\Plugin\AbstractPlugin', 'tslib_pibase');
+	(class_exists('language', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Lang\LanguageService', 'language');
+	(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
+	(class_exists('t3lib_utility_Math', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\MathUtility', 't3lib_utility_Math');
+	(class_exists('tslib_cObj', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer', 'tslib_cObj');
+	(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
+	(class_exists('t3lib_utility_Array', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Utility\ArrayUtility', 't3lib_utility_Array');
+	
+}
+
 require_once(t3lib_extmgm::extPath('toctoc_comments', 'pi2/facebook.php'));
+
 
 /**
  * AJAX login/Logout
