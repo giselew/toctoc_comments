@@ -227,9 +227,13 @@ $TCA['tx_toctoc_comments_prefixtotable'] = array(
 				'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
 				'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_toctoc_comments_prefixtotable.gif',
 
-		)
+		),
+		'feInterface' => array (
+			'fe_admin_fieldList' => 'uid,pi1_key,pi1_table,show_uid,displayfields,topratingsdetailpage,topratingsimagesfolder',
+		),
 );
 t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_comments_prefixtotable');
+t3lib_extMgm::addToInsertRecords('tx_toctoc_comments_prefixtotable');
 t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_comments_prefixtotable', 'EXT:toctoc_comments/locallang_csh.xml');
 
 $TCA['tx_toctoc_comments_ipbl_local'] = array (

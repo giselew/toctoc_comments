@@ -226,7 +226,8 @@ plugin.tx_toctoccomments_pi1 {
     FeUserImagePath = {$plugin.tx_toctoccomments_pi1.FeUserImagePath}
 
     FeUserDbField = {$plugin.tx_toctoccomments_pi1.FeUserDbField}
-
+	useAdditionalFe_usersFields = {$plugin.tx_toctoccomments_pi1.useAdditionalFe_usersFields}
+	
     # (commentsPerPage*scroll-multiplication) gives the number of comments that are scrolled back when show older comments is clicked
     CommentsShowOldPerCID = {$plugin.tx_toctoccomments_pi1.CommentsShowOldPerCID}
 
@@ -236,29 +237,28 @@ plugin.tx_toctoccomments_pi1 {
     # Column-position (colPos) where the comments-plugins go. Important if no templavoila used. Can be left on 0, most of the times
     UseMainColPos = {$plugin.tx_toctoccomments_pi1.UseMainColPos}
 
-
     // start deprecated sharing options in section advanced - will be removed with version 7
-    useSharing = {$plugin.tx_toctoccomments_pi1.useSharing}
+    // useSharing = {$plugin.tx_toctoccomments_pi1.useSharing}
 
     # if you dont use the sharing components at all you can set this to 1
-    sharingNoCalculatedCSS = 0
+    // sharingNoCalculatedCSS = 0
 
-    useSharingDesign = {$plugin.tx_toctoccomments_pi1.useSharingDesign}
+    // useSharingDesign = {$plugin.tx_toctoccomments_pi1.useSharingDesign}
 
-    dontUseSharingFacebook = {$plugin.tx_toctoccomments_pi1.dontUseSharingFacebook}
-    dontUseSharingTwitter = {$plugin.tx_toctoccomments_pi1.dontUseSharingTwitter}
-    dontUseSharingGoogle = {$plugin.tx_toctoccomments_pi1.dontUseSharingGoogle}
-    dontUseSharingLinkedIn = {$plugin.tx_toctoccomments_pi1.dontUseSharingLinkedIn}
-    dontUseSharingStumbleupon = {$plugin.tx_toctoccomments_pi1.dontUseSharingStumbleupon}
-    dontUseSharingPinterest = {$plugin.tx_toctoccomments_pi1.dontUseSharingPinterest}
-    dontUseSharingDigg = {$plugin.tx_toctoccomments_pi1.dontUseSharingDigg}
-    dontUseSharingDelicious = {$plugin.tx_toctoccomments_pi1.dontUseSharingDelicious}
-    dontUseSharingAddThisMore = {$plugin.tx_toctoccomments_pi1.dontUseSharingAddThisMore}
-    AddThisID = {$plugin.tx_toctoccomments_pi1.AddThisID}
-    shareUsersTotalText = {$plugin.tx_toctoccomments_pi1.shareUsersTotalText}
-    shareDataText = {$plugin.tx_toctoccomments_pi1.shareDataText}
-    sharePageURL = {$plugin.tx_toctoccomments_pi1.sharePageURL}
-    useShareIcon = {$plugin.tx_toctoccomments_pi1.useShareIcon}
+    // dontUseSharingFacebook = {$plugin.tx_toctoccomments_pi1.dontUseSharingFacebook}
+    // dontUseSharingTwitter = {$plugin.tx_toctoccomments_pi1.dontUseSharingTwitter}
+    // dontUseSharingGoogle = {$plugin.tx_toctoccomments_pi1.dontUseSharingGoogle}
+    // dontUseSharingLinkedIn = {$plugin.tx_toctoccomments_pi1.dontUseSharingLinkedIn}
+    // dontUseSharingStumbleupon = {$plugin.tx_toctoccomments_pi1.dontUseSharingStumbleupon}
+    // dontUseSharingPinterest = {$plugin.tx_toctoccomments_pi1.dontUseSharingPinterest}
+    // dontUseSharingDigg = {$plugin.tx_toctoccomments_pi1.dontUseSharingDigg}
+    // dontUseSharingDelicious = {$plugin.tx_toctoccomments_pi1.dontUseSharingDelicious}
+    // dontUseSharingAddThisMore = {$plugin.tx_toctoccomments_pi1.dontUseSharingAddThisMore}
+    // AddThisID = {$plugin.tx_toctoccomments_pi1.AddThisID}
+    // shareUsersTotalText = {$plugin.tx_toctoccomments_pi1.shareUsersTotalText}
+    // shareDataText = {$plugin.tx_toctoccomments_pi1.shareDataText}
+    // sharePageURL = {$plugin.tx_toctoccomments_pi1.sharePageURL}
+    // useShareIcon = {$plugin.tx_toctoccomments_pi1.useShareIcon}
     // end deprecated sharing options in section advanced - will be removed with version 7
 
     recentcommentsPluginpages = {$plugin.tx_toctoccomments_pi1.recentcommentsPluginpages}
@@ -440,6 +440,8 @@ plugin.tx_toctoccomments_pi1 {
  	allowedNumberOfRatings= {$plugin.tx_toctoccomments_pi1.allowedNumberOfRatings}
 	timeForAllowedNumberOfRatings= {$plugin.tx_toctoccomments_pi1.timeForAllowedNumberOfRatings}
 	allowedNumberOfRatingsExceededBlocktime= {$plugin.tx_toctoccomments_pi1.allowedNumberOfRatingsExceededBlocktime}
+	
+	useIPsInLikeDislike= {$plugin.tx_toctoccomments_pi1.useIPsInLikeDislike}
   }
 
   attachments {

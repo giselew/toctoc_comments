@@ -594,3 +594,15 @@
 	* Removed some useless includes in PHP
 	* Removed TypoScript Setup-option vmcNoPageCache, it's no longer needed
 	* Added templates for news using toctoc_comments in folder Classes
+
+2015-02-17  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 7.0.1
+	* Added refresh of spamhaus banned IPs to the backend administration interface, removed old files in /resources 
+	* Fixed function getPreserveGetVars() in class.toctoc_comments_felogin_pi1.php to be fully compatible with TYPO3 older than version 4.7	
+	* Added TypoScript option advanced.useAdditionalFe_usersFields = . This is a solution to forge Issue #64452, resolving perfomance problems with large fe_users-tables. 
+	  You only need to set the option to a comma-separated list of fe_users-fieldnames if you use these fields as custom fe_users-markers in your template.
+	* Fixed 3 misplaced constants in contants.txt (moved them back from secion sharing to advanced)
+	* Minimal requirement for PHP is 5.3.7. now.
+	* Fixed JavaScript error in Internet Explorer which kept the "Accept terms and conditions" checkbox in disabled state
+	* Fixed persistence of the notify checkbox during captcha form refreshs.
+	* Added TypoScript option ratings.useIPsInLikeDislike = 1: Show resolved IP-addresses in tiptexts for Likes and iLikes (if a user name is not present): 1 IPs will be shown, 0 IPs will be counted in "Others" and won't be shown in tip-texts

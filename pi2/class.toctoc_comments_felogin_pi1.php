@@ -813,15 +813,38 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 				$getVars['toctoc_comments_pi1'],
 				$getVars[$this->prefixId]
 		);
-		if ($this->conf['preserveGETvars'] === 'all') {
-			$preserveQueryParts = $getVars;
+				
+		if (version_compare(TYPO3_version, '4.7', '<')) {
+			$params = '';
+			$preserveVars =! ($this->conf['preserveGETvars'] || $this->conf['preserveGETvars']=='all' ? array() : implode(',', (array)$this->conf['preserveGETvars']));
+						
+			foreach ($getVars as $key => $val) {
+				if (stristr($key, $this->prefixId) === FALSE) {
+					if (is_array($val)) {
+						foreach ($val as $key1 => $val1) {
+							if ($this->conf['preserveGETvars'] == 'all' || in_array($key . '[' . $key1 .']', $preserveVars)) {
+								$params .= '&' . $key . '[' . $key1 . ']=' . $val1;
+							}
+						}
+					} else {
+						if (!in_array($key, array('id','no_cache','logintype','redirect_url','cHash'))) {
+							$params .= '&' . $key . '=' . $val;
+						}
+					}
+				}
+			}
 		} else {
-			$preserveQueryParts = t3lib_div::trimExplode(',', $this->conf['preserveGETvars']);
-			$preserveQueryParts = t3lib_div::explodeUrl2Array(implode('=1&', $preserveQueryParts) . '=1', TRUE);
-			$preserveQueryParts = t3lib_utility_Array::intersectRecursive($getVars, $preserveQueryParts);
+
+			if ($this->conf['preserveGETvars'] === 'all') {
+				$preserveQueryParts = $getVars;
+			} else {
+				$preserveQueryParts = t3lib_div::trimExplode(',', $this->conf['preserveGETvars']);
+				$preserveQueryParts = t3lib_div::explodeUrl2Array(implode('=1&', $preserveQueryParts) . '=1', TRUE);
+				$preserveQueryParts = t3lib_utility_Array::intersectRecursive($getVars, $preserveQueryParts);
+			}
+			$params = t3lib_div::implodeArrayForUrl('', $preserveQueryParts);
 		}
-		$parameters = t3lib_div::implodeArrayForUrl('', $preserveQueryParts);
-		return $parameters;
+		return $params;
 	}
 
 	/**

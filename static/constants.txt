@@ -64,11 +64,23 @@ plugin.tx_toctoccomments_pi1 {
 	
 	# cat=plugin.tx_toctoccomments_pi1: Basic//22; type=int+; label=Timeout for User-Sessions in minutes
 	sessionTimeout = 540
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//00; type=int; label=colPos for the plugin:Columnposition (colPos) where the plugins are inserted. Important if no templavoila used. Can be left on 0, most of the times.
+	UseMainColPos = 0
 
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//01; type=string; label=Date format: Date format specification. See PHP date() function for details. If empty, uses TYPO3 date format defined in Install tool
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//01; type=string; label=Path to feuser-images:Path where the feuser-images are stored. Normally uploads/pics/.
+	FeUserImagePath = uploads/pics/
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//02; type=string; label=db field for the user picture:Database field in fe_users where toctoc_comments should look for a user pic.
+	FeUserDbField = image
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//02; type=string; label=only fe_users-fields in 'uid, pid, username, email, image, gender, first_name, name, last_name, www, city, country' are available (and the the FeUserDbField) - here you can specify additional fields to select (comma-separated list) and then use as marker ###FEUSER_{FIELD}### in the HTML-template
+	useAdditionalFe_usersFields = 
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//03; type=string; label=Date format: Date format specification. See PHP date() function for details. If empty, uses TYPO3 date format defined in Install tool
 	dateFormat =
 
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//02; type=options[date()=date,strftime()=strftime]; label=Date format mode:If "date()", use date() PHP function (traditional default). If "strftime()", use strftime() function (better international support)
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//03; type=options[date()=date,strftime()=strftime]; label=Date format mode:If "date()", use date() PHP function (traditional default). If "strftime()", use strftime() function (better international support)
 	dateFormatMode = date
 	
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//04; type=boolean; label=Commenting works in Review mode (read manual about Reviews)
@@ -136,15 +148,6 @@ plugin.tx_toctoccomments_pi1 {
 	
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//19; type=string; label=TemplaVoila-field with comments:Name of the field defined in templavoila (if used) where the comments-plugins goes. Check your templavoila page-template.
 	UseTemplavoilaField = field_content
-	
-	# cat=plugin.tx_toctoccomments_pi1: Sharing//00; type=int; label=colPos for the plugin:Columnposition (colPos) where the plugins are inserted. Important if no templavoila used. Can be left on 0, most of the times.
-	UseMainColPos = 0
-
-	# cat=plugin.tx_toctoccomments_pi1: Sharing//01; type=string; label=Path to feuser-images:Path where the feuser-images are stored. Normally uploads/pics/.
-	FeUserImagePath = uploads/pics/
-	
-	# cat=plugin.tx_toctoccomments_pi1: Sharing//02; type=string; label=db field for the user picture:Database field in fe_users where toctoc_comments should look for a user pic.
-	FeUserDbField = image
 
 	# cat=plugin.tx_toctoccomments_pi1: Sharing//03; type=boolean; label=Use Sharing:Use of Share-Link for Facebook, Google and Twitter
 	useSharing = 1
@@ -375,10 +378,10 @@ plugin.tx_toctoccomments_pi1 {
 	emailTemplatecoi = EXT:toctoc_comments/res/template/toctoccomments_template_email_coi.txt
 
 	# cat=plugin.tx_toctoccomments_pi1: Spam protection//17; type=boolean; label=Enables IP-Blocklists in Frontend:If enabled comments by blocked IPs are evaluated as spam
-	useIPblocking=1
+	useIPblocking = 1
 	
 	# cat=plugin.tx_toctoccomments_pi1: Spam protection//18; type=boolean; label=Enables Confirmed opt-in (COI):A new commentator receives a confirmation mail needs to confirm his mailaddress by clicking a link, which unhides the comment (not yet approved). 
-	confirmedOptIn=0
+	confirmedOptIn = 0
 	
 	# cat=plugin.tx_toctoccomments_pi1: Spam protection//19; type=string; label=HTML-E-mail template notification on too many dislikes:HTML-Template to use for notification email for dislike-alerts to administrator
 	emailTemplateDislikeHTML = EXT:toctoc_comments/res/template/toctoccomments_template_email_dislike.html
@@ -466,6 +469,9 @@ plugin.tx_toctoccomments_pi1 {
 	
 	# cat=plugin.tx_toctoccomments_pi1: Ratings//32; type=int+; label=Time in minutes that a user is blocked if he made to many ratings - the wait penalty: After the last rating made the user has to wait for this time until he will be able to make more ratings or change his ratings
 	allowedNumberOfRatingsExceededBlocktime = 13	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//34; type=boolean; label=Show resolved IP-addresses in tiptexts for Likes and iLikes (if a user name is not present): 1 IPs will be shown, 0 IPs will be counted in "Others" and won't be shown in tip-texts
+	useIPsInLikeDislike = 1	
 	
 	# cat=plugin.tx_toctoccomments_pi1: Attachments//01; type=boolean; label=Use Attachment Feature Webpage preview: Webpage previews are allowed
 	useWebpagePreview = 1

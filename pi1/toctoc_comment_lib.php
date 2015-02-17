@@ -3491,14 +3491,32 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * @param	[type]		$uidlist: ...
 	 * @return	array		$retarr
 	 */
-	protected function getBaseFeUsersArray($pObj, $fromAjax, $uid, $uidlist = '') {
+	protected function getBaseFeUsersArray($pObj, $fromAjax, $uid, $uidlist = '', $conf) {
 		$this->trackdebug('getBaseFeUsersArray');
 		if ($this->FeUsersSet == FALSE) {
-			$rowsfeuser = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'fe_users', 'uid>0 ' . $this->enableFields('fe_users', $pObj, $fromAjax), '', 'uid');
+			$imagestr = '';
+			if (trim($conf['advanced.']['FeUserDbField']) != '') {
+				if (trim($conf['advanced.']['FeUserDbField']) != 'image') {
+					$imagestr = ', ' . $conf['advanced.']['FeUserDbField'];
+				}
+				
+			}
+			
+			$txtc_Fe_usersFields = 'uid, pid, username, email, image, gender, first_name, name, last_name, www, city, country' . $imagestr;
+			$AdditionalFe_usersField = '';
+			if (trim($conf['advanced.']['useAdditionalFe_usersFields']) != '') {
+				$AdditionalFe_usersFieldsarr = explode(', ', $txtc_Fe_usersFields . ',' . trim($conf['advanced.']['useAdditionalFe_usersFields']));
+				$AdditionalFe_usersFieldsarrunique = array_unique($AdditionalFe_usersFieldsarr);
+				$txtc_Fe_usersFields = implode(',', $AdditionalFe_usersFieldsarrunique);
+			}
+			
+			$rowsfeuser = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows($txtc_Fe_usersFields, 'fe_users', 'uid>0 ' . $this->enableFields('fe_users', $pObj, $fromAjax), '', 'uid');
+			
 			$cntfeusers = count($rowsfeuser);
 			for ($i = 0; $i < $cntfeusers; $i++) {
 				$this->FeUsers[$rowsfeuser[$i]['uid']] = $rowsfeuser[$i];
 			}
+			
 			$this->FeUsersSet = TRUE;
 		}
 
@@ -4311,7 +4329,7 @@ class toctoc_comment_lib extends tslib_pibase {
 
 				IF ($triggereduserid != $feuserid) {
 					if ($conf['advanced.']['wallExtension'] != 0) {
-						$rowsfeuser = $this->getBaseFeUsersArray($pObj, $fromAjax, $triggereduserid);
+						$rowsfeuser = $this->getBaseFeUsersArray($pObj, $fromAjax, $triggereduserid, '', $conf);
 						$lastname2='';
 						$firstname2='';
 						if (count($rowsfeuser)>0) {
@@ -5195,7 +5213,7 @@ class toctoc_comment_lib extends tslib_pibase {
 		$params['markers']['###USERNAME###'] = $params['markers']['###FIRSTNAME###']. ' '
 				. $params['markers']['###LASTNAME###'];
 		$rowsfeuser = array();
-		$rowsfeuser = $this->getBaseFeUsersArray($pObj, $fromAjax, $params['row']['toctoc_commentsfeuser_feuser']);
+		$rowsfeuser = $this->getBaseFeUsersArray($pObj, $fromAjax, $params['row']['toctoc_commentsfeuser_feuser'], '', $conf);
 		$usergenderexistsstr='';
 		if (count($rowsfeuser)>0) {
 			if (array_key_exists('gender', $rowsfeuser)) {
@@ -7014,12 +7032,18 @@ class toctoc_comment_lib extends tslib_pibase {
 			} elseif ($conf['advanced.']['notificationLevel'] == 2) {
 				$notifytext= $this->pi_getLLWrap($pObj, 'pi1_template.notificationforcommentator_desc_answersandsame', $fromAjax) . $durationtxt;
 			}
+			$checked = '';
+			if(intval($_SESSION['submitCommentVars'][$cid]['notify']) ==1) {
+				$checked = 'checked ';
+			}
 
 			$subformTemplateNotifySub =  $this->t3substituteMarkerArray($subformTemplateNotify, array(
 					'###DIVSHOW_NOTIFICATION###' => '<div class="tx-tc-ct-form-field-1' . $addcls . '">',
 					'###TEXT_NOTIFICATION###' => $this->pi_getLLWrap($pObj, 'pi1_template.notificationforcommentator', $fromAjax),
 					'###CID###' => $output_cid,
 					'###TEXT_NOTIFICATION_DESC###' => $notifytext,
+					'###NOTIFICATION_VALUE###' => intval($_SESSION['submitCommentVars'][$cid]['notify']),
+					'###NOTIFICATION_CHECKED###' => $checked,
 			));
 		} else  {
 			$subformTemplateNotifySub = '';
@@ -7174,7 +7198,7 @@ class toctoc_comment_lib extends tslib_pibase {
 				* First- and Lastname from the username
 				*/
 					$rows = array();
-					$rows = $this->getBaseFeUsersArray($pObj, $fromAjax, $fe_user_user_uid, '');
+					$rows = $this->getBaseFeUsersArray($pObj, $fromAjax, $fe_user_user_uid, '', $conf);
 					if (count($rows) >=1) {
 						$keyFeUserDbField=trim($this->fixFeUserPic($rows[$conf['advanced.']['FeUserDbField']]));
 						$femp='';
@@ -7450,17 +7474,17 @@ class toctoc_comment_lib extends tslib_pibase {
 	}
 
 	/**
-	 * Adds captcha code if enabled.
-	 * and if requested by submit. cid has to fit as well
+	 * gets a users name.
 	 *
+	 * @param	integer		$fe_user_user_uid: fe_users.uid
 	 * @param	object		$pObj: parent object
-	 * @param	array		$conf:  Array with the plugin configuration
 	 * @param	boolean		$fromAjax: if the request is an AJAX request
-	 * @return	string		Generated HTML
+	 * - @param	array		$conf:  Array with the plugin configuration
+	 * @return	string		users name
 	 */
-	protected function getUserName($fe_user_user_uid, $pObj, $fromAjax) {
+	protected function getUserName($fe_user_user_uid, $pObj, $fromAjax, $conf) {
 		$rows = array();
-		$rows = $this->getBaseFeUsersArray($pObj, $fromAjax, $fe_user_user_uid, '');
+		$rows = $this->getBaseFeUsersArray($pObj, $fromAjax, $fe_user_user_uid, '', $conf);
 		$ret='';
 
 		if (count($rows) >=1) {
@@ -7706,6 +7730,7 @@ class toctoc_comment_lib extends tslib_pibase {
 			$_SESSION['submitCommentVars'][$cid]['previewselpreviewid'] = trim($piVars['previewselpreviewid']);
 			$_SESSION['submitCommentVars'][$cid]['commentparentid'] = trim($piVars['commentparentid']);
 			$_SESSION['submitCommentVars'][$cid]['gender'] = intval(trim($piVars['gender']));
+			$_SESSION['submitCommentVars'][$cid]['notify'] = intval(trim($piVars['notify']));
 			$_SESSION['submitCommentVars'][$cid]['uploadpicid'] = trim($piVars['uploadpicid']);
 			$_SESSION['submitCommentVars'][$cid]['uploadpicheight'] = trim($piVars['uploadpicheight']);
 			$_SESSION['submitCommentVars'][$cid]['descriptionbyuser'] = trim($piVars['descriptionbyuser']);
@@ -7924,7 +7949,7 @@ class toctoc_comment_lib extends tslib_pibase {
 							$_SESSION['submitCommentVars'][$cid]['originalfilename'] ='';
 							$_SESSION['submitCommentVars'][$cid]['previewselpreviewid']=0;
 							$_SESSION['submitCommentVars'][$cid]['commenttitle']='';
-
+								
 							$optinemail='';
 							$optinip='';
 							if (($conf['spamProtect.']['confirmedOptIn'] ==1) && ($this->newcommentneedscoi==1)) {
@@ -8289,7 +8314,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	protected function IPBlockSpamCheck(&$pObj) {
 		$points = 0;
 		$ipaddr = $this->getIpAddr();
-		if ($pObj->conf['spamProtect.']['spamCutOffPoint'] && $this->checkTableBLs($ipaddr) || $this->checkNetworkBLs($ipaddr)) {
+		if ($pObj->conf['spamProtect.']['spamCutOffPoint'] && ($this->checkTableBLs($ipaddr) || $this->checkNetworkBLs($ipaddr))) {
 			$points = $pObj->conf['spamProtect.']['spamCutOffPoint'] + 1;
 		}
 
@@ -11433,7 +11458,7 @@ class toctoc_comment_lib extends tslib_pibase {
 					} else {
 						if (intval($scopeid) == 0) {
 							if ($commentusername == '') {
-								$commentusername= $this->getUserName($feuserid, $pObj, $fromAjax);
+								$commentusername= $this->getUserName($feuserid, $pObj, $fromAjax, $conf);
 							}
 
 							if ($commentusername != '') {
@@ -12032,10 +12057,14 @@ class toctoc_comment_lib extends tslib_pibase {
 					}
 
 				} else {
-					$printname=$myrating['i' . $mydis . 'likeusers'][$j]['ipresolved'];
+					if ($conf['ratings.']['useIPsInLikeDislike'] == 1) {
+						$printname=$myrating['i' . $mydis . 'likeusers'][$j]['ipresolved'];
+					} else {
+						$printname = '';
+					}
 				}
 
-				if ($i < $othersmaxcount) {
+				if (($i < $othersmaxcount) && ($printname != '')) {
 					$otheruserarray[$i]=$printname;
 					$i++;
 					$iovermax=$i;

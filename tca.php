@@ -1045,6 +1045,7 @@ $TCA['tx_toctoc_comments_prefixtotable'] = array (
 				'showRecordFieldList' => 'pi1_key,pi1_table,show_uid,displayfields,topratingsdetailpage,topratingsimagesfolder',
 				'maxDBListItems' => 50,
 		),
+		'feInterface' => $TCA['tx_toctoc_comments_prefixtotable']['feInterface'],
 		'columns' => array (
 				'pi1_key' => array (
 						'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_prefixtotable.pi1_key',
