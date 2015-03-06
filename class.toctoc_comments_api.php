@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 - 2014 Gisele Wendl <gisele.wendl@toctoc.ch>
+*  (c) 2012 - 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -40,29 +40,30 @@ require_once(t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments
  *
  *
  *
- *   73: class toctoc_comments_api
- *  105:     public function __construct()
- *  135:     public function comments_getComments_fe_user($params, $conf)
- *  154:     public function getwebpagepreview($cmd, $cid, $data, $conf)
- *  170:     public function cleanupfup($previewid, $conf, $originalfilename)
- *  184:     public function handleCommentatorNotifications($ref, $conf = NULL, $notfromeID =FALSE, $pid)
- *  202:     public function handleeID($ref, $conf, $messagetodisplay, $returnurl)
- *  223:     public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $commentspics, $scopeid=0, $isReview = 0)
- *  244:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $commentid)
- *  258:     public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
+ *   74: class toctoc_comments_api
+ *  106:     public function __construct()
+ *  136:     public function comments_getComments_fe_user($params, $conf)
+ *  155:     public function getwebpagepreview($cmd, $cid, $data, $conf)
+ *  171:     public function cleanupfup($previewid, $conf, $originalfilename)
+ *  185:     public function handleCommentatorNotifications($ref, $conf = NULL, $notfromeID =FALSE, $pid)
+ *  203:     public function handleeID($ref, $conf, $messagetodisplay, $returnurl)
+ *  224:     public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $commentspics, $scopeid=0, $isReview = 0)
+ *  245:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $commentid)
+ *  259:     public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
 			$feuserid = 0, $cmd, $piVars, $cid, $datathis, $AjaxData, $userpic, $commentspics, $check='',
 			$extref='', $tctreestate  = NULL, $commentreplyid=0, $isrefresh=0, $confSess = array())
- *  322:     public function updateComment($conf, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
- *  334:     public function previewcomment($data, $conf)
- *  348:     public function isVoted($ref, $scopeid, $feuser, $fromAjax)
- *  358:     public function initCaches()
- *  369:     public function enableFields($table)
- *  381:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
- *  390:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
- *  405:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- *  428:     public function createLinks($text, $conf = NULL)
+ *  323:     public function updateComment($conf, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
+ *  335:     public function previewcomment($data, $conf)
+ *  348:     public function commentsSearch($data, $conf, $cid)
+ *  366:     public function isVoted($ref, $scopeid, $feuser, $fromAjax)
+ *  376:     public function initCaches()
+ *  387:     public function enableFields($table)
+ *  399:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
+ *  408:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ *  423:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ *  446:     public function createLinks($text, $conf = NULL)
  *
- * TOTAL FUNCTIONS: 18
+ * TOTAL FUNCTIONS: 19
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -338,6 +339,23 @@ class toctoc_comments_api {
 		return $retstr;
 	}
 
+	/**
+	 * returns comment preview
+	 *
+	 * @param	array		$data
+	 * @param	array		$conf: ...
+	 * @param	[type]		$cid: ...
+	 * @return	string		preview html
+	 */
+	public function commentsSearch($data, $conf, $cid) {
+		$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['templateFile']);
+		$usetemplateFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
+
+		$this->templateCode = @file_get_contents(PATH_site . $usetemplateFile);
+
+		$retstr = $this->lib->showCommentsSearch($conf, $this, TRUE, $data, $cid);
+		return $retstr;
+	}
 	/**
 	 * Checks if item was already voted by current user
 	 *

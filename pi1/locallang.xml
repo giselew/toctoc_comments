@@ -26,6 +26,7 @@
 			<label index="tt_content.toctoc_comments_pi1.code.I.4">More charts</label>
 			<label index="tt_content.toctoc_comments_pi1.code.I.5">AJAX Login</label>
 			<label index="tt_content.toctoc_comments_pi1.code.I.6">User Center</label>
+			<label index="tt_content.toctoc_comments_pi1.code.I.7">Search Comments</label>
 			<label index="tt_content.toctoc_comments_pi1.code.I.u">Check the plugin configuration</label>
 			<label index="tt_content.toctoc_comments_pi1.numbertopRatings">Number of top ratings</label>
 			<label index="tt_content.toctoc_comments_pi1.topRatingsDays">Number of past days for top ratings</label>
@@ -124,6 +125,7 @@
 			<label index="error_too_many_spam_points">Message cannot be posted because it looks like spam.</label>
 			<label index="error.invalid.email">Email is incorrect</label>
 			<label index="error.invalid.useremail">No Email defined on your account - to enable posting please add a valid email to your account or ask your administrator for help</label>
+			<label index="error.required.fieldsadminshouldadd">To enable posting please add the following fields to your account or ask your administrator for help</label>
 			<label index="error.wrong.captcha">The code is incorrect</label>
 			<label index="error.empty.field">Field must not be empty</label>
 			<label index="requires.approval">Your message has been recorded and will appear as soon as it is approved by moderator.</label>
@@ -142,7 +144,7 @@
 			<label index="email.subjectcoi">Email confirmation request</label>
 			<label index="email.textresponsetothecomment">Response to the comment as administrator:</label>
 			<label index="email.textnewcomment">New comment was posted to</label>
-			<label index="email.textnewcoi">A comment was posted using your email. It was posted on </label>
+			<label index="email.textnewcoi">A comment was posted using your email. It was posted on</label>
 			<label index="email.textdislikeoncomment">The limit of dislikes has been reached for a comment on</label>
 			<label index="email.textrequiresyourapproval">It requires your approval to appear on the web site</label>
 			<label index="email.textnotrequiresyourapproval">It does not require your approval</label>
@@ -201,8 +203,10 @@
 			<label index="pi1_template.content">Content:</label>
 			<label index="pi1_template.textcommentlink">Comment:</label>
 			<label index="pi1_template.texterrorlength">The comment must contain %1$d characters at least</label>
+			<label index="pi1_template.texterrorsearchlength">The search term must contain %1$d characters at least</label>
 			<label index="pi1_template.textmakefirstreview">Please make your vote before submitting your reviews comment</label>
 			<label index="pi1_template.texterrornull">Please enter a comment</label>
+			<label index="pi1_template.searcherrornull">Please enter a search term</label>
 			<label index="pi1_template.deletecommentconfirm">Do you really want to delete this comment?</label>
 			<label index="pi1_template.cookiecommentconfirm">This commenting system uses cookies to improve your browsing experience. Would you like to keep them?</label>
 			<label index="pi1_template.dialogboxclose">Close</label>
@@ -243,6 +247,7 @@
 			<label index="pi1_template.timeconv.minutes">minutes</label>
 			<label index="pi1_template.timeconv.years">years</label>
 			<label index="pi1_template.timeconv.months">months</label>
+			<label index="pi1_template.timeconv.monthsgermannon">months</label>
 			<label index="pi1_template.timeconv.weeks">weeks</label>
 			<label index="pi1_template.timeconv.days">days</label>
 			<label index="pi1_template.timeconv.daysgermann">days</label>
@@ -324,6 +329,9 @@
 			<label index="pi1_template.reviewpostavailable">review available</label>
 			<label index="pi1_template.alreadymadeareview">Only one review is possible, please update or delete your existing review</label>
 			<label index="pi1_template.pleaseloginforreview">Please login to leave a review</label>
+			<label index="pi1_template.needwaitfor">You need to wait for</label>
+			<label index="pi1_template.needwaitforoneminute">You need to wait for one minute</label>
+			<label index="pi1_template.needwait_untilyoucanrepost">until you can repost a comment</label>
 			<label index="pi1_template.via">via</label>
 			<label index="pi1_template.fe_users.isonline">Online</label>
 			<label index="pi1_template.fe_users.you">You</label>
@@ -335,8 +343,8 @@
 			<label index="pi1_template.text_no_topviews">No top views found</label>
 			<label index="pi1_template.text_no_topactivity">No top activity found</label>
 			<label index="pi1_template.text_topratings">Top %s ratings</label>
-			<label index="pi1_template.text_topviews">Most viewed %s </label>
-			<label index="pi1_template.text_topactivities">Most active %s </label>
+			<label index="pi1_template.text_topviews">Most viewed %s</label>
+			<label index="pi1_template.text_topactivities">Most active %s</label>
 			<label index="pi1_template.text_topratings_conf0">ILikes in the last</label>
 			<label index="pi1_template.text_topratings_conf1">Votes together in the last</label>
 			<label index="pi1_template.text_topratings_conf2">Votes and Likes together in the last</label>
@@ -356,7 +364,7 @@
 			<label index="pi1_template.text_topratings_pagecontent">on page content</label>
 			<label index="pi1_template.text_topviews_pagecontent">contents</label>
 			<label index="pi1_template.text_topratings_comments">on comments</label>
-			<label index="pi1_template.text_topratings_calcalign">Results are calculated as if %s votes would have been given to each item, added votes have overall average of </label>
+			<label index="pi1_template.text_topratings_calcalign">Results are calculated as if %s votes would have been given to each item, added votes have overall average of</label>
 			<label index="pi1_template.view">view</label>
 			<label index="pi1_template.views">views</label>
 			<label index="pi1_template.viewlong">person saw this</label>
@@ -438,6 +446,17 @@
 			<label index="pi1_template.text_usercenter_showmoreorless">Show more or less</label>
 			<label index="pi1_template.text_usercenter_incommunity">in the community</label>
 			<label index="pi1_template.text_on">on</label>
+			<label index="pi1_template.text_commentssearchtitle">Search comments</label>
+			<label index="pi1_template.commentsearch_text_search">Search:</label>
+			<label index="pi1_template.commentsearch_text_age">Newer than:</label>
+			<label index="pi1_template.nocommentsfoundfor">No comments found for</label>
+			<label index="pi1_template.searchcommentsback">back</label>
+			<label index="pi1_template.searchcommentsnext">next</label>
+			<label index="pi1_template.commentssearch_commentsmade">Comments made in the last</label>
+			<label index="pi1_template.commentssearch_commentsalltime">Comments made all time</label>
+			<label index="pi1_template.commentssearch_alltime">no limit</label>
+			<label index="pi1_template.searchcommentsfoundtextbeforenr">Found</label>
+			<label index="pi1_template.searchcommentsfoundtextafternr">comments containing</label>
 			<label index="eid_template.titleprocessing">Processing</label>
 			<label index="eid_template.pleasewaitprocessing">Please wait, processing ...</label>
 			<label index="eid_template.processingdone">Processing finished</label>

@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-* (c) 2012 - 2014 Gisele Wendl <gisele.wendl@toctoc.ch>
+* (c) 2012 - 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -39,8 +39,9 @@
  *
  *   58: class toctoc_comments_recentcomments extends toctoc_comment_lib
  *   68:     public function mainRecentComments($pObj, $conf, $feuserid)
- *  148:     public function comments_getRecentComments($rows, $conf, $pObj, $fromusercenterid = 0, $usercenterlistid = 0)
- *  568:     protected function createRCLinks($text, $refID, $commentID, $prefix, $externalprefix, $singlePid, $conf, $show_uid, $okrowsi)
+ *  151:     public function comments_getRecentComments($rows, $conf, $pObj, $fromusercenterid = 0, $usercenterlistid = 0,
+			$fromAjax = FALSE, $searchincomments = '')
+ *  617:     protected function createRCLinks($text, $refID, $commentID, $prefix, $externalprefix, $singlePid, $conf, $show_uid, $okrowsi)
  *
  * TOTAL FUNCTIONS: 3
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -66,6 +67,7 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 	 * @return	string		Generated HTML
 	 */
 	public function mainRecentComments($pObj, $conf, $feuserid) {
+		$fromAjax = FALSE;
 		if (version_compare(TYPO3_version, '4.6', '<')) {
 			$tmpint = t3lib_div::testInt($conf['storagePid']);
 		} else {
@@ -81,7 +83,7 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 			$pidcond='pid IN (' . $conf['storagePid'] . ') ';
 		}
 
-		$where = 'tx_toctoc_comments_comments.' . $pidcond . $this->enableFields('tx_toctoc_comments_comments', $pObj);
+		$where = 'tx_toctoc_comments_comments.' . $pidcond . $this->enableFields('tx_toctoc_comments_comments', $pObj, $fromAjax);
 		$where .= ' AND tx_toctoc_comments_comments.approved =1';
 		$condfeusergroup='';
 		if ($conf['restrictToExternalPrefix'] !='') {
@@ -135,27 +137,31 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 		return $retstr;
 	}
 
+
+
 	/**
 	 * Generates list of recent comments
 	 *
 	 * @param	array		$rows	Rows from tx_toctoc_comments_comments
 	 * @param	array		$conf
 	 * @param	object		$pObj
-	 * @param	[type]		$fromusercenterid: ...
-	 * @param	[type]		$usercenterlistid: ...
+	 * @param	int		$fromusercenterid: ...
+	 * @param	int		$usercenterlistid: ...
 	 * @return	string		Generated HTML
 	 */
-	public function comments_getRecentComments($rows, $conf, $pObj, $fromusercenterid = 0, $usercenterlistid = 0) {
-		$this->cObj = t3lib_div::makeInstance('tslib_cObj');
-		$this->cObj->start('', '');
-		if (count($rows) == 0) {
+	public function comments_getRecentComments($rows, $conf, $pObj, $fromusercenterid = 0, $usercenterlistid = 0,
+			$fromAjax = FALSE, $searchincomments = '') {
 
+		if (!isset($this->cObj)) {
+			$this->cObj = t3lib_div::makeInstance('tslib_cObj');
+			$this->cObj->start('', '');
+		}
+		if (count($rows) == 0) {
 			$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###RECENTNO_COMMENTS###');
 			if ($template) {
-				$retstr =$this->t3substituteMarker($template, '###LL_TEXT_NO_COMMENTS###', $this->pi_getLLWrap($pObj, 'pi1_template.text_no_comments', FALSE));
+				$retstr =$this->t3substituteMarker($template, '###LL_TEXT_NO_COMMENTS###', $this->pi_getLLWrap($pObj, 'pi1_template.text_no_comments', $fromAjax));
 				return $retstr;
 			}
-
 		}
 
 		$showrecentcomment=0;
@@ -164,7 +170,8 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 		}
 		$entries = array();
 		if ($fromusercenterid == 0) {
-			$template= $this->t3getSubpart($pObj, $pObj->templateCode, '###SINGLE_RECENTCOMMENT###');
+			$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###SINGLE_RECENTCOMMENT###');
+
 		} else {
 			$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###SINGLE_USERCENTERCOMMENT###');
 		}
@@ -192,7 +199,7 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 			$ownershipok=1;
 			if ($mmtable== 'fe_users') {
 				$targetfortitle='name';
-				$arr_groupmembers=explode(',', $this->usersGroupmembers($pObj, FALSE, $conf, TRUE));
+				$arr_groupmembers=explode(',', $this->usersGroupmembers($pObj, $fromAjax, $conf, TRUE));
 
 				$arr_groupmembers=array_flip($arr_groupmembers);
 				if (!array_key_exists($refID, $arr_groupmembers))  {
@@ -255,8 +262,8 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 				);
 				$row['refTitle']=$rowstitle[0]['refTitle'];
 				$itemtitle = 'News';
-				$cttitle = str_replace(':', '', $this->pi_getLLWrap($pObj, 'pi1_template.textcommentlink', FALSE));
-				$itemtitle = ucfirst($this->pi_getLLWrap($pObj, 'comments_recent.' . $mmtable .'', FALSE));
+				$cttitle = str_replace(':', '', $this->pi_getLLWrap($pObj, 'pi1_template.textcommentlink', $fromAjax));
+				$itemtitle = ucfirst($this->pi_getLLWrap($pObj, 'comments_recent.' . $mmtable .'', $fromAjax));
 
 				$pageidrecord='';
 				if ($prefix == 'pages_') {
@@ -396,7 +403,43 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 						$exticon= $this->locationHeaderUrlsubDir() . t3lib_extMgm::siteRelPath('toctoc_comments') . 'ext_icon.gif">';
 					}
 
-					$commenttext = $this->trimContent($row['content'], $conf, $conf['recentcomments.']['maxCharCount'], FALSE);
+					if ($searchincomments != '') {
+						$commenttextprecrop = $row['content'];
+						$searchincommentsendpos = strpos(strtoupper($commenttextprecrop), strtoupper($searchincomments)) + strlen($searchincomments);
+						if (($searchincommentsendpos > intval($conf['recentcomments.']['maxCharCount']/2)) ) {
+							// precut
+							$precutpos = $searchincommentsendpos - intval($conf['recentcomments.']['maxCharCount']/2);
+							$commenttextprecrop = $this->trimContent($row['content'], $conf, $precutpos, FALSE, TRUE);
+							$commenttext = $this->trimContent($commenttextprecrop, $conf, (4 + $conf['recentcomments.']['maxCharCount']), FALSE);
+
+						} else {
+							$commenttext = $this->trimContent($commenttextprecrop, $conf, $conf['recentcomments.']['maxCharCount'], FALSE);
+						}
+
+					} else {
+						$commenttext = $this->trimContent($row['content'], $conf, $conf['recentcomments.']['maxCharCount'], FALSE);
+					}
+					if ($searchincomments != '') {
+						$searchincommentsarrupper = explode(strtoupper($searchincomments), strtoupper($commenttext));
+						$cntupper= count($searchincommentsarrupper);
+						$searchincommentsarr=array();
+						$searchincommentstermarr=array();
+						$searchincommentstermarr[0] ='';
+						$curpos =0;
+						for ($i=0;$i<$cntupper;$i++) {
+							$searchincommentsarr[$i] = substr($commenttext, $curpos, strlen($searchincommentsarrupper[$i]));
+							if ($i>0) {
+								$searchincommentstermarr[$i] = substr($commenttext, $curpos-strlen($searchincomments), strlen($searchincomments));
+							}
+							$curpos= $curpos + strlen($searchincommentsarr[$i])+strlen($searchincomments);
+						}
+						$commenttext = $searchincommentsarr[0];
+						for ($i=1;$i<$cntupper;$i++) {
+							if ($i>0) {
+								$commenttext .= '<span class="tx-tc-foundserchterm">' . $searchincommentstermarr[$i] . '</span>' .$searchincommentsarr[$i];
+							}
+						}
+					}
 
 					//Parse for Links and Smilies
 					$this->smiliesPath = str_replace('EXT:toctoc_comments/', $this->locationHeaderUrlsubDir() .
@@ -419,17 +462,23 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 					$commentimage = '';
 					$authorimage = '';
 
-					$link=$this->createRCLinks($commenttext, $refID, $commentID, $prefix, $externalprefix, $pageid, $conf, $show_uid, $okrowsi);
-					if ($link !=$commenttext) {
-						$titlelink = $this->createRCLinks(strip_tags($row['refTitle']), $refID, $commentID, $prefix, $externalprefix,
+					$saverecentcommentslinkComments = $conf['recentcomments.']['linkComments'];
+
+					$conf['recentcomments.']['linkComments']=1;
+					$titlelink=$this->createRCLinks(strip_tags($row['refTitle']), $refID, $commentID, $prefix, $externalprefix,
+							$pageid, $conf, $show_uid, $okrowsi);
+					$conf['recentcomments.']['linkComments'] = $saverecentcommentslinkComments;
+
+					if ($titlelink !=$commenttext) {
+						$link = $this->createRCLinks($commenttext, $refID, $commentID, $prefix, $externalprefix,
 								$pageid, $conf, $show_uid, $okrowsi);
 						$autortext = '';
 						$ratinghtml = '';
 						$reviewhtml = '';
 						$commentcontent =  $this->applyStdWrap($commentimage. $link, 'content_stdWrap', $conf);
 						if ($usercenterlistid == 0) {
-
 							$autortext = $this->applyStdWrap($authorimage. $row['firstname'].'&nbsp;'.$row['lastname'], 'author_stdWrap', $conf);
+
 						} else {
 							$feuserid = $GLOBALS['TSFE']->fe_user->user['uid'];
 							$savratingsuseLikeDislikeStyle = $conf['ratings.']['useLikeDislikeStyle'];
@@ -493,11 +542,10 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 							$ratinghtml = '<div class="tx-tc-width100 tx-tc-tabledisp">' . $allratingmarkers .'</div>';
 							$commentcontent = '<div class="tx-tc-width100 tx-tc-tabledisp">' . $commentcontent .'</div>';
 						}
-
 						$markerArray = array(
 								'###AUTHOR###' => $autortext,
 								'###COMMENT_DATE###' => '<span id="tx-tc-rctdatedisp-' .$row['uid'] .'">' .
-								$this->applyStdWrap($this->formatDate($row['crdate'], $pObj, FALSE, $conf), 'crdate_stdWrap', $conf) .
+								$this->applyStdWrap($this->formatDate($row['crdate'], $pObj, $fromAjax, $conf), 'crdate_stdWrap', $conf) .
 								'</span><span id="tx-tc-rctdatetime-' .$row['uid'] .'" class="tx-tc-nodisp">'.$row['crdate'].'</span>',
 								'###TITLE###' => $this->applyStdWrap($titleimage . $titlelink, 'recentComment_stdWrap', $conf),
 								'###COMMENT_CONTENT###' => $commentcontent,
@@ -505,6 +553,7 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 								'###RATING###' => $ratinghtml,
 								'###REVIEW###' => $reviewhtml,
 						);
+
 						$entries[] = $this->t3substituteMarkerArray($template, $markerArray);
 						$okrowsi++;
 					}
@@ -524,6 +573,7 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 		$retstrinner='';
 		if (intval($showrecentcomment)==0) {
 			$retstr = implode($entries);
+
 		} else {
 			$cntentries = count($entries);
 			for ($i=0; (($i<$showrecentcomment) && ($i<$cntentries)); $i++) {
@@ -536,9 +586,9 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 				$retstr .= $this->t3substituteMarkerArray($this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTER_DROPDOWNSHOWMORE###'),
 						array(
 								'###DROPDOWNID###' => ($usercenterlistid+$usercenterlistid*100),
-								'###DROPDOWNTIPTEXT###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercenter_showmoreorless', FALSE),
+								'###DROPDOWNTIPTEXT###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercenter_showmoreorless', $fromAjax),
 								'###DROPUPORDOWN###' => 'Down',
-								'###TITLE###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercenter_showmore', FALSE),
+								'###TITLE###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercenter_showmore', $fromAjax),
 								'###CONTENT###' => $retstrinner,
 
 						)
@@ -590,12 +640,15 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 
 			$useCacheHashNeeded = intval($GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError']);
         	$no_cacheflag = 0;
+
         	if (intval($GLOBALS['TYPO3_CONF_VARS']['FE']['disableNoCacheParameter']) ==0) {
         		if ($useCacheHashNeeded == 1) {
         			$no_cacheflag = 1;
         		}
+
         	}
- 			$conf = array(
+
+ 			$conflink = array(
         		'useCacheHash'     => $useCacheHashNeeded,
         		'no_cache'         => $no_cacheflag,
         		'parameter'        => $singlePid.$conf['recentcomments.']['anchorPre'].$commentID,
@@ -603,10 +656,29 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 				'ATagParams' => 'rel="nofollow"',
  				'forceAbsoluteUrl' => 1,
         	);
-        	$text = $this->cObj->typoLink($text, $conf);
+
+ 			// This part of code is to make enablefields() work in environment which delete these globals
+ 			if (!isset($GLOBALS['TCA'])) {
+ 				$GLOBALS['TCA'] = array();
+ 			}
+
+ 			if (!isset($GLOBALS['TCA']['sys_domain'])) {
+ 				$GLOBALS['TCA']['sys_domain'] = array();
+ 			}
+ 			if (!isset($GLOBALS['TCA']['sys_domain']['ctrl'])) {
+ 				$GLOBALS['TCA']['sys_domain']['ctrl'] = array();
+ 			}
+
+ 			if (!isset($GLOBALS['TCA']['tt_content'])) {
+ 				$GLOBALS['TCA']['tt_content'] = array();
+ 			}
+ 			if (!isset($GLOBALS['TCA']['tt_content']['ctrl'])) {
+ 				$GLOBALS['TCA']['tt_content']['ctrl'] = array();
+ 			}
+ 			//
+        	$text = $this->cObj->typoLink($text, $conflink);
         	$text = str_replace('href="', 'href="javascript:recentct(0, ' . $okrowsi . ', ' . $singlePid . ', \'', $text);
         	$text = str_replace('" rel="nofollow', '\')" rel="nofollow', $text);
-
         }
 
         return $text;

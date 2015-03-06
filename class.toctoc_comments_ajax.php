@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-* (c) 2012 - 2014 Gisele Wendl <gisele.wendl@toctoc.ch>
+* (c) 2012 - 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -37,25 +37,27 @@
  *
  *
  *
- *   91: class toctoc_comments_ajax
- *  143:     public function __construct()
- *  613:     public function main()
- *  651:     public function handleCommentatorNotifications()
- *  662:     protected function updateCommentDisplay()
- *  680:     protected function updateComment()
- *  695:     protected function webpagepreview()
- *  707:     protected function previewcomment()
- *  719:     protected function cleanupfup()
- *  733:     protected function getCaptcha($captchatype, $cid)
- *  868:     protected function chkcaptcha($cid, $code)
- *  895:     protected function getUserCard()
- *  908:     protected function updateCommentsView()
- * 1031:     protected function updateRating()
- * 1558:     protected function processDeleteSubmission()
- * 1638:     protected function processDenotifycommentSubmission()
- * 1688:     protected function recentCommentsClearCache()
+ *   93: class toctoc_comments_ajax
+ *  145:     public function __construct()
+ *  658:     protected function initTSFE()
+ *  704:     public function main()
+ *  744:     public function handleCommentatorNotifications()
+ *  755:     protected function updateCommentDisplay()
+ *  773:     protected function updateComment()
+ *  788:     protected function webpagepreview()
+ *  800:     protected function previewcomment()
+ *  811:     protected function commentsSearch()
+ *  823:     protected function cleanupfup()
+ *  837:     protected function getCaptcha($captchatype, $cid)
+ *  972:     protected function chkcaptcha($cid, $code)
+ *  999:     protected function getUserCard()
+ * 1012:     protected function updateCommentsView()
+ * 1137:     protected function updateRating()
+ * 1665:     protected function processDeleteSubmission()
+ * 1746:     protected function processDenotifycommentSubmission()
+ * 1797:     protected function recentCommentsClearCache()
  *
- * TOTAL FUNCTIONS: 16
+ * TOTAL FUNCTIONS: 18
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -151,12 +153,22 @@ class toctoc_comments_ajax {
 
 		$data_str = t3lib_div::_GP('data');
 		$data = unserialize(base64_decode($data_str));
+		if (version_compare(TYPO3_version, '4.3.99', '>') && (!isset($data['lang']))) {
+			$this->commonObj = t3lib_div::makeInstance('toctoc_comments_common');
+			if (!isset($_SESSION['activelang'])) {
+				$sessionTimeout=3*1440;
+				$this->commonObj->start_toctoccomments_session($sessionTimeout);
+			}
 
-		$GLOBALS['LANG'] = t3lib_div::makeInstance('language');
-		$GLOBALS['LANG']->init($data['lang'] ? $data['lang'] : 'default');
-		$GLOBALS['LANG']->includeLLFile('EXT:toctoc_comments/locallang_ajax.xml');
-
-		$this->commonObj = t3lib_div::makeInstance('toctoc_comments_common');
+			$GLOBALS['LANG'] = t3lib_div::makeInstance('language');
+			$GLOBALS['LANG']->init($_SESSION['activelang'] ? $_SESSION['activelang'] : 'default');
+			$GLOBALS['LANG']->includeLLFile('EXT:toctoc_comments/locallang_ajax.xml');
+		} else {
+			$GLOBALS['LANG'] = t3lib_div::makeInstance('language');
+			$GLOBALS['LANG']->init($data['lang'] ? $data['lang'] : 'default');
+			$GLOBALS['LANG']->includeLLFile('EXT:toctoc_comments/locallang_ajax.xml');
+			$this->commonObj = t3lib_div::makeInstance('toctoc_comments_common');
+		}
 
 		if (version_compare(TYPO3_version, '4.5', '<')) {
 		// Initialize FE user object:
@@ -165,9 +177,25 @@ class toctoc_comments_ajax {
 		if (version_compare(TYPO3_version, '6.1', '<')) {
 			tslib_eidtools::connectDB();
 		}
-
 		// is there any possible valid cmd what the script shall do?
 		$this->cmd = t3lib_div::_GP('cmd');
+
+		if ($this->cmd == 'searchcomment') {
+			$this->initTSFE();
+		} elseif (!isset($GLOBALS['TCA']['pages']['ctrl'])) {
+			// avoid flux crashes or other exts replacing TCA
+			$this->initTSFE();
+			if (!isset($GLOBALS['TCA'])) {
+				$GLOBALS['TCA'] = array();
+			}
+			if (!isset($GLOBALS['TCA']['pages'])) {
+				$GLOBALS['TCA']['pages'] = array();
+			}
+			if (!isset($GLOBALS['TCA']['pages']['columns'])) {
+				$GLOBALS['TCA']['pages']['columns'] = array();
+			}
+		}
+
 		if($this->cmd == 'showcomments') {
 			$confLogin=array();
 			$confLoginSess=array();
@@ -197,6 +225,24 @@ class toctoc_comments_ajax {
 			}
 
 			$this->pluginid = $data['ref'];
+			$this->previewconf = $data;
+		} elseif(($this->cmd == 'searchcomment') || ($this->cmd == 'searchbrowse')) {
+			$dataconf_str = t3lib_div::_GP('data');
+			$dataconf = unserialize(base64_decode($dataconf_str));
+			$confdiffarray = unserialize(base64_decode($dataconf['conf']));
+
+			if(!is_array($confdiffarray)) {
+				echo $GLOBALS['LANG']->getLL('bad_conf_value') . ', diffconf in ' .$this->cmd;
+				exit();
+			}
+			$this->conf = $this->commonObj->unmirrorConf($confdiffarray);
+			//print 'storagePid AAJX'. $this->conf['storagePid'];
+
+			if($this->conf == '') {
+				echo $GLOBALS['LANG']->getLL('session_expired');
+				exit();
+			}
+			$this->pluginid = t3lib_div::_GP('ref');
 			$this->previewconf = $data;
 		} elseif ($this->cmd == 'gettime') {
 			echo time();
@@ -604,6 +650,51 @@ class toctoc_comments_ajax {
 		}
 
 	}
+	/**
+	 * Initializes TSFE and sets $GLOBALS['TSFE']
+	 *
+	 * @return	void
+	 */
+	protected function initTSFE() {
+		try {
+// 			$GLOBALS['TT'] = new \TYPO3\CMS\Core\TimeTracker\NullTimeTracker();
+ //			$GLOBALS['TT']->start();
+
+			/** @var $frontend TypoScriptFrontendController */
+			//$GLOBALS['TSFE'] = t3lib_div::makeInstance('tslib_fe', $GLOBALS['TYPO3_CONF_VARS'], t3lib_div::_GP('id'), 0);
+
+			if (version_compare(TYPO3_version, '4.8', '>')) {
+				$frontend = t3lib_div::makeInstance(
+						'TYPO3\\CMS\\Frontend\\Controller\\TypoScriptFrontendController',
+						$GLOBALS['TYPO3_CONF_VARS'], $pageId, ''
+				);
+			} else {
+				$frontend = t3lib_div::makeInstance('tslib_fe', $GLOBALS['TYPO3_CONF_VARS'], $pageId, '');
+			}
+			$GLOBALS['TSFE'] = & $frontend;
+
+//			$frontend->connectToDB();
+			$frontend->initFEuser();
+//			$frontend->checkAlternativeIdMethods();
+			$frontend->determineId();
+			$frontend->initTemplate();
+ //			$frontend->getFromCache();
+ 			$frontend->getConfigArray();
+// 			$frontend->settingLanguage();
+// 			$frontend->settingLocale();
+			//     $frontend->newCObj();
+
+			//       // Get linkVars, absRefPrefix, etc
+			if (version_compare(TYPO3_version, '4.8', '>')) {
+				\TYPO3\CMS\Frontend\Page\PageGenerator::pagegenInit();
+			} else {
+				TSpagegen::pagegenInit();
+			}
+
+		} catch (Exception $e) {
+			print_r($e);
+		}
+	}
 
 	/**
 	 * Main processing function of eID script
@@ -629,6 +720,8 @@ class toctoc_comments_ajax {
 			$this->processDenotifycommentSubmission();
 		} elseif(($this->cmd == 'updatect')) {
 			$this->updateComment();
+		} elseif(($this->cmd == 'searchcomment') || ($this->cmd == 'searchbrowse')) {
+			$this->commentsSearch();
 		} elseif ($this->cmd == 'previewcomment'){
 			$this->previewcomment();
 		} elseif (strstr($this->cmd, 'preview')){
@@ -709,6 +802,17 @@ class toctoc_comments_ajax {
 		/* @var $apiObj toctoc_comments_api */
 
 		echo $apiObj->previewcomment($this->previewconf, $this->conf);
+	}
+	/**
+	 * Handling of commentsSearch
+	 *
+	 * @return	void
+	 */
+	protected function commentsSearch() {
+		$apiObj = t3lib_div::makeInstance('toctoc_comments_api');
+		/* @var $apiObj toctoc_comments_api */
+
+		echo $apiObj->commentsSearch($this->previewconf, $this->conf, $this->pluginid);
 	}
 
 	/**
@@ -1710,7 +1814,7 @@ class toctoc_comments_ajax {
 			$GLOBALS['TCA'] = array();
 			$GLOBALS['TCA']['tt_content'] = array();
 		}
-		
+
 		$tce->clear_cacheCmd($this->pid);
 
 		echo $this->pid;

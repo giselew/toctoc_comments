@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-* (c) 2012 - 2014 Gisele Wendl <gisele.wendl@toctoc.ch>
+* (c) 2012 - 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -82,7 +82,6 @@ class toctoc_comments_usercenter extends toctoc_comment_lib {
 			$conf['storagePid'] = $GLOBALS['TYPO3_DB']->cleanIntList($conf['storagePid']);
 		}
 		$pidcond='deleted=0 AND approved=1 AND hidden=0 AND ';
-		$restrictor=$pidcond;
 		$UserImage = '';
 		if (intval($conf['useUserImage']) != 0) {
 			$mpics = FALSE;
@@ -452,7 +451,7 @@ class toctoc_comments_usercenter extends toctoc_comment_lib {
 		$retstrout = $this->t3substituteMarkerArray($this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTER###'),
 				array(
 				'###USERCENTEROFTITLE###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercentertitle', FALSE),
-				'###USERCENTERUSER###' => $this->getUserName($GLOBALS['TSFE']->fe_user->user['uid'], $pObj, FALSE),
+				'###USERCENTERUSER###' => $this->getUserName($GLOBALS['TSFE']->fe_user->user['uid'], $pObj, FALSE, $conf),
 				'###USERCENTERCONTENT###' => $retstr,
 				)
 		);

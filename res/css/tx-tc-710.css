@@ -412,12 +412,20 @@ div.tx-tc-ct-form-field-1nl {
 div.tx-tc-ct-form-field-recap {
 	padding: 4px 0px 4px 0px;
 }
-input.tx-tc-ct-input {
+input.tx-tc-ct-input, select.tx-tc-ct-input {
 	position: relative;
 	border-style: solid;
 	border-width: 1px;
 	min-height: 20px;
 	padding: 0 2px;
+}
+select.tx-tc-ct-input option {
+	min-height: 20px;
+	border-style: solid;
+	border-bottom-width: 1px;
+	border-left-width: 0px;
+	border-right-width: 0px;
+	border-top-width: 0px;
 }
 .tx-tc-ct-form-field-cap input.tx-tc-ct-input {
 	margin: 0 0 0 4px;
@@ -436,6 +444,12 @@ input.tx-tc-ct-input {
 	min-height: 20px;
 	overflow: hidden;
 	white-space: nowrap;
+}
+.tx-tc-ct-label-base {
+	float: left;
+	font-weight: bold;
+	line-height: 20px;
+	margin-right: 4px;
 }
 .tx-tc-login-label {
 	float: left;
@@ -486,7 +500,7 @@ input.tx-tc-ct-input {
 span.tx-srfreecap-pi2-accessible {
 	padding: 0 4px;
 }
-#tx-tc-div-submit1.tx-tc-div-submit {
+#tx-tc-div-submit1.tx-tc-div-submit, .tx-tc-div-searchsubmit {
 	float: left;
 }
 .tx-tc-div-submit {
@@ -3037,6 +3051,7 @@ div.facebookuiGrid {
 	font-size: 110%;
 	padding: 0 4px;
 }
+
 .tx-tc-ucliststitletext {
 	margin: 0 4px;
 }
@@ -3054,4 +3069,27 @@ div.facebookuiGrid {
 }
 .tx-tc-title-usercenter, .tx-tc-opendropdown {
 	margin-bottom: 10px;
+}
+div.tx-tc-searchmore, div.tx-tc-searchprev {
+	border-top-style: solid;
+    border-top-width: 1px;
+	float: left;
+	width: 50%;
+}
+.tx-tc-foundserchterm {
+	font-weight: 700;
+}
+.tx-tc-search-loading {
+	height: auto;	
+}
+.tx-tc-search-loading .tx-tc-working-s {
+	border: 0;
+	height: 16px;
+	width: 16px;
+	display: inline-block;
+	margin: 3px 0px -3px 8px;
+	float: left;
+	opacity: 1;
+	position: relative;
+    top: 0;
 }

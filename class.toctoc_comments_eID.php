@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 - 2014 Gisele Wendl <gisele.wendl@toctoc.ch>
+*  (c) 2012 - 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -39,8 +39,8 @@
  *   67: class toctoc_comments_eID
  *   81:     public function init()
  *  183:     public function main()
- *  402:     protected function processReponseOutput()
- *  495:     protected function ipBlock()
+ *  405:     protected function processReponseOutput()
+ *  502:     protected function ipBlock()
  *
  * TOTAL FUNCTIONS: 4
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -378,7 +378,7 @@ class toctoc_comments_eID {
 					$GLOBALS['TCA'] = array();
 					$GLOBALS['TCA']['tt_content'] = array();
 				}
-				
+
 				/* @var $tce t3lib_TCEmain */
 				foreach ($pidList as $pid) {
 					if ($pid != 0) {
@@ -443,7 +443,7 @@ class toctoc_comments_eID {
 						$GLOBALS['TCA'] = array();
 						$GLOBALS['TCA']['tt_content'] = array();
 					}
-					
+
 						$tce->clear_cacheCmd($pid);
 						$messageMarkers = array(
 							'###STATUS_MESSAGE###' => $GLOBALS['LANG']->getLL('response_saved_cache_cleared')

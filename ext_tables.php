@@ -334,14 +334,44 @@ $tempColumns = array (
 						'eval' => 'trim',
 				)
 		),
+		'gender' => array (
+				'exclude' => '1',
+				'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:fe_users.gender',
+				'config' => array (
+						'type' => 'radio',
+						'items' => array (
+								array('LLL:EXT:toctoc_comments/locallang_db.xml:fe_users.gender.I.0', '0'),
+								array('LLL:EXT:toctoc_comments/locallang_db.xml:fe_users.gender.I.1', '1')
+						),
+				)
+		),
 );
 if (version_compare(TYPO3_branch, '6.1', '<')) {
 	t3lib_div::loadTCA('fe_users');
 }
+
+if($TCA['fe_users']['columns']['gender']) {
+	unset($tempColumns['gender']);
+}
 t3lib_extMgm::addTCAcolumns('fe_users', $tempColumns, 1);
-$TCA['fe_users']['feInterface']['fe_admin_fieldList'] .= ',tx_toctoc_comments_facebook_id,tx_toctoc_comments_facebook_link,tx_toctoc_comments_facebook_email,tx_toctoc_comments_facebook_gender,tx_toctoc_comments_facebook_locale,tx_toctoc_comments_facebook_updated_time';
-$TCA['fe_users']['interface']['showRecordFieldList'] .= ',tx_toctoc_comments_facebook_id,tx_toctoc_comments_facebook_link,tx_toctoc_comments_facebook_email,tx_toctoc_comments_facebook_gender,tx_toctoc_comments_facebook_locale,tx_toctoc_comments_facebook_updated_time';
-t3lib_extMgm::addToAllTCATypes('fe_users', '--div--;toctoc comments,tx_toctoc_comments_facebook_id;;;;1-1-1,tx_toctoc_comments_facebook_link,tx_toctoc_comments_facebook_email,tx_toctoc_comments_facebook_gender,tx_toctoc_comments_facebook_locale,tx_toctoc_comments_facebook_updated_time');
+$sgender = '';
+$sgenderadd = FALSE;
+if (str_replace('gender,', '', $TCA['fe_users']['feInterface']['fe_admin_fieldList'] ) == $TCA['fe_users']['feInterface']['fe_admin_fieldList'] ) {
+	$sgender = ',gender';
+	$sgenderadd = TRUE;
+}
+$TCA['fe_users']['feInterface']['fe_admin_fieldList'] .= ',tx_toctoc_comments_facebook_id,tx_toctoc_comments_facebook_link,tx_toctoc_comments_facebook_email,tx_toctoc_comments_facebook_gender,tx_toctoc_comments_facebook_locale,tx_toctoc_comments_facebook_updated_time' . $sgender;
+$sgender = '';
+if (str_replace('gender,', '', $TCA['fe_users']['feInterface']['showRecordFieldList'] ) == $TCA['fe_users']['feInterface']['showRecordFieldList'] ) {
+	$sgender = ',gender';
+	$sgenderadd = TRUE;
+}
+$TCA['fe_users']['interface']['showRecordFieldList'] .= ',tx_toctoc_comments_facebook_id,tx_toctoc_comments_facebook_link,tx_toctoc_comments_facebook_email,tx_toctoc_comments_facebook_gender,tx_toctoc_comments_facebook_locale,tx_toctoc_comments_facebook_updated_time' . $sgender;
+if ($sgenderadd == TRUE) {
+	t3lib_extMgm::addToAllTCATypes('fe_users', '--div--;toctoc comments,tx_toctoc_comments_facebook_id;;;;1-1-1,tx_toctoc_comments_facebook_link,tx_toctoc_comments_facebook_email,tx_toctoc_comments_facebook_gender,tx_toctoc_comments_facebook_locale,tx_toctoc_comments_facebook_updated_time,gender');
+} else {
+	t3lib_extMgm::addToAllTCATypes('fe_users', '--div--;toctoc comments,tx_toctoc_comments_facebook_id;;;;1-1-1,tx_toctoc_comments_facebook_link,tx_toctoc_comments_facebook_email,tx_toctoc_comments_facebook_gender,tx_toctoc_comments_facebook_locale,tx_toctoc_comments_facebook_updated_time');
+}
 
 // from commentbe
 if (TYPO3_MODE == 'BE') {

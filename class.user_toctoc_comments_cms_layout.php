@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 - 2014 Gisele Wendl <gisele.wendl@toctoc.ch>
+*  (c) 2012 - 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -77,17 +77,21 @@ class user_toctoc_comments_cms_layout {
 					$result .= $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.code.I.4');
 				} elseif ($mode =='5' ) {
 					$result .= $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.code.I.5');
+				} elseif ($mode =='6' ) {
+					$result .= $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.code.I.6');
+				} elseif ($mode =='7' ) {
+					$result .= $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.code.I.7');
 				}
 
 				if (($mode =='') || ($mode =='0')) {
 					$result .= '<br />';
 					$tpfx = $data['data']['sDEF']['lDEF']['externalPrefix']['vDEF'];
 					if ($tpfx !='') {
-						$result .= ucfirst($GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.trigger.prefix')) . ': ' .$tpfx;
+						$result .= ucfirst($GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.trigger.prefix')) . ' ' .$tpfx;
 						$result .= '<br />';
 					}
 
-					$useshr = $data['data']['sAdvanced']['lDEF']['useSharing']['vDEF'];
+					$useshr = $data['data']['sSharing']['lDEF']['useSharing']['vDEF'];
 					$result .= ucfirst($GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.useSharing')) . ' ';
 					if ($useshr =='') {
 						$result .= $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.usets');

@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 - 2014 Gisele Wendl <gisele.wendl@toctoc.ch>
+*  (c) 2012 - 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  PHP Class SEOstats adapted for toctoc_comments
 *  All rights reserved
 *

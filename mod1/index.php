@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 - 2014 Gisele Wendl <gisele.wendl@toctoc.ch>
+*  (c) 2012 - 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,7 +21,6 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-
 $GLOBALS['LANG']->includeLLFile('EXT:toctoc_comments/mod1/locallang.xml');
 if (version_compare(TYPO3_version, '6.0', '<')) {
 	require_once(PATH_t3lib . 'class.t3lib_scbase.php');
@@ -35,10 +34,13 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 	(class_exists('t3lib_SCbase', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Backend\Module\BaseScriptClass', 't3lib_SCbase');
 }
 
-	/**
-	 * [Describe function...]
-	 *
-	 */
+/**
+ * AJAX Social Network Components
+ *
+ * @author Gisele Wendl <gisele.wendl@toctoc.ch>
+ * @package TYPO3
+ * @subpackage toctoc_comments
+ */
 class  toctoc_comments_module1 extends t3lib_SCbase {
 	private $pageinfo;
 
@@ -50,6 +52,11 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 	// Set to true if you want to see which content elements and pages have cleared cache (shown at end of messages)
 	private $showcachemessage = FALSE;
 
+	/**
+	 * 1st main function executes under SOBE (see end of file)
+	 *
+	 * @return	void		...
+	 */
 	public function init()	{
 		if (version_compare(TYPO3_version, '6.3', '>')) {
 			(class_exists('bigDoc', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Backend\Template\DocumentTemplate', 'bigDoc');
@@ -61,7 +68,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 	}
 
 	/**
-	 * [Describe function...]
+	 * 2nd main function executes under SOBE (see end of file)
 	 *
 	 * @return	[type]		...
 	 */
@@ -75,9 +82,9 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 	}
 
 	/**
-	 * [Describe function...]
+	 * 3rd main function executes under SOBE (see end of file)
 	 *
-	 * @return	[type]		...
+	 * @return	void		...
 	 */
 	public function main()	{
 
@@ -209,9 +216,9 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 	}
 
 	/**
-	 * [Describe function...]
+	 * 4th main function executes under SOBE (see end of file)
 	 *
-	 * @return	[type]		...
+	 * @return	void		echoes $this->content
 	 */
 	public function printContent()	{
 
@@ -220,9 +227,11 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 	}
 
 	/**
-	 * [Describe function...]
+	 * Main processing - one function for all backend menu points
+	 * the function works on $this->content and does all needed data processing
+	 * individual menu point logics are separated by a switch in the following code
 	 *
-	 * @return	[type]		...
+	 * @return	void		works on $this->content
 	 */
 	private function moduleContent()	{
 		$this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['toctoc_comments']);
@@ -255,13 +264,13 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 			$selected1 = '';
 			$selected3 = '';
 		}
-		
+
 		if($_POST['admincommand'] == '3') {
 			$selected3 = ' selected';
 			$selected1 = '';
 			$selected2 = '';
 		}
-		
+
 		$content .= '
 		<div>
 		  <span class="tx-tc-title">'.$GLOBALS['LANG']->getLL('function').'</span>
@@ -286,14 +295,14 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 				} elseif($_POST['admincommand'] == '3') {
 					$settingfunction = 3;
 				}
-				
+
 			}
 
 			switch((string)$settingfunction) {
 				case 1:
-	
+
 				$editTable = 'tx_toctoc_comments_comments';
-	
+
 			    // "Create New" Button
 			    // params = Create New
 			    $params = '&edit['.$editTable.']['.$pid.']=new&defVals['.$editTable.']';
@@ -315,7 +324,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 						$fields_new = '';
 						foreach($fields as $field)$fields_new .= ','.intval($field);
 						$fields_new = substr($fields_new, 1);
-	
+
 						// Approve
 						if($_POST['bulkact'] == '1') {
 						  	$upd = $GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_comments SET approved=1 WHERE uid IN ('.
@@ -324,7 +333,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 						  	if ($numcomments !=1){
 						  		$infomessage = sprintf($GLOBALS['LANG']->getLL('approvedn'), $numcomments);
 						  	}
-	
+
 						} elseif($_POST['bulkact'] == '2') {
 						// Disapprove
 							$upd = $GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_comments SET approved=0 WHERE uid IN ('.
@@ -333,7 +342,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 							if ($numcomments !=1){
 								$infomessage = sprintf($GLOBALS['LANG']->getLL('disapprovedn'), $numcomments);
 							}
-	
+
 						} elseif($_POST['bulkact'] == '3') {
 						// Hide
 							$upd = $GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_comments SET hidden=1 WHERE uid IN ('.
@@ -342,7 +351,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 							if ($numcomments !=1){
 								$infomessage = sprintf($GLOBALS['LANG']->getLL('hiddenn'), $numcomments);
 							}
-	
+
 						} elseif($_POST['bulkact'] == '4') {
 						// Show
 						  	$upd = $GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_comments SET hidden=0 WHERE uid IN ('.$fields_new.')');
@@ -350,7 +359,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 							if ($numcomments !=1){
 								$infomessage = sprintf($GLOBALS['LANG']->getLL('unhiden'), $numcomments);
 							}
-	
+
 						} elseif($_POST['bulkact'] == '5') {
 						// Delete
 							$upd = $GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_comments SET deleted=1 WHERE uid IN ('.$fields_new.')');
@@ -358,14 +367,14 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 							if ($numcomments !=1){
 								$infomessage = sprintf($GLOBALS['LANG']->getLL('commentsdeleten'), $numcomments);
 							}
-	
+
 						}
 						$infomessage .= '<br>';
 						$infomessage .= $GLOBALS['LANG']->getLL('donelist') . ': ' . $fields_new;
 						$cachemessage ='';
-	
+
 						if ((intval($_POST['bulkact']) >= 1) && (intval($_POST['bulkact']) <= 5)) {
-	
+
 							$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('DISTINCT external_ref_uid, external_ref, external_prefix', 'tx_toctoc_comments_comments', 'uid IN ('.$fields_new.')', '', '');
 							$num_rows = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
 							$cpidList = '';
@@ -374,18 +383,18 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 								$cachemessage .= '<br>';
 								while($row=$GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 									$external_ref_uid = $row['external_ref_uid'];
-	
+
 									if ($row['external_prefix'] == 'pages') {
 										$cpidList .= ',' . intval(substr($row['external_ref'], 6));
 									} else {
 										$contentelementid = intval(substr($row['external_ref_uid'], 11));
 										$page_res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('pid', 'tt_content', 'uid='.$contentelementid);
-	
+
 										while($row_page=$GLOBALS['TYPO3_DB']->sql_fetch_assoc($page_res)) {
 											$cpidList .= ',' . $row_page['pid'];
 										}
 									}
-	
+
 									$res2 = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_toctoc_comments_plugincachecontrol', 'external_ref_uid="'.
 											$external_ref_uid.'"', '', '');
 									$num_rows2 = $GLOBALS['TYPO3_DB']->sql_num_rows($res2);
@@ -403,7 +412,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 										);
 										$external_ref_uidList .= ', ' . $external_ref_uid;
 									}
-	
+
 								}
 								$external_ref_uidList = substr($external_ref_uidList, 1);
 								$extArr = explode(',', $external_ref_uidList);
@@ -420,24 +429,24 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 								} else {
 									require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/DataHandling/DataHandler.php';
 								}
-	
+
 								$tce = t3lib_div::makeInstance('t3lib_TCEmain');
-	
+
 								/* @var $tce t3lib_TCEmain */
 								foreach ($cpidArr as $cpid) {
 									if ($cpid != 0) {
 										if (intval($this->vmcNPC) == 0) {
 											$tce->clear_cacheCmd($cpid);
 										}
-	
+
 									}
-	
+
 								}
 								unset($tce);
 							}
-	
+
 						}
-	
+
 			    	} else {
 				      	$infomessage = $GLOBALS['LANG']->getLL('nocommentsselected');
 				      	$alertmsg = 1;
@@ -452,18 +461,18 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 			    	} else {
 			    		$infomessage = '<div class="tx-tc-information">' . $infomessage . $cachemessage . '</div>';
 			    	}
-	
+
 			    }
 			    unset($_POST['actmul']);
 			    unset($_POST['bulkact']);
 			    unset($_POST['fields']);
-	
+
 			    $content .= $infomessage;
 					// Show all comments on root page
 			    if($pid == '0') {
 			      $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_toctoc_comments_comments', 'deleted=0', '', '');
 			    }
-	
+
 			    // Show comments on page
 			    else {
 			      $page_array = array();
@@ -471,7 +480,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 			      // Show comments in subpages, if activated in ext manager
 			      if($this->extConf['show_sub'] == 1) {
 				$page_res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'pages', 'deleted=0 AND pid='.$pid);
-	
+
 				while($row_page=$GLOBALS['TYPO3_DB']->sql_fetch_assoc($page_res)) {
 				  $page_array[] = $row_page['uid'];
 				}
@@ -479,35 +488,35 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 			      $pages = implode(',', $page_array);
 			      $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_toctoc_comments_comments', 'deleted=0 AND pid IN ('.$pages.')', '', '');
 			    }
-	
+
 			    $num_rows = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
-	
+
 			    // No Comment
 			    if ($num_rows == '') {
 			      $content .= ''.$GLOBALS['LANG']->getLL('nocomment').'<br /><br />';
 			    }
-	
+
 			    // Root Page and 1 Comment
 			    else if ($num_rows == '1' && $pid == '0') {
 			      $content .= ''.$GLOBALS['LANG']->getLL('commentglobal_one').'<b> '.$num_rows.'</b> '.$GLOBALS['LANG']->getLL('commentglobal_two').'<br /><br />';
 			    }
-	
+
 			    // Root Page and more than 1 Comment
 			    else if ($num_rows > '1' && $pid == '0') {
 			      $content .= ''.$GLOBALS['LANG']->getLL('commentglobalmore_one').'<b> '.$num_rows.'</b> '.
 			      				$GLOBALS['LANG']->getLL('commentglobalmore_two').'<br /><br />';
 			    }
-	
+
 			    // 1 Comment
 			    else if ($num_rows == '1') {
 			      $content .= ''.$GLOBALS['LANG']->getLL('onecomment_one').'<b> '.$num_rows.'</b> '.$GLOBALS['LANG']->getLL('onecomment_two').'<br /><br />';
 			    }
-	
+
 			    // More Comments
 			    else {
 			      $content .= ''.$GLOBALS['LANG']->getLL('morecomments_one').' <b>'.$num_rows.'</b> '.$GLOBALS['LANG']->getLL('morecomments_two').'<br /><br />';
 			    }
-	
+
 			  // Show Table Head only if at least 1 Comment exists.
 			  if($num_rows >= '1') {
 			  $content .= '
@@ -528,7 +537,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 				</tr>
 				</thead>';
 				}
-	
+
 				while($row=$GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 				  // Get the fields
 				  $editTable = 'tx_toctoc_comments_comments';
@@ -539,24 +548,24 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 				  $name = ''.$row['firstname'].' '.$row['lastname'].'';
 				  $comment_txt=htmlspecialchars($row['content']);
 				  if (strlen($comment_txt)>$text_crop) {
-	
+
 					$textcroppedleft = substr($comment_txt, 0, $text_crop);
 					$textcroppedright = substr($comment_txt, $text_crop);
 					$textcroppedrightarr = explode(' ', $textcroppedright);
 					if (count($textcroppedrightarr)>1) {
-	
+
 						$textcroppedleft .=$textcroppedrightarr[0] . ' ... ';
-	
+
 					} else {
 						$textcroppedleft .=$textcroppedright;
 					}
 					$comment_txt =$textcroppedleft;
 				  }
 				  $comment_txt_crop = ''.$comment_txt;
-	
+
 				  $tstamp = $row['crdate'];
 				  $time = ''.date('d.m.Y', $tstamp).' - '.date('H:i', $tstamp).'';
-	
+
 				  /*
 				  params2 = Edit
 				  params3 = Delete
@@ -565,7 +574,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 				  params6 = Disapprove
 				  params7 = Approve
 				  */
-	
+
 				  // Get the params
 				  $params2 = '&edit['.$editTable.']['.$editUid.']=edit';
 				  $params3 ='&cmd['.$editTable.']['.$editUid.'][delete]=1';
@@ -573,20 +582,20 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 				  $params5 ='&data['.$editTable.']['.$editUid.']['.$hiddenField.']=1';
 				  $params6 ='&data['.$editTable.']['.$editUid.']['.$approvedField.']=0';
 				  $params7 ='&data['.$editTable.']['.$editUid.']['.$approvedField.']=1';
-	
+
 				  $this->currentTable = 'tx_toctoc_comments_comments';
-	
+
 				$content .= '
-	
+
 				<tr>
 				  <td class="img">'.$editUid.'</td>
 				  <td>'.$pid_record.'</td>
 				  <td class="date">'.$time.'</td>
 				  <td class="name">'.$name.'</td>
 				  <td>'.$comment_txt_crop.'</td>
-	
+
 				  ';
-	
+
 				  if ($row[$approvedField])	{
 				    $content .='
 				      <td class="img"><a href="'.$this->doc->issueCommand($params6).'">
@@ -595,14 +604,14 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 				      /></a></td>
 				    ';
 				  }
-	
+
 				  else {
 				    $content .= '
 				      <td class="img"><a href="'.$this->doc->issueCommand($params7).'">
 				      <img src="'.$GLOBALS['BACK_PATH'].'../typo3conf/ext/toctoc_comments/icon_tx_toctoc_comments_not_approved.gif" border="0" title="'.
 				    $GLOBALS['LANG']->getLL('approve').'" align="top" alt="" /></a></td>';
 				  }
-	
+
 				  if ($row[$hiddenField])	{
 				    $content .='
 				      <td class="img"><a href="'.$this->doc->issueCommand($params4).'">
@@ -611,14 +620,14 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 				      /></a></td>
 				    ';
 				  }
-	
+
 				  else {
 				    $content .= '
 				      <td class="img"><a href="'.$this->doc->issueCommand($params5).'">
 				      <img src="'.$GLOBALS['BACK_PATH'].'sysext/t3skin/icons/gfx/button_hide.gif" border="0" title="'.
 				    $GLOBALS['LANG']->getLL('hide').'" align="top" alt="" /></a></td>';
 				  }
-	
+
 				  $content .= '
 				    <td class="img"><a href="#" onclick="'.htmlspecialchars(t3lib_BEfunc::editOnClick($params2, $GLOBALS['BACK_PATH'])).'">
 				      <img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], 'gfx/edit2.gif', 'width="11" height="12"').' title="'.
@@ -632,18 +641,18 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 				    <td>
 				      <input type="checkbox" name="fields[]" value="'.$editUid.'" />
 				    </td>';
-	
+
 				  $content .= '
 				    </tr>
 				  ';
 				}
-	
+
 				$content .= '
 				  </table>
 				  </fieldset>
 				  <hr style="margin-top: 5px; margin-bottom: 5px;"/>
 				';
-	
+
 				if($num_rows != 0) {
 				  $content .= '
 				  <div class="pagenav">
@@ -657,13 +666,13 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 					<span class="show_comments">'.$GLOBALS['LANG']->getLL('show_comments').'</span>
 					<select class="pagesize">
 				    ';
-	
+
 				    $select_val = trim($this->extConf['select_val']);
 				    $select_val_arr = explode(',', $select_val);
 				    $select_val_arr[] = $max_records; // Add starting value defined in ext manager
 				    rsort($select_val_arr); // Sort array
 				    $select_val_arr_unique = array_unique($select_val_arr);
-	
+
 				    // Build selectbox
 				    foreach($select_val_arr_unique as $o) {
 				      // Highlight starting value
@@ -680,7 +689,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 					';
 				      }
 				    }
-	
+
 				    $content .= '
 					</select>
 				      </form>
@@ -688,7 +697,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 				  </div>
 				  ';
 				}
-	
+
 				$content .= '
 				<div class="div-float">
 				  '.$GLOBALS['LANG']->getLL('bulkact').'
@@ -704,11 +713,11 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 				</div>
 				<div class="clearit">&nbsp;</div>
 				';
-	
+
 				$this->content.=$this->doc->section('', $content, 0, 1);
-	
+
 			    break;
-	
+
 			    case 2:
 	//* User administration
 				$editTable = 'tx_toctoc_comments_user';
@@ -720,9 +729,9 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 			    		if (is_array($_POST['fields'])) {
 			    			$fields = $_POST['fields'];
 			    		}
-	
+
 			    	}
-	
+
 			    	$numusers = count($fields);
 			    	if ($numusers > 0) {
 						$fields_new = '';
@@ -739,18 +748,18 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 								$cachemessage .= '<br>';
 								while($row=$GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 									$external_ref_uid = $row['external_ref_uid'];
-	
+
 									if ($row['external_prefix'] == 'pages') {
 										$cpidList .= ',' . intval(substr($row['external_ref'], 6));
 									} else {
 										$contentelementid = intval(substr($row['external_ref_uid'], 11));
 										$page_res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('pid', 'tt_content', 'uid='.$contentelementid);
-	
+
 										while($row_page=$GLOBALS['TYPO3_DB']->sql_fetch_assoc($page_res)) {
 											$cpidList .= ',' . $row_page['pid'];
 										}
 									}
-	
+
 									$res2 = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_toctoc_comments_plugincachecontrol', 'external_ref_uid="'.
 											$external_ref_uid.'"', '', '');
 									$num_rows2 = $GLOBALS['TYPO3_DB']->sql_num_rows($res2);
@@ -768,14 +777,14 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 										);
 										$external_ref_uidList .= ', ' . $external_ref_uid;
 									}
-	
+
 								}
 								$external_ref_uidList = substr($external_ref_uidList, 1);
 								$extArr = explode(',', $external_ref_uidList);
 								$extArr = array_unique($extArr);
 								$external_ref_uidList = implode (',', $extArr);
 								$cachemessage .= 'Reset plugincachecontrol for ' . $external_ref_uidList;
-	
+
 								$cpidList = substr($cpidList, 1);
 								$cpidArr = explode(',', $cpidList);
 								$cpidArr = array_unique($cpidArr);
@@ -786,33 +795,33 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 								} else {
 									require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/DataHandling/DataHandler.php';
 								}
-	
+
 								$tce = t3lib_div::makeInstance('t3lib_TCEmain');
-	
+
 								/* @var $tce t3lib_TCEmain */
 								foreach ($cpidArr as $cpid) {
 									if ($cpid != 0) {
 										if (intval($this->vmcNPC) == 0) {
 											$tce->clear_cacheCmd($cpid);
 										}
-	
+
 									}
-	
+
 								}
 								unset($tce);
 							}
 						}
-	
+
 						if ($_POST['bulkactuser'] == '1') {
 							// delete all user data
 							$infomessage = $GLOBALS['LANG']->getLL('usersdelete1');
 							if ($numusers !=1){
 								$infomessage = sprintf($GLOBALS['LANG']->getLL('usersdeleten'), $numusers);
 							}
-	
+
 							$upd = $GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_user SET deleted=1 WHERE toctoc_comments_user IN ('.$fields_new.')');
 						  	$upd = $GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET deleted=1 WHERE toctoc_comments_user IN ('.$fields_new.')');
-	
+
 						  $resd = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_toctoc_comments_comments', 'toctoc_comments_user IN ('.$fields_new.')', '', 'uid DESC');
 						  $num_rowsd = $GLOBALS['TYPO3_DB']->sql_num_rows($resd);
 						  if (intval($num_rowsd) > 0) {
@@ -824,14 +833,14 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 							  				while($rowdamm=$GLOBALS['TYPO3_DB']->sql_fetch_assoc($resdamm)) {
 							  					if ($rowdamm['attachmentid'] > 0) {
 							  						$upd = $GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_attachment SET deleted=1 WHERE uid='.$rowdamm['attachmentid'].'');
-	
+
 							  					}
-	
+
 							  				}
 							  				$upd = $GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_attachment_mm SET deleted=1 WHERE uid='.$rowd['attachment_id'].'');
-	
+
 							  			}
-	
+
 							  		}
 							  		// comments children test
 							  		$haschildren = FALSE;
@@ -845,11 +854,11 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 							  					$currentpid=$rowdac['pid'];
 							  					break;
 							  				}
-	
+
 							  			}
-	
+
 							  		}
-	
+
 							  		if ($haschildren == TRUE) {
 							  			// ckeck the deleted user
 							  			if ($this->deleteduserischecked == FALSE) {
@@ -899,9 +908,9 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 							  		} else {
 							  			$upd = $GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_comments SET deleted=1 WHERE uid ='.$rowd['uid']);
 								  	}
-	
+
 							  	}
-	
+
 						  	}
 						  	// check new "old" deleted users comments that can be deleted (because children just have been deleted)
 						  	// It does the level above (not more)
@@ -909,7 +918,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 						  	$num_rowsd = $GLOBALS['TYPO3_DB']->sql_num_rows($resd);
 						  	if (intval($num_rowsd) > 0) {
 						  		while($rowd=$GLOBALS['TYPO3_DB']->sql_fetch_assoc($resd)) {
-	
+
 						  			// comments children test
 						  			$haschildren = FALSE;
 						  			$currentpid=0;
@@ -924,24 +933,24 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 						  					}
 						  				}
 						  			}
-	
+
 						  			if ($haschildren == FALSE)  {
 						  				$upd = $GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_comments SET deleted=1 WHERE uid ='.$rowd['uid']);
 						  			}
-	
+
 						  		}
-	
+
 						  	}
 						} elseif($_POST['bulkactuser'] == '2') {
 							$infomessage = $GLOBALS['LANG']->getLL('permanentusersdelete1');
 							if ($numusers !=1){
 								$infomessage = sprintf($GLOBALS['LANG']->getLL('permanentusersdeleten'), $numusers);
 							}
-	
+
 							// kill all user data
 							$upd = $GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_user WHERE toctoc_comments_user IN ('.$fields_new.')');
 							$upd = $GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_feuser_mm WHERE toctoc_comments_user IN ('.$fields_new.')');
-	
+
 							$resd = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_toctoc_comments_comments', 'toctoc_comments_user IN ('.$fields_new.')', '', 'uid DESC');
 							$num_rowsd = $GLOBALS['TYPO3_DB']->sql_num_rows($resd);
 							if (intval($num_rowsd) > 0) {
@@ -954,13 +963,13 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 							  					if ($rowdamm['attachmentid'] > 0) {
 							  						$upd = $GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_attachment WHERE uid='.$rowdamm['attachmentid'].'');
 							  					}
-	
+
 							  				}
 							  				$upd = $GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_attachment_mm WHERE uid='.$rowd['attachment_id'].'');
 							  			}
-	
+
 							  		}
-	
+
 						  			// comments children test
 									$haschildren = FALSE;
 									  $currentpid=0;
@@ -975,7 +984,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 									  		}
 									  	}
 									  }
-	
+
 									  if ($haschildren == TRUE) {
 									  	// ckeck the deleted user
 									  	if ($this->deleteduserischecked == FALSE) {
@@ -1005,7 +1014,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 							  				}
 							  				$this->deleteduserischecked = TRUE;
 									  	}
-	
+
 						  	//set comment user to deleted user 0.0.0.127.0, firstname: deleted, lastname: user, web:'', email deleteduser@void.tt
 							  			$upd = $GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_comments SET firstname="'. $delusers_firstname. '", ' .
 							  			'lastname="'. $delusers_lastname. '", ' .
@@ -1023,22 +1032,22 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 							  			'tx_commentsnotify_notify=0, ' .
 							  			'homepage="" ' .
 							  			'WHERE uid ='.$rowd['uid'].'');
-	
+
 							  		} else {
 							  			$upd = $GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_comments WHERE uid ='. $rowd['uid']);
 							  		}
-	
+
 						  		}
-	
+
 						  	}
 						  	// check new "old" deleted users comments that can be deleted (because children just have been deleted)
 						  	// It does the level above (not more)
-	
+
 						  	$resd = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_toctoc_comments_comments', 'deleted=0 AND email ="' . $delusers_email . '"', '', 'uid DESC');
 						  	$num_rowsd = $GLOBALS['TYPO3_DB']->sql_num_rows($resd);
 						  	if (intval($num_rowsd) > 0) {
 						  		while($rowd=$GLOBALS['TYPO3_DB']->sql_fetch_assoc($resd)) {
-	
+
 						  			// comments children test
 						  			$haschildren = FALSE;
 						  			$currentpid=0;
@@ -1053,15 +1062,15 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 						  					}
 						  				}
 						  			}
-	
+
 						  			if ($haschildren == FALSE)  {
 						  				$upd = $GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_comments WHERE uid ='.$rowd['uid']);
 						  			}
-	
+
 						  		}
-	
+
 						  	}
-	
+
 						} elseif($_POST['bulkactuser'] == '3') {
 							$newuser=trim($_POST['mergeuser']);
 							$newusercheck = explode('.', $newuser);
@@ -1070,12 +1079,12 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 								if ($feuseruid == $newuser) {
 									$feuseruid = 0;
 								}
-	
+
 								$infomessage = $GLOBALS['LANG']->getLL('mergeusers1');
 								if ($numusers !=1){
 									$infomessage = sprintf($GLOBALS['LANG']->getLL('mergeusersn'), $numusers);
 								}
-	
+
 								$infomessage .= ' ' . $newuser . '.';
 								$currentpid=0;
 								// check new user
@@ -1096,18 +1105,18 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 													$rating = $rowd['average_rating']*intval($rowd['vote_count']);
 												}
 											}
-	
+
 											$vote_count = $rowd['vote_count'];
 											$like_count = $rowd['like_count'];
 											$dislike_count = $rowd['dislike_count'];
 											//ip remains untouched as its linked to the userid
-	
+
 											$initial_firstname = $rowd['initial_firstname'];
 											$initial_lastname = $rowd['initial_lastname'];
 											$initial_email = $rowd['initial_email'];
 											$initial_homepage = $rowd['initial_homepage'];
 											$initial_location = $rowd['initial_location'];
-	
+
 											$current_firstname = $rowd['current_firstname'];
 											$current_lastname = $rowd['current_lastname'];
 											$current_email = $rowd['current_email'];
@@ -1117,7 +1126,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 											$optindate = $rowd['optindate'];
 											$optin_ip = $rowd['optin_ip'];
 											$optin_email = $rowd['optin_email'];
-	
+
 											$resd2 = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_toctoc_comments_user', 'toctoc_comments_user IN ('.$fields_new.') AND deleted=0 AND pid = ' .
 													$currentpid, '', '');
 											$num_rowsd2 = $GLOBALS['TYPO3_DB']->sql_num_rows($resd2);
@@ -1131,22 +1140,22 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 																if ($rating2 != 0) {
 																	$rating= $rating + $rating2;
 																}
-	
+
 																$vote_count += $rowd2['vote_count'];
-	
+
 																if ($vote_count != 0) {
 																	$average_rating = $rating/$vote_count;
 																}
 															}
 														}
-	
+
 														$like_count += intval($rowd2['like_count']);
 														$dislike_count += intval($rowd2['dislike_count']);
-	
+
 														if (($lasttimestamp > $rowd2['tstamp']) && ($rowd2['tstamp'] !=0)) {
 															$lasttimestamp = $rowd2['tstamp'];
 														}
-	
+
 														if ($lasttimestamplastupdate < $rowd2['tstamp_lastupdate']) {
 															$lasttimestamplastupdate = $rowd2['tstamp_lastupdate'];
 															if (($rowd2['current_firstname'] != '') && ($rowd2['current_lastname'] != '')) {
@@ -1155,49 +1164,49 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 															} elseif (($rowd2['current_firstname'] == '') && ($rowd2['current_lastname'] != '')) {
 																$current_lastname = $rowd2['current_lastname'];
 															}
-	
+
 															if ($rowd2['current_email'] != '') {
 																$current_email = $rowd2['current_email'];
 															}
-	
+
 															if ($rowd2['current_homepage'] != '') {
 																$current_homepage = $rowd2['current_homepage'];
 															}
-	
+
 															if ($rowd2['current_location'] != '') {
 																$current_location = $rowd2['current_location'];
 															}
-	
+
 															if ($rowd2['current_ip'] != '') {
 																$current_ip = $rowd2['current_ip'];
 															}
-	
+
 														} else {
 															if ($current_firstname == '') {
 																$current_firstname = $rowd2['current_firstname'];
 															}
-	
+
 															if ($current_lastname == '') {
 																$current_lastname = $rowd2['current_lastname'];
 															}
-	
+
 															if ($current_email == '') {
 																$current_email = $rowd2['current_email'];
 															}
-	
+
 															if ($current_homepage == '') {
 																$current_homepage = $rowd2['current_homepage'];
 															}
-	
+
 															if ($current_location == '') {
 																$current_location = $rowd2['current_location'];
 															}
-	
+
 															if ($current_ip == '') {
 																$current_ip = $rowd2['current_ip'];
 															}
 														}
-	
+
 														if (($oldestcrdate > $rowd2['crdate']) && ($rowd2['crdate'] !=0)) {
 															$oldestcrdate = $rowd2['crdate'];
 															if (($rowd2['initial_firstname'] != '') && ($rowd2['initial_lastname'] != '')) {
@@ -1206,44 +1215,44 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 															} elseif (($rowd2['initial_firstname'] == '') && ($rowd2['initial_lastname'] != '')) {
 																$initial_lastname = $rowd2['initial_lastname'];
 															}
-	
+
 															if ($rowd2['initial_email'] != '') {
 																$initial_email = $rowd2['initial_email'];
 															}
-	
+
 															if ($rowd2['initial_homepage'] != '') {
 																$initial_homepage = $rowd2['initial_homepage'];
 															}
-	
+
 															if ($rowd2['initial_location'] != '') {
 																$initial_location = $rowd2['initial_location'];
 															}
 														}
-	
+
 														if (($initial_firstname == '') && ($rowd2['initial_firstname'] != '') && ($rowd2['initial_lastname'] != '')) {
 															$initial_firstname = $rowd2['initial_firstname'];
 															$initial_lastname = $rowd2['initial_lastname'];
 														}
-	
+
 														if (($initial_firstname == '' ) && ($rowd2['initial_firstname'] != '')) {
 															$initial_firstname = $rowd2['initial_firstname'];
 														}
-	
+
 														if (($initial_lastname == '' ) && ($rowd2['initial_lastname'] != '')) {
 															$initial_lastname = $rowd2['initial_lastname'];
 														}
-	
+
 														if (intval($rowd2['optindate']) != 0) {
 															if ((intval($optindate) > intval($rowd2['optindate'])) && (intval($rowd2['optindate']) !=0)) {
 																$optindate=$rowd2['optindate'];
 																$optin_ip = $rowd2['optin_ip'];
 																$optin_email = $rowd2['optin_email'];
 															}
-	
+
 														}
-	
+
 													}
-	
+
 												}
 											}
 											// merge into new user
@@ -1272,15 +1281,15 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 													optin_ip ="'. $optin_ip . '"
 													WHERE toctoc_comments_user = "' . $newuser.
 													'" AND deleted=0 AND pid = ' . $currentpid, '');
-	
+
 											// delete old users
 											$fields_new_wo_newuser = str_replace($newuser, '0.0.0.0.0', $fields_new);
 											$upd = $GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_user
 													WHERE toctoc_comments_user IN ('.$fields_new_wo_newuser. ') AND deleted=0 AND pid = ' . $currentpid, '');
 										}
-	
+
 									}
-	
+
 									$fields_new_wo_newuser = str_replace($newuser, '0.0.0.0.0', $fields_new);
 									$currentpid = 0;
 									$resd = $GLOBALS['TYPO3_DB']->exec_SELECTquery('DISTINCT pid', 'tx_toctoc_comments_feuser_mm', 'toctoc_comments_user ="'.$newuser.
@@ -1327,7 +1336,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 																	if ($newfeuser == $newuser) {
 																		$newfeuser = 0;
 																	}
-	
+
 																	$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_feuser_mm', array(
 																			'reference' => $reference,
 																	'reference_scope' => $reference_scope,
@@ -1350,14 +1359,14 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 																    'toctoc_commentsfeuser_feuser' => $newfeuser,
 																	'remote_addr' => $remote_addr,
 																	));
-	
+
 																}
 																// delete $fields_new_wo_newuser tx_toctoc_comments_feuser_mm for $reference/$reference_scope/$currentpid
 																$upd = $GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_feuser_mm
 																		WHERE toctoc_comments_user IN ('.$fields_new_wo_newuser. ') AND reference="'.
 																		$reference.'" AND reference_scope = '.$reference_scope.' AND pid = ' . $currentpid, '');
 															}
-	
+
 															$reference = $rowd2['reference'];
 															$reference_scope = $rowd2['reference_scope'];
 															$resd3 = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_toctoc_comments_feuser_mm',
@@ -1367,7 +1376,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 																	pid = ' . $currentpid);
 															$num_rowsd3 = $GLOBALS['TYPO3_DB']->sql_num_rows($resd3);
 															$updatefemm = FALSE;
-	
+
 															if (intval($num_rowsd3) > 0) {
 																while($rowd3=$GLOBALS['TYPO3_DB']->sql_fetch_assoc($resd3)) {
 																	$updatefemm = TRUE;
@@ -1387,7 +1396,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 																	$seen = $rowd3['seen'];
 																	$remote_addr = $rowd3['remote_addr'];
 																}
-	
+
 															} else {
 																$remote_addr = '';
 																$tstamp = 0;
@@ -1405,107 +1414,107 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 																$myrating = 0;
 																$seen = 0;
 															}
-	
+
 														}
-	
+
 														if (($remote_addr == '') && ($rowd2['remote_addr'] != '')) {
 															$remote_addr = $rowd2['remote_addr'];
 														}
-	
+
 														if ($rowd2['seen'] != 0) {
 															$seen = $rowd2['seen'];
 														}
-	
+
 														if ($rowd2['myrating'] > 0) {
 															if ($myrating > 0) {
 																$myrating= ($rowd2['myrating']+$myrating)/2;
 															} else {
 																$myrating = $rowd2['myrating'];
 															}
-	
+
 														}
-	
+
 														if (($rowd2['ilike'] != 0) && ($idislike == 0)) {
 															$like = $rowd2['ilike'];
 														}
-	
+
 														if (($rowd2['idislike'] != 0) && ($ilike ==0)) {
 															$idislike = $rowd2['idislike'];
 														}
-	
+
 														if ($rowd2['pagetstampseen'] != 0) {
 															if ($pagetstampseen == 0) {
 																$pagetstampseen = $rowd2['pagetstampseen'];
 															}
-	
+
 														}
-	
+
 														if ($rowd2['tstampseen'] != 0) {
 															if ($tstampseen == 0) {
 																$tstampseen = $rowd2['tstampseen'];
 															} elseif ($tstampseen > $rowd2['tstampseen']) {
 																$tstampseen = $rowd2['tstampseen'];
 															}
-	
+
 														}
-	
+
 														if ($rowd2['pagetstampmyrating'] != 0) {
 															if ($pagetstampmyrating == 0) {
 																$pagetstampmyrating = $rowd2['pagetstampmyrating'];
 															}
-	
+
 														}
-	
+
 														if ($rowd2['tstampmyrating'] != 0) {
 															if ($tstampmyrating == 0) {
 																$tstampmyrating = $rowd2['tstampmyrating'];
 															} elseif ($tstampmyrating > $rowd2['tstampmyrating']) {
 																$tstampmyrating = $rowd2['tstampmyrating'];
 															}
-	
+
 														}
-	
+
 														if ($rowd2['pagetstampidislike'] != 0) {
 															if ($pagetstampidislike == 0) {
 																$pagetstampidislike = $rowd2['pagetstampidislike'];
 															}
-	
+
 														}
-	
+
 														if ($rowd2['tstampidislike'] != 0) {
 															if ($tstampidislike == 0) {
 																$tstampidislike = $rowd2['tstampidislike'];
 															} elseif ($tstampidislike > $rowd2['tstampidislike']) {
 																$tstampidislike = $rowd2['tstampidislike'];
 															}
-	
+
 														}
-	
+
 														if ($rowd2['pagetstampilike'] != 0) {
 															if ($pagetstampilike == 0) {
 																$pagetstampilike = $rowd2['pagetstampilike'];
 															}
-	
+
 														}
-	
+
 														if ($rowd2['tstampilike'] != 0) {
 															if ($tstampilike == 0) {
 																$tstampilike = $rowd2['tstampilike'];
 															} elseif ($tstampilike > $rowd2['tstampilike']) {
 																$tstampilike = $rowd2['tstampilike'];
 															}
-	
+
 														}
-	
+
 														if ($rowd2['crdate'] != 0) {
 															if ($crdate == 0) {
 																$crdate = $rowd2['crdate'];
 															} elseif ($crdate > $rowd2['crdate']) {
 																$crdate = $rowd2['crdate'];
 															}
-	
+
 														}
-	
+
 														if ($rowd2['tstamp'] != 0) {
 															if ($tstamp == 0) {
 																$tstamp = $rowd2['tstamp'];
@@ -1513,7 +1522,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 																$tstamp = $rowd2['tstamp'];
 															}
 														}
-	
+
 													}
 													// last record
 													if ($reference != '') {
@@ -1542,7 +1551,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 															if ($newfeuser == $newuser) {
 																$newfeuser = 0;
 															}
-	
+
 															$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_feuser_mm', array(
 																	'reference' => $reference,
 																	'reference_scope' => $reference_scope,
@@ -1565,51 +1574,51 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 																	'toctoc_commentsfeuser_feuser' => $newfeuser,
 																	'remote_addr' => $remote_addr,
 															));
-	
+
 														}
 														// delete $fields_new_wo_newuser tx_toctoc_comments_feuser_mm for $reference/$reference_scope/$currentpid
 														$upd = $GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_feuser_mm
 																		WHERE toctoc_comments_user IN ('.$fields_new_wo_newuser. ') AND reference="'.
 																$reference.'" AND reference_scope = '.$reference_scope.' AND pid = ' . $currentpid, '');
 													}
-	
+
 												}
-	
+
 											}
-	
+
 										}
-	
+
 									}
-	
+
 									//update comments to new user
 									$upd = $GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_comments SET
 										toctoc_comments_user="'. $newuser . '",
 										toctoc_commentsfeuser_feuser='. $feuseruid .
 										' WHERE toctoc_comments_user IN ('.$fields_new.')');
-	
+
 								} else {
 									$infomessage = sprintf($GLOBALS['LANG']->getLL('mergefailusernotexist'), $newuser);
 									$alertmsg=1;
 								}
-	
+
 							} else {
 								$infomessage = sprintf($GLOBALS['LANG']->getLL('mergefailusermalformatted'), $numusers, $newuser);
 								$alertmsg=1;
 							}
-	
+
 						}
-	
+
 					} else {
 			      		$infomessage = $GLOBALS['LANG']->getLL('nousersselected');
 			      		$alertmsg = 1;
 					}
-	
+
 			    }
-	
+
 			    if ($this->showcachemessage == FALSE) {
 			    	$cachemessage='';
 			    }
-	
+
 			    if ($infomessage != '') {
 			    	if ($alertmsg == 1) {
 			    		$infomessage = '<div class="tx-tc-alert">' . $infomessage . '</div>';
@@ -1618,14 +1627,14 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 			    		$infomessage .= $GLOBALS['LANG']->getLL('donelist') . ': ' . str_replace('"', '', str_replace('",', '", ', $fields_new));
 			    		$infomessage = '<div class="tx-tc-information">' . $infomessage . ' ' . $cachemessage. '</div>';
 			    	}
-	
+
 			    }
-	
+
 			    unset($_POST['actuser']);
 			    unset($_POST['bulkactuser']);
 			    unset($_POST['fields']);
 			    $content .= $infomessage;
-	
+
 			    // Show all users on root page
 			    if($pid == '0') {
 			      $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_toctoc_comments_user', 'deleted=0 AND toctoc_comments_user != "0.0.0.127.0"', '', '');
@@ -1636,7 +1645,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 				      // Show comments in subpages, if activated in ext manager
 				      if($this->extConf['show_sub'] == 1) {
 							$page_res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'pages', 'deleted=0 AND pid='.$pid);
-	
+
 							while($row_page=$GLOBALS['TYPO3_DB']->sql_fetch_assoc($page_res)) {
 							  $page_array[] = $row_page['uid'];
 							}
@@ -1644,34 +1653,34 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 				      $pages = implode(',', $page_array);
 				      $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_toctoc_comments_user', 'deleted=0 AND toctoc_comments_user != "0.0.0.127.0" AND pid IN ('.$pages.')', '', '');
 			    }
-	
+
 			    $num_rows = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
-	
+
 			    // No user
 			    if ($num_rows == '') {
 			      $content .= ''.$GLOBALS['LANG']->getLL('nouser').'<br /><br />';
 			    }
-	
+
 			    // Root Page and 1 user
 			    else if ($num_rows == '1' && $pid == '0') {
 			      $content .= ''.$GLOBALS['LANG']->getLL('userglobal_one').'<b> '.$num_rows.'</b> '.$GLOBALS['LANG']->getLL('userglobal_two').'<br /><br />';
 			    }
-	
+
 			    // Root Page and more than 1 user
 			    else if ($num_rows > '1' && $pid == '0') {
 			      $content .= ''.$GLOBALS['LANG']->getLL('userglobalmore_one').'<b> '.$num_rows.'</b> '.$GLOBALS['LANG']->getLL('userglobalmore_two').'<br /><br />';
 			    }
-	
+
 			    // 1 user
 			    else if ($num_rows == '1') {
 			      $content .= ''.$GLOBALS['LANG']->getLL('oneuser_one').'<b> '.$num_rows.'</b> '.$GLOBALS['LANG']->getLL('oneuser_two').'<br /><br />';
 			    }
-	
+
 			    // More user
 			    else {
 			      $content .= ''.$GLOBALS['LANG']->getLL('morecomments_one').' <b>'.$num_rows.'</b> '.$GLOBALS['LANG']->getLL('moreusers_two').'<br /><br />';
 			    }
-	
+
 			  // Show Table Head only if at least 1 user exists.
 			  if($num_rows >= '1') {
 			  $content .= '
@@ -1691,10 +1700,10 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 				</tr>
 				</thead>';
 				}
-	
+
 					while($row=$GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 					  // Get the fields
-	
+
 							if ($row['toctoc_comments_user'] != '0.0.0.127.0') {
 								  $editTable = 'tx_toctoc_comments_user';
 								  $uid = $row['uid'];
@@ -1722,7 +1731,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 					SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count) AS dislike_count, MAX(tstamp_lastupdate) AS tstamp_lastupdate',
 								  		'tx_toctoc_comments_user',
 								  		$dataWhereusersum);
-	
+
 								  $pizzateile = explode('.', $toctocuid);
 								  $feuserid = $pizzateile[4];
 								  $dataWherefeuser = 'uid=' . intval($feuseruid);
@@ -1731,69 +1740,69 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 								  $dataWherecomment = 'toctoc_comments_user= "' . $toctocuid . '" AND deleted= 0 AND pid=' . intval($row['pid']);
 								  list($rowcomment) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*',
 								  		'tx_toctoc_comments_comments', $dataWherecomment);
-	
+
 								  if (($rowusrsum['comment_count'] != '') && ($rowusrsum['comment_count'] != '0')) {
 								  	$report .=$GLOBALS['LANG']->getLL('pi1_template.uc.comments') . ' ' . $rowusrsum['comment_count'];
 								  }
-	
+
 								  if (($rowusrsum['vote_count'] != '') && ($rowusrsum['vote_count'] != '0')) {
 								  	if ($report != '') {
 								  		$report .= ', ';
 								  	}
-	
+
 								  	$report.= $GLOBALS['LANG']->getLL('pi1_template.uc.rateditems') . ' ' . $rowusrsum['vote_count'];
 								  }
-	
+
 								  if (($rowusrsum['average_rating'] != '') && (round($rowusrsum['average_rating'], 2) != '0.00')) {
 								  	if ($report != '') {
 								  		$report .= '<br />';
 								  	}
-	
+
 								  	$report .= $GLOBALS['LANG']->getLL('pi1_template.uc.averagerating') . ' ' . round($rowusrsum['average_rating'], 2);
 								  }
-	
+
 								  if (($rowusrsum['like_count'] != '') && ($rowusrsum['like_count'] != '0')) {
 								  	if ($report != '') {
 								  		$report .= ', ';
 								  	}
-	
+
 								  	$report.= $GLOBALS['LANG']->getLL('pi1_template.uc.likes') . ' ' . $rowusrsum['like_count'];
 								  }
-	
+
 								  if (($rowusrsum['dislike_count'] != '') && ($rowusrsum['dislike_count'] != '0')) {
 								  	if ($report != '') {
 								  		$report .= ', ';
 								  	}
-	
+
 								  	$report.= $GLOBALS['LANG']->getLL('pi1_template.uc.dislikes') . ' ' . $rowusrsum['dislike_count'];
 								  }
-	
+
 								  if ($rowusrsum['tstamp'] != '') {
 								  	if ($report != '') {
 								  		$report .= '<br />';
 								  	}
-	
+
 								  	$report.= $GLOBALS['LANG']->getLL('pi1_template.uc.joined') . ' ' . ''.date('d.m.Y', $rowusrsum['tstamp']).' - '.date('H:i', $rowusrsum['tstamp']).'';
 								  }
-	
+
 								  if ($rowusrsum['tstamp_lastupdate'] != '') {
 								  	if ($rowusrsum['tstamp_lastupdate'] != $rowusrsum['tstamp'] ) {
 								  		if ($report != '') {
 								  			$report .= '<br />';
 								  		}
-	
+
 								  		$report.= $GLOBALS['LANG']->getLL('pi1_template.uc.lastactivity') . ' ' .
 								  				''.date('d.m.Y', $rowusrsum['tstamp_lastupdate']).' - '.date('H:i', $rowusrsum['tstamp_lastupdate']).'';
 								  	}
-	
+
 								  }
-	
+
 								$tstamp = $row['crdate'];
 							  	$time = ''.date('d.m.Y', $tstamp).' - '.date('H:i', $tstamp).'';
-	
+
 						  		$this->currentTable = 'tx_toctoc_comments_user';
 								$content .= '
-	
+
 								<tr>
 								  <td class="img">'.$editUid.'</td>
 								  <td>'.$pid_record.'</td>
@@ -1803,25 +1812,25 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 								  <td class="name">'.$currentname.'</td>
 								  <td class="name tx-tc-be-email">'.$current_email.'</td>
 								  <td class="name tx-tc-be-report">'.$report.'</td>
-	
+
 								  ';
 								  $content .= '
 								    <td>
 								      <input type="checkbox" name="fields[]" value="'.$editUid.'" />
 								    </td>';
-	
+
 								  $content .= '
 								    </tr>
 								  ';
 							}
 					}
-	
+
 					$content .= '
 					  </table>
 					  </fieldset>
 					  <hr style="margin-top: 5px; margin-bottom: 5px;"/>
 					';
-	
+
 					if($num_rows != 0) {
 					  $content .= '
 					  <div class="pagenav">
@@ -1835,13 +1844,13 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 						<span class="show_comments">'.$GLOBALS['LANG']->getLL('show_users').'</span>
 						<select class="pagesize">
 					    ';
-	
+
 					    $select_val = trim($this->extConf['select_val']);
 					    $select_val_arr = explode(',', $select_val);
 					    $select_val_arr[] = $max_records; // Add starting value defined in ext manager
 					    sort($select_val_arr); // Sort array
 					    $select_val_arr_unique = array_unique($select_val_arr);
-	
+
 					    // Build selectbox
 					    foreach($select_val_arr_unique as $o) {
 					      // Highlight starting value
@@ -1858,7 +1867,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 						';
 					      }
 					    }
-	
+
 					    $content .= '
 						</select>
 					      </form>
@@ -1866,7 +1875,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 					  </div>
 					  ';
 					}
-	
+
 					$content .= '
 					<div class="div-float">
 					  '.$GLOBALS['LANG']->getLL('bulkact').'
@@ -1883,26 +1892,26 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 					</div>
 					<div class="clearit">&nbsp;</div>
 					';
-	
+
 					$this->content.=$this->doc->section('', $content, 0, 1);
-	
+
 				    break;
-				    
+
 				    case 3:
-				    
+
 		    	$editTable = 'tx_toctoc_comments_ipbl_static';
-		    	
+
 		    	$content .= '<br /><br />';
 		    	$infomessage = '';
 		    	$alertmsg = 0;
 				    	// Bulk actions
 		    	if($_POST['refreships']) {
-		    		
+
 		    		//  droplasso, select, delete, insert, report
 		    		$storagePid=0;
 		    		$lastUpdate=0;
 		    		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('pid, tstamp', 'tx_toctoc_comments_ipbl_static', '', '', '');
-		    		 
+
 		    		$num_rows = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
 		    		$data = '';
 		    		// No Comment
@@ -1913,15 +1922,15 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 		    				$storagePid=$row['pid'];
 		    				$lastUpdate=$row['tstamp'];
 		    				break;
-		    			}	
+		    			}
 		    		}
-		    		
+
 		    		if (!extension_loaded('curl')) {
 		    			$infomessage .= 'PHP-Problem: Curl extension is required!';
 		    			$alertmsg = 1;
 		    		} else {
 		    			$ch = curl_init();
-	
+
 			    		$urltofetch = 'http://www.spamhaus.org/DROP/drop.lasso';
 		    			curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20100101 Firefox/15.0.1');
 		    			curl_setopt($ch, CURLOPT_URL, $urltofetch);
@@ -1932,20 +1941,20 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 		    			curl_setopt($ch, CURLOPT_FILETIME, 1);
 		    			curl_setopt($ch, CURLOPT_HEADER, 0);
 		    			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-		    		
+
 		    			curl_setopt($ch, CURLOPT_TRANSFERTEXT, 1);
 		    			curl_setopt($ch, CURLOPT_NOSIGNAL, 1);
 		    			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 7);
-		    				    					    		
+
 		    			$data = curl_exec($ch);
 		    			$curl_errno = curl_errno($ch);
-		    		
+
 		    			if ($curl_errno > 0) {
 		    				$curl_errmsg =  curl_error($ch);
 		    				curl_close($ch);
 		    				$infomessage = 'Curl, error reading: ' . $curl_errmsg;
 		    				$alertmsg = 1;
-		    		
+
 		    			} else {
 		    				if (strpos(strtolower($data), '</head>')==0) {
 		    					$urltofetch = str_replace('http:', 'https:', $urltofetch);
@@ -1953,22 +1962,22 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 		    					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 		    					$data = curl_exec($ch);
 		    				}
-		    		
+
 		    			}
-		    		
+
 		    			$infohttpcode = intval(curl_getinfo($ch, CURLINFO_HTTP_CODE));
 		    		// checking mime types
 		    			if ($infohttpcode< 400)  {
-		    				$this->returnurl = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);			    			
+		    				$this->returnurl = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
 		    				curl_close($ch);
 		    				$infomessage = '';
-		    				
+
 		    			} else {
 		    				$infomessage = 'Curl returned code ' . $infohttpcode . ' for URL: ' . $urltofetch;
 		    				$alertmsg = 1;
 		    				curl_close($ch);
-		    			}  	
-		    		}	
+		    			}
+		    		}
 		    		$newIPsArr = array();
 		    		$iIP=0;
 		    		if ($data != '') {
@@ -1980,13 +1989,13 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 		    					$foundExpires = TRUE;
 		    					$rowarr = explode('GMT', $datarow);
 		    					$cntrowarr = count($rowarr);
-		    					$bannedIP = $rowarr[1];	
+		    					$bannedIP = $rowarr[1];
 		    					$newIPsArr[$iIP] = $bannedIP;
 		    					$iIP++;
 		    					$infomessage .= '' . trim($rowarr[0] . 'GMT');
 		    					//$infomessage .= '<br>' . $bannedIP . '';
 		    				} else {
-		    					if ($foundExpires == FALSE) {			    						
+		    					if ($foundExpires == FALSE) {
 		    						$infomessage .= '' . $datarow;
 		    					} else {
 		    						if ($bannedIP == '') {
@@ -1997,13 +2006,13 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 		    							} else {
 		    								$bannedIP = htmlspecialchars($datarow);
 		    							}
-		    							    										    							
+
 		    						}
-		    						
+
 		    					}
 				    		}
 				    	}
-				    	
+
 				    	$cntnewIPs = count($newIPsArr);
 				    	if ($cntnewIPs > 1) {
 				    		// now delete and then INSERT
@@ -2015,74 +2024,74 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 				    					'crdate' => time(),
 				    					'ipaddr' => $newIP,
 				    					'comment' => 'DROP lasso',
-				    			));				    			
+				    			));
 				    		}
 				    	}
 				    	$infomessage .= '<br>' . $cntnewIPs . ' ' . $GLOBALS['LANG']->getLL('bannedipsrefreshed') . ' in SysFolder ' . $storagePid;
 				    } else {
-					    $infomessage .= '<br>' . $num_rows . ' ' . $GLOBALS['LANG']->getLL('bannedipsnotrefreshed');					    
+					    $infomessage .= '<br>' . $num_rows . ' ' . $GLOBALS['LANG']->getLL('bannedipsnotrefreshed');
 				    }
 				}
-	
+
 		    	if ($infomessage != '') {
 		    		if ($alertmsg == 1) {
 		    			$infomessage = '<div class="tx-tc-alert">' . $infomessage . '</div>';
 		    		} else {
 		    			$infomessage = '<div class="tx-tc-information">' . $infomessage . '</div>';
 		    		}
-		    
+
 		    	}
 		    	unset($_POST['refreships']);
-		    
+
 		    	$content .= $infomessage;
 		    	// Show all comments on root page
-		    	
+
 		    	$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_toctoc_comments_ipbl_static', '', '', '');
-		    
+
 		    	$num_rows = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
-		    
+
 		    	// No IP
 		    	if ($num_rows == '') {
 		    		$content .= ''.$GLOBALS['LANG']->getLL('noip').'<br /><br />';
-		    	}			    
+		    	}
 		    	// Root Page and 1 IP
 		    	else if ($num_rows == '1') {
 		    		$content .= ''.$GLOBALS['LANG']->getLL('ipglobal_one').'<b> '.$num_rows.'</b> '.$GLOBALS['LANG']->getLL('commentglobal_two').'<br /><br />';
-		    	}			    
+		    	}
 		    	// Root Page and more than 1 IP
 		    	else if ($num_rows > '1') {
 		    		$content .= ''.$GLOBALS['LANG']->getLL('ipglobalmore_one').'<b> '.$num_rows.'</b> '.
 		    				$GLOBALS['LANG']->getLL('ipglobalmore_two').'<br /><br />';
-		    	}			    
+		    	}
 		    	// 1 IP
 		    	else if ($num_rows == '1') {
 		    		$content .= ''.$GLOBALS['LANG']->getLL('oneip_one').'<b> '.$num_rows.'</b> '.$GLOBALS['LANG']->getLL('oneip_two').'<br /><br />';
-		    	}			    
+		    	}
 		    	// More IP
 		    	else {
 		    		$content .= ''.$GLOBALS['LANG']->getLL('moreip_one').' <b>'.$num_rows.'</b> '.$GLOBALS['LANG']->getLL('moreip_two').'<br /><br />';
 		    	}
-			    
+
 		    	$content .= ' <form><fieldset>';
-		    	
+
 		    	if ($num_rows == '') {
 		    		$storagePid=$pid;
 		    		$infomessage = '<div class="tx-tc-information">' . $GLOBALS['LANG']->getLL('lastupdatenone') . '</div>';
-		    		 
+
 		    	} else {
 		    		while($row=$GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 		    			$storagePid=$row['pid'];
 		    			$lastUpdate=$row['tstamp'];
 		    			if (intval($lastUpdate) > 0) {
 		    				$lastUpdatetime = ''. date('d.m.Y', $lastUpdate).' - '.date('H:i', $lastUpdate).'';
-		    				$infomessage = '<div class="tx-tc-information">' . $GLOBALS['LANG']->getLL('lastupdate') . $lastUpdatetime . '</div>';
+		    				$infomessage = '<div class="tx-tc-information">' . $GLOBALS['LANG']->getLL('lastupdate') . ' ' . $lastUpdatetime . '</div>';
 		    			} else {
 		    				$infomessage = '<div class="tx-tc-information">' . $GLOBALS['LANG']->getLL('lastupdateunknown') . '</div>';
 		    				 			    			}
 		    			break;
 		    		}
 		    	}
-			    
+
 			    $content .= $infomessage . '
 			  <hr style="margin-top: 5px; margin-bottom: 5px;"/>
 			';
@@ -2093,16 +2102,16 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 				  <input type="hidden" name="actadmincommand3" value="1">
 			  <input type="submit" name="refreships" value="'.$GLOBALS['LANG']->getLL('go').'" onclick="return confirm(unescape(\''.
 			    			  rawurlencode(''.$GLOBALS['LANG']->getLL('mul_txt').'').'\'));" />
-			</div> 
-			</fieldset> 
+			</div>
+			</fieldset>
 			</form>
 			<div class="clearit">&nbsp;</div>
 			';
-			    
-		    	$this->content.=$this->doc->section('', $content, 0, 1);			    
+
+		    	$this->content.=$this->doc->section('', $content, 0, 1);
 		    	break;
 			}
-		
+
 		}
 
 	}

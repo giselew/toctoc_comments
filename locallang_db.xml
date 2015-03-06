@@ -124,6 +124,19 @@
 			<label index="fe_users.toctoc_comments_email">Facebook E-Mail</label>
 			<label index="fe_users.tx_toctoc_comments_facebook_locale">Facebook locale</label>
 			<label index="fe_users.tx_toctoc_comments_facebook_updated_time">Facebook updated time</label>
+			<label index="fe_users.gender">Gender</label>
+			<label index="fe_users.gender.I.0">Man</label>
+			<label index="fe_users.gender.I.1">Woman</label>
+			<label index="tab.comments">Comments and ratings</label>
+			<label index="tx_toctoccommentsce_enable_comments.description">Enables toctoc_comments below this record</label>
+			<label index="tx_toctoccommentsce_enable_comments.tx_toctoccommentsce_comments">Comments</label>
+			<label index="tx_toctoccommentsce_enable_comments.tx_toctoccommentsce_enable_comments">Enable comments</label>
+			<label index="tx_toctoccommentsce_with_comments.description">Enables comments in the plugin</label>
+			<label index="tx_toctoccommentsce_with_comments.tx_toctoccommentsce_comments">With comments</label>
+			<label index="tx_toctoccommentsce_with_ratings.description">Enables ratings in the plugin</label>
+			<label index="tx_toctoccommentsce_with_ratings.tx_toctoccommentsce_comments">With ratings</label>
+			<label index="tx_toctoccommentsce_with_sharing.description">Enables sharing in the plugin</label>
+			<label index="tx_toctoccommentsce_with_sharing.tx_toctoccommentsce_comments">With sharing</label>
 		</languageKey>
 	</data>
 	<orig_hash type="array">

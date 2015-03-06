@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-* (c) 2012 - 2014 Gisele Wendl <gisele.wendl@toctoc.ch>
+* (c) 2012 - 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -38,37 +38,36 @@
  *
  *
  *
- *  103: class tx_toctoccomments_pi2 extends tslib_pibase
- *  121:     public function __construct()
- *  135:     protected function processRedirect()
- *  149:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  248:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  433:     protected function watermark($conf, $content)
- *  471:     protected function showForgot()
- *  551:     protected function showLogout()
- *  586:     protected function showLogin()
- *  732:     protected function getRSAKeyPair()
- *  769:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
- *  805:     protected function getPreserveGetVars()
- *  835:     protected function generatePassword($len)
- *  855:     protected function getDisplayText($label, $stdWrapArray=array())
- *  867:     protected function getUserFieldMarkers()
- *  902:     protected function validateRedirectUrl($url)
- *  933:     protected function isInCurrentDomain($url)
- *  945:     protected function isInLocalDomain($url)
- *  986:     protected function isRelativeUrl($url)
- * 1002:     protected function generateAndSendHash($user)
- * 1068:     protected function changePassword($uid, $piHash)
- * 1190:     protected function showSignon()
- * 1498:     protected function getSignupCaptcha($required, $errcp, $cpval)
- * 1541:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
- * 1568:     protected function processSignupCaptcha($postData)
- * 1608:     protected function loginUser($facebookId)
- * 1634:     protected function storeUser($facebookUserProfile)
- * 1742:     private function copyImageFromFacebook($facebookUserId)
- * 1757:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
+ *  109: class tx_toctoccomments_pi2 extends tslib_pibase
+ *  133:     protected function processRedirect()
+ *  147:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  246:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  431:     protected function watermark($conf, $content)
+ *  469:     protected function showForgot()
+ *  549:     protected function showLogout()
+ *  584:     protected function showLogin()
+ *  730:     protected function getRSAKeyPair()
+ *  767:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
+ *  803:     protected function getPreserveGetVars()
+ *  856:     protected function generatePassword($len)
+ *  876:     protected function getDisplayText($label, $stdWrapArray=array())
+ *  888:     protected function getUserFieldMarkers()
+ *  923:     protected function validateRedirectUrl($url)
+ *  954:     protected function isInCurrentDomain($url)
+ *  966:     protected function isInLocalDomain($url)
+ * 1007:     protected function isRelativeUrl($url)
+ * 1023:     protected function generateAndSendHash($user)
+ * 1089:     protected function changePassword($uid, $piHash)
+ * 1211:     protected function showSignon()
+ * 1519:     protected function getSignupCaptcha($required, $errcp, $cpval)
+ * 1562:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ * 1589:     protected function processSignupCaptcha($postData)
+ * 1629:     protected function loginUser($facebookId)
+ * 1655:     protected function storeUser($facebookUserProfile)
+ * 1763:     private function copyImageFromFacebook($facebookUserId)
+ * 1778:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
  *
- * TOTAL FUNCTIONS: 28
+ * TOTAL FUNCTIONS: 27
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -97,7 +96,7 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 	(class_exists('tslib_cObj', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer', 'tslib_cObj');
 	(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
 	(class_exists('t3lib_utility_Array', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Utility\ArrayUtility', 't3lib_utility_Array');
-	
+
 }
 
 require_once(t3lib_extmgm::extPath('toctoc_comments', 'pi2/facebook.php'));
@@ -813,11 +812,11 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 				$getVars['toctoc_comments_pi1'],
 				$getVars[$this->prefixId]
 		);
-				
+
 		if (version_compare(TYPO3_version, '4.7', '<')) {
 			$params = '';
 			$preserveVars =! ($this->conf['preserveGETvars'] || $this->conf['preserveGETvars']=='all' ? array() : implode(',', (array)$this->conf['preserveGETvars']));
-						
+
 			foreach ($getVars as $key => $val) {
 				if (stristr($key, $this->prefixId) === FALSE) {
 					if (is_array($val)) {

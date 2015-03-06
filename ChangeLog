@@ -606,3 +606,15 @@
 	* Fixed JavaScript error in Internet Explorer which kept the "Accept terms and conditions" checkbox in disabled state
 	* Fixed persistence of the notify checkbox during captcha form refreshs.
 	* Added TypoScript option ratings.useIPsInLikeDislike = 1: Show resolved IP-addresses in tiptexts for Likes and iLikes (if a user name is not present): 1 IPs will be shown, 0 IPs will be counted in "Others" and won't be shown in tip-texts
+	
+2015-03-06  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 7.1.0
+	* Added Plugin mode Comment Search, new TypoScript-options section "search" holds 7 options allowing to customize the search. 
+	* Added gender to fe_users, if not already there, added gender to fe_users TCA if not present yet.
+	* Added error message if commenters fe_users account misses values in required fields. (on new comments)
+	* Added TypoScript-option spamProtect.commentWaitTime = 1: Wait time between comments: Number of minutes an user has to wait before they may post another comment (includes all pages)
+	* Made SMTP-Server-check before sending e-mails optional: spamProtect.checkSMTPService = 0. On systems without PHP-extension sockets loaded the checkSMTPservice won't work.
+	* Added support for GraphicsMagick for generation of PDF-Thumbnails for pdf attachments
+	* Constant editor: changed labels of some constants in order to obtain nice titles of the contants description
+	* Fixed PHP-Warning when loading usercenter
+	* Fixed missing user image which could happen in connection with login using fe_login and user did not make a comment before.

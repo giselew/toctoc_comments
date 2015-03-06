@@ -397,7 +397,10 @@ plugin.tx_toctoccomments_pi1 {
     emailTemplatecoi = {$plugin.tx_toctoccomments_pi1.emailTemplatecoi}
 
     emailTemplateDislikeHTML = {$plugin.tx_toctoccomments_pi1.emailTemplateDislikeHTML}
-    emailTemplateDislike =  = {$plugin.tx_toctoccomments_pi1.emailTemplateDislike}
+    emailTemplateDislike = {$plugin.tx_toctoccomments_pi1.emailTemplateDislike}
+        
+    checkSMTPService = {$plugin.tx_toctoccomments_pi1.checkSMTPService}
+    commentWaitTime = {$plugin.tx_toctoccomments_pi1.commentWaitTime}
   }
 
   ratings {
@@ -599,7 +602,7 @@ plugin.tx_toctoccomments_pi1 {
 
     selectedBoxmodel = {$plugin.tx_toctoccomments_pi1.selectedBoxmodel}
 
-    # Height of textareas of forms, 16 - 30.
+    # Height of textareas of forms, 16 - 60.
     boxmodelTextareaLineHeight = {$plugin.tx_toctoccomments_pi1.boxmodelTextareaLineHeight}
 
     # How many lines the textarea contains ? 1 - 6.
@@ -658,6 +661,17 @@ plugin.tx_toctoccomments_pi1 {
 	disclaimerPageID = {$plugin.tx_toctoccomments_pi1.disclaimerPageID}
 	disclaimerSystemCheck = {$plugin.tx_toctoccomments_pi1.disclaimerSystemCheck}
 	disclaimerFromTocToc= {$plugin.tx_toctoccomments_pi1.disclaimerFromTocToc}
+  }
+  
+  search {
+  	showCommentsPerPage = {$plugin.tx_toctoccomments_pi1.showCommentsPerPage}
+  	# initialCommentage, options: 1=1 day, 2=7 days, 3 =1 month, 4=last 6 months, 5=1 year, 6=ever
+  	initialCommentage = {$plugin.tx_toctoccomments_pi1.initialCommentage}
+  	minSearchTermLength = {$plugin.tx_toctoccomments_pi1.minSearchTermLength}
+  	SearchCommentCropLength = {$plugin.tx_toctoccomments_pi1.SearchCommentCropLength}
+  	SearchDisplayTitle = {$plugin.tx_toctoccomments_pi1.SearchDisplayTitle}
+  	linkComments = 0
+  	searchMaxComments = 1000
   }
 }
 

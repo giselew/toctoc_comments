@@ -739,6 +739,73 @@
 </div>
 <!-- ###RECENTCOMMENT_LIST### end -->
 
+<hr size="1" />
+<h1>search comments</h1>
+
+<!-- ###SEARCHCOMMENT_MAIN### begin -->
+###SEARCHCOMMENTOFTITLE###
+<div class="tx-tc-box-search-cts">
+	<div class="tx-tc-search-form" id="txtcsearchform###CID###">
+		###SEARCHCOMMENTFORM###
+	</div>
+	<div class="tx-tc-search-results" id="txtcsearchresults###CID###">
+		###SEARCHCOMMENTCONTENT###
+	</div>
+	<div class="tx-tc-search-form tx-tc-search-loading tx-tc-nodisp" id="txtcsearchworking###CID###">
+	    <span class="tx-tc-working-s" title="###TXTLOADING###"></span>
+	</div>
+</div>
+<!-- ###SEARCHCOMMENT_MAIN### end -->
+
+<!-- ###SEARCHCOMMENT_FORM### begin -->
+<form autocomplete="off" id="txtcsearch###CID###" class="tx-tc-form-for-search" action="" method="post">
+	<fieldset id="txtcfssearch###CID###" class="tx-tc-search-fieldset">
+		<div class="tx-tc-ct-form-field">
+			<label class="tx-tc-ct-label ###LABELSTYLE###" for="toctoc_comments_pi1[search]">###TEXT_SEARCH###</label>
+			<input class="###INPUTCLASS###" size="" tabindex="1" type="text" name="toctoc_comments_pi1[search]" id="toctoc_comments_pi1_###CID###search" value="###SEARCH###" ###PHDR_SEARCH###/>
+		</div>
+		<div class="tx-tc-ct-form-field">
+			<label class="tx-tc-ct-label-base" for="toctoc_comments_pi1[commentage]">###TEXT_COMMENTAGE###</label>
+			<select class="###INPUTCLASS###" tabindex="2" name="toctoc_comments_pi1[commentage]" id="toctoc_comments_pi1_###CID###commentage" size="1">
+			    <option value="1"###SEL1###>###TEXT_CTAGE1###</option>
+			    <option value="2"###SEL2###>###TEXT_CTAGE2###</option>
+			    <option value="3"###SEL3###>###TEXT_CTAGE3###</option>
+			    <option value="4"###SEL4###>###TEXT_CTAGE4###</option>
+			    <option value="5"###SEL5###>###TEXT_CTAGE5###</option>
+			    <option value="6"###SEL6###>###TEXT_CTAGE6###</option>
+	  		</select>
+	  		<input type="hidden" name="toctoc_comments_pi1[confdiff]" id="toctoc_comments_pi1_###CID###confdiff" value="###HIDDENCONFDIFF###" />
+		</div>
+		<div class="tx-tc-div-submit tx-tc-div-searchsubmit tx-tc-blockdisp" id="tx-tc-div-submit###CID###">
+			<input id="toctoc_comments_pi1_###CID###submit" class="tx-tc-ct-submit tx-tc-ct-searchsubmit tx-tc-inlinedisp" type="button" name="toctoc_comments_pi1[submit]" 
+			value="###TEXT_SUBMIT###" tabindex="3" />
+		</div>
+		<span class="tx-tc-frmerrhndl tx-tc-nodisp" id="tx-tc-frmerrhndl###ENCTEXT###__0###CID###__0###ENCTEXT_SEARCH_COMMENT###"></span> 
+	</fieldset>
+</form>
+<div id="information###CID###" class="tx-tc-nodisp">
+	<div class="header"><span>###TXTINFO###</span></div>
+	<div class="message"></div>
+	<div class="buttons">
+		<div class="yes simpletxtcmoddlg-close">###TXTOK###</div>
+	</div>
+</div>
+<!-- ###SEARCHCOMMENT_FORM### end -->
+
+<!-- ###SEARCHCOMMENT_CONTENT### begin -->
+###SEARCHFOUND_TEXT###
+<!-- ###SINGLE_SEARCHCOMMENT### begin -->
+<div class="tx-tc-search-cts-article" id="tx-tc-search-cts-article-###RCID###">
+	<div class="tx-tc-search-cts-entry">###AUTHOR###&nbsp;###COMMENT_CONTENT###</div>
+	<div class="tx-tc-search-cts-title">###TITLE### &#124; ###COMMENT_DATE###</div>
+</div>
+<!-- ###SINGLE_SEARCHCOMMENT### end -->
+###SEARCHCOMMENTBROWSE###
+<!-- ###SEARCHCOMMENT_CONTENT### end -->
+
+<hr size="1" />
+<h1>usercenter</h1>
+
 <!-- ###USERCENTER### begin -->
 <div class="tx-tc-title tx-tc-title-usercenter">###USERCENTEROFTITLE### ###USERCENTERUSER###</div>
 ###USERCENTERCONTENT###

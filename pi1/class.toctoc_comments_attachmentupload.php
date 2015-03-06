@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
 *
-*  (c) 2013 - 2014 Gisele Wendl <gisele.wendl@toctoc.ch>
+*  (c) 2013 - 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -39,7 +39,7 @@
  *
  *   63: class toctoc_comments_attachmentupload
  *   75:     public function main($files, $post)
- *  428:     protected function create_thumbnail_frompdf($pdffile, $pdffilejpg, $impath)
+ *  438:     protected function create_thumbnail_frompdf($pdffile, $pdffilejpg, $impath, $isgm)
  *
  * TOTAL FUNCTIONS: 2
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -211,13 +211,22 @@ class toctoc_comments_attachmentupload {
 		$repstr= str_replace('/', $dirsep, '/typo3conf/ext/toctoc_comments/pi1');
 		$dirsep=str_replace($repstr, '', dirname(__FILE__));
 		$pathirname=$post['toctoc_comments_pi1']['configbaseURL'] . $savepath . 'temp/';
+		$isgm = FALSE;
+		if (str_replace('convert', '', $impath) != $impath) {
+			$isgm = TRUE;
+		}
+
 		if (DIRECTORY_SEPARATOR == '\\') {
 			// windows
 			$txdirname= str_replace('/', '\\', $dirsep .$pathirname);
-			$impath .= 'convert.exe';
+			if ($isgm == FALSE) {
+				$impath .= 'convert.exe';
+			}
 		} else {
 			$txdirname=$dirsep .$pathirname;
-			$impath .= 'convert';
+			if ($isgm == FALSE) {
+				$impath .= 'convert';
+			}
 		}
 
 		$idstr=session_id();
@@ -236,7 +245,7 @@ class toctoc_comments_attachmentupload {
 			}
 
 			$pdffilejpg=$savepathfilename;
-			$pdffilejpg = $this->create_thumbnail_frompdf($copytofile, $pdffilejpg, $impath);
+			$pdffilejpg = $this->create_thumbnail_frompdf($copytofile, $pdffilejpg, $impath, $isgm);
 			if ($pdffilejpg=='') {
 				$pathirname = $post['toctoc_comments_pi1']['configbaseURL'] . 'typo3conf/ext/toctoc_comments/res/css/themes/' .
 								$post['toctoc_comments_pi1']['theme'] . '/img/';
@@ -423,12 +432,18 @@ class toctoc_comments_attachmentupload {
 	 * @param	string		$pdffile: ...
 	 * @param	string		$pdffilejpg: ...
 	 * @param	string		$impath: ...
+	 * @param	[type]		$isgm: ...
 	 * @return	string		...
 	 */
-	protected function create_thumbnail_frompdf($pdffile, $pdffilejpg, $impath) {
+	protected function create_thumbnail_frompdf($pdffile, $pdffilejpg, $impath, $isgm) {
 		$data='';
+		
+		if ($isgm == TRUE) {
+			$txexeccommand= '"' . $impath . '  -geometry 90x116! -colorspace RGB -quality 95 "' . $pdffile . '[0]" "' . $pdffilejpg . '"';
+		} else {
+			$txexeccommand= '"' . $impath . '" -geometry 90x116! -colorspace RGB -quality 95 -sharpen 1x2 "' . $pdffile . '[0]" "' . $pdffilejpg . '"';
+		}
 
-		$txexeccommand= '"' . $impath . '" -geometry 90x116! -colorspace RGB -quality 95 -sharpen 1x2 "' . $pdffile . '[0]" "' . $pdffilejpg . '"';
 		if (DIRECTORY_SEPARATOR == '\\') {
 			// windows
 			$txexeccommand= str_replace(DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, $txexeccommand);

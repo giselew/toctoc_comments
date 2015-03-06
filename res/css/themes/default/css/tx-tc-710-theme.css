@@ -19,15 +19,18 @@ textarea.tx-tc-ctinput-textarea, textarea.tx-tc-ctinput-textarea-rq {
 	/*color: #030303;*/
 }
 
-input.tx-tc-ct-input {
+input.tx-tc-ct-input, select.tx-tc-ct-input {
 	border-color: #a4a5a7 #a4a5a7 #adbecc;
 	background: none repeat scroll 0 0 #fdfdff;
 	color: #030303;
 }
+select.tx-tc-ct-input option {
+	border-color: #a4a5a7 #a4a5a7 #adbecc;
+}
 .tx-tc-ct-label-cap {
 	color: #959697;
 }
-.tx-tc-ct-label, .tx-tc-ct-label-ntf {
+.tx-tc-ct-label, .tx-tc-ct-label-ntf, .tx-tc-ct-label-base {
 	color: #959697;
 }
 .tx-tc-cts-ct-dp {
@@ -533,5 +536,11 @@ span.tx-tc-emo-top-nav-off {
 	border-color: #97b0ee;
 }
 .tx-tc-text-top .tx-tc-yourreview {
+	color: #4e8fe0 !important;
+}
+div.tx-tc-searchmore, div.tx-tc-searchprev {
+	border-color: #97b0ee;
+}
+.tx-tc-foundserchterm {
 	color: #4e8fe0 !important;
 }

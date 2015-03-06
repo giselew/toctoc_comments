@@ -357,6 +357,7 @@ CREATE TABLE tx_toctoc_comments_cache_mailconf (
 # Table structure for table 'fe_users'
 #
 CREATE TABLE fe_users (
+    gender int(11) unsigned DEFAULT '0' NOT NULL,
     tx_toctoc_comments_facebook_id tinytext,
     tx_toctoc_comments_facebook_link tinytext,
     tx_toctoc_comments_facebook_gender tinytext,

@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 - 2014 Gisele Wendl <gisele.wendl@toctoc.ch>
+*  (c) 2012 - 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,43 +29,40 @@
  *
  *
  *
- *  101: class tx_toctoccomments_pi1 extends tslib_pibase
- *  172:     public function __construct()
- *  192:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
- * 2378:     protected function checkJSLoc()
- * 2629:     protected function checkCSSTheme()
- * 2740:     protected function checkCSSLoc()
- * 3203:     protected function makesharingcss ()
- * 3380:     protected function initprefixToTableMap()
- * 3417:     protected function init()
- * 4086:     protected function mergeConfiguration()
- * 4469:     protected function fetchConfigValue($param)
- * 4497:     protected function ae_detect_ie()
- * 4521:     protected function boxmodel()
- * 5193:     protected function crunchcss($buffer)
- * 5218:     protected function calculate_string( $mathString )
- * 5241:     protected function locationHeaderUrlsubDir()
- * 5260:     protected function currentPageName()
- * 5288:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
- * 5319:     protected function doClearCache ($forceclear=FALSE)
- * 5353:     protected function getPluginCacheControlTstamp ($external_ref_uid)
- * 5377:     protected function getLastUserAdditionTstamp ()
- * 5400:     protected function initLegacyCache ()
- * 5414:     protected function check_scopes()
- * 5572:     protected function initializeprefixtotablemap()
- * 5612:     protected function sharrrejs()
- * 5694:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
- * 5747:     private function resolveBackPath($pathStr)
- * 5782:     private function dirname($path)
- * 5796:     private function revExplode($delimiter, $string, $count = 0)
+ *  105: class tx_toctoccomments_pi1 extends tslib_pibase
+ *  186:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
+ * 2382:     protected function checkJSLoc()
+ * 2647:     protected function checkCSSTheme()
+ * 2758:     protected function checkCSSLoc()
+ * 3221:     protected function makesharingcss ()
+ * 3398:     protected function initprefixToTableMap()
+ * 3434:     protected function init()
+ * 4104:     protected function mergeConfiguration()
+ * 4489:     protected function fetchConfigValue($param)
+ * 4517:     protected function ae_detect_ie()
+ * 4540:     protected function boxmodel()
+ * 5212:     protected function crunchcss($buffer)
+ * 5237:     protected function calculate_string( $mathString )
+ * 5260:     protected function locationHeaderUrlsubDir()
+ * 5279:     protected function currentPageName()
+ * 5307:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
+ * 5342:     protected function doClearCache ($forceclear=FALSE)
+ * 5377:     protected function getPluginCacheControlTstamp ($external_ref_uid)
+ * 5388:     protected function getLastUserAdditionTstamp ()
+ * 5411:     protected function initLegacyCache ()
+ * 5425:     protected function check_scopes()
+ * 5583:     protected function initializeprefixtotablemap()
+ * 5623:     protected function sharrrejs()
+ * 5705:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
+ * 5758:     private function resolveBackPath($pathStr)
+ * 5793:     private function dirname($path)
+ * 5807:     private function revExplode($delimiter, $string, $count = 0)
+ * 5823:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 5846:     public function createLinks($text, $conf = NULL)
+ * 5869:     protected function getThemeTmageDimension($filename, $returnindex)
+ * 5889:     protected function checktoctoccommentsuser()
  *
- *              SECTION: needed by class.tx_commentsresponse_hooks.php
- * 5819:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 5842:     public function createLinks($text, $conf = NULL)
- * 5864:     protected function getGETVars($arrVars)
- * 5877:     protected function getThemeTmageDimension($filename, $returnindex)
- *
- * TOTAL FUNCTIONS: 32
+ * TOTAL FUNCTIONS: 31
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -91,7 +88,7 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 	if (!t3lib_extMgm::isLoaded('compatibility6')) {
 		(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
 	}
-		
+
 }
 
 require_once (t3lib_extMgm::extPath('toctoc_comments', 'pi1/toctoc_comment_lib.php'));
@@ -111,7 +108,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '700';
+	public $extVersion = '710';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
 	public $externalUid;						// UID of external record
@@ -187,7 +184,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	 * @return	void
 	 */
 	public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL) {
-
+		
 		$this->conf = $conf;
 		$this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['toctoc_comments']);
 
@@ -381,7 +378,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				}
 			}
 		}
-		
+
 		$_SESSION['activelangid'] = $GLOBALS['TSFE']->sys_language_uid;
 		$postDatapi2 = t3lib_div::_GET('tx_toctoccomments_pi2');
 		if ($postDatapi2['forgothash'] != '') {
@@ -588,7 +585,17 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		if  ($this->extConf['importDataprefixtotable']) {
 			$this->initializeprefixtotablemap();
 		}
-
+		
+		if (trim($this->conf['optionalRecordId']) == '') {
+			if (($hookTablePrefix) != '' && ($hookId > 0)) {
+				if ($hookTablePrefix == 'tt_content') {
+					$this->conf['optionalRecordId'] = $hookTablePrefix . '_' . $hookId;
+				} 
+		
+			} 
+							
+		} 
+			
 		if (intval($this->conf['externalPrefix'])>0) {
 			if ($this->conf['externalPrefix']!='') {
 				$where = 'uid=' . $this->conf['externalPrefix'];
@@ -693,6 +700,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 					$optionalRecordIdlhookTablePrefix = 'tt_content';
 					$optionalRecordIdlhookId = $triggeredRecordId;
 					$optionalRecordIdforexternalPrefix =$this->conf['optionalRecordId'];
+					$this->foreignTableName = 'pages';
 					$triggeredRecordId = 0;
 				}
 
@@ -845,6 +853,11 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$_SESSION['TSFE']['absRefPrefix']=$GLOBALS['TSFE']->absRefPrefix;
 			$_SESSION['TSFE']['mainScript'] =$GLOBALS['TSFE']->config['mainScript'];
 			$_SESSION['TSFE']['getMethodUrlIdToken']=$GLOBALS['TSFE']->getMethodUrlIdToken;
+			$_SESSION['TSFE']['renderCharset']=$GLOBALS['TSFE']->renderCharset;
+			if ($_SESSION['TSFE']['renderCharset'] == '') {
+				$_SESSION['TSFE']['renderCharset'] = 'utf-8';
+			}
+
 		}
 
 		if (!is_array($_SESSION['TSFE']['config'])) {
@@ -1765,6 +1778,8 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 		}
 
+		$this->checktoctoccommentsuser();
+
 		if ($this->showsdebugprint==TRUE) {
 			$starttimesetJSCSS=microtime(TRUE);
 		}
@@ -2355,6 +2370,15 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$retstr = $this->lib->showuserCenter($this->conf, $this);
 			return $retstr;
 
+		}  elseif (($this->conf['pluginmode'] == 7)) {
+			$_SESSION['activelang'] =$GLOBALS['TSFE']->lang;
+			$_SESSION['activelangid'] =$GLOBALS['TSFE']->sys_language_uid;
+			$this->pi_USER_INT_obj = 1;    // Configuring so caching is not expected. This value means that no cHash params are ever set.
+			                               //We do this, because it's a USER_INT object!
+			$_SESSION['edgeTime'] = microtime(TRUE);
+			$retstr = $this->lib->showCommentsSearch($this->conf, $this, FALSE, '');
+			return $retstr;
+
 		} else {
 			return '';
 		}
@@ -2386,6 +2410,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		$jscontent = '';
 
 		$strtexterrorlength = sprintf($this->lib->pi_getLLWrap($this, 'pi1_template.texterrorlength', FALSE), $this->conf['minCommentLength']);
+		$strtextsearcherrorlength = sprintf($this->lib->pi_getLLWrap($this, 'pi1_template.texterrorsearchlength', FALSE), $this->conf['search.']['minSearchTermLength']);
 
 		if ($this->conf['advanced.']['useBBCodeMenu']>0) {
 			$fetchBBs=TRUE;
@@ -2537,6 +2562,8 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 		$jscontent .= 'var activelang = "' . $_SESSION['activelang'] . '";' . "\n";
 		$jscontent .= 'var cookieLifetime = ' . intval($this->conf['dataProtect.']['cookieLifetime']) . ';' . "\n";
 		$jscontent .= 'var textErrCommentNull = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.texterrornull', FALSE)) . '";' . "\n";
+		$jscontent .= 'var textErrSearchLength = "' . base64_encode($strtextsearcherrorlength) . '";' . "\n";
+		$jscontent .= 'var textErrSearchNull = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.searcherrornull', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textSaveComment = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.savecomment', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textCommenttitle = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.commenttitle', FALSE)) . '";' . "\n";
 		$requiredFields = t3lib_div::trimExplode(',', $this->conf['requiredFields'], TRUE);
@@ -2573,7 +2600,18 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 		$jscontent .= 'var textclosepicupload = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.closeimageupload', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textshowmore = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.text_usercenter_showmore', FALSE)) . '";' . "\n";
 		$jscontent .= 'var texthideshowmore = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.text_usercenter_showless', FALSE)) . '";' . "\n";
-		$jscontent .= 'var pathim = "' . base64_encode($GLOBALS['TYPO3_CONF_VARS']['GFX']['im_path']) . '";' . "\n";
+		if ($GLOBALS['TYPO3_CONF_VARS']['GFX']['im_version_5'] != 'gm') {
+			$jscontent .= 'var pathim = "' . base64_encode($GLOBALS['TYPO3_CONF_VARS']['GFX']['im_path']) . '";' . "\n";
+		} else {
+			//graphicsMagick
+			if (DIRECTORY_SEPARATOR == '\\') {
+				$addpath = '.exe" convert';
+			} else {
+				$addpath = '" convert';
+			}
+			$jscontent .= 'var pathim = "' . base64_encode($GLOBALS['TYPO3_CONF_VARS']['GFX']['im_path'] . 'gm' . $addpath) . '";' . "\n";
+
+		}
 		$jscontent .= 'var textmessagecannotdelete = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.textmessagecannotdelete', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textmessagecannotinsert = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.textmessagecannotinsert', FALSE)) . '";' . "\n";
 		$jscontent .= 'var configbaseURL = "' . base64_encode($this->locationHeaderUrlsubDir()) . '";' . "\n";
@@ -3402,7 +3440,6 @@ sharrre design 2 and 4, calculated specifics
 	/**
 	 * Initializes the plugin
 	 *
-	 * @param	array		$conf	Configuration from TS
 	 * @return	boolean		FALSE if no comment plugin should be shown (community setting)
 	 */
 	protected function init() {
@@ -3443,6 +3480,7 @@ sharrre design 2 and 4, calculated specifics
 				$this->foreignTableName = 'pages';
 				$this->hooksrecordcontentelement= $this->lhookId;
 				$this->hooksrecordpage= $GLOBALS['TSFE']->id;
+				$_SESSION['commentListRecord']='tt_content_' . $this->externalUid;
 			} else {
 
 				$like = '%<field index="externalPrefix">\n                    <value index="vDEF">5</value>%';
@@ -3836,7 +3874,8 @@ sharrre design 2 and 4, calculated specifics
 ';
 				}
 
-				$jscontent = '	var errCommentRequiredLength = ' . intval($this->conf['minCommentLength']) . ';' . "\n";
+				$jscontent = ' var errCommentRequiredLength = ' . intval($this->conf['minCommentLength']) . ';' . "\n";
+				$jscontent .= '	var errSearchRequiredLength = ' . intval($this->conf['search.']['minSearchTermLength']) . ';' . "\n";
 				$jscontent .= '	var maxCommentLength = ' . intval($this->conf['maxCommentLength']) . ';' . "\n";
 				$jscontent .= '	var selectedTheme = "' . $this->conf['theme.']['selectedTheme'] . '";' . "\n";
 				$jscontent .= '	var boxmodelTextareaAreaTotalHeight = ' . intval($this->boxmodelTextareaAreaTotalHeight) . ';' . "\n";
@@ -4079,6 +4118,7 @@ sharrre design 2 and 4, calculated specifics
 		$this->conf['attachments.']['topWebpagePreviewPicture']=0;
 
 		$this->fetchConfigValue('storagePid');
+
 		if (intval($this->conf['externalPrefix'])>0) {
 			if ($this->conf['externalPrefix']!='') {
 				$where = 'uid=' . $this->conf['externalPrefix'];
@@ -4108,7 +4148,6 @@ sharrre design 2 and 4, calculated specifics
 			$this->fetchConfigValue('otherChartsNumberOfVotesRequired');
 		}
 
-		//$perfostart=1000*(microtime(TRUE));
 		$this->fetchConfigValue('topRatings');
 		$this->fetchConfigValue('topRatingsrestrictToExternalPrefix');
 		$this->fetchConfigValue('topRatingsExternalPrefix');
@@ -4205,7 +4244,7 @@ sharrre design 2 and 4, calculated specifics
 				$this->conf['sharing.']['useSharing']=$this->conf['sharing.']['useSharingV2'];
 			}
 			unset($this->conf['sharing.']['useSharingV2']);
-		} elseif ($this->conf['advanced.']['useSharing'] != 1) {
+		} elseif ($this->conf['advanced.']['useSharing'] != 0) {
 			$this->conf['sharing.']['useSharing']=$this->conf['advanced.']['useSharing'];
 		}
 
@@ -4372,7 +4411,9 @@ sharrre design 2 and 4, calculated specifics
 
 		if ($this->conf['pluginmode']!=1) {
 			unset ($this->conf['restrictToExternalPrefix']);
-			unset ($this->conf['recentcommentslistCount']);
+			if ($this->conf['pluginmode']!=7) {
+				unset ($this->conf['recentcommentslistCount']);
+			}
 		} else {
 
 			if ($this->conf['restrictToExternalPrefix'] != '') {
@@ -4504,9 +4545,8 @@ sharrre design 2 and 4, calculated specifics
 	}
 
 	/**
-	 * applies boxmadel to maincss and sets active css to boxmodell css
+	 * applies boxmadel to maincss and sets active CSS to boxmodell CSS
 	 *
-	 * @param	[type]		$newconfigcsswaswritten: ...
 	 * @return	string		optional error message
 	 */
 	protected function boxmodel() {
@@ -5178,8 +5218,8 @@ sharrre design 2 and 4, calculated specifics
 	/**
 	 * Crunches CSS
 	 *
-	 * @param	string		$buffer: ...
-	 * @return	string		...
+	 * @param	string		$buffer: uncompressed CSS
+	 * @return	string		compressed CSS
 	 */
 	protected function crunchcss($buffer) {
 		/* remove comments */
@@ -5290,9 +5330,9 @@ sharrre design 2 and 4, calculated specifics
 				$GLOBALS['TCA'] = array();
 				$GLOBALS['TCA']['tt_content'] = array();
 			}
-			
+
 			$tce->clear_cacheCmd($pid);
-			
+
 			$this->sdebugprint .= 'tt clear page cache for page ' . $pid. ' triggered by "' . $debugstr . '"<br />';
 		}
 
@@ -5324,7 +5364,7 @@ sharrre design 2 and 4, calculated specifics
 					$GLOBALS['TCA'] = array();
 					$GLOBALS['TCA']['tt_content'] = array();
 				}
-				
+
 				/* @var $tce t3lib_TCEmain */
 				foreach($pidListarr as $spid) {
 					if($spid != 0) {
@@ -5784,13 +5824,6 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 	}
 
 	/**
-	 * needed by class.tx_commentsresponse_hooks.php
-	 *
-	 *
-	 */
-
-
-	/**
 	 * Applies stdWrap to given text
 	 *
 	 * @param	string		$text	Text to apply stdWrap to
@@ -5839,18 +5872,6 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 	}
 
 	/**
-	 * [Describe function...]
-	 *
-	 * @param	[type]		$arrVars: ...
-	 * @return	[type]		...
-	 */
-	protected function getGETVars($arrVars){
-
-		$queryString = http_build_query($arrVars, '', '&');
-		return $queryString;
-
-	}
-	/**
 	 * returns height of a image in the current themes img directory
 	 *
 	 * @param	string		$filename: ...
@@ -5870,6 +5891,120 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 		$ret = $size[$returnindex];
 
 		return $ret;
+
+	}
+	/**
+	 * checks if a toctoc_comments user for an fe_user already exists and creates it if not
+	 *
+	 * @return	void
+	 */
+	protected function checktoctoccommentsuser(){
+		$record = array();
+		$feuserid=intval($GLOBALS['TSFE']->fe_user->user['uid']);
+		if (!isset($_SESSION['checktoctoccommentsuser'])) {
+			$_SESSION['checktoctoccommentsuser']=0;
+		}
+
+		if (($_SESSION['checktoctoccommentsuser'] == 0) && ($feuserid>0) && ($this->conf['pluginmode'] == 0 )) {
+
+			$strCurrentIP=$this->lib->getCurrentIp();
+
+			$fetoctocusertoquery ='"0.0.0.0.' . $feuserid . '"';
+			$fetoctocusertoinsert ='0.0.0.0.' . $feuserid;
+
+			if (version_compare(TYPO3_version, '4.6', '<')) {
+				$tmpint = t3lib_div::testInt($this->conf['storagePid']);
+			} else {
+				$tmpint = t3lib_utility_Math::canBeInterpretedAsInteger($this->conf['storagePid']);
+			}
+
+			if ($tmpint) {
+				$storagePidcond = 'pid=' . intval($this->conf['storagePid']);
+				$firstpid= intval($this->conf['storagePid']);
+			} else {
+				$storagePidcond = 'pid IN (' . $GLOBALS['TYPO3_DB']->cleanIntList($this->conf['storagePid']) . ')';
+				$pidarr = explode(',', $GLOBALS['TYPO3_DB']->cleanIntList($this->conf['storagePid']));
+				$firstpid= intval(trim($pidarr[0]));
+			}
+
+			$rowfirstname = trim($GLOBALS['TSFE']->fe_user->user['first_name']);
+			$rowlastname = trim($GLOBALS['TSFE']->fe_user->user['last_name']);
+
+			if (($rowlastname == '') && ($rowfirstname == '')) {
+				$rowfullname=trim($GLOBALS['TSFE']->fe_user->user['name']);
+				$namePartsArr=explode(' ', $rowfullname);
+				$countNameParts = count($namePartsArr);
+
+				if ($countNameParts>1) {
+					$lastpartlen=strlen($namePartsArr[$countNameParts-1]);
+					$tmpLASTNAME = trim(substr($rowfullname, (strlen($rowfullname)-$lastpartlen), 1000));
+					$tmpFIRSTNAME = trim(substr($rowfullname, 0, strlen($rowfullname)-strlen($tmpLASTNAME)));
+				} elseif (strlen($rowfullname)>1) {
+					$tmpLASTNAME = trim($rowfullname);
+					$tmpFIRSTNAME = '';
+				} else {
+					$tmpLASTNAME =trim($GLOBALS['TSFE']->fe_user->user['username']);
+					$tmpFIRSTNAME = '';
+				}
+
+				$rowfirstname = trim($tmpFIRSTNAME );
+				$rowlastname = trim($tmpLASTNAME );
+			}
+
+			$rowemail = trim($GLOBALS['TSFE']->fe_user->user['email']);
+			$rowhomepage = trim($GLOBALS['TSFE']->fe_user->user['www']);
+			$rowlocation = trim($GLOBALS['TSFE']->fe_user->user['city']);
+			if ($rowemail != '') {
+				$pageid = $GLOBALS['TSFE']->id;
+				$pluginid = $_SESSION['commentListRecord'];
+			// check the toctoc_comments_user
+				$dataWhereuser = 'deleted=0 AND ' . $storagePidcond .
+				' AND toctoc_comments_user = ' . $fetoctocusertoquery . '';
+				list($rowusr) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS tusr',
+						'tx_toctoc_comments_user', $dataWhereuser);
+
+				if (intval($rowusr['tusr']) === 0) {
+					$strCurrentIPres=gethostbyaddr($strCurrentIP);
+					$record= array(
+							'crdate' => time(),
+							'tstamp' => time(),
+							'pid' => $firstpid,
+							'toctoc_comments_user' => $fetoctocusertoinsert,
+							'ipresolved' => trim($strCurrentIPres),
+							'ip' => $strCurrentIP,
+							'initial_firstname' => $rowfirstname,
+							'initial_lastname' => trim($rowlastname),
+							'initial_email' => trim($rowemail),
+							'initial_homepage' => trim($rowhomepage),
+							'initial_location' => trim($rowlocation),
+					);
+					$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_user', $record);
+
+					list($rowusrmm) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS tusr',
+							'tx_toctoc_comments_feuser_mm', $dataWhereuser);
+					if (intval($rowusrmm['tusr']) === 0) {
+						$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_feuser_mm', array(
+								'crdate' => time(),
+								'tstampseen' => time(),
+								'pagetstampseen' =>$pageid,
+								'tstamp' => time(),
+								'seen' => 0,
+								'pid' => $firstpid,
+								'idislike' => 0,
+								'myrating' => 0,
+								'toctoc_commentsfeuser_feuser' => $feuserid,
+								'toctoc_comments_user' => $fetoctocusertoinsert,
+								'reference' => $pluginid,
+								'remote_addr' => $strCurrentIP
+						));
+					}
+				}
+				$_SESSION['AJAXUserimagerefresh'] = TRUE;
+				$_SESSION['AJAXUserimagerefreshImage'] = trim($GLOBALS['TSFE']->fe_user->user['image']);
+				$_SESSION['checktoctoccommentsuser']=1;
+			}
+
+		}
 
 	}
 }

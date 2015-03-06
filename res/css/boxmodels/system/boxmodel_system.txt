@@ -33,7 +33,8 @@ min-height: {minhinput}px;
 Rules
 {minhinput} = 2+{boxmodelTextareaLineHeight}
 Selectors
-input.tx-tc-ct-input
+input.tx-tc-ct-input, select.tx-tc-ct-input
+select.tx-tc-ct-input option
 ***
 
 Boxmodel
@@ -128,6 +129,17 @@ Selectors
 ***
 
 Boxmodel
+Line-Height 20 -label
+CSS
+line-height: 20px;
+line-height: {base26}px;
+Rules
+{base26}=6+{boxmodelTextareaLineHeight}
+Selectors
+.tx-tc-ct-label-base
+***
+
+Boxmodel
 Line-Height 20 -label additions
 CSS
 line-height: 20px;
@@ -149,6 +161,7 @@ Rules
 Selectors
 .tx-tc-ct-label, .tx-tc-ct-label-cap
 .tx-tc-ct-form-field-cap
+.tx-tc-ct-label-base
 ***
 
 Boxmodel
