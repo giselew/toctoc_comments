@@ -1,0 +1,1036 @@
+Boxmodel
+padding detail bereich von bilder-popups
+CSS
+padding: 4px;
+padding: {boxmodelSpacing}px;
+Selectors
+.txtc_details
+***
+
+Boxmodel
+padding administrator antworten
+CSS
+padding: 4px;
+padding: {boxmodelSpacingHalf}px;
+Selectors
+.tx-tcresponse-text
+***
+
+Boxmodel
+Line-Height 20 Textarea
+CSS
+line-height: 20px;
+line-height: {boxmodelTextareaLineHeight}px;
+Selectors
+textarea.tx-tc-ctinput-textarea, textarea.tx-tc-ctinput-textarea-rq
+***
+
+Boxmodel
+Height 20 Form input
+CSS
+min-height: 20px;
+min-height: {minhinput}px;
+Rules
+{minhinput} = 2+{boxmodelTextareaLineHeight}
+Selectors
+input.tx-tc-ct-input, select.tx-tc-ct-input
+select.tx-tc-ct-input option
+***
+
+Boxmodel
+boxmodelLineHeight for people have seen field
+CSS
+line-height: 16px;
+line-height: {boxmodelLineHeight}px;
+Selectors
+.tx-tc-ct-viewcnt
+.tx-tc-ct-cnt
+***
+
+Boxmodel
+Menu height depending boxmodelLineHeight
+CSS
+height: 22px;
+height: {blh2}px;
+Rules
+{blh2}=2+{boxmodelLineHeight}
+Selectors
+.tx-tc-sortlistmenu
+.tx-tc-sortlistmenutitle, .tx-tc-dsclmrlistmenutitle, .tx-tc-usermenumenutitle
+***
+
+Boxmodel
+Line height depending boxmodelLineHeight
+CSS
++line-height: 22px;
+line-height: {blh2}px;
+Selectors
+.tx-tc-sortlistmenutitle, .tx-tc-dsclmrlistmenutitle, .tx-tc-usermenumenutitle
+***
+
+Boxmodel
+Menu top  depending boxmodelLineHeight
+CSS
+top: 22px;
+top: {blh2}px;
+Selectors
+.tx-tc-sortlistpanel, .tx-tc-dsclmrlistpanel
+***
+
+Boxmodel
+Margin bottom of user center title
+CSS
+margin-bottom: 10px;
+margin-bottom: {boxmodelSpacing}px;
+Selectors
+.tx-tc-title-usercenter, .tx-tc-opendropdown
+***	
+	
+Boxmodel
+termscondtext margin-top
+CSS
+margin: 4px 0 0 0;
+margin: {boxmodelSpacingHalf}px 0 0 0;
+Selectors
+.tx-tc-termscondtext
+.tx-tc-ct-box-cttxt a + .tx-tc-rws-area
+.tx-tc-rws-area + .tx-tc-overrating
+***
+
+Boxmodel
+MArgin top depending boxmodelLineHeight
+CSS
+top: 22px;
+top: {blh2}px;
+Selectors
+.tx-tc-sortlistpanel, .tx-tc-dsclmrlistpanel
+***
+
+Boxmodel
+Height 24 Formfield
+CSS
+min-height: 20px;
+min-height: {226}px;
+Rules
+{226}=4+{boxmodelTextareaLineHeight}
+Selectors
+div.tx-tc-ct-form-field
+***
+
+Boxmodel
+Line-Height 20 -label
+CSS
+line-height: 20px;
+line-height: {26}px;
+Rules
+{26}=4+{boxmodelTextareaLineHeight}
+Selectors
+.tx-tc-ct-label, .tx-tc-ct-label-cap
+***
+
+Boxmodel
+Line-Height 20 -label
+CSS
+line-height: 20px;
+line-height: {base26}px;
+Rules
+{base26}=6+{boxmodelTextareaLineHeight}
+Selectors
+.tx-tc-ct-label-base
+***
+
+Boxmodel
+Line-Height 20 -label additions
+CSS
+line-height: 20px;
+line-height: {b26}px;
+Rules
+{b26}=4+{boxmodelTextareaLineHeight}
+Selectors
+div.tx-tc-ct-form-field-1
+.tx-tc-ct-form-field-cap
+***
+
+Boxmodel
+min-Height 20 -label
+CSS
+min-height: 20px;
+min-height: {27}px;
+Rules
+{27}={26}
+Selectors
+.tx-tc-ct-label, .tx-tc-ct-label-cap
+.tx-tc-ct-form-field-cap
+.tx-tc-ct-label-base
+***
+
+Boxmodel
+implement boxmodel Label Width
+CSS
+width: 134px;
+width: {boxmodelLabelWidth}px;
+Selectors
+.tx-tc-ct-label-ntf
+.tx-tc-ct-label, .tx-tc-ct-label-cap
+***
+
+
+Boxmodel
+boxmodel Spacing on leftmargin of .tx-tc-ct-label-ntf
+CSS
+margin: 0 4px 0 8px;
+margin: 0 4px 0 {boxmodelSpacing}px;
+Selectors
+.tx-tc-ct-label-ntf
+***
+
+Boxmodel
+Line-Height 16
+CSS
+line-height: 16px;
+line-height: {boxmodelLineHeight}px;
+Selectors
+.tx-tc-ct-prv-frame
+.tx-tc-text
+.tx-tc-ftm-text
+.tx-tcresponse-text
+.tx-tcresponse-text-title
+.txtc_details
+.tx-tc-ct-rybox-title
+.tx-tc-ct-rybox
+.toctoc-comments-pi1
+.tx-tc-ct-cnt span, .tx-tc-ct-viewcnt span
+***
+
+Boxmodel
+width of popup image
+CSS
+max-width: 700px;
+max-width: {picUploadMaxDimX}px;
+Selectors
+.txtc_overlay img.tx-tc-images-img-browse
+***
+
+Boxmodel
+width of popup image box
+CSS
+max-width: 900px;
+max-width: {wboxpopup}px;
+Rules
+{wboxpopup}=({picUploadMaxDimX}+200)
+Selectors
+.txtc_overlay
+***
+
+Boxmodel
+margin top 0 -> f(boxmodelLineHeight)
+CSS
+margin: 0px 0 0 0;
+margin: {230}px 0 0 0;
+Rules
+{230}=({boxmodelLineHeight}-16)/2
+Selectors
+.tx-tc-userpic, .tx-tc-userpicf, .tx-tc-ct-box-picturecrop322 img
+***
+
+Boxmodel
+margin top 2 -> f(boxmodelLineHeight) + 2
+CSS
+margin: 2px 7px 0 1px;
+margin: {231}px 7px 0 1px;
+Rules
+{231}=2+({boxmodelLineHeight}-16)/2
+Selectors
+.tx-tc-ct-rybox .tx-tc-userpic, .tx-tc-ct-rybox .tx-tc-userpicf
+***
+
+
+Boxmodel
+padding: 0px top 0 -> f(boxmodelLineHeight) + 0
+CSS
+padding: 0px 0 0;
+padding: {232}px 0 0;
+Rules
+{232}=({boxmodelLineHeight}-16)/2
+Selectors
+.tx-tc-ct-report
+***
+
+Boxmodel
+Dummy entry for loading boxmodelLineHeightHalf
+CSS
+margin: 0px 0 0 2px;
+margin: {boxmodelLineHeightHalf}px 0 0;
+Selectors
+.tx-tc-myrts-ilke img, .tx-tc-myrts-ilke .tx_toctoc_comments_static_ilike img, img.tx-tc-trt-rating-like-only
+***
+
+Boxmodel
+Margin of ilikes depends on ratingMarginTop
+CSS
+margin: 0px 0 0 2px;
+margin: {ratingMarginTop}px 0 0;
+Selectors
+.tx-tc-myrts-ilke img, .tx-tc-myrts-ilke .tx_toctoc_comments_static_ilike img, img.tx-tc-trt-rating-like-only
+***
+
+Boxmodel
+Margin of ilikes depends on ratingMarginTop
+CSS
+margin: 0px 0 0 2px;
+margin: {mrtsdl}px 0 0 0;
+Rules
+{mrtsdl}=-1+{ratingMarginTop}
+Selectors
+.tx-tc-myrts-ilke img, .tx-tc-myrts-ilke .tx_toctoc_comments_static_ilike img, img.tx-tc-trt-rating-like-only
+***
+
+Boxmodel
+Margin of ilikes depends on ratingMarginTop
+CSS
+margin: 2px 0 -2px 0;
+margin: {mrtsdisl}px 0 0 0;
+Rules
+{mrtsdisl}=1+{ratingMarginTop}
+Selectors
+.tx-tc-myrts-disilke img, .tx-tc-myrts-disilke .tx_toctoc_comments_static_ilike img
+***
+
+Boxmodel
+Min-Height 17
+CSS
+min-height: 17px;
+min-height: {227}px;
+Rules
+{227}=1+{boxmodelLineHeight}
+Selectors
+.tx-tc-ct-ry-report-line
+.tx-tc-form-top-message
+***
+
+Boxmodel
+Padding base 17 0
+CSS
++padding: 0px 0 0;
+padding: {228}px 0 0;
+Rules
+{228}={boxmodelLineHeightHalf}
+Selectors
+.tx-tc-ct-ry-report-line
+.tx-tc-form-top-message
+***
+
+Boxmodel
+Min-Height 32
+CSS
+min-height: 32px;
+Selectors
+form.tx-tc-form-for-newcomment
+***
+
+Boxmodel
+Min-Height 25
+CSS
+min-height: 25px;
+Selectors
+.tx-tc-ct-box
+***
+
+Boxmodel
+margin-bottom for highlighted comments or reviews
+CSS
+margin-bottom: 4px;
+margin-bottom: {boxmodelSpacing}px;
+Selectors
+.tx-tc-ct-highlight, .tx-tc-ct-userreview, .tx-tc-reviewform
+.tx-tc-sortlistmenu
+***	
+
+Boxmodel
+width: 11 (Dummy entry: introducing ratingNbrStars)
+CSS
+top: 2px;
+top: {ratingNbrStars}px;
+Selectors
+.tx-tc-dummy-nbrofstars
+***
+
+Boxmodel
+width: 11 (Dummy entry: introducing ratingNbrStars)
+CSS
+bottom: 2px;
+bottom: {reviewLineHeight}px;
+Selectors
+.tx-tc-dummy-nbrofstars2
+***
+
+Boxmodel
+width: 11 (Dummy entry: introducing ratingNbrStars)
+CSS
+left: 2px;
+left: {ratingLineHeight}px;
+Selectors
+.tx-tc-dummy-nbrofstars3
+***
+
+Boxmodel
+width: 11 (RATINGS base)
+CSS
+width: 11px;
+width: {ratingImageWidth}px;
+Selectors
+.tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-1, .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-1, .tx-tc-rts-vote-bar span A.tx-tc-rts-star-1, .tx-tc-rts-vote-bar span span.tx-tc-rts-star-1
+.tx-tc-rts-vote-bar DIV A, .tx-tc-rts-vote-bar DIV span
+.tx-tc-rts-vote-bar span A, .tx-tc-rts-vote-bar span span
+.tx-tc-myrts-vote-bar span A
+.tx-tc-myrts-vote-bar DIV A
+***
+
+Boxmodel
+width: 16 (REVIEWS base)
+CSS
+width: 16px;
+width: {reviewImageWidth}px;
+Selectors
+.tx-tc-rws-area .tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-1, .tx-tc-rws-area .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-1, .tx-tc-rws-area .tx-tc-rts-vote-bar span A.tx-tc-rts-star-1, .tx-tc-rws-area .tx-tc-rts-vote-bar span span.tx-tc-rts-star-1
+.tx-tc-rws-area .tx-tc-rts-vote-bar DIV A, .tx-tc-rws-area .tx-tc-rts-vote-bar DIV span
+.tx-tc-rws-area .tx-tc-rts-vote-bar span A, .tx-tc-rws-area .tx-tc-rts-vote-bar span span
+.tx-tc-rws-area .tx-tc-myrts-vote-bar span A
+.tx-tc-rws-area .tx-tc-myrts-vote-bar DIV A
+***
+
+Boxmodel
+height: 12 (ratings)
+CSS
+height: 12px;
+height: {s600}px;
+Rules
+{s600}=1+{ratingImageWidth}
+Selectors
+.tx-tc-myrts-gold-bar
+.tx-tc-myrts-vote-bar
+.tx-tc-myrts-vote-bar DIV A
+.tx-tc-myrts-vote-bar span A
+.tx-tc-rts-grey-bar
+.tx-tc-rts-gold-bar
+.tx-tc-rts-vote-bar
+.tx-tc-rts-vote-bar DIV A, .tx-tc-rts-vote-bar DIV span
+.tx-tc-rts-vote-bar span A, .tx-tc-rts-vote-bar span span
+***
+
+Boxmodel
+height: 16 (reviews)
+CSS
+height: 16px;
+height: {srw600}px;
+Rules
+{srw600}=1+{reviewImageWidth}
+Selectors
+.tx-tc-rws-area .tx-tc-myrts-gold-bar
+.tx-tc-rws-area .tx-tc-myrts-vote-bar
+.tx-tc-rws-area .tx-tc-myrts-vote-bar DIV A
+.tx-tc-rws-area .tx-tc-myrts-vote-bar span A
+.tx-tc-rws-area .tx-tc-rts-grey-bar
+.tx-tc-rws-area .tx-tc-rts-gold-bar
+.tx-tc-rws-area .tx-tc-rts-vote-bar
+.tx-tc-rws-area .tx-tc-rts-vote-bar DIV A, .tx-tc-rws-area .tx-tc-rts-vote-bar DIV span
+.tx-tc-rws-area .tx-tc-rts-vote-bar span A, .tx-tc-rws-area .tx-tc-rts-vote-bar span span
+***
+
+Boxmodel
+width: 55 (RATINGS bars)
+CSS
+width: 55px;
+width: {s615}px;
+Rules
+{s615}={ratingNbrStars}*{ratingImageWidth}
+Selectors
+.tx-tc-rts-grey-bar
+.tx-tc-rts-vote-bar
+***
+
+Boxmodel
+width: 80 (REVIEWS bars)
+CSS
+width: 55px;
+width: {srvw615}px;
+Rules
+{srvw615}=({ratingNbrStars}*{reviewImageWidth})
+Selectors
+.tx-tc-rws-area .tx-tc-rts-grey-bar
+.tx-tc-rws-area .tx-tc-rts-vote-bar
+***
+
+Boxmodel
+width: 55 (RATINGS myrating bar width) additions
+CSS
++width: 55px;
+width: {bs615}px;
+Rules
+{bs615}=({ratingNbrStars}*{ratingImageWidth})
+Selectors
+.tx-tc-myrts-vote-bar
+***
+
+Boxmodel
+width: 55 (REVIEWS myrating bar width) additions
+CSS
++width: 55px;
+width: {bsrvw615}px;
+Rules
+{bsrvw615}=({ratingNbrStars}*{reviewImageWidth})
+Selectors
+.tx-tc-rws-area .tx-tc-myrts-vote-bar
+***
+
+Boxmodel
+width: 121 (RATINGS 11 stars)
+CSS
+width: 121px;
+width: {ss116111}px;
+Rules
+{ss116111}=(11*{ratingImageWidth})
+Selectors
+.tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-11, .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-11, .tx-tc-rts-vote-bar span A.tx-tc-rts-star-11, .tx-tc-rts-vote-bar span span.tx-tc-rts-star-11
+***
+
+Boxmodel
+width: 172 (REVIEWS 11 stars)
+CSS
+width: 172px;
+width: {srv6111}px;
+Rules
+{srv6111}=(11*{reviewImageWidth})
+Selectors
+.tx-tc-rws-area .tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-11, .tx-tc-rws-area .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-11, .tx-tc-rws-area .tx-tc-rts-vote-bar span A.tx-tc-rts-star-11, .tx-tc-rws-area .tx-tc-rts-vote-bar span span.tx-tc-rts-star-11
+***
+
+Boxmodel
+width: 110 (RATINGS 10 stars)
+CSS
+width: 110px;
+width: {ss106110}px;
+Rules
+{ss106110}=(10*{ratingImageWidth})
+Selectors
+.tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-10, .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-10, .tx-tc-rts-vote-bar span A.tx-tc-rts-star-10, .tx-tc-rts-vote-bar span span.tx-tc-rts-star-10
+***
+
+Boxmodel
+width: 160 (REVIEWS 10 stars)
+CSS
+width: 160px;
+width: {srv6110}px;
+Rules
+{srv6110}=(10*{reviewImageWidth})
+Selectors
+.tx-tc-rws-area .tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-10, .tx-tc-rws-area .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-10, .tx-tc-rws-area .tx-tc-rts-vote-bar span A.tx-tc-rts-star-10, .tx-tc-rws-area .tx-tc-rts-vote-bar span span.tx-tc-rts-star-10
+***
+
+Boxmodel
+width: 99 (RATINGS 9 stars)
+CSS
+width: 99px;
+width: {ss9619}px;
+Rules
+{ss9619}=(9*{ratingImageWidth})
+Selectors
+.tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-9, .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-9, .tx-tc-rts-vote-bar span A.tx-tc-rts-star-9, .tx-tc-rts-vote-bar span span.tx-tc-rts-star-9
+***
+
+Boxmodel
+width: 144 (REVIEWS 9 stars)
+CSS
+width: 144px;
+width: {srv619}px;
+Rules
+{srv619}=(9*{reviewImageWidth})
+Selectors
+.tx-tc-rws-area .tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-9, .tx-tc-rws-area .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-9, .tx-tc-rws-area .tx-tc-rts-vote-bar span A.tx-tc-rts-star-9, .tx-tc-rws-area .tx-tc-rts-vote-bar span span.tx-tc-rts-star-9
+***
+
+Boxmodel
+width: 88 (RATINGS 8 stars)
+CSS
+width: 88px;
+width: {ss8618}px;
+Rules
+{ss8618}=(8*{ratingImageWidth})
+Selectors
+.tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-8, .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-8, .tx-tc-rts-vote-bar span A.tx-tc-rts-star-8, .tx-tc-rts-vote-bar span span.tx-tc-rts-star-8
+***
+
+Boxmodel
+width: 128 (REVIEWS 8 stars)
+CSS
+width: 128px;
+width: {srv618}px;
+Rules
+{srv618}=(8*{reviewImageWidth})
+Selectors
+.tx-tc-rws-area .tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-8, .tx-tc-rws-area .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-8, .tx-tc-rws-area .tx-tc-rts-vote-bar span A.tx-tc-rts-star-8, .tx-tc-rws-area .tx-tc-rts-vote-bar span span.tx-tc-rts-star-8
+***
+
+Boxmodel
+width: 77 (RATINGS 7 stars)
+CSS
+width: 77px;
+width: {ss7617}px;
+Rules
+{ss7617}=(7*{ratingImageWidth})
+Selectors
+.tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-7, .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-7, .tx-tc-rts-vote-bar span A.tx-tc-rts-star-7, .tx-tc-rts-vote-bar span span.tx-tc-rts-star-7
+***
+
+Boxmodel
+width: 112 (REVIEWS 7 stars)
+CSS
+width: 112px;
+width: {srv617}px;
+Rules
+{srv617}=(7*{reviewImageWidth})
+Selectors
+.tx-tc-rws-area .tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-7, .tx-tc-rws-area .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-7, .tx-tc-rws-area .tx-tc-rts-vote-bar span A.tx-tc-rts-star-7, .tx-tc-rws-area .tx-tc-rts-vote-bar span span.tx-tc-rts-star-7
+***
+
+Boxmodel
+width: 66 (RATINGS 6 stars)
+CSS
+width: 66px;
+width: {ss6616}px;
+Rules
+{ss6616}=(6*{ratingImageWidth})
+Selectors
+.tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-6, .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-6, .tx-tc-rts-vote-bar span A.tx-tc-rts-star-6, .tx-tc-rts-vote-bar span span.tx-tc-rts-star-6
+***
+
+Boxmodel
+width: 96 (REVIEWS 6 stars)
+CSS
+width: 96px;
+width: {srv616}px;
+Rules
+{srv616}=(6*{reviewImageWidth})
+Selectors
+.tx-tc-rws-area .tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-6, .tx-tc-rws-area .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-6, .tx-tc-rws-area .tx-tc-rts-vote-bar span A.tx-tc-rts-star-6, .tx-tc-rws-area .tx-tc-rts-vote-bar span span.tx-tc-rts-star-6
+***
+
+Boxmodel
+width: 55 (RATINGS 5 stars)
+CSS
+width: 55px;
+width: {ss5615}px;
+Rules
+{ss5615}=(5*{ratingImageWidth})
+Selectors
+.tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-5, .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-5, .tx-tc-rts-vote-bar span A.tx-tc-rts-star-5, .tx-tc-rts-vote-bar span span.tx-tc-rts-star-5
+***
+
+Boxmodel
+width: 80 (REVIEWS 5 stars)
+CSS
+width: 80px;
+width: {srv615}px;
+Rules
+{srv615}=(5*{reviewImageWidth})
+Selectors
+.tx-tc-rws-area .tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-5, .tx-tc-rws-area .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-5, .tx-tc-rws-area .tx-tc-rts-vote-bar span A.tx-tc-rts-star-5, .tx-tc-rws-area .tx-tc-rts-vote-bar span span.tx-tc-rts-star-5
+***
+
+Boxmodel
+width: 44 (RATINGS 4 stars)
+CSS
+width: 44px;
+width: {s614}px;
+Rules
+{s614}=4*{ratingImageWidth}
+Selectors
+.tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-4, .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-4, .tx-tc-rts-vote-bar span A.tx-tc-rts-star-4, .tx-tc-rts-vote-bar span span.tx-tc-rts-star-4
+***
+
+Boxmodel
+width: 64 (REVIEWS 4 stars)
+CSS
+width: 64px;
+width: {srvw614}px;
+Rules
+{srvw614}=4*{reviewImageWidth}
+Selectors
+.tx-tc-rws-area .tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-4, .tx-tc-rws-area .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-4, .tx-tc-rws-area .tx-tc-rts-vote-bar span A.tx-tc-rts-star-4, .tx-tc-rws-area .tx-tc-rts-vote-bar span span.tx-tc-rts-star-4
+***
+
+Boxmodel
+width: 33 (RATINGS 3 stars)
+CSS
+width: 33px;
+width: {s613}px;
+Rules
+{s613}=3*{ratingImageWidth}
+Selectors
+.tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-3, .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-3, .tx-tc-rts-vote-bar span A.tx-tc-rts-star-3, .tx-tc-rts-vote-bar span span.tx-tc-rts-star-3
+***
+
+Boxmodel
+width: 48 (REVIEWS 3 stars)
+CSS
+width: 48px;
+width: {srvw613}px;
+Rules
+{srvw613}=3*{reviewImageWidth}
+Selectors
+.tx-tc-rws-area .tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-3, .tx-tc-rws-area .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-3, .tx-tc-rws-area .tx-tc-rts-vote-bar span A.tx-tc-rts-star-3, .tx-tc-rws-area .tx-tc-rts-vote-bar span span.tx-tc-rts-star-3
+***
+
+Boxmodel
+width: 22 (RATINGS 2 stars)
+CSS
+width: 22px;
+width: {s612}px;
+Rules
+{s612}=2*{ratingImageWidth}
+Selectors
+.tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-2, .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-2, .tx-tc-rts-vote-bar span A.tx-tc-rts-star-2, .tx-tc-rts-vote-bar span span.tx-tc-rts-star-2
+***
+
+Boxmodel
+width: 32 (REVIEWS 2 stars)
+CSS
+width: 32px;
+width: {srvw612}px;
+Rules
+{srvw612}=2*{reviewImageWidth}
+Selectors
+.tx-tc-rws-area .tx-tc-rts-vote-bar DIV A.tx-tc-rts-star-2, .tx-tc-rws-area .tx-tc-rts-vote-bar DIV span.tx-tc-rts-star-2, .tx-tc-rws-area .tx-tc-rts-vote-bar span A.tx-tc-rts-star-2, .tx-tc-rws-area .tx-tc-rts-vote-bar span span.tx-tc-rts-star-2
+***
+
+Boxmodel
+background-position: 0 -24px (RATINGS animation position)
+CSS
+background-position: 0 -24px;
+background-position: 0 {s620}px;
+Rules
+{s620}=-(2*{ratingImageWidth}+2)
+Selectors
+.tx-tc-rts-vote-bar DIV A:hover
+.tx-tc-rts-vote-bar span A:hover
+***
+
+Boxmodel
+background-position: 0 -24px (RREVIWS animation position)
+CSS
+background-position: 0 -24px;
+background-position: 0 {srv620}px;
+Rules
+{srv620}=-(2*{reviewImageWidth}+4)
+Selectors
+.tx-tc-rws-area .tx-tc-rts-vote-bar DIV A:hover
+.tx-tc-rws-area .tx-tc-rts-vote-bar span A:hover
+***
+
+Boxmodel
+width: 59px (RATINGS area)
+CSS
+width: 59px;
+width: {s621}px;
+Rules
+{s621}=(4+({ratingNbrStars}*{ratingImageWidth}))
+Selectors
+.tx-tc-rts-dp
+***
+
+Boxmodel
+width: 84px (REVIEWS area)
+CSS
+width: 84px;
+width: {srv621}px;
+Rules
+{srv621}=(4+({ratingNbrStars}*{reviewImageWidth}))
+Selectors
+.tx-tc-rws-area .tx-tc-rts-dp
+***
+
+Boxmodel
+width: 56px (RATINGS area)
+CSS
+width: 56px;
+width: {sc621}px;
+Rules
+{sc621}=(1+({ratingNbrStars}*{ratingImageWidth}))
+Selectors
+.tx-tc-trt-cts-article .tx-tc-rts-dp
+***
+
+Boxmodel
+width: 56px (REVIEWS area)
+CSS
+width: 56px;
+width: {scrv621}px;
+Rules
+{scrv621}=(1+({ratingNbrStars}*{reviewImageWidth}))
+Selectors
+.tx-tc-trt-cts-article .tx-tc-rws-area .tx-tc-rts-dp
+***
+
+Boxmodel
+width: 63px (RATINGS area in top ratings)
+CSS
+width: 63px;;
+width: {sb621}px;
+Rules
+{sb621}=(8+({ratingNbrStars}*{ratingImageWidth}))
+Selectors
+.tx-tc-trt-cts-article .tx-tc-rts
+***
+
+Boxmodel
+width: 88px (REVIEWS area in top ratings)
+CSS
+width: 88px;;
+width: {sbrv621}px;
+Rules
+{sbrv621}=(8+({ratingNbrStars}*{reviewImageWidth}))
+Selectors
+.tx-tc-trt-cts-article .tx-tc-rws-area .tx-tc-rts
+***
+
+Boxmodel
+Line-Height like picture (rating), addition
+CSS
+line-height: 22px;
+line-height: {srvratlh622}px;
+Rules
+{srvratlh622}=2+{boxmodelLineHeight}
+Selectors
+.tx-tc-myrts-myrt
+***
+
+Boxmodel
+Line-Height like picture (review), addition
+CSS
+line-height: 22px;
+line-height: {srvrvwlh622}px;
+Rules
+{srvrvwlh622}={reviewLineHeight}
+Selectors
+.tx-tc-rws-area .tx-tc-rts-text, .tx-tc-rws-area .tx-tc-myrts-myrt
+.tx-tc-rws-area .tx-tc-rts-li
+***
+
+Boxmodel
+Line-Height share-in-review
+CSS
+line-height: 22px;
+line-height: {reviewLineHeight}px;
+Selectors
+.tx-tx-share-in-review
+***
+
+Boxmodel
+background: for rating stars
+CSS
+background: url("../themes/default/img/toctoc_comments_rating_stars.png") repeat-x 0 -12px;
+background: url("../themes/default/img/toctoc_comments_rating_stars.png") repeat-x scroll 0 -{s622}px transparent;
+Rules
+{s622}=1+{ratingImageWidth}
+Selectors
+.tx-tc-rts-gold-bar
+***
+
+Boxmodel
+background: for review stars
+CSS
+background: url("../themes/default/img/toctoc_comments_review_stars.png") repeat-x 0 -12px;
+background: url("../themes/default/img/toctoc_comments_review_stars.png") repeat-x scroll 0 -{srvrvw622}px transparent;
+Rules
+{srvrvw622}=2+{reviewImageWidth}
+Selectors
+.tx-tc-rws-area .tx-tc-rts-gold-bar
+***
+
+Boxmodel
+Line-Height 18 (ratings), addition
+CSS
++line-height: 18px;
+line-height: {ratingLineHeight}px;
+Selectors
+.tx-tc-rts
+***
+
+Boxmodel
+Line-Height 18 (ratings), addition
+CSS
++line-height: 18px;
+line-height: {ratingLineHeight}px;
+Selectors
+.tx-tc-cts-dp .tx-tc-text-top .tx-tc-atrts-dp .tx-tc-rts-area .tx-tc-rts-container .tx-tc-rts-li .tx-tc-rts
+.tx-tc-text-top .tx-tc-atrts-dp .tx-tc-rts-area .tx-tc-rts-container .tx-tc-firstvote .tx-tc-rts-li .tx-tc-rts
+.tx-tc-text-top .tx-tc-atrts-dp .tx-tc-rts-area .tx-tc-rts-cntrdata .tx-tc-rts-li .tx-tc-rts
+***
+
+Boxmodel
+Line-Height 18 (ratings), addition
+CSS
++line-height: 18px;
+line-height: {reviewLineHeight}px;
+Selectors
+.tx-tc-rws-area .tx-tc-rts
+***
+
+Boxmodel
+Line-Height like image (reviews), addition
+CSS
+line-height: 16px;
+line-height: {22bbhgt}px;
+Rules
+{22bbhgt}={reviewLineHeight}
+Selectors
+.tx-tc-rws-area .tx-tc-scopetitle, .tx-tc-rws-area .tx-tc-scopetitlebold
+***
+
+Boxmodel
+Line-Height like image (ratings), addition
+CSS
+line-height: 16px;
+line-height: {22bbhgtr}px;
+Rules
+{22bbhgtr}={ratingLineHeight}
+Selectors
+.tx-tc-scopetitle, .tx-tc-scopetitlebold
+***
+
+Boxmodel
+ratings and reviews, top of stars
+CSS
+top: 3px;
+top: {reviewMarginTop}px;
+Selectors
+.tx-tc-trt-rating-rating-wrap .tx-tc-rws-area .tx-tc-rts-dp
+.tx-tc-trt-cts-article .tx-tc-rws-area .tx-tc-rts-dp
+.tx-tc-rws-area .tx-tc-rts-dp
+***
+
+Boxmodel
+Top ratings, left of text box if there's an image
+CSS
+margin-left: 10px;
+margin-left: {boxmodelSpacing}px;
+Selectors
+.tx-tc-trt-rating-img + .tx-tc-trt-rating-detail .tx-tc-trt-rating-rating-wrap
+***
+
+Boxmodel
+usercenter userpic margin right
+CSS
+margin-right: 4px;
+margin-right: {boxmodelSpacing}px;
+Selectors
+.tx-tc-ct-usercenter-pic
+***
+	
+Boxmodel
+Top ratings, top of stars
+CSS
+top: 2px;
+top: {ratingMarginTop}px;
+Selectors
+.tx-tc-trt-rating-rating-wrap .tx-tc-rts-dp
+.tx-tc-rts-dp
+***
+
+Boxmodel
+Height top rating div elements
+CSS
+line-height: 20px;
+line-height: {ratingLineHeight}px;
+Selectors
+.tx-tc-trt-rating-rating-wrap
+***
+
+Boxmodel
+Height Review start area
+CSS
+height: 23px;
+height: {reviewLineHeight}px;
+Selectors
+.tx-tc-rws-area .tx-tc-rts-dp 
+***
+
+Boxmodel
+Height top rating div element for stars
+CSS
+height: 20px;
+height: {ratingLineHeight}px;
+Selectors
+.tx-tc-trt-rating-rating-wrap .tx-tc-rts-container .tx-tc-rts-li
+***
+
+Boxmodel
+Height 24 ctsbrowse
+CSS
+height: 24px;
+height: {10}px;
+Rules
+{10}=8+{boxmodelLineHeight}
+Selectors
+.tx-tc-cts-ctsbrowse
+***
+
+Boxmodel
+Height 24 ctsbrowse, addition
+CSS
++height: 24px;
+height: {10}px;
+Rules
+{10}=8+{boxmodelLineHeight}
+Selectors
+.tx-tc-cts-ctsbrowse-hide
+***
+
+Boxmodel
+Line-Height 24 ctsbrowse
+CSS
+line-height: 24px;
+line-height: {10}px;
+Selectors
+.tx-tc-cts-ctsbrowse
+.tx-tc-cts-ctsbrowse-hide
+***
+
+Boxmodel
+margin-bottom -24 ctsbrowse-hide
+CSS
+margin-bottom: -24px;
+margin-bottom: {11}px;
+Rules
+{11}=-{10}
+Selectors
+.tx-tc-cts-ctsbrowse-hide
+***
+
+Boxmodel
+top -24 ctsbrowse-hide
+CSS
+top: -24px;
+top: {11}px;
+Selectors
+.tx-tc-cts-ctsbrowse-hide
+***
+
+Boxmodel
+toprating ilike pics
+CSS
+bottom: 3px;
+bottom: {ratingMarginTop}px;
+Selectors
+.tx-tc-text .tx-tc-trt-rating-like
+.tx-tc-trt-rating-like
+ ***
+ 
+Boxmodel
+toprating ilike pics
+CSS
+margin-top: 3px;
+margin-top: {ratingMarginTop}px;
+Selectors
+p.tx-tc-text img.tx-tc-popularity-pic
+ ***

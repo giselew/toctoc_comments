@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for AJAX part of extension 'toctoc_comments'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="bad_rating_value">Error: bad rating value</label>
+			<label index="wrong_check_value">Error: bad check value</label>
+			<label index="bad_ref_value">Error: bad reference value</label>
+			<label index="bad_feuser_value">Error: bad value for feuserid</label>
+			<label index="bad_cmd_value">Error: bad cmd value</label>
+			<label index="bad_conf_value">Error: bad configuration value</label>
+			<label index="bad_pid_value">Error: bad pid value</label>
+			<label index="bad_cid_value">Error: bad cid value</label>
+			<label index="bad_piVars_value">Error: bad piVars</label>
+			<label index="bad_commentid_value">Error: bad value for commentid</label>
+			<label index="forcomment">for comment</label>
+			<label index="bad_commentspics_value">Error: Cached images missing in the received AJAX Array</label>
+			<label index="session_expired">Your PHP-Session has expired. Please reload the page</label>
+			<label index="made_toomanyratings">You made too many ratings.</label>
+			<label index="next_rating_in">You can make new ratings only after</label>
+			<label index="next_rating_minutes">minutes</label>
+			<label index="next_rating_inaminute">You can make new ratings in 1 minute</label>
+		</languageKey>
+	</data>
+	<orig_hash type="array">
+	</orig_hash>
+	<orig_text type="array">
+	</orig_text>
+</T3locallang>

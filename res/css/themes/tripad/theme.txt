@@ -1,0 +1,36 @@
+Color required field messages, Recaptcha Labels and Texts: 010101 010101
+Border submit: 001da0 001da0
+Color sr_freecap-clone-Captcha texts: 0D0909 0D0909
+Color Reset button, static iLike-Text: 212121 201e1f
+Color Dialog Message: 292a2d 292a2d
+Background Submitbutton: 589442 5475C8
+Background Dialogtitel: 589441 5475C9
+Border Prev/Next web page preview, Color of voting text, comment count, comment date: 8b8c90 8b8c90
+Color Labels: 959697 959697
+Border bottom in Userinfo Popups: CCCCCC 959695
+Border Recaptcha area: CCCCCC 999b99
+Border 3 for textarea: CCCCCC a4a5a7
+Border for highlighting comments: CCCCCC adaeaf
+Border inputs and textarea: CCCCCC adbecc
+Border sharrre, middle area: CCCCCC bdbebf
+Border Recaptcha Textbox,  top-border Commentsbrowser: CCCCCC bdc6da
+Border Captcha-image, border reset: CCCCCC bfc0c2
+Border Dialogs: CCCCCC cecece
+Border-top ratings area: CCCCCC d3d8e5
+Tag hr, few borders: ffffff d8d8d8
+Many borders, background overlay and admin response: e3e3e3 e3e3e3
+Background as Website is, forced for some elements: ffffff ffffff
+Color of Submitbutton: fefefd fefefd
+Backgroundcolor of inputfields: fdfdff fdfdff
+Color of inputfields: 030303 030303
+Border of Userpics: 97b0ee 97b0ee
+Color of Errormessages: ff4d1b ff4d1b
+Color of Important messages: 675cca 675cca
+Color of Watermark: 8b8c91 8b8c91
+Color of highlighted Comment: a1bbe4 a1bbe4
+Ranking, 1st place: FFD700 FFD700
+Ranking, 2nd place: C0C0C0 C0C0C0
+Ranking, 3rd place: CD7F32 CD7F32
+Info message (Disclaimer): 345A91 345A91
+OK Message (Disclaimer): 398B2E 398B2E
+Review highlight border: 589440 4e8fe0
