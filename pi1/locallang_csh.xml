@@ -10,7 +10,7 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index=".alttitle">toctoc_comments plugin configuration options</label>
+			<label index=".alttitle">toctoc_comments</label>
 			<label index="_.image">EXT:toctoc_comments/ext_icon.gif</label>
 			<label index=".image_descr">Plugin options serve to overwrite the options set in general or page Typoscript. Here, in the plugin itself - just make the exceptions work.</label>
 			<label index="pluginmode.description">Defines operation mode of the plugin</label>

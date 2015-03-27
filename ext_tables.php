@@ -23,6 +23,12 @@ else {
 	t3lib_extMgm::addPiFlexFormValue($_EXTKEY .'_pi1', 'FILE:EXT:toctoc_comments/pi1/flexform_ds.xml');
 }
 
+if (version_compare(TYPO3_version, '6.0', '<')) {
+	if (TYPO3_MODE=='BE') {
+		include_once(t3lib_extMgm::extPath($_EXTKEY).'class.user_toctoc_comments_toctoc_comments.php');
+	}
+}
+
 t3lib_extMgm::addLLrefForTCAdescr('tt_content.pi_flexform.toctoc_comments_pi1.list', 'EXT:toctoc_comments/pi1/locallang_csh.xml');
 
 // Comments table

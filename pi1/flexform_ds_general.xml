@@ -427,6 +427,15 @@
 					</config>
 				</TCEforms>
 			</additionalClearCachePagesLocal>
+			<toctoc_comments_msg>
+				<TCEforms>
+					<label>LLL:EXT:toctoc_comments/locallang_cedb.xml:tx_toctoccommentsce_donation_title</label>
+					<config>
+						<type>user</type>
+						<userFunc>user_toctoc_comments_toctoc_comments->displayDonationMessage</userFunc>												
+					</config>
+				</TCEforms>
+			</toctoc_comments_msg>
 		</el>
 	</ROOT>
 </T3DataStructure>

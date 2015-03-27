@@ -612,9 +612,19 @@
 	* Added Plugin mode Comment Search, new TypoScript-options section "search" holds 7 options allowing to customize the search. 
 	* Added gender to fe_users, if not already there, added gender to fe_users TCA if not present yet.
 	* Added error message if commenters fe_users account misses values in required fields. (on new comments)
-	* Added TypoScript-option spamProtect.commentWaitTime = 1: Wait time between comments: Number of minutes an user has to wait before they may post another comment (includes all pages)
+	* Added TypoScript-option spamProtect.commentWaitTime = 1: Wait time between comments: Number of minutes a user has to wait before they may post another comment (includes all pages)
 	* Made SMTP-Server-check before sending e-mails optional: spamProtect.checkSMTPService = 0. On systems without PHP-extension sockets loaded the checkSMTPservice won't work.
 	* Added support for GraphicsMagick for generation of PDF-Thumbnails for pdf attachments
-	* Constant editor: changed labels of some constants in order to obtain nice titles of the contants description
+	* Constant editor: changed labels of some constants in order to obtain nice titles of the constants description
 	* Fixed PHP-Warning when loading usercenter
 	* Fixed missing user image which could happen in connection with login using fe_login and user did not make a comment before.
+
+2015-03-27  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 7.2.0
+	* Compatibility with toctoccommentsce - new wrapper for toctoc_comments in content elements
+	* New popup message in the frontend if problems with jQuery are detected.
+	* Extended Comments search to authors names
+	* After login with the stand alone AJAX Login, new TypoScript-option plugin.tx_toctoccomments_pi2.sendBack = 1 sends back user after successful login to originating page
+	* Added Extension Configuration-Option basic.donationSecret, it allows to enter the donation key received upon first donation for toctoc_comments or toctoccommentsce
+	* Display of a donation-message in the backend plugin
+

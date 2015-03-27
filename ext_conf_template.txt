@@ -1,3 +1,6 @@
+# cat=basic//01; type=string; label=Donationkey: If you've made a donation you can enter your donationkey here - you receive a donation key upon first donation for toctoc_comments or toctoccommentsce
+donationSecret =
+
 # cat=basic//02; type=int+; label=Backend-Module, max. records shown: How much comments should be displayed per page
 max_records = 10
 

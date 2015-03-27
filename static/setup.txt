@@ -7,11 +7,11 @@ plugin.tx_toctoccomments_pi1 = USER_INT
 plugin.tx_toctoccomments_pi1 = USER_INT
 [global]
 plugin.tx_toctoccomments_pi1 {
-  ##
+
   includeLibs = EXT:toctoc_comments/pi1/class.toctoc_comments_pi1.php
   userFunc = tx_toctoccomments_pi1->main
 
-  # mode for plugin, '' (empty) : normal, 1: recent comments, 2: report bad comment, 3: topratings, 4:other reports, 5: ajax login, 6: user center
+  # mode for plugin, '' (empty) : normal, 1: recent comments, 2: report bad comment, 3: topratings, 4:other reports, 5: ajax login, 6: user center, 7: comments search
   pluginmode =
 
   # code for commenting parts, commenting style, possible: "FORM,COMMENTS" (default), "COMMENTS,FORM" or "COMMENTS"
@@ -54,7 +54,7 @@ plugin.tx_toctoccomments_pi1 {
   HTMLEmailFontFamily = {$plugin.tx_toctoccomments_pi1.HTMLEmailFontFamily}
 
   sessionTimeout = {$plugin.tx_toctoccomments_pi1.sessionTimeout}
-
+  
   # comments are hidden from search engines, if you want search engines to index all your comments set this option to 1
   dontSkipSearchEngines = 0
 
@@ -689,6 +689,8 @@ plugin.tx_toctoccomments_pi2 {
   # page type for faster refreshs on page part refreshs
   pageTypeRefreshs =
   policyPid =
+  # sends back the user to the originating page after login logout using window.history.back()
+  sendBack = 1 
 
   register {
     enableSignup = 1

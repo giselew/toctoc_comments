@@ -112,8 +112,7 @@ In displayfields you can specify title, time of the record, the content (will be
 A displayfield has the following syntax
 Field for title [filed for time] [field for image] [field for sys_language_uid], [field for content]
 for tt_news it looks like this:
-title tstamp image sys_language_uid, short
-When you install or update to toctoc_comments 4.0 or above, then the plugin automatically fills in some fields for existing prefixes. displayfields and topratingsimagesfolder  are set to default values, that can be changed as you want later in the Backend in the table.</label>
+title tstamp image sys_language_uid, short</label>
 			<label index="topratingsimagesfolder.description">Folder with images to display in top ratings list and other charts</label>
 			<label index="topratingsimagesfolder.details">If in displayfileds an image is specified, then we need to now the folder containing the images of the extension, Normally this is uploads/pics/, but it can be another folder which can be specified here.</label>
 			<label index="topratingsdetailpage.description">Force a detail page for top ratings and other charts</label>

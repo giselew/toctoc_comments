@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<description>Database labels used in toctoccommentsce</description>
+		<type>database</type>
+		<csh_table></csh_table>
+		<fileId>EXT:toctoc_comments/locallang_cedb.xml</fileId>
+		<labelContext type="array">
+		</labelContext>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tab.comments">Comments and ratings</label>
+			<label index="tx_toctoccommentsce.external_ref.wizard">Go to this record</label>
+			<label index="tx_toctoccommentsce_enable_comments.description">Enables toctoc_comments below this record</label>
+			<label index="tx_toctoccommentsce_enable_comments.tx_toctoccommentsce_comments">Comments</label>
+			<label index="tx_toctoccommentsce_enable_comments.tx_toctoccommentsce_reviews">Reviews</label>
+			<label index="tx_toctoccommentsce_enable_comments.tx_toctoccommentsce_enable_comments">Enable comments</label>
+			<label index="tx_toctoccommentsce_with_comments.description">Comments or reviews</label>
+			<label index="tx_toctoccommentsce_with_comments.tx_toctoccommentsce_comments">With comments</label>
+			<label index="tx_toctoccommentsce_with_ratings.description">Enable ratings</label>
+			<label index="tx_toctoccommentsce_with_ratings.tx_toctoccommentsce_comments">With ratings</label>
+			<label index="tx_toctoccommentsce_with_sharing.description">Enable sharing</label>
+			<label index="tx_toctoccommentsce_with_sharing.tx_toctoccommentsce_comments">With sharing</label>
+			<label index="tx_toctoccommentscedonation.statusdonation">Status</label>
+			<label index="tx_toctoccommentscedonation.optionnotset">Option donation.secret not set.</label>
+			<label index="tx_toctoccommentsdonation.optionnotset">Option donationSecret not set.</label>
+			<label index="tx_toctoccommentscedonation.thanksforusing">Thanks for using</label>
+			<label index="tx_toctoccommentsce.trigger.prefix">Selected plugin to tablemap:</label>
+			<label index="text_no_comments">No comments</label>
+			<label index="tt_content.toctoc_comments_pi1.code">Mode:</label>
+			<label index="tt_content.toctoc_comments_pi1.code.I.0">Normal</label>
+			<label index="tt_content.toctoc_comments_pi1.code.I.1">Recent comments</label>
+			<label index="tt_content.toctoc_comments_pi1.code.I.3">Top ratings</label>
+			<label index="tt_content.toctoc_comments_pi1.code.I.6">User Center</label>
+			<label index="tt_content.toctoc_comments_pi1.code.I.7">Search Comments</label>
+		</languageKey>
+	</data>
+	<orig_hash type="array">
+	</orig_hash>
+	<orig_text type="array">
+	</orig_text>
+</T3locallang>

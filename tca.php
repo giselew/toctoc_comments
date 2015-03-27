@@ -116,7 +116,7 @@ $TCA['tx_toctoc_comments_comments'] = array (
 			'config' => array (
 				'type' => 'text',
 				'wrap' => 'virtual',
-				'cols' > 48,
+				'cols' => 48,
 				'rows' => 15,
 				'eval' => 'trim,required',
 			),

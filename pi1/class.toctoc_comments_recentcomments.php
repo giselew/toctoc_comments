@@ -41,7 +41,7 @@
  *   68:     public function mainRecentComments($pObj, $conf, $feuserid)
  *  151:     public function comments_getRecentComments($rows, $conf, $pObj, $fromusercenterid = 0, $usercenterlistid = 0,
 			$fromAjax = FALSE, $searchincomments = '')
- *  617:     protected function createRCLinks($text, $refID, $commentID, $prefix, $externalprefix, $singlePid, $conf, $show_uid, $okrowsi)
+ *  638:     protected function createRCLinks($text, $refID, $commentID, $prefix, $externalprefix, $singlePid, $conf, $show_uid, $okrowsi)
  *
  * TOTAL FUNCTIONS: 3
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -478,6 +478,27 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 						$commentcontent =  $this->applyStdWrap($commentimage. $link, 'content_stdWrap', $conf);
 						if ($usercenterlistid == 0) {
 							$autortext = $this->applyStdWrap($authorimage. $row['firstname'].'&nbsp;'.$row['lastname'], 'author_stdWrap', $conf);
+							if ($searchincomments != '') {
+								$searchincommentsarrupper = explode(strtoupper($searchincomments), strtoupper($autortext));
+								$cntupper= count($searchincommentsarrupper);
+								$searchincommentsarr=array();
+								$searchincommentstermarr=array();
+								$searchincommentstermarr[0] ='';
+								$curpos =0;
+								for ($i=0;$i<$cntupper;$i++) {
+									$searchincommentsarr[$i] = substr($autortext, $curpos, strlen($searchincommentsarrupper[$i]));
+									if ($i>0) {
+										$searchincommentstermarr[$i] = substr($autortext, $curpos-strlen($searchincomments), strlen($searchincomments));
+									}
+									$curpos= $curpos + strlen($searchincommentsarr[$i])+strlen($searchincomments);
+								}
+								$autortext = $searchincommentsarr[0];
+								for ($i=1;$i<$cntupper;$i++) {
+									if ($i>0) {
+										$autortext .= '<span class="tx-tc-foundserchterm">' . $searchincommentstermarr[$i] . '</span>' .$searchincommentsarr[$i];
+									}
+								}
+							}
 
 						} else {
 							$feuserid = $GLOBALS['TSFE']->fe_user->user['uid'];

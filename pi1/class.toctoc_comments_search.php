@@ -188,8 +188,10 @@ class toctoc_comments_search extends toctoc_comment_lib {
 
 		if ($fromAjax == TRUE) {
 			// Build the searchresult
-			$wherebase = $pidcond . 'content LIKE "%'. $searchincomments . '%"';
-  			$mincrdate = time() - 24*60*60*$commentage;
+			$wherebase = $pidcond . '(content LIKE "%'. $searchincomments . '%"';
+			$wherebase .=  ' OR firstname LIKE "%'. $searchincomments . '%"';
+			$wherebase .=  ' OR lastname LIKE "%'. $searchincomments . '%")';
+			$mincrdate = time() - 24*60*60*$commentage;
 			$wherecrdate = ' AND crdate > ' . $mincrdate;
 			$sorting = 'uid DESC'; // $conf['recentcomments.']['sorting'];
 			$wherecomm = $wherebase  . $wherecrdate;

@@ -78,10 +78,10 @@ plugin.tx_toctoccomments_pi1 {
 	useAdditionalFe_usersFields = 
 	
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//03; type=string; label=Date format: Date format specification. See PHP date() function for details. If empty, uses TYPO3 date format defined in Install tool
-	dateFormat =
+	dateFormat = %d.%m.%Y
 
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//03; type=options[date()=date,strftime()=strftime]; label=Date format mode:If "date()", use date() PHP function (traditional default). If "strftime()", use strftime() function (better international support)
-	dateFormatMode = date
+	dateFormatMode = strftime
 	
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//04; type=boolean; label=Commenting works in Review mode (read manual about Reviews)
 	commentReview = 0
@@ -255,7 +255,7 @@ plugin.tx_toctoccomments_pi1 {
     loginRequired = 0
     
     # cat=plugin.tx_toctoccomments_pi1: Advanced//64;  type=boolean; label=Watermark form fields: form fields will have a watermark instead of labels  
-    watermarkFormFields = 0
+    watermarkFormFields = 1
     
     # cat=plugin.tx_toctoccomments_pi1: Advanced//65;  type=boolean; label=Use the menu for bb-codes: when youselect text in the commenting form a popup allows to insert bb-codes  
   	useBBCodeMenu = 1
@@ -549,16 +549,16 @@ plugin.tx_toctoccomments_pi1 {
 	selectedBoxmodel = 
 	
 	# cat=plugin.tx_toctoccomments_pi1: Theme//03; type=int+; label=Textarea lineheight:Lineheight of textareas of forms, 16 - 30.
-	boxmodelTextareaLineHeight = 20
+	boxmodelTextareaLineHeight = 30
 	
 	# cat=plugin.tx_toctoccomments_pi1: Theme//04; type=int+; label=Textarea number of lines: How many lines the textarea contains ? 1 - 6.
 	boxmodelTextareaNbrLines = 1
 	
 	# cat=plugin.tx_toctoccomments_pi1: Theme//05; type=int+; label=Boxmodel element x-spacing:Horizontal spacing between elements in the boxmodel, 0 - 10.
-	boxmodelSpacing = 4
+	boxmodelSpacing = 10
 	
 	# cat=plugin.tx_toctoccomments_pi1: Theme//06; type=int+; label=CSS-Lineheight:Lineheight in the plugin, 14 - 40.
-	boxmodelLineHeight = 16
+	boxmodelLineHeight = 20
 	
 	# cat=plugin.tx_toctoccomments_pi1: Theme//07; type=boolean; label=Preserve line-height:Preserve original line-height, saves some lines of CSS, but results with ratingstars and ilike thumbs can be out of mesure.
 	boxmodelLineHeightPreserve = 0
@@ -576,7 +576,7 @@ plugin.tx_toctoccomments_pi1 {
 	boxmodelInputFieldSize = 35
 	
 	# cat=plugin.tx_toctoccomments_pi1: Theme//120; type=boolean; label=Inputfield design: Uses the old default - layouted(0) - or non layouted(1) design for form input field and labels.
-	boxmodelLabelInputPreserve = 0
+	boxmodelLabelInputPreserve = 1
 	
 	# cat=plugin.tx_toctoccomments_pi1: Theme//121; type=boolean; label=Button design: Uses the old default - layouted(0) - or non layouted(1) design for form buttons.
 	boxmodelButtonPreserve = 0

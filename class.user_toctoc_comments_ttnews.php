@@ -22,19 +22,15 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 /**
- * Hooks to tt_news.
- *
- */
-/**
  * [CLASS/FUNCTION INDEX of SCRIPT]
  *
  *
  *
- *   56: class user_toctoc_comments_ttnews
- *   66:     public function extraItemMarkerProcessor($markerArray, $row, $lConf, &$pObj)
- *  227:     private function getNumberOfComments($newsUid, &$pObj)
- *  246:     private function getTemplate($section, $conf, &$pObj)
- *  280:     private function getItemLink($itemUid, &$pObj)
+ *   52: class user_toctoc_comments_ttnews
+ *   62:     public function extraItemMarkerProcessor($markerArray, $row, $lConf, &$pObj)
+ *  223:     private function getNumberOfComments($newsUid, &$pObj)
+ *  242:     private function getTemplate($section, $conf, &$pObj)
+ *  275:     private function getItemLink($itemUid, &$pObj)
  *
  * TOTAL FUNCTIONS: 4
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -47,7 +43,7 @@ if (version_compare(TYPO3_version, '6.0', '<')) {
 }
 
 /**
- * This clas provides hook to tt_news to add extra markers.
+ * This class provides hook to tt_news to add extra markers.
  *
  * @author	Gisele Wendl <gisele.wendl@toctoc.ch>
  * @package TYPO3
@@ -271,7 +267,6 @@ class user_toctoc_comments_ttnews {
 	 * link to item and attempts to extract the link. If value is empty, it uses item
 	 * uid to manually create link
 	 *
-	 * @param	string		$marker	Marker value with link
 	 * @param	int		$itemUid	Item uid
 	 * @param	tx_ttnews		$pObj	Reference to parent object
 	 * @return	string		Generated URL to item

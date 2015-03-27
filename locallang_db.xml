@@ -130,12 +130,13 @@
 			<label index="tab.comments">Comments and ratings</label>
 			<label index="tx_toctoccommentsce_enable_comments.description">Enables toctoc_comments below this record</label>
 			<label index="tx_toctoccommentsce_enable_comments.tx_toctoccommentsce_comments">Comments</label>
+			<label index="tx_toctoccommentsce_enable_comments.tx_toctoccommentsce_reviews">Reviews</label>
 			<label index="tx_toctoccommentsce_enable_comments.tx_toctoccommentsce_enable_comments">Enable comments</label>
-			<label index="tx_toctoccommentsce_with_comments.description">Enables comments in the plugin</label>
+			<label index="tx_toctoccommentsce_with_comments.description">Comments or reviews</label>
 			<label index="tx_toctoccommentsce_with_comments.tx_toctoccommentsce_comments">With comments</label>
-			<label index="tx_toctoccommentsce_with_ratings.description">Enables ratings in the plugin</label>
+			<label index="tx_toctoccommentsce_with_ratings.description">Enable ratings</label>
 			<label index="tx_toctoccommentsce_with_ratings.tx_toctoccommentsce_comments">With ratings</label>
-			<label index="tx_toctoccommentsce_with_sharing.description">Enables sharing in the plugin</label>
+			<label index="tx_toctoccommentsce_with_sharing.description">Enable sharing</label>
 			<label index="tx_toctoccommentsce_with_sharing.tx_toctoccommentsce_comments">With sharing</label>
 		</languageKey>
 	</data>

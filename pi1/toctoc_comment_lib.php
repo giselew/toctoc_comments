@@ -35,191 +35,192 @@
  *
  *              SECTION: Commenting functions
  *  654:     public function comments($conf,&$pObj, $fromAjax, $feuserid, $pid)
- * 2970:     protected function getCommentsMenu($pObj, $conf, $externalref, $fromAjax, $cntrowsorig)
- * 3431:     protected function getBaseCommentsArray($uid, $uidlist = '', $selectparentuid = FALSE)
- * 3489:     protected function getBaseFeUsersArray($pObj, $fromAjax, $uid, $uidlist = '', $conf)
- * 3546:     protected function makeemoji($text, $conf, $debug)
- * 3694:     public function comments_getComments(&$rows, $conf, $pObj, $feuserid, $fromAjax, $pid, $levelhlt=0)
- * 4739:     public function comments_getComments_getRatings(&$row, $conf, $pObj, $feuserid, $fromAjax, $isReview = 0, $externalref = '', $commentusername = '')
- * 4968:     protected function comments_getComments_getEmail($email)
- * 4984:     protected function isCommentingClosed($conf, $pObj)
- * 5033:     protected function commentingClosed($pObj, $fromAjax, $conf)
- * 5056:     protected function comments_getCommentsBrowser($rpp, $startpoint, $totalrows, $pObj, $fromAjax, $conf)
- * 5206:     public function comments_getComments_fe_user($params, $conf, $pObj, $commentid, $fromAjax, $commentusername)
- * 5311:     protected function addleadingspace($text)
- * 5340:     protected function check_comment_ownership ($rowexternal_ref, $feuserid)
- * 5363:     public function previewcomment($data, $pObj, $conf)
+ * 2967:     protected function getCommentsMenu($pObj, $conf, $externalref, $fromAjax, $cntrowsorig)
+ * 3428:     protected function getBaseCommentsArray($uid, $uidlist = '', $selectparentuid = FALSE)
+ * 3486:     protected function getBaseFeUsersArray($pObj, $fromAjax, $uid, $uidlist = '', $conf)
+ * 3543:     protected function makeemoji($text, $conf, $debug)
+ * 3691:     public function comments_getComments(&$rows, $conf, $pObj, $feuserid, $fromAjax, $pid, $levelhlt=0)
+ * 4736:     public function comments_getComments_getRatings(&$row, $conf, $pObj, $feuserid, $fromAjax, $isReview = 0, $externalref = '', $commentusername = '')
+ * 4965:     protected function comments_getComments_getEmail($email)
+ * 4981:     protected function isCommentingClosed($conf, $pObj)
+ * 5030:     protected function commentingClosed($pObj, $fromAjax, $conf)
+ * 5053:     protected function comments_getCommentsBrowser($rpp, $startpoint, $totalrows, $pObj, $fromAjax, $conf)
+ * 5203:     public function comments_getComments_fe_user($params, $conf, $pObj, $commentid, $fromAjax, $commentusername)
+ * 5308:     protected function addleadingspace($text)
+ * 5337:     protected function check_comment_ownership ($rowexternal_ref, $feuserid)
+ * 5360:     public function previewcomment($data, $pObj, $conf)
  *
  *              SECTION: functions for images cache (AJAX)
- * 5392:     protected function setAJAXimage($image, $feuserid)
- * 5405:     public function getAJAXimage($feuserid, $commentid, $conf, $email = '')
- * 5466:     protected function setAJAXimageCache($image, $imageoriginal, $feuserid)
- * 5477:     protected function getAJAXimageCache($commentuserimageout)
- * 5492:     protected function checkAjaxUserPic ($cid=0)
- * 5524:     protected function build_AJAXImages($conf, $pObj, $usergenderexistsstr = '', $fromAjax = FALSE)
- * 5738:     protected function fixFeUserPic ($pic)
- * 5762:     protected function makeImageSprite($conf)
+ * 5389:     protected function setAJAXimage($image, $feuserid)
+ * 5402:     public function getAJAXimage($feuserid, $commentid, $conf, $email = '')
+ * 5463:     protected function setAJAXimageCache($image, $imageoriginal, $feuserid)
+ * 5474:     protected function getAJAXimageCache($commentuserimageout)
+ * 5489:     protected function checkAjaxUserPic ($cid=0)
+ * 5521:     protected function build_AJAXImages($conf, $pObj, $usergenderexistsstr = '', $fromAjax = FALSE)
+ * 5732:     protected function fixFeUserPic ($pic)
+ * 5756:     protected function makeImageSprite($conf)
  *
  *              SECTION: Form functions
- * 5965:     private function form($conf, &$pObj, $piVars, $fromAjax, $pid, $ifeuserid=0, $userpic, $commentid=0, $replylevel=0,	$fromcomments = FALSE)
- * 7205:     protected function form_updatePostVarsWithFeUserData($pObj, $fromAjax, $conf, $piVars, $feuserid, $userpic, $cid, $output_cid)
- * 7543:     protected function getUserName($fe_user_user_uid, $pObj, $fromAjax, $conf)
- * 7610:     protected function form_getCaptcha($pObj, $conf, $fromAjax)
- * 7667:     protected function form_wrapError($field, $pObj, $conf)
+ * 5959:     private function form($conf, &$pObj, $piVars, $fromAjax, $pid, $ifeuserid=0, $userpic, $commentid=0, $replylevel=0,	$fromcomments = FALSE)
+ * 7200:     protected function form_updatePostVarsWithFeUserData($pObj, $fromAjax, $conf, $piVars, $feuserid, $userpic, $cid, $output_cid)
+ * 7538:     protected function getUserName($fe_user_user_uid, $pObj, $fromAjax, $conf)
+ * 7605:     protected function form_getCaptcha($pObj, $conf, $fromAjax)
+ * 7662:     protected function form_wrapError($field, $pObj, $conf)
  *
  *              SECTION: Comments page-browser functions
- * 7704:     protected function processBrowserSubmission($conf, $pObj, $cmd, $ref)
+ * 7699:     protected function processBrowserSubmission($conf, $pObj, $cmd, $ref)
  *
  *              SECTION: Inserting and Updating Comments functions
- * 7769:     public function processSubmission($conf, $pObj, $piVars, $fromAjax, $feuserid, $pid, $lang)
- * 8269:     public function updateComment($conf, $pObj, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
+ * 7764:     public function processSubmission($conf, $pObj, $piVars, $fromAjax, $feuserid, $pid, $lang)
+ * 8291:     public function updateComment($conf, $pObj, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
  *
  *              SECTION: IP-blocking functions, Spam checking
- * 8373:     protected function IPBlockSpamCheck(&$pObj)
- * 8391:     protected function sendNotificationIPBlock($params)
- * 8406:     protected function checkSMTPService($hostname, $port, $confcheckSMTPService = 0)
- * 8428:     private function getIpAddr()
- * 8444:     private function checkTableBLs($ipaddr)
- * 8455:     private function checkLocalBL($ipaddr)
- * 8468:     private function checkStaticBL($ipaddr)
- * 8498:     private function checkNetworkBLs($ipaddr)
- * 8522:     protected function processSubmission_checkTypicalSpam($pObj, $conf, $piVars, $lang, $fromAjax)
- * 8595:     protected function processSubmission_validate($piVars, $conf, $pObj, $fromAjax)
+ * 8395:     protected function IPBlockSpamCheck(&$pObj)
+ * 8413:     protected function sendNotificationIPBlock($params)
+ * 8428:     protected function checkSMTPService($hostname, $port, $confcheckSMTPService = 0)
+ * 8450:     private function getIpAddr()
+ * 8466:     private function checkTableBLs($ipaddr)
+ * 8477:     private function checkLocalBL($ipaddr)
+ * 8490:     private function checkStaticBL($ipaddr)
+ * 8520:     private function checkNetworkBLs($ipaddr)
+ * 8544:     protected function processSubmission_checkTypicalSpam($pObj, $conf, $piVars, $lang, $fromAjax)
+ * 8617:     protected function processSubmission_validate($piVars, $conf, $pObj, $fromAjax)
  *
  *              SECTION: E-mail notification
- * 8676:     public function sendNotificationEmail($uid, $plugincacheid, $points, $action, $conf, $pObj, $fromAjax, $piVars, $pid, $fetoctocusertoinsert,
+ * 8698:     public function sendNotificationEmail($uid, $plugincacheid, $points, $action, $conf, $pObj, $fromAjax, $piVars, $pid, $fetoctocusertoinsert,
 			$attachment_id=0, $attachment_subid=0, $optinemail='', $ratingpageid=0)
- * 9272:     protected function emailOptIn($conf, $optinemail, $optin_ip)
- * 9349:     protected function checkCOI($conf, $email, $checkip=TRUE)
+ * 9294:     protected function emailOptIn($conf, $optinemail, $optin_ip)
+ * 9371:     protected function checkCOI($conf, $email, $checkip=TRUE)
  *
  *              SECTION: language handling functions
- * 9385:     public function fixLL(&$conf)
- * 9410:     protected function fixLL_internal($LL, &$ll, $prefix = '')
+ * 9407:     public function fixLL(&$conf)
+ * 9432:     protected function fixLL_internal($LL, &$ll, $prefix = '')
  *
  *              SECTION: mostly formatting functions
- * 9435:     protected function createLinks($text, $conf)
- * 9490:     protected function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 9513:     protected function checkCustomFunctionCodes($code, $pObj)
- * 9538:     protected function isNoCacheUrl($url)
- * 9560:     protected function substituteMarkersAndSubparts($template, array $markers, array $subparts, $pObj)
+ * 9457:     protected function createLinks($text, $conf)
+ * 9512:     protected function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 9535:     protected function checkCustomFunctionCodes($code, $pObj)
+ * 9560:     protected function isNoCacheUrl($url)
+ * 9582:     protected function substituteMarkersAndSubparts($template, array $markers, array $subparts, $pObj)
  *
  *              SECTION: session and cache functions
- * 9587:     public function resetSessionVars($resetcontext, $alsoajaxvar = TRUE)
- * 9639:     public function getClearCacheIds($conf, $pid = 0, $repectsession = TRUE)
- * 9706:     protected function getClearCacheExternal_ref_uids($external_ref_uid = '')
- * 9735:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
- * 9812:     public function getPluginCacheControlTstamp ($external_ref_uid)
- * 9835:     public function initCaches()
- * 9891:     protected function clearPagesCaches($conf, $pid, $plugincacheid)
+ * 9609:     public function resetSessionVars($resetcontext, $alsoajaxvar = TRUE)
+ * 9661:     public function getClearCacheIds($conf, $pid = 0, $repectsession = TRUE)
+ * 9728:     protected function getClearCacheExternal_ref_uids($external_ref_uid = '')
+ * 9757:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
+ * 9834:     public function getPluginCacheControlTstamp ($external_ref_uid)
+ * 9857:     public function initCaches()
+ * 9913:     protected function clearPagesCaches($conf, $pid, $plugincacheid)
  *
  *              SECTION: Smilie functions
- * 9932:     public function parseSmilieArray($data)
- * 9949:     public function replaceSmilies($content, $conf)
- * 9971:     protected function checkbbcrop($content, $commentCropLength, $conf, $pObj)
- * 10007:     protected function replaceBBs($content, $pObj, $conf, $purge=FALSE)
+ * 9954:     public function parseSmilieArray($data)
+ * 9971:     public function replaceSmilies($content, $conf)
+ * 9993:     protected function checkbbcrop($content, $commentCropLength, $conf, $pObj)
+ * 10029:     protected function replaceBBs($content, $pObj, $conf, $purge=FALSE)
  *
  *              SECTION: functions for the AJAx interface with jQuery/JavaScript
- * 10059:     protected function getAjaxJSData($feuserid, $pid, $languagecode, $conf, $pObj, $cid, $fromAjax, $dataonly=FALSE, $externalref)
- * 10131:     protected function arraydiffassocrecursive($array1, $array2)
- * 10160:     protected function getAjaxData($feuserid, $pid, $languagecode, $conf, $cid, $ref)
- * 10183:     protected function mirrorconf($conf)
- * 10246:     protected function updateAjaxData($feuserid, $conf)
- * 10266:     protected function getAjaxLoggedInData($forjsvariable, $outputloginstate)
- * 10330:     protected function getAjaxDataAttachments($conf, $fromAjax, $pObj)
- * 10352:     protected function getAjaxJSDataCommentImgs($cid, $fromAjax)
- * 10389:     protected function getAjaxJSDataComments($cid, $pObj, $fromAjax)
- * 10427:     protected function getAjaxDataComments($pObj)
- * 10444:     protected function getAjaxDataImgs()
+ * 10081:     protected function getAjaxJSData($feuserid, $pid, $languagecode, $conf, $pObj, $cid, $fromAjax, $dataonly=FALSE, $externalref)
+ * 10153:     protected function arraydiffassocrecursive($array1, $array2)
+ * 10182:     protected function getAjaxData($feuserid, $pid, $languagecode, $conf, $cid, $ref)
+ * 10205:     protected function mirrorconf($conf)
+ * 10268:     protected function updateAjaxData($feuserid, $conf)
+ * 10288:     protected function getAjaxLoggedInData($forjsvariable, $outputloginstate)
+ * 10352:     protected function getAjaxDataAttachments($conf, $fromAjax, $pObj)
+ * 10374:     protected function getAjaxJSDataCommentImgs($cid, $fromAjax)
+ * 10411:     protected function getAjaxJSDataComments($cid, $pObj, $fromAjax)
+ * 10449:     protected function getAjaxDataComments($pObj)
+ * 10466:     protected function getAjaxDataImgs()
  *
  *              SECTION: URL- and IP-related functions
- * 10461:     public function getCurrentIp()
- * 10477:     public function hasValidItemUrl($piVars)
- * 10500:     public function getDefaultConfig($pluginkey='')
+ * 10483:     public function getCurrentIp()
+ * 10499:     public function hasValidItemUrl($piVars)
+ * 10522:     public function getDefaultConfig($pluginkey='')
  *
  *              SECTION: Rating functions
- * 10530:     public function getRatingDisplay($ref, $conf = NULL, $fromAjax = 0, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd = 'vote',
+ * 10552:     public function getRatingDisplay($ref, $conf = NULL, $fromAjax = 0, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd = 'vote',
 			$pObj = NULL, $cid, $fromcomments, $commentspics = array(), $scopeid=0, $isReview = 0, $commentusername = '')
- * 10591:     public function isVoted($ref, $pObj, $scopeid=0, $feuserid=0, $fromAjax)
- * 10629:     public function isCommented($ref, $pObj, $feuserid=0, $fromAjax)
- * 10662:     public function getBarWidth($rating, $conf, $isReview = 0)
- * 10685:     protected function getRatingInfo($ref, $pObj, $feuserid=-1, $conf, $scopeid=0, $fromAjax, $isReview = 0, $fromcomments = 0, $reviewfeuserid = 0)
- * 10884:     protected function generateRatingContent($ref, $template, $conf, $fromAjax, $pid, $returnasarray, $feuserid, $pObj, $cmd, $cid, $fromcomments,
+ * 10613:     public function isVoted($ref, $pObj, $scopeid=0, $feuserid=0, $fromAjax)
+ * 10651:     public function isCommented($ref, $pObj, $feuserid=0, $fromAjax)
+ * 10684:     public function getBarWidth($rating, $conf, $isReview = 0)
+ * 10707:     protected function getRatingInfo($ref, $pObj, $feuserid=-1, $conf, $scopeid=0, $fromAjax, $isReview = 0, $fromcomments = 0, $reviewfeuserid = 0)
+ * 10906:     protected function generateRatingContent($ref, $template, $conf, $fromAjax, $pid, $returnasarray, $feuserid, $pObj, $cmd, $cid, $fromcomments,
 	$commentspics, $scopeid = 0, $isReview = 0, $commentusername = '')
- * 11920:     private function makeiLikeText($conf, $pObj, $cmd, $ref, $fromAjax, $myrating = array(), $mylikeval, $mydis='', $template, $cid, $commentspics, $extpreffortext)
+ * 11942:     private function makeiLikeText($conf, $pObj, $cmd, $ref, $fromAjax, $myrating = array(), $mylikeval, $mydis='', $template, $cid, $commentspics, $extpreffortext)
  *
  *              SECTION: TYPO3 workarounds
- * 12364:     public function enableFields($tableName, $pObj, $getFromSession = FALSE)
- * 12386:     public function pi_getLLWrap($pObj, $llkey, $fromAjax)
- * 12431:     protected function t3getSubpart ($pObj, $templateCode, $templateMarker)
- * 12455:     protected function t3substituteMarkerArray ($content, $markContentArray)
- * 12477:     protected function t3substituteMarker ($template, $marker, $markContent)
- * 12491:     protected function t3fileResource ($pObj, $usetemplateFile)
- * 12508:     protected function getcheck ($ref, $i, $ratingscheck)
- * 12532:     protected function formatDate($date, $pObj, $fromAjax, $conf)
- * 12668:     protected function getPageURL($fromAjax = FALSE, $pid = 0)
- * 12690:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
- * 12715:     protected function getCleanHTML ($html)
- * 12738:     public function getLoginForm()
- * 12768:     public function getChangePasswordForm($uid = 0, $piHash = '')
- * 12799:     public function getBBCard($conf, $pObj, $buildthisbb = FALSE, $returnbbarray = FALSE)
+ * 12386:     public function enableFields($tableName, $pObj, $getFromSession = FALSE)
+ * 12408:     public function pi_getLLWrap($pObj, $llkey, $fromAjax)
+ * 12453:     protected function t3getSubpart ($pObj, $templateCode, $templateMarker)
+ * 12477:     protected function t3substituteMarkerArray ($content, $markContentArray)
+ * 12499:     protected function t3substituteMarker ($template, $marker, $markContent)
+ * 12513:     protected function t3fileResource ($pObj, $usetemplateFile)
+ * 12530:     protected function getcheck ($ref, $i, $ratingscheck)
+ * 12554:     protected function formatDate($date, $pObj, $fromAjax, $conf)
+ * 12690:     protected function getPageURL($fromAjax = FALSE, $pid = 0)
+ * 12712:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ * 12737:     protected function getCleanHTML ($html)
+ * 12760:     public function getLoginForm()
+ * 12790:     public function getChangePasswordForm($uid = 0, $piHash = '')
+ * 12821:     public function getBBCard($conf, $pObj, $buildthisbb = FALSE, $returnbbarray = FALSE)
  *
  *              SECTION: Usercards
- * 12902:     public function getSmiliesCard($conf)
- * 13168:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $pObj, $commentid, $fromAjax = TRUE, $fromusercenter = FALSE)
+ * 12924:     public function getSmiliesCard($conf)
+ * 13190:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $pObj, $commentid, $fromAjax = TRUE, $fromusercenter = FALSE)
  *
  *              SECTION: Mail functions
- * 13626:     protected function getMailTo($mailAddress, $linktxt = '', $initP = '?')
- * 13673:     protected function encryptEmail($string, $back=0)
- * 13715:     protected function encryptCharcode($n, $start, $end, $offset)
- * 13740:     public function send_mail ($toEMail, $subject, $message, $html, $fromEMail, $fromName, $confcheckSMTPService = 0, $attachment='')
- * 13913:     protected function slashName ($name, $apostrophe='"')
+ * 13648:     protected function getMailTo($mailAddress, $linktxt = '', $initP = '?')
+ * 13695:     protected function encryptEmail($string, $back=0)
+ * 13737:     protected function encryptCharcode($n, $start, $end, $offset)
+ * 13762:     public function send_mail ($toEMail, $subject, $message, $html, $fromEMail, $fromName, $confcheckSMTPService = 0, $attachment='')
+ * 13935:     protected function slashName ($name, $apostrophe='"')
  *
  *              SECTION: Commentator-Notification functions
- * 13937:     public function handleCommentatorNotifications($uid, $conf, $pObj, $fromeID = FALSE, $pid=0, $fromAjax=1)
+ * 13959:     public function handleCommentatorNotifications($uid, $conf, $pObj, $fromeID = FALSE, $pid=0, $fromAjax=1)
  *
  *              SECTION: Website preview functions
- * 14288:     public function cleanupfup($uploadedfile, $conf, $originalfilename)
- * 14307:     public function getwebpagepreview($cmd, $pObj, $cid, $data, $conf)
- * 14350:     protected function getpreviewinit($cid, $data, $conf)
- * 14398:     protected function savewebpagepreviewtodb($pcid, $pObj, $pcommentid, $conf)
- * 14637:     protected function cleanupdbandfiles($conf, $uploadedfile='', $originalfilename='')
- * 14789:     protected function getwebpagecache($pcid, $pObj, $pcommentid, $conf, $url='', $isbeforefetch = FALSE)
- * 14956:     protected function read_dir($dir, $array = array())
- * 14985:     protected function commentShowWebpagepreview ($rowattachmentid, $rowattachment_subid, $conf, $pObj, $cid, $topwebsitepreview, $fromAjax,
+ * 14310:     public function cleanupfup($uploadedfile, $conf, $originalfilename)
+ * 14329:     public function getwebpagepreview($cmd, $pObj, $cid, $data, $conf)
+ * 14372:     protected function getpreviewinit($cid, $data, $conf)
+ * 14420:     protected function savewebpagepreviewtodb($pcid, $pObj, $pcommentid, $conf)
+ * 14659:     protected function cleanupdbandfiles($conf, $uploadedfile='', $originalfilename='')
+ * 14811:     protected function getwebpagecache($pcid, $pObj, $pcommentid, $conf, $url='', $isbeforefetch = FALSE)
+ * 14978:     protected function read_dir($dir, $array = array())
+ * 15007:     protected function commentShowWebpagepreview ($rowattachmentid, $rowattachment_subid, $conf, $pObj, $cid, $topwebsitepreview, $fromAjax,
 			$row = array(), $isforemailnotification = FALSE)
- * 15484:     protected function makeAttachementPicture($picturefilename, $conf, $descriptionbyuser, $originalfilename, $firstname,
+ * 15506:     protected function makeAttachementPicture($picturefilename, $conf, $descriptionbyuser, $originalfilename, $firstname,
 			$lastname, $fetoctocusertoinsert)
  *
  *              SECTION: eID-Interface functions
- * 15664:     public function handleeID($uid, $conf, $pObj, $messagetodisplay, $refreshurl)
+ * 15686:     public function handleeID($uid, $conf, $pObj, $messagetodisplay, $refreshurl)
  *
  *              SECTION: Reply on comments functions
- * 15770:     protected function getCommentBoxDisplay($commentid, $conf, $level, $fromAjax, $triggeredlevel=0, $levelexpandoverride=0)
- * 15846:     protected function getCommentBoxChildrenDisplayIsCollapsed($commentschildrenids, $conf, $level, $fromAjax, $triggeredlevel=0, $levelexpandoverride=0)
+ * 15792:     protected function getCommentBoxDisplay($commentid, $conf, $level, $fromAjax, $triggeredlevel=0, $levelexpandoverride=0)
+ * 15868:     protected function getCommentBoxChildrenDisplayIsCollapsed($commentschildrenids, $conf, $level, $fromAjax, $triggeredlevel=0, $levelexpandoverride=0)
  *
  *              SECTION: Fe-usergroup functions
- * 15918:     public function usersGroupmembers($pObj, $fromAjax, $conf, $communitybuddies = FALSE)
- * 15999:     protected function isUserOnline($feuser_uid)
+ * 15940:     public function usersGroupmembers($pObj, $fromAjax, $conf, $communitybuddies = FALSE)
+ * 16021:     protected function isUserOnline($feuser_uid)
  *
  *              SECTION: Recent comments functions
- * 16038:     public function getRecentComments($pObj, $conf, $feuserid)
- * 16054:     protected function trimContent($text, $conf, $maxChars=0, $dospecialChars=TRUE, $precrop = FALSE)
+ * 16060:     public function getRecentComments($pObj, $conf, $feuserid)
+ * 16076:     protected function trimContent($text, $conf, $maxChars=0, $dospecialChars=TRUE, $precrop = FALSE)
  *
  *              SECTION: Report comments functions
- * 16111:     protected function getCommentsReportLink($params, &$pObj, $fromAjax, $pid)
- * 16159:     public function mainReport($content, $conf, $pObj, $piVars)
+ * 16133:     protected function getCommentsReportLink($params, &$pObj, $fromAjax, $pid)
+ * 16181:     public function mainReport($content, $conf, $pObj, $piVars)
  *
  *              SECTION: Debug function
- * 16186:     protected function trackdebug ($trackingfunction)
+ * 16208:     protected function trackdebug ($trackingfunction)
  *
  *              SECTION: Top ratings functions
- * 16213:     public function showtopRatings($conf, $pObj)
+ * 16235:     public function showtopRatings($conf, $pObj)
  *
  *              SECTION: show userCenter functions
- * 16235:     public function showuserCenter($conf, $pObj)
- * 16253:     public function showCommentsSearch($conf, $pObj, $fromAjax = FALSE, $data = '', $cid = 0)
- * 16269:     private function gravatarize($conf, $outstr, $email)
- * 16320:     private function gifbuild($conf, $pObj, $feuserid, $gravatarEnable, $userimgFile, $imagesize, $profileimgclass, $classonline, $userimagestyle, $usernametitle, $email, $cssid, $nogen = FALSE, $imgalign = '')
+ * 16257:     public function showuserCenter($conf, $pObj)
+ * 16275:     public function showCommentsSearch($conf, $pObj, $fromAjax = FALSE, $data = '', $cid = 0)
+ * 16291:     private function gravatarize($conf, $outstr, $email)
+ * 16341:     private function gifbuild($conf, $pObj, $feuserid, $gravatarEnable, $userimgFile, $imagesize, $profileimgclass, $classonline,
+			$userimagestyle, $usernametitle, $email, $cssid, $nogen = FALSE, $imgalign = '')
  *
  * TOTAL FUNCTIONS: 132
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -5709,7 +5710,7 @@ class toctoc_comment_lib extends tslib_pibase {
 
 					$this->setAJAXimage($tmpimgstr, $userindex);
 				}
-				
+
 				$_SESSION['AJAXimages']=$this->AJAXimages;
 				$_SESSION['AJAXimagesTimeStamp']=microtime(TRUE);
 				if (intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
@@ -6167,7 +6168,8 @@ class toctoc_comment_lib extends tslib_pibase {
 				$tformTopMessage =$_SESSION['formTopMessage'];
 
 			} else {
-				$requiredFields = t3lib_div::trimExplode(',', 'email, lastname,' . $conf['requiredFields'], TRUE);
+				$requiredFields = array_unique(t3lib_div::trimExplode(',', 'email, lastname,' . $conf['requiredFields'], TRUE));
+
 				$errfound= 0;
 				$errfields = '';
 				foreach ($requiredFields as $field) {
@@ -6181,7 +6183,7 @@ class toctoc_comment_lib extends tslib_pibase {
 
 				}
 
-				if ($errfound > 0) {
+				if (($errfound > 0) && ($feuserid > 0)) {
 					$_SESSION['formTopMessage']= '<div class="tx-tc-form-top-message"><p class="tx-tc-text">' .
 					$this->pi_getLLWrap($pObj, 'error.required.fieldsadminshouldadd', $fromAjax) . ': ' . $errfields .
 					'</p></div>';
@@ -6921,7 +6923,7 @@ class toctoc_comment_lib extends tslib_pibase {
 				$imagetag = str_replace('class="tx-tc-userpicf tx-tc-online tx-tc-uimgsize" title', 'class="tx-tc-margin0 tx-tc-nodisp tx-tc-online" title', $imagetag);
 				$imagetag = str_replace('width="' .$this->userimagesize .'"', 'width="'.$conf['UserImageSize'].'"', $imagetag);
 				$imagetag = str_replace('height="' .$this->userimagesize .'"', 'height="'.$conf['UserImageSize'].'"', $imagetag);
-
+								
 				$_SESSION['userAJAXimage'] = $imagetag;
 			}
 
@@ -7949,8 +7951,8 @@ class toctoc_comment_lib extends tslib_pibase {
 							}
 						} else {
 							$_SESSION['lasttimecomment'] = 0;
-						} 
-					} 					
+						}
+					}
 				} else {
 					$_SESSION['lasttimecomment'] = 0;
 				}
@@ -7965,13 +7967,13 @@ class toctoc_comment_lib extends tslib_pibase {
 				} elseif ($timegap > 0) {
 					//show and request captcha
 					if ($timegap == 1) {
-						$pObj->formTopMessage = $this->pi_getLLWrap($pObj, 'pi1_template.needwaitforoneminute', $fromAjax) . ' ' 
+						$pObj->formTopMessage = $this->pi_getLLWrap($pObj, 'pi1_template.needwaitforoneminute', $fromAjax) . ' '
 								. $this->pi_getLLWrap($pObj, 'pi1_template.needwait_untilyoucanrepost', $fromAjax);
 					} else {
-						$pObj->formTopMessage = $this->pi_getLLWrap($pObj, 'pi1_template.needwaitfor', $fromAjax) . ' ' . $timegap . ' ' 
-								. $this->pi_getLLWrap($pObj, 'pi1_template.timeconv.minutes', $fromAjax) . ' ' 
+						$pObj->formTopMessage = $this->pi_getLLWrap($pObj, 'pi1_template.needwaitfor', $fromAjax) . ' ' . $timegap . ' '
+								. $this->pi_getLLWrap($pObj, 'pi1_template.timeconv.minutes', $fromAjax) . ' '
 								. $this->pi_getLLWrap($pObj, 'pi1_template.needwait_untilyoucanrepost', $fromAjax);
-						
+
 					}
 				} elseif ($_SESSION['requestCapcha'][$cid]>=1) {
 					//show and request captcha
@@ -16344,7 +16346,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	 * @param	[type]		$imgalign: ...
 	 * @return	string		$tmpimgstr: img-tag of the pic
 	 */
-	private function gifbuild($conf, $pObj, $feuserid, $gravatarEnable, $userimgFile, $imagesize, $profileimgclass, $classonline, 
+	private function gifbuild($conf, $pObj, $feuserid, $gravatarEnable, $userimgFile, $imagesize, $profileimgclass, $classonline,
 			$userimagestyle, $usernametitle, $email, $cssid, $nogen = FALSE, $imgalign = '') {
 		if ($imgalign != '') {
 			$imgalign = ' align="' . $imgalign . '" ';

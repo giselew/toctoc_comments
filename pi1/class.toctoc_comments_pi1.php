@@ -29,40 +29,41 @@
  *
  *
  *
- *  105: class tx_toctoccomments_pi1 extends tslib_pibase
- *  186:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
- * 2382:     protected function checkJSLoc()
- * 2647:     protected function checkCSSTheme()
- * 2758:     protected function checkCSSLoc()
- * 3221:     protected function makesharingcss ()
- * 3398:     protected function initprefixToTableMap()
- * 3434:     protected function init()
- * 4104:     protected function mergeConfiguration()
- * 4489:     protected function fetchConfigValue($param)
- * 4517:     protected function ae_detect_ie()
- * 4540:     protected function boxmodel()
- * 5212:     protected function crunchcss($buffer)
- * 5237:     protected function calculate_string( $mathString )
- * 5260:     protected function locationHeaderUrlsubDir()
- * 5279:     protected function currentPageName()
- * 5307:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
- * 5342:     protected function doClearCache ($forceclear=FALSE)
- * 5377:     protected function getPluginCacheControlTstamp ($external_ref_uid)
- * 5388:     protected function getLastUserAdditionTstamp ()
- * 5411:     protected function initLegacyCache ()
- * 5425:     protected function check_scopes()
- * 5583:     protected function initializeprefixtotablemap()
- * 5623:     protected function sharrrejs()
- * 5705:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
- * 5758:     private function resolveBackPath($pathStr)
- * 5793:     private function dirname($path)
- * 5807:     private function revExplode($delimiter, $string, $count = 0)
- * 5823:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 5846:     public function createLinks($text, $conf = NULL)
- * 5869:     protected function getThemeTmageDimension($filename, $returnindex)
- * 5889:     protected function checktoctoccommentsuser()
+ *  106: class tx_toctoccomments_pi1 extends tslib_pibase
+ *  187:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
+ * 2427:     protected function checkJSLoc()
+ * 2695:     protected function checkCSSTheme()
+ * 2806:     protected function checkCSSLoc()
+ * 3303:     protected function makesharingcss ()
+ * 3480:     protected function initprefixToTableMap()
+ * 3516:     protected function initexternaluid($withinitprefixToTableMap)
+ * 3655:     protected function init()
+ * 4203:     protected function mergeConfiguration()
+ * 4588:     protected function fetchConfigValue($param)
+ * 4616:     protected function ae_detect_ie()
+ * 4639:     protected function boxmodel()
+ * 5311:     protected function crunchcss($buffer)
+ * 5336:     protected function calculate_string( $mathString )
+ * 5359:     protected function locationHeaderUrlsubDir()
+ * 5378:     protected function currentPageName()
+ * 5406:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
+ * 5441:     protected function doClearCache ($forceclear=FALSE)
+ * 5476:     protected function getPluginCacheControlTstamp ($external_ref_uid)
+ * 5487:     protected function getLastUserAdditionTstamp ()
+ * 5510:     protected function initLegacyCache ()
+ * 5524:     protected function check_scopes()
+ * 5682:     protected function initializeprefixtotablemap()
+ * 5722:     protected function sharrrejs()
+ * 5804:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
+ * 5857:     private function resolveBackPath($pathStr)
+ * 5892:     private function dirname($path)
+ * 5906:     private function revExplode($delimiter, $string, $count = 0)
+ * 5922:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 5945:     public function createLinks($text, $conf = NULL)
+ * 5968:     protected function getThemeTmageDimension($filename, $returnindex)
+ * 5988:     protected function checktoctoccommentsuser()
  *
- * TOTAL FUNCTIONS: 31
+ * TOTAL FUNCTIONS: 32
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -108,7 +109,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '710';
+	public $extVersion = '720';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
 	public $externalUid;						// UID of external record
@@ -184,12 +185,23 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	 * @return	void
 	 */
 	public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL) {
-		
+
 		$this->conf = $conf;
 		$this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['toctoc_comments']);
 
 		if (intval($this->conf['debug.']['useDebug'])==1) {
 			$this->showsdebugprint = TRUE;
+		}
+
+		if (intval($this->conf['pluginmode'])>0) {
+			if ($hookTablePrefix != '') {
+				if ($hookcObj) {
+					$this->cObj=$hookcObj;
+				}
+			}
+
+			$hookTablePrefix = '';
+			$hookId = 0;
 		}
 
 		$loginreset=FALSE;
@@ -585,17 +597,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		if  ($this->extConf['importDataprefixtotable']) {
 			$this->initializeprefixtotablemap();
 		}
-		
-		if (trim($this->conf['optionalRecordId']) == '') {
-			if (($hookTablePrefix) != '' && ($hookId > 0)) {
-				if ($hookTablePrefix == 'tt_content') {
-					$this->conf['optionalRecordId'] = $hookTablePrefix . '_' . $hookId;
-				} 
-		
-			} 
-							
-		} 
-			
+
 		if (intval($this->conf['externalPrefix'])>0) {
 			if ($this->conf['externalPrefix']!='') {
 				$where = 'uid=' . $this->conf['externalPrefix'];
@@ -607,13 +609,16 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 						'',
 						''
 				);
+
 				$arrwithid=explode('_', $this->conf['optionalRecordId']);
 				unset($arrwithid[count($arrwithid)-1]);
 				$recordtable=implode('_', $arrwithid);
 				if ($this->conf['externalPrefix'] != 'pages') {
+
 					if($recordtable != $rows[0]['pi1_table']) {
-						if ($recordtable != 'tt_content') {
+						if (($recordtable != 'tt_content') && ($recordtable != '')) {
 						//then we have mismach between $this->conf['externalPrefix'] and the record
+						// or it's from toctoccommentsfe and $recordtable is = '' (optionalRecordId not yet set)
 							$where = 'pi1_table="' . $recordtable .'"';
 							$rowsrf = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
 									'tx_toctoc_comments_prefixtotable.pi1_key AS pi1_key, tx_toctoc_comments_prefixtotable.pi1_table AS pi1_table',
@@ -675,6 +680,35 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			}
 
 		}
+
+		if (trim($this->conf['optionalRecordId']) == '') {
+			if (($hookTablePrefix) != '' && ($hookId > 0)) {
+				if ($hookTablePrefix == 'tt_content') {
+					$this->conf['optionalRecordId'] = $hookTablePrefix . '_' . $hookId;
+					if ($this->conf['externalPrefix'] != 'pages') {
+						$this->conf['optionalRecordId'] = '';
+						$hookTablePrefix = $this->conf['externalPrefix'];
+
+						// the hookid needs to be replaced with the id in the GET_VARS
+						$newhookId=0;
+						if ($this->initexternaluid(TRUE) == TRUE) {
+							$newhookId = $this->externalUid;
+						}
+
+						if ($newhookId > 0) {
+							$hookId = $newhookId;
+						}
+
+						$this->conf['externalPrefix'] = 'pages';
+					}
+
+				}
+
+			}
+
+		}
+
+		$this->conf['optionalRecordId'] . ',externalPrefix ' . $this->conf['externalPrefix'] . '<br>';
 
 		$contentelementMultiReference='';
 		if (($this->conf['externalPrefix'] != 'pages') && ($this->lhookTablePrefix == '')) {
@@ -2544,6 +2578,8 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 			$scopefb = 'email';
 		}
 
+		$sendbackafterloginout=intval($confpi2['sendBack']);
+
 		if(intval($this->conf['advanced.']['acceptTermsCondsOnSubmit']) > 0) {
 			$termscond = 1;
 		} else {
@@ -2560,6 +2596,7 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 		$jscontent .= 'var textErrNotReviewed = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.textmakefirstreview', FALSE)) . '";' . "\n";
 		$jscontent .= 'var confagbchck = ' . $termscond . ';' . "\n";
 		$jscontent .= 'var activelang = "' . $_SESSION['activelang'] . '";' . "\n";
+		$jscontent .= 'var sendbackafterloginout = ' . $sendbackafterloginout . ';' . "\n";
 		$jscontent .= 'var cookieLifetime = ' . intval($this->conf['dataProtect.']['cookieLifetime']) . ';' . "\n";
 		$jscontent .= 'var textErrCommentNull = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.texterrornull', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textErrSearchLength = "' . base64_encode($strtextsearcherrorlength) . '";' . "\n";
@@ -2866,9 +2903,46 @@ div.tx-tc-ct-form-field input, textarea.tx-tc-ctinput-textarea, textarea.tx-tc-c
 	-moz-box-sizing: border-box !important;
 	box-sizing: border-box !important;
 }
+.tx-tc-responsive .tx-tc-ctinput-textarea, .tx-tc-responsive .tx-tc-ct-input, .tx-tc-responsive input[type="text"], .tx-tc-responsive input[type="password"] {
+	line-height: ' . intval($this->conf['theme.']['boxmodelLineHeight']) . 'px;
+	width: 100%;
+}
+.tx-tc-responsive .tx-tc-ct-ntf-wrap {
+	width: calc(100% - 35px) !important;
+    width: 85%;
+}
+.tx-tc-responsive .tx-tcfh0 .tx-tc-ct-form-field {
+    width: 100%;
+}
+.tx-tc-responsive .tx-tc-ctinput-textarea {
+	padding: ' .  (intval(($this->conf['theme.']['boxmodelSpacing'])/2)-1) . 'px 0 ' .
+	(intval(($this->conf['theme.']['boxmodelSpacing'])/2)-1) . 'px ' . (intval(($this->conf['theme.']['boxmodelSpacing'])/2)-1) . 'px !important;
+}
+.tx-tc-responsive .tx-tc-ct-form-field input[type=text] {
+	padding-left: ' .  (intval(($this->conf['theme.']['boxmodelSpacing'])/2)-1) . 'px !important;
+}
+.tx-tc-responsive input[type=text], .tx-tc-responsive input[type=password] {
+    height: ' . (intval($this->conf['theme.']['boxmodelLineHeight']) + intval($this->conf['theme.']['boxmodelSpacing'])) . 'px;
+}
+.tx-tc-responsive .tx-tc-ct-cap-area-image {
+    margin: 0 1px ' . intval($this->conf['theme.']['boxmodelSpacing']) . 'px ' . intval($this->conf['theme.']['boxmodelSpacing']/2) . 'px;
+}
+.tx-tc-responsive .tx-tc-ct-cap-area-image + input {
+    float: left;
+}
+.tx-tc-responsive img.tx-tc-cap-image-rf {
+    float: none;
+}
+.tx-tc-responsive .tx-tc-ct-label-cap {
+    float: none;
+    width: 100%;
+}
+.tx-tc-responsive .tx-tc-ct-cap-area .tx-tc-ct-cap-area-cantreadit .tx-srfreecap-pi2-cant-read, .tx-tc-ct-cap-area-cantread .tx-srfreecap-pi2-cant-read {
+    width: 100%;
+}
 .toctoc-comments-pi1 .tx-tc-ct-box-cttxt .tx-tc-ctinput-textarea, .toctoc-comments-pi1 .tx-tc-pi1 .tx-tc-ctinput-textarea {
-	padding-bottom: '.intval(0.4*$this->conf['theme.']['boxmodelSpacing']).'px;
-	padding-top: '.intval(0.4*$this->conf['theme.']['boxmodelSpacing']).'px;
+	padding-bottom: '.intval(-1+0.5*$this->conf['theme.']['boxmodelSpacing']).'px;
+	padding-top: '.intval(-1+0.5*$this->conf['theme.']['boxmodelSpacing']).'px;
 }
 .tx-tc-ct-form-field-1, .tx-tc-div-submit {
 	margin-left: '.intval($this->conf['theme.']['boxmodelSpacing']).'px;
@@ -3436,6 +3510,145 @@ sharrre design 2 and 4, calculated specifics
 		}
 
 	}
+	/**
+	 * Initializes the externaluid
+	 *
+	 * @param	boolean		$withinitprefixToTableMap	With init of $this->conf['showUidMap.'] (needed for toctoccommentsce-hook)
+	 * @return	boolean		FALSE if no comment plugin should be shown (community setting)
+	 */
+	protected function initexternaluid($withinitprefixToTableMap) {
+		if ($withinitprefixToTableMap == TRUE) {
+			$this->initprefixToTableMap();
+		}
+
+		if ($this->conf['showUidMap.'][$this->conf['externalPrefix']]) {
+			$this->showUidParam = $this->conf['showUidMap.'][$this->conf['externalPrefix']];
+		}
+
+		$ar = t3lib_div::_GP($this->conf['externalPrefix']);
+
+		$this->externalUid = (is_array($ar) ? intval($ar[$this->showUidParam]) : FALSE);
+
+		if (intval($this->externalUid)==0) {
+			if ($this->conf['prefixToTableMap.'][$this->conf['externalPrefix']] == 'fe_users') {
+				$_SESSION['communityprofilepage']='';
+				if ((!isset($_SESSION['communityprofilepage'])) || ((isset($_SESSION['communityprofilepage'])) && ($_SESSION['communityprofilepage']==''))) {
+					$confcommunity=$this->lib->getDefaultConfig($this->conf['externalPrefix']);
+
+					if ($this->conf['externalPrefix'] != 'tx_cwtcommunity_pi1') {
+						$profilepage=$confcommunity['settings.']['profilePage'];
+						$getparamscommunity = 'tx_community[user]';
+					} else{
+						$profilepage=$confcommunity['pid_profile'];
+						$getparamscommunity = 'action=getviewprofile&uid';
+					}
+
+					$params = array(
+							$getparamscommunity => 9999999,
+					);
+					$useCacheHashNeeded = intval($GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError']);
+					$no_cacheflag = 0;
+					if (intval($GLOBALS['TYPO3_CONF_VARS']['FE']['disableNoCacheParameter']) ==0) {
+						if ($useCacheHashNeeded == 1) {
+							$no_cacheflag = 1;
+						}
+
+					}
+
+					$conflink = array(
+							'useCacheHash'     => $useCacheHashNeeded,
+							'no_cache'         => $no_cacheflag,
+							'parameter'        => $profilepage,
+							'additionalParams' => t3lib_div::implodeArrayForUrl('', $params, '', 1),
+							'ATagParams' => 'rel="nofollow"',
+					);
+					$_SESSION['communityprofilepage']= $this->cObj->typoLink('dummy', $conflink);
+					$_SESSION['communityprofilepageparams']='';
+					if (strpos($_SESSION['communityprofilepage'], '9999999')===FALSE) {
+						$conflink = array(
+								'useCacheHash'     => $useCacheHashNeeded,
+								'no_cache'         => $no_cacheflag,
+								'parameter'        => $profilepage,
+								'ATagParams' => 'rel="nofollow"',
+						);
+						$_SESSION['communityprofilepage']= $this->cObj->typoLink('dummy', $conflink);
+						$_SESSION['communityprofilepageparams']= t3lib_div::implodeArrayForUrl('', $params, '', 1);
+						if (strpos($_SESSION['communityprofilepage'], '?')===FALSE) {
+							$_SESSION['communityprofilepageparams']= '?' . substr($_SESSION['communityprofilepageparams'], 1);
+						}
+
+					}
+
+				}
+
+				if ($this->conf['externalPrefix'] == 'tx_cwtcommunity_pi1') {
+
+					$this->externalUid = t3lib_div::_GP('uid');
+					if (!$this->externalUid) {
+						$this->externalUid =$GLOBALS['TSFE']->fe_user->user['uid'];
+					} else {
+						$safewe=$this->conf['advanced.']['wallExtension'];
+						$this->conf['advanced.']['wallExtension'] =2;
+						$buddies= $this->lib->usersGroupmembers($this, FALSE, $this->conf);
+						$this->conf['advanced.']['wallExtension']=$safewe;
+						$budarr=explode(',', $buddies);
+
+						if (!in_array($this->externalUid, $budarr)) {
+							if ($this->communityFriendsProfileListAccessright==1) {
+								return FALSE;
+							} elseif ($this->communityFriendsProfileListAccessright==2) {
+								$this->conf['code']='COMMENTS';
+							}
+
+						}
+
+						if ($this->communityFriendsProfileListAccessright==0) {
+							if ($this->externalUid != $GLOBALS['TSFE']->fe_user->user['uid']) {
+								return FALSE;
+							}
+
+						}
+
+					}
+
+				} else {
+
+					$this->externalUid =$GLOBALS['TSFE']->fe_user->user['uid'];
+				}
+
+			}
+		} else {
+			if ($this->conf['prefixToTableMap.'][$this->conf['externalPrefix']] == 'fe_users') {
+				$safewe=$this->conf['advanced.']['wallExtension'];
+				$this->conf['advanced.']['wallExtension'] =1;
+				$buddies= $this->lib->usersGroupmembers($this, FALSE, $this->conf);
+				$this->conf['advanced.']['wallExtension']=$safewe;
+				$budarr=explode(',', $buddies);
+
+				if (!in_array($this->externalUid, $budarr)) {
+					if ($this->communityFriendsProfileListAccessright==1) {
+						return FALSE;
+					} elseif ($this->communityFriendsProfileListAccessright==2) {
+						$this->conf['code']='COMMENTS';
+					}
+
+				}
+
+				if ($this->communityFriendsProfileListAccessright==0) {
+					if ($this->externalUid != $GLOBALS['TSFE']->fe_user->user['uid']) {
+						return FALSE;
+					}
+
+				}
+
+			}
+
+		}
+
+		$this->foreignTableName = $this->conf['prefixToTableMap.'][$this->conf['externalPrefix']];
+		$_SESSION['commentListRecord']=$this->foreignTableName . '_' . $this->externalUid;
+		return TRUE;
+	}
 
 	/**
 	 * Initializes the plugin
@@ -3511,134 +3724,11 @@ sharrre design 2 and 4, calculated specifics
 			}
 
 		} elseif ($this->conf['externalPrefix'] != 'pages') {
+
 			// Adjust 'showUid' for old extensions like tt_news
-			if ($this->conf['showUidMap.'][$this->conf['externalPrefix']]) {
-				$this->showUidParam = $this->conf['showUidMap.'][$this->conf['externalPrefix']];
+			if ($this->initexternaluid(FALSE) == FALSE) {
+				return FALSE;
 			}
-
-			$ar = t3lib_div::_GP($this->conf['externalPrefix']);
-
-			$this->externalUid = (is_array($ar) ? intval($ar[$this->showUidParam]) : FALSE);
-
-			if (intval($this->externalUid)==0) {
-				if ($this->conf['prefixToTableMap.'][$this->conf['externalPrefix']] == 'fe_users') {
-					$_SESSION['communityprofilepage']='';
-					if ((!isset($_SESSION['communityprofilepage'])) || ((isset($_SESSION['communityprofilepage'])) && ($_SESSION['communityprofilepage']==''))) {
-						$confcommunity=$this->lib->getDefaultConfig($this->conf['externalPrefix']);
-
-						if ($this->conf['externalPrefix'] != 'tx_cwtcommunity_pi1') {
-							$profilepage=$confcommunity['settings.']['profilePage'];
-							$getparamscommunity = 'tx_community[user]';
-						} else{
-							$profilepage=$confcommunity['pid_profile'];
-							$getparamscommunity = 'action=getviewprofile&uid';
-						}
-
-						$params = array(
-								$getparamscommunity => 9999999,
-						);
-						$useCacheHashNeeded = intval($GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError']);
-						$no_cacheflag = 0;
-						if (intval($GLOBALS['TYPO3_CONF_VARS']['FE']['disableNoCacheParameter']) ==0) {
-							if ($useCacheHashNeeded == 1) {
-								$no_cacheflag = 1;
-							}
-
-						}
-
-						$conflink = array(
-								'useCacheHash'     => $useCacheHashNeeded,
-								'no_cache'         => $no_cacheflag,
-								'parameter'        => $profilepage,
-								'additionalParams' => t3lib_div::implodeArrayForUrl('', $params, '', 1),
-								'ATagParams' => 'rel="nofollow"',
-						);
-						$_SESSION['communityprofilepage']= $this->cObj->typoLink('dummy', $conflink);
-						$_SESSION['communityprofilepageparams']='';
-						if (strpos($_SESSION['communityprofilepage'], '9999999')===FALSE) {
-							$conflink = array(
-									'useCacheHash'     => $useCacheHashNeeded,
-									'no_cache'         => $no_cacheflag,
-									'parameter'        => $profilepage,
-									'ATagParams' => 'rel="nofollow"',
-							);
-							$_SESSION['communityprofilepage']= $this->cObj->typoLink('dummy', $conflink);
-							$_SESSION['communityprofilepageparams']= t3lib_div::implodeArrayForUrl('', $params, '', 1);
-							if (strpos($_SESSION['communityprofilepage'], '?')===FALSE) {
-								$_SESSION['communityprofilepageparams']= '?' . substr($_SESSION['communityprofilepageparams'], 1);
-							}
-
-						}
-
-					}
-
-					if ($this->conf['externalPrefix'] == 'tx_cwtcommunity_pi1') {
-
-						$this->externalUid = t3lib_div::_GP('uid');
-						if (!$this->externalUid) {
-							$this->externalUid =$GLOBALS['TSFE']->fe_user->user['uid'];
-						} else {
-							$safewe=$this->conf['advanced.']['wallExtension'];
-							$this->conf['advanced.']['wallExtension'] =2;
-							$buddies= $this->lib->usersGroupmembers($this, FALSE, $this->conf);
-							$this->conf['advanced.']['wallExtension']=$safewe;
-							$budarr=explode(',', $buddies);
-
-							if (!in_array($this->externalUid, $budarr)) {
-								if ($this->communityFriendsProfileListAccessright==1) {
-									return FALSE;
-								} elseif ($this->communityFriendsProfileListAccessright==2) {
-									$this->conf['code']='COMMENTS';
-								}
-
-							}
-
-							if ($this->communityFriendsProfileListAccessright==0) {
-								if ($this->externalUid != $GLOBALS['TSFE']->fe_user->user['uid']) {
-									return FALSE;
-								}
-
-							}
-
-						}
-
-					} else {
-
-						$this->externalUid =$GLOBALS['TSFE']->fe_user->user['uid'];
-					}
-
-				}
-
-			} else {
-				if ($this->conf['prefixToTableMap.'][$this->conf['externalPrefix']] == 'fe_users') {
-					$safewe=$this->conf['advanced.']['wallExtension'];
-					$this->conf['advanced.']['wallExtension'] =1;
-					$buddies= $this->lib->usersGroupmembers($this, FALSE, $this->conf);
-					$this->conf['advanced.']['wallExtension']=$safewe;
-					$budarr=explode(',', $buddies);
-
-					if (!in_array($this->externalUid, $budarr)) {
-						if ($this->communityFriendsProfileListAccessright==1) {
-							return FALSE;
-						} elseif ($this->communityFriendsProfileListAccessright==2) {
-							$this->conf['code']='COMMENTS';
-						}
-
-					}
-
-					if ($this->communityFriendsProfileListAccessright==0) {
-						if ($this->externalUid != $GLOBALS['TSFE']->fe_user->user['uid']) {
-							return FALSE;
-						}
-
-					}
-
-				}
-
-			}
-
-			$this->foreignTableName = $this->conf['prefixToTableMap.'][$this->conf['externalPrefix']];
-			$_SESSION['commentListRecord']=$this->foreignTableName . '_' . $this->externalUid;
 
 		} else {
 			// We are commenting normally
