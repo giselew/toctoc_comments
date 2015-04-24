@@ -1,0 +1,713 @@
+plugin.tx_toctoccomments_pi1 {
+	# cat=plugin.tx_toctoccomments_pi1: Basic//01; type=int+; label=Storage PID: The (single) PID where toctoc_comments data is stored
+	storagePid =
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic//02; type=string; label=commenting style (code): COMMENTS mode shows list of comments. FORM mode shows form to enter comments. Possible is FORM,COMMENTS, COMMENTS,FORM (default) or COMMENTS
+	code = FORM,COMMENTS
+
+	# cat=plugin.tx_toctoccomments_pi1: Basic//03; type=string; label=Comment trigger: If this prefix to showUid URL parameter exists, it will trigger commenting system
+	externalPrefix = pages
+
+	# cat=plugin.tx_toctoccomments_pi1: Basic//04; type=string; label=Template file: Template file for commenting system
+	templateFile = EXT:toctoc_comments/res/template/toctoccomments_template.html
+
+	# cat=plugin.tx_toctoccomments_pi1: Basic//05; type=int+; label=Comments per plugin: Number of comments shown in the plugin in COMMENTS
+	commentsPerPage = 3
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic//06; type=int+; label=RequiredComment length: Required length for a comment
+	minCommentLength = 10
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic//07; type=int+; label=Maximal Comment length: Maximal length for a comment
+	maxCommentLength = 4000
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic//08; type=int+; label=Comment cropping: After this length a comment is cropped at initial display
+	commentCropLength = 256
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic//09; type=int+; label=Review-comment cropping: After this length a comment used as a review is cropped at initial display
+	reviewCropLength = 512
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic//10; type=int+; label=Size for user images: Size of user image in pixels. Image will be cropped from the center of the original image (square), 18 to 96 is allowed.
+	UserImageSize = 32	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic//11; type=boolean; Use or not use the user-image
+	useUserImage = 1	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic//12; type=boolean; label=Display basic contact info on usercards:This option enables display of basic user contact information in usercards
+	userContactUC = 1	
+
+	# cat=plugin.tx_toctoccomments_pi1: Basic//13; type=boolean; label=Display homepage of user in contact info on usercards:This option enables display of the users homepage in usercards
+	userHomepageUC = 1	
+
+	# cat=plugin.tx_toctoccomments_pi1: Basic//14; type=boolean; label=Display email in contact info on usercards:This option enables display of the email of the commenting user in usercards
+	userEmailUC = 0	
+
+	# cat=plugin.tx_toctoccomments_pi1: Basic//15; type=boolean; label=Display location in contact info on usercards:This option enables display of the users location in usercards
+	userLocationUC = 1		
+
+	# cat=plugin.tx_toctoccomments_pi1: Basic//16; type=boolean; label=Display statistics on usercards:This option enables display of statistics in usercards
+	userStatsUC = 1	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic//16; type=boolean; label=Make statistics using email:The stats are based on toctoc_userid by default (0), enabling stats by email links together toctoc_userids with same initial or current email 
+	UCUserStatsByEmail = 0
+
+	# cat=plugin.tx_toctoccomments_pi1: Basic//17; type=boolean; label=Display IP information on usercards:This option enables display IP information about the user in usercards
+	userIPUC = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic//18; type=int+; label=Usercard display time: Time in seconds for display of a usercard. values between 3 and 15 are ok 
+	timeoutUC = 8
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic//20; type=boolean; label=e-mail are sent in HTML-Format or Text format
+	HTMLEmail = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic//21; type=string; label=Font Family for HTML E-Mail: Fonts to be used in HTML-E-mails
+	HTMLEmailFontFamily = tahoma,verdana,arial,sans-serif
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic//22; type=int+; label=Timeout for User-Sessions in minutes
+	sessionTimeout = 540
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//00; type=int; label=colPos for the plugin:Columnposition (colPos) where the plugins are inserted. Important if no templavoila used. Can be left on 0, most of the times.
+	UseMainColPos = 0
+
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//01; type=string; label=Path to feuser-images:Path where the feuser-images are stored. Normally uploads/pics/.
+	FeUserImagePath = uploads/pics/
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//02; type=string; label=db field for the user picture:Database field in fe_users where toctoc_comments should look for a user pic.
+	FeUserDbField = image
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//02; type=string; label=only fe_users-fields in 'uid, pid, username, email, image, gender, first_name, name, last_name, www, city, country' are available (and the the FeUserDbField) - here you can specify additional fields to select (comma-separated list) and then use as marker ###FEUSER_{FIELD}### in the HTML-template
+	useAdditionalFe_usersFields = 
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//03; type=string; label=Date format: Date format specification. See PHP date() function for details. If empty, uses TYPO3 date format defined in Install tool
+	dateFormat = %d.%m.%Y
+
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//03; type=options[date()=date,strftime()=strftime]; label=Date format mode:If "date()", use date() PHP function (traditional default). If "strftime()", use strftime() function (better international support)
+	dateFormatMode = strftime
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//04; type=boolean; label=Commenting works in Review mode (read manual about Reviews)
+	commentReview = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//03; type=string; label=Closes Commenting after some time:Comments can be automatically closed after X months, days or hours. Specify integer number followed by m, d or h. Empty means "no limit"
+	closeCommentsAfter = 
+
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//04; type=boolean; label=Closes Commenting:Closes commenting totally
+	commentingClosed = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//05; type=boolean; label=Create links in comments:If enabled, will search comment text for links (using "http://" or "www." as trigger) and create HTML links automatically.
+	autoConvertLinks = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//05; type=int+; label=Crop Length for created links in comments:Autoconverted links will be cropped if they exceed this length (Values: 40 - 150)
+	autoConvertLinksCropLength = 50
+
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//06; type=boolean; label=Admin can give direct comments on comments:When notification mails for new comments come in, the admin can give a direct reply which will be showed under the comment. Requires modified comments_response extension to be installed.
+	adminCommentResponse = 0
+
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//07; type=int+; label=Users can reply on comments:Number of Levels of comments on comments, values from 0 (none) to 20 are allowed
+	userCommentResponseLevels = 3
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//08; type=int+; label=Levels of Expanded comments on comments: When displaying comments on comments this sets how many levels are expanded. values from 1 (none) to 20  are allowed
+	userCommentResponseLevelExpanded = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//09; type=boolean; label=Show comments of FE Users:If set to 0 comments of FE users are shown only after login.
+	showFeUsercomments = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//10; type=boolean; label=Show comments for FE Users depending of the user group:For logged in users only comments by users of the same user group are shown (showFeUsercomments must be set to 0).
+	showFeUsercommentsOnlyInSameUserGroup = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//11; type=boolean; label=commentator of former comments can be notified about new, approved comments:If enabled, the commentator can chose if he wants to be informed on new comments and receives e-mail when new comments are approved.
+	commentatorNotify = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//11; type=boolean; label=Commentators that must be notified: 0: All commentators in the comments-list, 1: Only if the new comment is a reply, 2: like 1 but also if the comment is a subsequent comment on the same parent comment
+	notificationLevel = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//11; type=int+; label=Notification validity in days: 0: no limit, >= 1. Number of days for notification after a commentator left a comment
+	notificationValidDays = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//12; type=boolean; label=commentator of former comments are identified by their IP:If enabled, the commentators are identified as per their IP address if they are not logged in. If disabled commentators who are not logged in can't disable E-Mail notification on new comments.
+	commentatorNotifybyIP = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//130; type=string; label=Information e-mail for commentator of former comments:Information e-mail when a new comment is posted for commentator of former comments is sent from this address
+	notificationForCommentatorEmail =
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//131; type=string; label=Name used in information e-mail for commentator of former comments
+	notificationForCommentatorEmailName = %site% - Commentingsystem
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//14; type=string; label=HTML E-mail template for commentator of former comments:HTML Template to use for notification email to commentator of former comments
+	notificationForCommentatorHTMLEmailTemplate = EXT:toctoc_comments/res/template/toctoccomments_template_commentator_email.html
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//15; type=string; label=E-mail template for commentator of former comments:Template to use for notification email to commentator of former comments
+	notificationForCommentatorEmailTemplate = EXT:toctoc_comments/res/template/toctoccomments_template_commentatoremail.txt
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//16; type=string; label=HTML template eID processing:When clicking on Links in Admin-E-Mails this template will be used to show the answer of the system
+	eIDHTMLTemplate= EXT:toctoc_comments/res/template/toctoccomments_template_eid.html
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//17; type=int+; label=When show older comments, scroll-multiplicator:commentsPerPage*scroll-multiplicator gives the number of comments that are scrolled back when show older comments is clicked.
+	CommentsShowOldPerCID = 3
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//18; type=int+; label=Comments allowed for editig:When a user can edit his comments, this number indicates how many comments back the user is allowed to edit. set 0 for none. allowed 0 to 50.
+	commentsEditBack = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//19; type=string; label=TemplaVoila-field with comments:Name of the field defined in templavoila (if used) where the comments-plugins goes. Check your templavoila page-template.
+	UseTemplavoilaField = field_content
+
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//21; type=string; label=Pages with a record to display :When a plugin is linked to a content element on a page, but the page displays records you should indicate the page-ids here as a comma separated list. Used by recent comments and report bad comments forms. 
+	recentcommentsPluginpages =
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//23; type=string; label=Records for pages with a record to display :Corresponding list of records, a list like "tt_news_51, tt_products_65". Associated records to show for the selected pages containing plugins
+	recentcommentsPluginRecords =
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//25; type=boolean; label=Total number of comments:In comments listing on top the total number of comments is shown
+	commentsShowCount = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//27; options[with text=0,only number=1,icon=2,with short text=3]; label=Show number of comments with text, only number or with icon:In comments listing on top the total number of comments has text aside or is just displayed as a number
+	commentsShowCountText = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//29; type=int; label=Level needed to show number of comments: Display of number of comments starts when number of comments is higher or equal this level.
+	commentsShowCountLevel = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//31; type=boolean; label=Show last comments first :Reverses sorting order to show last comments on level 0 first
+    reverseSorting = 1
+    
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//33; type=boolean; label=Show most popular:Show most popular comments first. This overwrites reverseSorting
+    sortMostPopular = 0
+    
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//35; type=boolean; label=Enable popularity sort:If you use popularity then sorting by popularity is enabled in the comments list sort menu
+    useMostPopular = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//37; type=boolean; label=Use sort menu:use a menu for sorting of comments in the frontend 
+   	useSortMenu = 1
+    
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//38; type=boolean; label=Invert comment browser position :Puts commentsbrowser on top or bottom of commentslist.
+    invertBrowser = 1
+    
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//39; type=boolean; label=AllowHTMLTags in comments :HTML-Tags can be use to format comments, extending the BB-Codes, but more risky.
+    allowHTMLTagsInComments = 0
+    
+    # cat=plugin.tx_toctoccomments_pi1: Advanced//40; options[inactive=0,wall of tx_community=1,wall of cwt_community=2]; label=Enables plugin mode for walls of community extensions :Comments of you and your friends are shown. 
+    wallExtension = 0
+    
+   	# cat=plugin.tx_toctoccomments_pi1: Advanced//41; options[only user=0,user and friends=1,all community users=2]; label=Defines visibility of comments on users community profile page. 
+    communityProfileCommentsVisibility = 1
+    
+ 	# cat=plugin.tx_toctoccomments_pi1: Advanced//42; type=boolean; label=reply mode inline:Replies on comments are entered under the comment replied on. Slows down bit performance.
+    replyModeInline=1
+ 	
+ 	# cat=plugin.tx_toctoccomments_pi1: Advanced//43; type=boolean; label=reply mode inline with open form:Form for Replies on comments is shown instead of reply link
+    replyModeInlineOpenForm = 0
+    
+ 	# cat=plugin.tx_toctoccomments_pi1: Advanced//44; options[inactive=0,emoji images 16px=1,emoji images 20px=2,emoji images 26px=3,emoji images 33px=4]; label=make use of Emoji pictures :Unicode Emojis are replaced by image emojis in comments and while entering comments :text emojis: are converted to unicode-emojis.
+    useEmoji = 1
+    
+ 	# cat=plugin.tx_toctoccomments_pi1: Advanced//45; type=boolean; label=Specify if the internal smilies are displayed in the emoji selection panel
+    useInternalSmiliesInEmojiSelector = 1
+    
+    # cat=plugin.tx_toctoccomments_pi1: Advanced//46; options[site=0,page=1,plugin=2]; label=Caching of emoji configurations:Starting up the Emojis uncached costs much time. So we cache them. Here you can specify at what level they are cached.
+    emojiConfigCacheLevel = 0
+    
+ 	# cat=plugin.tx_toctoccomments_pi1: Advanced//47;  type=boolean; label=Make Plugins multilingual: If set to 0 TYPO3 translations of the plugin will always contain the content of the default language content element 
+    useMultilingual = 0
+ 	
+ 	# cat=plugin.tx_toctoccomments_pi1: Advanced//48;  type=boolean; label=Do not use TYPO3 caching: If set to 1 pages with plugins will not be cached (behavior as up to Version 3.5.0).
+ 	activateClearPageCache = 0
+ 	
+ 	# cat=plugin.tx_toctoccomments_pi1: Advanced//49;  type=boolean; label=Use session based caching: If set to 1 and activateClearPageCache=0, plugins are cached in PHP-session and recalculated only after changes in the data of a plugin of the page
+    useSessionCache = 1
+    
+ 	# cat=plugin.tx_toctoccomments_pi1: Advanced//50;  type=boolean; label=Show plugins with changed data: If useSessionCache isset to 1 you can use cacheBackTrack and show the user the plugins where data has changed since their first visit using their current session 
+    cacheBackTrack = 1
+ 	
+ 	# cat=plugin.tx_toctoccomments_pi1: Advanced//51;  type=boolean; label=Enables counting of Plugin views: For each Plugin a counter will be maintained and will be displayed on top of comments list, if enabled 
+    countViews = 1
+ 	
+ 	# cat=plugin.tx_toctoccomments_pi1: Advanced//52;  type=boolean; label=Shows "viewed since"-date 
+    countViewsShowSince = 1
+ 	
+ 	# cat=plugin.tx_toctoccomments_pi1: Advanced//53;  type=boolean; label=Shows counting of Plugin views 
+    showCountViews = 0
+    
+ 	# cat=plugin.tx_toctoccomments_pi1: Advanced//54;  type=boolean; label=Shows counting of Plugin views only if comments are present. showCountViews must be set to 1.
+    showCountViewsOnlyIfCommentsExist = 1
+    
+ 	# cat=plugin.tx_toctoccomments_pi1: Advanced//55;  type=boolean; label=Adds comments count to view count and enables initial values for viewcounts and firstview. showCountViews must be set to 1.
+    countViewsAddComments = 0
+    
+    # cat=plugin.tx_toctoccomments_pi1: Advanced//56;  type=boolean; label=Shows counts of comment views 
+    showCountCommentViews = 0
+    
+    # cat=plugin.tx_toctoccomments_pi1: Advanced//57;  type=boolean; label=Enables counting of comment views 
+    countCommentViews = 1
+    
+ 	# cat=plugin.tx_toctoccomments_pi1: Advanced//58;  type=boolean; label=Long view count text:Shows the text for counting of views in a longer format - Short - 909 Views since 21.12.2012. Long - 909 people saw this content since 21.12.2012 
+    showCountViewsLongFormat = 0
+ 
+    # cat=plugin.tx_toctoccomments_pi1: Advanced//59;  type=int+; label=Activity-calculation, multiplicand for number of ratings: For the value of an activity ratings might be considered more than views, with this ratings are given more value than simple views in the calculation of the activity-value 
+    activityMultiplicatorRating = 2
+   
+    # cat=plugin.tx_toctoccomments_pi1: Advanced//60;  type=int+; label=Activity-calculation, multiplicand for number of comments: For the value of an activity ratings might be comments more than views, with this comments are given more value than simple views in the calculation of the activity-value  
+    activityMultiplicatorComment = 4
+    
+    # cat=plugin.tx_toctoccomments_pi1: Advanced//61;  type=boolean; label=Comment link:Display the link for Commenting on top of the plugin  
+    useCommentLink = 1
+ 
+    # cat=plugin.tx_toctoccomments_pi1: Advanced//62;  type=boolean; label=Links on subcomments: Display the link for subcomments and number of subcomments  
+    displayChildComments = 1
+    
+    # cat=plugin.tx_toctoccomments_pi1: Advanced//63;  type=boolean; label=Require login: The commenting form will link to a login form and onyl after login commenting will be possible  
+    loginRequired = 0
+    
+    # cat=plugin.tx_toctoccomments_pi1: Advanced//64;  type=boolean; label=Watermark form fields: form fields will have a watermark instead of labels  
+    watermarkFormFields = 1
+    
+    # cat=plugin.tx_toctoccomments_pi1: Advanced//65;  type=boolean; label=Use the menu for bb-codes: when youselect text in the commenting form a popup allows to insert bb-codes  
+  	useBBCodeMenu = 1
+
+    # cat=plugin.tx_toctoccomments_pi1: Advanced//66;  type=string; label=String and sequence of available bb-codes: The available bb-codes are defined here, the initial setup hold all possible bb-codes. bold(b), italic(i), code(code), q(inlinbe quote), bq(blockquote) and ct(citation)
+	BBCodebbs = b, i, code, q, ct, bq
+   
+    # cat=plugin.tx_toctoccomments_pi1: Advanced//67;  type=string; label=iLike seperator:String for the separator between links iLike and iDislike (and more)
+	midDot = &middot;
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//70;  type=boolean; label=Show Gravatar for fe_users: If no gravatar is found, the local userpicture is shown (if your site is accessble from the internet)
+	gravatarEnable = 0	
+ 	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//71;  type=options[G,PG,R,X]; label=Gravatar Rating: Maximum allowed Gravatar rating to show. G - suitable for display on all websites with any audience type, PG - may contain rude gestures, provocatively dressed individuals, the lesser swear words, or mild violence, R - may contain such things as harsh profanity, intense violence, nudity, or hard drug use. X: may contain hardcore sexual imagery or extremely disturbing violence.
+	gravatarRating = G
+	
+    # cat=plugin.tx_toctoccomments_pi1: Advanced//72;  options[0, mm,identicon,monsterid,wavatar,retro]; label=Gravatar on localhost:When your site is not connected to the web, select the type of local user picture if no gravatar is found: 0, use normal userpicture on my server (it's connected to web) - mm, (mystery-man) a simple, cartoon-style silhouetted outline of a person (does not vary by email hash) - identicon, a geometric pattern based on an email hash - monsterid, a generated 'monster' with different colors, faces, etc - wavatar, generated faces with differing features and backgrounds - retro, awesome generated, 8-bit arcade-style pixelated faces	
+    gravatarLocalHost = 0
+    
+ 	# cat=plugin.tx_toctoccomments_pi1: Advanced//74; type=int+; label=Terms and conditions page:ID of your page with terms and conditions, link below submit button in commenting forms
+    acceptTermsCondsOnSubmit = 
+    
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//01; type=boolean; label=Require approval:Comments must be approved by moderator before showing them to other users
+	requireApproval = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//02; type=options[None=0,sr_freecap clone=1,recaptcha clone=2]; label=Use captcha:Enable captcha usage.
+	useCaptcha = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//03; type=boolean; label=Filter out typical spam:Automatically disapproves messages that contain signs of typical spam (such as "[url=", etc).
+	checkTypicalSpam = 1
+
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//04; type=string; label=Spam cut off point:New comment will not be posted at all if it earns this amount of points or more
+	spamCutOffPoint = 10	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//05; type=string;  label=freecaptcha-clone background color: Use valid rgb-code like 225,225, 225
+	freecapBackgoundcolor = 255, 255, 255
+	
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//06; type=string;  label=freecaptcha-clone textcolor:Use valid rgb-code like 25,25, 25
+	freecapTextcolor = 95, 107, 200
+	
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//07; type=int+; label=Number of characters freecaptcha-clone:max is 10, min is 3.
+	freecapNumberchars = 4
+	
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//08; type=int+; label=Height freecaptcha-clone:max is 50, min is 23.
+	freecapHeight = 23
+
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//09; type=string; label=Approval needed e-mail address:Notify administrator about comment that need to be approved by e-mail
+	notificationEmail =
+
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//10; type=string; label=Information e-mail address:Notify administrator about posted comment without approval by e-mail
+	informationEmail =
+
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//11; type=string; label=From e-mail address:Notification to administrator about posted comment is sent from this e-mail
+	fromEmail =
+	
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//11; type=string; label=From e-mail aendername:Notification to administrator about posted comment is sent from this name. %site% is replaced by your sitename
+	fromEmailName = %site% - Administrator
+
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//12; type=string; label=HTML-E-mail template approval and notification:HTML-Template to use for approval needed-notification email (as well as simple notification mails) to administrator
+	emailTemplateHTML = EXT:toctoc_comments/res/template/toctoccomments_template_email.html
+
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//13; type=string; label=Text-E-mail template approval:Template to use for approval needed-notification email to administrator
+	emailTemplate = EXT:toctoc_comments/res/template/toctoccomments_template_email.txt
+
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//14; type=string; label=Text-E-mail template notification:Template to use for information-notification email to administrator
+	emailTemplateInfo = EXT:toctoc_comments/res/template/toctoccomments_template_emailinfo.txt
+	
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//15; type=string; label=HTML-E-mail template COI:HTML-Template to use for confirmed opt in-(COI)-request email to user
+	emailTemplatecoiHTML = EXT:toctoc_comments/res/template/toctoccomments_template_email_coi.html
+
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//16; type=string; label=Text-E-mail template for COI:Template to use for confirmed opt in-request email to user
+	emailTemplatecoi = EXT:toctoc_comments/res/template/toctoccomments_template_email_coi.txt
+
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//17; type=boolean; label=IP-Blocklists in Frontend:If enabled comments by blocked IPs are evaluated as spam
+	useIPblocking = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//18; type=boolean; label=Confirmed opt-in (COI):A new commentator receives a confirmation mail needs to confirm his mailaddress by clicking a link, which unhides the comment (not yet approved). 
+	confirmedOptIn = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//19; type=string; label=HTML-E-mail template notification on dislikes:HTML-Template to use for notification email for dislike-alerts to administrator
+	emailTemplateDislikeHTML = EXT:toctoc_comments/res/template/toctoccomments_template_email_dislike.html
+
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//20; type=string; label=Text-E-mail template notification on dislikes:Template to use for notification email for dislike-alerts to administrator
+	emailTemplateDislike = EXT:toctoc_comments/res/template/toctoccomments_template_emaildislike.txt
+	
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//22; type=boolean; label=Enables check of SMTP-Service: This feature needs PHP extension sockets to be compiled in the PHP-binary. It makes sending mail more safe and errors can be detected more easily. Requires SMTP-Service to be configurend correctly in INSTALL-Tool of TYPO3 
+	checkSMTPService = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//24; type=int+; label=Wait time between comments: Number of minutes an user has to wait before they may post another comment (includes all pages)
+	commentWaitTime = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//01; type=boolean; label=Enable ratings: Enable or disable ratings for comments. 
+	enableRatings = 1	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//02; type=boolean; label=Enable ratings only: Use plugin as rating-only version
+	ratingsOnly = 0
+
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//03; type=int; label=Minimal rating value: Warning! this value must not be changed after ratings start working or results will be incorrect!
+	minValue = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//04; type=int; label=Maximal rating value: Warning! this value must not be changed after ratings start working or results will be incorrect! Maximum value is 11
+	maxValue = 5
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//06; type=options[Auto=auto,Force static=static]; label=Display mode: Force static display of ratings (no rating possible)
+	mode = auto
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//07; type=boolean; label=Disable IP check: This will let users change their vote (1) or let them only vote once per item (0)
+	disableIpCheck = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//08; type=string; label=Additional CSS file: Additional CSS file to use when ratings are displayed
+	additionalCSS =
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//09; type=string; label=Template file for Ratings
+	ratingsTemplateFile = EXT:toctoc_comments/res/template/toctoccomments_ratings.html
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//10; type=boolean; label=Show users vote: Show the vote of the user, if checked.
+	useMyVote = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//11; type=boolean; label=Shows the rating stars: Shows the rating stars and enables voting, if checked.
+	useVotes = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//12; type=boolean; label=Shows the number of votes: Shows the number of votes, if checked.
+	useNumberOfVotes = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//13; type=boolean; label=Shows the number of stars: Shows the number of stars, if checked.
+	useNumberOfStars = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//14; type=boolean; label=Shows the average of votes: Shows the average value of votes, if checked.
+	useAvgOfVotes = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//15; type=string; label=List of scopes to be use for voting: A list of uids for scopes, separated by commas
+	useScopesForVote = 
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//16; type=boolean; label=For scoped ratings, show overall: if checked overall will be visible.
+	useOverallScopeForVote = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//17; type=boolean; label=For scoped ratings, enable overall: if checked overall will be clickable.
+	enableOverallScopeForVote = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//18; type=boolean; label=Show Like and Dislike Features: if checked both are active.
+	useLikeDislike = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//19; type=boolean; label=Show Dislike Feature: Makes only sense in connection with useLikeDislike, here you can turn off the dislike.
+	useDislike = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//20; type=boolean; label=Shows the rating stars on top of the plugin: Disables the rating stars and enables voting if set to 0.
+	useTopVotes = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//21; type=boolean; label=Show Like and Dislike Features on top of the plugin: Disables Like and Dislike Features if set to 0.
+	useTopLikeDislike = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//22; type=options[only below comment=0,short display and separate thumbs=1]; label=Show Like and Dislike Features in alternative representation: Short display (1) shows thumbs for iLike above comment, only numbers are displayed
+	useLikeDislikeStyle = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//23; type=int+; label=Send notification to admin if level is reached: An email will be sent to admins mailbox (spamProtect.notificationEmail), when this number of dislikes is been reached
+	dlikeCtsNotifLvl = 5	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//24; type=int+; label=Time in minutes after a dislike notification without new notifications on the dislike: Only after this time an email will be sent to admins mailbox (spamProtect.notificationEmail), when this number of dislikes is been reached
+	dlikeCtsNotifIdlTime = 10	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//25; type=boolean; label=Show short form for Like and Dislike Features on top of the plugin: Like and Dislike on top of the plugin are displayed in short form
+	useShortTopLikes = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//30; type=int+; label=Maximum number of ratings allowed in a certain time: After this number of ratings the system checks if they have been made in the time allowed for this. If it was faster than this time, the user is prevented from making ratings for some time
+	allowedNumberOfRatings = 10	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//31; type=int+; label=Time in minutes that is allowed for the allowed number of ratings: If more ratings than allowed have been made in this time, the user will be prevented from placing new ratings for a certain time
+	timeForAllowedNumberOfRatings = 2	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//32; type=int+; label=Time in minutes that a user is blocked if he made to many ratings - the wait penalty: After the last rating made the user has to wait for this time until he will be able to make more ratings or change his ratings
+	allowedNumberOfRatingsExceededBlocktime = 13	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Ratings//34; type=boolean; label=Show resolved IP-addresses in tiptexts for Likes and iLikes (if a user name is not present): 1 IPs will be shown, 0 IPs will be counted in "Others" and won't be shown in tip-texts
+	useIPsInLikeDislike = 1	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//01; type=boolean; label=Use Attachment Feature Webpage preview: Webpage previews are allowed
+	useWebpagePreview = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//01; type=boolean; label=Use Attachment Feature Webpage video preview: Webpage video previews are allowed
+	useWebpageVideoPreview = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//02; type=int+; label=Height of the Webpagepreview: Associated webpagepreview-images will have same size. min is 30 max is 120 pixels
+	webpagePreviewHeight = 70
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//02; type=int+; label=Character length of the webpage preview title: values between 20 and 250 are accepted by the system
+	maxCharsPreviewTitle = 70
+		
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//03; type=int+; label=Character length of the webpage preview description: values between 50 and 500 are accepted by the system
+	webpagePreviewDescriptionLength = 160
+		
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//04; type=int+; label=Minimal character length of the webpage preview description: When a description found on a webpage is shorter than this number, the system gets the description from Google - values must be between 20 and 150
+	webpagePreviewDescriptionMinimalLength = 60
+			
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//05; type=int+; label=Cache expiry for scanned pages in minutes: After this time pages are scanned again. - values must be between 0 and 1440 (1 day max)
+	webpagePreviewCacheTimePage = 180
+			
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//06; type=int+; label=Cache expiry for temporary stored images in minutes: After this time images in the temp folder are deleted, after a new page has been scanned. - values must be between 5 and 120 (2 hours max)
+	webpagePreviewCacheTimeTempImages = 60
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//07; type=boolean; label=Delete temp images manually or by scheduled script: If you want to control manually deletion of outdated images in temp folder set this to 1 - you can use a scheduled php-script, or if you don't mind, even delete the files when your disk-space contingent is reached.
+	webpagePreviewCacheClearManual = 0	
+		
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//08; type=int+; label=Number of images in webpage previews: The number of images shown influences the performance during scanning of webpages remarkably. values between 4 and 25 are possible
+	webpagePreviewNumberOfImages = 10
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//09; type=int+; label=Minimal filesize for an image while scanning webpages: value in Bytes, 300 - 6000
+	webpagePreviewScanMinimalImageFileSize = 1500
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//10; type=int+; label=Minimal Height and Width for an image while scanning webpages: value in pixel, 30 - 100
+	webpagePreviewScanMinImageSize= 40
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//11; type=int+; label=Maximal Height and Width for an image while scanning webpages: value in pixel, 300 - 1280
+	webpagePreviewScanMaxImageSize = 450
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//12; type=int+; label=Minimal Height and Width for a logo image while scanning webpages: value in pixel, 20 - 70
+	webpagePreviewScanMinLogoSize = 30
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//13; type=int+; label=Maximal Pictures scanned if logo has been found already: values are 20 to 100, higher values result in longer scan time 
+	webpagePreviewScanMaxImageScans =40
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//14; type=int+; label=Maximal Pictures scanned if logo has not been been found already: values are 30 to 150, must be higher than webpagePreviewScanMaxImages to make sense
+	webpagePreviewScanMaxImageScansForLogo =55
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//15; type=int+; label=Maximal allowed x to y relation for scanned images: The integer value when dividing width by height a scanned image may have. values between 1 and 5 are possible
+	webpagePreviewScanMaxHorzizontalRelation = 5;
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//16; type=int+; label=Maximal allowed y to x relation for scanned images: The integer value when dividing height by width a scanned image may have. values between 1 and 4 are possible
+	webpagePreviewScanmaxverticalrelation = 3
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//17; type=string; label=Logopatterns:  list of string patterns for logo recognition, separated by commas - if a pattern is found in a file name, then the imagefile is considered as logo of the website scanned. Be careful with short patterns - patterns shorter than 4 chars are ignored
+	webpagePreviewScanLogoPatterns = logo,crght
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//18; type=string; label=List of exclude patterns: A list of string patterns for image-exclusion during scan, separated by commas - if a pattern is found in a file name, then the imagefile is excluded
+	webpagePreviewScanExcludeImagePatterns = pixeltrans,spacer,youtube,rclogos,white,transpa,bg_teaser
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//19; type=int+; label=Minimal fragment length: Minimal Length of a page text fragment during scan - when scanning text from pages, then the content of p-Tags and span-tags is analyzed. The content must be longer than this value for inclusion in page description. values between 10 and 100 are accepted
+	webpagePreviewDescriptionPortionLength = 40
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//20; type=int+; label=Timeout for HTML requests in ms: Request are canceled after this duration. 3000 to 13000.
+	webpagePreviewCurlTimeout = 7000
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//21; type=boolean; label=Use Image attachment.
+	usePicUpload = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//22; type=boolean; label=Use PDF attachment.
+	usePdfUpload = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//23; type=int+; label=Previewimage max dimension:Maximal height and width (dimensions) for a preview image after upload. value in pixel, 50 - 150.
+	picUploadDims = 100
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//24; type=int+; label=Image max original width:Maximal width for an image after upload. value in pixel, 100 - 900.
+	picUploadMaxDimX = 800
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//25; type=int+; label=Image max original height:Maximal height for an image after upload. value in pixel, 100 - 1200.
+	picUploadMaxDimY = 900		
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//26; type=int+; label=Display max dimension:Maximal dimensions for an image for display in the comments list, 200 - 800.
+	picUploadMaxDimWebpage = 470		
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//27; type=int+; label=Display max height:Maximal height for an image for display in the comments list, 200 - 800.
+	picUploadMaxDimYWebpage = 300		
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//28; type=int+; label=Image max size:Maximal file size for image upload. value in KB, 10 - 100000.
+	picUploadMaxfilesize = 2500	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//29; type=int+; label=Pdf max size:Maximal file size for pdf upload. value in KB, 10 - 100000.
+	pdfUploadMaxfilesize = 3000	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//31; type=string; Soundcloud Client ID: Needed to make proper display of webpage previews from soundcloud.com
+	soundcloudClientID = 
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//32; type=string; Soundcloud Client Secret: Secret matching the Soundcloud Client ID
+	soundcloudClientSecret = 
+	
+	# cat=plugin.tx_toctoccomments_pi1: Top ratings//01; type=options[likes=0,votes=1,both by rating=2,both by likes=3]; label=Composition - what to show?: Show top ratings for likes (0), votes(1) or both together(2 oder 3)
+	topRatingsMode = 2	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Top ratings//02; type=int+; label=Number of days: How many days should be checked for top ratings
+	RatingsDays = 30	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Top ratings//03; type=int+; label=Items in list: How many should be shown in top ratings
+	RatedItemsListCount = 10	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Top ratings//05; type=int+; label=Votes required:Number of votes required to appear in top ratings, minimum is 1 vote
+	NumberOfVotesRequired = 3	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Top ratings//06; type=int+; label=Text cropping:Number of characters after a top ratings text is cropped. 10 - 250
+	TextCropLength = 100	
+		
+	# cat=plugin.tx_toctoccomments_pi1: Theme//01; type=options[Default=default,White on black=black,White on red=red,Custom=custom,Koogle=koogle,TISQUS=tisqus,Windows=windows,TripAdvisor=tripad,Work theme=work]; label=Select a color theme (CSS): Selects the basic color-palette that is used by the extension in frontend. default, red or black 
+	selectedTheme = default	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//02; type=string; label=Font Family for theme: used for textareas
+	themeFontFamily = tahoma,verdana,arial,sans-serif
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//02; type=string; label=Boxmodel filename: To apply as Boxmodel on the CSS select an existing boxmdel here, value like myboxmodel.txt
+	selectedBoxmodel = 
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//03; type=int+; label=Textarea lineheight:Lineheight of textareas of forms, 16 - 30.
+	boxmodelTextareaLineHeight = 30
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//04; type=int+; label=Textarea number of lines: How many lines the textarea contains ? 1 - 6.
+	boxmodelTextareaNbrLines = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//05; type=int+; label=Boxmodel element x-spacing:Horizontal spacing between elements in the boxmodel, 0 - 10.
+	boxmodelSpacing = 10
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//06; type=int+; label=CSS-Lineheight:Lineheight in the plugin, 14 - 40.
+	boxmodelLineHeight = 20
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//07; type=boolean; label=Preserve line-height:Preserve original line-height, saves some lines of CSS, but results with ratingstars and ilike thumbs can be out of mesure.
+	boxmodelLineHeightPreserve = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//08; type=boolean; label=FontFamily of theme:Use themeFontFamily as font-family for the entire plugin.
+	usethemeFontFamilyForPlugin = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//09; options[full=1,half=2,third=3,boxmodelSpacing=4]; label=Indent for levels: Indent in fraction of user image size or, if 4, set to boxmodelSpacing
+	boxmodelLevelIndent = 2
+		
+	# cat=plugin.tx_toctoccomments_pi1: Theme//10; type=int+; label=Labelwitdh:Width of labels, 50 - 200.
+	boxmodelLabelWidth = 134
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//11; type=int+; label=Inputfieldsize: Size of Form Inputfields, 12 - 40.
+	boxmodelInputFieldSize = 35
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//120; type=boolean; label=Inputfield design: Uses the old default - layouted(0) - or non layouted(1) design for form input field and labels.
+	boxmodelLabelInputPreserve = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//121; type=boolean; label=Button design: Uses the old default - layouted(0) - or non layouted(1) design for form buttons.
+	boxmodelButtonPreserve = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//13; type=string; label=responsive Steps in px: This are the window-widths in pixels when toctoc_comments changes the layout to fit in the place on the screen. Defaults are the original values from the CSS-file.
+	responsiveSteps = 350,450
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//14; type=boolean; label=Minimize CSS:crunch CSS (1) or leave CSS uncompressed (0)
+	crunchCSS = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//15; type=int+; label=Use less tooltips:when set to 1, then on devices smaller than 768 less tooltips are shown, if set to 2 its regardless from screen width.
+	useLessToolTips = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//16; type=boolean; label=No tooltips on emojis:When set to 1, then smiles and emojis have no tooltips
+	emojiNoToolTips = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Debug//01; type=boolean; label=Use debug: Use of debugging messages such as show run-times, caching and session resets.
+	useDebug = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Debug//02; type=string; label=List with Fe_users.uid that are used for debugging, comma-separated
+	useDebugFeUserIds = 
+	
+	# cat=plugin.tx_toctoccomments_pi1: Facebook//01; type=string; label=Facebook app id:The app id of your Facebook application
+    appId =
+
+    # cat=plugin.tx_toctoccomments_pi1: Facebook//02; type=string; label=Facebook secret:The application secret of your Facebook application
+    secret =
+ 
+	# cat=plugin.tx_toctoccomments_pi1: dataProtect//01; type=boolean; label=Cookies:Set (1) or don't set (0) a cookie with data of not logged in commenters.
+	setCookie = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: dataProtect//02; type=int+; label=Cookie lifetime:Lifetime in days for a cookie, minimum is 7 days
+	cookieLifetime = 31
+	
+	# cat=plugin.tx_toctoccomments_pi1: dataProtect//04; type=boolean; label=Shows disclaimer: Shows a Disclaimer menu point above the comments list. (1)
+	useDisclaimer = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: dataProtect//05; type=boolean; label=Show disclamer on ratings only: Shows a Disclaimer menu point when only ratings are shown (ratings.ratingsOnly=1)
+	useDisclaimerInRatingsOnly = 0
+	
+ 	# cat=plugin.tx_toctoccomments_pi1: dataProtect//08; type=int+; label=Policy page:ID of your page with additional policy for data protection, link shown in disclaimer menu
+	disclaimerPageID = 
+		
+	# cat=plugin.tx_toctoccomments_pi1: dataProtect//12; type=boolean; label=Check database:Checks if database is on same server, checks if https is enabled and then shows a security rating of the site.
+	disclaimerSystemCheck = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: dataProtect//16; type=boolean; label=Show TocToc disclaimer:Shows the software creators disclaimer in the disclaimer
+	disclaimerFromTocToc = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//03; type=boolean; label=Use Sharing:Use of Share-Link for Facebook, Google and Twitter
+	useSharing = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//04; type=options[Default popup=0,Buttons popup=1,Default open=2,Buttons open=3,Add This small=4]; label=Use Sharingdesign: Use Design with (default) or without buttons
+	useSharingDesign = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//05; type=boolean; label=Don't Use facebook sharing :Use of Share-Link for Facebook is suppressed
+	dontUseSharingFacebook = 0
+
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//06; type=boolean; label=Don't Use Googleplus sharing :Use of Share-Link for Google+ is suppressed
+	dontUseSharingGoogle = 0
+
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//07; type=boolean; label=Don't Use Twitter sharing :Use of Share-Link for Twitter is suppressed
+	dontUseSharingTwitter = 0
+
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//08; type=boolean; label=Don't Use LinkedIn sharing :Use of Share-Link for LinkedIn is suppressed
+	dontUseSharingLinkedIn = 0
+
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//09; type=boolean; label=Don't Use Stumbleupon sharing :Use of Share-Link for Stumbleupon is suppressed
+	dontUseSharingStumbleupon =0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//09; type=boolean; label=Don't Use PInterest sharing :Use of Share-Link for PInterest is suppressed
+	dontUseSharingPinterest = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//09; type=boolean; label=Don't Use Digg sharing :Use of Share-Link for Digg is suppressed
+	dontUseSharingDigg = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//09; type=boolean; label=Don't Use Delicious sharing :Use of Share-Link for Delicious is suppressed
+	dontUseSharingDelicious = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//10; type=boolean; label=Don't Use Add This more button :Use of additional Share-Links with Add This is suppressed
+	dontUseSharingAddThisMore = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//11; type=string; label=Add This:Your ID string for Add This, like ra-41230c846b24bb7c
+	AddThisID= 
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//11; type=string; label=Sharing line title: optional title for sharing line, it replaces text "share this page" after the total number of users who shared
+	shareUsersTotalText =
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//11; type=boolean; label=Use icon: use an icon in the sharing line
+	useShareIcon = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//11; type=string; label=Text for sharer:optional text for shared item on Twitter, as shown in the share-message of the social network sharers
+	shareDataText =	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//11; type=string; label=Page URL:Page URL you want to share. If left empty the current URL will be shared
+	sharePageURL =	
+		
+	# cat=plugin.tx_toctoccomments_pi1: userCenter//01; type=string; label=Comment-Lists:Comment-Lists to be distinguished in user center. comma-separated list. Possible values are Reviews, Plugintotablemap, Commentsoncomments. Normal comments are always shown as a list, also iLikes und Votings will always have their lists.
+	uCLists = Reviews, Plugintotablemap, Commentsoncomments
+	
+	# cat=plugin.tx_toctoccomments_pi1: userCenter//03;  type=int+; label=Comments per list: Number of visible comments shown per list
+	commentsPerUCList = 3
+	
+	# cat=plugin.tx_toctoccomments_pi1: userCenter//06; type=int+; label=userCenters page ID:ID of your page with userCenter, link shown in menu on comments list
+	userCenterPageID = 
+		
+	# cat=plugin.tx_toctoccomments_pi1: userCenter//08;  type=int+; label=Items per list: Maximal number of items shown per list
+	maxItemsPerUCList = 50
+		
+	# cat=plugin.tx_toctoccomments_pi1: userCenter//08;  type=int+; label=Maximal age of items shown in list: Items older than this number (in days) won't be shown in the lists
+	maxItemAgeUCList = 365
+			
+	# cat=plugin.tx_toctoccomments_pi1: Search//01; type=int+; label=Number of comments:Number of found comments shown in search result
+	showCommentsPerPage = 5
+		
+	# cat=plugin.tx_toctoccomments_pi1: Search//03; type=options[1=1 day,2=7 days,3 =1 month,4=last 6 months,5=1 year,6=ever];label=Age of comments:Initial setting for the age of comments to search for
+	initialCommentage = 6
+		
+	# cat=plugin.tx_toctoccomments_pi1: Search//07; type=int+; label=Searchterm size: Minimal size of the term to search for
+	minSearchTermLength = 4
+
+	# cat=plugin.tx_toctoccomments_pi1: Search//09; type=int+; label=Text cropping:Cropping of the found comments.
+	SearchCommentCropLength = 200
+		
+	# cat=plugin.tx_toctoccomments_pi1: Search//11; type=boolean; label=Display title:Displays a title on top of the search box
+	SearchDisplayTitle = 1			
+		
+}

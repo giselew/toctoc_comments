@@ -1,0 +1,663 @@
+Boxmodel
+Borderradius small
+CSS
+border-radius: 3px 3px 3px 3px;
+Selectors
+.tx-tc-ct-box-picturecrop322 img
+.tx-tc-userpic, .tx-tc-userpicf, .tx-tc-defuserpic
+.txtc_details
+.tx-tc-ct-editbutton, .tx-tc-ct-deletebutton, .tx-tc-ct-denotifybutton
+***
+
+Boxmodel
+Borderradius big
+CSS
+border-radius: 3px 3px 3px 3px;
+Selectors
+.txtc_overlay
+.tx-tc-ct-highlight
+.tx-tc-recent-cts-article
+#confirm-container .buttons div
+.tx-tc-pvs-nopreviewpic
+.tx-tc-cap-image
+.tx-tc-ct-submit, .tx-tc-ct-reset, .tx-tc-ct-submit-loggedin
+***
+
+Boxmodel
+Padding for tag p.tx-tc-text
+CSS
+padding: 0 33px 0 0;
+Selectors
+div.tx-tc-cts-ct-dp div.tx-tc-ct-box div.tx-tc-ct-box-cttxt p.tx-tc-text
+***
+
+Boxmodel
+Padding comments user image
+CSS
+padding: 0 4px 4px;
+Selectors
+.tx-tc-ct-box-picturecrop32
+***
+
+Boxmodel
+Push atrtstop-ilike-dp
+CSS
+margin: 0;
+Selectors
+.tx-tc-atrtstop-ilike-dp
+.tx-tc-atrtstop-ilike-dp-static
+***
+
+Boxmodel
+Submit buttons
+CSS
+text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+CSS
+box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14), 0 1px 0 rgba(255, 255, 255, 0.25) inset, 0 -2px 6px rgba(255, 255, 255, 0.55) inset;
+CSS
++background: url("../../themes/tisqus/img/next-sprite.png") repeat-x scroll 0 0 #E3E3E3;
+CSS
++border-color: rgba(75, 83, 94, 0.45);
+Selectors
+#confirm-container .buttons div
+.tx-tc-ct-submit, .tx-tc-ct-reset, .tx-tc-ct-submit-loggedin
+***
+
+Boxmodel
+Margin of i(dis)likes images
+CSS
+margin: 5px 3px -5px 0px;
+Selectors
+.tx-tc-myrts-ilke img
+.tx-tc-myrts-disilke img
+***
+
+Boxmodel
+Code
+CSS
+font-size: 100%;
+Selectors
+.tx-tc-text code
+***
+
+Boxmodel
+Submit buttons hover
+CSS
++background-color: #F1F1F1;
+CSS
++background-position: 0 -40px;
+Selectors
+#confirm-container .buttons div:hover
+.tx-tc-ct-submit:hover, .tx-tc-ct-reset:hover, .tx-tc-ct-submit-loggedin:hover
+***
+
+
+Boxmodel
+Borderradius middle
+CSS
+border-radius: 3px 3px 3px 3px;
+Selectors
+.sharrre .shrmiddle
+.tx-tcresponse-text
+div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-wpp, div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-img, .tx-tc-ct-video
+.tx-tc-cts .tx-tc-ct-wpp
+.tx-tc-ct-rybox
+.tx-tc-ct-ry-frameover
+.tx-tc-ct-ry-frame
+.tx-tc-pvs-prevnext
+***
+
+Boxmodel
+Image width in attachment Showcase
+CSS
+max-width: 700px;
+max-width: {1}px;
+Selectors
+.txtc_overlay img.tx-tc-images-img-browse
+***
+
+Boxmodel
+Description width in attachment Showcase
+CSS
+width:170px;
+width:{2}px;
+Selectors
+.txtc_details
+***
+
+Boxmodel
+Maximal width of Showcase
+CSS
+max-width:900px;
+max-width:{3}px;
+Rules
+{3}=30+{1}+{2}
+Selectors
+.txtc_overlay
+
+***
+
+Boxmodel
+Dimensions of pics in F/M Avatar selector
+CSS
+width: 18px;
+CSS
+height: 18px;
+Selectors
+.tx-tc-defuserpic
+***
+
+Boxmodel
+Margins of pics in F/M Avatar selector
+CSS
+margin: 4px 2px 0 0;
+Selectors
+.tx-tc-defuserpic
+***
+
+Boxmodel
+Bordersize of user pics
+CSS
+border-width: 0px;
+Selectors
+.tx-tc-userpic, .tx-tc-userpicf, .tx-tc-defuserpic, .tx-tc-ct-uc-pic .tx-tc-userpic, .tx-tc-ct-uc-pic .tx-tc-userpicf, .tx-tc-ct-box-picturecrop322 img
+.tx-tc-userpic, .tx-tc-userpicf, .tx-tc-defuserpic
+.tx-tc-userpic, .tx-tc-userpicf, .tx-tc-ct-box-picturecrop322 img
+.tx-tc-ct-rybox .tx-tc-userpic, .tx-tc-ct-rybox .tx-tc-userpicf
+***
+
+Boxmodel
+1. Fontsize 100% Plugin-Container
+CSS
+font-size:116%;
+Selectors
+.toctoc-comments-pi1
+***
+
+Boxmodel
+1.1 Fontsize 100% Formbox
+CSS
+font-size:100%;
+Selectors
+div.tx-tc-pi1
+***
+
+Boxmodel
+1.1.1 Fontsize forced size 100% of the font of the labels in the form
+CSS
+font-size:100%;
+Selectors
+.tx-tcfh
+***
+
+Boxmodel
+1.1.2 Fontsize forced size 120% of the font in textarea
+CSS
+font-size: 118%;
+Selectors
+textarea.tx-tc-ctinput-textarea, textarea.tx-tc-ctinput-textarea-rq
+***
+
+Boxmodel
+Comment edits, move the TA a bit down
+CSS
++margin-top: 8px;
+Selectors
+.tx-tc-cts .tx-tc-cts-dp .tx-tc-cts-ct-box .tx-tc-cts-ct-dp .tx-tc-ct-box .tx-tc-ct-box-cttxt p.tx-tc-text form.tx-tc-form-for-newcomment fieldset.tx-tc-ct-fieldset textarea.tx-tc-ctinput-textarea
+.tx-tc-cts .tx-tc-cts-dp .tx-tc-cts-ct-box .tx-tc-cts-ct-dp .tx-tc-ct-box .tx-tc-ct-box-cttxt p.tx-tc-text form.tx-tc-form-for-newcomment fieldset.tx-tc-ct-fieldset textarea.tx-tc-ctinput-textarea-rq
+***
+
+Boxmodel
+Comment box, bit of margin at bottom
+CSS
++margin-bottom: 4px;
+Selectors
+.tx-tc-cts-ct-box
+***
+
+Boxmodel
+1.2 Fontsize forced size 100% of the comments-list
+CSS
+font-size: 100%;
+Selectors
+.tx-tc-cts
+***
+
+Boxmodel
+1.3 Fontsize forced size 110% in other controls: comment, reply, preview, messages over the form
+CSS
+font-size: 110%;
+Selectors
+.tx-tc-ct-ry-frame
+.tx-tc-ct-ry-frameover
+.tx-tc-ct-prv-frame
+.tx-tc-text, .tx-tc-text-top
+.tx-tc-ftm-text
+***
+
+Boxmodel
+2 Fontsize forced size 110% of text in usercards
+CSS
+font-size: 110%;
+Selectors
+.tx-tc-ct-uc
+***
+
+Boxmodel
+3 Disqus customize for smaller function lines, change font-size
+CSS
+font-size: 88%;
+Selectors
+.tx-tc-cts-ctsbrowse-submit, .tx-tc-cts-ctsbrowse-submit-hide
+***
+
+Boxmodel
+3 Disqus customize for smaller function lines, add font-size
+CSS
++font-size: 88%;
+Selectors
+.tx-tc-atrtstop-ilike-dp-static
+***
+
+Boxmodel
+3 Disqus customize for smaller function lines, add font-size
+CSS
++font-size: 88%;
+Selectors
+.tx-tc-ct-ry
+.tx-tc-atrtstop-ilike-dp
+.tx-tc-rts-li, .tx-tc-rts-li-text
+.tx-tc-rts-li-text-hide
+***
+
+Boxmodel
+3 Disqus customize for smaller function lines, add font-size
+CSS
++font-size: 78%;
+Selectors
+div.sharrre
+***
+
+Boxmodel
+3 sharrre margin
+CSS
+margin: 0;
+Selectors
+.tx-tc-sharrrearea-popup
+***
+
+Boxmodel
+3 Disqus customize for smaller function lines, change line-height
+CSS
+line-height: 11px;
+Selectors
+.tx-tc-cts-ctsbrowse-submit, .tx-tc-cts-ctsbrowse-submit-hide
+***
+
+Boxmodel
+3 Tisqus customize ctlink
+CSS
++font-size: 78%;
+CSS
+margin: 0;
+Selectors
+.tx-tc-atrts-ctlink
+***
+
+Boxmodel
+Border-radius of reply box
+CSS
+border-radius: 12px 12px 12px 2px;
+CSS
+padding: 0 1px 10px 0;
+Selectors
+.tx-tc-ct-box-cttxt-reply
+***
+
+Boxmodel
+Submit Button Bottom Margin
+CSS
+padding: 4px 0 10px 2px;
+CSS
++min-height: 28px;
+Selectors
+.tx-tc-div-submit
+***
+
+Boxmodel   
+toctoc_comments_rating_stars.png link
+CSS
+background: url("../themes/tisqus/img/toctoc_comments_rating_stars.png") repeat-x scroll 0 -12px transparent;
+Selectors 
+.tx-tc-rts-gold-bar
+***
+
+Boxmodel
+Margin top upload area
+CSS
+margin-top: -4px;
+Selectors
+.tx-tc-ct-form-field-upload
+***
+
+Boxmodel
+Disqus customize for smaller function lines
+CSS
+line-height: 26px;
+CSS
+margin: 0;
+Selectors
+.tx-tc-myrts-disilke
+.tx-tc-myrts-ilke
+***   
+    
+Boxmodel
+topmorgin of report-line
+CSS
+padding: 0;
+Selectors
+.tx-tc-ct-ry-report-line
+***
+
+Boxmodel
+border of textarea
+CSS
+margin: 5px 0 -4px -1px;
+Selectors
+.tx-tc-ct-ry-report-line textarea.tx-tc-ctinput-textarea, .tx-tc-ct-ry-report-line textarea.tx-tc-ctinput-textarea-rq
+***
+
+Boxmodel
+left indent of label in reply on comments
+CSS
+margin: 0 -4px 0 2px;
+Selectors
+.tx-tc-ct-label, .tx-tc-ct-label-cap
+***
+
+Boxmodel
+top margin nr of comments
+CSS
+font-size: 121%;
+CSS
+font-weight: bold;
+CSS
++color: #000000;
+CSS
+line-height: 24px;
+CSS
+margin: 0;
+Selectors
+.tx-tc-ct-cnt
+***
+
+Boxmodel
+top margin nr of views
+CSS
+font-size: 110%;
+CSS
+font-weight: bold;
+CSS
++color: #000000;
+CSS
+line-height: 24px;
+CSS
+margin-bottom: 0px;
+CSS
+margin-top: 0px;
+CSS
+padding: 2px 0 0;
+Selectors
+.tx-tc-ct-viewcnt
+***
+
+Boxmodel
+top margin nr of views
+CSS
++min-height: 23px;
+Selectors
+.tx-tc-cts-dp .tx-tc-ct-box div.tx-tc-text-top .tx-tc-atrts-dp .tx-tc-rts-area div.tx-tc-rts-container
+***
+
+Boxmodel
+margin of text after rating stars on top of the plugin
+CSS
+margin: 0;
+Selectors
+.tx-tc-atrts-dp .tx-tc-rts
+***
+
+Boxmodel
+Line-Height 14 (Recent comments list)
+CSS
+line-height: 14px;
+Selectors
+.tx-tc-recent-cts-entry
+.tx-tc-recent-cts-title
+***
+
+Boxmodel
+Height of form fields
+CSS
+min-height: 30px;
+CSS
+padding: 0;
+Selectors
+div.tx-tc-ct-form-field
+***
+
+Boxmodel
+Bad comments fist position
+CSS
+margin: -4px 0 0 2px;
+CSS
+padding: 0;
+CSS
+float: left;
+Selectors
+.tx-tc-ct-report
+***
+
+Boxmodel
+Line-Height26 ConfirmBoxes header and buttons
+CSS
+height: 26px;
+CSS	
+line-height: 26px;
+Selectors
+#confirm-container .header
+***
+
+Boxmodel
+Line-Height26 ConfirmBoxes header and buttons
+CSS
+height: 26px;
+CSS	
++line-height: 26px;
+Selectors
+#confirm-container .buttons div
+***
+
+Boxmodel
+Line-Height26 ConfirmBoxes header and buttons
+CSS
++height: 26px;
+CSS	
+line-height: 26px;
+Selectors
+#confirm-container .buttons
+***
+
+Boxmodel
+Position Notify stuff
+CSS	
+line-height: 18px;
+CSS	
+margin-top: 5px;
+CSS	
+width: 45%;
+Selectors
+.tx-tc-ntf-box
+
+Boxmodel
+Width Texts in UC
+CSS
+width: 222px;
+Selectors
+.tx-tc-ct-uc-text-contact, .tx-tc-ct-uc-text-stats, .tx-tc-ct-uc-text-ip, .tx-tc-ct-uc-text-contact-title
+***
+
+Boxmodel
+UC font-size in top ratings line
+CSS
++font-size: 115%;
+Selectors
+.tx-tc-cts-dp .tx-tc-ct-box .tx-tc-text-top .tx-tc-atrts-dp .tx-tc-ct-uc
+***
+
+Boxmodel
+UC font-size in normal ratings line
+CSS
++font-size: 125%;
+Selectors
+.tx-tc-cts-dp .tx-tc-cts-ct-dp .tx-tc-ct-box .tx-tc-ct-box-cttxt .tx-tc-rt .tx-tc-ct-uc
+***
+
+Boxmodel
+Top ratingsline fontsize (new selecor set)
+CSS
++font-size: 85%;
+Selectors
+div.tx-tc-text-top div.tx-tc-myrts-dp
+***
+
+Boxmodel
+Minimal height of an Item entry
+CSS
++min-height: 40px;
+Selectors
+.tx-tc-trt-cts-article
+***
+
+Boxmodel
+Topratings left rating stars2
+CSS
++left: 0;
+Selectors
+.tx-tc-trt-cts-article .tx-tc-rts
+***
+
+Boxmodel
+Height of br-tag in ratings on the top of the plugin
+CSS
+line-height:2em;
+Selectors
+.tx-tc-solobr-articlerating
+***
+
+Boxmodel
+Height of second br-tag in ratings on the top of the plugin (with sharing enabled)
+CSS
+line-height: 1.4em;
+Selectors
+.tx-tc-secondbr-articlerating
+***
+
+Boxmodel
+Margin of link to subcomments
+CSS
++font-size: 88%;
+Selectors
+.tx-tc-nbrsubcomments
+***
+
+Boxmodel
+Action forms frame position
+CSS
+margin: 0;
+CSS
+padding: 0;
+Selectors
+.tx-tc-ct-actionforms
+***
+
+Boxmodel
+br height over the comment
+CSS
++line-height: 25px;
+Selectors
+.tx-tc-brovercomment
+***
+
+Boxmodel
+padding for commenttext area p
+CSS
++margin: -2px 0 0;
+Selectors
+.tx-tc-overrating + .tx-tc-text
+***
+
+Boxmodel
+padding likes in comments
+CSS
+margin: 0;
+CSS
+padding: 0;
+Selectors
+.tx-tc-overrating
+***
+
+Boxmodel
+br line height after commentdate on displaymode=1
+CSS
++line-height: 26px;
+Selectors
+.tx-tc-overrating-date + br
+***
+
+Boxmodel
+margintop for form-for-newcomment
+CSS
+margin: 0;
+Selectors
+.tx-tc-text .tx-tc-form-for-newcomment
+***
+
+Boxmodel
+margintop for likes in comments
+CSS
+margin-top: 0px;
+Selectors
+.tx-tc-ct-box .tx-tc-ct-box-cttxt .tx-tc-myrts-dp .tx-tc-myrts-ilke
+.tx-tc-ct-box .tx-tc-ct-box-cttxt .tx-tc-myrts-dp .tx-tc-myrts-disilke
+***
+
+Boxmodel
+tooltip font
+CSS
+font-size:96%;
+Selectors
+.tx-tc-tooltip
+.tx-tc-tooltip2
+.tx-tc-tooltipemoji
+***
+
+Boxmodel
+Margin of ilikes depends on ratingMarginTop
+CSS
+margin: 2px 0 -2px 0;
+margin: {ratingMarginTop}px 0 0 0;
+Selectors
+.tx-tc-myrts-disilke img, .tx-tc-myrts-disilke .tx_toctoc_comments_static_ilike img
+***
+
+Boxmodel
+Margin of ilikes depends on ratingMarginTop
+CSS
+margin: 2px 0 -2px 0;
+margin: {mrtsdisl}px 0 0 0;
+Rules
+{mrtsdisl}=-3+{ratingMarginTop}
+Selectors
+.tx-tc-myrts-disilke img, .tx-tc-myrts-disilke .tx_toctoc_comments_static_ilike img
+***

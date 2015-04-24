@@ -1,0 +1,929 @@
+plugin.tx_toctoccomments_pi1 = USER
+plugin.tx_toctoccomments_pi2 = USER
+[usergroup = *]
+plugin.tx_toctoccomments_pi1 = USER_INT
+[global]
+[globalString = _GET|tx_toctoccomments_pi1|anchor=*]
+plugin.tx_toctoccomments_pi1 = USER_INT
+[global]
+plugin.tx_toctoccomments_pi1 {
+
+  includeLibs = EXT:toctoc_comments/pi1/class.toctoc_comments_pi1.php
+  userFunc = tx_toctoccomments_pi1->main
+
+  # mode for plugin, '' (empty) : normal, 1: recent comments, 2: report bad comment, 3: topratings, 4:other reports, 5: ajax login, 6: user center, 7: comments search
+  pluginmode =
+
+  # code for commenting parts, commenting style, possible: "FORM,COMMENTS" (default), "COMMENTS,FORM" or "COMMENTS"
+  code = {$plugin.tx_toctoccomments_pi1.code}
+
+  storagePid = {$plugin.tx_toctoccomments_pi1.storagePid}
+  externalPrefix = {$plugin.tx_toctoccomments_pi1.externalPrefix}
+  templateFile = {$plugin.tx_toctoccomments_pi1.templateFile}
+
+  UserImageSize = {$plugin.tx_toctoccomments_pi1.UserImageSize}
+  useUserImage =  {$plugin.tx_toctoccomments_pi1.useUserImage}
+  # Additional pages where the cache should be dropped when adding or deleting toctoc_comment-data
+  # global scope
+  additionalClearCachePages =
+  # local scope, typically added in Page TS, this will be merged with globalscope
+  additionalClearCachePagesLocal =
+
+  # Time in seconds for display of a usercard. Values between 3 and 15 are ok
+  timeoutUC = {$plugin.tx_toctoccomments_pi1.timeoutUC}
+
+  # This option enables display of information in usercards
+  userContactUC = {$plugin.tx_toctoccomments_pi1.userContactUC}
+  userHomepageUC = {$plugin.tx_toctoccomments_pi1.userHomepageUC}
+  userEmailUC = {$plugin.tx_toctoccomments_pi1.userEmailUC}
+  userLocationUC = {$plugin.tx_toctoccomments_pi1.userLocationUC}
+
+  userStatsUC = {$plugin.tx_toctoccomments_pi1.userStatsUC}
+  UCUserStatsByEmail = {$plugin.tx_toctoccomments_pi1.UCUserStatsByEmail}
+
+  # Display IP information about the user in User Cards
+  userIPUC = {$plugin.tx_toctoccomments_pi1.userIPUC}
+
+  minCommentLength = {$plugin.tx_toctoccomments_pi1.minCommentLength}
+  maxCommentLength = {$plugin.tx_toctoccomments_pi1.maxCommentLength}
+  commentCropLength = {$plugin.tx_toctoccomments_pi1.commentCropLength}
+  reviewCropLength = {$plugin.tx_toctoccomments_pi1.reviewCropLength}
+
+  # e-mail are sent in HTML-Format or Text format
+  HTMLEmail = {$plugin.tx_toctoccomments_pi1.HTMLEmail}
+  HTMLEmailFontFamily = {$plugin.tx_toctoccomments_pi1.HTMLEmailFontFamily}
+
+  sessionTimeout = {$plugin.tx_toctoccomments_pi1.sessionTimeout}
+  
+  # comments are hidden from search engines, if you want search engines to index all your comments set this option to 1
+  dontSkipSearchEngines = 0
+
+  optionalRecordId =
+
+  preventDuplicatePosts = 1
+
+  # possible values  = commenttitle, firstname, lastname, email, location, homepage (title is above comment), the remaining fields will display in this sequence
+  useFieldsSequence = firstname, lastname, email, location
+  useGenderWithField = lastname
+
+  # possible required values  = commenttitle, firstname, location, homepage (email, content and lastname are always mandatory)
+  requiredFields = firstname, lastname, email
+  requiredMark = *
+
+  # stdWrap for error message when required field is empty, reference to LLL-entry possible (but only here)
+  requiredFields_errorWrap {
+    dataWrap = <span class="tx-tc-required-error">{LLL:EXT:toctoc_comments/pi1/locallang.xml:error}:&#32;|</span>
+  }
+
+  # stdWrap for "First name" in the comment output
+  firstName_stdWrap {
+    wrap = <b>|</b>
+  }
+
+  # stdWrap for "Last name" in the comment output
+  lastName_stdWrap {
+    wrap = <b>|</b>
+  }
+
+  # stdWrap for "E-mail" in the comment output
+  email_stdWrap {
+    wrap =
+  }
+
+  # stdWrap for "web site" in the comment output
+  webSite_stdWrap {
+    wrap =
+  }
+
+  # stdWrap for "Location" in the comment output
+  location_stdWrap {
+    wrap =
+  }
+
+  # stdWrap for "Content" in the comment output
+  content_stdWrap {
+    wrap =
+  }
+
+  # stdWrap for "commentTitle" in the comment output
+  commentTitle_stdWrap {
+    wrap = <b>|</b>
+  }
+
+  # stdWrap for "recent comments"
+  crdate_stdWrap.wrap = |
+  author_stdWrap.wrap = |&nbsp;-&nbsp;
+  recentComment_stdWrap.wrap = |
+
+  smiliePath = EXT:toctoc_comments/res/smilie
+  fileExt = png
+  smilies {
+    smile = :-) :) :] =)
+    tongue = :-P :-p =P
+    wink = ;-) ;)
+    grin = :-D :D =D
+    curlylips = :3
+    kiss = :-* :*
+    grumpy = ^( ^-(
+    glasses = 8-) B-)
+    sunglasses = 8-| 8| B-| B|
+    upset = ^:-o ^:-O
+    confused = o.O O.o
+    shark = (^^^)
+    gasp = :O :o
+    pacman = :v
+    squint = -_-
+    devil = 3-)
+    unsure = :-/ :\ :-\
+    frown = :-( :(
+    cry = :'(
+    putnam = :putnam:
+    robot = :|]
+    heart = :h:
+    angel = O-)
+    kiki = ^_^
+    penguin = :+p:
+    gisele = :g:
+    jacque = :j:
+    rasta = :r:
+    serious = :-|
+    uncertain = :-s
+    oherrje = :-U
+    omg = 8O 8-O 8o 8-o
+    thief = =-=
+    monk = M-)
+    saint = ()-)
+    mohawk = V-)
+    furrow = [-)
+    moreevil = X-)
+    wow = WOW)
+  }
+
+  advanced {
+
+  	commentReview = {$plugin.tx_toctoccomments_pi1.commentReview}
+    # Number of comments per page
+    commentsPerPage = {$plugin.tx_toctoccomments_pi1.commentsPerPage}
+
+    # Comments can be automatically closed after X months, days or hours. Specify integer number followed by m, d or h. Empty means "no limit"
+    closeCommentsAfter = {$plugin.tx_toctoccomments_pi1.closeCommentsAfter}
+
+    commentsEditBack = {$plugin.tx_toctoccomments_pi1.commentsEditBack}
+
+    # Commenting can be totally suppressed, 0 (default) or 1
+    commentingClosed = {$plugin.tx_toctoccomments_pi1.commentingClosed}
+
+    # Date format specification. See PHP date() function for details. If empty, uses TYPO3 date format defined in Install tool
+    dateFormat = {$plugin.tx_toctoccomments_pi1.dateFormat}
+
+    # Date format mode. Can be either "date" or "strftime" (without quotes). Means what PHP function to use for date formatting
+    dateFormatMode = {$plugin.tx_toctoccomments_pi1.dateFormatMode}
+
+    # Enable old style Date format mode.
+    dateFormatOldStyle = 0
+
+    # Create links inside comment text automatically?
+    autoConvertLinks = {$plugin.tx_toctoccomments_pi1.autoConvertLinks}
+
+    # Cropping of autoconverted links
+    autoConvertLinksCropLength = {$plugin.tx_toctoccomments_pi1.autoConvertLinksCropLength}
+
+    # Let admins give comments on comments:When enabled a link is shown in notification emails opening a webpage where admins can give a direct reply on the comment
+    adminCommentResponse = {$plugin.tx_toctoccomments_pi1.adminCommentResponse}
+
+    # Users can reply on comments:Number of Levels of comments on comments, values from 0 (none) to 20 are allowed
+    userCommentResponseLevels =  {$plugin.tx_toctoccomments_pi1.userCommentResponseLevels}
+
+    # When displaying comments on comments this sets how many levels are expanded. values from 0 (none) to 20  are allowed
+    userCommentResponseLevelExpanded =  {$plugin.tx_toctoccomments_pi1.userCommentResponseLevelExpanded}
+
+    showFeUsercomments = {$plugin.tx_toctoccomments_pi1.showFeUsercomments}
+
+    # Show comments for FE Users depending of the user group:For logged in users only comments by users of the same user group are shown (showFeUsercomments must be set to 0).
+    showFeUsercommentsOnlyInSameUserGroup = {$plugin.tx_toctoccomments_pi1.showFeUsercommentsOnlyInSameUserGroup}
+
+    # If enabled, the commentator can chose if he wants to be informed on new comments and receives e-mail when new comments are approved.
+    commentatorNotify = {$plugin.tx_toctoccomments_pi1.commentatorNotify}
+    notificationLevel = {$plugin.tx_toctoccomments_pi1.notificationLevel}
+    notificationValidDays = {$plugin.tx_toctoccomments_pi1.notificationValidDays}
+
+    # If enabled, the commentators are identified as per their IP address if they are not logged in. If disabled commentators who are not logged in can't disable E-Mail notification on new comments.
+    commentatorNotifybyIP = {$plugin.tx_toctoccomments_pi1.commentatorNotifybyIP}
+
+    # Information e-mail when a new comment is posted for commentator of former comments is sent from this address
+    notificationForCommentatorEmail = {$plugin.tx_toctoccomments_pi1.notificationForCommentatorEmail}
+    notificationForCommentatorEmailName = {$plugin.tx_toctoccomments_pi1.notificationForCommentatorEmailName}
+
+    # E-mail template for commentator of former comments:Template to use for notification email to commentator of former comments
+    notificationForCommentatorEmailTemplate = {$plugin.tx_toctoccomments_pi1.notificationForCommentatorEmailTemplate}
+    notificationForCommentatorHTMLEmailTemplate = {$plugin.tx_toctoccomments_pi1.notificationForCommentatorHTMLEmailTemplate}
+    eIDHTMLTemplate = {$plugin.tx_toctoccomments_pi1.eIDHTMLTemplate}
+
+    # Enable URL log (for "List" mode)
+    enableUrlLog = 0
+
+    # Path where the feuser-images are stored. Normally uploads/pics/.
+    FeUserImagePath = {$plugin.tx_toctoccomments_pi1.FeUserImagePath}
+
+    FeUserDbField = {$plugin.tx_toctoccomments_pi1.FeUserDbField}
+	useAdditionalFe_usersFields = {$plugin.tx_toctoccomments_pi1.useAdditionalFe_usersFields}
+	
+    # (commentsPerPage*scroll-multiplication) gives the number of comments that are scrolled back when show older comments is clicked
+    CommentsShowOldPerCID = {$plugin.tx_toctoccomments_pi1.CommentsShowOldPerCID}
+
+    # TemplaVoila-field with comments:Name of the field defined in templavoila (if used) where the comments-plugins goes. Check your templavoila page-template
+    UseTemplavoilaField = {$plugin.tx_toctoccomments_pi1.UseTemplavoilaField}
+
+    # Column-position (colPos) where the comments-plugins go. Important if no templavoila used. Can be left on 0, most of the times
+    UseMainColPos = {$plugin.tx_toctoccomments_pi1.UseMainColPos}
+
+    // start deprecated sharing options in section advanced - will be removed with version 7
+    // useSharing = {$plugin.tx_toctoccomments_pi1.useSharing}
+
+    # if you dont use the sharing components at all you can set this to 1
+    // sharingNoCalculatedCSS = 0
+
+    // useSharingDesign = {$plugin.tx_toctoccomments_pi1.useSharingDesign}
+
+    // dontUseSharingFacebook = {$plugin.tx_toctoccomments_pi1.dontUseSharingFacebook}
+    // dontUseSharingTwitter = {$plugin.tx_toctoccomments_pi1.dontUseSharingTwitter}
+    // dontUseSharingGoogle = {$plugin.tx_toctoccomments_pi1.dontUseSharingGoogle}
+    // dontUseSharingLinkedIn = {$plugin.tx_toctoccomments_pi1.dontUseSharingLinkedIn}
+    // dontUseSharingStumbleupon = {$plugin.tx_toctoccomments_pi1.dontUseSharingStumbleupon}
+    // dontUseSharingPinterest = {$plugin.tx_toctoccomments_pi1.dontUseSharingPinterest}
+    // dontUseSharingDigg = {$plugin.tx_toctoccomments_pi1.dontUseSharingDigg}
+    // dontUseSharingDelicious = {$plugin.tx_toctoccomments_pi1.dontUseSharingDelicious}
+    // dontUseSharingAddThisMore = {$plugin.tx_toctoccomments_pi1.dontUseSharingAddThisMore}
+    // AddThisID = {$plugin.tx_toctoccomments_pi1.AddThisID}
+    // shareUsersTotalText = {$plugin.tx_toctoccomments_pi1.shareUsersTotalText}
+    // shareDataText = {$plugin.tx_toctoccomments_pi1.shareDataText}
+    // sharePageURL = {$plugin.tx_toctoccomments_pi1.sharePageURL}
+    // useShareIcon = {$plugin.tx_toctoccomments_pi1.useShareIcon}
+    // end deprecated sharing options in section advanced - will be removed with version 7
+
+    recentcommentsPluginpages = {$plugin.tx_toctoccomments_pi1.recentcommentsPluginpages}
+    recentcommentsPluginRecords = {$plugin.tx_toctoccomments_pi1.recentcommentsPluginRecords}
+
+    commentsShowCount = {$plugin.tx_toctoccomments_pi1.commentsShowCount}
+    commentsShowCountText = {$plugin.tx_toctoccomments_pi1.commentsShowCountText}
+    commentsShowCountLevel = {$plugin.tx_toctoccomments_pi1.commentsShowCountLevel}
+
+
+    # If set, reverses sortng to show last comments first
+    reverseSorting = {$plugin.tx_toctoccomments_pi1.reverseSorting}
+    sortMostPopular = {$plugin.tx_toctoccomments_pi1.sortMostPopular}
+    useMostPopular = {$plugin.tx_toctoccomments_pi1.useMostPopular}
+    useSortMenu = {$plugin.tx_toctoccomments_pi1.useSortMenu}
+    showSortMostPopularIcon = 1
+    invertBrowser = {$plugin.tx_toctoccomments_pi1.invertBrowser}
+
+    wallExtension = {$plugin.tx_toctoccomments_pi1.wallExtension}
+    communityProfileCommentsVisibility = {$plugin.tx_toctoccomments_pi1.communityProfileCommentsVisibility}
+
+    replyModeInline = {$plugin.tx_toctoccomments_pi1.replyModeInline}
+    replyModeInlineOpenForm = {$plugin.tx_toctoccomments_pi1.replyModeInlineOpenForm}
+
+    useEmoji = {$plugin.tx_toctoccomments_pi1.useEmoji}
+    emojiConfigCacheLevel = {$plugin.tx_toctoccomments_pi1.emojiConfigCacheLevel}
+    useInternalSmiliesInEmojiSelector = {$plugin.tx_toctoccomments_pi1.useInternalSmiliesInEmojiSelector}
+
+    useMultilingual= {$plugin.tx_toctoccomments_pi1.useMultilingual}
+
+    activateClearPageCache = {$plugin.tx_toctoccomments_pi1.activateClearPageCache}
+    useSessionCache = {$plugin.tx_toctoccomments_pi1.useSessionCache}
+    cacheBackTrack = {$plugin.tx_toctoccomments_pi1.cacheBackTrack}
+
+    countViews = {$plugin.tx_toctoccomments_pi1.countViews}
+    countViewsShowSince = {$plugin.tx_toctoccomments_pi1.countViewsShowSince}
+    showCountViews = {$plugin.tx_toctoccomments_pi1.showCountViews}
+    showCountViewsOnlyIfCommentsExist = {$plugin.tx_toctoccomments_pi1.showCountViewsOnlyIfCommentsExist}
+    initialViewsCount = 0
+    initialViewsDate =
+    showCountCommentViews = {$plugin.tx_toctoccomments_pi1.showCountCommentViews}
+    countCommentViews = {$plugin.tx_toctoccomments_pi1.countCommentViews}
+    showCountViewsLongFormat = {$plugin.tx_toctoccomments_pi1.showCountViewsLongFormat}
+
+    # For calculation of activity, multiplicator for number of ratings
+    activityMultiplicatorRating = {$plugin.tx_toctoccomments_pi1.activityMultiplicatorRating}
+    # For calculation of activity, multiplicator for number of commments
+    activityMultiplicatorComment = {$plugin.tx_toctoccomments_pi1.activityMultiplicatorComment}
+
+    useCommentLink = {$plugin.tx_toctoccomments_pi1.useCommentLink}
+    displayChildComments = {$plugin.tx_toctoccomments_pi1.displayChildComments}
+
+    loginRequired = {$plugin.tx_toctoccomments_pi1.loginRequired}
+
+    # Display the "eye" for comment previews
+    allowCommentPreview = 1
+    # Logged in users may delete their comments
+    allowCommentDeletion = 1
+
+    nameCommentSeparator = -
+    useNameCommentSeparator = 1
+
+    watermarkFormFields = {$plugin.tx_toctoccomments_pi1.watermarkFormFields}
+    loginRequiredIdLoginForm = tx-tc-loginform
+
+    allowHTMLTagsInComments = {$plugin.tx_toctoccomments_pi1.allowHTMLTagsInComments}
+    useBBCodeMenu = {$plugin.tx_toctoccomments_pi1.useBBCodeMenu}
+    BBCodebbs = {$plugin.tx_toctoccomments_pi1.BBCodebbs}
+    midDot = {$plugin.tx_toctoccomments_pi1.midDot}
+
+    gravatarEnable = {$plugin.tx_toctoccomments_pi1.gravatarEnable}
+	gravatarRating = {$plugin.tx_toctoccomments_pi1.gravatarRating}
+	gravatarLocalHost ={$plugin.tx_toctoccomments_pi1.gravatarLocalHost}
+
+	acceptTermsCondsOnSubmit ={$plugin.tx_toctoccomments_pi1.acceptTermsCondsOnSubmit}
+
+	# if you dont want to use GIFBUILDER for userpics then set this to 1
+    dontuseGIFBUILDER = 0
+    # set this to 1 only for debugging when you need to display entire conf in Frontend
+    dontUseMirrorConf = 0
+
+  }
+  sharing {
+ 	// sharing option valid since version 6
+    useSharing = {$plugin.tx_toctoccomments_pi1.useSharing}
+
+    # if you dont use the sharing components at all you can set this to 1
+    sharingNoCalculatedCSS = 0
+
+    useSharingDesign = {$plugin.tx_toctoccomments_pi1.useSharingDesign}
+
+    dontUseSharingFacebook = {$plugin.tx_toctoccomments_pi1.dontUseSharingFacebook}
+    dontUseSharingTwitter = {$plugin.tx_toctoccomments_pi1.dontUseSharingTwitter}
+    dontUseSharingGoogle = {$plugin.tx_toctoccomments_pi1.dontUseSharingGoogle}
+    dontUseSharingLinkedIn = {$plugin.tx_toctoccomments_pi1.dontUseSharingLinkedIn}
+    dontUseSharingStumbleupon = {$plugin.tx_toctoccomments_pi1.dontUseSharingStumbleupon}
+    dontUseSharingPinterest = {$plugin.tx_toctoccomments_pi1.dontUseSharingPinterest}
+    dontUseSharingDigg = {$plugin.tx_toctoccomments_pi1.dontUseSharingDigg}
+    dontUseSharingDelicious = {$plugin.tx_toctoccomments_pi1.dontUseSharingDelicious}
+    dontUseSharingAddThisMore = {$plugin.tx_toctoccomments_pi1.dontUseSharingAddThisMore}
+    AddThisID = {$plugin.tx_toctoccomments_pi1.AddThisID}
+    shareUsersTotalText = {$plugin.tx_toctoccomments_pi1.shareUsersTotalText}
+    shareDataText = {$plugin.tx_toctoccomments_pi1.shareDataText}
+    sharePageURL = {$plugin.tx_toctoccomments_pi1.sharePageURL}
+    useShareIcon = {$plugin.tx_toctoccomments_pi1.useShareIcon}
+ }
+
+  spamProtect {
+    requireApproval = {$plugin.tx_toctoccomments_pi1.requireApproval}
+    useCaptcha = {$plugin.tx_toctoccomments_pi1.useCaptcha}
+    checkTypicalSpam = {$plugin.tx_toctoccomments_pi1.checkTypicalSpam}
+
+    freecapBackgoundcolor = {$plugin.tx_toctoccomments_pi1.freecapBackgoundcolor}
+    freecapTextcolor = {$plugin.tx_toctoccomments_pi1.freecapTextcolor}
+    freecapNumberchars = {$plugin.tx_toctoccomments_pi1.freecapNumberchars}
+    freecapHeight = {$plugin.tx_toctoccomments_pi1.freecapHeight}
+
+    notificationEmail = {$plugin.tx_toctoccomments_pi1.notificationEmail}
+    fromEmail = {$plugin.tx_toctoccomments_pi1.fromEmail}
+    fromEmailName = {$plugin.tx_toctoccomments_pi1.fromEmailName}
+
+    emailTemplate = {$plugin.tx_toctoccomments_pi1.emailTemplate}
+    emailTemplateInfo = {$plugin.tx_toctoccomments_pi1.emailTemplateInfo}
+
+    spamCutOffPoint = {$plugin.tx_toctoccomments_pi1.spamCutOffPoint}
+
+    informationEmail = {$plugin.tx_toctoccomments_pi1.informationEmail}
+    emailTemplateHTML = {$plugin.tx_toctoccomments_pi1.emailTemplateHTML}
+
+    considerReferer = 0
+
+    useIPblocking = {$plugin.tx_toctoccomments_pi1.useIPblocking}
+
+    confirmedOptIn = {$plugin.tx_toctoccomments_pi1.confirmedOptIn}
+    emailTemplatecoiHTML = {$plugin.tx_toctoccomments_pi1.emailTemplatecoiHTML}
+    emailTemplatecoi = {$plugin.tx_toctoccomments_pi1.emailTemplatecoi}
+
+    emailTemplateDislikeHTML = {$plugin.tx_toctoccomments_pi1.emailTemplateDislikeHTML}
+    emailTemplateDislike = {$plugin.tx_toctoccomments_pi1.emailTemplateDislike}
+        
+    checkSMTPService = {$plugin.tx_toctoccomments_pi1.checkSMTPService}
+    commentWaitTime = {$plugin.tx_toctoccomments_pi1.commentWaitTime}
+  }
+
+  ratings {
+    # Should ratings be used?
+    enableRatings = {$plugin.tx_toctoccomments_pi1.enableRatings}
+
+    # Use this plugin only for ratings?
+    ratingsOnly = {$plugin.tx_toctoccomments_pi1.ratingsOnly}
+
+    ratingsTemplateFile = {$plugin.tx_toctoccomments_pi1.ratingsTemplateFile}
+    minValue = {$plugin.tx_toctoccomments_pi1.minValue}
+    maxValue = {$plugin.tx_toctoccomments_pi1.maxValue}
+
+    additionalCSS = {$plugin.tx_toctoccomments_pi1.additionalCSS}
+
+    mode = {$plugin.tx_toctoccomments_pi1.mode}
+    disableIpCheck = {$plugin.tx_toctoccomments_pi1.disableIpCheck}
+
+    useMyVote = {$plugin.tx_toctoccomments_pi1.useMyVote}
+
+    useVotes = {$plugin.tx_toctoccomments_pi1.useVotes}
+    useNumberOfVotes  = {$plugin.tx_toctoccomments_pi1.useNumberOfVotes}
+    useNumberOfStars = {$plugin.tx_toctoccomments_pi1.useNumberOfStars}
+    useAvgOfVotes  = {$plugin.tx_toctoccomments_pi1.useAvgOfVotes}
+
+    useScopesForVote = {$plugin.tx_toctoccomments_pi1.useScopesForVote}
+    useOverallScopeForVote = {$plugin.tx_toctoccomments_pi1.useOverallScopeForVote}
+    enableOverallScopeForVote = {$plugin.tx_toctoccomments_pi1.enableOverallScopeForVote}
+
+    useLikeDislike = {$plugin.tx_toctoccomments_pi1.useLikeDislike}
+    useDislike = {$plugin.tx_toctoccomments_pi1.useDislike}
+
+    useTopVotes = {$plugin.tx_toctoccomments_pi1.useTopVotes}
+    useTopLikeDislike = {$plugin.tx_toctoccomments_pi1.useTopLikeDislike}
+
+    useLikeDislikeStyle = {$plugin.tx_toctoccomments_pi1.useLikeDislikeStyle}
+    dlikeCtsNotifLvl= {$plugin.tx_toctoccomments_pi1.dlikeCtsNotifLvl}
+    dlikeCtsNotifIdlTime= {$plugin.tx_toctoccomments_pi1.dlikeCtsNotifIdlTime}
+    useShortTopLikes= {$plugin.tx_toctoccomments_pi1.useShortTopLikes}
+ 	allowedNumberOfRatings= {$plugin.tx_toctoccomments_pi1.allowedNumberOfRatings}
+	timeForAllowedNumberOfRatings= {$plugin.tx_toctoccomments_pi1.timeForAllowedNumberOfRatings}
+	allowedNumberOfRatingsExceededBlocktime= {$plugin.tx_toctoccomments_pi1.allowedNumberOfRatingsExceededBlocktime}
+	
+	useIPsInLikeDislike= {$plugin.tx_toctoccomments_pi1.useIPsInLikeDislike}
+  }
+
+  attachments {
+
+    useWebpagePreview = {$plugin.tx_toctoccomments_pi1.useWebpagePreview}
+    useWebpageVideoPreview = {$plugin.tx_toctoccomments_pi1.useWebpageVideoPreview}
+
+    # Height of the Webpagepreview
+    webpagePreviewHeight = {$plugin.tx_toctoccomments_pi1.webpagePreviewHeight}
+    maxCharsPreviewTitle = {$plugin.tx_toctoccomments_pi1.maxCharsPreviewTitle}
+
+    # Character length of the webpage preview description
+    webpagePreviewDescriptionLength = {$plugin.tx_toctoccomments_pi1.webpagePreviewDescriptionLength}
+
+    # Minimal character length of the webpage preview description
+    webpagePreviewDescriptionMinimalLength = {$plugin.tx_toctoccomments_pi1.webpagePreviewDescriptionMinimalLength}
+
+    # Cache expiry for scanned pages in minutes
+    webpagePreviewCacheTimePage = {$plugin.tx_toctoccomments_pi1.webpagePreviewCacheTimePage}
+
+    # Cache expiry for temporary stored images in minutes
+    webpagePreviewCacheTimeTempImages = {$plugin.tx_toctoccomments_pi1.webpagePreviewCacheTimeTempImages}
+
+    # Delete temp images manually, eg. by scheduled script
+    webpagePreviewCacheClearManual = {$plugin.tx_toctoccomments_pi1.webpagePreviewCacheClearManual}
+
+    # Number of images in webpage previews
+    webpagePreviewNumberOfImages = {$plugin.tx_toctoccomments_pi1.webpagePreviewNumberOfImages}
+
+    # Minimal file-size for an image while scanning webpages: Value in Bytes, 500 - 6000
+    webpagePreviewScanMinimalImageFileSize = {$plugin.tx_toctoccomments_pi1.webpagePreviewScanMinimalImageFileSize}
+
+    # Minimal Height and Width for an image while scanning webpages: Value in Pixel, 30 - 100
+    webpagePreviewScanMinImageSize = {$plugin.tx_toctoccomments_pi1.webpagePreviewScanMinImageSize}
+
+    # Maximal Height and Width for an image while scanning webpages: Value in Pixel, 30 - 100
+    webpagePreviewScanMaxImageSize = {$plugin.tx_toctoccomments_pi1.webpagePreviewScanMaxImageSize}
+
+    # Minimal Height and Width for a logo image while scanning webpages: Value in Pixel, 30 - 100
+    webpagePreviewScanMinLogoSize = {$plugin.tx_toctoccomments_pi1.webpagePreviewScanMinLogoSize}
+
+    # Maximal Pictures scanned if logo has been found already: Values are 20 to 100, higher values result in longer scan time
+    webpagePreviewScanMaxImageScans = {$plugin.tx_toctoccomments_pi1.webpagePreviewScanMaxImageScans}
+
+    # Maximal Pictures scanned if logo has not been been found already: Values are 30 to 150, must be higher than webpagePreviewScanMaxImages to make sense
+    webpagePreviewScanMaxImageScansForLogo = {$plugin.tx_toctoccomments_pi1.webpagePreviewScanMaxImageScansForLogo}
+
+    # Maximal allowed x to y relation for scanned images: The integer value when dividing width by height a scanned image may have. Values between 1 and 5 are possible
+    webpagePreviewScanMaxHorzizontalRelation = {$plugin.tx_toctoccomments_pi1.webpagePreviewScanMaxHorzizontalRelation}
+
+    # Maximal allowed y to x relation for scanned images: The integer value when dividing height by width a scanned image may have. Values between 1 and 4 are possible
+    webpagePreviewScanmaxverticalrelation = {$plugin.tx_toctoccomments_pi1.webpagePreviewScanmaxverticalrelation}
+
+    # A list of string patterns, separated by commas - if a pattern is found in a file name, then the image file is considered as logo of the website scanned. Be careful with short patterns - patterns shorter than 4 chars are ignored
+    webpagePreviewScanLogoPatterns = {$plugin.tx_toctoccomments_pi1.webpagePreviewScanLogoPatterns}
+
+    # A list of string patterns, separated by commas - if a pattern is found in a file name, then the image file is excluded.
+    webpagePreviewScanExcludeImagePatterns = {$plugin.tx_toctoccomments_pi1.webpagePreviewScanExcludeImagePatterns}
+
+    # Minimal Length of a page text fragment during scan
+    webpagePreviewDescriptionPortionLength = {$plugin.tx_toctoccomments_pi1.webpagePreviewDescriptionPortionLength}
+
+    # Timeout for HTML requests in ms
+    webpagePreviewCurlTimeout = {$plugin.tx_toctoccomments_pi1.webpagePreviewCurlTimeout}
+
+    # Use Image attachment.
+    usePicUpload = {$plugin.tx_toctoccomments_pi1.usePicUpload}
+
+    # Use Image attachment.
+    usePdfUpload = {$plugin.tx_toctoccomments_pi1.usePdfUpload}
+
+    # Maximal XY-Dims for for an preview image after upload
+    picUploadDims = {$plugin.tx_toctoccomments_pi1.picUploadDims}
+
+    # Maximal Width for an image after upload
+    picUploadMaxDimX = {$plugin.tx_toctoccomments_pi1.picUploadMaxDimX}
+
+    # Maximal Height for an image after upload
+    picUploadMaxDimY = {$plugin.tx_toctoccomments_pi1.picUploadMaxDimY}
+
+    # Maximal Dimension for an image in comments list
+    picUploadMaxDimWebpage = {$plugin.tx_toctoccomments_pi1.picUploadMaxDimWebpage}
+
+    # Maximal Height for an image in comments list, cropping
+    picUploadMaxDimYWebpage = {$plugin.tx_toctoccomments_pi1.picUploadMaxDimYWebpage}
+
+    # Maximal file size for image upload. Value in KB
+    picUploadMaxfilesize = {$plugin.tx_toctoccomments_pi1.picUploadMaxfilesize}
+
+    # Maximal file size for pdf upload. Value in KB
+    pdfUploadMaxfilesize = {$plugin.tx_toctoccomments_pi1.pdfUploadMaxfilesize}
+    
+    soundcloudClientID = {$plugin.tx_toctoccomments_pi1.soundcloudClientID}
+    soundcloudClientSecret = {$plugin.tx_toctoccomments_pi1.soundcloudClientSecret}
+  }
+
+  recentcomments {
+    listCount = 3
+    sorting = uid DESC
+    anchorPre = #tx-tc-ct-
+    linkComments = 1
+    maxCharCount = 100
+    restrictToPrefixToTableMap =
+  }
+
+  userCenter {
+    uCLists = {$plugin.tx_toctoccomments_pi1.uCLists}
+    commentsPerUCList  = {$plugin.tx_toctoccomments_pi1.commentsPerUCList}
+    userCenterPageID  = {$plugin.tx_toctoccomments_pi1.userCenterPageID}
+    maxItemsPerUCList  = {$plugin.tx_toctoccomments_pi1.maxItemsPerUCList}
+    maxItemAgeUCList  = {$plugin.tx_toctoccomments_pi1.maxItemAgeUCList}
+  }
+
+  commentsreport {
+    active = 0
+    # Report page id:ID of the page where reporting form is located
+    reportPid =
+
+    emailTemplateFile = EXT:toctoc_comments/res/template/toctoccomments_template_reportcomment_email.txt
+    HTMLemailTemplateFile= EXT:toctoc_comments/res/template/toctoccomments_template_reportcomment_email.html
+    # Required fields:Comma-separated list of required fields
+    requiredFields = from,frommail,text
+    # [None=0,captcha extension=1,sr_freecap extension=2]; Use captcha:Enable captcha usage. Requires appropriate extension to be installed
+    useCaptcha = 2
+    # E-mail to send notifications from
+    sourceEmail =
+    # E-mail to send notifications to
+    destinationEmail =
+  }
+
+  topRatings {
+    topRatingsMode = {$plugin.tx_toctoccomments_pi1.topRatingsMode}
+    RatingsDays = {$plugin.tx_toctoccomments_pi1.RatingsDays}
+    RatedItemsListCount = {$plugin.tx_toctoccomments_pi1.RatedItemsListCount}
+    NumberOfVotesRequired= {$plugin.tx_toctoccomments_pi1.NumberOfVotesRequired}
+    topRatingsrestrictToExternalPrefix = 0
+    topRatingsExternalPrefix =
+    topratingsimagesize = 54
+    topratingsnumberwidth = 20
+    topRatingsOriginalLangDisplay = 0
+    TextCropLength = {$plugin.tx_toctoccomments_pi1.TextCropLength}
+    AlignResultsWithMaxVotesAndAvgVote = 0
+    showMinimumVotesinTitle = 0
+    showAlignCommentinTitle = 0
+    countViewsAddComments = {$plugin.tx_toctoccomments_pi1.countViewsAddComments}
+    # enable last viewed date
+    showCountTopViewsLastView = 1
+  }
+
+  theme {
+    # color theme (CSS)is used by the extension in frontend
+    selectedTheme = {$plugin.tx_toctoccomments_pi1.selectedTheme}
+
+    # Font Family for theme used for Textareas
+    themeFontFamily = {$plugin.tx_toctoccomments_pi1.themeFontFamily}
+    # Use themeFontFamily as font-family for the entire plugin.
+    usethemeFontFamilyForPlugin= {$plugin.tx_toctoccomments_pi1.usethemeFontFamilyForPlugin}
+
+    selectedBoxmodel = {$plugin.tx_toctoccomments_pi1.selectedBoxmodel}
+
+    # Height of textareas of forms, 16 - 60.
+    boxmodelTextareaLineHeight = {$plugin.tx_toctoccomments_pi1.boxmodelTextareaLineHeight}
+
+    # How many lines the textarea contains ? 1 - 6.
+    boxmodelTextareaNbrLines = {$plugin.tx_toctoccomments_pi1.boxmodelTextareaNbrLines}
+
+    # Spacing between elements in the boxmodel, 0 - 10.
+    boxmodelSpacing = {$plugin.tx_toctoccomments_pi1.boxmodelSpacing}
+
+    # Lineheight in the plugin
+    boxmodelLineHeight = {$plugin.tx_toctoccomments_pi1.boxmodelLineHeight}
+    boxmodelLineHeightPreserve = {$plugin.tx_toctoccomments_pi1.boxmodelLineHeightPreserve}
+
+    # Indent option for comment replies
+    boxmodelLevelIndent = {$plugin.tx_toctoccomments_pi1.boxmodelLevelIndent}
+
+    # Width of form labels
+    boxmodelLabelWidth =  {$plugin.tx_toctoccomments_pi1.boxmodelLabelWidth}
+    boxmodelLabelInputPreserve = {$plugin.tx_toctoccomments_pi1.boxmodelLabelInputPreserve}
+    boxmodelButtonPreserve = {$plugin.tx_toctoccomments_pi1.boxmodelButtonPreserve}
+
+    # Size of Form Inputfields
+    boxmodelInputFieldSize =  {$plugin.tx_toctoccomments_pi1.boxmodelInputFieldSize}
+
+    responsiveSteps = {$plugin.tx_toctoccomments_pi1.responsiveSteps}
+
+    crunchCSS = {$plugin.tx_toctoccomments_pi1.crunchCSS}
+
+    # 0 keeps all tooltips (default), 1 removes most tooltips on smaller devices, = 2 regardless of device
+    useLessToolTips = {$plugin.tx_toctoccomments_pi1.useLessToolTips}
+
+    emojiNoToolTips= {$plugin.tx_toctoccomments_pi1.emojiNoToolTips}
+
+    # koogled boxmodels have either the word koogle in the name or set this to 1.
+    selectedBoxmodelkoogled = 0
+
+    # set this to 0 if you want to force CSS-generation, 1 for normal mode (changes in boxmodel or conf trigger refreshs)
+    # or 2 for frozen CSS (files must exist!)
+    freezeLevelCSS = 1
+  }
+
+  debug {
+    useDebug = {$plugin.tx_toctoccomments_pi1.useDebug}
+    useDebugFeUserIds = {$plugin.tx_toctoccomments_pi1.useDebugFeUserIds}
+    showStartupDetails= 0
+    showLibDetails= 0
+    # Inconsistent entries in a boxmodel get dropped. Here you can turn on the protocol to see the drops
+    showDropsfromBoxmodel = 0
+    showCSScomments = 0
+  }
+
+  dataProtect {
+  	setCookie = {$plugin.tx_toctoccomments_pi1.setCookie}
+  	cookieLifetime = {$plugin.tx_toctoccomments_pi1.cookieLifetime}
+  	useDisclaimer = {$plugin.tx_toctoccomments_pi1.useDisclaimer}
+  	useDisclaimerInRatingsOnly = {$plugin.tx_toctoccomments_pi1.useDisclaimerInRatingsOnly}
+	disclaimerPageID = {$plugin.tx_toctoccomments_pi1.disclaimerPageID}
+	disclaimerSystemCheck = {$plugin.tx_toctoccomments_pi1.disclaimerSystemCheck}
+	disclaimerFromTocToc= {$plugin.tx_toctoccomments_pi1.disclaimerFromTocToc}
+  }
+  
+  search {
+  	showCommentsPerPage = {$plugin.tx_toctoccomments_pi1.showCommentsPerPage}
+  	# initialCommentage, options: 1=1 day, 2=7 days, 3 =1 month, 4=last 6 months, 5=1 year, 6=ever
+  	initialCommentage = {$plugin.tx_toctoccomments_pi1.initialCommentage}
+  	minSearchTermLength = {$plugin.tx_toctoccomments_pi1.minSearchTermLength}
+  	SearchCommentCropLength = {$plugin.tx_toctoccomments_pi1.SearchCommentCropLength}
+  	SearchDisplayTitle = {$plugin.tx_toctoccomments_pi1.SearchDisplayTitle}
+  	linkComments = 0
+  	searchMaxComments = 1000
+  }
+}
+
+plugin.tx_toctoccomments_pi2 {
+  includeLibs = EXT:toctoc_comments/pi2/class.toctoc_comments_felogin_pi1.php
+  templateFile = typo3conf/ext/toctoc_comments/res/template/toctoccomments_template_felogin_pi1.html
+
+  userFunc = tx_toctoccomments_pi2->main
+  # over write fe_login setup here: make sure that feloginBaseURL and storagePid are set to correct values
+
+  # CSS-ids that should be refreshed outside the plugin after logouts logins
+  refreshIdList=
+  # page type for faster refreshs on page part refreshs
+  pageTypeRefreshs =  
+  
+  * hide forgot password link if facebook is active
+  hideIfFaceBookActive = 0  
+
+  # page ID with your policy
+  policyPid =
+  
+  # sends back the user to the originating page after login logout using window.history.back()
+  sendBack = 1
+  
+  #**** Since version 7.3.0. all options formerly token from tx_felogin_pi1 must be setup, tx_felogin_pi1 has been detached from toctoc_comments_pi2
+  
+  # storagePid - where are the user records? use only single value 
+  storagePid =
+  recursive =
+  
+  email_from = 
+  email_fromName = 
+  replyTo = 
+  
+  #typolink-configuration for links / urls, parameter and additionalParams are set by extension
+  linkConfig {
+    target =
+    ATagParams = rel="nofollow"
+  }
+  
+  # stdWrap for fe_users fields used in Messages
+  userfields {
+    username {
+      htmlSpecialChars = 1
+      wrap = <strong>|</strong>
+    }
+  }
+  
+  dateFormat = Y-m-d H:i
+  
+  showPermaLogin =
+  showForgotPasswordLink = 
+  # Expose the information on whether or not the account for which a new password was requested exists. By default, that information is not disclosed for privacy reasons.
+  exposeNonexistentUserInForgotPasswordDialog = 0
+  # time in hours how long the link for forget password is valid
+  forgetLinkHashValidTime = 12
+  
+  newPasswordMinLength = 6
+  
+  #**** 
+  
+  register {
+    enableSignup = 1
+    # setup default usergroup(s)-uids setup when registering, separated by commas
+    usergroup=1
+    # 1 is extension captcha, 2 is sr_freecap
+    signupUseCaptcha = 2
+    signupRequireFirstname = 1
+    newUserMinLength = 6
+  }
+  facebook {
+    appId = {$plugin.tx_toctoccomments_pi1.appId}
+    secret = {$plugin.tx_toctoccomments_pi1.secret}
+	makeSessionPermanent=0
+    imageDir = uploads/pics/
+  }
+  
+  google {
+   # setup google ClientID like 684647485867-sijp65j8uduisehhje18s5e5m8vu9rpt.apps.googleusercontent.com
+    ClientID = 
+    ClientSecret  = 
+  }
+  
+  ll {
+    de {
+      ButtonNewAccount = Registrieren
+      NewAccount = Neuen Account erstellen
+      forgotpw = Passwort vergessen
+    }
+    en {
+      ButtonNewAccount = Sign Up
+      NewAccount = Create new account
+      forgotpw = Forgot password
+    }
+  }
+  # for watermaking the form fields instead of labels  set to 1
+  watermark=0
+
+  # stdWraps
+  
+  welcomeMessage_stdWrap {
+    wrap = |
+  }
+  welcomeHeader_stdWrap {
+    wrap = |
+  }
+  
+  successMessage_stdWrap {
+    wrap = |
+  }
+  successHeader_stdWrap {
+    wrap = |
+  }
+  
+  logoutMessage_stdWrap {
+    wrap = |
+  }
+  logoutHeader_stdWrap {
+    wrap = |
+  }  
+
+  errorMessage_stdWrap {
+    wrap = <span class="tx-tc-required-error">|</span>
+  }
+  errorHeader_stdWrap {
+    wrap = |
+  }
+    
+  forgotMessage_stdWrap {
+    wrap = |
+  }
+  forgotHeader_stdWrap {
+    wrap = |
+  }
+  forgotResetMessageEmailSentMessage_stdWrap {
+    wrap = |
+  }
+
+  signupMessage_stdWrap {
+    wrap = |
+  }
+  signupHeader_stdWrap {
+    wrap = |
+  }
+  signupErrorMessage_stdWrap {
+    wrap = <span class="tx-tc-required-error">|</span>
+  }
+  signupOkMessage_stdWrap {
+    wrap = |
+  }
+  
+  newUserTooShortMessage_stdWrap {
+    wrap = <span class="tx-tc-required-error">|</span>
+  }
+  newUserFirstnameRequiredMessage_stdWrap {
+    wrap = <span class="tx-tc-required-error">|</span>
+  }
+  newUserLastnameRequiredMessage_stdWrap {
+    wrap = <span class="tx-tc-required-error">|</span>
+  }
+  newEmailTooShortMessage_stdWrap {
+    wrap = <span class="tx-tc-required-error">|</span>
+  }
+  newEmailInvalidMessage_stdWrap {
+    wrap = <span class="tx-tc-required-error">|</span>
+  }
+  newUserDataHasErrorsMessage_stdWrap {
+    wrap = <span class="tx-tc-required-error tx-tc-error-title">|</span>
+  }
+  
+  changePasswordMessage_stdWrap {
+    wrap = |
+  }
+  changePasswordHeader_stdWrap {
+    wrap = |
+  }
+  changePasswordNotValidMessage_stdWrap {
+    wrap = <span class="tx-tc-required-error">|</span>
+  }
+  changePasswordTooShortMessage_stdWrap {
+    wrap = <span class="tx-tc-required-error">|</span>
+  }
+  changePasswordNotEqualMessage_stdWrap {
+    wrap = <span class="tx-tc-required-error">|</span>
+  }
+  changePasswordDoneMessage_stdWrap {
+    wrap = |
+  }
+  
+  cookieWarning_stdWrap {
+    wrap = <span class="tx-tc-required-error">|</span>
+  }
+  
+}
+
+plugin.tx_toctoccomments_pi2._LOCAL_LANG.default {
+}
+
+plugin.tx_toctoccomments_pi2._LOCAL_LANG {
+  de.ll_forgot_validate_reset_password (
+  Ihr neues Passwort
+  Hallo %s,
+
+  Sie erhalten diese Nachricht, da Sie Ihr Passwort zurücksetzen lassen wollen. Zur Bestätigung bitte nachstehenden Link aufrufen:
+  %s
+
+  Aus Sicherheitsgründen ist dieser Link nur bis %s aktiv. Falls Sie den Link nicht bis dahin aufgerufen haben, müssen Sie die Schritte zum Zurücksetzen des Passworts wiederholen.
+
+  )
+  de.ll_signupOk_message (
+  Anmeldung erfolgreich
+  )
+  de.ll_signup_userexistsalready_message_error (
+  Benutzername oder E-Mail existiert bereits
+  )
+
+}
+
+# setup options for toctoc_comments used as Marker in tt_news
+plugin.tt_news {
+  toctoc_comments {
+    LIST {
+      # text= 0, number=1
+      commentsShowCountText = 0
+    }
+    LIST2 {
+      commentsShowCountText = 1
+    }
+    LIST3 {
+      commentsShowCountText = 1
+    }
+    LATEST {
+      commentsShowCountText = 0
+    }
+    SEARCH {
+      commentsShowCountText = 0
+    }
+    SINGLE {
+      commentsShowCountText = 0
+    }
+  }
+}
+
+# setup options for toctoc_comments used as Coumments counter ViewHelper in tx_news
+plugin.tx_news {
+  toctoc_comments {
+    # text= 0, number=1
+    commentsShowCountText = 0
+  }
+}
+
+config.htmlTag_setParams := appendString( xmlns:fb="http://www.facebook.com/2008/fbml")

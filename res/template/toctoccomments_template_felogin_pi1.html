@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+        <title>Templates for felogin-clone in toctoc_comments</title>
+</head>
+<body>
+
+<!--###TEMPLATE_LOGIN###-->
+<div class="tx-tc-loginform" id="tx-tc-loginform">
+        <div class="tx-tc-status-for-felogin###HIDEIFFBACTIV###" id="tx-tc-status-for-felogin">###STATUS_MESSAGE###</div>
+        <!-- ###LOGIN_FORM### -->
+         <a id="tx-tc-ct-loginform" name="tx-tc-ct-loginform"></a>
+        <form class="tx-tc-form-for-felogin" action="###ACTION_URI###" onsubmit="###ON_SUBMIT###" method="post" id="###FORM_ID###">
+                <fieldset class="tx-tc-fieldset-for-felogin">
+                        <div class="tx-tc-login-form-field###HIDEIFFBACTIV###">
+                                <label class="tx-tc-ct-label tx-tc-ct-box-rlvl-0" for="user">###USERNAME_LABEL###</label>
+                                <input class="tx-tc-ct-input" type="text" id="user" name="user" value="" />
+                        </div>
+                        <div class="tx-tc-login-form-field###HIDEIFFBACTIV###">
+                                <label class="tx-tc-ct-label tx-tc-ct-box-rlvl-0" for="pass">###PASSWORD_LABEL###</label>
+                                <input class="tx-tc-ct-input" type="password" id="pass" name="pass" value="" />
+                        </div>
+                <!--###PERMALOGIN_VALID###-->
+                        <div class="tx-tc-login-form-field###HIDEIFFBACTIV###">
+                                <label class="tx-tc-login-label tx-tc-ct-label-perma tx-tc-mrg-r-4" for="permalogin">###PERMALOGIN###</label>
+                                <input name="permalogin" value="0" type="hidden" ###PERMALOGIN_HIDDENFIELD_ATTRIBUTES### id="permaloginHiddenField" />
+                                <input name="permalogin" value="1" type="checkbox" ###PERMALOGIN_CHECKBOX_ATTRIBUTES### id="permalogin" onclick="document.getElementById('permaloginHiddenField').disabled = this.checked;" />
+                        </div>
+                <!--###PERMALOGIN_VALID###-->
+
+                        <div class="tx-tc-div-submit###HIDESHOWIFFBACTIV###">
+                                <input class="tx-tc-ct-submit tx-tc-login-submit tx-tc-login-submitli" type="button" id="tx_toctoccomments_pi2_submit" name="submit" value="###LOGIN_LABEL###" />
+                        </div>
+                       
+                        <input type="hidden" name="logintype" value="login" />
+                        <input type="hidden" name="pid" value="###STORAGE_PID###" />
+                        <input type="hidden" name="redirect_url" value="###REDIRECT_URL###" />
+                        <input type="hidden" name="###PREFIXID###[noredirect]" value="###NOREDIRECT###" />
+                        ###EXTRA_HIDDEN###
+                        <!--###FORGOTP_VALID###-->
+                        <div class="tx-tc-login-form-field###HIDEIFFBACTIV###" id="tx-tc-forgotpw">
+                                ###DIV_BLOCKLINKS###<!--###FORGOT_PASSWORD_LINK###-->###FORGOT_PASSWORD###<!--###FORGOT_PASSWORD_LINK###-->
+                        </div>
+                        <!--###FORGOTP_VALID###-->
+                        ###FACEBOOK######POLICY###
+                 </fieldset>
+        </form>
+        
+###REGISTER###
+###SIGNUP###
+<!-- ###LOGIN_FORM### -->
+</div>
+<div id="tx-tc-loginlogoutinprogress" class="tx-tc-nodisp">
+<div class="tx-tc-loginlogoutinprogress">
+</div>
+</div>
+<!--###TEMPLATE_LOGIN###-->
+
+<!--###TEMPLATE_LOGOUT###-->
+<div class="tx-tc-loginform" id="tx-tc-loginform">
+        <p>Youre logged in.###STATUS_MESSAGE###
+        </p>
+        <form class="tx-tc-form-for-felogin" name="ttlogout" action="###ACTION_URI###" method="post" id="###FORM_ID###lo">
+                <fieldset class="tx-tc-fieldset-for-felogin">
+                        <p>
+                                <input class="tx-tc-ct-submit tx-tc-login-submitlo" id="tx_toctoccomments_pi2_formlogout_submit" type="button" name="formlogout_submit" value="###LOGOUT_LABEL###" />
+                        </p>
+                        <input type="hidden" name="logintype" value="logout" />
+                        <input type="hidden" name="pid" value="###STORAGE_PID###" />
+                        <input type="hidden" name="###PREFIXID###[noredirect]" value="###NOREDIRECT###" />
+                </fieldset>
+        </form>
+</div>
+<div id="tx-tc-loginlogoutinprogress" class="tx-tc-nodisp">
+        <div class="tx-tc-loginlogoutinprogress">
+        </div>
+</div>
+<!--###TEMPLATE_LOGOUT###-->
+
+
+<!--###TEMPLATE_FORGOT###-->
+<div class="tx-tc-loginform tx-tc-nodisp" id="tx-tc-loginformfp">
+
+<div class="tx-tc-status-for-felogin tx-tc-pwf-sts">###STATUS_MESSAGE###</div>
+<!-- ###FORGOT_FORM### -->
+
+        <form class="tx-tc-form-for-felogin" name="ttforgot" action="###ACTION_URI###" onsubmit="return false" method="post" id="###FORM_ID###fp">
+                <fieldset class="tx-tc-fieldset-for-felogin">
+            <div class="felogin-hidden">
+                        <input type="hidden" name="tx_toctoccomments_pi2[forgot_hash]" value="###FORGOTHASH###" />
+                </div>
+
+                <div class="tx-tc-login-form-field">
+                        <label class="tx-tc-ct-label tx-tc-ct-box-rlvl-0" for="tx_toctoccomments_pi2-forgot-email">###DATA_LABEL###</label>
+                        <input class="tx-tc-ct-input" type="text" name="###FORGOT_EMAIL###" id="tx_toctoccomments_pi2-forgot-email" />
+                </div>
+                <div class="tx-tc-div-submit tx-tc-blockdisp">
+                        <input class="tx-tc-ct-submit tx-tc-login-submit tx-tc-login-submitfo" type="button" id="tx_toctoccomments_pi2_submitfp" name="submit" value="###SEND_PASSWORD###" />
+                </div>
+                <input type="hidden" name="logintype" value="forgot" />
+                <div id="tx-tc-loginbacklink" class="tx-tc-loginbacklink tx-tc-textlink">###BACKLINK_LOGIN###</div>
+                </fieldset>
+        </form>
+<!-- ###FORGOT_FORM### -->
+</div>
+<!--###TEMPLATE_FORGOT###-->
+
+<!--###TEMPLATE_SIGNON###-->
+<div class="tx-tc-loginform tx-tc-nodisp" id="tx-tc-loginformso">
+
+        <div class="tx-tc-status-for-felogin tx-tc-so-sts">###STATUS_MESSAGESO###</div>
+<!-- ###SIGNON_FORM### -->
+
+        <form class="tx-tc-form-for-felogin" name="ttsignup" action="###ACTION_URI###" method="post" id="###FORM_ID###so">
+                <fieldset class="tx-tc-fieldset-for-felogin">
+                <div>
+                        <div class="tx-tc-login-form-field">
+                                ###ERRNEWUSERV###
+                                <label class="tx-tc-ct-label tx-tc-ct-box-rlvl-0" for="user">###USERNAME_LABEL###</label>
+                                <input class="tx-tc-ct-input" type="text" id="usersignup" name="###NEWUSER###" value="###NEWUSERV###" />
+                        </div>
+                        <div class="tx-tc-login-form-field">
+                                ###ERRNEWPASSWORD1V###
+                                <label class="tx-tc-ct-label tx-tc-ct-box-rlvl-0" for="password1">###NEWPASSWORD1_LABEL###</label>
+                                <input class="tx-tc-ct-input" type="password" id="password1" name="###NEWPASSWORD1###" value="###NEWPASSWORD1V###" />
+                        </div>
+                        <div class="tx-tc-login-form-field">
+                                ###ERRNEWPASSWORD2V###
+                                <label class="tx-tc-ct-label tx-tc-ct-box-rlvl-0" for="password2">###NEWPASSWORD2_LABEL###</label>
+                                <input class="tx-tc-ct-input" type="password" id="password2" name="###NEWPASSWORD2###" value="###NEWPASSWORD2V###" />
+                        </div>
+                        <div class="tx-tc-login-form-field">
+                                ###ERRNEWEMAILV###
+                                <label class="tx-tc-ct-label tx-tc-ct-box-rlvl-0" for="tx_toctoccomments_pi2-signon-email">###DATA_LABEL###</label>
+                                <input class="tx-tc-ct-input" type="text" name="###NEWEMAIL###" id="tx_toctoccomments_pi2-signon-email" value="###NEWEMAILV###" />
+                        </div>
+                        <div class="tx-tc-login-form-field">
+                                ###ERRNEWFIRSTNAMEV###
+                                <label class="tx-tc-ct-label tx-tc-ct-box-rlvl-0" for="firstname">###FIRSTNAME_LABEL###</label>
+                                <input class="tx-tc-ct-input" type="text" id="newfirstname" name="###NEWFIRSTNAME###" value="###NEWFIRSTNAMEV###" />
+                        </div>
+                        <div class="tx-tc-login-form-field">
+                                ###ERRNEWLASTNAMEV###
+                                <label class="tx-tc-ct-label tx-tc-ct-box-rlvl-0" for="lastname">###LASTNAME_LABEL###</label>
+                                <input class="tx-tc-ct-input" type="text" id="newlastname" name="###NEWLASTNAME###" value="###NEWLASTNAMEV###" />
+                        </div>
+                        ###CAPTCHA###
+                        </div>
+                <div class="tx-tc-div-submit tx-tc-blockdisp">
+                        <input class="tx-tc-ct-submit tx-tc-login-submit tx-tc-login-submitsu" type="button" id="tx_toctoccomments_pi2_submitso"
+                        name="tx_toctoccomments_pi2[signupsubmit]" value="###SIGN_UP###" />
+                </div>
+                <input type="hidden" name="logintype" value="signup" />
+                <input type="hidden" name="tx_toctoccomments_pi2[pid]" value="###STORAGE_PID###" />
+                <input type="hidden" name="tx_toctoccomments_pi2[cpdone]" value="###CPDONED###" />
+                <div id="tx-tc-signonlink" class="tx-tc-signuplink tx-tc-textlink">###BACKLINK_SIGNON###</div>
+                </fieldset>
+        </form>
+<!-- ###SIGNON_FORM### -->
+</div>
+<!--###TEMPLATE_SIGNON###-->
+
+<!-- ###SIGNUP_CAPTCHA### begin -->
+<div class="tx-tc-login-form-field">
+        <label class="tx-tc-ct-label tx-tc-ct-box-rlvl-0" for="captcha">###TEXT_CAPTCHA###</label>
+        <span class="tx-tc-ct-cap-area-image">###SR_FREECAP_IMAGE###</span>
+        <input class="tx-tc-ct-input" type="text" required="required"
+        id="tx_comments_pi2-cap1" name="tx_toctoccomments_pi2[captcha]" value="###NEWCAPTCHAV###" />
+        <span class="tx-tc-ct-cap-area-accessible"></span>
+</div>
+<div class="tx-tc-login-form-field">
+        <div class="tx-tc-ct-cap-message">###ERROR_CAPTCHA###</div>
+        <div class="tx-tc-ct-cap-area">
+                <div class="tx-tc-ct-cap-area-cantreadit">###SR_FREECAP_CANT_READ###</div>
+   </div>
+</div>
+<!-- ###SIGNUP_CAPTCHA### end -->
+
+<!--###TEMPLATE_CHANGEPASSWORD###-->
+<div class="tx-tc-loginform tx-tc-nodisp tx-tc-ct-highlight" id="tx-tc-loginformcp">
+	<div class="tx-tc-status-for-felogin tx-tc-cpw-sts">###STATUS_MESSAGE###</div>
+<!-- ###CHANGEPASSWORD_FORM### -->
+       <form class="tx-tc-form-for-felogin" name="ttchange" action="###ACTION_URI###" method="post" id="###FORM_ID###cp">
+		 <fieldset class="tx-tc-fieldset-for-felogin">
+            <div class="tx-tc-login-form-field">
+                <label class="tx-tc-ct-label tx-tc-ct-box-rlvl-0" for="###NEWPASSWORD1###">###NEWPASSWORD1_LABEL###</label>
+                <input class="tx-tc-ct-input" type="password" id="tx_toctoc_comments_pi2-changepassword1" name="###NEWPASSWORD1###" value="" />
+            </div>
+            <div class="tx-tc-login-form-field">
+                <label class="tx-tc-ct-label tx-tc-ct-box-rlvl-0" for="###NEWPASSWORD2###">###NEWPASSWORD2_LABEL###</label>
+                <input class="tx-tc-ct-input" type="password" id="tx_toctoc_comments_pi2-changepassword2" name="###NEWPASSWORD2###" value="" />
+            </div>
+ 			<div class="tx-tc-div-submit tx-tc-blockdisp">
+            	<input class="tx-tc-ct-submit tx-tc-login-submit tx-tc-login-submitcp" type="button" id="tx_toctoccomments_pi2_submitcp"
+                        name="tx_toctoccomments_pi2[changepasswordsubmit]" value="###SEND_PASSWORD###" />
+             </div>
+		</fieldset>
+	</form>
+<!-- ###CHANGEPASSWORD_FORM### -->
+</div>
+<!--###TEMPLATE_CHANGEPASSWORD###--> 
+
+<!--###TEMPLATE_FACEBOOK###-->
+<span id="u_0_0" class="facebookFaviconButton facebookFaviconButtonEnabled facebookFaviconButtonMedium"><div class="facebookuiGrid"><i class="facebookFaviconButtonIcon img facebook_login-button facebook_login-button_medium"></i><i class="facebookFaviconButtonIconActive img facebook_login-button facebook_login-button_mediuma"></i><span class="facebookFaviconButtonIconThrobber"><i class="img facebook_login-button facebook_login-button_"></i></span><span class="facebookFaviconButtonBorder"><span class="facebookFaviconButtonText facebookwb">###FBLOGIN###</span></span></div></span>
+<!--###TEMPLATE_FACEBOOK###-->
+
+<!--###TEMPLATE_GOOGLE###-->
+
+<div id="signinButton" class="button">
+      <button class="g-signin"
+          data-scope="email"
+          data-clientid="###CLIENT_ID###"
+          data-callback="signinCallback"
+          data-theme="dark"
+          data-cookiepolicy="single_host_origin">
+      </button>      
+</div>
+<!--###TEMPLATE_GOOGLE###-->

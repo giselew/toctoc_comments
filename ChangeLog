@@ -1,0 +1,640 @@
+2012-08-20  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 2.0.0
+	
+2012-08-21  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 2.0.3
+	* Bugfixes for Multilanguage-Support
+	
+2012-08-22  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 2.0.4
+	* Better Sharing implementation, configuration option to use the old Dateformat added
+	
+2012-08-26  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 2.0.6
+	* fixed E-Mail encryption and bug with stdWrap for required field error and other stdWraps from configuration
+		
+2012-09-09  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 2.0.7
+	* Updated sharing component sharrre to version 1.3.3 which fixes a problem with Google+
+	
+2012-09-11  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 2.1.0
+	* fixed problems with disableIPcheck=0
+	* added 2nd design for sharrre
+	* added option for required comment length
+	* added 4 options to configure the freecap-clone
+	* improved, new templates and css
+
+2012-09-12  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 2.1.2
+	* Bugfixed recaptcha-clone and date display for comments
+	* Fixes CSS-issue for sharing default design
+	
+2012-09-28  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 2.2.0 / 2.2.1
+	* Bugfixed issue with iLike blocking voteing in static mode
+	* Added support for extensions comment_ipbl, comments_report and comments_response
+	* Added commentator notification on new comments
+	* Updated Documentation with Interoperability List for various comments-related extensions
+	* Approval and notification-E-Mails are localized now
+	* Compatibility with IE8, 98% done
+	
+2012-09-30  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 2.2.2
+	* Bugfixed "sharrre - Google Comment is not possible because window closes on mouse over"
+	* Bugfixed "sharrre - Google Count is not added to total shares"
+	* Bugfixed "sharrre - CSS 'overflow: hidden' is making popups inaccessible in main template"
+	* Bugfixed "Duplicate marker for admin-comment on comment in main template"
+	* Template points to minified elastic.1.6.min.js now
+	* localized sharrre design 2, Buttons for Google+, Facebook and Twitter
+
+2012-10-03  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 2.2.3
+	* Bugfixed PHP 5.3.10 issue with function-calls containing &$variable parameters
+	* Bugfixed New Comment does not show up immediately after successful submit (without approval), when triggering prefix is set
+	* Bugfixed notification e-mails to commentator do not refer to record when triggering prefix is set
+	
+2012-12-01  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 3.0.0
+	* Users can reply on comments, comments are shown in a hierarchical tree-view
+	* Male/Female avatar for anonymous users.
+	* eID-Interface with HTML-template
+	* fe_users can edit their comments
+	* Comments-cropping after a certain length, it can be set in TS-options
+	* Web page previews can be attached to comments
+	* included web page scanner can be configured by TS-options
+	* HTML notification e-mails are new and default now.
+	* Filtering by user-groups of fe_user, exclusion of fe_user comments from public.
+	* CSH (Context Sensitive Help) in both Back end tables and plugin
+	* Support for new languages over the TYPO3 translation server ( http://translations.typo3.org/ – feel free to contribute your language.
+	* Special Labels for rating products, news, images and more (example: “I like this product”)
+	* Changed Extension's name from “AJAX Commenting System” to “AJAX Social Network Components”
+
+2012-12-07  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 3.0.6
+	* fixed HTML-E-Mail and page, add new for TYPO3 6.0
+	* now the extension is compatible TYPO3 6.0
+	* fixed gender-assignments for fe_users in environments without gender defined in fe_users. Set to 0 (male) if so.
+	* fixed PHP-sessions to named sessions
+	* fixed several PHP-Warnings
+	
+2012-12-21  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 3.1.0
+	* fixed missing commentdate when displaying only comments without ratings
+	* fixed missing comment after insert of a subsequent comment in logged in mode
+	* fixed additional cache pages
+	* added IP-blocking for comments
+	* moved triggering prefixes from TS-config to an internal table
+	* added import of static data for triggering prefixes and blocked IPs (static table)
+	* added plugin mode for recent comments
+	* added plugin mode for bad comments reporting form 
+
+2013-01-10  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+
+	* Release of version 3.2.0
+	* fixed links without rel=nofollow (impacted indexed_search)
+	* redesigned and enhanced display of iLikes (and iDislikes) with facebook-like info about the users
+	* moved 2 plugin options for recent comments to TS-options (->advanced)
+	* introducing jQuery Tools (Tooltips in Comments-List)
+	* added marker for comments count
+	* changed default value for textareas to watermark using jQuery
+	* added a new marker for tt_news for entire plugin display in LIST, SEARCH and LATEST views
+	* created 4 CSS-color-themes selectable by TS-option for easy change of colors used in the plugin
+	* dropped 5 TS-options for image paths, these images are part of the CSS-themes now
+	* dropped TS-option FeUserImageStyle, it's part of CSS/ CSS-themes now
+	* fixed bug with comments browsing when commenting on records
+	* fixed bug with comments-browsing and back - showing items of a collapsed a node on the 2nd level
+	* Fixed existing tt_news marker
+	* Fixed marker for reset button
+	* Fixed fadeout-problems for Chrome Browser
+	* Fixed bug with no web page preview saved for not logged in users
+	* Fixed calls to PHP variable $_SERVER['DOCUMENT_ROOT'], which is not reliable
+
+2013-01-10  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 3.2.1
+	* Bugfix for Websitepreviews
+	
+2013-02-11  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 3.3.0	
+	* Classic mode COMMENTS,FORM can be changed to FORM,COMMENTS or COMMENTS now
+	* Introducing picture- and PDF-attachments with nice presentation in frontend (scaled and cropped images as well as a nice jQuery Lightbox)
+	* HTML5 Fileuploading (only HTML5...)
+	* Reverse Sorting for comments on hierarchy level 1
+	* Change place of comments browser from top to bottom or inverse
+	* Added Close-Button for Messages providing from form-posts
+	* Added optional COI (email confirmation opt-in) for new commentators (E-Mail confirmation)
+	* Added BB-Codes [b], [i] and [code]
+	* HTML tags are possible in comments or not (recommended use only for IT-Intranets)
+	* Allows to display comments on specific records or content elements anywhere
+	* With TemplaVoila toctoc_comments plugins can now be placed as Shortcuts on other pages
+	* toctoc_comments can be used as TypoScript-Object and placed in the page by TypoScript
+	* changed markers ###FIRSTNAME### and ###LASTNAME### for comments to ###NAMEPART###, old markers are preserved
+	* database: added prefix-to-table mapsfor cwt_community and community
+	* database: new fields for COI and attachment filesize (database update needed)
+	* Added support for toctoc_comments as commenting solution on community-extensions user profiles and walls. cwt_community and community work.
+	* Polished CSS (alignment of fields)
+	* added Option to select an alternative fe_users image field
+	* Bugfix for Websitepreviews hanging on 2nd load
+	* Bugfix for Websitepreviews CURL Timeouts, which some versions of PHP do not handle correctly
+	* Bugfix for displaying all comments (Page_browser) on start-up
+	* Bugfixed comment form in tt_news LIST-View hook-mode
+	* Removed option userStats, stats are always on now (it's needed for many other features)
+	* Removed reply-link If 'code' ='COMMENTS' 
+	* changed state of extension from beta to stable	
+	
+2013-03-14  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 3.4.0	
+	* Added inline reply mode with open form or linked form.
+	* Added 2 new rating designs.
+	* Added support for boxmodels, they document and implement changes to the CSS layout in a single file.
+	* 9 new TS Options for Plugin Design are available as 'theme'-options. CSS, JS are handled according these TS options concerning design.
+	* Values of 6 design relevant TS Options are available for use in boxmodels. 
+	* 2 boxmodels and 2 color themes for a look like DISQUS and Google are included.
+	* Deletion of comments in Community-Profiles for Profile Owner is supported now.
+	* Cancel notification for new comments from notification mail.
+	* Added support for OptionalRecordIds on tt_content *with* external prefixes.
+	* BB-Tags are shown in HTML-emails as well.
+	* Sharing Designs are both available as no-popup version (open buttons), small button design for 'Add this'.
+	* TS-Options for 'Show more'-sharing-options and for userkey for 'Add This'.
+	* Ratings on top of the plugin can be hidden by TS Option.
+	* Added Community option communityProfileCommentsVisibility for profile comments visibility to "only user", "user and friends", "all community users".
+	* Added support for max. 50 leading spaces in comments, up now they were not displayed by the browsers.	
+	* Multiuser insert on deleted comment (deleted between last load of comments list and insert attempt) is trapped now.
+	* Multiuser delete should be blocked if child-comments do exist (added between last load of comments list and delete attempt).
+	* Moved HTML-Tags around first- and lastname from code to stdWrap.
+	* Added maintenance of userstats thru eID interface when approving, deleting comments or when a comment becomes visible thru COI.
+	* Required marks are setup from TS-Option requiredFields and takes its value (actually "*") from the template.
+	* Required hint displays only if required fields present.
+	* Links on profile comments from users which are not in the friendlist of current user are not shown anymore in recent comments list.
+	* Avoid cropping inside BB-Tags.
+	* Expand comment if linked and hidden.
+	* Updated sharing-component Sharrre to Version 1.3.4.
+	* Added dependency setting for TYPO3 version in ext_emconf.php.
+	* Correct use of caching framework (compatibility TYPO3 4.3 - 4.5).
+	* Session_start in delete_comment and denotify_comment.
+	* Worked out CSS and template of the form to be more robust for different layouts of the commenting interface.
+	* Removed trailing middot if only "I like" is displayed.
+	* Comments list was not refreshed properly after delete in list with external prefix.
+	* Bug fixed 'missing pic/pdf-Upload links after new comment with web page preview'.
+	* Bug fixed 'Web page scanner for pages with basedir set went into timeout because of 404s', so now basedir is no longer ignored.
+	* Bug fixed 'missing records in frontend after edit and save in backend', in this context external_ref_uid has been removed from backend.
+	* Bug fixed 'After web page preview removal web page preview was saved by error'.
+	* Bug fixed detection of IE10 ... HTML5 upload still not fully supported by preview version IE 10 :-(.
+	
+2013-04-02  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 3.5.0	
+	* Support for Unicode Emoji (iOS 6 set): You can type :RAINBOW: or any Emojitext, it will be converted to Unicode symbol (or insert a symbol directly) and after saving Emojis are displayed as images.
+	* Added option advanced.useEmoji, which by default is set to 1 (display 16px emojis), alternative 20px version is av. as option 2
+	* Added support for flash-videos in web page previews (youtube, vimeo), video links are stored as attachment variant 3 and they are playable in comments list
+	* Added support for HTML5-videos in web page previews, they are played in comments list with flowplayer
+	* Added option attachments.useWebpageVideoPreview, which by default is set to 1 (on)
+	* Userpics of online users have an additional CSS property that allows to layout diffently the border of user images
+	* Moved remaining image-files for frontend from res/img to the themes img-folder
+	* Added missing Koogle theme and TISQUS theme to "selectedTheme"-Options in constants.txt
+	* Set all User Card options to "on" for admin e-mail
+	* Fixed PHP-warnings from boxmodeller
+	* Bug Fixed 'Editing comments Back not correct when reversed order of comments is active'
+	* Fixed about 4 PHP-warnings (eID, webpage preview had still some warnings)
+	* Fixed layout problem after deleting a comment on level 0. (area of deleted comment did not disappear properly)
+	* Fixed a problem with hook-mode, under some conditions hook-mode could enter in an endless loop. Added traps for endless loops where it can happen under special conditions like bad configs.
+	* Removed wrong links from recent comments list to comments in communities, where the comment owner is well friend of the user, but not the top parent comment owner.
+	* More accuracy in caching: former versions cached too much. Now there's no more caching for links from the plugins recent commentslist and comments report, caching is only active for initial pluginmode=0 display
+
+2013-05-05  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 3.6.0 - database update required
+	* Added support for TYPO3-installations in subdirectories
+	* Added support for multilingual or monolingual mode, this eliminates several possible issues when operating a site in multiple languages
+	  TS-Option: advanced.useMultilingual.	
+	* Optimization of use of TYPO3-Cache, less deletions of cache entries. Now page cache is only deleted on calls for recent comments and after updates/inserts or deletes of comments in the frontend.
+	* New application cache: Use of caching in PHP-session for plugins instead of rendering same thing twice. 
+	  TS-Option: advanced.useSessionCache.
+	  TS-Option: advanced.cacheBackTrack uses application cache and with the feature, plugins where data changed are visualized with a border like new comments, same colour but just 1px large instead of 2px.
+	* URL-parameter ?no_cache=1 empties  session application cache
+	  URL-parameter ?purge_cache=1 clears page cache and resets entire session
+	* New Options for Debugging cache access and performance measuring: debug.useDebugFeUserIds and debug.useDebug, both must be set to enable the feature. 
+	  In addition, with TS-Option debug.showStartupDetails detailed measures of the parts of the start-up-process will be shown.
+	* Tested on TYPO3 4.3, 4.4 and TYPO3 6.1, changed compatibility-range in em_conf.php
+	* Added TS-Option additionalClearCachePagesLocal to setup.txt, the option can be used to locally extend additionalClearCachePages	
+	* Links to recent comments changed to JavaScript, this allows to handle the page cache of the targeted page before the page is called.
+	* Fixed a bug in attachment upload for images, which were not scaled correctly if pic was in portrait with width and height over config limits.
+	* Fixed webpage preview bug "descriptions with more than 2000 words cause endless loop".
+	* Fixed problems with titles of webpage preview pictures, causing HTML errors.
+	* Fixed problem with Google-Sharing Button which, after a change of Google, did not show up properly anymore
+	* Fixed CSS word-wrap for picture popups with long words in the description
+	* Fixed CSS margin-bottom for reply on comment textarea
+	* Fixed blacktheme to same as on www.deltarose.org
+	* Fixed bug missing recent comments when the comments are replies on a user’s community profile
+	* Fixed 404 from recent comments list when TYPO3 config option [FE][pageNotFoundOnCHashError] = 1
+	* Database Update required
+	
+2013-08-07  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 4.0.0
+	* Added a smilie and emoji selection panel
+	* Added scopes (categories) for ratings
+	* Added plugin mode for top ratings
+	* Added support for custom texts from TypoScript
+	* Fixed position of a close button for messages occurring on comment-inserts for concerned boxmodel koogle.
+	* More and more nice tooltips
+	* Moved debug.showStartupDetails to setup.txt and added debug.showLibDetails, showing times of processes in toctoc_comment_lib.php
+	* Added more cached variables, impacting changes in the template: when testing, call the page with ?no_cache=1&purge_cache=1 (this clears also the SESSION-cache)
+	* Removed calls to PHP my_sql-functions
+	* Renamed some of the internal smilies in order to get nice tooltips
+	* Fixed bug editing comments with emojis did not work with all the emojis
+	* Fixed bug ratings blocked: Subsequent ratings on the rating star with the current voting value are possible now
+	* Fixed bug when saving non-latin characters they were in a coded form in the backend 
+	* Fixed bug for markers in tt_news, if a marker was used more than one time in the tt_news-template, then only one marker could be processed
+	* Fixed bug Comments and ratings disappear when adding a 'comments report' or 'recent comments' form before the plugin concerned (automatically assigned Cid changed)
+	* Fixed bug automatic refresh of comments date sometimes failed
+	* Completely disabled file uploads for IE - the way we do it does not work.
+	* Database Update required in TYPO3 4.x
+	
+2013-09-11  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 4.1.0
+	* The main CSS, theme CSS, main JS now always have number of the extension version (now: 410) in the filename. On extension updates the old files will be preserved, this can be useful to track your changes.
+	* Added checks for valid e-mails when sending notification e-mails for commenters
+	* Added emojis to the recent comments links
+	* Added emoji png8 version (much smaller file-size: 4.73 MB (4'967'568 Bytes) to 899 KB (920'647 Bytes), all 4 files) of the emojis. See subfolder png8 in folder /res/css/emoji
+	* Added fields for comments views in DB
+	* Added new plugin mode "More Charts" with 2 new charts for top views and top activities
+	* Added TS-option advanced.countViews = 1,boolean. Enables counting of Plugin views: For each Plugin a counter will be maintained and will be displayed on top of comments list, if enabled 
+	* Added TS-option advanced.countViewsShowSince = 1,boolean. Shows view since date in the front end plugin
+	* Added TS-option advanced.showCountViews = 0,boolean. Shows counting of Plugin views 
+	* Added TS-option advanced.showCountViewsOnlyIfCommentsExist = 1,boolean. Shows counting of Plugin views only if comments are present. showCountViews must be set to 1.
+	* Added TS-option advanced.countViewsAddComments = 0,boolean. Adds comments count to view count and enables initial values for viewcounts and firstview. showCountViews must be set to 1.
+	* Added TS-option advanced.showCountCommentViews = 0,boolean. Shows counting of comment views
+	* Added TS-option advanced.countCommentViews = 1,boolean. enables counting of comment views
+	* Added TS-option advanced.showCountViewsLongFormat = 0,boolean. Shows the text for counting of views in a longer format: Short: 909 Views since 21.12.2012. Long: 909 people saw this content since 21.12.2012
+	* Added TS-option advanced.activityMultiplicatorRating = 2,int+. For calculation of activity, multiplicand for number of ratings: For the value of an activity ratings might be considered more than views, with this ratings are given more value than simple views in the calculation of the activity-value
+	* Added TS-option advanced.activityMultiplicatorComment = 4 ,int+. For calculation of activity, multiplicand for number of comments: For the value of an activity ratings might be comments more than views, with this comments are given more value than simple views in the calculation of the activity-value 
+	* Added TS-setup-option advanced.initialViewsCount and advanced.initialViewsDate, they allow to give initial values to the viewscounters by TypoScript
+	* Added TS-setup-option topratings.showCountTopViewsLastView, turn on or off the last seen or activity date in top views and top activity chart
+	* Added advanced.initialViewsCount and advanced.initialViewsDate to the backend plugin
+	* Added TS-setup-option theme.selectedBoxmodelkoogled = 0. "Koogled" boxmodels have either the word koogle in the name or set this to 1. This does the following:
+		*  	Margin of comments in comments list get 6 pixels less margin for the texts in top ratings lists and charts
+		*	Usercards get prepared to display a background image on top
+		*	The Expand-Icons have more left margin
+		*	Opacity of form is initialized with 0.5
+	* Added a new boxmodel kooglemobile.txt which is the mobile version of boxmodel koogle, see http://mobile.toctoc.ch
+	* Added TS-setup-option debug.showDropsfromBoxmodel = 0: Inconsistent entries in a boxmodel get dropped. Here you can turn on the protocol to see the drops
+	* TS-Option for optionalRecordId on tt_content, in the plugin it's called "Trigger optional record": It now also works when an external prefix is selected.
+	* Modified the line-height which is responsible for the separation between 1st line with iLike and second line with votes on the top of the plugin. It's now set by 2 css-classes (on the <br>-tag). These classes are adapted in the boxmodels for boxmodells Koogle and TISQUS.
+	* Fixed design-bug: In preview picture popups, the internal smilies show up on the left of the text instead inline.
+	* Fixed JavaScript-bug: Without title and image webpagepreviews do not show up properly (preview box does not grow to max-height).
+	* Fixed JavaScript-bug: After an unsuccessful scan for a webpage subsequent scans in the same plugin do not start, one needs to reload the webpage manually.
+	* Fixed JavaScript-bug: on new installations JavaScript-variable tccommnetidstart was not initialized properly, leading to subsequent errors in JavaScript.
+	* Fixed bug in boxmodeller "From new CSS Selectors only the first is token in account, therefore the other new ones are missing in the CSS output"
+	* Fixed bug with fe-users who had a valid name at time of commenting and then the name info got deleted - tooltips gathered from fe_users failed in this situation, now substituting with fe_users.username for this very rare case.
+	* Fixed bug under SSL: Notification mail to the admin had no previewpictures for attachments (wrong link)
+	* Updated CSH in backend plugin and tables
+	* Fixed dropped entries in all boxmodels
+	* Changed URL to https in jquery.sharrre-1.3.4.js to avoid cross domain errors if https	
+	* Database Update required in TYPO3 4.x	
+	
+2013-10-29  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 4.3.0
+	* Compatibility TYPO3 6.2
+	* Added new commenting mode "login required"
+	  toctoc_comments installs a wrapper (XCLASS) on felogin. 2 new templates for standalone mode of the loginform as well as the template needed for the loginRequired-mode (in folder res/template/)
+	* Added new display mode for ratings. Likes and dislikes are presented in a short form and the entire rating area is above the comment: 
+	  TS Option ratings.useLikeDislikeStyle = 1 activates the new design
+	* Added new design "Windows" (boxmodel and theme) with new look like windowslive.com/Office 2013	
+	* Added notification email if a given number of dislikes has been given to a comment TS-opotion ratings.dlikeCtsNotifLvl = 5 (default) sets the level.
+	  ratings.dlikeCtsNotifIdlTime = 10 helps to protect from abuse: Time in minutes after a dislike notification without new notifications on the dislike. Only after this time an email will be sent to admins mailbox (spamProtect.notificationEmail), when this number of dislikes is been reached
+	* Added Links to subcomments below the comment. TS-Option advanced.displayChildComments = 1 (default)
+	* Link for commenting can be turned off by TypoScript. Option advanced.useCommentLink = 1
+	* Added TS-option advanced.watermarkFormFields, set to 1 form fields are watermarked instead of having a label
+	* Completed missing entries for TS-Options in the manual
+	* Added LIST2, LIST3 and SINGLE view for use of toctoc_comments-markers in tt_news
+	* Added TS-Option for each view of tt_news for the display of number of comments as a single number or as text, improved the text (no more bracket in the text)
+	* Added TS-option advanced.commentsShowCountText for 4 different representations of the comments counter on top of the plugin: 0: Long Texts, 1: only number, 2: icon and number, 3: short texts
+	* Email notification on new comments sends now at the base of email, before it was at the base of toctoc-user, which could cause sending of duplicate mails to a user with one email and several toctoc-users associated
+	* Updated the Design of boxmodel Koogle, added Fonts from Google+ (best viewed in Chrome browser)
+	* Fixed a bug while rendering of some emojis (ex: Red Heart) which caused than in comment edits the emojis were changed to codes
+	* Fixed bug for video attachments that did not display if displayed on https (and link to original video is http)
+	* Fixed Javascript bug when emojis were not activated, var tcsmiliecard was not set
+	* Fixed bug Missing user picture in Popups when fe_user only made ratings and no comments are present by the user
+	* no database update required in TYPO3 4.x	
+	
+2013-11-14  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 4.3.1
+	* Fixed PHP-code for rules compliance with https://metrics.typo3.org/, see http://metrics.toctoc.ch/ for current quality (also JavaScript)
+	* Hunting and fixing PHP 5.4 warnings and errors.
+	* Updated sharing component sharrre to version 1.3.5
+	* Updated comment report-icon in default design
+	* Updated iLike-Pics as well as the comment report icon and the default user pics for boxmodel koogle
+	* Continued work on CSS for correctness of responsive design 
+	* Fixed bug JavaScript-error that happened on click on the expand-icons for sub-comments, when display of only expand-collapse-icon was setup.
+	* Fixed bug TCA-entries for rating scopes missing
+	* Fixed bug With short Ilikes scopes showed also Ilikes after rating a scoped item 
+
+2013-11-15  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 4.3.2
+	* Fixed bug Captcha did not resolve, which was very annoying for anonymous commenters entering new comments
+	
+2014-01-29  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 5.0.0
+	* Removed all Inline-CSS and Inline-JavaScript, thus reducing radically the size of the HTML transferred from the server to the client.
+	* Added BB-Code Selection Popup, advanced.useBBCodeMenu and advanced.BBCodebbs, a list with allowed BB-codes, configure the feature 
+	* Pluginmode AJAX Login and Signup, new TS-options are available as tx_toctoc_comments_pi2
+	* AJAX Login and Sign up can be used as stand alone plugin or inside toctoc_comments, it's a clone of felogin, all in AJAX
+	* AJAX Login can refresh parts of the page identified by CSS-ids, ids are defined in TS, for these refreshs you can optionally define a light-weight page type
+	* Successful AJAX Signup automatically does a login, Signup-feature can be turned off
+	* Password recovery by e-mail is possible and can be done in the Login-Form
+	* AJAX Login with facebook-account
+	* Removed wrapper (XCLASS) on felogin.
+	* CSS-Files do no longer include the conf-css, this is now all in the boxmodel-css file
+	* CSS-Comments can be included, showing link to boxmodel.txt-entry
+	* CSS-files can be frozen (no checks for needed changes and regeneration if needed): see TS-Setup-Option theme.freezeLevelCSS
+	* Added 2 fluid ViewHelper for extension news. With this, news integrates toctoc_comments like tt_news does, features like comments counter in the news list can be setup in news as well
+	* included entire sharing possibilities from sharrre by adding Pinterest, Digg and Delicious
+	* Used form fields are defined now by TS-option useFields (title, firstname, location, homepage, gender), now the template is totally dynamic
+	* TS-option useGenderWithField (lastname) fixes where the gender-selection pictures are placed 
+	* For form fields there are now subtemplates for hidden input, visible field and gender
+	* Now lastname and e-mail are mandatory
+	* New form field comment title
+	* Subcomments have their own template now
+	* fixed a bug which is rather complicated to explain: UC panels on top of the plugin show wrong user when users are present as likers and dislikers, 
+	  the first uc is ok, but the uc at the same position on the other side (dislikes) showed the same user again
+	* In environments running extensions vhs, fluidpages and flux: page caching is "no longer available by some reason"
+	  Set vmcNoPageCache = 1 to avoid errors when accessing page cache fails (make an iLike, see an error with getKey? that's it)
+	* Table tx_toctoc_comments_prefixtotable is no longer maintained as static table, importing data twice did destabilize the plugin. But initial data still can be imported:
+	  it's recommended, for fresh installations, that you set Extension option importDataprefixtotable = 1. This imports the initial data which before was maintained as static table data
+	  When you start a plugin in frontend the initial data will be imported. After this set importDataprefixtotable again to 0 to avoid unneeded database access
+	* fixed problems with sharing links in design 0 and 2 (small buttons did not work)
+	* Changed name of function .modal to .txtcmoddlg in library jQuery.simplemodal to avoid conflicts with other jQuery-libraries (Twitter Bootstrap), renamed js-file to jquery.txtc-simplemodal.1.4.3.min.js
+	* Changed names of two functions in library jQuery.tools to avoid conflicts with other jQuery-libraries (Twitter Bootstrap), .tooltip is now .cooltip and .overlay is .superpose
+	  Left filename intact, but a rename to jquery.tctx-tools.min.js is recommended to keep order
+	* jquery.tools.min.js is optimized in size by eliminating unneeded tools-functions
+	* When a user picture or an avatar picture cannot be found on your server, by whatever reason, an image from toctoc.ch is displayed. It's a text in courier new, black on white: "image not found"
+	* JavaScript files are minified now, resulting in 40% reduction of the concerned files size. Uncompressed versions are available in zip-file js.uncompressed.zip
+	
+2014-02-26  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 5.0.1
+	* Fixed JavaScript bug "After edit and save comment, the save comment event is not rebound"
+	* Deleted smilie "frown = :[" from setup.txt. It interacted with BB-Codes
+	* Fixed JavaScript error for AJAX page part refreshs after logins/logouts: "ids on tags that appear in first place in the HTML were not refreshed"
+	* Fixed JavaScript bug "Fill comment with several lines, then <delete> all of them: No resize happens"
+	* Made regular language files for the backend module (compatibility TYPO3-language-server)
+	* Fixed JavaScript bug "Entering comment title and pressing enter, like for form submit, submits the form to page"
+	* Added TS-Option theme.boxmodelLineHeightPreserve for the CSS-line height: Preserve original line-height, it saves some lines of CSS, but results with ratingstars and ilike thumbs can be out of measure. 
+
+2014-05-01  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 5.1.0
+	* Please change to the new template, it changed a little because of improvements in HTML-quality and support for $TYPO3_CONF_VARS['FE']['versionNumberInFilename'].
+	* CSS: Fixed calculation for top-margin of ratingstars and like-button with new entries in boxmodell_system.txt
+	* CSS: added some @media-instructions to assume responsive behaviours of word-breaks, placings of comments and different look for login form
+	* Added TS-Option theme.responsiveSteps (pixel). These are the screen-widths when layouting in toctoc_comments can change.
+	  The two available steps concern the word-breaks and placing of comments and indented element.
+	  The option can be adjusted by page, thus allowing very nice control over the responsive behaviour inside the plugin. 
+	* Added TS-Option advanced.autoConvertLinksCropLength, cropping autoconverted links to a reasonable length (40 - 150)
+	* Fixed PHP-code bug "some servers did output the HTML of the AJAX-Login-Standaloneplugin with an erroneous /div> at the end"
+	* PHP: toctoc_comments-PHP-Sessions are now isolated from other sessions in typo3temp. New TS-Option sessionTimeout allows to fix session life time. Default is 9 hours (540 minutes)
+	* PHP: When the session is expired a message is displayed: "Your PHP-Session has expired. Please reload the page"
+	* CSS: added the missing line-height for scope-titles depending on theme.boxmodelLineHeight (boxmodell_system.txt)
+	* Added TS-Option theme.boxmodelLabelInputPreserve which allows to layout the inputfields and label as in former versions or minimizes the layouting (size and so on), so it's possible to add the CSS classes of toctoc_comments to your custom.css-file (vaild for the design of your site) and change them to your look.
+	* Fixed JavaScript Bug "AJAX pagepartrefreshs after AJAX-Logins left over the outerHTML of ids which should be removed." Now the entire tag is removed properly.
+	* Fixed comments report form
+	* Fixed option theme.boxmodelLabelWidth, added support for boxmodelLabelWidth in the boxmodels
+	* Size of Popup-Picures fully depends on attachments.picUploadMaxDimX. This is the maximal width for the image in the popup. With this width some responsive behaviour of the popups are defined.
+	* Added support for $TYPO3_CONF_VARS['FE']['versionNumberInFilename']
+	* Fixed bug in Backendplugin under TYPO3 6.2.0: "External Prefix (and other fields) shows up as mandatory"
+		
+2014-06-01  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 5.2.0
+	* Please change to the new template
+	* Changed display of youtube-videos to the new embed-style, which allows videos to be seen also on tablets and handy
+	* Fixed CSS display of top rated item entry to "display: table;"
+	* added support for storagePid in top ratings and recent comments, storagePid can be a single folder or a list of folders
+	* E-Mail notifications about new comments to commenters contain now a hot link to the new comment (New comment has a highlight-frame and the webpage is positioned on the comment)
+	* fixed bug with unwanted additional "<" at the end of voting on comments and in shortlikes-style (only visible on LINUX systems)
+	* fixed bug "approving comments from mail sometimes generated a white page, comments were not approved"
+	* In the comments tree when opening collapsed comments from level 3 or deeper, the display of the opened comment box had a problem in display - changed the JavaScript to the correct CSS-values "display: table;" (instead of block)
+	* jquery.tools must no longer be included in page.includeJSlibs, the extension now uses the file jquery.toctoc.tools.min.js. jquery.tools.min.js is identical to this file and by compatibility reasons with former 
+	    versions the old file is still part of the extension. Furthermore, toctoc_comments checks if jquery.tools.min.js is present in page.includeJSlibs (or includeJS) and then suppresses the link to 
+	    jquery.toctoc.tools.min.
+	* removed jQuery 1.7 from jquery.toctoc.tools.min.js. This is important for users of jQuery newer than 1.9, the old version jquery.tools.min.js made it impossible to use another jQuery version than 1.7.
+	    If you encounter JavaScript errors like "b.browser is not defined", this is because you use jQuery newer 1.9 - the "b.browser error" probably comes from another jQuery-library used than those shipped with toctoc_comments.
+	* updated to jQuery.simplemodal 1.4.4.
+	* made jQuery.simplemodal and jQuery.tools compatible jQuery >= 1.9 ($.browser was removed in jQuery and needed to be substituted)
+	* made jQuery.elastic compatible jQuery 1.7 with newer versions, (border-box CSS style is not token in account by jQuery 1.7.2 and lower)
+	* fixed bug (in PHP) "After stand alone login from facebook and if a new userpic was created, user pictures in Plugins on other pages sometimes were missing."
+	* when toctoc_comments is run in useSessionCache = 0 now it's made save that the SESSION is reset. 
+	
+2014-06-10  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 5.2.1
+	* Fixed PHP Warning that appeared when page.IncludeJS or page.IncludeJSLibs is not set
+	* removed console.log print out from jquery.elastic
+	* fixed wrong conversion of BB-Code [bq] when editing comments
+	* Set PHP compatibility to 5.2.0-5.5.99
+	
+2014-07-07  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 5.2.2
+	* CSS by toctoc_comments is now compressed by default. New option theme.crunchCSS enables (default) or disables the compression
+	* Username for logged in facebook users is displayed now as first- and lastname with link to the facebook profile page
+	* Changed Comment Browsing: When showing new comments, the entire comments list was refreshed, now only new comments are added.
+	* AJAX-Login now works with extension rsaauth enabled, former version worked only in 'normal'-mode
+	* fixed missing tiptext for the "others like this" in the commentslist
+	* fixed problems with storagePid when working with more than 1 storagePid for voting and ilikes
+	* Backend-Plugin: storagePid is visible in all plugin-modes now, not only in mode 'normal'- apart from AJAX-Login.
+	* TCA: Adjusted range values, some of them were to narrow, resulting in errors on saves in the backend
+	* TCA: Some mandatory input fields where missing, for example the description of a rating scope is mandatory now.
+	* SEO: Comments and ratings are no longer visible to major search engines with new TS-Option dontSkipSearchEngines = 0
+	* PHP-Sessions: No more Session-creation for Search Engines
+	* PHP-Sessions: Moved toctoc_comments-Sessions from typo3temp to typo3conf/ext/toctoc_comments/pi1/sessionTemp, this allows better control over session files.
+	* Charts: Fixed image-display for tt_content-items on TYPO3 >= 6.0
+	* Ratings: Changed data type of average rating fields from int or decimal(19,2) to decimal(19,8), charts on scoped ratings had rounding errors with the former "2 decimal places"-system   
+	* Database Update required in TYPO3 4.x
+		
+2014-07-27  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 5.3.0
+	* Added gravatar user pictures with TypoScript option advanced.gravatarEnable. 
+	* Max shown gravatar-rating can be configured with advanced.gravatarRating
+	* Defaultpictures in "gravatar"-mode remain existing user-pictures. 
+	* To prevent errors when gravatar.com tries to access the user-pictures on servers that are not accessible to gravatar.com you can set advanced.gravatarLocalHost to a default gravatar
+	* Added TypoScript option theme.useLessToolTips = 0. When set to 1, then on devices smaller than 768 less tooltips are shown, if set to 2 it's regardless from screen width.
+	* Added TypoScript option theme.emojiNoToolTips = 0. When set to 1, then smiles and emojis have no tool tips
+	* Added TypoScript option for sendernames in emails from the commenting system: advanced.notificationForCommentatorEmailName and spamProtect.fromEmailName
+	* Added TypoScript option that allows configuring the "middot" in the commenting forms. This separator is set to a custom value with advanced.midDot
+	* Added TypoScript option UCUserStatsByEmail, stats on the user are made using email instead of IP (or UserId) if enabled
+	* Added TypoScript option advanced.dontuseGIFBUILDER, if you do not want to use GIFBUILDER for generation of the userpics. Default is 0.
+	* Tuned up 1st start of the extension by some 100%. A MySQL-LIMIT created a query with long execution times as soon as 1 of the 2 linked tables became bigger.
+	* Fixed bug: AJAX-Login fails with rsaauth enabled in comment-lists
+	* Fixed bug: AJAX-Login fails on pages with GET-Parameters containing brackets "[" and "]"
+	* Fixed bug: comments browsing fails with advanced.invertBrowser = 0 or advanced.reverseSorting = 0
+	* Changed recent comments URLs in links to comments to absolute URLs. Same in Charts
+		
+2014-09-11  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 5.4.0
+	* Minor changes in the template, please update, users of TYPO3 4.x please run database update in extension manager
+	* Added hotlink to notification emails on already approved comments
+	* Added TypoScript option advanced.notificationLevel: email-notifications on new comments regard all new comments in the plugin (option 0, (old) default)
+	* Added TypoScript option advanced.notificationValidDays: Notification validity in days: 0: no limit, >= 1. Number of days for notification after a commentator left a comment
+	  option 1 enables notification only for replies on a comment, option 2 is like option 1, but subsequent comments on the same level also trigger notification
+	* Added TypoScript option advanced.sortMostPopular: Comments are sorted according popularity score, which calculates as follows:
+		Number of views + advanced.activityMultiplicatorRating * (count(ilikes+idislikes+votes) + advanced.activityMultiplicatorComments * count(Subcomments) 
+		Popularity sort only sorts the first level of comments
+	* Added TypoScript option advanced.showSortMostPopularIcon (Setup only): Shows an Icon with a tip text indicating the popularity score
+	* Added TypoScript option advanced.useSortMenu, default = 1: use a menu for sorting of comments in the frontend. Sorting only affects displayed comments
+	  Remark: when current sorting is different from original sorting and older comments shall display, then they display in original sorting 
+	* Added TypoScript option advanced.useMostPopular. If you use popularity then sorting by popularity is enabled in the comments list, default = 1
+	* Added Session-Caching for data behind comment lists - it speeds up comment browsing
+	* Added TypoScript option advanced.shareUsersTotalText: optional title for sharing line, it replaces text "share this page" after the total number of users who shared
+	* Added TypoScript option advanced.useShareIcon: use an icon in the sharing line. Default is 1.
+	* Added TypoScript option advanced.shareDataText: optional text for shared item on Twitter, as shown in the share-message of the social network sharers
+	* For administrator responses on comments the old extension comments_response is no longer needed - it's inside toctoc_comments now
+	  Set TypoScript option advanced.adminCommentResponse = 1 to enable the feature (default 0)
+	  When the admin receives an information or approval-mail there's a new link "Response to the comment as administrator"
+	* Fixed problems with sharing delicious and digg (they changed the call for sharing counts)
+	* Fixed problem with hotlinks from pages that already were hotlinked (double hotlink)
+	* Fixed problem with AJAX-Login on pages that were hotlinked and/or contained cHash-Parameter in URL
+	* Fixed missing tooltips after comments browsing on iLikes
+	* Fixed Import of Plugin-to-Tablemaps using Extension configuration option importDataprefixtotable in EM (did not import)
+	* Fixed display error on Nexus-Androidbrowser. It was identified as search engines because of string "google" in the useragent. 
+	  Now string "googlebot" in useragent is filtered - if search engine filtering is active. (dontSkipSearchEngines = 0)
+	* Fixed a JavaScript bug that caused an error message after successful insert of a subsequent second comment (length of comment must not be 0)
+	
+2014-09-12  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 5.4.1
+	* Fixed bug comment insertion fails with MySQL 5.5.+
+	
+2014-10-14  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 5.5.0
+	* Minor changes in the template for data protection features, please update
+	* Cookies from not logged in users are no longer stored in clear text
+	* With TypoScript-option advanced.acceptTermsCondsOnSubmit specify an ID of your page with term and conditions, the link shows up beside the submit button in commenting forms
+	  when the ID is specified the terms and conditions must be accepted before submitting a comment
+	* An entire TypoScript-options section dataProtect has been created - it implements options regarding data protection and for instance hold 7 new options
+	* dataProtect.setCookie = 1 : Set (1) or don't set (0) a cookie with form data of not logged in commenters
+	* dataProtect.cookieLifetime = 31 : Lifetime in days for a cookie, minimum is 7 days
+	* dataProtect.useDisclaimer = 1 : Shows a disclaimer menu point above the comments list. (1)
+	* dataProtect.useDisclaimerInRatingsOnly = 0 : Shows a disclaimer menu point when only ratings are shown (ratings.ratingsOnly=1)
+ 	* dataProtect.disclaimerPageID = : ID of your page with additional policy for data protection, link shown in disclaimer menu
+	* dataProtect.disclaimerSystemCheck = 1 : Checks if database is on same server, checks if https is enabled and then shows a security rating of the site.
+	* dataProtect.disclaimerFromTocToc = 1 : Shows the software creators disclaimer in the disclaimer popup
+	* added TCA for the fields toctoc_comments adds in fe_users (facebook login). There is a new toctoc_comments tab in the fe_users-records in TYPO3-Backend
+	* Redesigned the backend module "Comments" and a new option for user administration has been added
+	* In the new user administration users data can be deleted or erased from the database 
+	* In the new user administration users can be merged into a specified user
+	* New status messages after bulk actions report what has been processed (comments or users)
+	* Fixed bug "add a comment on level 0 and after this you try adding another comment, again on level 0. The events remain unbound, nothing moves and the 2nd comment can only be added after reloading the page."
+	* Fixed bug "Notification Text-E-Mails says there is an attachment when there is none"
+	* Fixed bug "New notification options only work if user posts comment logged in, it does not work after approval by Admin-E-Mails"
+	* Fixed bug "Comment rating with ratings.useLikeDislikeStyle = 1 left over an "<" at the end of the AJAX reply, but only under UNIX/LINUX hosts" 
+
+2014-12-06  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 6.0.0	
+	* Added TypoScript option advanced.commentReviews. When set to 1, then commenting is considered as reviewing: A review is a rating with a comment.
+	  Only logged in users can write reviews. Reviews can be commented and rated like normal comments. 
+	  At the base reviews comments work like normal comments, but the rules how they are handled are different.
+	* For reviews you can specify a different crop length for the texts than for comments. Default is at 512 characters. TypoScript option advanced.reviewCropLength
+	* Existing comment streams can be redefined as reviews
+	* The review comment can be edited or deleted. (the vote can't be deleted)
+	* In reviewComment-mode the comment of the current user is always displayed on top of the list.
+	* Added pluginmode 6: user center. The user center shows all comments and ratings by the current user (must be logged in)
+	* TypoScript-Setup options section usercenter holds options regarding the new user center
+	* TypoScript option usercenter.uCLists = : Lists to be distinguished in user center. comma-separated list. Possible values: Reviews, Plugintotablemap, Commentsoncomments
+	* TypoScript option usercenter.commentsPerUCList = 3: Comments per list: Number of comments shown in the plugin in Usercenter per list
+	* TypoScript option usercenter.userCenterPageID = : ID of your page with userCenter, link shown in menu on comments list
+	* TypoScript option usercenter.maxItemsPerUCList = 50: Items per list: Maximal number of items shown per list
+	* TypoScript option maxItemAgeUCList = 365: Maximal age of items shown in list: Items older than this number (in days) won't be shown in the lists
+	* ratings.disableIPcheck behaves different now. If disabled, then users can change their votes, subsequent votes are not taken as new votes, but as change of the existing vote
+	* With this we added a feature to protect the site from "vote attacks": 3 TypoScript options allow to specify:
+	  1. How long the user is prevented from rating once he exceeded the allowed limit (in minutes): ratings.allowedNumberOfRatingsExceededBlocktime = 13
+	  2. The number of ratings that can exceed the limit: ratings.allowedNumberOfRatings = 10
+	  3. The time to be considered (in minutes): ratings.timeForAllowedNumberOfRatings = 2
+	  You can say: If a user made 10 ratings in 2 minutes, then he will be blocked for the next 13 minutes from rating.	  
+	* ratings.ratingImageWidth is no longer needed. It's determined now automatically from file toctoc_comments_myrating_star.png in the current themes img directory
+	* In commentReview-mode disableIPcheck is set to 1 in background, so the vote on an existing review can be changed by the user. 
+	* sharing.sharePageURL = : URL of page you like to share, useful if current page sometimes is loaded with different URL-Parameters, or http/https. 
+	  With this you can fix the page to share to a fixed value. Available in Plugin.
+	* The sharing options in TypoScript option section advanced is depreciated. The sharing options are now all in new section sharing. 
+	  Existing options under advanced will still work, if they differ from the default value they will be token into account.	
+	* In the backend plugin the sharing options have an own section now, section advanced is cleaned out. On updates the old values remain in the plugin, even if one does not see them in the backend. 
+	  They are overwritten by new values from section sharing if the new values differ from TypoScript default-setup. 
+	* Updated list of the static IP-Block list. (10/17/2014)
+	* Revised the boxmodels. Basic logics for the rating stars in now in boxmodel_system.txt and does not need to be touched anymore for different displays of rating stars in user-boxmodels.
+	* Added Review stars, they are a bit bigger than the rating stars but they have the same designs like the rating stars
+	* Changing number of rating stars as well as ratingImageWidth are carried out now totally thru code (boxmodel_system.txt). 
+	  Make sure the according theme-options are setup correctly as well for a proper display of the rating system.
+	* New Icons for popularity sort
+	* Added commenttitle to comment edit
+	* Added option theme.boxmodelButtonPreserve = 0. It's for Button design: Uses the old default - layouted(0) - or non layouted(1) design for form buttons.
+	* Removed Gravatars for anonymous users (does not yet work properly), gravatars for logged in users did not change.
+	* Removed pdf-Manual from TER-distribution, it's available on https://www.toctoc.ch/toctoc_comments_doc.html
+	* Added TypoScript-Setup-option requiredMark = *, dropped Subpart ###REQUIRED_FIELD###
+	* Fixed JS errors in IE when sorting comments and on comments browse: Background: The tag attributes order in DOM differs from the order in HTML under IE,
+      this made fail some JavaScript-functions (split), because the split argument did not match the DOM. example: var.split('<div id="') fails if class attribute is present, 
+      because in the DOM the HTML is represented as '<div class="xxx" id="' even if original HTML is like '<div id="'.
+	* Fixed missing margin in sharing design 0 and 1s total counter
+	* Fixed problem with DB Compare (DROP Index and then ADD Index again for 2 or 3 tables) 
+	* Fixed SQL-Error when advanced.showCountCommentViews = 1, no comments present and [SYS][sqlDebug] = 1
+	* Fixed tca definition of table tx_toctoccomments_plugincachecontrol, it caused the search of TYPO3 backend to make SQL errors
+	* Fixed missing rsa-JS-files when using AJAX-login and a page was opened in loggedin mode, on the page the logout works, but relogin can fail.
+	* Fixed problems with editing comments: double space from "show more" is eliminated. Cropped links were not retransformed in full links.
+
+2014-12-21  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 7.0.0
+	* Compatibility TYPO3 7 without EXT:compatibility6 needed, compatibility now covers TYPO3 versions 4.3 up to 7.0
+	* Compatibility PHP 5.6
+	* Fixed JS-error and wrong height of website-previews window when using captcha to confirm comment
+	* Beautified plugin-display in TYPO3 page-module
+	* Removed some useless includes in PHP
+	* Removed TypoScript Setup-option vmcNoPageCache, it's no longer needed
+	* Added templates for news using toctoc_comments in folder Classes
+
+2015-02-17  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 7.0.1
+	* Added refresh of spamhaus banned IPs to the backend administration interface, removed old files in /resources 
+	* Fixed function getPreserveGetVars() in class.toctoc_comments_felogin_pi1.php to be fully compatible with TYPO3 older than version 4.7	
+	* Added TypoScript option advanced.useAdditionalFe_usersFields = . This is a solution to forge Issue #64452, resolving perfomance problems with large fe_users-tables. 
+	  You only need to set the option to a comma-separated list of fe_users-fieldnames if you use these fields as custom fe_users-markers in your template.
+	* Fixed 3 misplaced constants in contants.txt (moved them back from secion sharing to advanced)
+	* Minimal requirement for PHP is 5.3.7. now.
+	* Fixed JavaScript error in Internet Explorer which kept the "Accept terms and conditions" checkbox in disabled state
+	* Fixed persistence of the notify checkbox during captcha form refreshs.
+	* Added TypoScript option ratings.useIPsInLikeDislike = 1: Show resolved IP-addresses in tiptexts for Likes and iLikes (if a user name is not present): 1 IPs will be shown, 0 IPs will be counted in "Others" and won't be shown in tip-texts
+	
+2015-03-06  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 7.1.0
+	* Added Plugin mode Comment Search, new TypoScript-options section "search" holds 7 options allowing to customize the search. 
+	* Added gender to fe_users, if not already there, added gender to fe_users TCA if not present yet.
+	* Added error message if commenters fe_users account misses values in required fields. (on new comments)
+	* Added TypoScript-option spamProtect.commentWaitTime = 1: Wait time between comments: Number of minutes a user has to wait before they may post another comment (includes all pages)
+	* Made SMTP-Server-check before sending e-mails optional: spamProtect.checkSMTPService = 0. On systems without PHP-extension sockets loaded the checkSMTPservice won't work.
+	* Added support for GraphicsMagick for generation of PDF-Thumbnails for pdf attachments
+	* Constant editor: changed labels of some constants in order to obtain nice titles of the constants description
+	* Fixed PHP-Warning when loading usercenter
+	* Fixed missing user image which could happen in connection with login using fe_login and user did not make a comment before.
+
+2015-03-27  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 7.2.0
+	* Compatibility with toctoccommentsce - new wrapper for toctoc_comments in content elements
+	* New popup message in the frontend if problems with jQuery are detected.
+	* Extended Comments search to authors names
+	* After login with the stand alone AJAX Login, new TypoScript-option plugin.tx_toctoccomments_pi2.sendBack = 1 sends back user after successful login to originating page
+	* Added Extension Configuration-Option basic.donationSecret, it allows to enter the donation key received upon first donation for toctoc_comments or toctoccommentsce
+	* Display of a donation-message in the backend plugin
+
+2015-04-24  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 7.3.0
+	* Fixed centering of play button in video attachments
+	* Added attachment type video/soundcloud. For activation, you need to be Soundcloud-user, then create an Application and get Client ID and Client Secret from developers.soundcloud.com
+	  New options attachments.soundcloudClientID and attachments.soundcloudClientSecret
+	* Added Login with Google+: You need create a google app on https://console.developers.google.com/project?authuser=0 and use ClientID and ClientSecret to enable the feature
+	  How to add an app on Google? See https://developers.google.com/+/web/signin/add-button, Step 1.
+	  New options in toctoc_comments_pi2: google.ClientID and google.ClientSecret
+	* Removed dependency on fe_login, formerly inherited Typoscript-options need manual setup: storagePid, email_from, email_fromName and replyTo.
+	* Fixed missing "f" in Facebooklogin. After Facebook design update of April/19 2015 the old linked image-file went offline. The new "f" is now hosted locally.

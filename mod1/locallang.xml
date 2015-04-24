@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for module &quot;web_toctoccommentsbeM1&quot;</description>
+		<labelContext type="array">
+		</labelContext>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="title">toctoc_comments Administration</label>
+			<label index="newcomment">New comment on this page</label>
+			<label index="nocomment">There aren't any comments on this page.</label>
+			<label index="onecomment_one">There is</label>
+			<label index="onecomment_two">comment on this page.</label>
+			<label index="commentglobal_one">There is</label>
+			<label index="commentglobal_two">comment overall.</label>
+			<label index="commentglobalmore_one">There are</label>
+			<label index="commentglobalmore_two">comments overall.</label>
+			<label index="morecomments_one">There are</label>
+			<label index="morecomments_two">comments on this page.</label>
+			<label index="noip">There aren't any IPs imported yet.</label>
+			<label index="lastupdate">Last time updated:</label>
+			<label index="lastupdateunknown">Last update unknown</label>
+			<label index="lastupdatenone">Never updated</label>
+			<label index="bannedipsrefreshed">IPs in static list of banned IPs refreshed</label>
+			<label index="bannedipsnotrefreshed">existing IPs in static list of banned IPs were not refreshed</label>
+			<label index="oneip_one">There is</label>
+			<label index="oneip_two">IP.</label>
+			<label index="ipglobal_one">There is</label>
+			<label index="ipglobal_two">IP overall.</label>
+			<label index="ipglobalmore_one">There are</label>
+			<label index="ipglobalmore_two">IPs overall.</label>
+			<label index="moreips_one">There are</label>
+			<label index="moreips_two">IPs.</label>
+			<label index="approve">Approve comment</label>
+			<label index="disapprove">Disapprove comment</label>
+			<label index="show">Show comment</label>
+			<label index="hide">Hide comment</label>
+			<label index="edit">Edit comment</label>
+			<label index="delete">Delete comment</label>
+			<label index="deleteuser">Delete user</label>
+			<label index="delete_txt">Are you sure you want to delete this comment?</label>
+			<label index="mul_txt">Are you sure you want to do that?</label>
+			<label index="id">ID</label>
+			<label index="date">Date</label>
+			<label index="name">Name</label>
+			<label index="comment">Comment</label>
+			<label index="approveboth">(Dis-)approve</label>
+			<label index="hideshow">Hide/Show</label>
+			<label index="edittwo">Edit</label>
+			<label index="deletetwo">Delete</label>
+			<label index="go">Go!</label>
+			<label index="bulkact">Bulk actions:</label>
+			<label index="bulkact_one">Approve selected</label>
+			<label index="bulkact_two">Disapprove selected</label>
+			<label index="bulkact_three">Hide selected</label>
+			<label index="bulkact_four">Show selected</label>
+			<label index="bulkact_five">Delete selected</label>
+			<label index="pid">PID</label>
+			<label index="check_all">Check all</label>
+			<label index="show_comments">Show comments</label>
+			<label index="show_users">Show users</label>
+			<label index="function">Administration menu</label>
+			<label index="function1">Comments</label>
+			<label index="function2">Users</label>
+			<label index="function3">Banned IPs</label>
+			<label index="refreshblockedips">refresh banned IPs from spamhaus.org</label>
+			<label index="nouser">There aren't any toctoc_comments users on this page.</label>
+			<label index="oneuser_one">There is</label>
+			<label index="oneuser_two">user on this page.</label>
+			<label index="userglobal_one">There is</label>
+			<label index="userglobal_two">user overall.</label>
+			<label index="userglobalmore_one">There are</label>
+			<label index="userglobalmore_two">users overall.</label>
+			<label index="moreusers_one">There are</label>
+			<label index="moreusers_two">users on this page.</label>
+			<label index="toctoc_comments_user">User</label>
+			<label index="initial_name">initial name</label>
+			<label index="current_name">current name</label>
+			<label index="report">report</label>
+			<label index="initial_email">initial email</label>
+			<label index="current_email">current email</label>
+			<label index="bulkactuser_one">Delete selected users</label>
+			<label index="bulkactuser_two">Kill selected users data from DB</label>
+			<label index="bulkactuser_three">Merge selected users with</label>
+			<label index="mergewithuser">Merge with user</label>
+			<label index="pi1_template.uc.comments">Comments:</label>
+			<label index="pi1_template.uc.rateditems">Ratings:</label>
+			<label index="pi1_template.uc.averagerating">Average rating:</label>
+			<label index="pi1_template.uc.likes">Likes:</label>
+			<label index="pi1_template.uc.joined">Joined:</label>
+			<label index="pi1_template.uc.lastactivity">Last activity:</label>
+			<label index="pi1_template.uc.dislikes">Dislikes:</label>
+			<label index="donelist">List</label>
+			<label index="commentdeleted">Comment deleted</label>
+			<label index="approved1">Approved 1 comment, set approved=1 in database.</label>
+			<label index="disapproved1">Disapproved 1 comment, set approved=0 in database.</label>
+			<label index="approvedn">Approved %d comments, set approved=1 in database.</label>
+			<label index="disapprovedn">Disapproved %d comments, set approved=0 in database.</label>
+			<label index="hidden1">1 comment hidden, set hidden=1 in database.</label>
+			<label index="unhide1">1 comment unhidden, set hidden=0 in database.</label>
+			<label index="commentsdelete1">1 comment deleted, set deleted=1 in database.</label>
+			<label index="hiddenn">%d comments hidden, set hidden=1 in database.</label>
+			<label index="unhiden">%d comments unhidden, set hidden=0 in database.</label>
+			<label index="commentsdeleten">%d comments deleted, set deleted=1 in database.</label>
+			<label index="usersdeleten">Deleted %d toctoc_comments users, set deleted=1 in database.</label>
+			<label index="usersdelete1">Deleted 1 toctoc_comments user, set deleted=1 in database.</label>
+			<label index="permanentusersdeleten">Permanently deleted %d toctoc_comments users.</label>
+			<label index="permanentusersdelete1">Permanently deleted 1 toctoc_comments user.</label>
+			<label index="mergeusersn">Merged %d toctoc_comments users to user</label>
+			<label index="mergeusers1">Merged 1 toctoc_comments user to user</label>
+			<label index="nocommentsselected">No comments selected. Please select comments by checking selection boxes at the end of the comment rows.</label>
+			<label index="nousersselected">No users selected. Please select users by checking selection boxes at the end of the user rows.</label>
+			<label index="mergefailusernotexist">Merge into user %s failed, userid does not exist</label>
+			<label index="mergefailusermalformatted">Merge of %d users into user %s failed, userid is malformed</label>
+		</languageKey>
+	</data>
+	<orig_hash type="array">
+	</orig_hash>
+	<orig_text type="array">
+	</orig_text>
+</T3locallang>
