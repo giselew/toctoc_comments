@@ -38,20 +38,20 @@
  *
  *
  *   82: class toctoc_comments_webpagepreview
- *  123:     public function main ($inputurl, $inputcommentid, $inputcid, $lang, $inconf = array(), $pObj = NULL, $pObjParent=NULL)
- *  353:     protected function timepoint($startpoint, $datainfo, $showtotal = FALSE)
- *  379:     protected function check_pvs_url($value)
- *  399:     protected function file_pvs_get_contents_curl($urltofetch, $ext, $savepathfilename = '')
- *  562:     public function saveAndResize($filename, $new_width, $new_height, $pathAndFilename, $ext)
- *  918:     public function previewsite ($pObj=NULL, $pObjParent=NULL)
- * 1493:     private function pvs_fetch_images($strextraction, $iscss, $cssfile='')
- * 1672:     protected function pvs_fetch_css($strextraction,&$strouthtml, $iscss, $cssfile='')
- * 1801:     protected function checklogopattern($strtest)
- * 1833:     protected function checkimagepattern($strtest)
- * 1865:     protected function checkvideocontent($html)
- * 2189:     protected function croptitleordesc($description)
- * 2218:     protected function cleanouttitleordesc($title)
- * 2295:     protected function checkandcorrUTF8($strtocheck)
+ *  122:     public function main ($inputurl, $inputcommentid, $inputcid, $lang, $inconf = array(), $pObj = NULL, $pObjParent=NULL)
+ *  352:     protected function timepoint($startpoint, $datainfo, $showtotal = FALSE)
+ *  378:     protected function check_pvs_url($value)
+ *  398:     protected function file_pvs_get_contents_curl($urltofetch, $ext, $savepathfilename = '')
+ *  561:     public function saveAndResize($filename, $new_width, $new_height, $pathAndFilename, $ext)
+ *  917:     public function previewsite ($pObj=NULL, $pObjParent=NULL)
+ * 1577:     private function pvs_fetch_images($strextraction, $iscss, $cssfile='')
+ * 1756:     protected function pvs_fetch_css($strextraction,&$strouthtml, $iscss, $cssfile='')
+ * 1885:     protected function checklogopattern($strtest)
+ * 1917:     protected function checkimagepattern($strtest)
+ * 1949:     protected function checkvideocontent($html)
+ * 2273:     protected function croptitleordesc($description)
+ * 2302:     protected function cleanouttitleordesc($title)
+ * 2379:     protected function checkandcorrUTF8($strtocheck)
  *
  * TOTAL FUNCTIONS: 14
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -113,7 +113,6 @@ class toctoc_comments_webpagepreview {
 //placeholder input
 	private $commentid = 'p0';
 	private $cid = 'p1003';
-
 //debug
 	private $totaltime = 0.000001;
 	private $starttime = 0.000001;
@@ -919,122 +918,205 @@ class toctoc_comments_webpagepreview {
 		$strouthtml='';
 		$starttime=microtime(TRUE);
 		$_SESSION[$this->cid][$this->commentid]['url'] = $this->url;
+		$scs = $this->conf['attachments.']['soundcloudClientSecret'];
+		$sci = $this->conf['attachments.']['soundcloudClientID'];
 
-		$html = $this->file_pvs_get_contents_curl($this->url, 'html');
-		if (($html) && ($this->returnurl !='')) {
-			//checking for basedir...
+		$issoundcloud = FALSE;
+		if (($scs !='') && ($sci !='') && (str_replace('soundcloud.com', '', $this->url ) != $this->url)) {
+			require_once 'Soundcloud/Soundcloud.php';
+			// create a client object with your app credentials
+			$client = new Services_Soundcloud($sci);
+
+			// a permalink to a track
+			$track_url = $this->url;
+			// resolve track URL into track resource
+			$track = json_decode($client->get('resolve', array('url' => $track_url)));
+			$trackid = $track->id;
+			$trackartwork_url = $track->artwork_url;
+			$tracktitle = $track->user->username . ': ' . $track->title;
+			$trackdescription = $track->description;
+			$client = new Services_Soundcloud($sci, $scs);
+			$client->setCurlOptions(array(CURLOPT_FOLLOWLOCATION => 1));
+			// get a tracks oembed data
+			$track_url = $this->url;
+			$embed_info = json_decode($client->get('oembed', array('url' => $track_url)));
+			$issoundcloud = TRUE;
+			// render the html for the player widget
+			$html = $embed_info->html;
 			$basedir = '';
-			$basedirarr = explode('<base href="', $html);
-			if (count($basedirarr)>1) {
-				$basedirarr2 = explode('"', $basedirarr[1]);
-				$basedir=$basedirarr2[0];
+			$fullurlarr = parse_url($track->permalink_url);
+			$strpathout='';
+			if (isset($fullurlarr['path'])) {
+				if (strlen ($fullurlarr['path']) >30) {
+					$strpathout=trim(substr($fullurlarr['path'], 0, 30)) . ' ...';
+
+				} else{
+					$strpathout=trim($fullurlarr['path']);
+				}
+
 			}
 
-			$newhost = parse_url($this->returnurl);
-			$oldhost= parse_url($this->url);
-			$newhoststr =$newhost['scheme'] . '://' . $newhost['host'] . '/';
-			$newpathstr='';
+			$strouthtml.=  '<br>URL: <a href="' . $this->url .'">' . trim($fullurlarr['host']) . $strpathout . '</a>';
+			$_SESSION[$this->cid][$this->commentid]['urlfound'] = $track->permalink_url;
+			$_SESSION[$this->cid][$this->commentid]['urltext'] = trim($fullurlarr['host']) . $strpathout;
+			$_SESSION[$this->cid][$this->commentid]['title'] = $tracktitle;
+			$_SESSION[$this->cid][$this->commentid]['logofile'] = '';
+			$_SESSION[$this->cid][$this->commentid]['embedUrl'] = $html;
+			$_SESSION[$this->cid][$this->commentid]['videotype'] = 'SCD';
+			$_SESSION[$this->cid][$this->commentid]['totalcounter'] = 1;
+			$_SESSION[$this->cid][$this->commentid]['logo'] = $trackartwork_url;
+			$_SESSION[$this->cid][$this->commentid]['videosite'] = 'Soundcloud';
 
-			if (array_key_exists('path', $newhost)) {
-				$newpathstr=$newhost['path'];
+			session_write_close();
+			if ($this->sessionSavePath == '') {
+				$this->sessionSavePath =  @file_get_contents(realpath(dirname(__FILE__)) . '/sessionpath.tmp');
 			}
 
-			$oldpathstr='';
-			if (array_key_exists('path', $oldhost)) {
-				$oldpathstr =$oldhost['path'];
+			if (!(isset($commonObj))) {
+				require_once ('class.toctoc_comments_common.php');
+				$commonObj = new toctoc_comments_common;
 			}
 
-			// subpath for css start
+			$commonObj->start_toctoccomments_session(3*1440, $this->sessionSavePath);
 
-			// when a redirect bring out a new subdirectory, then this new subdirectory
-			// must be used to fetsch css-files
-			$this->urlsubpath = '';
-			if ($oldpathstr == $this->url) {
-				if (array_key_exists('scheme', $oldhost)) {
-					$oldhoststr =$oldhost['scheme'] . '://' . $oldpathstr;
-					if (array_key_exists('host', $oldhost)) {
-						$oldpathstr = str_replace($oldhost['host'], '', $oldpathstr);
-					}else {
+			if (strlen($description)>= $this->conf['attachments.']['webpagePreviewDescriptionMinimalLength'])  {
+				$descriptionarr = explode(' ', $trackdescription);
+				$descriptionlen =0;
+				$descriptionout ='';
+				$descriptionret='';
+				$countdescriptionarr=count($descriptionarr);
+				for($i = 0; $i < $countdescriptionarr; $i++) {
+					$descriptionlen += strlen($descriptionarr[$i])+1;
+					$descriptionout .= $descriptionarr[$i] . ' ';
+					if ($descriptionlen>=$this->conf['attachments.']['webpagePreviewDescriptionLength']) {
+						$descriptionret=$descriptionout . ' ...';
+						break;
+					}
+
+					$trackdescription=$descriptionout;
+				}
+			}
+
+			$_SESSION[$this->cid][$this->commentid]['description'] = $trackdescription;
+
+		} else {
+			$html = $this->file_pvs_get_contents_curl($this->url, 'html');
+
+			if (($html) && ($this->returnurl !='')) {
+				//checking for basedir...
+				$basedir = '';
+				$basedirarr = explode('<base href="', $html);
+				if (count($basedirarr)>1) {
+					$basedirarr2 = explode('"', $basedirarr[1]);
+					$basedir=$basedirarr2[0];
+				}
+
+				$newhost = parse_url($this->returnurl);
+				$oldhost= parse_url($this->url);
+				$newhoststr =$newhost['scheme'] . '://' . $newhost['host'] . '/';
+				$newpathstr='';
+
+				if (array_key_exists('path', $newhost)) {
+					$newpathstr=$newhost['path'];
+				}
+
+				$oldpathstr='';
+				if (array_key_exists('path', $oldhost)) {
+					$oldpathstr =$oldhost['path'];
+				}
+
+				// subpath for css start
+
+				// when a redirect bring out a new subdirectory, then this new subdirectory
+				// must be used to fetsch css-files
+				$this->urlsubpath = '';
+				if ($oldpathstr == $this->url) {
+					if (array_key_exists('scheme', $oldhost)) {
+						$oldhoststr =$oldhost['scheme'] . '://' . $oldpathstr;
+						if (array_key_exists('host', $oldhost)) {
+							$oldpathstr = str_replace($oldhost['host'], '', $oldpathstr);
+						}else {
+							$oldpathstr = str_replace($newhost['host'], '', $oldpathstr);
+						}
+
+					} else {
+						$oldhoststr =$newhost['scheme'] . '://' . $oldpathstr;
 						$oldpathstr = str_replace($newhost['host'], '', $oldpathstr);
 					}
 
 				} else {
-					$oldhoststr =$newhost['scheme'] . '://' . $oldpathstr;
-					$oldpathstr = str_replace($newhost['host'], '', $oldpathstr);
-				}
-
-			} else {
-				if (array_key_exists('scheme', $oldhost)) {
-					$oldhoststr =$oldhost['scheme'] . '://' . $oldhost['host'] . '/';
-					$oldpathstr = str_replace($oldhost['host'], '', $oldpathstr);
-				}
-
-				else {
-					if (array_key_exists('host', $oldhost)) {
-						$oldhoststr =$newhost['scheme'] . '://' . $oldhost['host'] . '/';
+					if (array_key_exists('scheme', $oldhost)) {
+						$oldhoststr =$oldhost['scheme'] . '://' . $oldhost['host'] . '/';
 						$oldpathstr = str_replace($oldhost['host'], '', $oldpathstr);
 					}
 
 					else {
+						if (array_key_exists('host', $oldhost)) {
+							$oldhoststr =$newhost['scheme'] . '://' . $oldhost['host'] . '/';
+							$oldpathstr = str_replace($oldhost['host'], '', $oldpathstr);
+						}
 
-						$oldhoststr =$newhost['scheme'] . '://' . $newhost['host'] . '/';
-						$oldpathstr = str_replace($newhost['host'], '', $oldpathstr);
-					}
+						else {
 
-				}
-
-			}
-
-			if ($oldpathstr != '') {
-				if (substr($oldpathstr, 0, 1) == '/') {
-					$oldpathstr= trim(substr($oldpathstr, 1, 1024));
-				}
-
-			}
-
-			if ($newpathstr != '') {
-				if (substr($newpathstr, 0, 1) == '/') {
-					$newpathstr= trim(substr($newpathstr, 1, 1024));
-				}
-
-				$arrnewpath= explode('/', $newpathstr);
-				if (count($arrnewpath) > 0){
-					$i = (count($arrnewpath) - 1);
-					if ($arrnewpath[$i] != '') {
-						//last elem is file so set it to ''
-						$arrnewpath[$i] = '';
-					}
-
-					$newpathstr='';
-					$countarrnewpath=count($arrnewpath);
-					for($i = 0; $i < $countarrnewpath; $i++) {
-						if ($arrnewpath[$i] != '') {
-							$newpathstr .=$arrnewpath[$i] . '/';
+							$oldhoststr =$newhost['scheme'] . '://' . $newhost['host'] . '/';
+							$oldpathstr = str_replace($newhost['host'], '', $oldpathstr);
 						}
 
 					}
 
 				}
 
+				if ($oldpathstr != '') {
+					if (substr($oldpathstr, 0, 1) == '/') {
+						$oldpathstr= trim(substr($oldpathstr, 1, 1024));
+					}
+
+				}
+
+				if ($newpathstr != '') {
+					if (substr($newpathstr, 0, 1) == '/') {
+						$newpathstr= trim(substr($newpathstr, 1, 1024));
+					}
+
+					$arrnewpath= explode('/', $newpathstr);
+					if (count($arrnewpath) > 0){
+						$i = (count($arrnewpath) - 1);
+						if ($arrnewpath[$i] != '') {
+							//last elem is file so set it to ''
+							$arrnewpath[$i] = '';
+						}
+
+						$newpathstr='';
+						$countarrnewpath=count($arrnewpath);
+						for($i = 0; $i < $countarrnewpath; $i++) {
+							if ($arrnewpath[$i] != '') {
+								$newpathstr .=$arrnewpath[$i] . '/';
+							}
+
+						}
+
+					}
+
+				}
+
+				$this->urlsubpath =$newpathstr;
+				// subpath for css end
+
+				if ($this->urlhomearrstr != $newhoststr) {
+					$this->urlhomearrstr = $newhoststr;
+					$this->urlsitestr = $newhoststr;
+				}
+
+				$this->url=$this->returnurl;
+
 			}
-
-			$this->urlsubpath =$newpathstr;
-			// subpath for css end
-
-			if ($this->urlhomearrstr != $newhoststr) {
-				$this->urlhomearrstr = $newhoststr;
-				$this->urlsitestr = $newhoststr;
-			}
-
-			$this->url=$this->returnurl;
-
 		}
 
 		if ($basedir!='') {
 			$this->urlsubpath='';
 		}
 
-		if ($html) {
+		if (($html) && ($issoundcloud == FALSE)) {
 
 			$this->docutf8=TRUE;
 			if (mb_detect_encoding($html, 'UTF-8', TRUE) === FALSE) {
@@ -1461,6 +1543,8 @@ class toctoc_comments_webpagepreview {
 				$strouthtml.= '</div>';
 			}
 
+		} elseif (($html) && ($issoundcloud == TRUE)) {
+			$strouthtml= '';
 		} else {
 			$strouthtml= 'Please enter a valid url';
 		}

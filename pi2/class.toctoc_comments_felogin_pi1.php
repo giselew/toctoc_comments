@@ -39,33 +39,33 @@
  *
  *
  *  109: class tx_toctoccomments_pi2 extends tslib_pibase
- *  133:     protected function processRedirect()
- *  147:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  246:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  431:     protected function watermark($conf, $content)
- *  469:     protected function showForgot()
- *  549:     protected function showLogout()
- *  584:     protected function showLogin()
- *  730:     protected function getRSAKeyPair()
- *  767:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
- *  803:     protected function getPreserveGetVars()
- *  856:     protected function generatePassword($len)
- *  876:     protected function getDisplayText($label, $stdWrapArray=array())
- *  888:     protected function getUserFieldMarkers()
- *  923:     protected function validateRedirectUrl($url)
- *  954:     protected function isInCurrentDomain($url)
- *  966:     protected function isInLocalDomain($url)
- * 1007:     protected function isRelativeUrl($url)
- * 1023:     protected function generateAndSendHash($user)
- * 1089:     protected function changePassword($uid, $piHash)
- * 1211:     protected function showSignon()
- * 1519:     protected function getSignupCaptcha($required, $errcp, $cpval)
- * 1562:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
- * 1589:     protected function processSignupCaptcha($postData)
- * 1629:     protected function loginUser($facebookId)
- * 1655:     protected function storeUser($facebookUserProfile)
- * 1763:     private function copyImageFromFacebook($facebookUserId)
- * 1778:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
+ *  132:     protected function processRedirect()
+ *  146:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  237:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  463:     protected function watermark($conf, $content)
+ *  501:     protected function showForgot()
+ *  581:     protected function showLogout()
+ *  616:     protected function showLogin()
+ *  762:     protected function getRSAKeyPair()
+ *  799:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
+ *  835:     protected function getPreserveGetVars()
+ *  888:     protected function generatePassword($len)
+ *  908:     protected function getDisplayText($label, $stdWrapArray=array())
+ *  920:     protected function getUserFieldMarkers()
+ *  962:     protected function validateRedirectUrl($url)
+ *  993:     protected function isInCurrentDomain($url)
+ * 1005:     protected function isInLocalDomain($url)
+ * 1046:     protected function isRelativeUrl($url)
+ * 1062:     protected function generateAndSendHash($user)
+ * 1128:     protected function changePassword($uid, $piHash)
+ * 1250:     protected function showSignon()
+ * 1558:     protected function getSignupCaptcha($required, $errcp, $cpval)
+ * 1601:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ * 1628:     protected function processSignupCaptcha($postData)
+ * 1668:     protected function loginUser($facebookId)
+ * 1695:     protected function storeUser($facebookUserProfile, $socialnetwork)
+ * 1809:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
+ * 1827:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
  *
  * TOTAL FUNCTIONS: 27
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -124,7 +124,6 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 	protected $tableName = 'fe_users';
 	protected $fberror = '';
 
-
 	/**
 	 * [Describe function...]
 	 *
@@ -146,14 +145,6 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 	 */
     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '') {
 
-		$this->uploadDir = 'uploads/tx_felogin/';
-
-			// Loading default pivars
-		$this->pi_setPiVarDefaults();
-
-			// Loading language-labels
-		$this->pi_loadLL();
-		 //PIDs:
 		if ($this->conf['storagePid']) {
 			if (intval($this->conf['recursive'])) {
 				$this->spid = $this->pi_getPidList($this->conf['storagePid'], intval($this->conf['recursive']));
@@ -247,6 +238,15 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 		$prefix=$this->prefixId;
 		$this->conf = $conf;
+		$this->conf['redirectMode'] = '';
+		$this->conf['redirectDisable'] = '';
+		$this->conf['redirectFirstMethod'] = '';
+		$this->conf['preserveGETvars'] = 'all';
+		// Loading default pivars
+		$this->pi_setPiVarDefaults();
+
+		// Loading language-labels
+		$this->pi_loadLL();
 
 		if (t3lib_div::_GP('getrsahash')) {
 			//
@@ -274,17 +274,18 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		}
 		$contentfb='';
 		if ($this->nofacebook == FALSE) {
-			$facebook = new Facebooktc(array(
-					'appId' => $conf['facebook.']['appId'],
-					'secret' => $conf['facebook.']['secret']
-			));
+			if($_POST['tx_toctoccomments_pi2']['fbLogin'] == '1') {
+				$facebook = new Facebooktc(array(
+						'appId' => $conf['facebook.']['appId'],
+						'secret' => $conf['facebook.']['secret']
+				));
 
-			$fbuser = $facebook->getUser();
-			$_SESSION['fbaccessToken'] = NULL;
-			if ($fbuser) {
-				$_SESSION['fbaccessToken'] = $facebook->getAccessToken();
+				$fbuser = $facebook->getUser();
+				$_SESSION['fbaccessToken'] = NULL;
+				if ($fbuser) {
+					$_SESSION['fbaccessToken'] = $facebook->getAccessToken();
+				}
 			}
-
 			if(($_POST['tx_toctoccomments_pi2']['fbLogin'] == '1') && $fbuser) {
 				try {
 					if ($_SESSION['fbaccessToken'] != NULL) {
@@ -292,7 +293,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 					}
 
 					$facebookUserProfile = $facebook->api('/me');
-					$this->storeUser($facebookUserProfile);
+					$this->storeUser($facebookUserProfile, 'facebook');
 					$this->loginUser($fbuser);
 				} catch (FacebookApiException $e) {
 					$this->fberror=$e;
@@ -300,11 +301,42 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 				}
 			}
 			$subpart = trim($this->cObj->getSubpart($this->template, '###TEMPLATE_FACEBOOK###'));
-			$subpartArray = $linkpartArray = $markerArray = array();
+			$thefacebooklogin=$this->pi_getLL('facebooklogin', '', 1);
+			$subpartArray = $linkpartArray = $markerArray = array(
+					'###FBLOGIN###' => $thefacebooklogin,
+					);
 			$fbbutton = trim($this->cObj->substituteMarkerArrayCached($subpart, $markerArray, $subpartArray, $linkpartArray));
      		$contentfb .= '
 			<div id="facebookauth">' . $fbbutton . '</div>
 ';
+		}
+
+		$nogoogle = FALSE;
+		if (!isset($conf['google.']['ClientID']) || $conf['google.']['ClientID'] == '') {
+			$nogoogle = TRUE;
+		}
+
+		if (!isset($conf['google.']['ClientSecret']) || $conf['google.']['ClientSecret'] == '') {
+			$nogoogle = TRUE;
+		}
+		$contentgoogle = '';
+		if ($nogoogle == FALSE) {
+			if(($_POST['tx_toctoccomments_pi2']['googleLogin'] == '1') && ($_POST['tx_toctoccomments_pi2']['googleEncUser'] != '')) {
+				$data_str = $_POST['tx_toctoccomments_pi2']['googleEncUser'];
+				$facebookUserProfile = unserialize(base64_decode($data_str));
+				$this->storeUser($facebookUserProfile, 'google');
+				$this->loginUser($facebookUserProfile['id']);
+
+			}
+
+			$subpart = trim($this->cObj->getSubpart($this->template, '###TEMPLATE_GOOGLE###'));
+			$subpartArray = $linkpartArray = $markerArray = array(
+					'###CLIENT_ID###' => $conf['google.']['ClientID'],
+					);
+			$googlebutton = trim($this->cObj->substituteMarkerArrayCached($subpart, $markerArray, $subpartArray, $linkpartArray));
+     		$contentgoogle .= '
+     				<div id="googleauth">' . $googlebutton . '</div>
+     				';
 		}
 
 		$content = $this->pmain($content, $dochangepassword, $uid, $piHash);
@@ -324,7 +356,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 						$conf['ll.'][$GLOBALS['TSFE']->lang . '.']['forgotpw'] . '</span>';
 			$hideIfFacebookActiveClass = '';
 			$hideshowIfFacebookActiveClass = ' tx-tc-blockdisp';
-			if ((intval($conf['hideIfFaceBookActive']) ==1) && ($this->nofacebook == FALSE)){
+			if ((intval($conf['hideIfFaceBookActive']) ==1) && ($this->nofacebook == FALSE) && ($this->nogoogle == FALSE)){
 				$hideIfFacebookActiveClass = ' tx-tc-nodisp';
 				$hideshowIfFacebookActiveClass = ' tx-tc-nodisp';
 			}
@@ -371,7 +403,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 										'###DIV_BLOCKLINKS###'=>'',
 										'###SIGNUP###'=> $this->showSignon(),
 										'###REGISTER###' => $buttonnewaccount,
-										'###FACEBOOK###' => $contentfb,
+										'###FACEBOOK###' => $contentfb . $contentgoogle ,
 										'###POLICY###' => $policyLink,
 										'###HIDEIFFBACTIV###' => $hideIfFacebookActiveClass,
 										'###HIDESHOWIFFBACTIV###' => $hideshowIfFacebookActiveClass,
@@ -898,8 +930,15 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			$firstname = $marker['###FEUSER_FIRST_NAME###'];
 			$lastname = $marker['###FEUSER_LAST_NAME###'];
 			$fullname = trim($firstname . ' ' . $lastname);
-			if (str_replace('facebook', '', $tempFeUserName) != $tempFeUserName) {
-				$fblink = '(<a href="' . $marker['###FEUSER_TX_TOCTOC_COMMENTS_FACEBOOK_LINK###'] . '">facebook</a>)';
+			$socialnetwork='';
+			if ((str_replace('facebook', '', $tempFeUserName) != $tempFeUserName)) {
+				$socialnetwork='Facebook';
+			} elseif (str_replace('google', '', $tempFeUserName) != $tempFeUserName) {
+				$socialnetwork='Google';
+			}
+
+			if ($socialnetwork != '') {
+				$fblink = '(<a href="' . $marker['###FEUSER_TX_TOCTOC_COMMENTS_FACEBOOK_LINK###'] . '">'. $socialnetwork .'</a>)';
 				$marker['###USER###'] = trim($fullname . ' ' . $fblink);
 			} else {
 				if ($fullname != '') {
@@ -1649,14 +1688,15 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 	/**
 	 * inserts or updates the facebook values to table fe_users
 	 *
-	 * @param	[type]		$facebookUserProfile: ...
+	 * @param	array		$facebookUserProfile: UserProfile
+	 * @param	string		$socialnetwork: facebook or google
 	 * @return	[type]		...
 	 */
-	protected function storeUser($facebookUserProfile) {
+	protected function storeUser($facebookUserProfile, $socialnetwork) {
 
 		$this->fe_usersValues['pid'] = $this->conf['storagePid'];
 		// username should be a unique, random string that should never be used with any registration
-		$username = 'facebook' . $facebookUserProfile['id'] . '.' . t3lib_div::getRandomHexString(12);
+		$username = $socialnetwork . $facebookUserProfile['id'] . '.' . t3lib_div::getRandomHexString(12);
 
 		$where = 'tx_toctoc_comments_facebook_id=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($facebookUserProfile['id'], $this->tableName) .
 		' AND deleted=0';
@@ -1667,14 +1707,18 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 		if($userFound) {
 			$user = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result);
-
-			if($user['tx_toctoc_comments_facebook_updated_time'] == $facebookUserProfile['updated_time']) {
-				/* no update needed since facebook profile was not updated */
-				return;
+			if($user['tx_toctoc_comments_facebook_updated_time'] != '') {
+				if($user['tx_toctoc_comments_facebook_updated_time'] == $facebookUserProfile['updated_time']) {
+					/* no update needed since facebook profile was not updated */
+					return;
+				}
 			}
 
 		}
-
+		$imageurl='';
+		if($socialnetwork=='google') {
+			$imageurl=$facebookUserProfile['imageurl'];
+		}
 		$fe_usersValues['tstamp'] = time();
 		$fe_usersValues['first_name'] = $facebookUserProfile['first_name'];
 		$fe_usersValues['last_name'] = $facebookUserProfile['last_name'];
@@ -1699,7 +1743,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 		$fe_usersValues['pid'] = $this->conf['storagePid'];
 		$imagename = '';
-		$imagename = $this->copyImageFromFacebook($facebookUserProfile['id']);
+		$imagename = $this->copyImageFromFacebook($facebookUserProfile['id'], $imageurl, $socialnetwork);
 		$fe_usersValues['image'] = $imagename;
 		$fe_usersValues['tx_toctoc_comments_facebook_updated_time'] = $facebookUserProfile['updated_time'];
 
@@ -1758,11 +1802,16 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 	 * copy Image from Facebook
 	 *
 	 * @param	string		$facebookUserId: url to fetch
+	 * @param	[type]		$url: ...
+	 * @param	[type]		$socialnetwork: ...
 	 * @return	string		$imgname
 	 */
-	private function copyImageFromFacebook($facebookUserId) {
+	private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork) {
 		$imageUrl = 'http://graph.facebook.com/' . $facebookUserId. '/picture?width=300&height=300 ';
-		$fileName = 'facebook' . $facebookUserId . '.jpg';
+		if ($url !='') {
+			$imageUrl =$url;
+		}
+		$fileName = $socialnetwork . $facebookUserId . '.jpg';
 		$savepathfilename = $this->file_get_contents_curl($imageUrl, 'jpg', PATH_site . $this->conf['facebook.']['imageDir'] . $fileName);
 		$ret = str_replace(PATH_site . $this->conf['facebook.']['imageDir'], '', $savepathfilename);
 		return $ret;

@@ -716,9 +716,7 @@ span.emoji {
 }
 div.sharrre {
 	float: left;
-	margin-top: 1px;
 }
-
 .sharrre .button {
 	top: 6px;
 	margin: 0 4px 0 4px;
@@ -968,7 +966,7 @@ a.addthis_counter .addthis_pill_style {
 	white-space: normal;
 }
 img.tx-tc-ucpic {
-	margin-right: 4px;
+	margin-right: 4px !important;
 }
 .tx-tc-ct-uc-text-stats, .tx-tc-ct-uc-text-ip {
 	margin-top: 2px;
@@ -2065,6 +2063,9 @@ label.tx-tc-CloseButton, label.tx-tc-DropDownButton {
 	display: block;
 	float: left;
 	padding: 4px;
+	position: relative;
+	width: auto;
+	height: auto;
 }
 .tx-tc-pvs-vid-img {
 	height: auto;
@@ -2579,8 +2580,17 @@ p.tx-tc-lower-text {
 	margin: 2px 0 0;
 }
 .tx-tc-mrg-pct-40002040, .tx-tc-mrg-ovl-50002040 {
-	margin: -50% 0 20% 40%;
+	
+	margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
 }
+
+
+	
 .tx-tc-mrg-r-4 {
 	margin-right: 4px;
 }
@@ -2806,45 +2816,38 @@ div.tx-tc-cts-ct-dp div.tx-tc-ct-box div.tx-tc-ct-box-cttxt p.tx-tc-text {
 }
 .facebookFaviconButton {
     background-color: #5F78AB;
+	border-radius: 2px;
     color: #FFFFFF;
     cursor: pointer;
     display: inline-block;
-    height: 22px;
+    height: 24px;
     vertical-align: top;
 }
 .facebookFaviconButtonMedium .facebookFaviconButtonText {
 	float: right;
-    font-size: 11px;
-    height: 20px;
-    line-height: 20px;
-    padding: 0 6px;
+    font-size: 13px;
+    line-height: 16px;
+    padding: 4px 6px;
+	font-family: "helvetica neue",helvetica,arial,"lucida grande",sans-serif;
 }
 .facebookFaviconButtonText, form.async_saving .facebookFaviconButtonEnabled:active .facebookFaviconButtonText {
-    border-top: 1px solid #879AC0;
     display: inline-block;
     white-space: nowrap;
 }
 .facebookFaviconButtonBorder, form.async_saving .facebookFaviconButtonBorder:active {
-    border-bottom: 1px solid #1A356E;
-    border-right: 1px solid #29447E;
-    border-top: 1px solid #29447E;
     display: inline-block;
-    height: 20px;
-	background-color: #5F78AB;
     margin: 0;
     padding: 0;
 }
 .facebook_login-button {
-    background-image: url("https://fbstatic-a.akamaihd.net/rsrc.php/v2/yx/r/j_i0CTUUUEe.png");
+  	background-image: url("../../../pi2/img/fbloginbutton20.png");
+    background-position: 2px 2px;
     background-repeat: no-repeat;
-    background-size: auto auto;
     display: inline-block;
 }
 .facebook_login-button_medium {
-    background-position: 0 -132px;
-    height: 22px;
-    width: 22px;
-    float: left;
+    height: 24px;
+    width: 24px;
 }
 .facebookwb {
     font-weight: bold;
@@ -2855,12 +2858,12 @@ div.facebookuiGrid {
 #fb-root {
 	display: none;
 }
-#facebookauth {
+#facebookauth, #googleauth {
 	float: left;
 	width: 99%;
     color: #FFEEEE;
 	padding: 4px 0 4px 2px;
-	height: 22px;
+	height: 35px;
 	white-space: nowrap;	
 }
 .tx-tc-wpplogopic {
@@ -2922,7 +2925,7 @@ div.facebookuiGrid {
 	border-style: solid;
     border-width: 2px;
     position: absolute;
-    z-index: 5;
+    z-index: 15;
 	box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
 	border-radius: 0 0 4px 4px;
 	float: right;

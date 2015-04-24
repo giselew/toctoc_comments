@@ -524,6 +524,12 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Attachments//29; type=int+; label=Pdf max size:Maximal file size for pdf upload. value in KB, 10 - 100000.
 	pdfUploadMaxfilesize = 3000	
 	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//31; type=string; Soundcloud Client ID: Needed to make proper display of webpage previews from soundcloud.com
+	soundcloudClientID = 
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//32; type=string; Soundcloud Client Secret: Secret matching the Soundcloud Client ID
+	soundcloudClientSecret = 
+	
 	# cat=plugin.tx_toctoccomments_pi1: Top ratings//01; type=options[likes=0,votes=1,both by rating=2,both by likes=3]; label=Composition - what to show?: Show top ratings for likes (0), votes(1) or both together(2 oder 3)
 	topRatingsMode = 2	
 	
@@ -604,9 +610,6 @@ plugin.tx_toctoccomments_pi1 {
 
     # cat=plugin.tx_toctoccomments_pi1: Facebook//02; type=string; label=Facebook secret:The application secret of your Facebook application
     secret =
-
-    # cat=plugin.tx_toctoccomments_pi1: Facebook//04; type=string; label=Facebook language
-    facebookLanguage=en_US	
  
 	# cat=plugin.tx_toctoccomments_pi1: dataProtect//01; type=boolean; label=Cookies:Set (1) or don't set (0) a cookie with data of not logged in commenters.
 	setCookie = 1

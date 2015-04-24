@@ -536,6 +536,9 @@ plugin.tx_toctoccomments_pi1 {
 
     # Maximal file size for pdf upload. Value in KB
     pdfUploadMaxfilesize = {$plugin.tx_toctoccomments_pi1.pdfUploadMaxfilesize}
+    
+    soundcloudClientID = {$plugin.tx_toctoccomments_pi1.soundcloudClientID}
+    soundcloudClientSecret = {$plugin.tx_toctoccomments_pi1.soundcloudClientSecret}
   }
 
   recentcomments {
@@ -675,7 +678,6 @@ plugin.tx_toctoccomments_pi1 {
   }
 }
 
-plugin.tx_toctoccomments_pi2 < plugin.tx_felogin_pi1
 plugin.tx_toctoccomments_pi2 {
   includeLibs = EXT:toctoc_comments/pi2/class.toctoc_comments_felogin_pi1.php
   templateFile = typo3conf/ext/toctoc_comments/res/template/toctoccomments_template_felogin_pi1.html
@@ -685,13 +687,55 @@ plugin.tx_toctoccomments_pi2 {
 
   # CSS-ids that should be refreshed outside the plugin after logouts logins
   refreshIdList=
-  hideIfFaceBookActive = 0
   # page type for faster refreshs on page part refreshs
-  pageTypeRefreshs =
-  policyPid =
-  # sends back the user to the originating page after login logout using window.history.back()
-  sendBack = 1 
+  pageTypeRefreshs =  
+  
+  * hide forgot password link if facebook is active
+  hideIfFaceBookActive = 0  
 
+  # page ID with your policy
+  policyPid =
+  
+  # sends back the user to the originating page after login logout using window.history.back()
+  sendBack = 1
+  
+  #**** Since version 7.3.0. all options formerly token from tx_felogin_pi1 must be setup, tx_felogin_pi1 has been detached from toctoc_comments_pi2
+  
+  # storagePid - where are the user records? use only single value 
+  storagePid =
+  recursive =
+  
+  email_from = 
+  email_fromName = 
+  replyTo = 
+  
+  #typolink-configuration for links / urls, parameter and additionalParams are set by extension
+  linkConfig {
+    target =
+    ATagParams = rel="nofollow"
+  }
+  
+  # stdWrap for fe_users fields used in Messages
+  userfields {
+    username {
+      htmlSpecialChars = 1
+      wrap = <strong>|</strong>
+    }
+  }
+  
+  dateFormat = Y-m-d H:i
+  
+  showPermaLogin =
+  showForgotPasswordLink = 
+  # Expose the information on whether or not the account for which a new password was requested exists. By default, that information is not disclosed for privacy reasons.
+  exposeNonexistentUserInForgotPasswordDialog = 0
+  # time in hours how long the link for forget password is valid
+  forgetLinkHashValidTime = 12
+  
+  newPasswordMinLength = 6
+  
+  #**** 
+  
   register {
     enableSignup = 1
     # setup default usergroup(s)-uids setup when registering, separated by commas
@@ -704,55 +748,84 @@ plugin.tx_toctoccomments_pi2 {
   facebook {
     appId = {$plugin.tx_toctoccomments_pi1.appId}
     secret = {$plugin.tx_toctoccomments_pi1.secret}
- 	facebookLanguage = {$plugin.tx_toctoccomments_pi1.facebookLanguage}
 	makeSessionPermanent=0
     imageDir = uploads/pics/
   }
+  
+  google {
+   # setup google ClientID like 684647485867-sijp65j8uduisehhje18s5e5m8vu9rpt.apps.googleusercontent.com
+    ClientID = 
+    ClientSecret  = 
+  }
+  
   ll {
     de {
       ButtonNewAccount = Registrieren
       NewAccount = Neuen Account erstellen
+      forgotpw = Passwort vergessen
     }
     en {
       ButtonNewAccount = Sign Up
       NewAccount = Create new account
+      forgotpw = Forgot password
     }
   }
   # for watermaking the form fields instead of labels  set to 1
   watermark=0
 
-  # reset of some existing and setup of some new stdWraps
-  signupHeader_stdWrap {
+  # stdWraps
+  
+  welcomeMessage_stdWrap {
+    wrap = |
+  }
+  welcomeHeader_stdWrap {
+    wrap = |
+  }
+  
+  successMessage_stdWrap {
+    wrap = |
+  }
+  successHeader_stdWrap {
+    wrap = |
+  }
+  
+  logoutMessage_stdWrap {
+    wrap = |
+  }
+  logoutHeader_stdWrap {
+    wrap = |
+  }  
+
+  errorMessage_stdWrap {
+    wrap = <span class="tx-tc-required-error">|</span>
+  }
+  errorHeader_stdWrap {
+    wrap = |
+  }
+    
+  forgotMessage_stdWrap {
     wrap = |
   }
   forgotHeader_stdWrap {
     wrap = |
   }
-  welcomeMessage_stdWrap {
-    wrap = |
-  }
-  successMessage_stdWrap {
-    wrap = |
-  }
-  logoutMessage_stdWrap {
-    wrap = |
-  }
-  signupMessage_stdWrap {
-    wrap = |
-  }
-  changePasswordMessage_stdWrap {
+  forgotResetMessageEmailSentMessage_stdWrap {
     wrap = |
   }
 
-  errorMessage_stdWrap {
-    wrap = <span class="tx-tc-required-error">|</span>
+  signupMessage_stdWrap {
+    wrap = |
   }
-  forgotMessage_stdWrap {
+  signupHeader_stdWrap {
     wrap = |
   }
   signupErrorMessage_stdWrap {
     wrap = <span class="tx-tc-required-error">|</span>
   }
+  signupOkMessage_stdWrap {
+    wrap = |
+  }
+  
   newUserTooShortMessage_stdWrap {
     wrap = <span class="tx-tc-required-error">|</span>
   }
@@ -771,20 +844,34 @@ plugin.tx_toctoccomments_pi2 {
   newUserDataHasErrorsMessage_stdWrap {
     wrap = <span class="tx-tc-required-error tx-tc-error-title">|</span>
   }
+  
+  changePasswordMessage_stdWrap {
+    wrap = |
+  }
+  changePasswordHeader_stdWrap {
+    wrap = |
+  }
+  changePasswordNotValidMessage_stdWrap {
+    wrap = <span class="tx-tc-required-error">|</span>
+  }
   changePasswordTooShortMessage_stdWrap {
     wrap = <span class="tx-tc-required-error">|</span>
   }
   changePasswordNotEqualMessage_stdWrap {
     wrap = <span class="tx-tc-required-error">|</span>
   }
+  changePasswordDoneMessage_stdWrap {
+    wrap = |
+  }
+  
   cookieWarning_stdWrap {
     wrap = <span class="tx-tc-required-error">|</span>
   }
+  
 }
 
-plugin.tx_toctoccomments_pi2._CSS_DEFAULT_STYLE >
-
-plugin.tx_toctoccomments_pi2._LOCAL_LANG.default < plugin.tx_felogin._LOCAL_LANG.default
+plugin.tx_toctoccomments_pi2._LOCAL_LANG.default {
+}
 
 plugin.tx_toctoccomments_pi2._LOCAL_LANG {
   de.ll_forgot_validate_reset_password (
@@ -805,7 +892,6 @@ plugin.tx_toctoccomments_pi2._LOCAL_LANG {
   )
 
 }
-plugin.tx_toctoccomments_pi2._DEFAULT_PI_VARS < plugin.tx_felogin._DEFAULT_PI_VARS
 
 # setup options for toctoc_comments used as Marker in tt_news
 plugin.tt_news {

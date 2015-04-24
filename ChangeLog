@@ -628,3 +628,13 @@
 	* Added Extension Configuration-Option basic.donationSecret, it allows to enter the donation key received upon first donation for toctoc_comments or toctoccommentsce
 	* Display of a donation-message in the backend plugin
 
+2015-04-24  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 7.3.0
+	* Fixed centering of play button in video attachments
+	* Added attachment type video/soundcloud. For activation, you need to be Soundcloud-user, then create an Application and get Client ID and Client Secret from developers.soundcloud.com
+	  New options attachments.soundcloudClientID and attachments.soundcloudClientSecret
+	* Added Login with Google+: You need create a google app on https://console.developers.google.com/project?authuser=0 and use ClientID and ClientSecret to enable the feature
+	  How to add an app on Google? See https://developers.google.com/+/web/signin/add-button, Step 1.
+	  New options in toctoc_comments_pi2: google.ClientID and google.ClientSecret
+	* Removed dependency on fe_login, formerly inherited Typoscript-options need manual setup: storagePid, email_from, email_fromName and replyTo.
+	* Fixed missing "f" in Facebooklogin. After Facebook design update of April/19 2015 the old linked image-file went offline. The new "f" is now hosted locally.

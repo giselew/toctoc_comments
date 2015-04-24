@@ -22,6 +22,7 @@ Another possibility is that cookies might be disabled in your web browser.</labe
 			<label index="ll_success_message">You are logged in as '###USER###'</label>
 			<label index="ll_status_header">Current status</label>
 			<label index="ll_status_message">This is your current status:</label>
+			<label index="facebooklogin">Log in</label>
 			<label index="cookie_warning">Warning: There is a possibility that cookies are not enabled in your web browser! If your login disappears on your next click that is the case and you should enable cookies (or accept cookies from this website) immediately!</label>
 			<label index="username">Username:</label>
 			<label index="firstname">First name:</label>

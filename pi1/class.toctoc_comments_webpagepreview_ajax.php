@@ -148,7 +148,8 @@ public $extKey = 'toctoc_comments';
 		if (array_key_exists('embedUrl', $_SESSION[$cid][$commentid])) {
 			if ($_SESSION[$cid][$commentid]['embedUrl'] != '') {
 				//video found
-
+				if ($_SESSION[$cid][$commentid]['videotype'] != 'SCD') {
+					// not a soundcloud link
 					if ($_SESSION[$cid][$commentid]['logo'] != '') {
 						//url to preview picture found
 						$videohtml=$outhtml;
@@ -191,7 +192,7 @@ public $extKey = 'toctoc_comments';
 						}
 
 						$videohtml .= '				<div class="tx-tc-vid-video">';
-						$videohtml .= '					<a href="###VIDEOURL###" rel="nofollow" title= "###DESC###" onclick="">###TITLE###</a>';
+						$videohtml .= '					<a href="###VIDEOURL###" rel="nofollow" title="###DESCALT###" onclick="">###TITLE###</a>';
 						$videohtml .= '				</div>';
 						$videohtml .= '				<div class="tx-tc-vid-desc">###DESC###';
 						$videohtml .= '				</div>';
@@ -199,6 +200,28 @@ public $extKey = 'toctoc_comments';
 						$videohtml .= '		</div>';
 						$videohtml .= '</div>';
 					}
+				} else {
+				// soundcloud embed
+					$videohtml = $outhtml;
+					$_SESSION[$cid][$commentid]['titleoutfound']=$_SESSION[$cid][$commentid]['title'];
+					$videohtml .= '<div class="tx-tc-ct-video tx-tc-width95">';
+					$videohtml .= '		<div class="tx-tc-ct-video-dp">';
+					$videohtml .= '			<div id="tx-tc-cts-vid-formtext-###IDPLUS###p###CID###" class="tx-tc-cts-vid-formtext">';
+
+					$vidmaxwidth=round(intval($conf['attachments.']['webpagePreviewHeight'])*(4/3), 0);
+
+					$videohtml .= '				<div class="tx-tc-vid"><img class="tx-tc-vidimg tx-tc-blockdisp" id="vidimg' . $cid . 'index1" src="' .
+											$_SESSION[$cid][$commentid]['logo'] .
+											'" class="tx-tc-pvs-vid-img" /></div>';
+					$videohtml .= '				<div class="tx-tc-vid-video">';
+					$videohtml .= '					<a href="###VIDEOURL###" rel="nofollow" title="###DESCALT###" onclick="">###TITLE###</a>';
+					$videohtml .= '				</div>';
+					$videohtml .= '				<div class="tx-tc-vid-desc">###DESC###';
+					$videohtml .= '				</div>';
+					$videohtml .= '			</div>';
+					$videohtml .= '		</div>';
+					$videohtml .= '</div>';
+				}
 
 			} else {
 				unset($_SESSION[$cid][$commentid]['embedUrl']);
@@ -273,7 +296,7 @@ public $extKey = 'toctoc_comments';
 			$text=$_SESSION[$cid][$commentid]['description'];
 			$htmlarr=explode('<br />', $text);
 			$text=implode(' ', $htmlarr);
-			$text=htmlspecialchars(stripslashes($text));
+
 			if (strlen($text)>$maxDescChars){
 				$textcroppedleft = substr($text, 0, $maxDescChars);
 				$textcroppedright = substr($text, $maxDescChars);
@@ -334,6 +357,7 @@ public $extKey = 'toctoc_comments';
 		}
 
 		if ($_SESSION[$cid][$commentid]['description'] != '') {
+			$trimeddescription=htmlspecialchars(stripslashes($trimeddescription));
 			$outhtml .= '<div class="tx-tc-pvs-desc">' . $trimeddescription . '</div>';
 		}
 
@@ -362,6 +386,8 @@ public $extKey = 'toctoc_comments';
 				$videohtml = str_replace('###CID###', $cid, $videohtml);
 				$videohtml = str_replace('###IDPLUS###', $commentid, $videohtml);
 				$videohtml = str_replace('###DESC###', $trimeddescription, $videohtml);
+				$trimedaltdescription = htmlspecialchars(stripslashes($trimeddescription));
+				$videohtml = str_replace('###DESCALT###', $trimedaltdescription, $videohtml);
 				if (trim($trimedText) =='') {
 					if ($_SESSION[$cid][$commentid]['titleoutfound']=='') {
 						$trimedText=$_SESSION[$cid][$commentid]['urltext'];

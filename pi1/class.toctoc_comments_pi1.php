@@ -32,38 +32,39 @@
  *  106: class tx_toctoccomments_pi1 extends tslib_pibase
  *  187:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
  * 2427:     protected function checkJSLoc()
- * 2695:     protected function checkCSSTheme()
- * 2806:     protected function checkCSSLoc()
- * 3303:     protected function makesharingcss ()
- * 3480:     protected function initprefixToTableMap()
- * 3516:     protected function initexternaluid($withinitprefixToTableMap)
- * 3655:     protected function init()
- * 4203:     protected function mergeConfiguration()
- * 4588:     protected function fetchConfigValue($param)
- * 4616:     protected function ae_detect_ie()
- * 4639:     protected function boxmodel()
- * 5311:     protected function crunchcss($buffer)
- * 5336:     protected function calculate_string( $mathString )
- * 5359:     protected function locationHeaderUrlsubDir()
- * 5378:     protected function currentPageName()
- * 5406:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
- * 5441:     protected function doClearCache ($forceclear=FALSE)
- * 5476:     protected function getPluginCacheControlTstamp ($external_ref_uid)
- * 5487:     protected function getLastUserAdditionTstamp ()
- * 5510:     protected function initLegacyCache ()
- * 5524:     protected function check_scopes()
- * 5682:     protected function initializeprefixtotablemap()
- * 5722:     protected function sharrrejs()
- * 5804:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
- * 5857:     private function resolveBackPath($pathStr)
- * 5892:     private function dirname($path)
- * 5906:     private function revExplode($delimiter, $string, $count = 0)
- * 5922:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 5945:     public function createLinks($text, $conf = NULL)
- * 5968:     protected function getThemeTmageDimension($filename, $returnindex)
- * 5988:     protected function checktoctoccommentsuser()
+ * 2714:     protected function checkCSSTheme()
+ * 2825:     protected function checkCSSLoc()
+ * 3325:     protected function makesharingcss ()
+ * 3504:     protected function initprefixToTableMap()
+ * 3540:     protected function initexternaluid($withinitprefixToTableMap)
+ * 3679:     protected function init()
+ * 4249:     protected function mergeConfiguration()
+ * 4634:     protected function fetchConfigValue($param)
+ * 4662:     protected function ae_detect_ie()
+ * 4685:     protected function boxmodel()
+ * 5357:     protected function crunchcss($buffer)
+ * 5382:     protected function calculate_string( $mathString )
+ * 5405:     protected function locationHeaderUrlsubDir()
+ * 5424:     protected function currentPageName()
+ * 5452:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
+ * 5487:     protected function doClearCache ($forceclear=FALSE)
+ * 5522:     protected function getPluginCacheControlTstamp ($external_ref_uid)
+ * 5533:     protected function getLastUserAdditionTstamp ()
+ * 5556:     protected function initLegacyCache ()
+ * 5570:     protected function check_scopes()
+ * 5728:     protected function initializeprefixtotablemap()
+ * 5768:     protected function sharrrejs()
+ * 5850:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
+ * 5903:     private function resolveBackPath($pathStr)
+ * 5938:     private function dirname($path)
+ * 5952:     private function revExplode($delimiter, $string, $count = 0)
+ * 5968:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 5991:     public function createLinks($text, $conf = NULL)
+ * 6014:     protected function getThemeTmageDimension($filename, $returnindex)
+ * 6034:     protected function checktoctoccommentsuser()
+ * 6149:     protected function fbgoogle_lan($isfacebook)
  *
- * TOTAL FUNCTIONS: 32
+ * TOTAL FUNCTIONS: 33
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -95,7 +96,6 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 require_once (t3lib_extMgm::extPath('toctoc_comments', 'pi1/toctoc_comment_lib.php'));
 require_once (t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments_common.php'));
 
-
 /**
  * AJAX Social Network Components
  *
@@ -109,7 +109,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '720';
+	public $extVersion = '730';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
 	public $externalUid;						// UID of external record
@@ -2572,11 +2572,27 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 		if (!isset($confpi2['facebook.']['secret']) || $confpi2['facebook.']['secret'] == '') {
 			$this->nofacebook = TRUE;
 		}
-		$contentfb='';
+
 		if ($this->nofacebook == FALSE) {
 			$confpi2appId = $confpi2['facebook.']['appId'];
 			$scopefb = 'email';
 		}
+		$scopegoogle = '';
+		$this->nogoogle = FALSE;
+		if (!isset($confpi2['google.']['ClientID']) || $confpi2['google.']['ClientID'] == '') {
+			$this->nogoogle = TRUE;
+		}
+
+		if (!isset($confpi2['google.']['ClientSecret']) || $confpi2['google.']['ClientSecret'] == '') {
+			$this->nogoogle = TRUE;
+		}
+
+		if ($this->nogoogle == FALSE) {
+			$confpi2ClientID = $confpi2['google.']['ClientID'];
+			$scopegoogle = 'emails.0.value';
+		}
+		$fblan = $this->fbgoogle_lan(TRUE);
+		$googlelan = $this->fbgoogle_lan(FALSE);
 
 		$sendbackafterloginout=intval($confpi2['sendBack']);
 
@@ -2670,7 +2686,10 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 		$jscontent .= 'var pi1_templatetimeconvtextbefore = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.timeconv.textbefore', FALSE)) . '";' . "\n";
 		$jscontent .= 'var pi2_fbappId = "' . $confpi2appId . '";' . "\n";
 		$jscontent .= 'var pi2_fbscope = "' . $scopefb . '";' . "\n";
-
+		$jscontent .= 'var pi2_googleClientID = "' . $confpi2ClientID . '";' . "\n";
+		$jscontent .= 'var pi2_googlescope = "' . $scopegoogle . '";' . "\n";
+		$jscontent .= 'var pi2_fblan = "' . $fblan . '";' . "\n";
+		$jscontent .= 'var pi2_googlelan = "' . $googlelan . '";' . "\n";
 		if (file_exists($filenamejs)) {
 			$content = file_get_contents($filenamejs);
 			if ($content != $jscontent) {
@@ -3307,10 +3326,12 @@ Variables used in the boxmodel.txt-files res/css/boxmodels/system/boxmodel-syste
 		$retcss = '';
 		$confdontUseSharingStumbleupon = $this->conf['sharing.']['dontUseSharingStumbleupon'];
 		$confdontUseSharingDigg = $this->conf['sharing.']['dontUseSharingDigg'];
+		$confdontUseSharingDelicious = $this->conf['sharing.']['dontUseSharingDelicious'];
 		if (@$_SERVER['HTTPS'] == 'on') {
-			// on https StumbleUpon and Digg fail
+			// on https StumbleUpon and Digg fail ... and also Delious cause braking SSL-certs
 			$confdontUseSharingStumbleupon = 1;
 			$confdontUseSharingDigg = 1;
+			$confdontUseSharingDelicious = 1;
 
 		}
 		if ($this->conf['sharing.']['sharingNoCalculatedCSS'] == 0) {
@@ -3433,7 +3454,7 @@ Variables used in the boxmodel.txt-files res/css/boxmodels/system/boxmodel-syste
 				$accumulatedwidth += 62;
 			}
 
-			if ($this->conf['sharing.']['dontUseSharingDelicious'] !=1 ) {
+			if ($confdontUseSharingDelicious !=1 ) {
 				$hasValidSharingItems++;
 				$leftpxde = 4 + $accumulatedwidth;
 				$accumulatedwidth += 54;
@@ -4036,12 +4057,34 @@ sharrre design 2 and 4, calculated specifics
 				$ajaxloginjs='';
 				$freecapjs='';
 				if ((intval($this->conf['advanced.']['loginRequired']) == 1) || (intval($this->conf['pluginmode']) == 5)) {
+					$confpi2 = $this->lib->getDefaultConfig('tx_toctoccomments_pi2');
 					$filenm = $GLOBALS['TSFE']->tmpl->getFileName('EXT:toctoc_comments/res/js/tx-tc-afl-' . $this->extVersion . '.js');
 					$mod1_file = $this->createVersionNumberedFilename($filenm);
 
 					$ajaxloginjs='<script type="text/javascript" src="'.$mod1_file.'"></script>';
+
+					$nogoogle = FALSE;
+					if (!isset($confpi2['google.']['ClientID']) || $confpi2['google.']['ClientID'] == '') {
+						$nogoogle = TRUE;
+					}
+
+					if (!isset($confpi2['google.']['ClientSecret']) || $confpi2['google.']['ClientSecret'] == '') {
+						$nogoogle = TRUE;
+					}
+					$googleloginjs = '';
+					if ($nogoogle == FALSE) {
+						$googlelan = $this->fbgoogle_lan(FALSE);
+						$googleloginjs= '<script>
+  window.___gcfg = {
+    lang: \'' . $googlelan . '\'
+  };
+</script>
+ <script src="https://apis.google.com/js/client:platform.js" async defer></script>
+';
+					}
+
 					if (t3lib_extMgm::isLoaded('sr_freecap')) {
-						$confpi2 = $this->lib->getDefaultConfig('tx_toctoccomments_pi2');
+
 						if (is_array($confpi2)) {
 							if ($confpi2['register.']['enableSignup'] == 1) {
 								$repstr= str_replace('/', DIRECTORY_SEPARATOR, '/typo3conf/ext/toctoc_comments/pi1');
@@ -4128,7 +4171,7 @@ sharrre design 2 and 4, calculated specifics
 						'###BOXMODEL###' => $mod1_file,
 						'###EMOJICSS###' => $emojicss,
 						'###EMOJIJS###' => $emojijs,
-						'###AJAXLOGINJS###' => $ajaxloginjs . $freecapjs,
+						'###AJAXLOGINJS###' => $ajaxloginjs . $freecapjs . $googleloginjs,
 						'###JSSERVERVARS###' => $jsservervars,
 						'###JSMAIN###' => $jsmain,
 				), $subParts);
@@ -6095,6 +6138,86 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 			}
 
 		}
+
+	}
+	/**
+	 * Translates current TYPO3 languague to Facebook or Google Language Code
+	 *
+	 * @param	[type]		$isfacebook: ...
+	 * @return	void
+	 */
+	protected function fbgoogle_lan($isfacebook) {
+		$translarray = array(
+'af' => array('af','af_ZA'),
+'sq' => array('en-GB','sq_AL'),
+'ar' => array('ar','ar_AR'),
+'ms' => array('en-GB','ml_IN'),
+'eu' => array('eu','eu_ES'),
+'bs' => array('bn','bs_BA'),
+'pt_BR' => array('pt-BR','pt_BR'),
+'bg' => array('bg','bg_BG'),
+'ca' => array('ca','ca_ES'),
+'ch' => array('zh-CN','zh_CN'),
+'zh' => array('zh-TW','zh_TW'),
+'hr' => array('hr','hr_HR'),
+'cs' => array('cs','cs_CZ'),
+'da' => array('da','da_DK'),
+'nl' => array('nl','nl_NL'),
+'en' => array('en-GB','en_GB'),
+'eo' => array('en-GB','eo_EO'),
+'et' => array('et','et_EE'),
+'fo' => array('fil','fo_FO'),
+'fi' => array('fi','fi_FI'),
+'fr' => array('fr','fr_FR'),
+'fr_CA' => array('fr-CA','fr_CA'),
+'gl' => array('gl','gl_ES'),
+'ka' => array('en-GB','ka_GE'),
+'de' => array('de','de_DE'),
+'el' => array('el','el_GR'),
+'kl' => array('en-GB','en_GB'),
+'he' => array('iw','he_IL'),
+'hi' => array('hi','hi_IN'),
+'hu' => array('hu','hu_HU'),
+'is' => array('is','is_IS'),
+'it' => array('it','it_IT'),
+'ja' => array('ja','ja_JP'),
+'km' => array('en-GB','km_KH'),
+'ko' => array('ko','ko_KR'),
+'lv' => array('lv','lv_LV'),
+'lt' => array('lt','lt_LT'),
+'no' => array('no','nb_NO'),
+'fa' => array('fa','fa_IR'),
+'pl' => array('pl','pl_PL'),
+'pt' => array('pt-PT','pt_PT'),
+'ro' => array('ro','ro_RO'),
+'ru' => array('ru','ru_RU'),
+'sr' => array('sr','sr_RS'),
+'sk' => array('sk','sk_SK'),
+'sl' => array('sl','sl_SI'),
+'es' => array('es','es_ES'),
+'sv' => array('sv','sv_SE'),
+'th' => array('th','th_TH'),
+'tr' => array('tr','tr_TR'),
+'uk' => array('uk','uk_UA'),
+'vi' => array('vi','vi_VN'),
+);
+		$ret='';
+		$selarray = $translarray[$GLOBALS['TSFE']->lang];
+		if (is_array($selarray)) {
+			if ($isfacebook == TRUE) {
+				$ret=$selarray[1];
+			} else {
+				$ret=$selarray[0];
+			}
+
+		} else {
+			if ($isfacebook == TRUE) {
+				$ret='en_GB';
+			} else {
+				$ret='en-GB';
+			}
+		}
+		return $ret;
 
 	}
 }
