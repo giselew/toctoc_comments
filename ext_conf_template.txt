@@ -1,0 +1,40 @@
+# cat=basic//01; type=string; label=Donationkey: If you've made a donation you can enter your donationkey here - you receive a donation key upon first donation for toctoc_comments or toctoccommentsce
+donationSecret =
+
+# cat=basic//02; type=int+; label=Backend-Module, max. records shown: How much comments should be displayed per page
+max_records = 10
+
+# cat=basic//04; type=int+; label=Backend-Module, comment crop: Set the crop size of the comment field in the backend
+text_crop = 55
+
+# cat=basic//06; type=boolean; label=Backend-Module, show comments in subpages: If activated, lists also comments in subpages of the actual page
+show_sub = 1
+
+# cat=basic//08; type=string; label=Backend-Module, select values: The select values which appear in the selectbox in the BE module (comma separated list)
+select_val = 5,10,20,30,50,100
+
+# cat=basic//10; type=string; label=Network blocking lists:Comma-separated list of network blocking lists (such as cbl.abuseat.org)
+dnsbl_list =
+
+# cat=database//02; type=boolean; label=Frontend, import prefix to table map data:On first call the plugin imports a first set of data into an empty table tx_toctoc_comments_prefixtotable, including most common mappings such as tx_news, tt_news, TT_products and others
+importDataprefixtotable = 0
+
+# cat=database//04; type=boolean; label=Update folder for static tables:Check this, if you want to move the static tables from the rootpage to the folder the storage-folder (TS-configuration) of the plugin. The Update is done by the plugin itself: On next use of the plugin in the frontend pids are updated.
+updatefromRoottoCommentFolder =
+
+# cat=database//06; type=boolean; label=Frontend, update mode:While in update mode, the plugin converts existing comments from extension comments 1.5.x to toctoc_comments. The Update is done by the plugin itself: On next use of the plugin on a page with old comments, these comments are updated to toctoc_comments.
+updateMode = 0
+
+# cat=database//08; type=boolean; label=Ratings, debug mode:While in debug mode, it is possible to remove entries from toctoc_comments_rating tables or change values there
+debugMode = 0 
+
+# cat=deleted user//01; type=string; label=Firstname for deleted users in comment lists
+delusers_firstname = deleted
+
+# cat=deleted user//03; type=string; label=Fastname for deleted users in comment lists
+delusers_lastname  = user
+
+# cat=deleted user//05; type=string; label=deleted users emailaddress in comment lists
+delusers_email = deleteduser@site.tld
+
+

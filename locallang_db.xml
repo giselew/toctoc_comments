@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<description>Database labels</description>
+		<type>database</type>
+		<csh_table></csh_table>
+		<fileId>EXT:toctoc_comments/locallang_db.xml</fileId>
+		<labelContext type="array">
+		</labelContext>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_toctoc_comments_comments">TocToc Comments</label>
+			<label index="tx_toctoc_comments_feuser_mm">TocToc Userratings per Comment</label>
+			<label index="tx_toctoc_comments_spamwords">TocToc Spamwords</label>
+			<label index="tx_toctoc_ratings_scope">TocToc Scopes for ratings</label>
+			<label index="tx_toctoc_comments_comments.external_ref">Comment for the record or page:</label>
+			<label index="tx_toctoc_comments_comments.external_ref_uid">Contentelement identification for the comment:</label>
+			<label index="tx_toctoc_comments_comments.external_prefix">External prefix for this comment:</label>
+			<label index="tx_toctoc_comments_comments.approved">Approval state:</label>
+			<label index="tx_toctoc_comments_comments.approved.I.0">Approved</label>
+			<label index="tx_toctoc_comments_comments.review">Review:</label>
+			<label index="tx_toctoc_comments_comments.review.I.0">Is a review</label>
+			<label index="tx_toctoc_comments_comments.firstname">First name:</label>
+			<label index="tx_toctoc_comments_comments.lastname">Last name:</label>
+			<label index="tx_toctoc_comments_comments.email">Email:</label>
+			<label index="tx_toctoc_comments_comments.homepage">Web site:</label>
+			<label index="tx_toctoc_comments_comments.location">Location:</label>
+			<label index="tx_toctoc_comments_comments.content">Comment:</label>
+			<label index="tx_toctoc_comments_comments.commenttitle">Commenttitle:</label>
+			<label index="tx_toctoc_comments_comments.remote_addr">IP address:</label>
+			<label index="tx_toctoc_comments_comments.double_post_check">Code for double post checks:</label>
+			<label index="tx_toctoc_comments_comments.external_ref.wizard">Go to this record</label>
+			<label index="tx_toctoc_comments_comments.external_ref_uid.wizard">Go to this record</label>
+			<label index="tx_toctoc_comments_comments.toctoc_commentsfeuser_feuser">Optional frontend user UID</label>
+			<label index="tx_toctoc_comments_comments.toctoc_comments_user">Internal user identification</label>
+			<label index="tx_toctoc_comments_comments.tx_commentsnotify_notify">Notification for new comments:</label>
+			<label index="tx_toctoc_comments_comments.tx_commentsnotify_notify.I.0">Notification active</label>
+			<label index="tx_toctoc_comments_comments.tx_commentsresponse_response">Administrator response:</label>
+			<label index="tx_toctoc_comments_urllog">URL Log for comments</label>
+			<label index="tx_toctoc_comments_urllog.url">URL:</label>
+			<label index="tx_toctoc_comments_feuser_mm.toctoc_commentsfeuser_feuser">Frontend User UID</label>
+			<label index="tx_toctoc_comments_feuser_mm.reference">rating reference</label>
+			<label index="tx_toctoc_comments_feuser_mm.remote_addr">User's IP address:</label>
+			<label index="tx_toctoc_comments_feuser_mm.myrating">Individual rating value</label>
+			<label index="tx_toctoc_comments_feuser_mm.idislike">User dislikes comment</label>
+			<label index="tx_toctoc_comments_feuser_mm.ilike">User likes comment or record</label>
+			<label index="tx_toctoc_comments_feuser_mm.tstampilike">Time when the user liked comment or record</label>
+			<label index="tx_toctoc_comments_feuser_mm.tstampidislike">Time when the user disliked comment or record</label>
+			<label index="tx_toctoc_comments_feuser_mm.tstampmyrating">Time when the user rated the comment or record</label>
+			<label index="tx_toctoc_comments_feuser_mm.pagetstampilike">Id of the page with the like</label>
+			<label index="tx_toctoc_comments_feuser_mm.pagetstampidislike">Id of the page with the dislike</label>
+			<label index="tx_toctoc_comments_feuser_mm.pagetstampmyrating">Id of the page with the user rating</label>
+			<label index="tx_toctoc_comments_feuser_mm.seen">Number of times the user saw the comment or record</label>
+			<label index="tx_toctoc_comments_feuser_mm.tstampseen">Time when the user saw the comment or record</label>
+			<label index="tx_toctoc_comments_feuser_mm.pagetstampseen">Id of the page with the user view</label>
+			<label index="tx_toctoc_ratings_data">TocToc Comments Ratings data</label>
+			<label index="tx_toctoc_ratings_data.reference">Rated item:</label>
+			<label index="tx_toctoc_ratings_data.rating">Accumulated rating value:</label>
+			<label index="tx_toctoc_ratings_data.vote_count">Number of votes:</label>
+			<label index="tx_toctoc_ratings_iplog">TocToc Comments Ratings IP data</label>
+			<label index="tx_toctoc_ratings_iplog.reference">Rated item:</label>
+			<label index="tx_toctoc_ratings_iplog.crdate">Rated on:</label>
+			<label index="tx_toctoc_ratings_iplog.ip">IP address:</label>
+			<label index="tx_toctoc_comments_spamwords.spamvalue">Spampoints for this text (1-10)</label>
+			<label index="tx_toctoc_comments_spamwords.spamword">Spamtext</label>
+			<label index="tx_toctoc_comments_feuser_mm.ilike.I.0">I like</label>
+			<label index="tx_toctoc_comments_feuser_mm.idislike.I.0">I dislike</label>
+			<label index="tx_toctoc_comments_user">TocToc Userstats</label>
+			<label index="tx_toctoc_comments_user.initial_firstname">Commenter's initial first name:</label>
+			<label index="tx_toctoc_comments_user.initial_lastname">Commenter's initial last name:</label>
+			<label index="tx_toctoc_comments_user.initial_email">Commenter's initial email:</label>
+			<label index="tx_toctoc_comments_user.initial_homepage">Commenter's initial web site:</label>
+			<label index="tx_toctoc_comments_user.initial_location">Commenter's initial location:</label>
+			<label index="tx_toctoc_comments_user.ip">Commenter's initial IP:</label>
+			<label index="tx_toctoc_comments_user.ipresolved">Commenter's initial IP, resolved:</label>
+			<label index="tx_toctoc_comments_user.current_firstname">Commenter's current first name:</label>
+			<label index="tx_toctoc_comments_user.current_lastname">Commenter's current last name:</label>
+			<label index="tx_toctoc_comments_user.current_email">Commenter's current email:</label>
+			<label index="tx_toctoc_comments_user.current_homepage">Commenter's current web site:</label>
+			<label index="tx_toctoc_comments_user.current_location">Commenter's current location:</label>
+			<label index="tx_toctoc_comments_user.current_ip">last used IP</label>
+			<label index="tx_toctoc_comments_user.average_rating">average rating value</label>
+			<label index="tx_toctoc_comments_user.dislike_count">number of dislikes</label>
+			<label index="tx_toctoc_comments_user.like_count">number of likes</label>
+			<label index="tx_toctoc_comments_user.vote_count">number of votes</label>
+			<label index="tx_toctoc_comments_user.comment_count">number of comments</label>
+			<label index="tx_toctoc_comments_user.toctoc_comments_user">TocToc UserID</label>
+			<label index="tx_toctoc_comments_user.tstamp">Creation date</label>
+			<label index="tx_toctoc_comments_user.tstamp_lastupdate">Last update</label>
+			<label index="tx_toctoc_comments_user.optindate">Date of confirmed opt in (COI)</label>
+			<label index="tx_toctoc_comments_user.optin_email">Email used for COI</label>
+			<label index="tx_toctoc_comments_user.optin_ip">IP used for COI</label>
+			<label index="tx_toctoc_comments_attachment">Comment Attachments</label>
+			<label index="tx_toctoc_comments_attachment.attachmentvariant">Kind of attachment</label>
+			<label index="tx_toctoc_comments_attachment.systemurltext">URL, original file name</label>
+			<label index="tx_toctoc_comments_attachment.photo_main">Logo image, small preview, pdf</label>
+			<label index="tx_toctoc_comments_attachment.photos_etc">Preview or attachment images</label>
+			<label index="tx_toctoc_comments_attachment.title">Title</label>
+			<label index="tx_toctoc_comments_attachment.description">Description</label>
+			<label index="tx_toctoc_comments_attachment.attachmentfilesize">Attachment file size (Bytes)</label>
+			<label index="tx_toctoc_comments_prefixtotable">Plugin to table map</label>
+			<label index="tx_toctoc_comments_prefixtotable.pi1_key">Plugin</label>
+			<label index="tx_toctoc_comments_prefixtotable.pi1_table">Table</label>
+			<label index="tx_toctoc_comments_prefixtotable.show_uid">Optional URL parameter</label>
+			<label index="tx_toctoc_comments_prefixtotable.displayfields">Fields to display in top ratings list</label>
+			<label index="tx_toctoc_comments_prefixtotable.topratingsdetailpage">Force a detail page for top Ratings</label>
+			<label index="tx_toctoc_comments_prefixtotable.topratingsimagesfolder">Folder with images to display in top ratings list</label>
+			<label index="tx_toctoc_comments_ipbl_local">Local IP blocking list for toctoc_comments</label>
+			<label index="tx_toctoc_comments_ipbl_local.ipaddr">IP address:</label>
+			<label index="tx_toctoc_comments_ipbl_local.crdate">Added:</label>
+			<label index="tx_toctoc_comments_ipbl_local.comment">Comment:</label>
+			<label index="tx_toctoc_comments_ipbl_static">Static IP blocking list for toctoc_comments</label>
+			<label index="tx_toctoc_comments_ipbl_static.ipaddr">IP address:</label>
+			<label index="tx_toctoc_comments_ipbl_static.comment">Comment:</label>
+			<label index="tx_toctoc_ratings_scope.scope_title">Title:</label>
+			<label index="tx_toctoc_ratings_scope.scope_description">Description:</label>
+			<label index="tx_toctoc_ratings_scope.display_order">Display order:</label>
+			<label index="tx_toctoc_ratings_data.reference_scope">Use this scope</label>
+			<label index="tx_toctoc_ratings_data.reference_scope.wizard">Use this scope</label>
+			<label index="fe_users.toctoc_comments_id">Facebook ID</label>
+			<label index="fe_users.toctoc_comments_link">Facebook User Link</label>
+			<label index="fe_users.toctoc_comments_gender">Facebook Gender</label>
+			<label index="fe_users.toctoc_comments_email">Facebook E-Mail</label>
+			<label index="fe_users.tx_toctoc_comments_facebook_locale">Facebook locale</label>
+			<label index="fe_users.tx_toctoc_comments_facebook_updated_time">Facebook updated time</label>
+			<label index="fe_users.gender">Gender</label>
+			<label index="fe_users.gender.I.0">Man</label>
+			<label index="fe_users.gender.I.1">Woman</label>
+			<label index="tab.comments">Comments and ratings</label>
+			<label index="tx_toctoccommentsce_enable_comments.description">Enables toctoc_comments below this record</label>
+			<label index="tx_toctoccommentsce_enable_comments.tx_toctoccommentsce_comments">Comments</label>
+			<label index="tx_toctoccommentsce_enable_comments.tx_toctoccommentsce_reviews">Reviews</label>
+			<label index="tx_toctoccommentsce_enable_comments.tx_toctoccommentsce_enable_comments">Enable comments</label>
+			<label index="tx_toctoccommentsce_with_comments.description">Comments or reviews</label>
+			<label index="tx_toctoccommentsce_with_comments.tx_toctoccommentsce_comments">With comments</label>
+			<label index="tx_toctoccommentsce_with_ratings.description">Enable ratings</label>
+			<label index="tx_toctoccommentsce_with_ratings.tx_toctoccommentsce_comments">With ratings</label>
+			<label index="tx_toctoccommentsce_with_sharing.description">Enable sharing</label>
+			<label index="tx_toctoccommentsce_with_sharing.tx_toctoccommentsce_comments">With sharing</label>
+		</languageKey>
+	</data>
+	<orig_hash type="array">
+	</orig_hash>
+	<orig_text type="array">
+	</orig_text>
+</T3locallang>

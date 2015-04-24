@@ -1,0 +1,17 @@
+In /typo3conf/ext/news/Resources/Private/Templates/News/detail.html or other template:
+
+Output the plugin
+{namespace nt=Tx_News_ViewHelpers}
+<div class="toctoccomments">
+	<nt:social.TocTocComments newsItem="{newsItem}"></nt:social.TocTocComments>
+</div>
+
+Output Comments counter
+{namespace nt=Tx_News_ViewHelpers}
+<nt:social.TocTocCommentsCount newsItem="{newsItem}">
+</nt:social.TocTocCommentsCount>
+
+Templates for news using toctoc_comments are in subfolder Resources/Private
+Open files with editor and search for toctoc, if you want to see the fluid parts concerning toctoc_comments
+
+
