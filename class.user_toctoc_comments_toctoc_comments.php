@@ -26,12 +26,11 @@
  *
  *
  *
- *   51: class user_toctoc_comments_toctoc_comments
- *   59:     public function displayDonationMessage()
- *  181:     protected function getCurrentIp()
- *  194:     protected function checkSecret($secret)
+ *   50: class user_toctoc_comments_toctoc_comments
+ *   58:     public function displayDonationMessage()
+ *  203:     protected function checkSecret($secret)
  *
- * TOTAL FUNCTIONS: 3
+ * TOTAL FUNCTIONS: 2
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -40,7 +39,12 @@ if (version_compare(TYPO3_version, '6.0', '<')) {
 } else {
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('lang') . 'Classes/LanguageService.php';
 }
-
+if (version_compare(TYPO3_version, '6.3', '>')) {
+			(class_exists('t3lib_extMgm', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Utility\ExtensionManagementUtility', 't3lib_extMgm');
+			(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
+			(class_exists('language', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Lang\LanguageService', 'language');
+			//(class_exists('tslib_cObj', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer', 'tslib_cObj');
+		}
 /**
  * This class provides userfunctions used by toctoc_comments itself
  *
@@ -57,12 +61,7 @@ class user_toctoc_comments_toctoc_comments {
 	 * @return	string		The HTML for the form field
 	 */
 	public function displayDonationMessage() {
-		if (version_compare(TYPO3_version, '6.3', '>')) {
-			(class_exists('t3lib_extMgm', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Utility\ExtensionManagementUtility', 't3lib_extMgm');
-			(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
-			(class_exists('language', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Lang\LanguageService', 'language');
-			(class_exists('tslib_cObj', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer', 'tslib_cObj');
-		}
+		
 
 		$GLOBALS['LANG'] = t3lib_div::makeInstance('language');
 
@@ -153,38 +152,44 @@ class user_toctoc_comments_toctoc_comments {
 			$datadonationintro = $datadonationarr[2];
 			$datadonationoutro = $datadonationarr[3];
 			$datadonationretcode = $datadonationarr[0];
+			
+			if (count($datadonationarr) > 4) {
+				$datadonationarrauth = $datadonationarr[4];
+				$autharr = explode(',', $datadonationarrauth);
+				$dkcontent = $_SESSION['toctoc_commentsfedonationsecret'];
+				
+			}
 
 		}
 		if (intval($datadonationretcode) < 400) {
-			$html = '<div style="display:table;"><span>' .
-					$datadonationintro . $datadonation . $datadonationoutro .'</span></div>';
+			$html = '<div class="tx-tc-donationmessage"><div style="display:table;"><span>' .
+					$datadonationintro . $datadonation . $datadonationoutro .'</span></div></div>';
 			$this->toctoccommentsfedonationdone=1;
 		} else {
 			if ($secret == '') {
-				$datadonation = $txtoptionnotset;
+				if (($datadonation == '') || ($_SESSION['toctoc_commentsfedonationsecret'] == 'dmy')) {
+					$datadonation = $txtoptionnotset;
+				} else {
+					$datadonation .= '<br>' . $txtoptionnotset;
+				}
 			}
 
 			$this->toctoccommentsfedonationdone=0;
-			$html = '<div style="float:left;display: table;"><span>' . $datadonationintro . '</span></div>
-					<div style="display: table;"><span>'.$txtthanksforusing.' <i>toctoc_comments</i>.<br>
-					' . $datadonationoutro . $txtstatusdonation . ': ' . $datadonation . '</span></div>';
+			if (intval($datadonationretcode) == 403) {
+				$html = '<div class="tx-tc-donationmessage"><div style="float:left;display: table;"><span>' . 
+				 $datadonationoutro . $txtstatusdonation . ': ' . $datadonation . '</span></div></div>';
+			} else {
+				$html = '<div class="tx-tc-donationmessage"><div style="float:left;display: table;"><span>' . $datadonationintro . '</span></div>
+						<div style="display: table;"><span>'.$txtthanksforusing.' <i>toctoc_comments</i>.<br>
+					' . $datadonationoutro . $txtstatusdonation . ': ' . $datadonation . '</span></div></div>';
+			}
+					
 		}
 
 		$_SESSION['toctoc_commentsfedonationdone']=$this->toctoccommentsfedonationdone;
 		return $html;
 	}
-	/**
-	 * Retrieves current IP address
-	 *
-	 * @return	string		Current IP address
-	 */
-	protected function getCurrentIp() {
-		if (preg_match('/^\d{2,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/', $_SERVER['HTTP_X_FORWARDED_FOR'])) {
-			return $_SERVER['HTTP_X_FORWARDED_FOR'];
-		}
 
-		return $_SERVER['REMOTE_ADDR'];
-	}
 	/**
 	 * checks the secret
 	 *
@@ -195,7 +200,8 @@ class user_toctoc_comments_toctoc_comments {
 		$data ='';
 		$infomessage = '';
 		$donationserver = 'www.toctoc.ch';
-		//$donationserver = 'toctoc4xdrp';
+		//$donationserver = '';
+		//$_SESSION['toctoc_commentsfedonation'] = '';
 		if (trim($_SESSION['toctoc_commentsfedonation']) != '') {
 			if ($_SESSION['toctoc_commentsfedonationdone']==1) {
 				$this->toctoccommentsfedonationdone=1;
@@ -207,8 +213,20 @@ class user_toctoc_comments_toctoc_comments {
 				$infomessage = 'Curl, PHP-Problem: Curl extension is required!';
 				$alertmsg = 1;
 			} else {
+				$curip = $_ENV['SERVER_ADDR'];
+				if (trim($curip) == '') {
+					$curip = isset($_SERVER['SERVER_ADDR'])?$_SERVER['SERVER_ADDR']:gethostbyname(gethostname());
+				}
+
+				if (trim($curip) == '') {
+					$curip = isset($_SERVER['HTTP_HOST'])?$_SERVER['HTTP_HOST']:gethostname();
+				}
+
+				if (trim($curip) == '') {
+					$curip = gethostname();
+				}
+
 				$ch = curl_init();
-				$curip = $this->getCurrentIp();
 				$langreq = 'en';
 				if (strlen($GLOBALS['BE_USER']->uc['lang']) > 0) {
 					$langreq = $GLOBALS['BE_USER']->uc['lang'];
@@ -256,6 +274,7 @@ class user_toctoc_comments_toctoc_comments {
 					$alertmsg = 1;
 					curl_close($ch);
 				}
+				
 			}
 
 			if ((trim($data) == '') && (trim($infomessage) == '')) {
@@ -270,6 +289,7 @@ class user_toctoc_comments_toctoc_comments {
 				$_SESSION['toctoc_commentsfedonation']=$infomessage;
 				return $infomessage;
 			}
+			
 		}
 
 	}

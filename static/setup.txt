@@ -237,37 +237,12 @@ plugin.tx_toctoccomments_pi1 {
     # Column-position (colPos) where the comments-plugins go. Important if no templavoila used. Can be left on 0, most of the times
     UseMainColPos = {$plugin.tx_toctoccomments_pi1.UseMainColPos}
 
-    // start deprecated sharing options in section advanced - will be removed with version 7
-    // useSharing = {$plugin.tx_toctoccomments_pi1.useSharing}
-
-    # if you dont use the sharing components at all you can set this to 1
-    // sharingNoCalculatedCSS = 0
-
-    // useSharingDesign = {$plugin.tx_toctoccomments_pi1.useSharingDesign}
-
-    // dontUseSharingFacebook = {$plugin.tx_toctoccomments_pi1.dontUseSharingFacebook}
-    // dontUseSharingTwitter = {$plugin.tx_toctoccomments_pi1.dontUseSharingTwitter}
-    // dontUseSharingGoogle = {$plugin.tx_toctoccomments_pi1.dontUseSharingGoogle}
-    // dontUseSharingLinkedIn = {$plugin.tx_toctoccomments_pi1.dontUseSharingLinkedIn}
-    // dontUseSharingStumbleupon = {$plugin.tx_toctoccomments_pi1.dontUseSharingStumbleupon}
-    // dontUseSharingPinterest = {$plugin.tx_toctoccomments_pi1.dontUseSharingPinterest}
-    // dontUseSharingDigg = {$plugin.tx_toctoccomments_pi1.dontUseSharingDigg}
-    // dontUseSharingDelicious = {$plugin.tx_toctoccomments_pi1.dontUseSharingDelicious}
-    // dontUseSharingAddThisMore = {$plugin.tx_toctoccomments_pi1.dontUseSharingAddThisMore}
-    // AddThisID = {$plugin.tx_toctoccomments_pi1.AddThisID}
-    // shareUsersTotalText = {$plugin.tx_toctoccomments_pi1.shareUsersTotalText}
-    // shareDataText = {$plugin.tx_toctoccomments_pi1.shareDataText}
-    // sharePageURL = {$plugin.tx_toctoccomments_pi1.sharePageURL}
-    // useShareIcon = {$plugin.tx_toctoccomments_pi1.useShareIcon}
-    // end deprecated sharing options in section advanced - will be removed with version 7
-
     recentcommentsPluginpages = {$plugin.tx_toctoccomments_pi1.recentcommentsPluginpages}
     recentcommentsPluginRecords = {$plugin.tx_toctoccomments_pi1.recentcommentsPluginRecords}
 
     commentsShowCount = {$plugin.tx_toctoccomments_pi1.commentsShowCount}
     commentsShowCountText = {$plugin.tx_toctoccomments_pi1.commentsShowCountText}
     commentsShowCountLevel = {$plugin.tx_toctoccomments_pi1.commentsShowCountLevel}
-
 
     # If set, reverses sortng to show last comments first
     reverseSorting = {$plugin.tx_toctoccomments_pi1.reverseSorting}
@@ -339,7 +314,22 @@ plugin.tx_toctoccomments_pi1 {
     dontuseGIFBUILDER = 0
     # set this to 1 only for debugging when you need to display entire conf in Frontend
     dontUseMirrorConf = 0
-
+    
+	# Additional crawlers to be excluded from the commenting system and session creation, use comma-separated list 
+ 
+    # defaut blacklist CrawlerAgents: 'googlebot','yahoo','baidu','msnbot','bingbot','spider','bot.htm','yandex','jeevez'
+    blacklistCrawlerAgentStrings = package,curl,AU-MIC,Python,Test,Wotbox,Lipperhey,Traveler,FDiag,bot,lucid,Mining,crawl,protect,Walker,Checker,DuckDuck,LinkFinder,Ezooms,filterdb,findlinks,monitor,blast,gonzo,htdig,archiver,jobs,ips-agent,larbin,linkdex,MajesticSEO,Survey,OpenLinkProfiler,eeker,picmole,Qualidator,ReverseGet,schrein,Scooter,search,SEOkicks,sistrix,thunderstone,TinEye,Unister,Webinator,Webmaster,xovi,Yeti
+    whitelistCrawlerAgentStrings = 
+    
+    # if enabled file pi1/crawlerprotocol.txt will be filled with a log
+    protocolCrawlerAgents = 0
+    protocolCrawlerAgentsMaxLines = 10000
+    protocolBlacklistedIPs = 0
+    protocolBlacklistedIPsMaxLines = 10000
+    
+    # Empty HTTP_USER_AGENT are uncool, most possibly crawlers to be excluded from the commenting system and session creation
+    dontTakeEmptyAgentStringAsCrawler = 0
+   
   }
   sharing {
  	// sharing option valid since version 6
@@ -393,6 +383,8 @@ plugin.tx_toctoccomments_pi1 {
     useIPblocking = {$plugin.tx_toctoccomments_pi1.useIPblocking}
 
     confirmedOptIn = {$plugin.tx_toctoccomments_pi1.confirmedOptIn}
+    confirmedOptInEmailOnly = {$plugin.tx_toctoccomments_pi1.confirmedOptInEmailOnly}
+    
     emailTemplatecoiHTML = {$plugin.tx_toctoccomments_pi1.emailTemplatecoiHTML}
     emailTemplatecoi = {$plugin.tx_toctoccomments_pi1.emailTemplatecoi}
 
@@ -690,7 +682,7 @@ plugin.tx_toctoccomments_pi2 {
   # page type for faster refreshs on page part refreshs
   pageTypeRefreshs =  
   
-  * hide forgot password link if facebook is active
+  # hide forgot password link if facebook is active
   hideIfFaceBookActive = 0  
 
   # page ID with your policy
@@ -701,6 +693,9 @@ plugin.tx_toctoccomments_pi2 {
   
   #**** Since version 7.3.0. all options formerly token from tx_felogin_pi1 must be setup, tx_felogin_pi1 has been detached from toctoc_comments_pi2
   
+  # example for feloginBaseURL = http://www.domain.ch/
+  feloginBaseURL = 
+  
   # storagePid - where are the user records? use only single value 
   storagePid =
   recursive =
@@ -708,7 +703,7 @@ plugin.tx_toctoccomments_pi2 {
   email_from = 
   email_fromName = 
   replyTo = 
-  
+   
   #typolink-configuration for links / urls, parameter and additionalParams are set by extension
   linkConfig {
     target =
@@ -734,8 +729,6 @@ plugin.tx_toctoccomments_pi2 {
   
   newPasswordMinLength = 6
   
-  #**** 
-  
   register {
     enableSignup = 1
     # setup default usergroup(s)-uids setup when registering, separated by commas
@@ -744,6 +737,7 @@ plugin.tx_toctoccomments_pi2 {
     signupUseCaptcha = 2
     signupRequireFirstname = 1
     newUserMinLength = 6
+    signupConfirmEmail = 0
   }
   facebook {
     appId = {$plugin.tx_toctoccomments_pi1.appId}

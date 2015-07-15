@@ -3096,3 +3096,6 @@ div.tx-tc-searchmore, div.tx-tc-searchprev {
 	position: relative;
     top: 0;
 }
+.tx-tc-login-form-field .tx-tc-ct-label {
+	width: 100%;	
+}

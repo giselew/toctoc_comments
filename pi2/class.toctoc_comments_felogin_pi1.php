@@ -38,36 +38,37 @@
  *
  *
  *
- *  109: class tx_toctoccomments_pi2 extends tslib_pibase
- *  132:     protected function processRedirect()
- *  146:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  237:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  463:     protected function watermark($conf, $content)
- *  501:     protected function showForgot()
- *  581:     protected function showLogout()
- *  616:     protected function showLogin()
- *  762:     protected function getRSAKeyPair()
- *  799:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
- *  835:     protected function getPreserveGetVars()
- *  888:     protected function generatePassword($len)
- *  908:     protected function getDisplayText($label, $stdWrapArray=array())
- *  920:     protected function getUserFieldMarkers()
- *  962:     protected function validateRedirectUrl($url)
- *  993:     protected function isInCurrentDomain($url)
- * 1005:     protected function isInLocalDomain($url)
- * 1046:     protected function isRelativeUrl($url)
- * 1062:     protected function generateAndSendHash($user)
- * 1128:     protected function changePassword($uid, $piHash)
- * 1250:     protected function showSignon()
- * 1558:     protected function getSignupCaptcha($required, $errcp, $cpval)
- * 1601:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
- * 1628:     protected function processSignupCaptcha($postData)
- * 1668:     protected function loginUser($facebookId)
- * 1695:     protected function storeUser($facebookUserProfile, $socialnetwork)
- * 1809:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
- * 1827:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
+ *  110: class tx_toctoccomments_pi2 extends tslib_pibase
+ *  133:     protected function processRedirect()
+ *  147:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  238:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  471:     protected function watermark($conf, $content)
+ *  509:     protected function showForgot()
+ *  589:     protected function showLogout()
+ *  624:     protected function showLogin()
+ *  770:     protected function getRSAKeyPair()
+ *  807:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
+ *  843:     protected function getPreserveGetVars()
+ *  896:     protected function generatePassword($len)
+ *  916:     protected function getDisplayText($label, $stdWrapArray=array())
+ *  928:     protected function getUserFieldMarkers()
+ *  970:     protected function validateRedirectUrl($url)
+ * 1001:     protected function isInCurrentDomain($url)
+ * 1013:     protected function isInLocalDomain($url)
+ * 1054:     protected function isRelativeUrl($url)
+ * 1070:     protected function generateAndSendHash($user)
+ * 1140:     protected function changePassword($uid, $piHash)
+ * 1262:     protected function showSignon()
+ * 1621:     protected function getSignupCaptcha($required, $errcp, $cpval)
+ * 1664:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ * 1691:     protected function processSignupCaptcha($postData)
+ * 1731:     protected function loginUser($facebookId)
+ * 1758:     protected function storeUser($facebookUserProfile, $socialnetwork)
+ * 1872:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
+ * 1890:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
+ * 1976:     protected function getCurrentIp()
  *
- * TOTAL FUNCTIONS: 27
+ * TOTAL FUNCTIONS: 28
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -96,6 +97,9 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 	(class_exists('tslib_cObj', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer', 'tslib_cObj');
 	(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
 	(class_exists('t3lib_utility_Array', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Utility\ArrayUtility', 't3lib_utility_Array');
+	if ((t3lib_extMgm::isLoaded('saltedpasswords')) && ($GLOBALS['TYPO3_CONF_VARS']['FE']['loginSecurityLevel']))  {
+		(class_exists('tx_saltedpasswords_div', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Saltedpasswords\Utility\SaltedPasswordsUtility', 'tx_saltedpasswords_div');
+	}
 
 }
 
@@ -205,7 +209,13 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		// Get storage
 			// Process the redirect
 		if (($this->logintype === 'login' || $this->logintype === 'logout' || $this->logintype === 'forgot' || $this->logintype === 'signup') && $this->redirectUrl && !$this->noRedirect) {
-			if (!$GLOBALS['TSFE']->fe_user->cookieId) {
+			if (version_compare(TYPO3_version, '6.1', '>')) {
+				$fe_usercookieOK = $GLOBALS['TSFE']->fe_user->isCookieSet();
+			} else {
+				$fe_usercookieOK = $GLOBALS['TSFE']->fe_user->cookieId;
+			}
+			
+			if (!$fe_usercookieOK) {
 				$content .= $this->cObj->stdWrap($this->pi_getLL('cookie_warning', '', 1), $this->conf['cookieWarning_stdWrap.']);
 			}
 
@@ -437,6 +447,13 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 		if($_POST['tx_toctoccomments_pi2']['ajax']){
 			if (t3lib_div::_GP('refreshcontent') != 'refresh') {
+				$strCurrentIP = $this->getCurrentIp();
+
+				if (intval($GLOBALS['TSFE']->fe_user->user['uid']) == 0) {
+					$_SESSION['toctoc_user'] = '' . $strCurrentIP . '.0';
+				} else {
+					$_SESSION['toctoc_user'] = '0.0.0.0.' . $GLOBALS['TSFE']->fe_user->user['uid'];
+				}
 
 				$search = array('@<![\s\S]*?--[ \t\n\r]*>@',
 				);
@@ -1104,8 +1121,12 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			return $ret;
 		}
 
-		$msg = sprintf($this->pi_getLL('ll_forgot_validate_reset_password', '', 0), $user['username'], $link, $validEndString);
+		if (intval($this->conf['register.']['signupConfirmEmail']) == 1) {
+			$msg = sprintf($this->pi_getLL('ll_register_validate_reset_password', '', 0), $user['username'], $link, $validEndString);
 
+		} else {
+			$msg = sprintf($this->pi_getLL('ll_forgot_validate_reset_password', '', 0), $user['username'], $link, $validEndString);
+		}
 		// no RDCT - Links for security reasons
 		$oldSetting = $GLOBALS['TSFE']->config['config']['notification_email_urlmode'];
 		$GLOBALS['TSFE']->config['config']['notification_email_urlmode'] = 0;
@@ -1456,8 +1477,46 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 			} else {
 				if ($this->logintype == 'signup') {
-					$markerArray['###STATUS_MESSAGESO###'] = '<span class="tx-tc-nodisp>SIGNUPANDLOGINOK</span>' .
-														$this->cObj->stdWrap($this->pi_getLL('ll_signupOk_message', '', 1), $this->conf['signupOkMessage_stdWrap.']);
+					if (intval($this->conf['register.']['signupConfirmEmail']) != 1) {
+						$markerArray['###STATUS_MESSAGESO###'] = '<span class="tx-tc-nodisp">SIGNUPANDLOGINOK</span>' .
+																$this->cObj->stdWrap($this->pi_getLL('ll_signupOk_message', '', 1), $this->conf['signupOkMessage_stdWrap.']);
+					} else {
+						$markerArray['###STATUS_MESSAGESO###'] = '<span class="tx-tc-nodisp">SIGNUPANDCONFIRM</span>' .
+								$this->cObj->stdWrap($this->pi_getLL('ll_signupOk_messageconfirm', '', 1), $this->conf['signupOkMessage_stdWrap.']);
+						// send confirmation mail
+						// generate hash
+						$hash = md5($this->generatePassword(3));
+						// set hash in feuser session
+						$GLOBALS['TSFE']->fe_user->setKey('ses', 'forgot_hash', array('forgot_hash' => $hash));
+
+						$postedHash = $hash;
+						$hashData = $GLOBALS['TSFE']->fe_user->getKey('ses', 'forgot_hash');
+
+						if ($postedHash === $hashData['forgot_hash']) {
+							$row = FALSE;
+
+							// look for user record
+							$data = $GLOBALS['TYPO3_DB']->fullQuoteStr($postData['forgot_email'], 'fe_users');
+							$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+									'uid, username, password, email',
+									'fe_users',
+									'(email="' . $postData['signup_email'] .'") AND pid IN ('.$GLOBALS['TYPO3_DB']->cleanIntList($this->spid).') '.
+									$this->cObj->enableFields('fe_users')
+							);
+
+							if ($GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
+								$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+							}
+
+							$error = NULL;
+							if ($row) {
+								// generate an email with the hashed link
+								$error = $this->generateAndSendHash($row);
+							}
+
+						}
+
+					}
 					$done = TRUE;
 					$subpartArray['###SIGNON_FORM###'] = '';
 				} else {
@@ -1465,6 +1524,18 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 				}
 			}
 			$markerArray['###BACKLINK_SIGNON###'] = $this->pi_getLL('ll_forgot_header_backToLogin', '', 1);
+
+			$passwordcss = '';
+			$postDatapassword1 = $postData['password1'];
+			$postDatapassword2 = $postData['password2'];
+			$Datapassword1 = '';
+			$Datapassword2 = '';
+			if (intval($this->conf['register.']['signupConfirmEmail']) == 1) {
+			 	$passwordcss = ' tx-tc-nodisp';
+			 	$hash = md5($this->generatePassword(3));
+			 	$Datapassword1 = $hash;
+			 	$Datapassword2 = $hash;
+			 }
 
 			if (!$done) {
 				$markerArray['###FORM_ID###'] = 'tx_toctoccomments_pi2_form';
@@ -1486,13 +1557,14 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 				$markerArray['###NEWPASSWORD2_LABEL###'] = $this->pi_getLL('newpassword_label2', '', 1);
 				$markerArray['###NEWPASSWORD1###'] = $this->prefixId . '[password1]';
 				$markerArray['###NEWPASSWORD2###'] = $this->prefixId . '[password2]';
+				$markerArray['###CSSPWDCF###'] = $passwordcss;
 				$markerArray['###NEWUSER###'] = $this->prefixId . '[user]';
 				$markerArray['###NEWFIRSTNAME###'] = $this->prefixId . '[firstname]';
 				$markerArray['###NEWLASTNAME###'] = $this->prefixId . '[lastname]';
 				$markerArray['###NEWEMAIL###'] = $this->prefixId . '[signup_email]';
 				if ($this->logintype == 'signup') {
-					$markerArray['###NEWPASSWORD1V###'] = $postData['password1'];
-					$markerArray['###NEWPASSWORD2V###'] = $postData['password2'];
+					$markerArray['###NEWPASSWORD1V###'] = $postDatapassword1;
+					$markerArray['###NEWPASSWORD2V###'] = $postDatapassword2;
 					$markerArray['###NEWUSERV###'] = $postData['user'];
 					$markerArray['###NEWFIRSTNAMEV###'] = $postData['firstname'];
 					$markerArray['###NEWLASTNAMEV###'] = $postData['lastname'];
@@ -1519,8 +1591,8 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 						$markerArray['###CAPTCHA###'] = '';
 					}
 				} else {
-					$markerArray['###NEWPASSWORD1V###'] = '';
-					$markerArray['###NEWPASSWORD2V###'] = '';
+					$markerArray['###NEWPASSWORD1V###'] = $Datapassword1;
+					$markerArray['###NEWPASSWORD2V###'] = $Datapassword2;
 					$markerArray['###NEWUSERV###'] = '';
 					$markerArray['###NEWFIRSTNAMEV###'] = '';
 					$markerArray['###NEWLASTNAMEV###'] = '';
@@ -1904,6 +1976,18 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			return FALSE;
 		}
 
+	}
+	/**
+	 * Retrieves current IP address
+	 *
+	 * @return	string		Current IP address
+	 */
+	protected function getCurrentIp() {
+		if (preg_match('/^\d{2,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/', $_SERVER['HTTP_X_FORWARDED_FOR'])) {
+			return $_SERVER['HTTP_X_FORWARDED_FOR'];
+		}
+
+		return $_SERVER['REMOTE_ADDR'];
 	}
 }
 ?>

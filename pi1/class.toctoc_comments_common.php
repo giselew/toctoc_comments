@@ -39,11 +39,11 @@
  *
  *   61: class toctoc_comments_common
  *  113:     public function unmirrorConf($confDiff)
- *  148:     public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '')
- *  226:     private function getSessionSavePath()
- *  247:     private function ensureSessionSavePathExists($sessionSavePath, $dohtaccess = TRUE)
- *  310:     public function substGifbuilder ($contentdir, $filename, $imgsize)
- *  430:     private function getGifBuilderSavePath()
+ *  149:     public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '', $conf = array())
+ *  383:     private function getSessionSavePath()
+ *  404:     private function ensureSessionSavePathExists($sessionSavePath, $dohtaccess = TRUE)
+ *  467:     public function substGifbuilder ($contentdir, $filename, $imgsize)
+ *  587:     private function getGifBuilderSavePath()
  *
  * TOTAL FUNCTIONS: 6
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -143,23 +143,10 @@ class toctoc_comments_common {
 	 *
 	 * @param	[type]		$expireTimeInMinutes: ...
 	 * @param	[type]		$sessionSavePathSaved: ...
+	 * @param	[type]		$conf: ...
 	 * @return	[type]		...
 	 */
-	public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '') {
-		// no sessions for bots
-		$interestingCrawlers = array('googlebot', 'yahoo', 'baidu', 'msnbot', 'bingbot', 'spider', 'bot.htm', 'yandex', 'jeevez');
-		$numMatches = 0;
-		$countinterestingCrawlers = count($interestingCrawlers);
-		for ($i=0; $i<$countinterestingCrawlers; $i++){
-			if (str_replace(strtolower($interestingCrawlers[$i]), '', strtolower($_SERVER['HTTP_USER_AGENT'])) != strtolower($_SERVER['HTTP_USER_AGENT'])) {
-				$numMatches++;
-			}
-		}
-		if($numMatches > 0) {
-			return;
-		}
-		// end
-
+	public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '', $conf = array()) {
 		//check if pic is in temp and them move the 2 pics in attachments
 		$repstr= str_replace('/', DIRECTORY_SEPARATOR, '/typo3conf/ext/toctoc_comments/pi1');
 		$PATH_site = str_replace($repstr, '', dirname(__FILE__)) . DIRECTORY_SEPARATOR;
@@ -171,6 +158,137 @@ class toctoc_comments_common {
 		if (!defined('TYPO3_version')) {
 			define('TYPO3_version', 'TYPO3_version');
 		}
+		// no sessions for bots
+		$interestingCrawlers = array('googlebot','yahoo','baidu','msnbot','bingbot','spider','bot.htm','yandex','jeevez');
+		$interestingWhiteCrawlersConf = array();
+		if (count($conf)>2) {
+			$interestingCrawlersConf = explode(',', $conf['advanced.']['blacklistCrawlerAgentStrings']);
+
+			$tmparr = array_merge($interestingCrawlers, $interestingCrawlersConf);
+			$interestingCrawlers = array_unique($tmparr);
+
+			$interestingWhiteCrawlersConf = explode(',', $conf['advanced.']['whitelistCrawlerAgentStrings']);
+			$interestingWhiteCrawlersConf = array_unique($interestingWhiteCrawlersConf);
+		}
+
+		$numcookies = count($_COOKIE);
+		$strPhpCookies = '';
+
+		while ($cookieel = current($_COOKIE)) {
+			$strPhpCookies .= key($_COOKIE) . '-';
+			next($_COOKIE);
+		}
+
+		if ($strPhpCookies != '') {
+			if (strlen($strPhpCookies) >1) {
+				$strPhpCookies = substr($strPhpCookies, 0, (strlen($strPhpCookies) -1));
+			}
+
+		}
+
+		$numMatches = 0;
+		$countinterestingCrawlers = count($interestingCrawlers);
+		$countinterestingWhiteCrawlersConf = count($interestingWhiteCrawlersConf);
+		$identstr='';
+		if ($_SERVER['HTTP_USER_AGENT']){
+			if (trim($_SERVER['HTTP_USER_AGENT']) != ''){
+				$foundwhite = 0;
+				for ($i=0; $i<$countinterestingWhiteCrawlersConf; $i++){
+					if (str_replace(strtolower(trim($interestingWhiteCrawlersConf[$i])), '', strtolower($_SERVER['HTTP_USER_AGENT'])) != strtolower($_SERVER['HTTP_USER_AGENT'])) {
+						$foundwhite = 1;
+						$identstr=trim($interestingWhiteCrawlersConf[$i]);
+					}
+
+				}
+				if ($foundwhite == 0) {
+					for ($i=0; $i<$countinterestingCrawlers; $i++){
+						if (str_replace(strtolower(trim($interestingCrawlers[$i])), '', strtolower($_SERVER['HTTP_USER_AGENT'])) != strtolower($_SERVER['HTTP_USER_AGENT'])) {
+							$numMatches++;
+							$identstr=trim($interestingCrawlers[$i]);
+							break;
+						}
+
+					}
+				}
+
+			} else {
+				if (intval($conf['advanced.']['dontTakeEmptyAgentStringAsCrawler']) == 0) {
+					$numMatches++;
+				}
+
+			}
+
+		} else {
+			if (intval($conf['advanced.']['dontTakeEmptyAgentStringAsCrawler']) == 0) {
+					$numMatches++;
+			}
+
+		}
+
+		if (($numMatches > 0) || ($foundwhite == 1)) {
+			if (count($conf) > 2) {
+				if ($conf['advanced.']['protocolCrawlerAgents'] == 1) {
+					if (($numMatches > 0)) {
+						$protocol = '';
+						if ($_SERVER['HTTP_USER_AGENT']){
+							if (trim($_SERVER['HTTP_USER_AGENT']) != ''){
+								$protocol = 'BL: ' . strftime('%Y/%m/%d %H:%M:%S', microtime(TRUE)) . ': ' . $_SERVER['HTTP_USER_AGENT'] . ' idfd "' . $identstr . '"@@-@@-';
+							}
+
+						}
+
+						if ($protocol == ''){
+							$protocol = 'BL: ' . strftime('%Y/%m/%d %H:%M:%S', microtime(TRUE)) . ': ' . 'HTTP_USER_AGENT missing' . ' idfd "' . $identstr . '"@@-@@-';
+
+						}
+
+					} else {
+						$protocol = 'WL: ' . strftime('%Y/%m/%d %H:%M:%S', microtime(TRUE)) . ': ' . $_SERVER['HTTP_USER_AGENT'] . ' idfd "' . $identstr . '"@@-@@-';
+					}
+
+					if (!(file_exists(realpath(dirname(__FILE__)) . '/crawlerprotocol.txt'))) {
+						if (version_compare(TYPO3_version, '6.0', '<')) {
+							t3lib_div::writeFile(realpath(dirname(__FILE__)) . '/crawlerprotocol.txt', $protocol);
+						} else	{
+							\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile(realpath(dirname(__FILE__)) . '/crawlerprotocol.txt', $protocol);
+						}
+
+					} else {
+
+						$content = file_get_contents(realpath(dirname(__FILE__)) . '/crawlerprotocol.txt');
+						$contentarr = explode("\r\n", $content);
+						$testelem= 	$contentarr[count($contentarr)-1];
+						$testelemarr = explode('@@', $testelem);
+						$testelemarrhua = explode(' idfd "', $testelemarr[0]);
+						$testelemarrhua2 = explode(': ', $testelemarrhua[0]);
+						$hua = $testelemarrhua2[count($testelemarrhua2)-1];
+						if (($hua != $_SERVER['HTTP_USER_AGENT']) || ($testelemarr[1] != '-') || ($testelemarr[2] != '-')) {
+							$protocol = str_replace("\r\n", ', ', $protocol);
+							$protocol = str_replace("\n", ', ', $protocol);
+
+							$content = $content . "\r\n" . $protocol;
+							$contentarr = explode("\r\n", $content);
+							if (count($contentarr) > $conf['advanced.']['protocolCrawlerAgentsMaxLines']) {
+								array_shift($contentarr);
+								$content = implode("\r\n", $contentarr);
+							}
+
+							// Write the contents back to the file
+							file_put_contents(realpath(dirname(__FILE__)) . '/crawlerprotocol.txt', $content);
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		if($numMatches > 0) {
+			return;
+		}
+		// end
 
 		$this->expireTimeInMinutes = intval($expireTimeInMinutes);
 		$this->typo3tempPath = $PATH_site . 'typo3conf/ext/toctoc_comments/pi1/sessionTemp/';
@@ -214,6 +332,45 @@ class toctoc_comments_common {
 
  			}
 
+ 		}
+
+		$_SESSION['PHPCookie'] = $numcookies;
+		if (($numcookies > 0) && ($strPhpCookies !='')) {
+ 			$_SESSION['strPHPCookies'] = $strPhpCookies;
+		}
+
+	 	if (!isset($_SESSION['StartTime'])) {
+ 			$_SESSION['StartTime'] =  microtime(TRUE);
+ 		}
+
+ 		if (!isset($_SESSION['numberOfPages'])) {
+ 			$_SESSION['numberOfPages'] =  0;
+ 		}
+
+ 		if (!isset($_SESSION['CurrentIP'])) {
+ 			if (preg_match('/^\d{2,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/', $_SERVER['HTTP_X_FORWARDED_FOR'])) {
+ 				$currip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+ 			}
+
+ 			$currip = $_SERVER['REMOTE_ADDR'];
+ 			$_SESSION['CurrentIP'] =  $currip;
+ 		}
+
+ 		if (!isset($_SESSION['curPageName'])) {
+ 			if (!isset($_SERVER['REQUEST_URI'])) {
+ 				$serverrequri = $_SERVER['PHP_SELF'];
+ 			} else {
+ 				$serverrequri = $_SERVER['REQUEST_URI'];
+ 			}
+
+ 			$s = empty($_SERVER['HTTPS']) ? '' : ($_SERVER['HTTPS'] == 'on') ? 's' : '';
+ 			$slcurrentPageName=str_replace('?&no_cache=1', '', $serverrequri);
+ 			$slcurrentPageName=str_replace('?no_cache=1', '', $slcurrentPageName);
+ 			$slcurrentPageName=str_replace('&no_cache=1', '', $slcurrentPageName);
+ 			$slcurrentPageName=str_replace('?&purge_cache=1', '', $slcurrentPageName);
+ 			$slcurrentPageName=str_replace('?purge_cache=1', '', $slcurrentPageName);
+ 			$slcurrentPageName=str_replace('&purge_cache=1', '', $slcurrentPageName);
+ 			$_SESSION['curPageName'] =  $slcurrentPageName;
  		}
 
 	}

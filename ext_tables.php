@@ -137,9 +137,6 @@ $TCA['tx_toctoc_ratings_scope'] = array (
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
 		'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_toctoc_comments_ratings_scope.gif',
 	),
-	'feInterface' => array (
-		'fe_admin_fieldList' => 'scope_title, sys_language_uid, l18n_parent, l18n_diffsource, scope_description, display_order, hidden',
-	)
 );
 t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_ratings_scope');
 t3lib_extMgm::addToInsertRecords('tx_toctoc_ratings_scope');
@@ -233,9 +230,6 @@ $TCA['tx_toctoc_comments_prefixtotable'] = array(
 				'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
 				'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_toctoc_comments_prefixtotable.gif',
 
-		),
-		'feInterface' => array (
-			'fe_admin_fieldList' => 'uid,pi1_key,pi1_table,show_uid,displayfields,topratingsdetailpage,topratingsimagesfolder',
 		),
 );
 t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_comments_prefixtotable');
@@ -360,15 +354,20 @@ if($TCA['fe_users']['columns']['gender']) {
 	unset($tempColumns['gender']);
 }
 t3lib_extMgm::addTCAcolumns('fe_users', $tempColumns, 1);
-$sgender = '';
-$sgenderadd = FALSE;
-if (str_replace('gender,', '', $TCA['fe_users']['feInterface']['fe_admin_fieldList'] ) == $TCA['fe_users']['feInterface']['fe_admin_fieldList'] ) {
-	$sgender = ',gender';
-	$sgenderadd = TRUE;
+if (version_compare(TYPO3_branch, '7.0', '<')) {
+	$sgender = '';
+	$sgenderadd = FALSE;
+	$fei = 'fe' . 'Interface';
+	$feadm = 'fe' . '_admin_fieldList';
+	
+	if (str_replace('gender,', '', $TCA['fe_users'][$fei][$feadm] ) == $TCA['fe_users'][$fei][$feadm] ) {
+		$sgender = ',gender';
+		$sgenderadd = TRUE;
+	}
+	$TCA['fe_users'][$fei][$feadm] .= ',tx_toctoc_comments_facebook_id,tx_toctoc_comments_facebook_link,tx_toctoc_comments_facebook_email,tx_toctoc_comments_facebook_gender,tx_toctoc_comments_facebook_locale,tx_toctoc_comments_facebook_updated_time' . $sgender;
 }
-$TCA['fe_users']['feInterface']['fe_admin_fieldList'] .= ',tx_toctoc_comments_facebook_id,tx_toctoc_comments_facebook_link,tx_toctoc_comments_facebook_email,tx_toctoc_comments_facebook_gender,tx_toctoc_comments_facebook_locale,tx_toctoc_comments_facebook_updated_time' . $sgender;
 $sgender = '';
-if (str_replace('gender,', '', $TCA['fe_users']['feInterface']['showRecordFieldList'] ) == $TCA['fe_users']['feInterface']['showRecordFieldList'] ) {
+if (str_replace('gender,', '', $TCA['fe_users']['interface']['showRecordFieldList'] ) == $TCA['fe_users']['interface']['showRecordFieldList']) {
 	$sgender = ',gender';
 	$sgenderadd = TRUE;
 }
@@ -382,7 +381,39 @@ if ($sgenderadd == TRUE) {
 // from commentbe
 if (TYPO3_MODE == 'BE') {
 	t3lib_extMgm::addModulePath('web_toctoccommentsbeM1', t3lib_extMgm::extPath($_EXTKEY) . 'mod1/');
-	t3lib_extMgm::addModule('web', 'toctoccommentsbeM1', '', t3lib_extMgm::extPath($_EXTKEY) . 'mod1/');
+	if (version_compare(TYPO3_branch, '7.0', '<')) {
+		t3lib_extMgm::addModule('web', 'toctoccommentsbeM1', '', t3lib_extMgm::extPath($_EXTKEY) . 'mod1/');
+		// configuration array then comes from mod1/conf.php
+	} else {
+		if (version_compare(TYPO3_branch, '7.1', '<')) {
+			\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addModule(
+					'web',
+					'toctoccommentsbeM1',
+					'bottom',
+					\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'mod1/'
+			);
+					
+		} else {
+			\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addModule(
+					'web',
+					'toctoccommentsbeM1',
+					'bottom',
+					\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'mod1/',
+					array(
+							'script' => '_DISPATCH',
+							'access' => 'user,group',
+							'name' => 'web_toctoccommentsbeM1',
+							'labels' => array(
+									'tabs_images' => array(
+											'tab' => 'CommentsModuleIcon.png',
+									),
+									'll_ref' => 'LLL:EXT:toctoc_comments/mod1/locallang_mod.xml',
+							),
+					)
+			);
+		}
+		
+	}
 }
 
 ?>

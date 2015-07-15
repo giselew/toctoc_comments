@@ -112,6 +112,7 @@
 			<label index="tx_toctoc_comments_ipbl_local.comment">Comment:</label>
 			<label index="tx_toctoc_comments_ipbl_static">Static IP blocking list for toctoc_comments</label>
 			<label index="tx_toctoc_comments_ipbl_static.ipaddr">IP address:</label>
+			<label index="tx_toctoc_comments_ipbl_local.blockfe">Block frontend access:</label>
 			<label index="tx_toctoc_comments_ipbl_static.comment">Comment:</label>
 			<label index="tx_toctoc_ratings_scope.scope_title">Title:</label>
 			<label index="tx_toctoc_ratings_scope.scope_description">Description:</label>

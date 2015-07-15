@@ -1045,7 +1045,6 @@ $TCA['tx_toctoc_comments_prefixtotable'] = array (
 				'showRecordFieldList' => 'pi1_key,pi1_table,show_uid,displayfields,topratingsdetailpage,topratingsimagesfolder',
 				'maxDBListItems' => 50,
 		),
-		'feInterface' => $TCA['tx_toctoc_comments_prefixtotable']['feInterface'],
 		'columns' => array (
 				'pi1_key' => array (
 						'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_prefixtotable.pi1_key',
@@ -1118,9 +1117,8 @@ $TCA['tx_toctoc_comments_prefixtotable'] = array (
 $TCA['tx_toctoc_comments_ipbl_local'] = array (
 	'ctrl' => $TCA['tx_toctoc_comments_ipbl_local']['ctrl'],
 	'interface' => array (
-		'showRecordFieldList' => 'ipaddr,comment'
+		'showRecordFieldList' => 'ipaddr,blockfe,comment'
 	),
-	'feInterface' => $TCA['tx_toctoc_comments_ipbl_local']['feInterface'],
 	'columns' => array (
 		'ipaddr' => array (
 			'exclude' => 1,
@@ -1129,6 +1127,14 @@ $TCA['tx_toctoc_comments_ipbl_local'] = array (
 				'type' => 'input',
 				'size' => '30',
 				'eval' => 'trim,nospace,unique',
+			)
+		),
+		'blockfe' => array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_ipbl_local.blockfe',
+			'config' => array (
+					'type' => 'check',
+					'default' => '0'
 			)
 		),
 		'crdate' => array (
@@ -1152,7 +1158,7 @@ $TCA['tx_toctoc_comments_ipbl_local'] = array (
 		),
 	),
 	'types' => array (
-		'0' => array ('showitem' => 'ipaddr;;;;1-1-1, crdate, comment')
+		'0' => array ('showitem' => 'ipaddr,blockfe;;;;1-1-1, crdate, comment')
 	),
 	'palettes' => array (
 		'1' => array ('showitem' => '')
@@ -1164,7 +1170,6 @@ $TCA['tx_toctoc_comments_ipbl_static'] = array (
 	'interface' => array (
 		'showRecordFieldList' => 'ipaddr,comment'
 	),
-	'feInterface' => $TCA['tx_toctoc_comments_ipbl_static']['feInterface'],
 	'columns' => array (
 		'ipaddr' => array (
 			'exclude' => 1,
@@ -1198,7 +1203,6 @@ $TCA['tx_toctoc_ratings_scope'] = array (
 		'interface' => array (
 				'showRecordFieldList' => 'sys_language_uid,l18n_parent,l18n_diffsource,hidden,scope_title,scope_description,display_order'
 		),
-		'feInterface' => $TCA['tx_toctoc_ratings_scope']['feInterface'],
 		'columns' => array (
 				'sys_language_uid' => array (
 						'exclude' => 1,

@@ -16,6 +16,9 @@ select_val = 5,10,20,30,50,100
 # cat=basic//10; type=string; label=Network blocking lists:Comma-separated list of network blocking lists (such as cbl.abuseat.org)
 dnsbl_list =
 
+# cat=basic//12; type=boolean; label=Block Ips in static lists from front end access:Needs install of EXT:toctoccommentssiteban. There, TS-option activateBan must be set to 1 to activate the feature
+useSpamhausBlocklistForWebsiteBan = 0
+
 # cat=database//02; type=boolean; label=Frontend, import prefix to table map data:On first call the plugin imports a first set of data into an empty table tx_toctoc_comments_prefixtotable, including most common mappings such as tx_news, tt_news, TT_products and others
 importDataprefixtotable = 0
 
@@ -37,4 +40,8 @@ delusers_lastname  = user
 # cat=deleted user//05; type=string; label=deleted users emailaddress in comment lists
 delusers_email = deleteduser@site.tld
 
+# cat=reports//01; type=string; label=URL to use for checking Whois information on IP4 addresses
+urlWhoisIP4 = http://www.whois.com/whois/
 
+# cat=reports//01; type=string; label=URL to use for checking Whois information on IP6 addresses
+urlWhoisIP6 = http://www.tcpiputils.com/whois-lookup/

@@ -287,6 +287,7 @@ CREATE TABLE tx_toctoc_comments_ipbl_local (
 	crdate int(11) DEFAULT '0' NOT NULL,
 	cruser_id int(11) DEFAULT '0' NOT NULL,
 	ipaddr varchar(255) DEFAULT '' NOT NULL,
+	blockfe int(11) DEFAULT '0' NOT NULL,
 	comment text,
 
 	PRIMARY KEY (uid),

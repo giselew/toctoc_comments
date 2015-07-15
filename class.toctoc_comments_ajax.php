@@ -39,23 +39,23 @@
  *
  *   93: class toctoc_comments_ajax
  *  145:     public function __construct()
- *  658:     protected function initTSFE()
- *  704:     public function main()
- *  744:     public function handleCommentatorNotifications()
- *  755:     protected function updateCommentDisplay()
- *  773:     protected function updateComment()
- *  788:     protected function webpagepreview()
- *  800:     protected function previewcomment()
- *  811:     protected function commentsSearch()
- *  823:     protected function cleanupfup()
- *  837:     protected function getCaptcha($captchatype, $cid)
- *  972:     protected function chkcaptcha($cid, $code)
- *  999:     protected function getUserCard()
- * 1012:     protected function updateCommentsView()
- * 1137:     protected function updateRating()
- * 1665:     protected function processDeleteSubmission()
- * 1746:     protected function processDenotifycommentSubmission()
- * 1797:     protected function recentCommentsClearCache()
+ *  668:     protected function initTSFE()
+ *  714:     public function main()
+ *  754:     public function handleCommentatorNotifications()
+ *  765:     protected function updateCommentDisplay()
+ *  783:     protected function updateComment()
+ *  798:     protected function webpagepreview()
+ *  810:     protected function previewcomment()
+ *  821:     protected function commentsSearch()
+ *  833:     protected function cleanupfup()
+ *  847:     protected function getCaptcha($captchatype, $cid)
+ *  982:     protected function chkcaptcha($cid, $code)
+ * 1009:     protected function getUserCard()
+ * 1022:     protected function updateCommentsView()
+ * 1147:     protected function updateRating()
+ * 1675:     protected function processDeleteSubmission()
+ * 1756:     protected function processDenotifycommentSubmission()
+ * 1807:     protected function recentCommentsClearCache()
  *
  * TOTAL FUNCTIONS: 18
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -183,17 +183,27 @@ class toctoc_comments_ajax {
 		if ($this->cmd == 'searchcomment') {
 			$this->initTSFE();
 		} elseif (!isset($GLOBALS['TCA']['pages']['ctrl'])) {
-			// avoid flux crashes or other exts replacing TCA
+			// make sure $GLOBALS['TCA'] is present
 			$this->initTSFE();
+			if (version_compare(TYPO3_version, '6.1', '>')) {
+				if (!is_array($GLOBALS['TCA']) || !isset($GLOBALS['TCA']['pages'])) {
+		            \TYPO3\CMS\Core\Core\Bootstrap::getInstance()->loadCachedTca();
+				}
+
+			}
+
 			if (!isset($GLOBALS['TCA'])) {
 				$GLOBALS['TCA'] = array();
 			}
+
 			if (!isset($GLOBALS['TCA']['pages'])) {
 				$GLOBALS['TCA']['pages'] = array();
 			}
+
 			if (!isset($GLOBALS['TCA']['pages']['columns'])) {
 				$GLOBALS['TCA']['pages']['columns'] = array();
 			}
+
 		}
 
 		if($this->cmd == 'showcomments') {

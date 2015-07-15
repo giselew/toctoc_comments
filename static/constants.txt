@@ -332,13 +332,16 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Spam protection//17; type=boolean; label=IP-Blocklists in Frontend:If enabled comments by blocked IPs are evaluated as spam
 	useIPblocking = 1
 	
-	# cat=plugin.tx_toctoccomments_pi1: Spam protection//18; type=boolean; label=Confirmed opt-in (COI):A new commentator receives a confirmation mail needs to confirm his mailaddress by clicking a link, which unhides the comment (not yet approved). 
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//18; type=boolean; label=Confirmed opt-in (COI) with email and IP:A new commentator receives a confirmation mail and needs to confirm his mailaddress by clicking a link, which unhides the comment (not yet approved). Confirmation is valid only on current IP of the user.
 	confirmedOptIn = 0
 	
-	# cat=plugin.tx_toctoccomments_pi1: Spam protection//19; type=string; label=HTML-E-mail template notification on dislikes:HTML-Template to use for notification email for dislike-alerts to administrator
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//19; type=boolean; label=Confirmed opt-in (COI) email only:A new commentator receives a confirmation mail needs to confirm his mailaddress by clicking a link, which unhides the comment (not yet approved). Confirmation is valid regardless of IP of the user. 
+	confirmedOptInEmailOnly = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//20; type=string; label=HTML-E-mail template notification on dislikes:HTML-Template to use for notification email for dislike-alerts to administrator
 	emailTemplateDislikeHTML = EXT:toctoc_comments/res/template/toctoccomments_template_email_dislike.html
 
-	# cat=plugin.tx_toctoccomments_pi1: Spam protection//20; type=string; label=Text-E-mail template notification on dislikes:Template to use for notification email for dislike-alerts to administrator
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//21; type=string; label=Text-E-mail template notification on dislikes:Template to use for notification email for dislike-alerts to administrator
 	emailTemplateDislike = EXT:toctoc_comments/res/template/toctoccomments_template_emaildislike.txt
 	
 	# cat=plugin.tx_toctoccomments_pi1: Spam protection//22; type=boolean; label=Enables check of SMTP-Service: This feature needs PHP extension sockets to be compiled in the PHP-binary. It makes sending mail more safe and errors can be detected more easily. Requires SMTP-Service to be configurend correctly in INSTALL-Tool of TYPO3 

@@ -638,3 +638,29 @@
 	  New options in toctoc_comments_pi2: google.ClientID and google.ClientSecret
 	* Removed dependency on fe_login, formerly inherited Typoscript-options need manual setup: storagePid, email_from, email_fromName and replyTo.
 	* Fixed missing "f" in Facebooklogin. After Facebook design update of April/19 2015 the old linked image-file went offline. The new "f" is now hosted locally.
+
+2015-07-15  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 7.4.0
+	* AJAX-Login: There's a new TS option which allows to require COI from new users: If set to 1 they must confirm their e-mail by changing their password from a link sent to the new user by mail. 
+	  register.signupConfirmEmail = 0
+	* New options to control crawlers and blacklisted IPs in section advanced:
+	  In addition to the default CrawlerAgents identified by 'googlebot','yahoo','baidu','msnbot','bingbot','spider','bot.htm','yandex','jeevez' we added additional options allowing to define black- or whitelisted crawlers:
+      advanced.blacklistCrawlerAgentStrings = AU-MIC,Python,Test,Wotbox, ... (and some more)
+      and advanced.whitelistCrawlerAgentStrings = 
+      You can log now crawler-accesses to pi1/crawlerprotocol.txt with advanced.protocolCrawlerAgents = 1 (default is 0)
+      advanced.protocolCrawlerAgentsMaxLines = 10000 limits the size of the protocol (old entries are dropped after this limit when new entries are written)
+      Same protocol ist possible for blacklisted IPs in pi1/blacklistprotocol.txt with advanced.protocolBlacklistedIPs = 1 (default is 0)
+      advanced.protocolBlacklistedIPsMaxLines = 10000 limits the size of the protocol
+      Now some clients use an empty HTTP_USER_AGENT, this is uncool and they are most possibly crawlers to be excluded from the commenting system and session creation
+      For this set advanced.dontTakeEmptyAgentStringAsCrawler = 1 (default is 0)
+	* New reports module in backend: Module Reports offers 4 reports: Sessions, Active users, Crawler protocol and Blacklisted IPs protocol 
+	  Session report includes Session deletion and blocking users from commenting and/or website access.
+	* New Extension configuration options: Whois server for IPv4 and IPv6 queries can be defined (used in BE-module)
+	* IPs in local block list can have mask now like 192.162.0.0/24
+	* New field in table local IP block: "Block frontend access" allows IPs to be banned from access to comments (concerns only comments from anonymous users) 
+	* New extension configuration option: Use static IP ban list from Spamhaus.org for website banning using extension toctoccommentssiteban 
+	* Added spamProtect.confirmedOptInEmailOnly = 0: Confirmed opt-in (COI) email only:A new commentator receives a confirmation mail needs to confirm his mailaddress by clicking a link, which unhides the comment (not yet approved). Confirmation is valid regardless of IP of the user.
+	* Fixed Backendmodule (error on load) for TYPO3 7.0 and newer.
+	* Fixed Typo-error in setup.txt
+	* Fixed donation key check, now it checks the IP of the Server (before: IP of Backenduser)
+	* New addon extension for frontend: ASNC Siteban (toctoccommentssiteban) allows IP blocklist based ban from website access with a redirect to an appropriate page or site

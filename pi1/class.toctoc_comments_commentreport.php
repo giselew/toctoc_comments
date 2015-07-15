@@ -158,7 +158,9 @@ class toctoc_comments_commentreport extends toctoc_comment_lib {
 				$errors['text'] = $this->pi_getLLWrap($pObj, 'commentreport.error_cannot_get_info', FALSE);
 			} else {
 				// Get comment
-				t3lib_div::loadTCA('tx_toctoc_comments_comments');
+				if (version_compare(TYPO3_branch, '6.1', '<')) {
+					t3lib_div::loadTCA('tx_toctoc_comments_comments');
+				}
 				$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*',
 						'tx_toctoc_comments_comments',
 						'uid=' . intval($info['uid']));
@@ -291,7 +293,9 @@ class toctoc_comments_commentreport extends toctoc_comment_lib {
 			$complainedcomment= $this->pi_getLLWrap($pObj, 'commentreport.error_cannot_get_info', FALSE);
 		} else {
 			// Get comment
-			t3lib_div::loadTCA('tx_toctoc_comments_comments');
+			if (version_compare(TYPO3_branch, '6.1', '<')) {
+				t3lib_div::loadTCA('tx_toctoc_comments_comments');
+			}
 			$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*',
 					'tx_toctoc_comments_comments',
 					'uid=' . intval($info['uid']));
