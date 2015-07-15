@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<description>Additional CSH labels</description>
+		<type>CSH</type>
+		<csh_table>tx_toctoc_comments_comments</csh_table>
+		<fileId>EXT:toctoc_comments/locallang_csh.xml</fileId>
+		<labelContext type="array">
+		</labelContext>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="external_ref.description">Commented record</label>
+			<label index="external_ref.details">Displays commented page or, if commenting on records like news, the commented record. Manual change of this value is risky, the new record must be suitable. This means for example that the new page already should contain the plugin, or on the page for the records, the plugin must be present.</label>
+			<label index="_external_ref.seeAlso">tx_toctoc_comments_comments:external_ref_uid</label>
+			<label index="external_ref_uid.description">Title of the content element</label>
+			<label index="external_ref_uid.details">Displays the header of the content element which holds the plug-in. As you can select any content element you want, make sure that in case of changes to this field, the new content element holds the plugin as well!</label>
+			<label index="_external_ref_uid.seeAlso">tx_toctoc_comments_comments:external_ref</label>
+			<label index="approved.description">Approval by system or moderator</label>
+			<label index="approved.details">Comments must be approved by system or moderator in order to be displayed. Check this box to approve comments.</label>
+			<label index="firstname.description">First name</label>
+			<label index="firstname.details">Commenter's first name.</label>
+			<label index="lastname.description">Last name</label>
+			<label index="lastname.details">Commenter's last name. Use this field as Alias or single Name field if you don't want to use the first name field</label>
+			<label index="email.description">Email</label>
+			<label index="email.details">Commenter's email.</label>
+			<label index="location.description">Location</label>
+			<label index="location.details">Commenter's location (where he comes from).</label>
+			<label index="homepage.description">Web site</label>
+			<label index="homepage.details">Commenter's web site.</label>
+			<label index="content.description">Comment</label>
+			<label index="content.details">This is a text as entered by commenter.</label>
+			<label index="ip.description">IP address</label>
+			<label index="ip.details">This is the IP address of the host from which this rating was made.</label>
+			<label index="remote_addr.description">IP address</label>
+			<label index="remote_addr.details">This is the IP address of the host from which this comment was made. If you plan to use this information for access limitation, check that it is not a proxy or you can block lots of innocent people.</label>
+			<label index="toctoc_comments_user.description">TocToc Comments User id</label>
+			<label index="toctoc_comments_user.details">The internal ID for user identification is either based on IP or on fe_users uid. It's also referred as 'TocToc user id'. This ID must be in format IP.0 or 0.0.0.0.fe_users.uid</label>
+			<label index="toctoc_commentsfeuser_feuser.description">uid of Frontend user</label>
+			<label index="toctoc_commentsfeuser_feuser.details">The fe_users.uid of the user who created the comment. It's set to 0 for users who leave comments without login.</label>
+			<label index="tx_commentsnotify_notify.description">Notify about new comments</label>
+			<label index="tx_commentsnotify_notify.details">The user want to be notified about new comments. On new comments an email will be sent to him, with a link to the new comment. Email notification only works if the new comment is automatically approved or approved from the admin email. It's not working when changing data in the backend.</label>
+			<label index="external_prefix.description">External prefix for this comment</label>
+			<label index="external_prefix.details">The external prefix is set by TS option and identifies the TYPO3 table for which the comment was made. 'pages' in fact means tt_content without associated records from another table. Any other prefix indicated that the comment is associated to this table and, as always, to the content element holding the comment.</label>
+			<label index="_external_prefix.seeAlso">tx_toctoc_comments_comments:external_ref</label>
+			<label index="ilike.description">Positive rating</label>
+			<label index="ilike.details">An iLike is a positive rating on a comment or record.</label>
+			<label index="idislike.description">Negative rating</label>
+			<label index="idislike.details">An iDislike is a negative rating on a comment or record.</label>
+			<label index="myrating.description">Rating on a scale of stars</label>
+			<label index="myrating.details">Ratings made with the ratings bar (rating-stars) are stored as 'Myratings'.</label>
+			<label index="rating.description">Sum of ratings with the stars</label>
+			<label index="rating.details">Sum of the ratings made with the ratings bar (rating-stars) are stored as 'Myratings'.</label>
+			<label index="vote_count.description">Number of votes</label>
+			<label index="vote_count.details">Total number of votes made for this item.</label>
+			<label index="optindate.description">Date of email opt-in</label>
+			<label index="optindate.details">The date of opt-in is filled as soon the user confirms his email address. The confirmation process does only check the email, not the IP.</label>
+			<label index="optin_email.description">email to be confirmed by email</label>
+			<label index="optin_email.details">When an opt-in is requested the email is filled and the IP of the request</label>
+			<label index="optin_ip.description">IP from where the email opt-in was made</label>
+			<label index="optin_ip.details">When a user tries to comment from another IP then he will have to reconfirm his email</label>
+			<label index="spamword.description">Word identified as Spam</label>
+			<label index="spamword.details">This word is identified as possible spam and therefore will get the associated spam values - this is for evaluation if a comment is spam or not.</label>
+			<label index="spamvalue.description">Spampoints for this word</label>
+			<label index="spamvalue.details">When a Spamword appears in a comment it will get this number of spam points.</label>
+			<label index="_spamvalue.seeAlso">tx_toctoc_comments_comments:spamword</label>
+			<label index="sys_language_uid.description">Language</label>
+			<label index="sys_language_uid.details">Language for which this spam word is defined.</label>
+			<label index="attachmentvariant.description">Type of attachment</label>
+			<label index="attachmentvariant.details">1 is webpage preview, 2 is image, 3 is video, 4 is general document (pdf, doc..)</label>
+			<label index="systemurltext.description">Optional URL of the attachment</label>
+			<label index="systemurltext.details">For webpage previews the URL as returned by the webserver is stored here. The URL the User entered is in table attachment_mm - it is linked to the System-URL by the relation to the corresponding record in the table here (attachment).</label>
+			<label index="photo_main.description">Main image</label>
+			<label index="photo_main.details">The main image for an attachment is the website-logo (for webpages, if a logo is found), for image-attachments it's the uploaded image.</label>
+			<label index="photos_etc.description">Additional images for the attachment</label>
+			<label index="photos_etc.details">For a webpage preview here the found images are stored.</label>
+			<label index="title.description">Attachment title</label>
+			<label index="title.details">Title of the attachment.</label>
+			<label index="attachmentfilesize.description">Attachment file size in bytes</label>
+			<label index="attachmentfilesize.details">The size of the file is used for display in frontend. For images and pdf different limits can be given in TS with picUploadMaxfilesize and pdfUploadMaxfilesize (in the options values are in Kbytes)</label>
+			<label index="description.description">Attachment description</label>
+			<label index="description.details">Description or illustrating Text for the attachment.</label>
+			<label index="pi1_key.description">pi1 extension key</label>
+			<label index="pi1_key.details">The extension key for which the prefix to table map is valid.</label>
+			<label index="pi1_table.description">Extensiontable</label>
+			<label index="pi1_table.details">Table where pi1 plugin stores records</label>
+			<label index="show_uid.description">Url parameter</label>
+			<label index="show_uid.details">Some extensions may use url parameter other than showUid to show a record. showUid is used by default, if the extension uses another parameter you can specify it here</label>
+			<label index="reference.description"></label>
+			<label index="reference.details"></label>
+			<label index="seen.description">User saw this element</label>
+			<label index="seen.details">When a user first time sees a comment or plugin, after 3 seconds, the view is recorded here</label>
+			<label index="pagetstampseen.description">TYPO3 page id of the view</label>
+			<label index="pagetstampseen.details">Also the TYPO3 page id of the view is recorded and used later in charts for links</label>
+			<label index="tstampseen.description">Time of the view</label>
+			<label index="tstampseen.details">The exact date time when the user first saw the element</label>
+			<label index="tstampilike.description">Time of the like</label>
+			<label index="tstampilike.details">The exact date time when the user liked the element</label>
+			<label index="tstampidislike.description">Time of the dislike</label>
+			<label index="tstampidislike.details">The exact date time when the user disliked the element</label>
+			<label index="tstampmyrating.description">Time of the rating</label>
+			<label index="tstampmyrating.details">The exact date time when the user rated the element</label>
+			<label index="pagetstampilike.description">TYPO3 page id of the like</label>
+			<label index="pagetstampilike.details">The TYPO3 page id of the like is recorded and used later in charts for links</label>
+			<label index="pagetstampidislike.description">TYPO3 page id of the dislike</label>
+			<label index="pagetstampidislike.details">The TYPO3 page id of the dislike is recorded and used later in charts for links</label>
+			<label index="pagetstampmyrating.description">TYPO3 page id of the rating</label>
+			<label index="pagetstampmyrating.details">The TYPO3 page id of the rating is recorded and used later in charts for links</label>
+			<label index="displayfields.description">Fields to display in top ratings list and other charts</label>
+			<label index="displayfields.details">For selecting topRatings data on records like News or Products toctoc_comments needs to know which fields of the record to display. 
+In displayfields you can specify title, time of the record, the content (will be cropped) and you can specify if toctoc_comments should use translated records (in the same records table) with sys_languahe_uid, also you can specify the name of the field holding an image for display.
+A displayfield has the following syntax
+Field for title [filed for time] [field for image] [field for sys_language_uid], [field for content]
+for tt_news it looks like this:
+title tstamp image sys_language_uid, short</label>
+			<label index="topratingsimagesfolder.description">Folder with images to display in top ratings list and other charts</label>
+			<label index="topratingsimagesfolder.details">If in displayfileds an image is specified, then we need to now the folder containing the images of the extension, Normally this is uploads/pics/, but it can be another folder which can be specified here.</label>
+			<label index="topratingsdetailpage.description">Force a detail page for top ratings and other charts</label>
+			<label index="topratingsdetailpage.details">Some website allow their records to be rated on overview pages and also on detailpages. It concerns mainly the extensions tt_products and tt_news. So linking the rated item to the overview page is a bad idea - here you can force the page which displays the detail records.</label>
+	
+			
+		</languageKey>
+	</data>
+	<orig_hash type="array">
+	</orig_hash>
+	<orig_text type="array">
+	</orig_text>
+</T3locallang>

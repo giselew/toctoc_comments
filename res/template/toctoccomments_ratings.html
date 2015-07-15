@@ -1,0 +1,200 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Rating Template</title>
+<!-- ###HEADER_PARTS### -->
+
+<!-- ###ADDITIONAL_CSS### begin -->
+<link rel="stylesheet" href="###CSS_FILE###" />
+<!-- ###ADDITIONAL_CSS### end -->
+<!-- ###HEADER_PARTS### -->
+</head>
+
+<body>
+
+<h3>TEMPLATE RATING (WITH VOTING)</h3>
+<em>This is the template for rating display</em>
+
+<!-- ###TEMPLATE_RATING### begin -->
+###MYILIKE_AREA###
+<div class="tx-tc-rts-container">
+
+	<div id="tx-tc-rts-dp-###REF###" class="tx-tc-rts-li">
+		<div class="tx-tc-rts">
+			###COMMENT_DATE###
+			<div class="tx-tc-rts-dp###HIDEVOTE###">
+				<div class="tx-tc-myrts-gold-bar" style="width: ###MYBAR_WIDTH###px;left: ###MYBAR_LEFT###px"></div>
+				<div class="tx-tc-rts-grey-bar"></div>
+				<div class="tx-tc-rts-gold-bar" style="width: ###BAR_WIDTH###px"></div>
+				<div class="###CLASSVOTEBARREVIEW###">
+					<div>
+						###VOTE_LINKS###
+					</div>
+					<div class="tx-tc-rts-cleaner"></div>
+				</div>
+			</div>
+			<div class="tx-tc-rts-text###HIDEVOTE###">
+				###RATING###
+				<!--  <br />
+				###TEXT_RATING_TIP###-->
+			</div>
+			<div class="tx-tc-myrts-myrt###HIDEVOTEMYRATING###">###MYRATING###</div>
+		</div>
+	</div>		
+	
+</div>
+<!-- ###TEMPLATE_RATING### end -->
+
+<!-- ###TEMPLATE_MYRATING### start -->
+<div id="tx-tc-myrts-###REF###" class="tx-tc-rts-area">
+	<div id="tx-tc-myrts-dp-###REF###" class="tx-tc-rts-li">
+		<div class="tx-tc-myrts-dp">
+			<div class="tx-tc-myrts-ilke">###MYILIKE######MYILIKETEXT###</div>
+			<div class="tx-tc-myrts-disilke">###MYIDISLIKE######MYIDISLIKETEXT###</div>
+		</div>
+	</div>
+</div>###BRFORFIRSTSCOPE###
+<!-- ###TEMPLATE_MYRATING### end -->
+<!-- ###TEMPLATE_MYRATING_TOP### start -->
+	<div id="tx-tc-myrts-dp-###REF###" class="tx-tc-rts-li">
+		<div class="tx-tc-myrts-dp">
+			<div class="tx-tc-myrts-ilke">###MYILIKE######MYILIKETEXT###</div>
+			<div class="tx-tc-myrts-disilke">###MYIDISLIKE######MYIDISLIKETEXT###</div>
+		</div>
+	</div>
+<!-- ###TEMPLATE_MYRATING_TOP### end -->
+
+<!-- ###TEMPLATE_RATING_STATIC### begin -->
+###MYILIKE_AREA###	
+<div class="tx-tc-rts-container">
+
+	<div id="tx-tc-rts-dp-###REF###" class="tx-tc-rts-li">
+		<div class="tx-tc-rts">
+			###COMMENT_DATE###
+			<div class="tx-tc-rts-dp###HIDEVOTE###">
+				<div class="tx-tc-myrts-gold-bar" style="width: ###MYBAR_WIDTH###px;left: ###MYBAR_LEFT###px"></div>
+				<div class="tx-tc-rts-grey-bar"></div>
+				<div class="tx-tc-rts-gold-bar" style="width: ###BAR_WIDTH###px"></div>
+				<div class="###CLASSVOTEBAR###">
+					<div class="tx-tc-rts-cleaner"></div>
+				</div>
+			</div>
+			<div class="tx-tc-rts-text###HIDEVOTE###">
+				###RATING###
+				<!--  <br />
+				###TEXT_RATING_TIP###-->
+			</div>
+			<div class="tx-tc-myrts-myrt###HIDEVOTEMYRATING###">###MYRATING###</div>
+		</div>
+	</div>
+	
+</div>
+<!-- ###TEMPLATE_RATING_STATIC### end -->
+
+<!-- ###TEMPLATE_MYRATING_STATIC### begin -->
+<div id="tx-tc-myrts-###REF###" class="tx-tc-rts-area">
+	<div id="tx-tc-myrts-dp-###REF###" class="tx-tc-rts-li">
+		<div class="tx-tc-myrts-dp">
+			<div class="tx-tc-myrts-ilke">###MYILIKE######MYILIKETEXT###</div>
+			<div class="tx-tc-myrts-disilke">###MYIDISLIKE######MYIDISLIKETEXT###</div>
+		</div>
+	</div>
+	         
+</div>###BRFORFIRSTSCOPE###
+<!-- ###TEMPLATE_MYRATING_STATIC### end -->
+
+<!-- ###VOTE_LINK_SUB### begin -->
+<a title="###APIRATINGTIP###" id="tx-tc-rts-star-v-###VALUE###__###REF###__###CID###__###CHECK###" href="javascript:void(0)" rel="nofollow" class="tx-tc-rts-star-v tx-tc-rts-star-###VALUE###"></a>
+<!-- ###VOTE_LINK_SUB### end -->
+
+<!-- ###VOTE_LINK_SUB_OVERALLVOTE### begin -->
+<span title="###APIRATINGTIP###" id="tx-tc-rts-star-v-###VALUE###__###REF###__###CID###__###CHECK###" class="tx-tc-rts-star-v tx-tc-rts-star-###VALUE### tx-tc-idrep"></span>
+<!-- ###VOTE_LINK_SUB_OVERALLVOTE### end -->
+
+<!-- ###VOTE_LINKARTICLE_SUB### begin -->
+<a href="javascript:void(0)" rel="nofollow" id="tx-tc-rts-star-v-###VALUE###__###REF###__###CID###__###CHECK###" class="tx-tc-rts-star-v tx-tc-rts-star-###VALUE###"></a>
+<!-- ###VOTE_LINKARTICLE_SUB### end -->
+
+<!-- ###VOTE_LINKARTICLE_SUB_OVERALLVOTE### begin -->
+<span title="###APIRATINGTIP###" id="tx-tc-rts-star-v-###VALUE###__###REF###__###CID###__###CHECK###" class="tx-tc-rts-star-v tx-tc-rts-star-###VALUE### tx-tc-idrep"></span>
+<!-- ###VOTE_LINKARTICLE_SUB_OVERALLVOTE### end -->
+
+<!-- ###ILIKE_STATIC_SUB### begin -->
+<div class="tx_toctoc_comments_static_ilike###CONTENTADDCSS###">###CONTENT###</div>
+<!-- ###ILIKE_STATIC_SUB### end -->
+
+<!-- ###ILIKE_LINK_SUB### begin -->
+<a href="javascript:void(0)" rel="nofollow" id="tx-tc-rts-star-l-###VALUE###__###REF###__###CID###__###CHECK###__like" ###TITLE### class="tx-tc-rts-star-l tx-tc-rts-star-###VALUE###">###CONTENT###</a>
+<!-- ###ILIKE_LINK_SUB### end -->
+
+<!-- ###IDISLIKE_LINK_SUB### begin -->
+<a href="javascript:void(0)" rel="nofollow" id="tx-tc-rts-star-l-###VALUE###__###REF###__###CID###__###CHECK###__unlike" ###TITLE### class="tx-tc-rts-star-l tx-tc-rts-star-###VALUE###">###CONTENT###</a>
+<!-- ###IDISLIKE_LINK_SUB### end -->
+
+<!-- ###ILIKE_LINKTOP_SUB### begin -->
+<a href="javascript:void(0)" rel="nofollow" id="tx-tc-rts-star-l-###VALUE###__###REF###__###CID###__###CHECK###__liketop" ###TITLE### class="tx-tc-rts-star-l tx-tc-rts-star-###VALUE###">###CONTENT###</a>
+<!-- ###ILIKE_LINKTOP_SUB### end -->
+
+<!-- ###IDISLIKE_LINKTOP_SUB### begin -->
+<a href="javascript:void(0)" rel="nofollow" id="tx-tc-rts-star-l-###VALUE###__###REF###__###CID###__###CHECK###__unliketop" ###TITLE### class="tx-tc-rts-star-l tx-tc-rts-star-###VALUE###">###CONTENT###</a>
+<!-- ###IDISLIKE_LINKTOP_SUB### end -->
+
+<!-- ###COMMENT_DATE_SUB### begin -->
+<div class="tx-tc-ctdate" id="tx-tc-ctdatedisp-###COMMENTID###">###COMMENT_DATE###</div>###COMMENTVIEWS###<div id="tx-tc-ctdatetime-###COMMENTID###" class="tx-tc-nodisp">###COMMENT_TIMESTAMP###</div>
+<!-- ###COMMENT_DATE_SUB### end -->
+
+<!-- ###TEMPLATE_MYARTICLERATING_TOP### start -->
+<div id="tx-tc-myrtstop-dp-###REF###" class="tx-tc-rts-li-text###HIDECSS###">
+	<div class="tx-tc-atrtstop-ilike-dp">###MYILIKETEXT######MYIDISLIKETEXT###</div>
+</div>
+<!-- ###TEMPLATE_MYARTICLERATING_TOP### end -->
+at the end a couple of redundant subtemplates (performance question))
+
+This is redundant to the comments ratings
+
+<!-- ###SHOWUC_SUB### begin -->
+<div class="tx-tc-ct-uc" id="tx-tc-cts-uc-###COMMENT_ID###">
+	<div class="tx-tc-ct-uc-pic2" id="tx-tc-cts-uc-pic2-###COMMENT_ID###">###PCEHDRPIC###</div>
+	<div class="tx-tc-ct-box-ctclose">
+		<span id="tx-tc-cts-uc-cls-###COMMENT_ID###" class="tx-tc-ucclose tx-tc-CloseButton" title="###TXTCLOSE###"></span>
+	</div>
+	<div class="tx-tc-ucinner" id="tx-tc-cts-uc-inner-###COMMENT_ID###"></div>
+</div>
+<!-- ###SHOWUC_SUB### end -->
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
