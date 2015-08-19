@@ -1,0 +1,1135 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!-- ###HEADER_ADDITIONS### begin -->
+###JQUERYTOOLS###
+<link href="###BOXMODEL###" type="text/css" rel="stylesheet" />
+<link href="###SITE_REL_PATH###res/css/flowplayer/functional.css" rel="stylesheet" type="text/css"/>
+###EMOJICSS###
+<script type="text/javascript" src="###SITE_REL_PATH###res/js/temp/tx-tc-###LANCODE###.js"></script>
+<!-- ALL jQuery Tools. No jQuery library -->
+###JSSERVERVARS###
+<script type="text/javascript" src="###JSMAIN###"></script>###AJAXLOGINJS###
+<script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.sharrre-1.3.5.js"></script>
+<script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.elastic-1.6.min.js"></script>
+<script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.txtc-simplemodal.1.4.4.min.js"></script>
+<script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.watermark.js"></script>
+<script type="text/javascript" src="###SITE_REL_PATH###res/js/flowplayer.min.js"></script>
+###EMOJIJS###
+<!-- ###ADDITIONAL_CSS### begin -->
+<link rel="stylesheet" href="###CSS_FILE###" />
+<!-- ###ADDITIONAL_CSS### end -->
+<!-- ###HEADER_ADDITIONS### end -->
+</head>
+<body>
+
+<h1>AJAX Header subpart</h1>
+<hr size="1" />
+<!-- ###AJAXHEADER### begin -->
+    <div id="tx-tc-cAD-data-cont-###CID###" class="tx-tc-commentsAjaxData tx-tc-nodisp">
+        ###AJAX_DATA###
+        ###AJAX_COMMENTSDATA###
+        ###AJAX_COMMENTSIMGS###
+    </div>
+     ###IMAGESPRITE###
+	<div id="txtcbbmenu"></div>
+<!-- ###AJAXHEADER### end -->
+        
+<h1>Comments and commenting forms</h1>
+<hr size="1" />
+<h4>Comment listing subpart</h4>
+<!-- ###COMMENT_LIST### begin
+    This subpart formats comments
+-->
+    ###REPLYONCOMMENTTOP###
+    ###COMMENTSMENU###
+    <div id="uid0###UID######CID###" class="tx-tc-cts">
+        <div id="tx-tc-cts-###REFCSS###">
+            <!-- ###COMMENT_LISTAJAX### begin -->
+            <div id="tx-tc-cts-dp-###REFCSS###">
+            <a id="tx-tc-cts-a-###REF###" name="tx-tc-cts-a###REF###"></a>
+                <div class="tx-tc-cts-dp###TOPBORDERCLASS###">
+                ###SUBTEMPLATE_TOPAREA###
+                ###PAGE_BROWSERTOP###
+					          
+                    <!-- ###SINGLE_COMMENT### begin -->
+                    <div id="tx-tc-cts-ct-tx-tc-cts_###COMMENT_ID###" class="tx-tc-cts-ct-box###STYLECOMMENTBOX###">
+                        <div class="tx-tc-sortinfo tx-tc-nodisp" id="tx-tc-sortinfos_###CID###__0###COMMENT_ID###__0###SORTING###__0###SORTPOPULAR###__0###SQNUMBER###__0###POPNUMBER###"></div> 
+                        <div id="tx-tc-cts-ct-dp-tx-tc-cts_###COMMENT_ID###" ###HIGHLIGHTSTYLE###>
+                            <div class="tx-tc-cts-ct-dp">
+                                <div class="tx-tc-ct-box">
+                                   <div class="tx-tc-ct-uc" id="tx-tc-cts-uc-###COMMENT_ID###">
+	                                    <div class="tx-tc-ct-uc-pic2" id="tx-tc-cts-uc-pic2-###COMMENT_ID###">###PCEHDRPIC###</div>
+	                                    <div class="tx-tc-ct-box-ctclose">
+											<span id="tx-tc-cts-uc-cls-###COMMENT_ID###" class="tx-tc-ucclose tx-tc-CloseButton" title="###TXTCLOSE###"></span>
+										</div>
+										<div class="tx-tc-ucinner" id="tx-tc-cts-uc-inner-###COMMENT_ID###"></div>
+                                    </div>
+                                    <div class="tx-tc-ze"></div>
+                                    <div class="tx-tc-ct-box-ctpic">
+                                        <div class="tx-tc-ct-box-picturecrop32"><a href="javascript:void(0)" rel="nofollow" class="tx-tc-picclasslink" id="###SHOWUCLINK###">###IMAGE###</a></div>
+                                        ###EXPANDCOMMENTS###
+                                    </div>
+                                    <div class="tx-tc-ct-box-cttxt###TIPPJS###">
+                                        ###DENOTIFY_LINK######DELETE_LINK######EDIT_LINK###
+                                        <a id="tx-tc-ct-id-###COMMENT_ID###" name="tx-tc-ct-###COMMENT_ID###"></a>
+                                        ###COMMENTREVIEW###
+                                        ###OVERCOMMENTRATINGS###<p id="tx-tc-ct-box-cttxt-###COMMENT_ID###" class="tx-tc-text###STYLEBOX###">###NAMEPART######BROVERCOMMENTRATINGS######COMMENT_CONTENT###</p>
+                                        ###ATTACHMENT###
+                                        <div class="tx-tc-rt">
+                                            <div id="tx-tc-rts-tx_toctoc_comments_comments_###COMMENT_ID###" class="tx-tc-rts-area">
+                                            ###COMMENTDATENORATINGS###
+                                                ###RATINGS###
+                                            </div>
+                                        </div>
+                                    </div>
+                                    ###COMMENT_RESPONSE_START######COMMENT_RESPONSE######COMMENT_RESPONSE_END###
+                                    ###LINE_COMMENTSREPORTREPLYSTART### 
+                                        ###TX_COMMENTSREPORT### 
+                                        ###TX_COMMENTSREPLY### 
+                                        ###TXTHASCHILDREN###
+                                    ###LINE_COMMENTSREPORTREPLYEND###     
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ###SINGLE_COMMENT### end -->
+                    
+                    ###PAGE_BROWSER###
+                </div>    
+            </div>
+            <div class="tx-tc-updatecidlist tx-tc-nodisp" id="tx-tc-updatecidlist###CID###__0###REFCSS###"></div> 
+            
+            <!-- ###COMMENT_LISTAJAX### end -->
+         </div> 
+    </div>
+    ###REPLYONCOMMENT###
+<!-- ###COMMENT_LIST### end -->
+
+<hr />
+<!-- ###SINGLE_SUBCOMMENT### begin -->
+<div id="tx-tc-cts-ct-tx-tc-cts_###COMMENT_ID###" class="tx-tc-cts-ct-box###STYLECOMMENTBOX### tx-tc-cts-ct-box-sc">
+	<div class="tx-tc-sortinfo tx-tc-nodisp" id="tx-tc-sortinfos_###CID###__0###COMMENT_ID###__0###SORTING###__0###SORTPOPULAR###__0###SQNUMBER###__0###POPNUMBER###"></div> 
+    <div id="tx-tc-cts-ct-dp-tx-tc-cts_###COMMENT_ID###" ###HIGHLIGHTSTYLE###>
+        <div class="tx-tc-cts-ct-dp tx-tc-cts-ct-dp-sc">
+            <div class="tx-tc-ct-box tx-tc-ct-box-sc">
+                <div class="tx-tc-ct-uc" id="tx-tc-cts-uc-###COMMENT_ID###">
+	                <div class="tx-tc-ct-uc-pic2" id="tx-tc-cts-uc-pic2-###COMMENT_ID###">###PCEHDRPIC###</div>
+	                <div class="tx-tc-ct-box-ctclose">
+						<span id="tx-tc-cts-uc-cls-###COMMENT_ID###" class="tx-tc-ucclose tx-tc-CloseButton" title="###TXTCLOSE###"></span>
+					</div>
+					<div class="tx-tc-ucinner" id="tx-tc-cts-uc-inner-###COMMENT_ID###">
+	                </div>
+				</div>
+                <div class="tx-tc-ze tx-tc-ze-sc"></div>
+                <div class="tx-tc-ct-box-ctpic tx-tc-ct-box-ctpic-sc">
+                    <div class="tx-tc-ct-box-picturecrop32 tx-tc-ct-box-picturecrop32-sc"><a href="javascript:void(0)" rel="nofollow" class="tx-tc-picclasslink" id="###SHOWUCLINK###">###IMAGE###</a></div>
+                    ###EXPANDCOMMENTS###
+                </div>
+                <div class="tx-tc-ct-box-cttxt tx-tc-ct-box-cttxt-sc###TIPPJS###">
+                    ###DENOTIFY_LINK######DELETE_LINK######EDIT_LINK###
+                    <a id="tx-tc-ct-id-###COMMENT_ID###" name="tx-tc-ct-###COMMENT_ID###"></a>
+                    ###OVERCOMMENTRATINGS###<p id="tx-tc-ct-box-cttxt-###COMMENT_ID###" class="tx-tc-text###STYLEBOX### tx-tc-text###STYLEBOX###-sc">###NAMEPART######BROVERCOMMENTRATINGS######COMMENT_CONTENT###</p>
+                    ###ATTACHMENT###
+                    <div class="tx-tc-rt tx-tc-rt-sc">
+                        <div id="tx-tc-rts-tx_toctoc_comments_comments_###COMMENT_ID###" class="tx-tc-rts-area tx-tc-rts-area-sc">
+                        	###COMMENTDATENORATINGS###
+                            ###RATINGS###
+                        </div>
+                    </div>
+                </div>
+                ###COMMENT_RESPONSE_START######COMMENT_RESPONSE######COMMENT_RESPONSE_END###
+                ###LINE_COMMENTSREPORTREPLYSTART### 
+                ###TX_COMMENTSREPORT### 
+                ###TX_COMMENTSREPLY### 
+                ###TXTHASCHILDREN###
+                ###LINE_COMMENTSREPORTREPLYEND###     
+                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ###SINGLE_SUBCOMMENT### end -->    					
+
+<h4>Subtemplate for the top area of the plugin</h4>
+<!-- ###SUBTOPAREA### begin -->
+ ###TOPATTACHMENT###
+	<div id="uid###UID######CID###" class="tx-tc-ct-box###TOPATTACHMENTSTYLEHIDE###">            
+		<div class="tx-tc-text-top">
+			<div id="tx-tc-myrtstop-###REF###" class="tx-tc-rts-area###HIDECSS###">
+				<div id="tx-tc-myrtstop-dp-###REF###" class="tx-tc-rts-li-text###HIDECSS###">
+					<div class="tx-tc-atrtstop-ilike-dp###STATICADDON###">
+						###ARTICLELIKE###
+					</div>
+				</div>
+			</div>
+			###ARTICLECOMMENTLINK###
+			###ARTICLESHARE### 
+			<div class="tx-tc-atrts-dp" id="tx-tc-atrts-dp-###REF###">
+				<div id="tx-tc-rts-###REF###" class="tx-tc-rts-area">###ARTICLEVOTE###</div>
+			</div>
+			###COMMENTSCOUNT###
+		</div>
+	</div>
+	<div id="confirm###CID###" class="tx-tc-nodisp">
+		<div class="header"><span>###TXTCONFIRM###</span></div>
+		<div class="message"></div>
+		<div class="buttons">
+			<div class="no simpletxtcmoddlg-close">###TXTNO###</div><div class="yesconfirm">###TXTYES###</div>
+		</div>
+	</div>
+	<div id="information###CID###" class="tx-tc-nodisp">
+		<div class="header"><span>###TXTINFO###</span></div>
+		<div class="message"></div>
+		<div class="buttons">
+			<div class="yes simpletxtcmoddlg-close">###TXTOK###</div>
+		</div>
+	</div>
+<!-- ###SUBTOPAREA### end -->
+
+<!-- ###SUBTOPAREAFP### begin -->
+	<div class="tx-tc-cts-dp" id="tx-tc-cts-dp-split-###REFCSS###">
+		###TOPAREA###				
+	</div>
+	<div id="dummy"></div>
+<!-- ###SUBTOPAREAFP### end -->
+
+<hr size="1" />
+<h4>No comments</h4>
+<!-- ###NO_COMMENTS### begin -->
+    <div class="tx-tc-ct-box">
+	    <div class="tx-tc-ct-box-empty">
+	        <p class="tx-tc-text">###TEXT_NO_COMMENTS###</p>
+	    </div>
+    </div>
+<!-- ###NO_COMMENTS### end -->
+<hr size="1" />
+<h4>Comment date subpart</h4>
+<!-- ###COMMENTDATE_NORATINGS### begin -->
+<div class="tx-tc-rts-container">
+	<div id="tx-tc-rts-dp-tx_toctoc_comments_comments_###REF###" class="tx-tc-rts-li">
+		<div class="tx-tc-rts">
+			<div class="tx-tc-ctdate" id="tx-tc-ctdatedisp-###COMMENTID###">###COMMENT_DATE###</div>###COMMENTVIEWS###<div id="tx-tc-ctdatetime-###COMMENTID###" class="tx-tc-nodisp">###COMMENT_TIMESTAMP###</div>
+		</div>
+	</div>
+</div>
+<!-- ###COMMENTDATE_NORATINGS### begin -->
+
+<hr size="1" />
+<h4>Comment count (just the counterdisplay) subpart</h4>
+<!-- ###COMMENTSCOUNTSUB### begin -->    
+     <div class="tx-tc-ct-cnt" id="tx-tc-ct-cnt-###CID###">
+		<span>###COMMENTSCOUNT###</span>
+     </div>
+<!-- ###COMMENTSCOUNTSUB### end -->  
+
+<hr size="1" />
+<h4>Comment counter subpart</h4>
+<!-- ###COMMENTSVIEWCOUNTSUB### begin -->    
+	<span class="tx-tc-ct-viewcnt">###COMMENTSVIEWCOUNT###</span>
+	<span class="tx-tc-cmtvcntr tx-tc-nodisp" id="tx-tc-cmtvcntr__###RECORD###__###FEUSERID###__###CID###__0__###STORPID###"></span>
+<!-- ###COMMENTSVIEWCOUNTSUB### end -->
+
+<h4>Comment counter (just the AJAX-counter) subpart</h4>
+<!-- ###COMMENTSVIEWONLYCOUNTSUB### begin -->    
+     <span class="tx-tc-cmtvcntr tx-tc-nodisp" id="tx-tc-cmtvcntr__###RECORD###__###FEUSERID###__###CID###__0__###STORPID###"></span>
+<!-- ###COMMENTSVIEWONLYCOUNTSUB### end -->
+
+<h4>Comment form subpart</h4>
+<!-- ###COMMENT_FORM### begin -->
+	<div id="tx-tc-pi1-form-###REF###" class="tx-tc-pi1###REVIEWSTYLE###">
+	    <span class="tx-tc-initpreviewvrs tx-tc-nodisp" id="tx-tc-initpreviewvrs-###CID###"></span>
+        <div id="tx-tc-form-###REF###" class="tx-tc-state-###LOGGEDIN###">
+        <!-- ###COMMENT_FORMAJAX### start -->
+            <div id="tx-tc-form-dp-###REF###">
+                 <div class="tx-tc-form-dp">
+                ###TOP_MESSAGE###
+                    <div class="tx-tc-ct-box-ctpic2">
+                        <div class="tx-tc-ct-box-picturecrop322">###IMAGETAG###</div>
+                     </div>
+                    <div class="tx-tc-ct-box-cttxt tx-tc-frmsqrhgt" id="tx-tc-formsqueezer-###CID###">
+                        <form autocomplete="off" id="cf###CID###" class="tx-tc-form-for-newcomment" action="###ACTION_URL###"
+                            method="post" name="ncf###CID###" enctype="multipart/form-data">
+                            <fieldset id="cffs###SUBMITONCLICK###" class="tx-tc-ct-fieldset">
+                                 <input type="hidden" name="toctoc_comments_pi1[itemurl]" id="toctoc_comments_pi1_###CID###itemurl" value="###CURRENT_URL###" />
+                                <input type="hidden" name="toctoc_comments_pi1[itemurlchk]" id="toctoc_comments_pi1_###CID###itemurlchk" value="###CURRENT_URL_CHK###" />
+                                ###SUBFORM###
+                                ###JS_USER_DATA###
+                            </fieldset>
+                        </form>
+                         ###SUBFORMLOGIN###
+                         ###PRVCTAREA###
+             			<a id="comment-###CURRENT_URL_CHK######CID###" name="comment_a_###CID###"></a>
+                    </div>
+                </div>
+             </div>
+            <!-- ###COMMENT_FORMAJAX### end -->
+        </div>
+    </div>
+<!-- ###COMMENT_FORM### end -->
+
+<hr size="1" />
+<h4>single form field</h4>
+<!-- ###SUBFORMFIELD### begin -->
+<div class="tx-tc-ct-form-field###FIELDSTYLE###">
+	###LABEL_FIELD_NAME###
+	<input class="###FIELD_FORMCLASS###" ###PHDR_FIELD_NAME### type="text" size="###INPUTSIZE###" name="toctoc_comments_pi1[###FIELD_FORMNAME###]" id="toctoc_comments_pi1_###CID######FIELD_FORMNAME###" value="###FIELD_VALUE###" />
+	 ###WMJS_FIELD_NAME###
+</div>
+###ERROR_FIELD_NAME###
+<!-- ###SUBFORMFIELD### end -->
+
+<hr size="1" />
+<h4>the form field that is combined with gender</h4>
+<!-- ###SUBFORMFIELDGDR### begin -->  
+<div class="tx-tc-ct-form-field###FIELDSTYLE###">
+	###LABEL_FIELD_NAME###
+	<input class="###FIELD_FORMCLASS### tx-tc-fleft" ###PHDR_FIELD_NAME### type="text" size="###INPUTSIZESMALL###" name="toctoc_comments_pi1[###FIELD_FORMNAME###]" id="toctoc_comments_pi1_###CID######FIELD_FORMNAME###" value="###FIELD_VALUE###" />
+	###WMJS_FIELD_NAME###
+	<div class="tx-tc-ct-form-gender###FIELDSTYLEGENDER###" id="tx-tc-ct-form-gender###CID###">
+		  <label class="tx-tc-ct-labelgender" for="toctoc_comments_pi1[gender]">###TEXT_GENDER###</label>
+		  <input type="hidden" name="toctoc_comments_pi1[gender]" id="toctoc_comments_pi1_###CID###gender" value="###GENDER###" />
+	</div>
+</div>
+###ERROR_FIELD_NAME###
+<!-- ###SUBFORMFIELDGDR### end -->
+  
+<hr size="1" />
+<h4>hidden form fields</h4>
+<!-- ###SUBFORMFIELDHIDDEN### begin -->
+	<input type="hidden" name="toctoc_comments_pi1[###FIELD_FORMNAME###]" id="toctoc_comments_pi1_###CID######FIELD_FORMNAME###" value="###FIELD_VALUE###" /> 
+<!-- ###SUBFORMFIELDHIDDEN### end -->
+  
+<hr size="1" />
+<h4>anonymous users commenting form</h4>
+<!-- ###SUBFORMIP### begin -->
+	<div class="tx-tc-cts-form-fieldtextarea">
+	    <div class="tx-tc-divtextarea tx-tc-dtadyn" id="textarea-###CID###">
+			<textarea autocomplete="off" class="tx-tc-ctinput-textarea" cols="42" rows="1"
+			placeholder="###TEXT_ADD_COMMENT###" name="toctoc_comments_pi1[content]" id="toctoc_comments_pi1_contenttextbox_###CID###">###CONTENT###</textarea>
+			###SMILIESSELECTOR###
+			<span class="tx-tc-wtrmrk-tcnt tx-tc-nodisp" id="tx-tc-wtrmrk-tcnt-###CID###__0###ENCTEXT_ADD_COMMENT###"></span>
+		</div>
+	</div>
+	<div id="formhider-###CID###" class="tx-tcfh tx-tcfh112 tx-tc-nodisp">
+		<div class="tx-tc-ct-form-field-wpp tx-tc-nodisp" id="tx-tc-form-dp-wpp-###CID###">
+				<div id="tx-tc-cts-pvsprevnext-###CID###" class="tx-tc-pvs-prevnext tx-tc-nodisp">
+					<img id="tx-tc-cts-pvsprev-###CID###" title="###TXTPREV###" height="11" width="12" src="###SITE_REL_PATH###res/###THEMEPATH###/prev.png" class="tx-tc-pvs-prev tx-tc-nodisp tx-tc-fright"> 
+					<img id="tx-tc-cts-pvsnext-###CID###" height="11" width="12" title="###TXTNEXT###" src="###SITE_REL_PATH###res/###THEMEPATH###/next.png" class="tx-tc-pvs-next tx-tc-nodisp tx-tc-fright">
+					<img id="tx-tc-cts-nopreviewpic-###CID###" height="11" width="12" title="###TXTNOPREVIEWPIC###" src="###SITE_REL_PATH###res/###THEMEPATH###/nopreviewpic.png" class="tx-tc-pvs-nopreviewpic tx-tc-nodisp tx-tc-fright">
+				</div>
+				<div id="tx-tc-cts-pvsfuncs-###CID###" class="tx-tc-pvs-pvsfuncs tx-tc-nodisp">
+					<img id="tx-tc-cts-pvsnopreview-###CID###" src="###SITE_REL_PATH###res/###THEMEPATH###/nopreviewpic.png" height="11" width="12" title="###TXTCLSPRV###" class="tx-tc-pvs-pvsnopreview tx-tc-nodisp"> 
+				</div>
+				<div id="tx-tc-form-wpp-###CID###">
+					<img id="tx-tc-form-wpp-working###CID###" class="tx-tc-working tx-tc-blockdisp" align="right" src="###SITE_REL_PATH###res/###THEMEPATH###/workingslides.gif" width="16"
+						height="11" alt="###TXTLOADING###" title="###TXTLOADING###" />
+				</div>
+			</div>
+		###FORMPICUPLOAD###
+	    ###FIELDSHTML###
+	    ###TEXT_REQUIRED_HINT###
+	    ###COOKIEACCEPT###                                
+	    ###SUBFORMCOMMENTATORNOTIFYPART###
+	    ###CAPTCHA###
+	    <input type="hidden" name="toctoc_comments_pi1[cid]" id="toctoc_comments_pi1_###CID###cid" value="###CID###" />
+	    <input type="hidden" name="toctoc_comments_pi1[level]" id="toctoc_comments_pi1_###CID###level" value="###LEVEL###" />
+	</div>
+	<div class="tx-tc-div-submit" id="tx-tc-div-submit###CID###">  
+	    <input type="hidden" name="insert" id="toctoc_comments_pi1_###CID###insert" value="insert" />
+	    <input type="button" class="tx-tc-ct-submit tx-tc-nodisp tx-tc-sbinit" name="toctoc_comments_pi1[submit]" 
+	    id="toctoc_comments_pi1_submit_###CID###" value="###TEXT_SUBMIT###" />
+	    ###PRVCT###
+	    <!-- &nbsp;&nbsp;<input type="reset" value="###TEXT_RESET###" class="tx-tc-ct-reset tx-tc-marginreset" />   -->
+	    ###AGBACCEPTED###
+	</div>
+	<span class="tx-tc-frmerrhndl tx-tc-nodisp" id="tx-tc-frmerrhndl###ERRCODE###__0###CID###"></span> 
+	
+<!-- ###SUBFORMIP### end -->
+  
+<hr size="1" />
+<h4>fe-users commenting form, userdatafields are hidden</h4>
+<!-- ###SUBFORMUSER### begin -->
+	 <div class="tx-tc-cts-form-fieldtextarea-1">
+	    <div class="tx-tc-divtextarea tx-tc-dtadyn" id="textarea-###CID###">
+	        <textarea autocomplete="off" class="tx-tc-ctinput-textarea" cols="42" rows="1" placeholder="###TEXT_ADD_COMMENT###" name="toctoc_comments_pi1[content]" id="toctoc_comments_pi1_contenttextbox_###CID###">###CONTENT###</textarea>
+			###SMILIESSELECTOR###
+			<span class="tx-tc-wtrmrk-tcnt tx-tc-nodisp" id="tx-tc-wtrmrk-tcnt-###CID###__0###ENCTEXT_ADD_COMMENT###"></span>
+			###REVIEWACTION###
+		</div>
+	</div>
+	<div class="tx-tcfh32 tx-tc-nodisp" id="formhider-###CID###">
+		<div class="tx-tc-ct-form-field-wpp tx-tc-nodisp tx-tc-wpp-mrgn" id="tx-tc-form-dp-wpp-###CID###">
+			<div id="tx-tc-cts-pvsprevnext-###CID###" class="tx-tc-pvs-prevnext tx-tc-nodisp">
+				<img id="tx-tc-cts-pvsprev-###CID###" title="###TXTPREV###" height="11" width="12" src="###SITE_REL_PATH###res/###THEMEPATH###/prev.png" class="tx-tc-pvs-prev tx-tc-nodisp tx-tc-fright" /> 
+				<img id="tx-tc-cts-pvsnext-###CID###" height="11" width="12" title="###TXTNEXT###" src="###SITE_REL_PATH###res/###THEMEPATH###/next.png" class="tx-tc-pvs-next tx-tc-nodisp tx-tc-fright" />
+				<img id="tx-tc-cts-nopreviewpic-###CID###" height="11" width="12" title="###TXTNOPREVIEWPIC###" src="###SITE_REL_PATH###res/###THEMEPATH###/nopreviewpic.png" class="tx-tc-pvs-nopreviewpic tx-tc-nodisp tx-tc-fright" />
+			</div>
+			 <div id="tx-tc-cts-pvsfuncs-###CID###" class="tx-tc-pvs-pvsfuncs tx-tc-nodisp">
+				<img id="tx-tc-cts-pvsnopreview-###CID###" src="###SITE_REL_PATH###res/###THEMEPATH###/nopreviewpic.png" height="11" width="12" title="###TXTCLSPRV###" class="tx-tc-pvs-pvsnopreview tx-tc-nodisp" /> 
+			</div>
+			<div id="tx-tc-form-wpp-###CID###">
+				<img id="tx-tc-form-wpp-working###CID###" class="tx-tc-working tx-tc-blockdisp" align="right" src="###SITE_REL_PATH###res/###THEMEPATH###/workingslides.gif" width="16"
+				height="11" alt="###TXTLOADING###" title="###TXTLOADING###" />
+			</div>
+		</div>
+	    ###FORMPICUPLOAD###
+	    ###FIELDSHTML###
+	    ###SUBFORMCOMMENTATORNOTIFYPART###
+	    ###CAPTCHA###
+	    <input type="hidden" name="toctoc_comments_pi1[cid]" id="toctoc_comments_pi1_###CID###cid" value="###CID###" />
+	    <input type="hidden" name="toctoc_comments_pi1[level]" id="toctoc_comments_pi1_###CID###level" value="###LEVEL###" />
+	</div>
+	<div class="tx-tc-div-submit" id="tx-tc-div-submit###CID###">
+	    ###LOGOUT###
+	    <input type="hidden" name="insert" id="toctoc_comments_pi1_###CID###insert" value="insert" />
+	    <input type="button" class="tx-tc-ct-submit-loggedin tx-tc-nodisp tx-tc-sbinit" name="toctoc_comments_pi1[submit]" 
+	    id="toctoc_comments_pi1_submit_###CID###" value="###TEXT_SUBMIT###" />
+	    
+	    ###PRVCT###
+	   <!-- &nbsp;&nbsp;<input type="reset" value="###TEXT_RESET###" class="tx-tc-ct-reset tx-tc-marginreset" />   -->
+	   ###AGBACCEPTED###
+	   <span class="tx-tc-frmerrhndl tx-tc-nodisp" id="tx-tc-frmerrhndl###ERRCODE###__0###CID###"></span> 
+<!-- ###SUBFORMUSER### end -->
+   
+<hr size="1" />
+<h4>login required commenting form, 1st part</h4>
+<!-- ###SUBFORLOGINREQ### begin -->
+<div class="tx-tc-cts-form-fieldtextarea">
+	<div class="tx-tc-divtextarea tx-tc-dtadyn" id="textarea-###CID###">
+		<textarea autocomplete="off" class="tx-tc-ctinput-textarea-rq" cols="42" rows="1" placeholder="###TEXT_ADD_COMMENT###" name="toctoc_comments_pi1[content]" id="toctoc_comments_pi1_contenttextbox_###CID###">###CONTENT###</textarea>
+			###SMILIESSELECTOR###
+			<span class="tx-tc-wtrmrk-tcnt tx-tc-nodisp" id="tx-tc-wtrmrk-tcnt-###CID###__0###ENCTEXT_ADD_COMMENT###"></span> 
+	</div>
+</div>
+<!-- ###SUBFORLOGINREQ### end -->
+    
+<hr size="1" />
+<h4>login required commenting form, 2nd part</h4>
+<p>refer to JS function tt_showlogin(): Text 'loginform' marks the place where the login form will be inserted</p>
+
+<!-- ###SUBFORLOGINREQ2### begin -->
+	<div id="formhiderinside-###CID###" class="tx-tc-nodisp">
+		<div id="formhider-###CID###" class="tx-tcfh tx-tcfh112 tx-tc-nodisp">
+			loginform
+		</div>
+		<div class="tx-tc-div-submit" id="tx-tc-div-submit###CID###">  
+			<input type="hidden" name="insert" id="toctoc_comments_pi1_###CID###insert" value="insert" />
+			<input type="button" class="tx-tc-ct-submit tx-tc-nodisp tx-tc-sbinit" name="toctoc_comments_pi1[submit]" 
+	    id="toctoc_comments_pi1_submit_###CID###" value="###TEXT_SUBMIT###" />
+	    ###PRVCT###
+	    <!-- &nbsp;&nbsp;<input type="reset" value="###TEXT_RESET###" class="tx-tc-ct-reset tx-tc-marginreset" /> -->
+	    ###AGBACCEPTED###
+	</div>
+	<span class="tx-tc-frmerrhndl tx-tc-nodisp" id="tx-tc-frmerrhndl###ERRCODE###__0###CID###"></span> 
+	</div>
+<!-- ###SUBFORLOGINREQ2### end -->
+
+<hr size="1" />
+<h4>Comment preview icon</h4>
+<!-- ###SUBPRVCT### begin --> 
+ ###PRVLINK###
+<!-- ###SUBPRVCT### end --> 
+ 
+<hr size="1" />
+<h4>Area holding uploaded pictures</h4>
+<!-- ###SUBFORMPICUPLOAD### begin --> 
+	<div id="tx-tc-###CID###uploaddiv" class="tx-tc-ct-form-field-upload tx-tc-fright###CSSSHOW###">
+		<input type="hidden" name="toctoc_comments_pi1[uploadpicid]" id="toctoc_comments_pi1_###CID###uploadpicid" value="###UPLOADPICID###" />
+		<input type="hidden" name="toctoc_comments_pi1[uploadpicheight]" id="toctoc_comments_pi1_###CID###uploadpicheight" value="###UPLOADPICHEIGHT###" />
+		<input type="hidden" name="toctoc_comments_pi1[originalfilename]" id="toctoc_comments_pi1_###CID###originalfilename" value="###ORIGINALUPLOADFILENAME###" />
+	 	<input type="hidden" name="toctoc_comments_pi1[ajax]" id="toctoc_comments_pi1_###CID###ajax" value="" />
+	 	<input type="hidden" name="toctoc_comments_pi1[theme]" id="toctoc_comments_pi1_###CID###theme" value="###SELTHEME###" />
+	 	<input type="file" id="toctoc_comments_pi1_###CID###uploadpic" class="tx-tc-nodisp" name="toctoc_comments_pi1[uploadpic]" />
+	 	###OPENFILEDIALOG###
+	 	###OPENPDFFILEDIALOG###
+	</div>
+	<div id="tx-tc-form-fup-###CID###" class="tx-tc-fright">
+		<img id="tx-tc-form-fup-working###CID###" class="tx-tc-nodisp" align="right" src="###SITE_REL_PATH###res/###THEMEPATH###/workingslides.gif" width="16"
+		           	height="11" alt="###TXTLOADING###" title="###TXTLOADING###" />
+	</div>
+	<div class="tx-tc-ct-form-field-fup###CSSHIDE###" id="tx-tc-form-dp-fup-###CID###" style="min-height:###UPLOADPICHEIGHT###px; max-height:###UPLOADPICHEIGHT###px;">
+		 <div id="tx-tc-cts-pvsfuncsfup-###CID###" class="tx-tc-fuparea###CSSHIDE###">
+			 <div id="tx-tc-cts-fuppicprv-###CID###" class="tx-tc-cts-fuppicprv###CSSHIDE###"> 
+				<img id="tx-tc-cts-previewfup-###CID###" src="###UPLOADPICRELPATH###" title="###TXTTIPPFUP###" class="tx-tc-fup-preview###CSSHIDE###" /> 
+				<img id="tx-tc-cts-nopreviewfup-###CID###" src="###SITE_REL_PATH###res/###THEMEPATH###/nopreviewpic.png" title="###TXTCLSFUP###" class="tx-tc-fup-nopreview###CSSHIDE###" />
+			</div>
+			<div id="tx-tc-cts-fupta-###CID###" class="tx-tc-cts-fupta###CSSHIDE###"> 
+				<textarea autocomplete="off" class="tx-tc-ctinput-textarea###CSSHIDE### tx-tc-max-hgt0" cols="42" rows="1" placeholder="###TEXT_ADD_DESC###" name="toctoc_comments_pi1[descriptionbyuser]" id="toctoc_comments_pi1_uplcontenttextbox_###CID###">###USERUPLOADDESCRIPTION###</textarea>
+	                <span class="tx-tc-wtrmrk-fup tx-tc-nodisp" id="tx-tc-wtrmrk-fup-###CID###__0###ENCTEXT_ADD_DESC###"></span> 
+			</div>
+		</div>
+	</div>
+	<span class="tx-tc-uplpic-trigger tx-tc-nodisp" id="tx-tc-uplpic-trigger-###CID###"></span>
+	<!-- ###SUBFORMPICUPLOAD### end -->
+ 
+<!-- ###SUBFORMCOMMENTATORNOTIFY### begin -->
+	<div class="tx-tc-ct-ntf-wrap">
+		<div class="tx-tc-ct-form-field-ntf" id="tx-tc-ct-form-field-ntf-###CID###">###DIVSHOW_NOTIFICATION###<label class="tx-tc-ct-label-ntf tx-tc-ct-label-notify" for="toctoc_comments_pi1[notify]">###TEXT_NOTIFICATION###</label>
+	    	<input type="checkbox" name="toctoc_comments_pi1[notify]" title="###TEXT_NOTIFICATION_DESC###" class="tx-tc-ntf-check" id="toctoc_comments_pi1_###CID###notify" ###NOTIFICATION_CHECKED###value="###NOTIFICATION_VALUE###" />
+	    </div>
+	</div>
+<!-- ###SUBFORMCOMMENTATORNOTIFY### end -->
+
+<!-- ###SUBFORMATTACHMENTPIC### begin -->
+<div class="tx-tc-ct-img tx-tc-blockdisp">
+	<div>
+		<div class="tx-tc-margin-top0">
+			<div id="tx-tc-cts-pic-formtext-###IDPLUS###p###CID###" class="tx-tc-margin0"> 
+				<div class="tx-tc-img-desc">
+					###DESC###
+				</div>	
+				<div class="tx-tc-img-image">		 
+			  		<a href="###LINK###" rel="nofollow" title= "###LINKTITLE###">###IMAGE###</a>
+					<!-- overlay for the first trigger. id matches the rel- attribute -->
+					<div class="txtc_overlay" id="txtcphoto###CID###">
+					  ###IMAGESRC###
+					  <div class="txtc_details">
+					    <div class="txtc_h2">###TITLE###</div>
+					    <p>###DESC###</p>
+					  </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- ###SUBFORMATTACHMENTPIC### end -->
+
+<!-- ###SUBFORMATTACHMENTVIDHTML5### begin -->
+<div class="tx-tc-vid-embed tx-tc-nodisp" id="tx-tc-cts-vid-box-###IDPLUS###p###CID###">
+	<div class="flowplayer" data-swf="###SITE_REL_PATH###res/flowplayer/flowplayer.swf" data-ratio="0.417">
+		###VIDEOHTML###
+	</div>
+</div>
+<!-- ###SUBFORMATTACHMENTVIDHTML5### end -->
+
+<!-- ###SUBFORMATTACHMENTVIDFLASH### begin -->
+<div class="tx-tc-vid-embed tx-tc-nodisp" id="tx-tc-cts-vid-box-###IDPLUS###p###CID###">
+	<iframe id="tx-tc-cts-vid-flasho-###IDPLUS###p###CID###" width="560" height="315" frameborder="0" src="###EMBEDURL###"></iframe>
+</div>
+<!-- ###SUBFORMATTACHMENTVIDFLASH### end -->
+
+<!-- ###SUBFORMATTACHMENTSOUNDCLOUD### begin -->
+<div class="tx-tc-vid-embed tx-tc-nodisp" id="tx-tc-cts-vid-box-###IDPLUS###p###CID###">
+	<div id="tx-tc-cts-vid-flasho-###IDPLUS###p###CID###">###EMBEDURL###</div>
+</div>
+<!-- ###SUBFORMATTACHMENTSOUNDCLOUD### end -->
+
+
+<!-- ###SUBFORMATTACHMENTVID### begin -->
+<div class="tx-tc-ct-video">
+	<div class="tx-tc-ct-video-dp">
+		<div id="tx-tc-cts-vid-formtext-###IDPLUS###p###CID###" class="tx-tc-cts-vid-formtext">
+			<div class="tx-tc-vid" id="tx-tc-cts-vid-img-###IDPLUS###p###CID###">
+				<a id="player###IDPLUS###p###CID###" href="javascript:void(0)" class="tx-tc-vidshw" rel="nofollow">###IMAGE######IMAGEOVERLAY###</a>
+			</div>
+			###SUBVIDEOEMBED###
+			<div class="tx-tc-ct-box-ctclose tx-tc-nodisp" id="tx-tc-ct-box-ctclose###IDPLUS###p###CID###">
+  					<span id="playerclose###IDPLUS###p###CID######HTML5FLAG###" class="tx-tc-vidclose tx-tc-CloseButton" title="###TXTCLOSE###"></span>			
+			</div>
+			<div class="tx-tc-vid-video" id="tx-tc-cts-vid-title-###IDPLUS###p###CID###">
+				<a href="###VIDEOURL###" rel="nofollow" title="###DESCTITLE###">###TITLE###</a>
+			</div>
+			<div class="tx-tc-vid-desc" id="tx-tc-cts-vid-desc-###IDPLUS###p###CID###">
+				###DESC###
+			</div>
+		</div>
+	</div>
+</div>
+<!-- ###SUBFORMATTACHMENTVID### end -->
+
+<!-- ###SUBFORMATTACHMENTWPP### begin -->
+<div class="tx-tc-ct-wpp tx-tc-blockdisp###BOXMINHEIGHT###">
+	<div>###LOGOBG###
+		<div class="tx-tc-margin-top0">
+			<a href="###URL###" rel="nofollow">###IMAGE###</a>
+			<div id="tx-tc-cts-pvs-formtext-###IDPLUS###p###CID###" class="###TEXTAREAMARGIN###"> 
+				<div class="tx-tc-pvs-title">
+					<a href="###URL###" rel="nofollow">###TITLE###</a>
+				</div>
+				<div class="tx-tc-pvs-urltext">
+					###URLTEXT###
+				</div>
+				<div class="tx-tc-pvs-desc">
+					###DESC###
+				 </div>
+			  </div>
+		</div>
+	</div>
+</div>
+<!-- ###SUBFORMATTACHMENTWPP### end -->
+
+<!-- ###SUBFORMATTACHMENTVIDMAIL### begin -->
+<hr />
+<strong>###TXTATTACHMENT###</strong><br />
+<b>###LINKTITLE###</b>
+<p>###DESC###</p>	 
+###IMAGE###
+<!-- ###SUBFORMATTACHMENTVIDMAIL### end -->
+
+<!-- ###SUBFORMATTACHMENTPICMAIL### begin -->
+<hr />
+<strong>###TXTATTACHMENT###</strong><br />
+<b>###LINKTITLE###</b>
+<p>###DESC###</p>	 
+###IMAGE###
+<!-- ###SUBFORMATTACHMENTPICMAIL### end -->
+
+<!-- ###SUBFORMATTACHMENTWPPMAIL### begin -->
+<hr />
+<strong>###TXTATTACHMENT###</strong><br />
+<a href="###URL###" rel="nofollow">###IMAGE###</a>
+<a href="###URL###" rel="nofollow">###TITLE###</a>
+<br>
+###URLTEXT###
+<br>
+###DESC###
+<!-- ###SUBFORMATTACHMENTWPPMAIL### end -->
+
+<hr size="1" />
+<h4>Form top message block</h4>
+<!-- ###FORM_TOP_MESSAGE### begin -->
+	<div class="tx-tc-form-top-message" id="tx-tc-cts-ftm-###CID###">
+	    <p class="tx-tc-ftm-text">###MESSAGE###</p>
+	 	<div class="tx-tc-ct-box-ctclose">
+			<span id="tx-tc-topmsg-cls-###CID###" class="tx-tc-topmsgcls tx-tc-CloseButton" title="###TXTCLOSE###"></span>
+		</div>
+	</div>
+<!-- ###FORM_TOP_MESSAGE### end -->
+
+<h4>Commenting closed message</h4>
+<!-- ###COMMENTING_CLOSED### begin -->
+    <div class="tx-tc-pi1">
+        <div class="tx-tc-form-dp">
+            <div class="tx-tc-closed">
+                <p class="tx-tc-text">
+                    <img src="###SITE_REL_PATH###res/css/themes/###SELTHEME###/img/commenting-closed.gif" width="16" height="16" alt="" />###MESSAGE###</p>
+            </div>
+        </div>
+    </div>
+<!-- ###COMMENTING_CLOSED### end -->
+
+<h4>Captcha freecap clone</h4>
+<!-- ###CAPTCHA_SUB### begin -->
+    <div class="tx-tc-ct-form-field">
+        <label class="tx-tc-ct-label-cap">###TEXT_ENTER_CODE######REQUIRED_CAPTCHA###</label>
+        <span class="tx-tc-ct-cap-area-image">
+        <img class="tx-tc-cap-image" src="index.php?eID=toctoc_comments_ajax&cmd=getcap&captchatype=1&cid=###CID######AJAXDATACONF###" alt="" id="toctoc_comments_cap_###CID###" />
+        </span>
+        <input class="tx-tc-ct-input" type="text" required="required" id="toctoc_comments_pi1-cap-###CID###" name="toctoc_comments_pi1[captcha]" size="6" value="" />
+        <img class="tx-tc-cap-image-rf tx-tc-cap-image-rf-mrg" id="toctoc_comments_caprefresh_###CID###_ctp1__0###AJAXDATACONF###" src="###SITE_REL_PATH###res/###THEMEPATH###/refresh.png" 
+        width="25" title="###SR_FREECAP_CANT_READ###" />
+    </div>
+    <div class="tx-tc-ct-form-field tx-tc-nodisp" id="tx-tc-cap-message-dp-###CID###">
+        <div id="tx-tc-cap-message-###CID###" class="tx-tc-ct-cap-message">
+            ###ERROR_CAPTCHA###
+        </div>
+    </div>
+<!-- ###CAPTCHA_SUB### end -->
+
+<h4>Captcha recaptcha clone</h4>
+<!-- ###RECAPTCHA_SUB### begin -->
+    <div class="tx-tc-ct-form-field-recap">
+        <div id="cap-wrap###CID###" class="cap-wrap">
+            <div class="cap-box">
+                <span class="tx-tc-ct-cap-area-image-recap"><img class="tx-tc-cap-image-recap" src="index.php?eID=toctoc_comments_ajax&cmd=getcap&captchatype=2&cid=###CID###" alt="" id="toctoc_comments_cap_###CID###" /></span>
+            </div>
+            <div class="over-text-box">
+            <div class="text-box">
+                <label>###TEXT_ENTER_CODE######REQUIRED_CAPTCHA###</label>
+                <input class="tx-tc-ct-input" type="text" required="required" id="toctoc_comments_pi1-cap-###CID###" name="toctoc_comments_pi1[captcha]" size="8" value="" />
+            </div>
+            <div class="cap-action">
+                <img class="tx-tc-cap-image-rf" id="toctoc_comments_caprefresh_###CID###_ctp2" src="###SITE_REL_PATH###res/###THEMEPATH###/rcrefresh.jpg" width="16" title="###SR_FREECAP_CANT_READ###" />
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="tx-tc-ct-form-field tx-tc-nodisp" id="tx-tc-cap-message-dp-###CID###">
+        <div id="tx-tc-cap-message-###CID###" class="tx-tc-ct-cap-message">
+            ###ERROR_CAPTCHA###
+        </div>
+    </div>
+<!-- ###RECAPTCHA_SUB### end -->
+
+<h4>Comment counter for use in tt_news, with text</h4>
+<!-- ###TTNEWS_COMMENT_COUNT_SUB### begin -->
+    <span class="tx-tc-count-wrap"><a
+        href="###COMMENTS_LINK####tx-tc-cts-att_news_###UID###"
+        rel="nofollow" class="tx-tc-count">###COMMENTS_COUNT###</a></span>
+<!-- ###TTNEWS_COMMENT_COUNT_SUB### end -->
+
+<h4>Comment counter for use in tt_news, no text</h4>
+<!-- ###TTNEWS_COMMENT_NONE_SUB### begin -->
+    <span class="tx-tc-count-wrap"><a
+        href="###COMMENTS_LINK####tx-tc-cts-att_news_###UID###"
+        rel="nofollow" class="tx-tc-count">###COMMENTS_COUNT_NONE###</a></span>
+<!-- ###TTNEWS_COMMENT_NONE_SUB### end -->
+
+<h4>Comment counter for use in tx_news, with text</h4>
+<!-- ###TXNEWS_COMMENT_COUNT_SUB### begin -->
+    <span class="tx-tc-count-wrap"><a
+        href="###COMMENTS_LINK####tx-tc-cts-atx_news_domain_model_news_###UID###"
+        rel="nofollow" class="tx-tc-count">###COMMENTS_COUNT###</a></span>
+<!-- ###TXNEWS_COMMENT_COUNT_SUB### end -->
+
+<h4>Comment counter for use in tx_news, no text</h4>
+<!-- ###TXNEWS_COMMENT_NONE_SUB### begin -->
+    <span class="tx-tc-count-wrap"><a
+        href="###COMMENTS_LINK####tx-tc-cts-atx_news_domain_model_news_###UID###"
+        rel="nofollow" class="tx-tc-count">###COMMENTS_COUNT_NONE###</a></span>
+<!-- ###TXNEWS_COMMENT_NONE_SUB### end -->
+
+<h4>Display of Erros</h4>   
+<!-- ###ERROR_SUB### begin -->
+    <div class="tx-tc-errors">
+        <!-- ###ERROR### begin -->
+        <div>###MESSAGE</div>
+        <!-- ###ERROR### end -->
+    </div>
+<!-- ###ERROR_SUB### end -->
+
+<h4>Popup with Userinfos</h4>
+<!-- ###SHOWUC_SUB### begin -->
+<div class="tx-tc-ct-uc" id="tx-tc-cts-uc-###COMMENT_ID###">
+	<div class="tx-tc-ct-uc-pic2" id="tx-tc-cts-uc-pic2-###COMMENT_ID###">###PCEHDRPIC###</div>
+	<div class="tx-tc-ct-box-ctclose">
+		<span id="tx-tc-cts-uc-cls-###COMMENT_ID###" class="tx-tc-ucclose tx-tc-CloseButton" title="###TXTCLOSE###"></span>
+	</div>
+	<div class="tx-tc-ucinner" id="tx-tc-cts-uc-inner-###COMMENT_ID###">
+	</div>
+</div>
+<!-- ###SHOWUC_SUB### end -->
+
+<h4>Commentlink</h4>
+<!-- ###COMMENTLINKTOP### begin -->
+	<div class="tx-tc-atrts-ctlink###STYLECOMMENT###">
+		###BEGINSTRING###
+		<a class="tx-tc-openerform" id="tx-tc-openerform###CID###__0###LOGGEDIN###" href="###ARTICLESHAREURL####comment_a_###CID###" title="###TEXT_ADD_COMMENTTITLE###">###TEXT_ADD_COMMENTTOP###</a>
+		<a name="commentit_a_###CID###"></a>
+	</div>
+<!-- ###COMMENTLINKTOP### end -->
+
+<h4>IDs for events</h4>
+<!-- ###DELETE_COMMENT_LINK_SUB### begin -->
+###REF###__0###VALUE###__0###CID###__0###CHECK###__0deletecomment__0cts-ct__0###UID###__0###PCID###__0###REFSHOW###__0###EXTREF###
+<!-- ###DELETE_COMMENT_LINK_SUB### end -->
+    
+<!-- ###DENOTIFY_COMMENT_LINK_SUB### begin -->
+###REF###__0###VALUE###__0###CID###__0###CHECK###__0denotifycomment__0cts-ct__0###UID###__0###PCID###__0###REFSHOW###__0###EXTREF###
+<!-- ###DENOTIFY_COMMENT_LINK_SUB### end -->    
+    
+<!-- ###ADD_COMMENT_LINK_SUB### begin -->
+###CID###__0###REF###__0###VALUE###__0###CHECK###__0addcomment__0form__0###CAPSESS###__0###ERROR_CAPTCHA###__0###LOGGEDON###__0###EXTREF###__0###PVSHEIGHT###
+<!-- ###ADD_COMMENT_LINK_SUB### end -->
+        
+<!-- ###BROWSE_COMMENT_LINK_SUB### begin -->
+###CID###__0###REF###__0###VALUE###__0###CHECK###__0browse###HIDE###__0cts__0###STARTPOINT###__0###TOTALROWS###
+<!-- ###BROWSE_COMMENT_LINK_SUB### end -->    
+ 
+<!-- ###EDIT_COMMENT_LINK_SUB### begin -->
+###UID###__0###CID###__0###PID###__0###ONOFF###
+<!-- ###EDIT_COMMENT_LINK_SUB### end -->   
+ 
+<hr size="1" />
+<h1>Recent comments</h1>
+ 
+<!-- ###RECENTCOMMENT_LIST### begin -->
+<div class="tx-tc-box-recent-cts">
+	<!-- ###SINGLE_RECENTCOMMENT### begin -->
+	<div class="tx-tc-recent-cts-article" id="tx-tc-recent-cts-article-###RCID###">
+		<div class="tx-tc-recent-cts-entry">###AUTHOR###&nbsp;###COMMENT_CONTENT###</div>
+		<div class="tx-tc-recent-cts-title">###TITLE### &#124; ###COMMENT_DATE###</div>
+	</div>
+	<!-- ###SINGLE_RECENTCOMMENT### end -->
+</div>
+<!-- ###RECENTCOMMENT_LIST### end -->
+
+<hr size="1" />
+<h1>search comments</h1>
+
+<!-- ###SEARCHCOMMENT_MAIN### begin -->
+###SEARCHCOMMENTOFTITLE###
+<div class="tx-tc-box-search-cts">
+	<div class="tx-tc-search-form" id="txtcsearchform###CID###">
+		###SEARCHCOMMENTFORM###
+	</div>
+	<div class="tx-tc-search-results" id="txtcsearchresults###CID###">
+		###SEARCHCOMMENTCONTENT###
+	</div>
+	<div class="tx-tc-search-form tx-tc-search-loading tx-tc-nodisp" id="txtcsearchworking###CID###">
+	    <span class="tx-tc-working-s" title="###TXTLOADING###"></span>
+	</div>
+</div>
+<!-- ###SEARCHCOMMENT_MAIN### end -->
+
+<!-- ###SEARCHCOMMENT_FORM### begin -->
+<form autocomplete="off" id="txtcsearch###CID###" class="tx-tc-form-for-search" action="" method="post">
+	<fieldset id="txtcfssearch###CID###" class="tx-tc-search-fieldset">
+		<div class="tx-tc-ct-form-field">
+			<label class="tx-tc-ct-label ###LABELSTYLE###" for="toctoc_comments_pi1[search]">###TEXT_SEARCH###</label>
+			<input class="###INPUTCLASS###" size="" tabindex="1" type="text" name="toctoc_comments_pi1[search]" id="toctoc_comments_pi1_###CID###search" value="###SEARCH###" ###PHDR_SEARCH###/>
+		</div>
+		<div class="tx-tc-ct-form-field">
+			<label class="tx-tc-ct-label-base" for="toctoc_comments_pi1[commentage]">###TEXT_COMMENTAGE###</label>
+			<select class="###INPUTCLASS###" tabindex="2" name="toctoc_comments_pi1[commentage]" id="toctoc_comments_pi1_###CID###commentage" size="1">
+			    <option value="1"###SEL1###>###TEXT_CTAGE1###</option>
+			    <option value="2"###SEL2###>###TEXT_CTAGE2###</option>
+			    <option value="3"###SEL3###>###TEXT_CTAGE3###</option>
+			    <option value="4"###SEL4###>###TEXT_CTAGE4###</option>
+			    <option value="5"###SEL5###>###TEXT_CTAGE5###</option>
+			    <option value="6"###SEL6###>###TEXT_CTAGE6###</option>
+	  		</select>
+	  		<input type="hidden" name="toctoc_comments_pi1[confdiff]" id="toctoc_comments_pi1_###CID###confdiff" value="###HIDDENCONFDIFF###" />
+		</div>
+		<div class="tx-tc-div-submit tx-tc-div-searchsubmit tx-tc-blockdisp" id="tx-tc-div-submit###CID###">
+			<input id="toctoc_comments_pi1_###CID###submit" class="tx-tc-ct-submit tx-tc-ct-searchsubmit tx-tc-inlinedisp" type="button" name="toctoc_comments_pi1[submit]" 
+			value="###TEXT_SUBMIT###" tabindex="3" />
+		</div>
+		<span class="tx-tc-frmerrhndl tx-tc-nodisp" id="tx-tc-frmerrhndl###ENCTEXT###__0###CID###__0###ENCTEXT_SEARCH_COMMENT###"></span> 
+	</fieldset>
+</form>
+<div id="information###CID###" class="tx-tc-nodisp">
+	<div class="header"><span>###TXTINFO###</span></div>
+	<div class="message"></div>
+	<div class="buttons">
+		<div class="yes simpletxtcmoddlg-close">###TXTOK###</div>
+	</div>
+</div>
+<!-- ###SEARCHCOMMENT_FORM### end -->
+
+<!-- ###SEARCHCOMMENT_CONTENT### begin -->
+###SEARCHFOUND_TEXT###
+<!-- ###SINGLE_SEARCHCOMMENT### begin -->
+<div class="tx-tc-search-cts-article" id="tx-tc-search-cts-article-###RCID###">
+	<div class="tx-tc-search-cts-entry">###AUTHOR###&nbsp;###COMMENT_CONTENT###</div>
+	<div class="tx-tc-search-cts-title">###TITLE### &#124; ###COMMENT_DATE###</div>
+</div>
+<!-- ###SINGLE_SEARCHCOMMENT### end -->
+###SEARCHCOMMENTBROWSE###
+<!-- ###SEARCHCOMMENT_CONTENT### end -->
+
+<hr size="1" />
+<h1>usercenter</h1>
+
+<!-- ###USERCENTER### begin -->
+<div class="tx-tc-title tx-tc-title-usercenter">###USERCENTEROFTITLE### ###USERCENTERUSER###</div>
+###USERCENTERCONTENT###
+<!-- ###USERCENTER### end -->
+
+<!-- ###USERCENTER_DROP_DOWN### begin -->
+<div class="tx-tc-dropdown tx-tc-width100 tx-tc-textlink" id="tx-tc-dropdown_###DROPDOWNID###" title="###DROPDOWNTIPTEXT###">
+	<div class="tx-tc-fleft tx-tc-width88 tx-tc-dropdowntitle">###TITLE###</div>
+		<div class="tx-tc-ct-box-ctclose">
+			<span id="tx-tc-dropupdown_###DROPDOWNID###" class="tx-tc-dropupdown tx-tc-Drop###DROPUPORDOWN###Button">
+			</span>
+		</div>
+	</div>
+<div class="tx-tc-opendropdown tx-tc-width100" id="tx-tc-dropupdown_###DROPDOWNID###-content">###CONTENT###</div>
+<!-- ###USERCENTER_DROP_DOWN### end -->	
+
+<!-- ###USERCENTER_DROPDOWNSHOWMORE### begin -->
+<div class="tx-tc-opendropdown tx-tc-width100" id="tx-tc-dropupdown_rc###DROPDOWNID###-content" style="display: none;">###CONTENT###</div>
+<div class="tx-tc-dropdown tx-tc-width100 tx-tc-textlink" id="tx-tc-dropdown_rc###DROPDOWNID###" title="###DROPDOWNTIPTEXT###">
+	<div class="tx-tc-fleft tx-tc-width88 tx-tc-showmore" id="tx-tc-dropdownshowmore_rc###DROPDOWNID###">###TITLE###</div>
+	<div class="tx-tc-ct-box-ctclose">
+		<span class="tx-tc-dropupdown tx-tc-Drop###DROPUPORDOWN###Button" id="tx-tc-dropupdown_rc###DROPDOWNID###">
+		</span>
+	</div>
+</div>
+<!-- ###USERCENTER_DROPDOWNSHOWMORE### end -->			
+
+<!-- ###USERCENTERCOMMENT_LIST### begin -->
+<div class="tx-tc-box-recent-cts">
+	<!-- ###SINGLE_USERCENTERCOMMENT### begin -->
+	<div class="tx-tc-recent-cts-article" id="tx-tc-recent-cts-article-###RCID###">
+		<div class="tx-tc-recent-cts-entry">###REVIEW######AUTHOR######COMMENT_CONTENT######RATING###</div>
+		<div class="tx-tc-recent-cts-title">###TITLE### &#124; ###COMMENT_DATE###</div>
+	</div>
+	<!-- ###SINGLE_USERCENTERCOMMENT### end -->
+</div>
+<!-- ###USERCENTERCOMMENT_LIST### end -->
+
+<!-- ###RECENTNO_COMMENTS### begin -->
+<div class="tx-tc-box-recent-cts">
+	###LL_TEXT_NO_COMMENTS###
+</div>
+<!-- ###RECENTNO_COMMENTS### end -->
+<hr size="1" />
+<h1>Top ratings</h1>
+<!-- ###TOPRATINGS_LIST### begin -->
+<div class="toctoc-comments-pi1">
+	<div class="tx-tc-box-trt-cts">
+		<div class="tx-tc-trt-listtitle">###TOPRATINGS_CONFIG_TITLE###</div>
+		<div class="tx-tc-trt-listdesc">###TOPRATINGS_CONFIG_DETAIL###</div>
+	        <!-- ###SINGLE_TOPRATINGS### begin -->
+	            <div class="tx-tc-trt-cts-article" id="tx-tc-trt-cts-article-###RCID###">
+	                ###TOPRATINGS_RANK###
+	                ###TOPRATINGS_IMG###
+	                <div class="tx-tc-trt-rating-detail###STYLEHEIGHT###">
+		                <div class="tx-tc-trt-rating-rating-wrap"><div class="tx-tc-trt-rating-rating">###TOPRATINGS_ILIKE_VOTE######TOPRATINGS_NBRVOTES###</div>###ADDBR###</div>
+		                 ###LINKTOPRATEDITEM###
+		                 ###TOPRATINGS_CONTENT###
+		            </div>
+	            </div>
+	        <!-- ###SINGLE_TOPRATINGS### end -->
+	</div>
+</div>
+<!-- ###TOPRATINGS_LIST### end -->
+
+<!-- ###NO_TOPRATINGS### begin -->
+<div class="toctoc-comments-pi1">
+	<div class="tx-tc-box-trt-cts">
+		<div class="tx-tc-trt-listtitle">###TOPRATINGS_CONFIG_TITLE###</div>
+		<div class="tx-tc-trt-listdesc">###TOPRATINGS_CONFIG_DETAIL###</div>
+	       ###LL_TEXT_NO_TOPRATINGS###
+	</div>
+</div>
+<!-- ###NO_TOPRATINGS### end -->
+
+<hr size="1" />
+<h1>Report comment</h1>
+<!-- ###REPORT_FORM### begin -->
+<div class="tx-tc-cts-pi1">
+	<div class="tx-tc-pi1 tx-tc-padleft4">
+		<h2>###TEXT_YOURCOMPLAINT###</h2>
+		###BADCOMMENT###
+		<div id="confirm1" class="tx-tc-nodisp">
+			<div class="header"><span>###TXTCONFIRM###</span></div>
+			<div class="message"></div>
+			<div class="buttons">
+				<div class="no simpletxtcmoddlg-close">###TXTNO###</div><div class="yesconfirm">###TXTYES###</div>
+			</div>
+		</div>
+		<div id="information1" class="tx-tc-nodisp">
+			<div class="header"><span>###TXTINFO###</span></div>
+			<div class="message"></div>
+			<div class="buttons">
+				<div class="yes simpletxtcmoddlg-close">###TXTOK###</div>
+			</div>
+		</div>
+		<div class="tx-tc-ct-box-cttxt tx-tc-frmsqrhgt" id="tx-tc-formsqueezer-1">
+			<form autocomplete="off" id="cf1" class="tx-tc-form-for-newcomment" action="###ACTION###" method="post"
+			onsubmit="var errcsbt = commentform_validate(tctnme + '1',1); if (errcsbt!=true) {return false};">
+				<fieldset id="cffs1" class="tx-tc-ct-fieldset">
+					<input type="hidden" name="toctoc_comments_pi1[info]" value="###INFO###" />
+					 <div class="tx-tc-cts-form-fieldtextarea-1">
+					    <div class="tx-tc-divtextarea tx-tc-dtadyn" id="textarea-1">
+					        <textarea autocomplete="off" class="tx-tc-ctinput-textarea" cols="42" rows="1" placeholder="###TEXT_TEXT###" name="toctoc_comments_pi1[text]" id="toctoc_comments_pi1_contenttextbox_1">###CONTENT###</textarea>
+							
+							<span class="tx-tc-wtrmrk-tcnt tx-tc-nodisp" id="tx-tc-wtrmrk-tcnt-1__0###ENCTEXT_ADD_COMMENT###"></span>
+						</div>
+					</div>					
+					 ###ERROR_TEXT###
+					<div id="formhider-1" class="tx-tcfh tx-tcfh0 tx-tc-nodisp">
+						<div class="tx-tc-ct-form-field">
+							<label class="tx-tc-ct-label ###LABELSTYLE###" for="toctoc_comments_pi1[from]">###TEXT_FROM###</label>
+							<input class="tx-tc-ct-input" tabindex="2" type="text" name="toctoc_comments_pi1[from]" id="toctoc_comments_pi1from" value="###FROM###" ###PHDR_FROM###/> ###ERROR_FROM###
+						</div>
+						<div class="tx-tc-ct-form-field">
+							<label class="tx-tc-ct-label ###LABELSTYLE###" for="toctoc_comments_pi1[frommail]">###TEXT_FROMMAIL###</label>
+							<input class="tx-tc-ct-input" tabindex="3" type="text" name="toctoc_comments_pi1[frommail]" id="toctoc_comments_pi1frommail" value="###FROMMAIL###" ###PHDR_FROMMAIL###/> ###ERROR_FROMMAIL###
+						</div>
+						###CAPTCHA###
+						<div class="tx-tc-div-submit" id="tx-tc-div-submit1">
+							<input id="toctoc_comments_pi1_submit_1" class="tx-tc-ct-submit" type="button" name="toctoc_comments_pi1[submit]" 
+							value="###TEXT_SUBMIT###" tabindex="5" />
+						</div>
+						<span class="tx-tc-frmerrhndl tx-tc-nodisp" id="tx-tc-frmerrhndl###ENCTEXT###__01__0###ENCTEXT_ADD_COMMENT###"></span> 
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- ###REPORT_FORM### end -->
+
+<h1>Comments report Required</h1>
+<!-- ###REPORT_REQUIRED### begin -->
+<span class="tx-tc-required">###TEXT_REQUIRED###</span>
+<!-- ###REPORT_REQUIRED### end -->
+
+<h1>Comments report Error</h1>
+<!-- ###REPORT_ERROR### begin -->
+<span class="tx-tc-required-error"> ###TEXT###</span>
+<!-- ###REPORT_ERROR### end -->
+
+<h1>Comments report Captcha</h1>
+<!-- ###REPORT_CAPTCHA### begin -->
+	<div class="tx-tc-ct-form-field">
+		<label class="tx-tc-ct-label ###LABELSTYLE###">###TEXT_CAPTCHA###</label>
+		<span class="tx-tc-ct-cap-area-image">###SR_FREECAP_IMAGE###</span>
+		<input class="tx-tc-ct-input" type="text" required="required" 
+		id="tx_comments_pi1-cap1" tabindex="4" name="toctoc_comments_pi1[captcha]" value="" ###PDHRT_CAPTCHA###/>
+		<span class="tx-tc-ct-cap-area-accessible"></span>
+	</div>
+	<div class="tx-tc-ct-form-field">
+		<div class="tx-tc-ct-cap-message">###ERROR_CAPTCHA###</div>
+		<div class="tx-tc-ct-cap-area">
+			<div class="tx-tc-ct-cap-area-cantreadit">###SR_FREECAP_CANT_READ###</div>				
+	   </div>
+	</div>
+<!-- ###REPORT_CAPTCHA### end -->
+
+<h1>Comments report "Thank you" message</h1>
+<!-- ###THANK_YOU### begin -->
+	<div class="tx-tc-ct-form-field">
+		<p><b>###TEXT_THANKYOU###</b></p>
+	</div>
+<!-- ###THANK_YOU### end -->
+
+<h1>Reporting link</h1>
+<!-- ###REPORT_LINK### begin -->
+<a href="###LINK###" rel="nofollow">###TITLE###</a>
+<!-- ###REPORT_LINK### end -->
+
+<h1>Component sharrre and addthis. see www.sharrre.com and www.addthis.com</h1>
+<!-- ###SHARRRE### begin -->
+
+<div id="shareme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###"></div>
+<script type="text/javascript">
+    var thetemplate###CID### = String('<div id="sharebox###CID###" class="shrbox"><div class="shrleft">###ARTICLESHARE###</div><div class="shrmiddle shrd1" id="sharrremiddle###CID###">###SHAREHTML_FACEBOOK######SHAREHTML_TWITTER######SHAREHTML_GOOGLE######SHAREHTML_LINKEDIN######SHAREHTML_STUMBLEUPON######SHAREHTML_PINTEREST######SHAREHTML_DIGG######SHAREHTML_DELICIOUS###</div><div id="shareright###CID###" class="shrright">###SHAREICON###{total}</div></div>'); 
+    $('#shareme###CID###').sharrre({
+	    share: {
+	        ###SHARELIST_TWITTER######SHARELIST_FACEBOOK######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON######SHARELIST_PINTEREST######SHARELIST_DIGG######SHARELIST_DELICIOUS###
+	    },
+	    template: thetemplate###CID###,
+	    enableHover: false,
+	    enableTracking: true,
+	    render: function(api, options){
+###JSSHARRRET######JSSHARRREF######JSSHARRREG######JSSHARRREL######JSSHARRRED######JSSHARRREP######JSSHARRREDI######JSSHARRREDE###
+	        window.setTimeout("tttip('t101', '#sharrremiddle###CID### .tx-tc-textlink[title]')", 200);
+	    }
+    });
+</script>   
+<!-- ###SHARRRE### end -->
+
+<!-- ###SHARRREDESIGN2### begin -->
+
+<div id="sharemearea###CID###" class="tx-tc-sharrrearea-popup###ISREVIEWCLASS###">
+    ###SHAREICON###<div id="shareme###CID###" class="shrdes2" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###">
+    <span class="tx-tc-working-s" title="###TXTLOADING###"></span></div>
+</div>
+<script type="text/javascript">
+	var googlenodie###CID###=0;
+	$('#shareme###CID###').sharrre({
+	share: {
+		###SHARELIST_FACEBOOK######SHARELIST_TWITTER######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON######SHARELIST_PINTEREST######SHARELIST_DIGG######SHARELIST_DELICIOUS###
+	},
+	enableTracking: true,
+	buttons: {
+		###SHAREBUTTON_FACEBOOK######SHAREBUTTON_TWITTER######SHAREBUTTON_GOOGLE######SHAREBUTTON_LINKEDIN######SHAREBUTTON_STUMBLEUPON######SHAREBUTTON_PINTEREST######SHAREBUTTON_DIGG######SHAREBUTTON_DELICIOUS###
+	},
+	hover: function(api, options){
+	    $(api.element).find('.buttons').show();
+	    $(api.element).find('.googleplus').hover(function() {
+	    	googlenodie###CID###=1;
+	    	window.setTimeout("googlenodie###CID###=0", 2000);
+	    });
+	    $(api.element).find('.twitter').hover(function() {
+	    	googlenodie###CID###=0;
+	    });
+	    $(api.element).find('.linkedin').hover(function() {
+	    	googlenodie###CID###=0;
+	    });
+	    $(api.element).find('.pinterest').hover(function() {
+	    	googlenodie###CID###=0;
+	    });
+	    $(api.element).find('.digg').hover(function() {
+	    	googlenodie###CID###=0;
+	    });
+	    $(api.element).find('.delicious').hover(function() {
+	    	googlenodie###CID###=0;
+	    });
+	},
+	hide: function(api, options){
+		if (googlenodie###CID###==0) {
+	    	$(api.element).find('.buttons').hide();
+		}
+	}
+	});
+</script>    
+<!-- ###SHARRREDESIGN2### end -->
+
+<!-- ###SHARRREJSCALL### begin -->	        $(api.element).on('click', '###CLICKFUNCTION###', function() {
+	           api.openPopup('###OPENPOPUPVAR###');
+	        });<!-- ###SHARRREJSCALL### end -->
+
+<!-- ###SHARRREDESIGNADDTHIS### begin -->
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style ">
+       ###ADDTHISF###
+		###ADDTHIST###
+        ###ADDTHISG###
+        ###ADDTHISL###
+        ###ADDTHISD###	 
+        ###ADDTHISP###	 
+        ###ADDTHISDI###	        
+        ###ADDTHISDE###	        
+        ###ADDTHISMORE###		
+</div>
+<script type="text/javascript">var addthis_config = {###ADDTHISCONFIG###};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=###ADDTHISID###"></script>
+<!-- AddThis Button END -->
+<!-- ###SHARRREDESIGNADDTHIS### end -->
+
+<!-- ###SHARRREDESIGN3### begin -->
+<div id="shareme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###"></div>
+<script type="text/javascript">
+	var thetemplate###CID### = '<div id="sharebox###CID###" class="shrboxopen"><div class="shrleft">###ARTICLESHARE###</div><div class="shrmiddleopen" id="sharrremiddle###CID###">###SHAREHTML_FACEBOOK######SHAREHTML_TWITTER######SHAREHTML_GOOGLE######SHAREHTML_LINKEDIN######SHAREHTML_STUMBLEUPON######SHAREHTML_PINTEREST######SHAREHTML_DIGG######SHAREHTML_DELICIOUS###</div><div id="shareright###CID###" class="shrrightopen">###SHAREICON###{total}</div></div>';
+    $('#shareme###CID###').sharrre({
+	    share: {
+	        ###SHARELIST_TWITTER######SHARELIST_FACEBOOK######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON######SHARELIST_PINTEREST######SHARELIST_DIGG######SHARELIST_DELICIOUS###
+	    },
+	    template: thetemplate###CID###,
+	    enableHover: false,
+	    enableTracking: true,
+	    render: function(api, options){
+###JSSHARRRET######JSSHARRREF######JSSHARRREG######JSSHARRREL######JSSHARRRED######JSSHARRREP######JSSHARRREDI######JSSHARRREDE###
+	        window.setTimeout("tttip('t101', '#sharrremiddle###CID### .tx-tc-textlink[title]')", 200);
+	    }
+    });
+    
+</script>    
+<!-- ###SHARRREDESIGN3### end -->
+
+<!-- ###SHARRREDESIGN4### begin -->
+<div id="sharemearea###CID###" class="shrdes4">
+    <div id="shareme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###"></div>
+	<script type="text/javascript">
+		$('#sharemearea###CID###').sharrre({
+		share: {
+			###SHARELIST_FACEBOOK######SHARELIST_TWITTER######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON######SHARELIST_PINTEREST######SHARELIST_DIGG######SHARELIST_DELICIOUS###
+		},
+		buttons: {
+			###SHAREBUTTON_FACEBOOK######SHAREBUTTON_TWITTER######SHAREBUTTON_GOOGLE######SHAREBUTTON_LINKEDIN######SHAREBUTTON_STUMBLEUPON######SHAREBUTTON_PINTEREST######SHAREBUTTON_DIGG######SHAREBUTTON_DELICIOUS###
+		},
+		enableHover: false,
+		enableCounter: false,
+		enableTracking: true
+		}); 
+	</script>     
+</div>
+<div id="sharemecntarea###CID###" class="shrdes4 shrdes4cnt">
+	<div id="sharecntme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###"></div>
+	<script type="text/javascript">
+		var thetemplateshrdes4###CID### = '<div id="shrdes4right###CID###" class="shrdes4right">###SHAREICON###{total}</div>';
+		$('#sharecntme###CID###').sharrre({
+		share: {
+			###SHARELIST_FACEBOOK######SHARELIST_TWITTER######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON######SHARELIST_PINTEREST######SHARELIST_DIGG######SHARELIST_DELICIOUS###
+		},
+		buttons: {
+			###SHAREBUTTON_FACEBOOK######SHAREBUTTON_TWITTER######SHAREBUTTON_GOOGLE######SHAREBUTTON_LINKEDIN######SHAREBUTTON_STUMBLEUPON######SHAREBUTTON_PINTEREST######SHAREBUTTON_DIGG######SHAREBUTTON_DELICIOUS###
+		},
+		template: thetemplateshrdes4###CID###,
+		enableHover: false,
+		enableCounter: true,
+		enableTracking: false
+		});
+				
+	</script>  
+</div>
+<!-- ###SHARRREDESIGN4### end -->
+</body>
+</html>
