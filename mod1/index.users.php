@@ -1100,7 +1100,7 @@
 					  }
 
 					$tstamp = $row['crdate'];
-				  	$time = ''.date('d.m.Y', $tstamp).' - '.date('H:i', $tstamp).'';
+					$time = date('Y-m-d H:i:s', $tstamp);
 
 			  		$this->currentTable = 'tx_toctoc_comments_user';
 					$content .= '

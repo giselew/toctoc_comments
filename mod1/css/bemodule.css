@@ -99,14 +99,14 @@ div.reportoptions {
     padding: 5px;
 }
 .tx-tc-alert {
-	background-color: #f2dede;
-    border-color: #ebccd1;
-    color: #a94442;
+	background-color: #f4d8e0;
+    border-color: #73564e;
+    color: #b32e33;
 }
 .tx-tc-information {
-	background-color: #d9edf7;
-    border-color: #bce8f1;
-    color: #31708f;
+	background-color: #dfe4e8;
+    border-color: #b5bec0;
+    color: #345A91;
 }
 .tx-tc-title, .tx-tc-reporttitle {
 	font-size: 110%;

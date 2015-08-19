@@ -1,7 +1,10 @@
 <?php
 
 if (!defined ('TYPO3_MODE')) die('Access denied.');
-
+if (version_compare(TYPO3_version, '6.3', '>')) {
+	(class_exists('t3lib_extMgm', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Utility\ExtensionManagementUtility', 't3lib_extMgm');
+	(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
+}
 t3lib_extMgm::addPItoST43($_EXTKEY, 'pi1/class.toctoc_comments_pi1.php', '_pi1', 'list_type', 1);
 t3lib_extMgm::addPItoST43($_EXTKEY, 'pi2/class.toctoc_comments_felogin_pi1.php', '_pi1', 'list_type', 1);
 

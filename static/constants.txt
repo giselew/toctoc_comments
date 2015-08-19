@@ -131,14 +131,29 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//131; type=string; label=Name used in information e-mail for commentator of former comments
 	notificationForCommentatorEmailName = %site% - Commentingsystem
 	
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//14; type=string; label=HTML E-mail template for commentator of former comments:HTML Template to use for notification email to commentator of former comments
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//14; type=string; label=HTML E-mail template for commentator of former comments:HTML-template to use for notification email to commentator of former comments
 	notificationForCommentatorHTMLEmailTemplate = EXT:toctoc_comments/res/template/toctoccomments_template_commentator_email.html
 	
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//15; type=string; label=E-mail template for commentator of former comments:Template to use for notification email to commentator of former comments
 	notificationForCommentatorEmailTemplate = EXT:toctoc_comments/res/template/toctoccomments_template_commentatoremail.txt
+
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//151; type=string; label=Information e-mail for new user:Information e-mail for new user is sent from this address
+	notificationForNewUserEmail =
 	
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//16; type=string; label=HTML template eID processing:When clicking on Links in Admin-E-Mails this template will be used to show the answer of the system
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//152; type=string; label=Name used in information e-mail for new user
+	notificationForNewUserEmailName = %site% - Useradministration
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//153; type=string; label=HTML E-mail template for new user:HTML-template to use for notification email to new user
+	notificationForNewUserHTMLEmailTemplate = EXT:toctoc_comments/res/template/toctoccomments_template_newuseremail.html
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//154; type=string; label=E-mail template for new user:Text-template to use for notification email to new user
+	notificationForNewUserEmailTemplate = EXT:toctoc_comments/res/template/toctoccomments_template_newuseremail.txt
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//16; type=string; label=HTML-template eID processing:When clicking on Links in Admin-E-Mails this template will be used to show the answer of the system
 	eIDHTMLTemplate= EXT:toctoc_comments/res/template/toctoccomments_template_eid.html
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//153; type=string; label=HTML E-mail template for password changes and user COI:HTML-template to use for notification email to user who needs to change his password (forgot or new user)
+	notificationForPwdChangeHTMLEmailTemplate = EXT:toctoc_comments/res/template/toctoccomments_template_forgotpwdemail.html
 	
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//17; type=int+; label=When show older comments, scroll-multiplicator:commentsPerPage*scroll-multiplicator gives the number of comments that are scrolled back when show older comments is clicked.
 	CommentsShowOldPerCID = 3
@@ -350,6 +365,12 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Spam protection//24; type=int+; label=Wait time between comments: Number of minutes an user has to wait before they may post another comment (includes all pages)
 	commentWaitTime = 1
 	
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//26; type=string; label=HTML-E-mail template notification on signup admin confirm:HTML-Template to use for notification email for signup admin confirmation messages to administrator
+	emailTemplateSignupConfirmHTML = EXT:toctoc_comments/res/template/toctoccomments_template_emailsignupadminconfirm.html
+
+	# cat=plugin.tx_toctoccomments_pi1: Spam protection//28; type=string; label=Text-E-mail template notification on signup admin confirm:Template to use for notification email for signup admin confirmation messages to administrator
+	emailTemplateSignupConfirm = EXT:toctoc_comments/res/template/toctoccomments_template_emailsignupadminconfirm.txt
+		
 	# cat=plugin.tx_toctoccomments_pi1: Ratings//01; type=boolean; label=Enable ratings: Enable or disable ratings for comments. 
 	enableRatings = 1	
 	
@@ -607,12 +628,6 @@ plugin.tx_toctoccomments_pi1 {
 	
 	# cat=plugin.tx_toctoccomments_pi1: Debug//02; type=string; label=List with Fe_users.uid that are used for debugging, comma-separated
 	useDebugFeUserIds = 
-	
-	# cat=plugin.tx_toctoccomments_pi1: Facebook//01; type=string; label=Facebook app id:The app id of your Facebook application
-    appId =
-
-    # cat=plugin.tx_toctoccomments_pi1: Facebook//02; type=string; label=Facebook secret:The application secret of your Facebook application
-    secret =
  
 	# cat=plugin.tx_toctoccomments_pi1: dataProtect//01; type=boolean; label=Cookies:Set (1) or don't set (0) a cookie with data of not logged in commenters.
 	setCookie = 1

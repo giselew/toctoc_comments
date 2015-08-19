@@ -31,38 +31,38 @@
  *
  *  106: class tx_toctoccomments_pi1 extends tslib_pibase
  *  190:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
- * 2597:     protected function checkJSLoc()
- * 2884:     protected function checkCSSTheme()
- * 2995:     protected function checkCSSLoc()
- * 3495:     protected function makesharingcss ()
- * 3674:     protected function initprefixToTableMap()
- * 3710:     protected function initexternaluid($withinitprefixToTableMap)
- * 3849:     protected function init()
- * 4419:     protected function mergeConfiguration()
- * 4804:     protected function fetchConfigValue($param)
- * 4832:     protected function ae_detect_ie()
- * 4855:     protected function boxmodel()
- * 5527:     protected function crunchcss($buffer)
- * 5552:     protected function calculate_string( $mathString )
- * 5575:     protected function locationHeaderUrlsubDir()
- * 5594:     protected function currentPageName()
- * 5622:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
- * 5657:     protected function doClearCache ($forceclear=FALSE)
- * 5692:     protected function getPluginCacheControlTstamp ($external_ref_uid)
- * 5703:     protected function getLastUserAdditionTstamp ()
- * 5726:     protected function initLegacyCache ()
- * 5740:     protected function check_scopes()
- * 5898:     protected function initializeprefixtotablemap()
- * 5938:     protected function sharrrejs()
- * 6020:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
- * 6073:     private function resolveBackPath($pathStr)
- * 6108:     private function dirname($path)
- * 6122:     private function revExplode($delimiter, $string, $count = 0)
- * 6138:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 6161:     public function createLinks($text, $conf = NULL)
- * 6184:     protected function getThemeTmageDimension($filename, $returnindex)
- * 6204:     protected function checktoctoccommentsuser()
- * 6321:     protected function fbgoogle_lan($isfacebook)
+ * 2650:     protected function checkJSLoc()
+ * 2937:     protected function checkCSSTheme()
+ * 3048:     protected function checkCSSLoc()
+ * 3548:     protected function makesharingcss ()
+ * 3727:     protected function initprefixToTableMap()
+ * 3763:     protected function initexternaluid($withinitprefixToTableMap)
+ * 3902:     protected function init()
+ * 4488:     protected function mergeConfiguration()
+ * 4873:     protected function fetchConfigValue($param)
+ * 4901:     protected function ae_detect_ie()
+ * 4924:     protected function boxmodel()
+ * 5597:     protected function crunchcss($buffer)
+ * 5622:     protected function calculate_string( $mathString )
+ * 5645:     protected function locationHeaderUrlsubDir()
+ * 5664:     protected function currentPageName()
+ * 5692:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
+ * 5727:     protected function doClearCache ($forceclear=FALSE)
+ * 5762:     protected function getPluginCacheControlTstamp ($external_ref_uid)
+ * 5773:     protected function getLastUserAdditionTstamp ()
+ * 5796:     protected function initLegacyCache ()
+ * 5810:     protected function check_scopes()
+ * 5968:     protected function initializeprefixtotablemap()
+ * 6008:     protected function sharrrejs()
+ * 6090:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
+ * 6143:     private function resolveBackPath($pathStr)
+ * 6178:     private function dirname($path)
+ * 6192:     private function revExplode($delimiter, $string, $count = 0)
+ * 6208:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 6231:     public function createLinks($text, $conf = NULL)
+ * 6254:     protected function getThemeTmageDimension($filename, $returnindex)
+ * 6274:     protected function checktoctoccommentsuser()
+ * 6391:     protected function fbgoogle_lan($isfacebook)
  *
  * TOTAL FUNCTIONS: 33
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -109,7 +109,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '740';
+	public $extVersion = '741';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
 	public $externalUid;						// UID of external record
@@ -191,9 +191,9 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		if ($conf['optionalRecordId'] == 'Pagemode') {
 			$conf['optionalRecordId'] =  'pages_' . $GLOBALS['TSFE']->id;
 		}
-		
+
 		//$GLOBALS['TCA']['pages']['columns'] must be set
-		
+
 		If (!is_array($GLOBALS['TCA'])) {
 			$GLOBALS['TCA'] = array();
 		}
@@ -203,7 +203,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		If (!is_array($GLOBALS['TCA']['pages']['columns'])) {
 			$GLOBALS['TCA']['pages']['columns'] = array();
 		}
-		
+
 		$this->conf = $conf;
 		$this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['toctoc_comments']);
 
@@ -271,7 +271,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 					$numMatches++;
 			}
 		}
-		
+
 		$this->lib = new toctoc_comment_lib;
 		if (($numMatches > 0) || ($foundwhite == 1)) {
 			if ($conf['advanced.']['protocolCrawlerAgents'] == 1) {
@@ -288,27 +288,27 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 								$cntarrCurrentIPres = count($arrCurrentIPres);
 								$IPrevTest = '';
 								for ($i = $cntarrCurrentIPres-1; (($i > 0) && ($i > ($cntarrCurrentIPres -4))); $i--) {
-									$IPrevTest = '.' . $arrCurrentIPres[$i] . $IPrevTest; 
+									$IPrevTest = '.' . $arrCurrentIPres[$i] . $IPrevTest;
 								}
-								
+
 								if (strlen($IPrevTest) > 2) {
 									$IPrevTest = substr($IPrevTest, 1);
 								}
-								
+
 								if ($strCurrentIPres == '') {
 									$IPrevTest = $strCurrentIP;
 								}
-								
+
 								if ($IPrevTest != 'search.msn.com') {
 									$identstrbing == 'wrong bingbot@' . $strCurrentIPres . ' using user-agent ';
 								}
-						
-								
+
 							}
+
 							$protocol = 'BL: ' . strftime('%Y/%m/%d %H:%M:%S', microtime(TRUE)) . ': ' . $identstrbing . $_SERVER['HTTP_USER_AGENT'] . ' idfd "' . $identstr .
-								'"@@' . $GLOBALS['TSFE']->id . '@@' . $GLOBALS['TSFE']->lang;	
+								'"@@' . $GLOBALS['TSFE']->id . '@@' . $GLOBALS['TSFE']->lang;
 						}
-						
+
 					}
 
 					if ($protocol == ''){
@@ -320,7 +320,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 					$protocol = 'WL: ' . strftime('%Y/%m/%d %H:%M:%S', microtime(TRUE)) . ': ' . $_SERVER['HTTP_USER_AGENT'] . ' idfd "' . $identstr .
 					'"@@' . $GLOBALS['TSFE']->id . '@@' . $GLOBALS['TSFE']->lang;
 				}
-				
+
 				if (!(file_exists(realpath(dirname(__FILE__)) . '/crawlerprotocol.txt'))) {
 					if (version_compare(TYPO3_version, '6.0', '<')) {
 						t3lib_div::writeFile(realpath(dirname(__FILE__)) . '/crawlerprotocol.txt', $protocol);
@@ -350,11 +350,11 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 					}
 
 				}
-				
+
 			}
-			
+
 		}
-		
+
 		if ($this->lib->checkTableBLs('', TRUE, $this) == TRUE) {
 			$numMatches++;
 			if ($conf['advanced.']['protocolBlacklistedIPs'] == 1) {
@@ -586,6 +586,13 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				} else {
 					$_SESSION['cachepurgedlogin']=0;
 				}
+			}
+		}
+
+		if (t3lib_div::_GET('tx_toctoccomments_pi2')) {
+			$postDatapi2temp = t3lib_div::_GET('tx_toctoccomments_pi2');
+			if (($postDatapi2temp['ajax'] == 'tx_toctoccomments_pi2') && (t3lib_div::_GET('pid')) && (t3lib_div::_GET('refreshcontent')== 'refresh')) {
+				$_GET = array();
 			}
 		}
 
@@ -4092,14 +4099,24 @@ sharrre design 2 and 4, calculated specifics
 				if (version_compare(TYPO3_version, '6.3', '>')) {
 					$rsajsloc = 'Resources/Public/JavaScript';
 				}
-				
+				if (version_compare(TYPO3_version, '6.1', '>')) {
+					$rsajsenc = '/FrontendLoginFormRsaEncryption.js';
+					$rsascript='<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') .
+								'res/js' . $rsajsenc . '"></script>';
+					//$rsascript='<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/' . $rsajsloc . $rsajsenc . '"></script>';
+
+				} else {
+					$rsajsenc = '/rsaauth_min.js';
+					$rsascript='<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/' . $rsajsloc . $rsajsenc . '"></script>';
+				}
+
 				$rsajsstr = '<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/' . $rsajsloc . '/jsbn/jsbn.js"></script>
 						<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/' . $rsajsloc . '/jsbn/prng4.js"></script>
 						<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/' . $rsajsloc . '/jsbn/rng.js"></script>
 						<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/' . $rsajsloc . '/jsbn/rsa.js"></script>
 						<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/' . $rsajsloc . '/jsbn/base64.js"></script>
-						<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/' . $rsajsloc . '/rsaauth_min.js"></script>';
-				
+						' . $rsascript . '';
+
 				if ((intval($this->conf['advanced.']['loginRequired']) == 0) && ($this->conf['pluginmode'] != 5)) {
 					$locLoginFormhtml= '	var tclogincard ="";
 ';
@@ -4968,8 +4985,9 @@ sharrre design 2 and 4, calculated specifics
 			}
 
 		}
-
+		$subfldrLESS = '';
 		$filenamecssfile='tx-tc-' . $this->extVersion . '.css';
+
 		$httpsid='';
 		if (@$_SERVER['HTTPS'] == 'on') {
 			// on https StumbleUpon and Digg fail
@@ -5016,7 +5034,7 @@ sharrre design 2 and 4, calculated specifics
 
 		$txdirnamedefault= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep . t3lib_extMgm::siteRelPath('toctoc_comments') .
 							'res/css/' );
-		$filenamedefaultcss=$txdirnamedefault . $filenamecssfile;
+		$filenamedefaultcss=$txdirnamedefault . $subfldrLESS . $filenamecssfile;
 
 		$filetime = @filemtime($filenamedefaultcss);
 		if (!isset($_SESSION['fileTimeDefaultCSS'])) {

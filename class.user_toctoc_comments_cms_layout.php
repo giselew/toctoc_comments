@@ -91,7 +91,7 @@ class user_toctoc_comments_cms_layout {
 						$result .= '<br />';
 					}
 
-					$useshr = $data['data']['sSharing']['lDEF']['useSharing']['vDEF'];
+					$useshr = $data['data']['sSharing']['lDEF']['useSharingV2']['vDEF'];
 					$result .= ucfirst($GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.useSharing')) . ' ';
 					if ($useshr =='') {
 						$result .= $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.usets');

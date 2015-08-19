@@ -26,203 +26,204 @@
  *
  *
  *
- *  242: class toctoc_comment_lib extends tslib_pibase
- *  309:     public function __construct()
- *  327:     public function maincomments($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $feuserid = 0, $cmd = '', &$pObj, $piVars = array(),
+ *  243: class toctoc_comment_lib extends tslib_pibase
+ *  310:     public function __construct()
+ *  328:     public function maincomments($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $feuserid = 0, $cmd = '', &$pObj, $piVars = array(),
 		$cid = 0, $sessioncapdata = '', $userpic='', $commentspics = array(), $check='', $AjaxData = '', $ajaxextref= '',
 		$tctreestate = NULL, $commentreplyid=0, $confSess=array())
- *  632:     protected function checkExternalUid($conf, $pObj, $fromAjax)
+ *  633:     protected function checkExternalUid($conf, $pObj, $fromAjax)
  *
  *              SECTION: Commenting functions
- *  660:     public function comments($conf,&$pObj, $fromAjax, $feuserid, $pid)
- * 2973:     protected function getCommentsMenu($pObj, $conf, $externalref, $fromAjax, $cntrowsorig)
- * 3434:     protected function getBaseCommentsArray($uid, $uidlist = '', $selectparentuid = FALSE)
- * 3492:     protected function getBaseFeUsersArray($pObj, $fromAjax, $uid, $uidlist = '', $conf)
- * 3549:     protected function makeemoji($text, $conf, $debug)
- * 3697:     public function comments_getComments(&$rows, $conf, $pObj, $feuserid, $fromAjax, $pid, $levelhlt=0)
- * 4756:     public function comments_getComments_getRatings(&$row, $conf, $pObj, $feuserid, $fromAjax, $isReview = 0, $externalref = '', $commentusername = '')
- * 4985:     protected function comments_getComments_getEmail($email)
- * 5001:     protected function isCommentingClosed($conf, $pObj)
- * 5051:     protected function commentingClosed($pObj, $fromAjax, $conf)
- * 5074:     protected function comments_getCommentsBrowser($rpp, $startpoint, $totalrows, $pObj, $fromAjax, $conf)
- * 5224:     public function comments_getComments_fe_user($params, $conf, $pObj, $commentid, $fromAjax, $commentusername)
- * 5330:     protected function addleadingspace($text)
- * 5359:     protected function check_comment_ownership ($rowexternal_ref, $feuserid)
- * 5382:     public function previewcomment($data, $pObj, $conf)
+ *  661:     public function comments($conf,&$pObj, $fromAjax, $feuserid, $pid)
+ * 2974:     protected function getCommentsMenu($pObj, $conf, $externalref, $fromAjax, $cntrowsorig)
+ * 3435:     protected function getBaseCommentsArray($uid, $uidlist = '', $selectparentuid = FALSE)
+ * 3493:     protected function getBaseFeUsersArray($pObj, $fromAjax, $uid, $uidlist = '', $conf)
+ * 3550:     protected function makeemoji($text, $conf, $debug)
+ * 3698:     public function comments_getComments(&$rows, $conf, $pObj, $feuserid, $fromAjax, $pid, $levelhlt=0)
+ * 4757:     public function comments_getComments_getRatings(&$row, $conf, $pObj, $feuserid, $fromAjax, $isReview = 0, $externalref = '', $commentusername = '')
+ * 4986:     protected function comments_getComments_getEmail($email)
+ * 5002:     protected function isCommentingClosed($conf, $pObj)
+ * 5052:     protected function commentingClosed($pObj, $fromAjax, $conf)
+ * 5075:     protected function comments_getCommentsBrowser($rpp, $startpoint, $totalrows, $pObj, $fromAjax, $conf)
+ * 5225:     public function comments_getComments_fe_user($params, $conf, $pObj, $commentid, $fromAjax, $commentusername)
+ * 5331:     protected function addleadingspace($text)
+ * 5360:     protected function check_comment_ownership ($rowexternal_ref, $feuserid)
+ * 5383:     public function previewcomment($data, $pObj, $conf)
  *
  *              SECTION: functions for images cache (AJAX)
- * 5411:     protected function setAJAXimage($image, $feuserid)
- * 5424:     public function getAJAXimage($feuserid, $commentid, $conf, $email = '')
- * 5485:     protected function setAJAXimageCache($image, $imageoriginal, $feuserid)
- * 5496:     protected function getAJAXimageCache($commentuserimageout)
- * 5511:     protected function checkAjaxUserPic ($cid=0)
- * 5543:     protected function build_AJAXImages($conf, $pObj, $usergenderexistsstr = '', $fromAjax = FALSE)
- * 5754:     protected function fixFeUserPic ($pic)
- * 5778:     protected function makeImageSprite($conf)
+ * 5412:     protected function setAJAXimage($image, $feuserid)
+ * 5425:     public function getAJAXimage($feuserid, $commentid, $conf, $email = '')
+ * 5486:     protected function setAJAXimageCache($image, $imageoriginal, $feuserid)
+ * 5497:     protected function getAJAXimageCache($commentuserimageout)
+ * 5512:     protected function checkAjaxUserPic ($cid=0)
+ * 5544:     protected function build_AJAXImages($conf, $pObj, $usergenderexistsstr = '', $fromAjax = FALSE)
+ * 5755:     protected function fixFeUserPic ($pic)
+ * 5779:     protected function makeImageSprite($conf)
  *
  *              SECTION: Form functions
- * 5981:     private function form($conf, &$pObj, $piVars, $fromAjax, $pid, $ifeuserid=0, $userpic, $commentid=0, $replylevel=0,	$fromcomments = FALSE)
- * 7228:     protected function form_updatePostVarsWithFeUserData($pObj, $fromAjax, $conf, $piVars, $feuserid, $userpic, $cid, $output_cid)
- * 7566:     protected function getUserName($fe_user_user_uid, $pObj, $fromAjax, $conf)
- * 7633:     protected function form_getCaptcha($pObj, $conf, $fromAjax)
- * 7690:     protected function form_wrapError($field, $pObj, $conf)
+ * 5982:     private function form($conf, &$pObj, $piVars, $fromAjax, $pid, $ifeuserid=0, $userpic, $commentid=0, $replylevel=0,	$fromcomments = FALSE)
+ * 7229:     protected function form_updatePostVarsWithFeUserData($pObj, $fromAjax, $conf, $piVars, $feuserid, $userpic, $cid, $output_cid)
+ * 7567:     protected function getUserName($fe_user_user_uid, $pObj, $fromAjax, $conf)
+ * 7634:     protected function form_getCaptcha($pObj, $conf, $fromAjax)
+ * 7691:     protected function form_wrapError($field, $pObj, $conf)
  *
  *              SECTION: Comments page-browser functions
- * 7727:     protected function processBrowserSubmission($conf, $pObj, $cmd, $ref)
+ * 7728:     protected function processBrowserSubmission($conf, $pObj, $cmd, $ref)
  *
  *              SECTION: Inserting and Updating Comments functions
- * 7792:     public function processSubmission($conf, $pObj, $piVars, $fromAjax, $feuserid, $pid, $lang)
- * 8327:     public function updateComment($conf, $pObj, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
+ * 7793:     public function processSubmission($conf, $pObj, $piVars, $fromAjax, $feuserid, $pid, $lang)
+ * 8328:     public function updateComment($conf, $pObj, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
  *
  *              SECTION: IP-blocking functions, Spam checking
- * 8431:     protected function IPBlockSpamCheck(&$pObj)
- * 8449:     protected function sendNotificationIPBlock($params)
- * 8464:     protected function checkSMTPService($hostname, $port, $confcheckSMTPService = 0)
- * 8486:     public function getIpAddr()
- * 8504:     public function checkTableBLs($ipaddr = '', $checksiteblock = FALSE, $pObj)
- * 8522:     private function checkLocalBL($ipaddr, $checksiteblock = FALSE, $pObj)
- * 8564:     private function checkStaticBL($ipaddr, $checksiteblock = FALSE, $pObj)
- * 8607:     private function checkNetworkBLs($ipaddr)
- * 8631:     protected function processSubmission_checkTypicalSpam($pObj, $conf, $piVars, $lang, $fromAjax)
- * 8704:     protected function processSubmission_validate($piVars, $conf, $pObj, $fromAjax)
+ * 8432:     protected function IPBlockSpamCheck(&$pObj)
+ * 8450:     protected function sendNotificationIPBlock($params)
+ * 8465:     protected function checkSMTPService($hostname, $port, $confcheckSMTPService = 0)
+ * 8487:     public function getIpAddr()
+ * 8505:     public function checkTableBLs($ipaddr = '', $checksiteblock = FALSE, $pObj)
+ * 8523:     private function checkLocalBL($ipaddr, $checksiteblock = FALSE, $pObj)
+ * 8565:     private function checkStaticBL($ipaddr, $checksiteblock = FALSE, $pObj)
+ * 8608:     private function checkNetworkBLs($ipaddr)
+ * 8632:     protected function processSubmission_checkTypicalSpam($pObj, $conf, $piVars, $lang, $fromAjax)
+ * 8705:     protected function processSubmission_validate($piVars, $conf, $pObj, $fromAjax)
  *
  *              SECTION: E-mail notification
- * 8785:     public function sendNotificationEmail($uid, $plugincacheid, $points, $action, $conf, $pObj, $fromAjax, $piVars, $pid, $fetoctocusertoinsert,
-			$attachment_id=0, $attachment_subid=0, $optinemail='', $ratingpageid=0)
- * 9381:     protected function emailOptIn($conf, $optinemail, $optin_ip)
- * 9458:     protected function checkCOI($conf, $email, $checkip=TRUE)
+ * 8786:     public function sendNotificationEmail($uid, $plugincacheid, $points, $action, $conf, $pObj, $fromAjax, $piVars, $pid, $fetoctocusertoinsert,
+			$attachment_id=0, $attachment_subid=0, $optinemail='', $ratingpageid=0, $langajax = '')
+ * 9547:     protected function emailOptIn($conf, $optinemail, $optin_ip)
+ * 9624:     protected function checkCOI($conf, $email, $checkip=TRUE)
  *
  *              SECTION: language handling functions
- * 9494:     public function fixLL(&$conf)
- * 9519:     protected function fixLL_internal($LL, &$ll, $prefix = '')
+ * 9660:     public function fixLL(&$conf)
+ * 9685:     protected function fixLL_internal($LL, &$ll, $prefix = '')
  *
  *              SECTION: mostly formatting functions
- * 9544:     protected function createLinks($text, $conf)
- * 9599:     protected function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 9622:     protected function checkCustomFunctionCodes($code, $pObj)
- * 9647:     protected function isNoCacheUrl($url)
- * 9669:     protected function substituteMarkersAndSubparts($template, array $markers, array $subparts, $pObj)
+ * 9710:     protected function createLinks($text, $conf)
+ * 9765:     protected function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 9788:     protected function checkCustomFunctionCodes($code, $pObj)
+ * 9813:     protected function isNoCacheUrl($url)
+ * 9835:     protected function substituteMarkersAndSubparts($template, array $markers, array $subparts, $pObj)
  *
  *              SECTION: session and cache functions
- * 9696:     public function resetSessionVars($resetcontext, $alsoajaxvar = TRUE)
- * 9748:     public function getClearCacheIds($conf, $pid = 0, $repectsession = TRUE)
- * 9815:     protected function getClearCacheExternal_ref_uids($external_ref_uid = '')
- * 9844:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
- * 9921:     public function getPluginCacheControlTstamp ($external_ref_uid)
- * 9944:     public function initCaches()
- * 10000:     protected function clearPagesCaches($conf, $pid, $plugincacheid)
+ * 9862:     public function resetSessionVars($resetcontext, $alsoajaxvar = TRUE)
+ * 9914:     public function getClearCacheIds($conf, $pid = 0, $repectsession = TRUE)
+ * 9981:     protected function getClearCacheExternal_ref_uids($external_ref_uid = '')
+ * 10010:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
+ * 10087:     public function getPluginCacheControlTstamp ($external_ref_uid)
+ * 10110:     public function initCaches()
+ * 10166:     protected function clearPagesCaches($conf, $pid, $plugincacheid)
  *
  *              SECTION: Smilie functions
- * 10041:     public function parseSmilieArray($data)
- * 10058:     public function replaceSmilies($content, $conf)
- * 10080:     protected function checkbbcrop($content, $commentCropLength, $conf, $pObj)
- * 10116:     protected function replaceBBs($content, $pObj, $conf, $purge=FALSE)
+ * 10207:     public function parseSmilieArray($data)
+ * 10224:     public function replaceSmilies($content, $conf)
+ * 10246:     protected function checkbbcrop($content, $commentCropLength, $conf, $pObj)
+ * 10282:     protected function replaceBBs($content, $pObj, $conf, $purge=FALSE)
  *
  *              SECTION: functions for the AJAx interface with jQuery/JavaScript
- * 10168:     protected function getAjaxJSData($feuserid, $pid, $languagecode, $conf, $pObj, $cid, $fromAjax, $dataonly=FALSE, $externalref)
- * 10240:     protected function arraydiffassocrecursive($array1, $array2)
- * 10269:     protected function getAjaxData($feuserid, $pid, $languagecode, $conf, $cid, $ref)
- * 10292:     protected function mirrorconf($conf)
- * 10355:     protected function updateAjaxData($feuserid, $conf)
- * 10375:     protected function getAjaxLoggedInData($forjsvariable, $outputloginstate)
- * 10439:     protected function getAjaxDataAttachments($conf, $fromAjax, $pObj)
- * 10461:     protected function getAjaxJSDataCommentImgs($cid, $fromAjax)
- * 10498:     protected function getAjaxJSDataComments($cid, $pObj, $fromAjax)
- * 10536:     protected function getAjaxDataComments($pObj)
- * 10553:     protected function getAjaxDataImgs()
+ * 10334:     protected function getAjaxJSData($feuserid, $pid, $languagecode, $conf, $pObj, $cid, $fromAjax, $dataonly=FALSE, $externalref)
+ * 10406:     protected function arraydiffassocrecursive($array1, $array2)
+ * 10435:     protected function getAjaxData($feuserid, $pid, $languagecode, $conf, $cid, $ref)
+ * 10458:     protected function mirrorconf($conf)
+ * 10521:     protected function updateAjaxData($feuserid, $conf)
+ * 10541:     protected function getAjaxLoggedInData($forjsvariable, $outputloginstate)
+ * 10605:     protected function getAjaxDataAttachments($conf, $fromAjax, $pObj)
+ * 10627:     protected function getAjaxJSDataCommentImgs($cid, $fromAjax)
+ * 10664:     protected function getAjaxJSDataComments($cid, $pObj, $fromAjax)
+ * 10702:     protected function getAjaxDataComments($pObj)
+ * 10719:     protected function getAjaxDataImgs()
  *
  *              SECTION: URL- and IP-related functions
- * 10570:     public function getCurrentIp()
- * 10586:     public function hasValidItemUrl($piVars)
- * 10609:     public function getDefaultConfig($pluginkey='')
+ * 10736:     public function getCurrentIp()
+ * 10752:     public function hasValidItemUrl($piVars)
+ * 10775:     public function getDefaultConfig($pluginkey='')
  *
  *              SECTION: Rating functions
- * 10639:     public function getRatingDisplay($ref, $conf = NULL, $fromAjax = 0, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd = 'vote',
+ * 10805:     public function getRatingDisplay($ref, $conf = NULL, $fromAjax = 0, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd = 'vote',
 			$pObj = NULL, $cid, $fromcomments, $commentspics = array(), $scopeid=0, $isReview = 0, $commentusername = '')
- * 10700:     public function isVoted($ref, $pObj, $scopeid=0, $feuserid=0, $fromAjax)
- * 10738:     public function isCommented($ref, $pObj, $feuserid=0, $fromAjax)
- * 10771:     public function getBarWidth($rating, $conf, $isReview = 0)
- * 10794:     protected function getRatingInfo($ref, $pObj, $feuserid=-1, $conf, $scopeid=0, $fromAjax, $isReview = 0, $fromcomments = 0, $reviewfeuserid = 0)
- * 10993:     protected function generateRatingContent($ref, $template, $conf, $fromAjax, $pid, $returnasarray, $feuserid, $pObj, $cmd, $cid, $fromcomments,
+ * 10866:     public function isVoted($ref, $pObj, $scopeid=0, $feuserid=0, $fromAjax)
+ * 10904:     public function isCommented($ref, $pObj, $feuserid=0, $fromAjax)
+ * 10937:     public function getBarWidth($rating, $conf, $isReview = 0)
+ * 10960:     protected function getRatingInfo($ref, $pObj, $feuserid=-1, $conf, $scopeid=0, $fromAjax, $isReview = 0, $fromcomments = 0, $reviewfeuserid = 0)
+ * 11159:     protected function generateRatingContent($ref, $template, $conf, $fromAjax, $pid, $returnasarray, $feuserid, $pObj, $cmd, $cid, $fromcomments,
 	$commentspics, $scopeid = 0, $isReview = 0, $commentusername = '')
- * 12029:     private function makeiLikeText($conf, $pObj, $cmd, $ref, $fromAjax, $myrating = array(), $mylikeval, $mydis='', $template, $cid, $commentspics, $extpreffortext)
+ * 12195:     private function makeiLikeText($conf, $pObj, $cmd, $ref, $fromAjax, $myrating = array(), $mylikeval, $mydis='', $template, $cid, $commentspics, $extpreffortext)
  *
  *              SECTION: TYPO3 workarounds
- * 12473:     public function enableFields($tableName, $pObj, $getFromSession = FALSE)
- * 12495:     public function pi_getLLWrap($pObj, $llkey, $fromAjax)
- * 12540:     protected function t3getSubpart ($pObj, $templateCode, $templateMarker)
- * 12564:     protected function t3substituteMarkerArray ($content, $markContentArray)
- * 12586:     protected function t3substituteMarker ($template, $marker, $markContent)
- * 12600:     protected function t3fileResource ($pObj, $usetemplateFile)
- * 12617:     protected function getcheck ($ref, $i, $ratingscheck)
- * 12641:     protected function formatDate($date, $pObj, $fromAjax, $conf)
- * 12777:     protected function getPageURL($fromAjax = FALSE, $pid = 0)
- * 12799:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
- * 12824:     protected function getCleanHTML ($html)
- * 12847:     public function getLoginForm()
- * 12877:     public function getChangePasswordForm($uid = 0, $piHash = '')
- * 12908:     public function getBBCard($conf, $pObj, $buildthisbb = FALSE, $returnbbarray = FALSE)
+ * 12639:     public function enableFields($tableName, $pObj, $getFromSession = FALSE)
+ * 12661:     public function pi_getLLWrap($pObj, $llkey, $fromAjax)
+ * 12706:     protected function t3getSubpart ($pObj, $templateCode, $templateMarker)
+ * 12726:     public function t3substituteMarkerArray ($content, $markContentArray)
+ * 12747:     protected function t3substituteMarker ($template, $marker, $markContent)
+ * 12761:     protected function t3fileResource ($pObj, $usetemplateFile)
+ * 12778:     protected function getcheck ($ref, $i, $ratingscheck)
+ * 12802:     protected function formatDate($date, $pObj, $fromAjax, $conf)
+ * 12938:     protected function getPageURL($fromAjax = FALSE, $pid = 0)
+ * 12960:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ * 12985:     protected function getCleanHTML ($html)
+ * 13008:     public function getLoginForm()
+ * 13038:     public function getChangePasswordForm($uid = 0, $piHash = '')
+ * 13069:     public function getBBCard($conf, $pObj, $buildthisbb = FALSE, $returnbbarray = FALSE)
  *
  *              SECTION: Usercards
- * 13011:     public function getSmiliesCard($conf)
- * 13277:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $pObj, $commentid, $fromAjax = TRUE, $fromusercenter = FALSE)
+ * 13172:     public function getSmiliesCard($conf)
+ * 13438:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $pObj, $commentid, $fromAjax = TRUE, $fromusercenter = FALSE)
  *
  *              SECTION: Mail functions
- * 13735:     protected function getMailTo($mailAddress, $linktxt = '', $initP = '?')
- * 13782:     protected function encryptEmail($string, $back=0)
- * 13824:     protected function encryptCharcode($n, $start, $end, $offset)
- * 13849:     public function send_mail ($toEMail, $subject, $message, $html, $fromEMail, $fromName, $confcheckSMTPService = 0, $attachment='')
- * 14022:     protected function slashName ($name, $apostrophe='"')
+ * 13896:     protected function getMailTo($mailAddress, $linktxt = '', $initP = '?')
+ * 13943:     protected function encryptEmail($string, $back=0)
+ * 13985:     protected function encryptCharcode($n, $start, $end, $offset)
+ * 14010:     public function send_mail ($toEMail, $subject, $message, $html, $fromEMail, $fromName, $confcheckSMTPService = 0, $attachment='')
+ * 14183:     protected function slashName ($name, $apostrophe='"')
  *
- *              SECTION: Commentator-Notification functions
- * 14046:     public function handleCommentatorNotifications($uid, $conf, $pObj, $fromeID = FALSE, $pid=0, $fromAjax=1)
+ *              SECTION: Notification functions
+ * 14207:     public function handleCommentatorNotifications($uid, $conf, $pObj, $fromeID = FALSE, $pid=0, $fromAjax=1)
+ * 14552:     public function handleNewUserNotification($uid, $conf, $pObj, $fromeID = FALSE, $pid=0, $fromAjax=1)
  *
  *              SECTION: Website preview functions
- * 14397:     public function cleanupfup($uploadedfile, $conf, $originalfilename)
- * 14416:     public function getwebpagepreview($cmd, $pObj, $cid, $data, $conf)
- * 14459:     protected function getpreviewinit($cid, $data, $conf)
- * 14507:     protected function savewebpagepreviewtodb($pcid, $pObj, $pcommentid, $conf)
- * 14746:     protected function cleanupdbandfiles($conf, $uploadedfile='', $originalfilename='')
- * 14898:     protected function getwebpagecache($pcid, $pObj, $pcommentid, $conf, $url='', $isbeforefetch = FALSE)
- * 15065:     protected function read_dir($dir, $array = array())
- * 15094:     protected function commentShowWebpagepreview ($rowattachmentid, $rowattachment_subid, $conf, $pObj, $cid, $topwebsitepreview, $fromAjax,
+ * 14689:     public function cleanupfup($uploadedfile, $conf, $originalfilename)
+ * 14708:     public function getwebpagepreview($cmd, $pObj, $cid, $data, $conf)
+ * 14751:     protected function getpreviewinit($cid, $data, $conf)
+ * 14799:     protected function savewebpagepreviewtodb($pcid, $pObj, $pcommentid, $conf)
+ * 15038:     protected function cleanupdbandfiles($conf, $uploadedfile='', $originalfilename='')
+ * 15193:     protected function getwebpagecache($pcid, $pObj, $pcommentid, $conf, $url='', $isbeforefetch = FALSE)
+ * 15360:     protected function read_dir($dir, $array = array())
+ * 15389:     protected function commentShowWebpagepreview ($rowattachmentid, $rowattachment_subid, $conf, $pObj, $cid, $topwebsitepreview, $fromAjax,
 			$row = array(), $isforemailnotification = FALSE)
- * 15597:     protected function makeAttachementPicture($picturefilename, $conf, $descriptionbyuser, $originalfilename, $firstname,
+ * 15892:     protected function makeAttachementPicture($picturefilename, $conf, $descriptionbyuser, $originalfilename, $firstname,
 			$lastname, $fetoctocusertoinsert)
  *
  *              SECTION: eID-Interface functions
- * 15777:     public function handleeID($uid, $conf, $pObj, $messagetodisplay, $refreshurl)
+ * 16072:     public function handleeID($uid, $conf, $pObj, $messagetodisplay, $refreshurl)
  *
  *              SECTION: Reply on comments functions
- * 15883:     protected function getCommentBoxDisplay($commentid, $conf, $level, $fromAjax, $triggeredlevel=0, $levelexpandoverride=0)
- * 15959:     protected function getCommentBoxChildrenDisplayIsCollapsed($commentschildrenids, $conf, $level, $fromAjax, $triggeredlevel=0, $levelexpandoverride=0)
+ * 16183:     protected function getCommentBoxDisplay($commentid, $conf, $level, $fromAjax, $triggeredlevel=0, $levelexpandoverride=0)
+ * 16259:     protected function getCommentBoxChildrenDisplayIsCollapsed($commentschildrenids, $conf, $level, $fromAjax, $triggeredlevel=0, $levelexpandoverride=0)
  *
  *              SECTION: Fe-usergroup functions
- * 16031:     public function usersGroupmembers($pObj, $fromAjax, $conf, $communitybuddies = FALSE)
- * 16112:     protected function isUserOnline($feuser_uid)
+ * 16331:     public function usersGroupmembers($pObj, $fromAjax, $conf, $communitybuddies = FALSE)
+ * 16412:     protected function isUserOnline($feuser_uid)
  *
  *              SECTION: Recent comments functions
- * 16151:     public function getRecentComments($pObj, $conf, $feuserid)
- * 16167:     protected function trimContent($text, $conf, $maxChars=0, $dospecialChars=TRUE, $precrop = FALSE)
+ * 16451:     public function getRecentComments($pObj, $conf, $feuserid)
+ * 16467:     protected function trimContent($text, $conf, $maxChars=0, $dospecialChars=TRUE, $precrop = FALSE)
  *
  *              SECTION: Report comments functions
- * 16224:     protected function getCommentsReportLink($params, &$pObj, $fromAjax, $pid)
- * 16272:     public function mainReport($content, $conf, $pObj, $piVars)
+ * 16524:     protected function getCommentsReportLink($params, &$pObj, $fromAjax, $pid)
+ * 16572:     public function mainReport($content, $conf, $pObj, $piVars)
  *
  *              SECTION: Debug function
- * 16299:     protected function trackdebug ($trackingfunction)
+ * 16599:     protected function trackdebug ($trackingfunction)
  *
  *              SECTION: Top ratings functions
- * 16326:     public function showtopRatings($conf, $pObj)
+ * 16626:     public function showtopRatings($conf, $pObj)
  *
  *              SECTION: show userCenter functions
- * 16348:     public function showuserCenter($conf, $pObj)
- * 16366:     public function showCommentsSearch($conf, $pObj, $fromAjax = FALSE, $data = '', $cid = 0)
- * 16382:     private function gravatarize($conf, $outstr, $email)
- * 16432:     private function gifbuild($conf, $pObj, $feuserid, $gravatarEnable, $userimgFile, $imagesize, $profileimgclass, $classonline,
+ * 16648:     public function showuserCenter($conf, $pObj)
+ * 16666:     public function showCommentsSearch($conf, $pObj, $fromAjax = FALSE, $data = '', $cid = 0)
+ * 16682:     private function gravatarize($conf, $outstr, $email)
+ * 16732:     private function gifbuild($conf, $pObj, $feuserid, $gravatarEnable, $userimgFile, $imagesize, $profileimgclass, $classonline,
 			$userimagestyle, $usernametitle, $email, $cssid, $nogen = FALSE, $imgalign = '')
  *
- * TOTAL FUNCTIONS: 132
+ * TOTAL FUNCTIONS: 133
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -6766,7 +6767,7 @@ class toctoc_comment_lib extends tslib_pibase {
 			}
 			if ($fieldpresent == FALSE) {
 				$formFieldTemplate = $this->t3getSubpart($pObj, $pObj->templateCode, '###SUBFORMFIELDHIDDEN###');
-				if ($conf['theme.']['boxmodelLabelInputPreserve']==0) {
+				if ($conf['theme.']['boxmodelLabelInputPreserve'] == 0) {
 					$formfieldcclass = 'tx-tc-ct-input tx-tc-ct-input-' . $possiblefield;
 				}else{
 					$formfieldcclass = '';
@@ -8791,10 +8792,20 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * @return	void
 	 */
 	public function sendNotificationEmail($uid, $plugincacheid, $points, $action, $conf, $pObj, $fromAjax, $piVars, $pid, $fetoctocusertoinsert,
-			$attachment_id=0, $attachment_subid=0, $optinemail='', $ratingpageid=0) {
+			$attachment_id=0, $attachment_subid=0, $optinemail='', $ratingpageid=0, $langajax = '') {
 
+		// there's a special call coming from pi2, the pObj is not the same and function params are properly misused:
+		// $this->lib->sendNotificationEmail(0, 0, 0, 'adminconfirmsignup', $confpi1, $this, TRUE, $row, $GLOBALS['TSFE']->id,
+ 		//							$GLOBALS['TSFE']->page['title'], $requrl, 0, '', 0, $langajax);
 		if (($fromAjax)) {
 			$language = &$GLOBALS['LANG'];
+
+			if ($langajax == '') {
+				$language->init('default');
+			} else {
+				$language->init($langajax);
+			}
+
 			$lang = $GLOBALS['LANG']->lang;
 		} else {
 			$language = t3lib_div::makeInstance('language');
@@ -8810,139 +8821,190 @@ class toctoc_comment_lib extends tslib_pibase {
 
 		$fromEmail = $conf['spamProtect.']['fromEmail'];
 		$attachmentinfoHTML = '';
-		$hasattachement = TRUE;
-		if ($attachment_id != 0) {
-			$attachmentinfoHTML = $this->commentShowWebpagepreview ($attachment_id, $attachment_subid, $conf, $pObj, $uid, FALSE, $fromAjax, array(), TRUE);
-			if ($attachmentinfoHTML == '') {
-				$attachmentinfoHTML = $this->pi_getLLWrap($pObj, 'email.attachment_mmnotfounderror', $fromAjax) . ' ' . $attachment_id;
+		$hasattachement = FALSE;
+		if ($action != 'adminconfirmsignup') {
+			$hasattachement = TRUE;
+			if ($attachment_id != 0) {
+				$attachmentinfoHTML = $this->commentShowWebpagepreview ($attachment_id, $attachment_subid, $conf, $pObj, $uid, FALSE, $fromAjax, array(), TRUE);
+				if ($attachmentinfoHTML == '') {
+					$attachmentinfoHTML = $this->pi_getLLWrap($pObj, 'email.attachment_mmnotfounderror', $fromAjax) . ' ' . $attachment_id;
+					$hasattachement = FALSE;
+				}
+
+			} else {
+				$attachmentinfoHTML = $this->pi_getLLWrap($pObj, 'email.noattachmentforcomment', $fromAjax);
 				$hasattachement = FALSE;
 			}
 
-		} else {
-			$attachmentinfoHTML = $this->pi_getLLWrap($pObj, 'email.noattachmentforcomment', $fromAjax);
-			$hasattachement = FALSE;
-		}
+			if (!$conf['HTMLEmail']) {
+				if ($hasattachement == TRUE) {
+					$attachmentinfoHTML = $this->pi_getLLWrap($pObj, 'email.commenthasattachment', $fromAjax);
+				} else {
+					$attachmentinfoHTML = $this->pi_getLLWrap($pObj, 'email.noattachmentforcomment', $fromAjax);
+				}
 
-		if (!$conf['HTMLEmail']) {
-			if ($hasattachement == TRUE) {
-				$attachmentinfoHTML = $this->pi_getLLWrap($pObj, 'email.commenthasattachment', $fromAjax);
-			} else {
-				$attachmentinfoHTML = $this->pi_getLLWrap($pObj, 'email.noattachmentforcomment', $fromAjax);
 			}
 
 		}
-
- 		$clearCacheIds = $this->getClearCacheIds($conf, $pid, FALSE);
-		$clearCachePlugins = $plugincacheid;
 
 		$check = md5($uid . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']);
 
-		if ($_SESSION['commentsPageTitles'][$pid] == '') {
-			$pageTitle =$_SESSION['commentsPageIdsClean'][$pid];
-		} else {
-			$pageTitle =$_SESSION['commentsPageTitles'][$pid];
-		}
+		if ($action != 'adminconfirmsignup') {
+	 		$clearCacheIds = $this->getClearCacheIds($conf, $pid, FALSE);
+			$clearCachePlugins = $plugincacheid;
 
-		$linktocomment = $_SESSION['commentsPageIdsClean'][$pid];
-		if (isset($_SESSION['commentsPageIdsTypolinks'][$pid][$uid])) {
-			$linktocomment=$_SESSION['commentsPageIdsTypolinks'][$pid][$uid];
-		} else {
-			$linktocomment = '';
-		}
+			if ($_SESSION['commentsPageTitles'][$pid] == '') {
+				$pageTitle =$_SESSION['commentsPageIdsClean'][$pid];
+			} else {
+				$pageTitle =$_SESSION['commentsPageTitles'][$pid];
+			}
 
-		if (($conf['spamProtect.']['confirmedOptIn'] == 1) && ($optinemail != '')) {
+			$linktocomment = $_SESSION['commentsPageIdsClean'][$pid];
+			if (isset($_SESSION['commentsPageIdsTypolinks'][$pid][$uid])) {
+				$linktocomment=$_SESSION['commentsPageIdsTypolinks'][$pid][$uid];
+			} else {
+				$linktocomment = '';
+			}
+
+			if (($conf['spamProtect.']['confirmedOptIn'] == 1) && ($optinemail != '')) {
+				if ($conf['HTMLEmail']) {
+					$confencarrcoi =array(
+							'advanced.' => array(
+								'notificationForCommentatorEmail' => $conf['advanced.']['notificationForCommentatorEmail'],
+								'notificationForCommentatorHTMLEmailTemplate' => $conf['advanced.']['notificationForCommentatorHTMLEmailTemplate'],
+								'eIDHTMLTemplate' => $conf['advanced.']['eIDHTMLTemplate'],
+							),
+							'pageTitle' => $_SESSION['commentsPageTitles'][$pid],
+							'pageURL' => $_SESSION['commentsPageIdsClean'][$pid],
+							'pageURLhotlink' => $linktocomment,
+							'storagePid' => $conf['storagePid'],
+							'HTMLEmail' => $conf['HTMLEmail'],
+							'HTMLEmailFontFamily' => $conf['HTMLEmailFontFamily'],
+							'aP' => $conf['recentcomments.']['anchorPre'],
+							'optinemail' => $optinemail,
+							'optin_ip' => t3lib_div::getIndpEnv('REMOTE_ADDR'),
+							'plugin' => $plugincacheid,
+							'notificationLevel' => $conf['advanced.']['notificationLevel'],
+							'notificationValidDays' => $conf['advanced.']['notificationValidDays'],
+
+					);
+				} else {
+					$confencarrcoi =array(
+							'advanced.' => array(
+								'notificationForCommentatorEmail' => $conf['advanced.']['notificationForCommentatorEmail'],
+								'notificationForCommentatorEmailTemplate' => $conf['advanced.']['notificationForCommentatorEmailTemplate'],
+								'eIDHTMLTemplate' => $conf['advanced.']['eIDHTMLTemplate'],
+							),
+							'pageTitle' => $_SESSION['commentsPageTitles'][$pid],
+							'pageURL' => $_SESSION['commentsPageIdsClean'][$pid],
+							'pageURLhotlink' => $linktocomment,
+							'storagePid' => $conf['storagePid'],
+							'HTMLEmail' => $conf['HTMLEmail'],
+							'aP' => $conf['recentcomments.']['anchorPre'],
+							'optinemail' => $optinemail,
+							'optin_ip' => t3lib_div::getIndpEnv('REMOTE_ADDR'),
+							'plugin' => $plugincacheid,
+							'notificationLevel' => $conf['advanced.']['notificationLevel'],
+							'notificationValidDays' => $conf['advanced.']['notificationValidDays'],
+					);
+				}
+
+				$confenccoi = rawurlencode(base64_encode(serialize($confencarrcoi)));
+				$record = array(
+						'mailconf' => $confenccoi,
+				);
+
+				$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_cache_mailconf', $record);
+				$confenccoi = $GLOBALS['TYPO3_DB']->sql_insert_id();
+
+			}
+
 			if ($conf['HTMLEmail']) {
-				$confencarrcoi =array(
+				$confencarr =array(
 						'advanced.' => array(
-							'notificationForCommentatorEmail' => $conf['advanced.']['notificationForCommentatorEmail'],
-							'notificationForCommentatorHTMLEmailTemplate' => $conf['advanced.']['notificationForCommentatorHTMLEmailTemplate'],
-							'eIDHTMLTemplate' => $conf['advanced.']['eIDHTMLTemplate'],
+								'notificationForCommentatorEmail' => $conf['advanced.']['notificationForCommentatorEmail'],
+								'notificationForCommentatorHTMLEmailTemplate' => $conf['advanced.']['notificationForCommentatorHTMLEmailTemplate'],
+								'eIDHTMLTemplate' => $conf['advanced.']['eIDHTMLTemplate'],
 						),
 						'pageTitle' => $_SESSION['commentsPageTitles'][$pid],
 						'pageURL' => $_SESSION['commentsPageIdsClean'][$pid],
 						'pageURLhotlink' => $linktocomment,
+						'aP' => $conf['recentcomments.']['anchorPre'],
 						'storagePid' => $conf['storagePid'],
 						'HTMLEmail' => $conf['HTMLEmail'],
 						'HTMLEmailFontFamily' => $conf['HTMLEmailFontFamily'],
-						'aP' => $conf['recentcomments.']['anchorPre'],
-						'optinemail' => $optinemail,
-						'optin_ip' => t3lib_div::getIndpEnv('REMOTE_ADDR'),
 						'plugin' => $plugincacheid,
+						'vmcNPC' => intval($conf['vmcNoPageCache']),
 						'notificationLevel' => $conf['advanced.']['notificationLevel'],
 						'notificationValidDays' => $conf['advanced.']['notificationValidDays'],
-
 				);
 			} else {
-				$confencarrcoi =array(
+				$confencarr =array(
 						'advanced.' => array(
-							'notificationForCommentatorEmail' => $conf['advanced.']['notificationForCommentatorEmail'],
-							'notificationForCommentatorEmailTemplate' => $conf['advanced.']['notificationForCommentatorEmailTemplate'],
-							'eIDHTMLTemplate' => $conf['advanced.']['eIDHTMLTemplate'],
+								'notificationForCommentatorEmail' => $conf['advanced.']['notificationForCommentatorEmail'],
+								'notificationForCommentatorEmailTemplate' => $conf['advanced.']['notificationForCommentatorEmailTemplate'],
+								'eIDHTMLTemplate' => $conf['advanced.']['eIDHTMLTemplate'],
 						),
 						'pageTitle' => $_SESSION['commentsPageTitles'][$pid],
 						'pageURL' => $_SESSION['commentsPageIdsClean'][$pid],
 						'pageURLhotlink' => $linktocomment,
+						'aP' => $conf['recentcomments.']['anchorPre'],
 						'storagePid' => $conf['storagePid'],
 						'HTMLEmail' => $conf['HTMLEmail'],
-						'aP' => $conf['recentcomments.']['anchorPre'],
-						'optinemail' => $optinemail,
-						'optin_ip' => t3lib_div::getIndpEnv('REMOTE_ADDR'),
 						'plugin' => $plugincacheid,
+						'vmcNPC' => intval($conf['vmcNoPageCache']),
 						'notificationLevel' => $conf['advanced.']['notificationLevel'],
 						'notificationValidDays' => $conf['advanced.']['notificationValidDays'],
 				);
 			}
-
-			$confenccoi = rawurlencode(base64_encode(serialize($confencarrcoi)));
-			$record = array(
-					'mailconf' => $confenccoi,
-			);
-
-			$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_cache_mailconf', $record);
-			$confenccoi = $GLOBALS['TYPO3_DB']->sql_insert_id();
+			$confenc = rawurlencode(base64_encode(serialize($confencarr)));
 
 		}
 
-		if ($conf['HTMLEmail']) {
-			$confencarr =array(
-					'advanced.' => array(
-							'notificationForCommentatorEmail' => $conf['advanced.']['notificationForCommentatorEmail'],
-							'notificationForCommentatorHTMLEmailTemplate' => $conf['advanced.']['notificationForCommentatorHTMLEmailTemplate'],
-							'eIDHTMLTemplate' => $conf['advanced.']['eIDHTMLTemplate'],
-					),
-					'pageTitle' => $_SESSION['commentsPageTitles'][$pid],
-					'pageURL' => $_SESSION['commentsPageIdsClean'][$pid],
-					'pageURLhotlink' => $linktocomment,
-					'aP' => $conf['recentcomments.']['anchorPre'],
-					'storagePid' => $conf['storagePid'],
-					'HTMLEmail' => $conf['HTMLEmail'],
-					'HTMLEmailFontFamily' => $conf['HTMLEmailFontFamily'],
-					'plugin' => $plugincacheid,
-					'vmcNPC' => intval($conf['vmcNoPageCache']),
-					'notificationLevel' => $conf['advanced.']['notificationLevel'],
-					'notificationValidDays' => $conf['advanced.']['notificationValidDays'],
-			);
-		} else {
-			$confencarr =array(
-					'advanced.' => array(
-							'notificationForCommentatorEmail' => $conf['advanced.']['notificationForCommentatorEmail'],
-							'notificationForCommentatorEmailTemplate' => $conf['advanced.']['notificationForCommentatorEmailTemplate'],
-							'eIDHTMLTemplate' => $conf['advanced.']['eIDHTMLTemplate'],
-					),
-					'pageTitle' => $_SESSION['commentsPageTitles'][$pid],
-					'pageURL' => $_SESSION['commentsPageIdsClean'][$pid],
-					'pageURLhotlink' => $linktocomment,
-					'aP' => $conf['recentcomments.']['anchorPre'],
-					'storagePid' => $conf['storagePid'],
-					'HTMLEmail' => $conf['HTMLEmail'],
-					'plugin' => $plugincacheid,
-					'vmcNPC' => intval($conf['vmcNoPageCache']),
-					'notificationLevel' => $conf['advanced.']['notificationLevel'],
-					'notificationValidDays' => $conf['advanced.']['notificationValidDays'],
-			);
+		if ($action == 'adminconfirmsignup') {
+			$attachment_id = str_replace('?&tx_toctoccomments_pi2[signup]=1', '', $attachment_id);
+			$attachment_id = str_replace('?tx_toctoccomments_pi2[signup]=1', '', $attachment_id);
+			$attachment_id = str_replace('&tx_toctoccomments_pi2[signup]=1', '', $attachment_id);
+			if ($conf['HTMLEmail']) {
+				$confencadminconfirmsignup=array(
+						'advanced.' => array(
+								'eIDHTMLTemplate' => $conf['advanced.']['eIDHTMLTemplate'],
+								'notificationForNewUserEmail' => $conf['advanced.']['notificationForNewUserEmail'],
+								'notificationForNewUserHTMLEmailTemplate' => $conf['advanced.']['notificationForNewUserHTMLEmailTemplate'],
+						),
+						'pageTitle' => $fetoctocusertoinsert,
+						'pageURL' => $attachment_id,
+						'storagePid' => $conf['storagePid'],
+						'HTMLEmail' => $conf['HTMLEmail'],
+						'HTMLEmailFontFamily' => $conf['HTMLEmailFontFamily'],
+						'newuseruid' => $piVars['uid'],
+						'newuserusername' => $piVars['username'],
+						'newuserfirst_name' => $piVars['first_name'],
+						'newuserlast_name' => $piVars['last_name'],
+						'newuserlast_email' => $piVars['email'],
+				);
+			} else {
+				$confencadminconfirmsignup=array(
+						'advanced.' => array(
+								'eIDHTMLTemplate' => $conf['advanced.']['eIDHTMLTemplate'],
+								'notificationForNewUserEmail' => $conf['advanced.']['notificationForNewUserEmail'],
+								'notificationForNewUserHTMLEmailTemplate' => $conf['advanced.']['notificationForNewUserHTMLEmailTemplate'],
+						),
+						'pageTitle' => $fetoctocusertoinsert,
+						'pageURL' => $attachment_id,
+						'storagePid' => $conf['storagePid'],
+						'HTMLEmail' => $conf['HTMLEmail'],
+						'HTMLEmailFontFamily' => $conf['HTMLEmailFontFamily'],
+						'newuseruid' => $piVars['uid'],
+						'newuserusername' => $piVars['username'],
+						'newuserfirst_name' => $piVars['first_name'],
+						'newuserlast_name' => $piVars['last_name'],
+						'newuserlast_email' => $piVars['email'],
+				);
+			}
+			$confenc = rawurlencode(base64_encode(serialize($confencadminconfirmsignup)));
 		}
 
-		$confenc = rawurlencode(base64_encode(serialize($confencarr)));
 		$record = array(
 				'mailconf' => $confenc,
 		);
@@ -8952,209 +9014,260 @@ class toctoc_comment_lib extends tslib_pibase {
 
 		$approvelinkcoi = '';
 		$seperatorchar = ' - ';
-		if ($conf['HTMLEmail']) {
-			$seperatorchar = '<br />';
-			$approvelink = '<b><a class="approvelink" href="' . t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' . $uid . '&chk=' . $check .
-					'&lng=' . $lang . '&clearCache=' . urlencode($clearCacheIds) .
-						'&cmd=approve&confenc=' . $confenc) . '">' . $this->pi_getLLWrap($pObj, 'email.textapprovecomment', $fromAjax) .'</a></b>';
-			$approvelinkcoi = '<b><a class="approvelink" href="' . t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' . $uid . '&chk=' . $check .
-					'&lng=' . $lang . '&clearCache=' . urlencode($clearCacheIds) .
-						'&cmd=approvecoi&confenc=' . $confenccoi) . '">' . $this->pi_getLLWrap($pObj, 'email.textapprovecoicomment', $fromAjax) .'</a></b>';
-			$deletelink = '<a href="' . t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' . $uid . '&chk=' . $check . '&lng=' . $lang .
-					'&clearCache=' . urlencode($clearCacheIds) . '&cmd=delete&confenc=' . $confenc) . '">' .
-			$this->pi_getLLWrap($pObj, 'email.textdeletecomment', $fromAjax) . '</a>';
-			$killlink = ' | <a href="' . t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' . $uid . '&chk=' . $check . '&lng=' . $lang .
-					'&clearCache=' . urlencode($clearCacheIds) . '&cmd=kill&confenc=' . $confenc) . '">' .
-			$this->pi_getLLWrap($pObj, 'email.textkillcomment', $fromAjax) . '</a>';
+
+		if (!($this->cObj)) {
+			$this->cObj = t3lib_div::makeInstance('tslib_cObj');
+			$this->cObj->start('', '');
+		}
+
+		if ($action == 'adminconfirmsignup') {
+			if ($conf['HTMLEmail']) {
+				$seperatorchar = '<br />';
+				$approvelinkadminconfirmsignup = '<b><a class="approvelink" href="' . t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' .
+						$uid . '&chk=' . $check .
+						'&lng=' . $lang . '&clearCache=' . urlencode(0) .
+							'&cmd=approveadminconfirmsignup&confenc=' . $confenc) . '">' .
+				$pObj->pi_getLL('email.textapprovenewuser') .'</a></b>';
+
+				$deletelinkadminconfirmsignup = '<a href="' . t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' . $uid . '&chk=' .
+						$check . '&lng=' . $lang .
+						'&clearCache=' . urlencode(0) . '&cmd=deleteadminconfirmsignup&confenc=' . $confenc) . '">' .
+						$pObj->pi_getLL('email.textdeletenewuser') . '</a>';
+
+			} else {
+				$approvelinkadminconfirmsignup = $pObj->pi_getLL('email.textapprovenewuser') . ' ' .
+						t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' . $uid . '&chk=' . $check . '&lng=' . $lang . '&clearCache=' .
+								urlencode(0) .
+								'&cmd=approveadminconfirmsignup&confenc=' . $confenc);
+
+				$deletelinkadminconfirmsignup = $pObj->pi_getLL('email.textdeletenewuser') . ' ' .
+						t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' .
+						$uid . '&chk=' . $check . '&lng=' . $lang . '&clearCache=' . urlencode(0) .
+								'&cmd=deleteadminconfirmsignup&confenc=' . $confenc);
+			}
 
 		} else {
-			$approvelink = $this->pi_getLLWrap($pObj, 'email.textapprovecomment', $fromAjax) . ' ' .
-							t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' . $uid . '&chk=' . $check . '&lng=' . $lang . '&clearCache=' .
-									urlencode($clearCacheIds) .
-							'&cmd=approve&confenc=' . $confenc);
-			$approvelinkcoi = $this->pi_getLLWrap($pObj, 'email.textapprovecoicomment', $fromAjax) . ' ' .
-							t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' . $uid . '&chk=' . $check . '&lng=' . $lang . '&clearCache=' .
-									urlencode($clearCacheIds) .
-							'&cmd=approvecoi&confenc=' . $confenccoi);
+			if ($conf['HTMLEmail']) {
+				$seperatorchar = '<br />';
+				$approvelink = '<b><a class="approvelink" href="' . t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' . $uid . '&chk=' . $check .
+						'&lng=' . $lang . '&clearCache=' . urlencode($clearCacheIds) .
+						'&cmd=approve&confenc=' . $confenc) . '">' . $this->pi_getLLWrap($pObj, 'email.textapprovecomment', $fromAjax) .'</a></b>';
+				$approvelinkcoi = '<b><a class="approvelink" href="' . t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' . $uid . '&chk=' . $check .
+						'&lng=' . $lang . '&clearCache=' . urlencode($clearCacheIds) .
+						'&cmd=approvecoi&confenc=' . $confenccoi) . '">' . $this->pi_getLLWrap($pObj, 'email.textapprovecoicomment', $fromAjax) .'</a></b>';
 
-			$deletelink = $this->pi_getLLWrap($pObj, 'email.textdeletecomment', $fromAjax) . ' ' . t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' .
-					$uid . '&chk=' . $check . '&lng=' . $lang . '&clearCache=' . urlencode($clearCacheIds) . '&cmd=delete&confenc=' . $confenc);
-			$killlink = $this->pi_getLLWrap($pObj, 'email.textkillcomment', $fromAjax) . ' ' . t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' .
-					$uid . '&chk=' . $check . '&lng=' . $lang . '&clearCache=' . urlencode($clearCacheIds) . '&cmd=kill&confenc=' . $confenc);
+				$deletelink = '<a href="' . t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' . $uid . '&chk=' . $check . '&lng=' . $lang .
+						'&clearCache=' . urlencode($clearCacheIds) . '&cmd=delete&confenc=' . $confenc) . '">' .
+						$this->pi_getLLWrap($pObj, 'email.textdeletecomment', $fromAjax) . '</a>';
 
+				$killlink = ' | <a href="' . t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' . $uid . '&chk=' . $check . '&lng=' . $lang .
+						'&clearCache=' . urlencode($clearCacheIds) . '&cmd=kill&confenc=' . $confenc) . '">' .
+						$this->pi_getLLWrap($pObj, 'email.textkillcomment', $fromAjax) . '</a>';
+
+			} else {
+				$approvelink = $this->pi_getLLWrap($pObj, 'email.textapprovecomment', $fromAjax) . ' ' .
+						t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' . $uid . '&chk=' . $check . '&lng=' . $lang . '&clearCache=' .
+								urlencode($clearCacheIds) .
+								'&cmd=approve&confenc=' . $confenc);
+				$approvelinkcoi = $this->pi_getLLWrap($pObj, 'email.textapprovecoicomment', $fromAjax) . ' ' .
+						t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' . $uid . '&chk=' . $check . '&lng=' . $lang . '&clearCache=' .
+								urlencode($clearCacheIds) .
+								'&cmd=approvecoi&confenc=' . $confenccoi);
+
+				$deletelink = $this->pi_getLLWrap($pObj, 'email.textdeletecomment', $fromAjax) . ' ' . t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' .
+						$uid . '&chk=' . $check . '&lng=' . $lang . '&clearCache=' . urlencode($clearCacheIds) . '&cmd=delete&confenc=' . $confenc);
+
+				$killlink = $this->pi_getLLWrap($pObj, 'email.textkillcomment', $fromAjax) . ' ' . t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' .
+						$uid . '&chk=' . $check . '&lng=' . $lang . '&clearCache=' . urlencode($clearCacheIds) . '&cmd=kill&confenc=' . $confenc);
+			}
 		}
 
-		$userinfo ='';
-		$requiredFields = t3lib_div::trimExplode(',', $conf['requiredFields'], TRUE);
-		$userinfo .= ($piVars['commenttitle']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.commenttitle', $fromAjax) . ' ' . $piVars['commenttitle'] .
-		$seperatorchar : '';
-		$userinfo .= ($piVars['firstname']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.first_name', $fromAjax) . ' ' . $piVars['firstname'] . $seperatorchar : '';
-		$userinfo .= ($piVars['lastname']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.last_name', $fromAjax) . ' ' . $piVars['lastname'] . $seperatorchar : '';
-		$userinfo .= ($piVars['email']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.email', $fromAjax) . ' ' . $piVars['email'] . $seperatorchar : '';
-		$userinfo .= ($piVars['location']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.location', $fromAjax) . ' ' . $piVars['location'] . $seperatorchar : '';
-		$userinfo .= ($piVars['homepage']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.web_site', $fromAjax) . ' ' . $piVars['homepage'] . $seperatorchar : '';
-		if ($action=='rating') {
+		if ($action != 'adminconfirmsignup') {
+
 			$userinfo ='';
-			//get comment
-			list($row) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('content, firstname, lastname, email, location, homepage',
-					'tx_toctoc_comments_comments', 'uid =' . $uid);
-			$userinfo .= ($row['commenttitle']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.commenttitle', $fromAjax) . ' ' . $row['commenttitle'] .
+			$requiredFields = t3lib_div::trimExplode(',', $conf['requiredFields'], TRUE);
+			$userinfo .= ($piVars['commenttitle']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.commenttitle', $fromAjax) . ' ' . $piVars['commenttitle'] .
 			$seperatorchar : '';
-			$userinfo .= ($row['firstname']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.first_name', $fromAjax) . ' ' . $row['firstname'] . $seperatorchar : '';
-			$userinfo .= ($row['lastname']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.last_name', $fromAjax) . ' ' . $row['lastname'] . $seperatorchar : '';
-			$userinfo .= ($row['email']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.email', $fromAjax) . ' ' . $row['email'] . $seperatorchar : '';
-			$userinfo .= ($row['location']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.location', $fromAjax) . ' ' . $row['location'] . $seperatorchar : '';
-			$userinfo .= ($row['homepage']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.web_site', $fromAjax) . ' ' . $row['homepage'] . $seperatorchar : '';
-			$contentdislike = $row['content'];
+			$userinfo .= ($piVars['firstname']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.first_name', $fromAjax) . ' ' . $piVars['firstname'] . $seperatorchar : '';
+			$userinfo .= ($piVars['lastname']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.last_name', $fromAjax) . ' ' . $piVars['lastname'] . $seperatorchar : '';
+			$userinfo .= ($piVars['email']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.email', $fromAjax) . ' ' . $piVars['email'] . $seperatorchar : '';
+			$userinfo .= ($piVars['location']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.location', $fromAjax) . ' ' . $piVars['location'] . $seperatorchar : '';
+			$userinfo .= ($piVars['homepage']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.web_site', $fromAjax) . ' ' . $piVars['homepage'] . $seperatorchar : '';
+			if ($action=='rating') {
+				$userinfo ='';
+				//get comment
+				list($row) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('content, firstname, lastname, email, location, homepage',
+						'tx_toctoc_comments_comments', 'uid =' . $uid);
+				$userinfo .= ($row['commenttitle']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.commenttitle', $fromAjax) . ' ' . $row['commenttitle'] .
+				$seperatorchar : '';
+				$userinfo .= ($row['firstname']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.first_name', $fromAjax) . ' ' . $row['firstname'] . $seperatorchar : '';
+				$userinfo .= ($row['lastname']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.last_name', $fromAjax) . ' ' . $row['lastname'] . $seperatorchar : '';
+				$userinfo .= ($row['email']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.email', $fromAjax) . ' ' . $row['email'] . $seperatorchar : '';
+				$userinfo .= ($row['location']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.location', $fromAjax) . ' ' . $row['location'] . $seperatorchar : '';
+				$userinfo .= ($row['homepage']!='') ? $this->pi_getLLWrap($pObj, 'pi1_template.web_site', $fromAjax) . ' ' . $row['homepage'] . $seperatorchar : '';
+				$contentdislike = $row['content'];
+			}
+			$contentformail=$piVars['content'];
 		}
-
 		$myhomepagelinkarr=explode('//', t3lib_div::locationHeaderUrl(''));
 		$myhomepagelink=$myhomepagelinkarr[1];
 
 		//now, now, now we get the user-infos so the admin knows bit more about the commentator
 		$infoleft='';
-		$contentformail=$piVars['content'];
-		if (($conf['spamProtect.']['confirmedOptIn'] ==1) && ($optinemail!='')) {
-			if ($conf['HTMLEmail']) {
-				$infoleft='<b>' . $this->pi_getLLWrap($pObj, 'pi1_template.informationaboutyou', $fromAjax) . '</b><br />' . $this->getUserCard('',
-						$fetoctocusertoinsert, $conf, $pObj, $uid);
-				$URLinfo =  $this->pi_getLLWrap($pObj, 'email.textnewcoi', $fromAjax) . ' ' . $_SESSION['commentsPageIdsClean'][$pid] . '.<br /> ' .
-				$this->pi_getLLWrap($pObj, 'email.textemailrequiresyourconfirmation', $fromAjax);
-				$contentformail=$this->replaceBBs($piVars['content'], $pObj, $conf, FALSE);
-				$contentformail =$this->addleadingspace($contentformail);
-				$saveconfemoji=$conf['advanced.']['useEmoji'];
-
-				$conf['advanced.']['useEmoji']=0;
-				$contentformail = $this->makeemoji($contentformail, $conf, 'sendNotificationEmail');
-
-				$conf['advanced.']['useEmoji']=$saveconfemoji;
-			} else {
-
-				$URLinfo =  $this->pi_getLLWrap($pObj, 'email.textnewcoi', $fromAjax) . ' ' . $_SESSION['commentsPageIdsClean'][$pid] . '. ' .
-				$this->pi_getLLWrap($pObj, 'email.textemailrequiresyourconfirmation', $fromAjax);
-
-			}
-
-			if ($conf['HTMLEmail']) {
-				$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['spamProtect.']['emailTemplatecoiHTML']);
-
-			} else {
-				$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['spamProtect.']['emailTemplatecoi']);
-			}
-
-			$usetemplateFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
-			if ($fromAjax) {
-				$template = @file_get_contents(PATH_site . $usetemplateFile);
-			} else {
-				$template = $this->t3fileResource($pObj, $usetemplateFile);
-			}
-
-			$markers = array(
-					'###URL###' =>  $URLinfo,
-					'###USER###' => $userinfo,
-					'###CONTENT###' =>  $contentformail,
-					'###TEXTCONTENT###' => $this->pi_getLLWrap($pObj, 'pi1_template.content', $fromAjax),
-					'###APPROVE_LINK###' => $approvelinkcoi,
-					'###SITE_REL_PATH###' => $this->locationHeaderUrlsubDir(FALSE). t3lib_extMgm::siteRelPath('toctoc_comments'),
-					'###MESSAGETYPE###'  => $this->pi_getLLWrap($pObj, 'email.coiemail', $fromAjax),
-					'###INFOSLEFT###'  => $infoleft,
-					'###INFOSRIGHT###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
-					'###MYHOMEPAGE###'  => $myhomepagelink,
-					'###MYHOMEPAGELINK###'  => $this->cObj->typoLink_URL(array('parameter' => t3lib_div::locationHeaderUrl(''), 'ATagParams' => 'rel="nofollow"',)),
-					'###MYFONTFAMILY###'  => $conf['HTMLEmailFontFamily'],
-					'###MYHOMEPAGETITLE###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
-					'###ATTACHMENT###'  => $attachmentinfoHTML,
-			);
-			$content = $this->t3substituteMarkerArray($template, $markers);
-			if ($conf['spamProtect.']['fromEmailName'] == '') {
-				$sendername = $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] . ' - Administrator';
-			} else {
-				$sendername = str_replace('%site%', $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'], $conf['spamProtect.']['fromEmailName']);
-			}
-
-			if (t3lib_div::validEmail($optinemail) && t3lib_div::validEmail($fromEmail)) {
-				if ($conf['HTMLEmail']) {	// If htmlmail lib is included, then generate a nice HTML-email
-					self::send_mail($optinemail, $this->pi_getLLWrap($pObj, 'email.subjectcoi', $fromAjax), '', $content,
-							$conf['spamProtect.']['fromEmail'], $sendername, $conf['spamProtect.']['checkSMTPService']);
-				} else {		// ... else just plain text...
-					t3lib_div::plainMailEncoded($optinemail, $this->pi_getLLWrap($pObj, 'email.subjectcoi', $fromAjax), $content,
-					'From: ' . $conf['spamProtect.']['fromEmail']);
-				}
-
-			}
-
-		}
-
-		if (($action=='approve') || ($action=='info') || ($action=='rating')) {
-			if (t3lib_div::validEmail($toEmail) && t3lib_div::validEmail($fromEmail)) {
-				$contentformail=$piVars['content'];
-				if ($action=='rating') {
-
-					$contentformail=$contentdislike;
-					$contentformail= '<b>Alert: This comment just obtained ' . $conf['ratings.']['dlikeCtsNotifLvl'] . ' dislikes!</b><br />' . $contentformail;
-				}
-
+		if ($action != 'adminconfirmsignup') {
+			if (($conf['spamProtect.']['confirmedOptIn'] ==1) && ($optinemail!='')) {
 				if ($conf['HTMLEmail']) {
-					$confwrk = $conf;
-					$confwrk['userContactUC'] = 1;
-					$confwrk['userHomepageUC'] =1;
-					$confwrk['userEmailUC'] = 1;
-					$confwrk['userLocationUC'] =1;
-					$confwrk['userStatsUC'] = 1;
-					$confwrk['userIPUC'] = 1;
-
-					if (!isset($this->cObj)) {
-						$this->cObj = t3lib_div::makeInstance('tslib_cObj');
-						$this->cObj->start('', '');
-					}
-
-					if ($action=='rating') {
-						$infoleft='<b>' . $this->pi_getLLWrap($pObj, 'pi1_template.informationaboutdislikeevaluator', $fromAjax) . '</b><br />' .
-						$this->getUserCard('', $fetoctocusertoinsert, $confwrk, $pObj, $uid);
-					} else {
-						$infoleft='<b>' . $this->pi_getLLWrap($pObj, 'pi1_template.informationaboutcommentator', $fromAjax) . '</b><br />' .
-						$this->getUserCard('', $fetoctocusertoinsert, $confwrk, $pObj, $uid);
-					}
-
-					$contentformail=$this->replaceBBs($contentformail, $pObj, $conf, FALSE);
+					$infoleft='<b>' . $this->pi_getLLWrap($pObj, 'pi1_template.informationaboutyou', $fromAjax) . '</b><br />' . $this->getUserCard('',
+							$fetoctocusertoinsert, $conf, $pObj, $uid);
+					$URLinfo =  $this->pi_getLLWrap($pObj, 'email.textnewcoi', $fromAjax) . ' ' . $_SESSION['commentsPageIdsClean'][$pid] . '.<br /> ' .
+					$this->pi_getLLWrap($pObj, 'email.textemailrequiresyourconfirmation', $fromAjax);
+					$contentformail=$this->replaceBBs($piVars['content'], $pObj, $conf, FALSE);
 					$contentformail =$this->addleadingspace($contentformail);
 					$saveconfemoji=$conf['advanced.']['useEmoji'];
 
 					$conf['advanced.']['useEmoji']=0;
-					$contentformail = $this->makeemoji($contentformail, $conf, 'sendNotificationEmail2');
+					$contentformail = $this->makeemoji($contentformail, $conf, 'sendNotificationEmail');
 
 					$conf['advanced.']['useEmoji']=$saveconfemoji;
+				} else {
+
+					$URLinfo =  $this->pi_getLLWrap($pObj, 'email.textnewcoi', $fromAjax) . ' ' . $_SESSION['commentsPageIdsClean'][$pid] . '. ' .
+					$this->pi_getLLWrap($pObj, 'email.textemailrequiresyourconfirmation', $fromAjax);
 
 				}
 
-				$coiinfo='';
-				if ($this->newcommentneedscoi==1) {
-					$coiinfo=$this->pi_getLLWrap($pObj, 'email.textrequirescoi', $fromAjax);
+				if ($conf['HTMLEmail']) {
+					$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['spamProtect.']['emailTemplatecoiHTML']);
+
+				} else {
+					$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['spamProtect.']['emailTemplatecoi']);
 				}
+
+				$usetemplateFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
+				if ($fromAjax) {
+					$template = @file_get_contents(PATH_site . $usetemplateFile);
+				} else {
+					$template = $this->t3fileResource($pObj, $usetemplateFile);
+				}
+				$myhomepagetypoLink_URL = str_replace('https:', 'http:', $this->cObj->typoLink_URL(array('parameter' => t3lib_div::locationHeaderUrl(''), 'ATagParams' => 'rel="nofollow"',)));
+				$markers = array(
+						'###URL###' =>  $URLinfo,
+						'###USER###' => $userinfo,
+						'###CONTENT###' =>  $contentformail,
+						'###TEXTCONTENT###' => $this->pi_getLLWrap($pObj, 'pi1_template.content', $fromAjax),
+						'###APPROVE_LINK###' => $approvelinkcoi,
+						'###SITE_REL_PATH###' => $this->locationHeaderUrlsubDir(FALSE). t3lib_extMgm::siteRelPath('toctoc_comments'),
+						'###MESSAGETYPE###'  => $this->pi_getLLWrap($pObj, 'email.coiemail', $fromAjax),
+						'###INFOSLEFT###'  => $infoleft,
+						'###INFOSRIGHT###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
+						'###MYHOMEPAGE###'  => $myhomepagelink,
+						'###MYHOMEPAGELINK###'  => $myhomepagetypoLink_URL,
+						'###MYFONTFAMILY###'  => $conf['HTMLEmailFontFamily'],
+						'###MYHOMEPAGETITLE###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
+						'###ATTACHMENT###'  => $attachmentinfoHTML,
+				);
+				$content = $this->t3substituteMarkerArray($template, $markers);
+				if ($conf['spamProtect.']['fromEmailName'] == '') {
+					$sendername = $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] . ' - Administrator';
+				} else {
+					$sendername = str_replace('%site%', $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'], $conf['spamProtect.']['fromEmailName']);
+				}
+
+				if (t3lib_div::validEmail($optinemail) && t3lib_div::validEmail($fromEmail)) {
+					if ($conf['HTMLEmail']) {	// If htmlmail lib is included, then generate a nice HTML-email
+						self::send_mail($optinemail, $this->pi_getLLWrap($pObj, 'email.subjectcoi', $fromAjax), '', $content,
+								$conf['spamProtect.']['fromEmail'], $sendername, $conf['spamProtect.']['checkSMTPService']);
+					} else {		// ... else just plain text...
+						t3lib_div::plainMailEncoded($optinemail, $this->pi_getLLWrap($pObj, 'email.subjectcoi', $fromAjax), $content,
+						'From: ' . $conf['spamProtect.']['fromEmail']);
+					}
+
+				}
+
+			}
+		}
+
+		if (($action=='approve') || ($action=='info') || ($action=='rating') || ($action == 'adminconfirmsignup')) {
+			if (t3lib_div::validEmail($toEmail) && t3lib_div::validEmail($fromEmail)) {
+				if ($action != 'adminconfirmsignup') {
+					$contentformail=$piVars['content'];
+				}
+
+				if ($action=='rating') {
+
+					$contentformail=$contentdislike;
+					$contentformailtext = str_replace('%s', $conf['ratings.']['dlikeCtsNotifLvl'], $this->pi_getLLWrap($pObj, 'pi1_template.informationjustobtaineddislikes', FALSE));
+					$contentformail= '<b>'. $contentformailtext.'</b><br />' . $contentformail;
+				}
+				if ($action != 'adminconfirmsignup') {
+					if ($conf['HTMLEmail']) {
+						$confwrk = $conf;
+						$confwrk['userContactUC'] = 1;
+						$confwrk['userHomepageUC'] =1;
+						$confwrk['userEmailUC'] = 1;
+						$confwrk['userLocationUC'] =1;
+						$confwrk['userStatsUC'] = 1;
+						$confwrk['userIPUC'] = 1;
+
+						if (!isset($this->cObj)) {
+							$this->cObj = t3lib_div::makeInstance('tslib_cObj');
+							$this->cObj->start('', '');
+						}
+
+						if ($action=='rating') {
+							$infoleft='<b>' . $this->pi_getLLWrap($pObj, 'pi1_template.informationaboutdislikeevaluator', $fromAjax) . '</b><br />' .
+							$this->getUserCard('', $fetoctocusertoinsert, $confwrk, $pObj, $uid);
+						} else {
+
+								$infoleft='<b>' . $this->pi_getLLWrap($pObj, 'pi1_template.informationaboutcommentator', $fromAjax) . '</b><br />' .
+								$this->getUserCard('', $fetoctocusertoinsert, $confwrk, $pObj, $uid);
+
+						}
+
+						$contentformail=$this->replaceBBs($contentformail, $pObj, $conf, FALSE);
+						$contentformail =$this->addleadingspace($contentformail);
+						$saveconfemoji=$conf['advanced.']['useEmoji'];
+
+						$conf['advanced.']['useEmoji']=0;
+						$contentformail = $this->makeemoji($contentformail, $conf, 'sendNotificationEmail2');
+
+						$conf['advanced.']['useEmoji']=$saveconfemoji;
+					}
+					
+					$coiinfo='';
+					if ($this->newcommentneedscoi==1) {
+						$coiinfo=$this->pi_getLLWrap($pObj, 'email.textrequirescoi', $fromAjax);
+					}
+					
+				}
+
+				$myhomepagetypoLink_URL = str_replace('https:', 'http:', $this->cObj->typoLink_URL(array('parameter' => t3lib_div::locationHeaderUrl(''),
+						'ATagParams' => 'rel="nofollow"',)));
 
 				if ($action == 'info') {
 					if ($conf['HTMLEmail']) {
-						$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['spamProtect.']['emailTemplateHTML']);
+						$usetemplateFile = str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['spamProtect.']['emailTemplateHTML']);
 
 					} else {
-						$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['spamProtect.']['emailTemplateInfo']);
+						$usetemplateFile = str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['spamProtect.']['emailTemplateInfo']);
 					}
 
-					$usetemplateFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
+					$usetemplateFile = str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
 					if ($fromAjax) {
 						$template = @file_get_contents(PATH_site . $usetemplateFile);
 					} else {
 						$template = $this->t3fileResource($pObj, $usetemplateFile);
 					}
+					
 					if ($_SESSION['commentsPageTitles'][$pid] == '') {
-						$pagename =$_SESSION['commentsPageIdsClean'][$pid];
+						$pagename = $_SESSION['commentsPageIdsClean'][$pid];
 					} else {
-						$pagename =$_SESSION['commentsPageTitles'][$pid];
+						$pagename = $_SESSION['commentsPageTitles'][$pid];
 					}
 
 					$urlofcommentpage = $_SESSION['commentsPageIdsClean'][$pid];
 					if (isset($_SESSION['commentsPageIdsTypolinks'][$pid][$uid])) {
-						$urlofcomment='<a href="' . $_SESSION['commentsPageIdsTypolinks'][$pid][$uid] . '">' .
+						$urlofcomment = '<a href="' . $_SESSION['commentsPageIdsTypolinks'][$pid][$uid] . '">' .
 								$pagename . '</a>';
 					} else {
 						$urlofcomment = '<a href="' . $_SESSION['commentsPageIdsClean'][$pid]  . $conf['recentcomments.']['anchorPre'] . $uid . '">' .
@@ -9180,18 +9293,16 @@ class toctoc_comment_lib extends tslib_pibase {
 							'###INFOSLEFT###'  => $infoleft,
 							'###INFOSRIGHT###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
 							'###MYHOMEPAGE###'  => $myhomepagelink,
-							'###MYHOMEPAGELINK###'  =>
-							$this->cObj->typoLink_URL(array('parameter' => t3lib_div::locationHeaderUrl(''), 'ATagParams' => 'rel="nofollow"',)),
+							'###MYHOMEPAGELINK###'  =>$myhomepagetypoLink_URL,
 							'###MYFONTFAMILY###'  => $conf['HTMLEmailFontFamily'],
 							'###MYHOMEPAGETITLE###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
 							'###ATTACHMENT###'  => $attachmentinfoHTML,
 					);
 				} elseif ($action == 'approve') {
 					if ($conf['HTMLEmail']) {
-						$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['spamProtect.']['emailTemplateHTML']);
-
+						$usetemplateFile = str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['spamProtect.']['emailTemplateHTML']);
 					} else {
-						$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['spamProtect.']['emailTemplate']);
+						$usetemplateFile = str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['spamProtect.']['emailTemplate']);
 					}
 
 					$usetemplateFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
@@ -9200,7 +9311,7 @@ class toctoc_comment_lib extends tslib_pibase {
 					} else {
 						$template = $this->t3fileResource($pObj, $usetemplateFile);
 					}
-
+					
 					$markers = array(
 							'###URL###' =>  $this->pi_getLLWrap($pObj, 'email.textnewcomment', $fromAjax) . ' ' . $_SESSION['commentsPageIdsClean'][$pid] . '. ' .
 							$this->pi_getLLWrap($pObj, 'email.textrequiresyourapproval', $fromAjax) . '. ',
@@ -9218,19 +9329,59 @@ class toctoc_comment_lib extends tslib_pibase {
 							'###INFOSLEFT###'  => $infoleft,
 							'###INFOSRIGHT###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
 							'###MYHOMEPAGE###'  => $myhomepagelink,
-							'###MYHOMEPAGELINK###'  => $this->cObj->typoLink_URL(array('parameter' => t3lib_div::locationHeaderUrl(''),
-									'ATagParams' => 'rel="nofollow"',)),
+							'###MYHOMEPAGELINK###'  => $myhomepagetypoLink_URL,
 							'###MYFONTFAMILY###'  => $conf['HTMLEmailFontFamily'],
 							'###MYHOMEPAGETITLE###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
 							'###ATTACHMENT###'  => $attachmentinfoHTML,
 					);
-				} else {
+				}  elseif ($action == 'adminconfirmsignup') {
+					if ($conf['HTMLEmail']) {
+						$usetemplateFile = str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['spamProtect.']['emailTemplateSignupConfirmHTML']);
+					} else {
+						$usetemplateFile = str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['spamProtect.']['emailTemplateSignupConfirm']);
+					}
+
+					$usetemplateFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
+					if ($fromAjax) {
+						$template = @file_get_contents(PATH_site . $usetemplateFile);
+					} else {
+						$template = $this->t3fileResource($pObj, $usetemplateFile);
+					}
+
+					$contentformail = '<b>' . $pObj->pi_getLL('email.textconfirmationfornewuser') . ' ' . $piVars['username'] .'</b><br />';
+
+					$userinfo='';
+					$userinfo .= ($piVars['first_name']!='') ? $pObj->pi_getLL('firstname') . ' ' . $piVars['first_name'] . $seperatorchar : '';
+					$userinfo .= ($piVars['last_name']!='') ? $pObj->pi_getLL('lastname') . ' ' . $piVars['last_name'] . $seperatorchar : '';
+					$userinfo .= ($piVars['email']!='') ? $pObj->pi_getLL('email') . ' ' . $piVars['email'] . $seperatorchar : '';
+					$userinfo .= ($piVars['username']!='') ? $pObj->pi_getLL('username') . ' ' . $piVars['username'] . $seperatorchar : '';
+
+					$infoleft='';
+					$rmoteadr = $pObj->pi_getLL('email.textsignedupfromip') . ' ' . t3lib_div::getIndpEnv('REMOTE_ADDR');
+					$siteRelPath = $this->locationHeaderUrlsubDir(FALSE). t3lib_extMgm::siteRelPath('toctoc_comments');
+					$markers = array(
+							'###USER###' => $userinfo,
+							'###CONTENT###' =>  $contentformail,
+							'###TEXTCONTENT###' => '',
+							'###REMOTE_ADDR###' => $rmoteadr,
+							'###APPROVE_LINK###' => $approvelinkadminconfirmsignup,
+							'###DELETE_LINK###' => $deletelinkadminconfirmsignup,
+							'###SITE_REL_PATH###' => $siteRelPath,
+							'###MESSAGETYPE###'  => $pObj->pi_getLL('email.approvalsignupemail'),
+							'###INFOSLEFT###'  => $infoleft,
+							'###INFOSRIGHT###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
+							'###MYHOMEPAGE###'  => $myhomepagelink,
+							'###MYHOMEPAGELINK###'  => $myhomepagetypoLink_URL,
+							'###MYFONTFAMILY###'  => $conf['HTMLEmailFontFamily'],
+							'###MYHOMEPAGETITLE###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
+					);
+
+				}  else {
 					//rating
 					if ($conf['HTMLEmail']) {
-						$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['spamProtect.']['emailTemplateDislikeHTML']);
-
+						$usetemplateFile = str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['spamProtect.']['emailTemplateDislikeHTML']);
 					} else {
-						$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['spamProtect.']['emailTemplateDislike']);
+						$usetemplateFile = str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['spamProtect.']['emailTemplateDislike']);
 					}
 
 					$usetemplateFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
@@ -9262,101 +9413,116 @@ class toctoc_comment_lib extends tslib_pibase {
 							'###INFOSLEFT###'  => $infoleft,
 							'###INFOSRIGHT###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
 							'###MYHOMEPAGE###'  => $myhomepagelink,
-							'###MYHOMEPAGELINK###'  => $this->cObj->typoLink_URL(array('parameter' => t3lib_div::locationHeaderUrl(''),
-									'ATagParams' => 'rel="nofollow"',)),
+							'###MYHOMEPAGELINK###'  => $myhomepagetypoLink_URL,
 							'###MYFONTFAMILY###'  => $conf['HTMLEmailFontFamily'],
 							'###MYHOMEPAGETITLE###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
 					);
 				}
 
 				// Call hook for custom markers
-				$pObj->conf=$conf;
-				$params = array(
-						'pObj' => $pObj,
-						'template' => $template,
-						'check' => $check,
-						'markers' => $markers,
-						'uid' => $uid
-				);
-				if (is_array($tempMarkers = $this->sendNotificationIPBlock($params))) {
-							$markers = $tempMarkers;
-				}
-
-				if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['sendNotificationMail'])) {
-					foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['sendNotificationMail'] as $userFunc) {
-						if ($userFunc != 'comments_response') {
-							$params = array(
-									'pObj' => $pObj,
-									'template' => $template,
-									'check' => $check,
-									'markers' => $markers,
-									'uid' => $uid
-							);
-							if (is_array($tempMarkers = t3lib_div::callUserFunction($userFunc, $params, $pObj))) {
+				if ($action != 'adminconfirmsignup') {
+					$pObj->conf=$conf;
+					$params = array(
+							'pObj' => $pObj,
+							'template' => $template,
+							'check' => $check,
+							'markers' => $markers,
+							'uid' => $uid
+					);
+					if (is_array($tempMarkers = $this->sendNotificationIPBlock($params))) {
 								$markers = $tempMarkers;
+					}
+
+					if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['sendNotificationMail'])) {
+						foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['sendNotificationMail'] as $userFunc) {
+							if ($userFunc != 'comments_response') {
+								$params = array(
+										'pObj' => $pObj,
+										'template' => $template,
+										'check' => $check,
+										'markers' => $markers,
+										'uid' => $uid
+								);
+								if (is_array($tempMarkers = t3lib_div::callUserFunction($userFunc, $params, $pObj))) {
+									$markers = $tempMarkers;
+								}
+
 							}
 
 						}
 
 					}
 
-				}
+					$blockanddeletelink = $this->pi_getLLWrap($pObj, 'email.textdeleteblock', $fromAjax);
+					$blockandkilllink = $this->pi_getLLWrap($pObj, 'email.textkillblock', $fromAjax);
 
-				$blockanddeletelink = $this->pi_getLLWrap($pObj, 'email.textdeleteblock', $fromAjax);
-				$blockandkilllink = $this->pi_getLLWrap($pObj, 'email.textkillblock', $fromAjax);
-
-				$markers['###DELETE_LINK_AND_BLOCK###'] = str_replace($this->pi_getLLWrap($pObj, 'email.textdeletecomment', $fromAjax), '',
-						$markers['###DELETE_LINK_AND_BLOCK###'] );
-				$markers['###KILL_LINK_AND_BLOCK###'] = str_replace($this->pi_getLLWrap($pObj, 'email.textkillcomment', $fromAjax), '',
-						$markers['###KILL_LINK_AND_BLOCK###'] );
-				if ($conf['HTMLEmail']) {
-					$markers['###DELETE_LINK_AND_BLOCK###'] = str_replace('"></a>', '', $markers['###DELETE_LINK_AND_BLOCK###']);
-					$markers['###KILL_LINK_AND_BLOCK###'] = str_replace('"></a>', '', $markers['###KILL_LINK_AND_BLOCK###']);
-					$markers['###DELETE_LINK_AND_BLOCK###'] = ' | ' . $markers['###DELETE_LINK_AND_BLOCK###'] . '">' . $blockanddeletelink . '</a>';
-					$markers['###KILL_LINK_AND_BLOCK###'] = $markers['###KILL_LINK_AND_BLOCK###']. '">' . $blockandkilllink . '</a>';
-					$markers['###KILL_LINK###'] = str_replace('|', '', $markers['###KILL_LINK###']);
-					$markers['###KILL_LINK###'] ='| ' . $markers['###KILL_LINK###'];
-					$markers['###DELETE_LINK###'] = str_replace('|', '', $markers['###DELETE_LINK###']);
-				} else {
-					$markers['###DELETE_LINK_AND_BLOCK###'] = $blockanddeletelink . $markers['###DELETE_LINK_AND_BLOCK###'];
-					$markers['###KILL_LINK_AND_BLOCK###'] = $blockandkilllink . $markers['###KILL_LINK_AND_BLOCK###'];
-
-				}
-
-				if ((intval($conf['advanced.']['adminCommentResponse']) == 1)) {
-					//post-handle response to the comment:
-					$strrespondlink=$this->pi_getLLWrap($pObj, 'email.textresponsetothecomment', $fromAjax);
-					$markers['###RESPOND_LINK###'] = t3lib_div::locationHeaderUrl(
-							'index.php?eID=toctoc_comments' .
-							'&uid=' . $uid .
-							'&chk=' . $check .
-							'&cmd=respond' .
-							'&confenc=' . $confenc .
-							'&clearCache=' . $pid
-					);
-
-					if (trim($markers['###RESPOND_LINK###']) !='') {
-						if ($conf['HTMLEmail']) {
-							$strrespondlink=str_replace(':', '', $strrespondlink);
-							$markers['###RESPOND_LINK###'] = '<br /><a rel="nofollow" href="' . $markers['###RESPOND_LINK###'] . '">' . $strrespondlink . '</a>';
-
-						} else {
-							$markers['###RESPOND_LINK###'] = '\\n' . $strrespondlink . ' ' . $markers['###RESPOND_LINK###'];
-						}
+					$markers['###DELETE_LINK_AND_BLOCK###'] = str_replace($this->pi_getLLWrap($pObj, 'email.textdeletecomment', $fromAjax), '',
+							$markers['###DELETE_LINK_AND_BLOCK###'] );
+					$markers['###KILL_LINK_AND_BLOCK###'] = str_replace($this->pi_getLLWrap($pObj, 'email.textkillcomment', $fromAjax), '',
+							$markers['###KILL_LINK_AND_BLOCK###'] );
+					if ($conf['HTMLEmail']) {
+						$markers['###DELETE_LINK_AND_BLOCK###'] = str_replace('"></a>', '', $markers['###DELETE_LINK_AND_BLOCK###']);
+						$markers['###KILL_LINK_AND_BLOCK###'] = str_replace('"></a>', '', $markers['###KILL_LINK_AND_BLOCK###']);
+						$markers['###DELETE_LINK_AND_BLOCK###'] = ' | ' . $markers['###DELETE_LINK_AND_BLOCK###'] . '">' . $blockanddeletelink . '</a>';
+						$markers['###KILL_LINK_AND_BLOCK###'] = $markers['###KILL_LINK_AND_BLOCK###']. '">' . $blockandkilllink . '</a>';
+						$markers['###KILL_LINK###'] = str_replace('|', '', $markers['###KILL_LINK###']);
+						$markers['###KILL_LINK###'] ='| ' . $markers['###KILL_LINK###'];
+						$markers['###DELETE_LINK###'] = str_replace('|', '', $markers['###DELETE_LINK###']);
+					} else {
+						$markers['###DELETE_LINK_AND_BLOCK###'] = $blockanddeletelink . $markers['###DELETE_LINK_AND_BLOCK###'];
+						$markers['###KILL_LINK_AND_BLOCK###'] = $blockandkilllink . $markers['###KILL_LINK_AND_BLOCK###'];
 
 					}
 
 				} else {
-					$markers['###RESPOND_LINK###'] = '';
+					if ($conf['HTMLEmail']) {
+							$markers['###DELETE_LINK###'] = str_replace('|', '', $markers['###DELETE_LINK###']);
+					}
+
+				}
+
+				if ($action != 'adminconfirmsignup') {
+					if ((intval($conf['advanced.']['adminCommentResponse']) == 1)) {
+						//post-handle response to the comment:
+						$strrespondlink = $this->pi_getLLWrap($pObj, 'email.textresponsetothecomment', $fromAjax);
+						$markers['###RESPOND_LINK###'] = t3lib_div::locationHeaderUrl(
+								'index.php?eID=toctoc_comments' .
+								'&uid=' . $uid .
+								'&chk=' . $check .
+								'&cmd=respond' .
+								'&confenc=' . $confenc .
+								'&clearCache=' . $pid
+						);
+
+						if (trim($markers['###RESPOND_LINK###']) !='') {
+							if ($conf['HTMLEmail']) {
+								$strrespondlink = str_replace(':', '', $strrespondlink);
+								$markers['###RESPOND_LINK###'] = '<br /><a rel="nofollow" href="' . $markers['###RESPOND_LINK###'] . '">' . $strrespondlink . '</a>';
+
+							} else {
+								$markers['###RESPOND_LINK###'] = '\\n' . $strrespondlink . ' ' . $markers['###RESPOND_LINK###'];
+							}
+
+						}
+
+					} else {
+						$markers['###RESPOND_LINK###'] = '';
+					}
+					
 				}
 
 				if ((intval($conf['advanced.']['adminCommentResponse']) == 0)) {
 					$markers['###RESPOND_LINK###'] = '';
 				}
 
-				$subjecttext = $this->pi_getLLWrap($pObj, 'email.subject', $fromAjax);
-				if ($action == 'rating') {
-					$subjecttext = $this->pi_getLLWrap($pObj, 'email.subjectdislike', $fromAjax);
+				if ($action == 'adminconfirmsignup') {
+					$subjecttext = $pObj->pi_getLL('email.subjectadminconfirmsignup');
+				} else {
+					$subjecttext = $this->pi_getLLWrap($pObj, 'email.subject', $fromAjax);
+					if ($action == 'rating') {
+						$subjecttext = $this->pi_getLLWrap($pObj, 'email.subjectdislike', $fromAjax);
+					}
+					
 				}
 
 				$content = $this->t3substituteMarkerArray($template, $markers);
@@ -12561,15 +12727,11 @@ class toctoc_comment_lib extends tslib_pibase {
 	/**
 	 * simplified substitute for TYPO3 function substituteMarkerArray, allowing trackdebug
 	 *
-	 * @param	[type]		$pObj: ...
 	 * @param	[type]		$content: ...
 	 * @param	[type]		$markContentArray: ...
-	 * @param	[type]		$wrap: ...
-	 * @param	[type]		$uppercase: ...
-	 * @param	[type]		$deleteUnused: ...
-	 * @return	[type]		...
+	 * @return	[type]		$content
 	 */
-	protected function t3substituteMarkerArray ($content, $markContentArray) {
+	public function t3substituteMarkerArray ($content, $markContentArray) {
 
 		if (is_array($markContentArray)) {
 			foreach ($markContentArray as $marker => $markContent) {
@@ -12585,7 +12747,6 @@ class toctoc_comment_lib extends tslib_pibase {
 	/**
 	 * [Describe function...]
 	 *
-	 * @param	[type]		$pObj: ...
 	 * @param	[type]		$template: ...
 	 * @param	[type]		$marker: ...
 	 * @param	[type]		$markContent: ...
@@ -14034,7 +14195,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	}
 
 	/**
-	 * Commentator-Notification functions
+	 * Notification functions
 	 *
 	 *
 	 */
@@ -14324,6 +14485,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 						}
 
 					}
+					$myhomepagetypoLink_URL = str_replace('https:', 'http:', t3lib_div::locationHeaderUrl(''));
 
 					$markerArray = array(
 							'###USER###' => $notifiyusername,
@@ -14336,7 +14498,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 							'###INFOSRIGHT###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
 							'###MYHOMEPAGE###'  => $myhomepagelink,
 							'###SITE_REL_PATH###' => $this->locationHeaderUrlsubDir(FALSE). t3lib_extMgm::siteRelPath('toctoc_comments'),
-							'###MYHOMEPAGELINK###'  => t3lib_div::locationHeaderUrl(''),
+							'###MYHOMEPAGELINK###'  => $myhomepagetypoLink_URL,
 							'###MYFONTFAMILY###'  => $conf['HTMLEmailFontFamily'],
 							'###MYHOMEPAGETITLE###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
 							'###DENOTIFYLINK###'  => $denotify,
@@ -14383,7 +14545,137 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 		}
 
 	}
+	/**
+	 * handles new user notifications when a new user has been appoved or refused
+	 * called from eid
+	 *
+	 * @param	int		$uid: the user uid
+	 * @param	array		$conf: ...
+	 * @param	[type]		$pObj: ...
+	 * @param	boolean		$fromeID: if request has been made by eID-call
+	 * @param	int		$pid: page id needed to fetch right session values
+	 * @param	boolean		$fromAjax: ...
+	 * @return	string		Message to be displayed in eID-Page
+	 */
+	public function handleNewUserNotification($uid, $conf, $pObj, $fromeID = FALSE, $pid=0, $fromAjax=1) {
+		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+				'first_name AS firstname,last_name AS lastname,email,uid,username,disable',
+				'fe_users',
+				'uid='.$uid
+		);
+		$pid = 0;
+		$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
 
+		if ($conf['HTMLEmail']) {
+			$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['advanced.']['notificationForNewUserHTMLEmailTemplate']);
+
+		} else {
+			$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['advanced.']['notificationForNewUserEmailTemplate']);
+		}
+
+		$usetemplateFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
+		if ($fromAjax==1) {
+			$templateCode = @file_get_contents(PATH_site . $usetemplateFile);
+			$templatefilepath=PATH_site . $usetemplateFile;
+		}
+
+		$language = &$GLOBALS['LANG'];
+		$lang = $GLOBALS['LANG']->lang;
+
+		$check = md5($uid . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']);
+
+		$pageTitle=$conf['pageTitle'];
+
+		if (trim($conf['pageURLhotlink']) != '') {
+			$linktologin = $conf['pageURLhotlink'];
+		} else {
+			$linktologin = $conf['pageURL'];
+		}
+
+		$infoleft='';
+
+		$myhomepagelinkarr=explode('//', t3lib_div::locationHeaderUrl(''));
+		$myhomepagelink=$myhomepagelinkarr[1];
+		$fromeIDreturn='';
+		$lastprocessedemail=$row['email'];
+		$notifiyusername ='';
+
+		if ($row['lastname'] != '') {
+			$salutation= $this->pi_getLLWrap($pObj, 'commentatorEmail.salutationformal', $fromAjax);
+			$notifiyusername = $row['lastname'];
+			if ($row['firstname'] != '') {
+				$notifiyusername = $row['firstname'] . ' ' . $row['lastname'];
+			}
+
+		} else {
+			$salutation= $this->pi_getLLWrap($pObj, 'commentatorEmail.salutation', $fromAjax);
+			if ($row['firstname'] != '') {
+				$notifiyusername = $row['firstname'];
+			}
+
+		}
+		if ($row['disable'] == 0) {
+			$mailmessage = $this->pi_getLLWrap($pObj, 'newuserEmail.messageok', $fromAjax) . '<br />' .
+			$this->pi_getLLWrap($pObj, 'newUserEmail.usernameis', $fromAjax) . ': <b>' . $row['username'] . '</b>';
+		} else {
+			$mailmessage = $this->pi_getLLWrap($pObj, 'newuserEmail.messageko', $fromAjax);
+			$linktologin = '';
+		}
+
+		$myhomepagetypoLink_URL = str_replace('https:', 'http:', t3lib_div::locationHeaderUrl(''));
+
+		$markerArray = array(
+				'###USER###' => $notifiyusername,
+				'###SALUTATION###' => $salutation,
+				'###MESSAGE###' => $mailmessage,
+				'###PAGETITLE####' => $pageTitle,
+				'###LINK_TO_COMMENT###' => $linktologin,
+				'###MESSAGETYPE###'  => $this->pi_getLLWrap($pObj, 'email.newuseremail', $fromAjax),
+				'###INFOSLEFT###'  => $infoleft,
+				'###INFOSRIGHT###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
+				'###MYHOMEPAGE###'  => $myhomepagelink,
+				'###SITE_REL_PATH###' => $this->locationHeaderUrlsubDir(FALSE). t3lib_extMgm::siteRelPath('toctoc_comments'),
+				'###MYHOMEPAGELINK###'  => $myhomepagetypoLink_URL,
+				'###MYFONTFAMILY###'  => $conf['HTMLEmailFontFamily'],
+				'###MYHOMEPAGETITLE###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
+				'###DENOTIFYLINK###'  => $denotify,
+		);
+		$subject = str_replace('%s', $GLOBALS[GLOBALS][TYPO3_CONF_VARS][SYS][sitename].': '.
+				$pageTitle, $this->pi_getLLWrap($pObj, 'newUserEmail.subject', $fromAjax));
+		if ($conf['advanced.']['notificationForNewUserEmailName'] == '') {
+			$sendername = $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] . ' - ' . $this->pi_getLLWrap($pObj, 'email.commentingsystem', $fromAjax);
+		} else {
+			$sendername = str_replace('%site%', $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'], $conf['advanced.']['notificationForNewUserEmailName']);
+		}
+
+		if (t3lib_div::validEmail($conf['advanced.']['notificationForNewUserEmail'])) {
+			if (t3lib_div::validEmail($row['email'])) {
+				if ($conf['HTMLEmail']) {	// If htmlmail lib is included, then generate a nice HTML-email
+					$content = $this->t3substituteMarkerArray($templateCode, $markerArray);
+					self::send_mail($row['email'], $subject, '', $errortext. $content,
+							$conf['advanced.']['notificationForNewUserEmail'], $sendername, $conf['spamProtect.']['checkSMTPService']);
+				} else {
+					$template = $this->t3getSubpart($pObj, $templateCode, '###COMMENTS_RECIPENT_MAIL###');
+					$mailContent = $this->t3substituteMarkerArray($template, $markerArray); // substitute markerArray for HTML content
+					t3lib_div::plainMailEncoded($row['email'], $subject, $mailContent, 'From: ' .
+							$conf['advanced.']['notificationForNewUserEmail']);
+				}
+
+				$fromeIDreturn .=  '<br />'. $this->pi_getLLWrap($pObj, 'commentatorEmail.notificationsentto', $fromAjax) . ' : '. $row['email'];
+			} else {
+				$fromeIDreturn .=  '<br />'. $this->pi_getLLWrap($pObj, 'error.invalid.email', $fromAjax) . ' : '. $row['email'];
+			}
+
+		} else {
+			$fromeIDreturn .=  '<br />'. $this->pi_getLLWrap($pObj, 'error.invalid.email', $fromAjax) .
+			' (TS-Setup) advanced.notificationForNewUserEmail: '. $conf['advanced.']['notificationForNewUserEmail'];
+		}
+
+		if ($fromeID) {
+			return  $fromeIDreturn . '<br />';
+		}
+
+	}
 	/**
 	 * Website preview functions
 	 *
@@ -15837,6 +16129,11 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 					$refresh='';
 				}
 
+			} elseif (str_replace('notificationsadmconfirm', '', $refreshurl) != $refreshurl) {
+				// dbaction
+				$messagetodisplay .=$this->handleNewUserNotification($uid, $conf, $pObj, TRUE, $conf['storagePid'], 1);
+				$refresh='<meta http-equiv="refresh" content="0;URL=' . $refreshurl . '&rteecho=' . base64_encode($messagetodisplay) .'">';
+
 			} else {
 				$refresh='<meta http-equiv="refresh" content="0;URL=' . $refreshurl . '">';
 			}
@@ -15853,7 +16150,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 		} else {
 			$waittext='<br /><br />' . $this->pi_getLLWrap($pObj, 'eid_template.processingdone', $fromAjax);
 		}
-
+		$myhomepagetypoLink_URL = str_replace('https:', 'http:', t3lib_div::locationHeaderUrl(''));
 		$markerArray = array(
 				'###MESSAGE###' => $this->pi_getLLWrap($pObj, 'commentatorEmail.message', $fromAjax),
 				'###WAITTEXT###' => $waittext,
@@ -15865,7 +16162,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 				'###INFOSRIGHT###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
 				'###MYHOMEPAGE###'  => $myhomepagelink,
 				'###SITE_REL_PATH###' => $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments'),
-				'###MYHOMEPAGELINK###'  => t3lib_div::locationHeaderUrl(''),
+				'###MYHOMEPAGELINK###'  => $myhomepagetypoLink_URL,
 				'###MYFONTFAMILY###'  => $conf['HTMLEmailFontFamily'],
 				'###MYHOMEPAGETITLE###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
 		);

@@ -129,6 +129,7 @@ plugin.tx_toctoccomments_pi1 {
     sunglasses = 8-| 8| B-| B|
     upset = ^:-o ^:-O
     confused = o.O O.o
+    egal = :e)
     shark = (^^^)
     gasp = :O :o
     pacman = :v
@@ -217,7 +218,18 @@ plugin.tx_toctoccomments_pi1 {
     # E-mail template for commentator of former comments:Template to use for notification email to commentator of former comments
     notificationForCommentatorEmailTemplate = {$plugin.tx_toctoccomments_pi1.notificationForCommentatorEmailTemplate}
     notificationForCommentatorHTMLEmailTemplate = {$plugin.tx_toctoccomments_pi1.notificationForCommentatorHTMLEmailTemplate}
+    
+    # Information e-mail when a new user is accepted or refused by the admin is sent from this address
+    notificationForNewUserEmail = {$plugin.tx_toctoccomments_pi1.notificationForNewUserEmail}
+    notificationForNewUserEmailName = {$plugin.tx_toctoccomments_pi1.notificationForNewUserEmailName}
+
+    # E-mail template for commentator of former comments:Template to use for notification email to commentator of former comments
+    notificationForNewUserEmailTemplate = {$plugin.tx_toctoccomments_pi1.notificationForNewUserEmailTemplate}
+    notificationForNewUserHTMLEmailTemplate = {$plugin.tx_toctoccomments_pi1.notificationForNewUserHTMLEmailTemplate}
+    
     eIDHTMLTemplate = {$plugin.tx_toctoccomments_pi1.eIDHTMLTemplate}
+    
+    notificationForPwdChangeHTMLEmailTemplate = {$plugin.tx_toctoccomments_pi1.notificationForPwdChangeHTMLEmailTemplate}
 
     # Enable URL log (for "List" mode)
     enableUrlLog = 0
@@ -390,6 +402,9 @@ plugin.tx_toctoccomments_pi1 {
 
     emailTemplateDislikeHTML = {$plugin.tx_toctoccomments_pi1.emailTemplateDislikeHTML}
     emailTemplateDislike = {$plugin.tx_toctoccomments_pi1.emailTemplateDislike}
+    
+    emailTemplateSignupConfirmHTML = {$plugin.tx_toctoccomments_pi1.emailTemplateSignupConfirmHTML}
+    emailTemplateSignupConfirm = {$plugin.tx_toctoccomments_pi1.emailTemplateSignupConfirm}
         
     checkSMTPService = {$plugin.tx_toctoccomments_pi1.checkSMTPService}
     commentWaitTime = {$plugin.tx_toctoccomments_pi1.commentWaitTime}
@@ -531,6 +546,7 @@ plugin.tx_toctoccomments_pi1 {
     
     soundcloudClientID = {$plugin.tx_toctoccomments_pi1.soundcloudClientID}
     soundcloudClientSecret = {$plugin.tx_toctoccomments_pi1.soundcloudClientSecret}
+    
   }
 
   recentcomments {
@@ -738,11 +754,13 @@ plugin.tx_toctoccomments_pi2 {
     signupRequireFirstname = 1
     newUserMinLength = 6
     signupConfirmEmail = 0
+    signupAdminConfirmation = 0
   }
   facebook {
-    appId = {$plugin.tx_toctoccomments_pi1.appId}
-    secret = {$plugin.tx_toctoccomments_pi1.secret}
-	makeSessionPermanent=0
+    appId = 
+    secret = 
+	# next 2 options are valid for google as well
+	makeSessionPermanent = 0
     imageDir = uploads/pics/
   }
   
@@ -752,18 +770,6 @@ plugin.tx_toctoccomments_pi2 {
     ClientSecret  = 
   }
   
-  ll {
-    de {
-      ButtonNewAccount = Registrieren
-      NewAccount = Neuen Account erstellen
-      forgotpw = Passwort vergessen
-    }
-    en {
-      ButtonNewAccount = Sign Up
-      NewAccount = Create new account
-      forgotpw = Forgot password
-    }
-  }
   # for watermaking the form fields instead of labels  set to 1
   watermark=0
 

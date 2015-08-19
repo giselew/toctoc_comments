@@ -34,3 +34,7 @@ Ranking, 3rd place: CD7F32 CD7F32
 Info message (Disclaimer): 9bb0d0 345A91
 OK Message (Disclaimer): 5ec24f 398B2E
 Review highlight border: d8d8d8 4e8fe0
+Background Errormessages: f4d8e0 f4d8e0
+Background Info message: dfe4e8 dfe4e8
+Border Errormessages: 73564e 73564e
+Border Info message: b5bec0 b5bec0

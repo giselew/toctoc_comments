@@ -38,9 +38,9 @@
  *
  *   67: class toctoc_comments_eID
  *   81:     public function init()
- *  183:     public function main()
- *  405:     protected function processReponseOutput()
- *  502:     protected function ipBlock()
+ *  206:     public function main()
+ *  468:     protected function processReponseOutput()
+ *  564:     protected function ipBlock()
  *
  * TOTAL FUNCTIONS: 4
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -107,7 +107,10 @@ class toctoc_comments_eID {
 
 		// Sanity check
 		$this->uid = t3lib_div::_GET('uid');
-
+		$this->rteecho ='';
+		if (t3lib_div::_GET('rteecho') != '') {
+			$this->rteecho = base64_decode(trim(t3lib_div::_GET('rteecho')));
+		}
 		if (version_compare(TYPO3_version, '4.6', '<')) {
 			$tmpint = t3lib_div::testInt($this->uid);
 		} else {
@@ -125,7 +128,7 @@ class toctoc_comments_eID {
 		}
 
 		$this->command = t3lib_div::_GET('cmd');
-		if (!t3lib_div::inList('respond,denotify,approve,approvecoi,delete,kill', $this->command)) {
+		if (!t3lib_div::inList('respond,approveadminconfirmsignup,deleteadminconfirmsignup,denotify,approve,approvecoi,delete,kill', $this->command)) {
 			$this->messageinternal .=  $GLOBALS['LANG']->getLL('wrong_cmd') . '<br />';
 		}
 
@@ -146,6 +149,7 @@ class toctoc_comments_eID {
 		} else {
 			$data_str = $data_str_id;
 		}
+
 		$data = unserialize(base64_decode(rawurldecode($data_str)));
 		$this->conf = $data;
 
@@ -156,23 +160,42 @@ class toctoc_comments_eID {
 				echo $this->apiObj->handleeID($this->uid, $this->conf, $rtecho, $returnurl);
 				exit;
 			}
+
 		} else {
-			$this->data = array_pop(
-					$GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
-							'content as comment, tx_commentsresponse_response AS response',
-							'tx_toctoc_comments_comments',
-							'uid=' . $this->uid
-					)
-			);
+			if (($this->command == 'approveadminconfirmsignup') || ($this->command == 'deleteadminconfirmsignup')) {
+				$this->data = array_pop(
+						$GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+								'uid as uid',
+								'fe_users',
+								'uid=' . $this->uid
+						)
+				);
+				if (empty($this->data)) {
 
-			if (empty($this->data)) {
+					echo $GLOBALS['LANG']->getLL('user_does_not_exist');
+					exit;
+				}
 
-				echo $GLOBALS['LANG']->getLL('comment_does_not_exist');
-				exit;
+			} else {
+				$this->data = array_pop(
+						$GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+								'content as comment, tx_commentsresponse_response AS response',
+								'tx_toctoc_comments_comments',
+								'uid=' . $this->uid
+						)
+				);
+				if (empty($this->data)) {
+
+					echo $GLOBALS['LANG']->getLL('comment_does_not_exist');
+					exit;
+				}
+
 			}
+
 		}
 		$this->notifications = t3lib_div::_GET('notifications');
 		$this->notificationscoi = t3lib_div::_GET('notificationscoi');
+		$this->notificationsadmconfirm = t3lib_div::_GET('notificationsadmconfirm');
 	}
 
 	/**
@@ -185,23 +208,34 @@ class toctoc_comments_eID {
 			$this->apiObj->InitCaches();
 		}
 
-		$rtecho = '';
-
 		if ($this->command != 'respond') {
 			if ($this->notifications) {
+				$rtecho = '';
 				$rtecho .= htmlspecialchars($GLOBALS['LANG']->getLL('comment_approved')) . '<br />' .
 				$this->apiObj->handleCommentatorNotifications($this->uid, $this->conf, FALSE, $this->conf['storagePid']);
 			} elseif ($this->notificationscoi) {
+				$rtecho = '';
 				$rtecho .= htmlspecialchars($GLOBALS['LANG']->getLL('comment_approvedcoi')) . '<br />';
+			} elseif ($this->notificationsadmconfirm) {
+				$rtecho = $this->rteecho . '<br />';
+				$rtecho .= htmlspecialchars($GLOBALS['LANG']->getLL('user_approvaldone')) . '<br />';
 			} else {
-
+				$rtecho = '';
 				$sendmailok = 0;
 				$coiok=0;
 				if ($this->messageinternal =='') {
-					$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS t', 'tx_toctoc_comments_comments', 'uid=' . $this->uid);
+					if (($this->command == 'approveadminconfirmsignup') || ($this->command == 'deleteadminconfirmsignup')) {
+						$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS t', 'fe_users', 'uid=' . $this->uid);
+					} else {
+						$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS t', 'tx_toctoc_comments_comments', 'uid=' . $this->uid);
+					}
 
 					if ($rows[0]['t'] == 0) {
-						$rtecho .= $GLOBALS['LANG']->getLL('comment_does_not_exist');
+						if (($this->command == 'approveadminconfirmsignup') || ($this->command == 'deleteadminconfirmsignup')) {
+							$rtecho .= $GLOBALS['LANG']->getLL('user_does_not_exist');
+						} else {
+							$rtecho .= $GLOBALS['LANG']->getLL('comment_does_not_exist');
+						}
 						$this->clearCacheNeeded=FALSE;
 
 					} else {
@@ -215,6 +249,22 @@ class toctoc_comments_eID {
 								$rtecho .=  htmlspecialchars(sprintf($GLOBALS['LANG']->getLL('comment_denotified'), $this->conf['email']))
 								 . '<br />';
 								$sendmailok=0;
+								break;
+							case 'approveadminconfirmsignup':
+								$res = $GLOBALS['TYPO3_DB']->exec_UPDATEquery('fe_users', 'uid=' . $this->uid, array('disable' => 0));
+
+								$rtecho .=  htmlspecialchars(sprintf($GLOBALS['LANG']->getLL('user_approved'), $this->conf['email']))
+								. '<br />';
+
+								$admconfirmok=1;
+								break;
+							case 'deleteadminconfirmsignup':
+								$res = $GLOBALS['TYPO3_DB']->exec_UPDATEquery('fe_users', 'uid=' . $this->uid, array('disable' => 1));
+
+								$rtecho .=  htmlspecialchars(sprintf($GLOBALS['LANG']->getLL('user_deleted'), $this->conf['email']))
+								. '<br />';
+								$admconfirmok=1;
+
 								break;
 							case 'approvecoi':
 								$rowsa = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS t', 'tx_toctoc_comments_comments', 'uid=' . $this->uid . ' AND hidden = 1');
@@ -339,7 +389,20 @@ class toctoc_comments_eID {
 
 						}
 
-						//t3lib_div::callUserFunction($userFunc, $params, $this);
+						if (($this->command=='approveadminconfirmsignup') || ($this->command=='deleteadminconfirmsignup')) {
+							// check new user notifications
+							if ($admconfirmok>=1) {
+								if (!$this->notifications) {
+									$returnurl=$_SERVER['REQUEST_URI'] . '&notificationsadmconfirm=1';
+									$rtecho .=  htmlspecialchars($GLOBALS['LANG']->getLL('nowsendemailnotificationadmconfirm')) . '<br />';
+									echo $this->apiObj->handleeID($this->uid, $this->conf, $rtecho, $returnurl);
+									exit;
+								}
+
+							}
+
+						}
+
 						$rtecho .=  $this->ipBlock();
 						// Call hooks
 						if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['eID_postProc'])) {
@@ -493,15 +556,13 @@ class toctoc_comments_eID {
 		return $rettext;
 	}
 
-
 	/**
 	 * Adds ip address to local block list.
 	 *
-	 * @return	void		...
+	 * @return	string		success message or empty
 	 */
 	protected function ipBlock() {
 		$ip = long2ip(t3lib_div::_GP('ip'));
-		/* @var $pObj tx_comments_eID */
 		if ($ip && ($this->command == 'delete' || $this->command == 'kill')) {
 			if ($ip != '0.0.0.0') {
 				$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_ipbl_local', array(

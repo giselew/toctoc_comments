@@ -19,8 +19,12 @@
 			<label index="comment_approved">Comment is approved</label>
 			<label index="comment_approvedcoi">Email confirmation successful</label>
 			<label index="comment_deleted">Comment is deleted</label>
+			<label index="user_approvaldone">user confirmation done</label>
+			<label index="user_approved">user %s approved</label>
+			<label index="user_deleted">user %s not approved</label>
 			<label index="comment_killed">Comment is removed permanently</label>
 			<label index="nowsendemailnotification">Now checking and sending email notifications to users</label>
+			<label index="nowsendemailnotificationadmconfirm">Now sending email notification to new user</label>
 			<label index="ip_blocked">Blocked commenting for IP</label>
 			<label index="comment_alreadycoi">Confirmation has already been sent</label>
 			<label index="comment_notyetapproved">Confirmation has been sent, but comment still needs to be approved by the administrator</label>
@@ -33,6 +37,7 @@
 			<label index="submit_label">Save response</label>
 			<label index="response_saved">Response saved.</label>
 			<label index="response_saved_cache_cleared">Response saved and cache cleared.</label>
+			<label index="user_does_not_exist">User does not exist</label>
 		</languageKey>
 	</data>
 	<orig_hash type="array">

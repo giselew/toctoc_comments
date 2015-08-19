@@ -53,8 +53,11 @@ $editTable = 'tx_toctoc_comments_ipbl_static';
 		    			$alertmsg = 1;
 		    		} else {
 		    			$ch = curl_init();
+					$toctoccommentsuseragent = 'TocTocCommentsExternalhit/1.0 (+https://www.toctoc.ch/toctoc_comments.html?L=2)';
 
 			    		$urltofetch = 'http://www.spamhaus.org/DROP/drop.lasso';
+					curl_setopt($ch, CURLOPT_USERAGENT, toctoccommentsuseragent);
+
 		    			curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20100101 Firefox/15.0.1');
 		    			curl_setopt($ch, CURLOPT_URL, $urltofetch);
 		    			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);

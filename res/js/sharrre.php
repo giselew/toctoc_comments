@@ -42,7 +42,7 @@ function parse($encUrl){
 		CURLOPT_HEADER => FALSE, // don't return headers
 		CURLOPT_FOLLOWLOCATION => TRUE, // follow redirects
 		CURLOPT_ENCODING => "", // handle all encodings
-		CURLOPT_USERAGENT => 'sharrre', // who am i
+		CURLOPT_USERAGENT => 'TocTocCommentsExternalhit/1.0 (+https://www.toctoc.ch/toctoc_comments.html?L=2)', // who am i
 		CURLOPT_AUTOREFERER => TRUE, // set referer on redirect
 		CURLOPT_CONNECTTIMEOUT => 5, // timeout on connect
 		CURLOPT_TIMEOUT => 10, // timeout on response

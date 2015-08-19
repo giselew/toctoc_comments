@@ -24,7 +24,7 @@ Color of Submitbutton: fefefd fefefd
 Backgroundcolor of inputfields: fdfdff fdfdff
 Color of inputfields: 030303 030303
 Border of Userpics: 97b0ee 97b0ee
-Color of Errormessages: ff4d1b ff4d1b
+Color of Errormessages: b32e33 b32e33
 Color of Important messages: 675cca 675cca
 Color of Watermark: 8b8c91 8b8c91
 Color of highlighted Comment: a1bbe4 a1bbe4
@@ -34,3 +34,7 @@ Ranking, 3rd place: CD7F32 CD7F32
 Info message (Disclaimer): 345A91 345A91
 OK Message (Disclaimer): 398B2E 398B2E
 Review highlight border: 4e8fe0 4e8fe0
+Background Errormessages: f4d8e0 f4d8e0
+Background Info message: dfe4e8 dfe4e8
+Border Errormessages: 73564e 73564e
+Border Info message: b5bec0 b5bec0

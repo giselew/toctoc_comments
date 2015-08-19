@@ -1,6 +1,21 @@
 <?php
 if (!defined ('TYPO3_MODE')) die('Access denied.');
 
+if (version_compare(TYPO3_version, '6.3', '>')) {
+	$scriptelem = 'module';
+	$scriptcontent = array(
+	'name' => 'wizard_element_browser',
+	'urlParameters' => array(
+		'mode' => 'wizard',
+		'act' => 'edit'
+	)
+);
+	
+} else {
+	$scriptelem = 'script';
+	$scriptcontent = 'wizard_edit.php';
+
+}
 $TCA['tx_toctoc_comments_comments'] = array (
 	'ctrl' => $TCA['tx_toctoc_comments_comments']['ctrl'],
 	'interface' => array (
@@ -32,7 +47,7 @@ $TCA['tx_toctoc_comments_comments'] = array (
 					'edit' => array (
 						'type' => 'popup',
 						'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.external_ref.wizard',
-						'script' => 'wizard_edit.php',
+						$scriptelem => $scriptcontent,
 						'popup_onlyOpenIfSelected' => 1,
 						'icon' => 'edit2.gif',
 						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
@@ -717,7 +732,7 @@ $TCA['tx_toctoc_comments_urllog'] = array (
 					'edit' => array (
 						'type' => 'popup',
 						'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.external_ref.wizard',
-						'script' => 'wizard_edit.php',
+						$scriptelem => $scriptcontent,
 						'popup_onlyOpenIfSelected' => 1,
 						'icon' => 'edit2.gif',
 						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
@@ -748,7 +763,7 @@ $TCA['tx_toctoc_comments_urllog'] = array (
 					'edit' => array (
 						'type' => 'popup',
 						'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.external_ref_uid.wizard',
-						'script' => 'wizard_edit.php',
+						$scriptelem => $scriptcontent,
 						'popup_onlyOpenIfSelected' => 1,
 						'icon' => 'edit2.gif',
 						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
@@ -1092,7 +1107,7 @@ $TCA['tx_toctoc_comments_prefixtotable'] = array (
 							'edit' => array (
 								'type' => 'popup',
 								'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.external_ref.wizard',
-								'script' => 'wizard_edit.php',
+								$scriptelem => $scriptcontent,
 								'popup_onlyOpenIfSelected' => 1,
 								'icon' => 'edit2.gif',
 								'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',

@@ -80,8 +80,6 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 	 * @return	void		...
 	 */
 	public function init()	{
-
-
 		parent::init();
 	}
 
@@ -105,19 +103,17 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 	 * @return	void		...
 	 */
 	public function main()	{
-
 		$this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['toctoc_comments']);
-		
 		if (!is_array($this->extConf)) {
 			$this->extConf = $this->defaultTYPO3EXTCONF();
 		} else {
 			if (!$this->extConf['max_records']) {
 				$this->extConf = $this->defaultTYPO3EXTCONF();
 			}
+
 		}
-		
+
 		$max_records = $this->extConf['max_records'];
-		
 
 		// Access check!
 		// The page will show only if there is a valid page and if this page may be viewed by the user
@@ -145,12 +141,9 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 								$(document).ready(function(){
 		  $("#tablesorter-demo")
 		  .tablesorter({
-		    sortList:[[0,1],[1,0],[3,0],[5,0],[6,0]],
+		    sortList:[[0,1],[1,0],[2,0],[3,0],[5,0],[6,0]],
 		    widgets: [\'zebra\'],
 		    headers: {
-		      2: {
-			sorter: false
-		      },
 		      4: {
 			sorter: false
 		      },
@@ -224,9 +217,12 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 
 		  $("#tablesorter-reps")
 		  .tablesorter({
-		    sortList:[[0,1],[1,0],[2,1],[3,0],[4,0],[5,0],[6,0],[7,0],[8,0]],
+		    sortList:[[0,1],[1,0],[3,0],[4,0],[5,0],[6,0],[7,0],[8,0]],
 		    widgets: [\'zebra\'],
 		   headers: {
+		      2: {
+			sorter: false
+		      },
 		      9: {
 			sorter: false
 		      }
@@ -239,16 +235,10 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 		  });
 		  $("#tablesorter-user")
 		  .tablesorter({
-		    sortList:[[0,0],[1,0],[3,0],[4,0],[5,0],[6,0],[7,0]],
+		    sortList:[[0,0],[1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[7,0]],
 		    widgets: [\'zebra\'],
 		    headers: {
-		      2: {
-			sorter: false
-		      },
 		      8: {
-			sorter: false
-		      },
-		      9: {
 			sorter: false
 		      }
 		    }
@@ -334,7 +324,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 				$this->extConf = $this->defaultTYPO3EXTCONF();
 			}
 		}
-		
+
 		$max_records = $this->extConf['max_records'];
 		$text_crop = $this->extConf['text_crop'];
 		$delusers_firstname = $this->extConf['delusers_firstname'];
@@ -447,7 +437,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 		if (is_dir($getSessionSavePath)) {
 			$d = dir($getSessionSavePath);
 		}
-		
+
 		if (!isset($_SESSION)) {
 			session_name('sess_toctoccomments_be');
 			session_start();
@@ -467,7 +457,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 			}
 
 		}
-		
+
 		if (is_dir($getSessionSavePath)) {
 			if ($d != FALSE){
 				// dir the sessionfiles
@@ -477,9 +467,9 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 						$sessionfiles[$i]['SessionName'] = $entry;
 						$i++;
 					}
-	
+
 				}
-				
+
 				$d->close();
 			}
 		}
@@ -813,7 +803,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 					'urlWhoisIP6' => 'http://www.tcpiputils.com/whois-lookup/',
 			);
 		return $ret;
-		
+
 	}
 	/**
 	 * Checks static blocking lists.
@@ -868,6 +858,57 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 			$ret = $strleft . $strright;
 		}
 		return $ret;
+	}
+	/**
+	 * Checks static blocking lists.
+	 *
+	 * @param	int		$activetimestamdiff	Difference between timestamps
+	 * @return	$ActiveTimeStr		string reprersentation of time difference
+	 */
+	private function activetime($activetimestamdiff) {
+		$ActiveTime = round($activetimestamdiff, 0);
+		$ActiveTimeday = round(($ActiveTime/(24*3600)), 0) % (24);
+		$ActiveTimehour = round(($ActiveTime/3600), 0) % (60);
+		$ActiveTimeminute = round(($ActiveTime/60), 0) % (60);
+		$ActiveTimeseconds = $ActiveTime % (60);
+		$ActiveTimeStr = '';
+		if ($ActiveTimeday > 1) {
+			$ActiveTimeStr .= $ActiveTimeday . ' ' . $GLOBALS['LANG']->getLL('days') . ' ';
+		}
+
+		if ($ActiveTimeday == 1) {
+			$ActiveTimeStr .= $ActiveTimeday . ' ' . $GLOBALS['LANG']->getLL('day') . ' ';
+		}
+
+		if ($ActiveTimehour > 1) {
+			$ActiveTimeStr .= $ActiveTimehour . ' ' . $GLOBALS['LANG']->getLL('hours') . ' ';
+		}
+
+		if ($ActiveTimehour == 1) {
+			$ActiveTimeStr .= $ActiveTimehour . ' ' . $GLOBALS['LANG']->getLL('hour') . ' ';
+		}
+
+		if ($ActiveTimeminute > 1) {
+			$ActiveTimeStr .= $ActiveTimeminute . ' ' . $GLOBALS['LANG']->getLL('minutes') . ' ';
+		}
+
+		if ($ActiveTimeminute == 1) {
+			$ActiveTimeStr .= $ActiveTimeminute . ' ' . $GLOBALS['LANG']->getLL('minute') . ' ';
+		}
+
+		if ($ActiveTimeseconds > 1) {
+			$ActiveTimeStr .= $ActiveTimeseconds . ' ' . $GLOBALS['LANG']->getLL('seconds') . ' ';
+		}
+
+		if ($ActiveTimeseconds == 1) {
+			$ActiveTimeStr .= $ActiveTimeseconds . ' ' . $GLOBALS['LANG']->getLL('second') . ' ';
+		}
+
+		if (($ActiveTimeseconds == 0) && ($ActiveTimeStr == '')) {
+			$ActiveTimeStr .= '<1 ' . $GLOBALS['LANG']->getLL('second') . ' ';
+		}
+
+		return $ActiveTimeStr;
 	}
 }
 

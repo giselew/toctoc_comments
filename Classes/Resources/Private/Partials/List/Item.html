@@ -80,9 +80,11 @@
 		<n:link newsItem="{newsItem}" settings="{settings}" class="more">
 			<f:translate key="more-link" />
 		</n:link>
-		
-		<n:social.TocTocCommentsCount newsItem="{newsItem}">
-		</n:social.TocTocCommentsCount>
+
+		{namespace nt=Tx_News_ViewHelpers}
+		<div class="toctoccomments">
+			<nt:social.TocTocCommentsCount newsItem="{newsItem}"></nt:social.TocTocCommentsCount>
+		</div>
 		
 	</div>
 

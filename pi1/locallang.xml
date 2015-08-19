@@ -163,6 +163,7 @@
 			<label index="email.dislikeemail">Dislike notification</label>
 			<label index="email.coiemail">Email confirmation</label>
 			<label index="email.commentatoremail">Notification about new comment on your comment</label>
+			<label index="email.newuseremail">Notification about your new account</label>
 			<label index="email.commentingsystem">Commenting System</label>
 			<label index="email.commenthasattachment">Comment has attachment</label>
 			<label index="email.noattachmentforcomment">No attachment for this comment</label>
@@ -195,6 +196,7 @@
 			<label index="pi1_template.email">Email:</label>
 			<label index="pi1_template.web_site">Web site:</label>
 			<label index="pi1_template.location">Location:</label>
+			<label index="pi1_template.username">Username:</label>
 			<label index="pi1_template.submit">Submit</label>
 			<label index="pi1_template.deletelink">Delete Comment</label>
 			<label index="pi1_template.denotifylink">Disable Notification on new comments</label>
@@ -271,6 +273,7 @@
 			<label index="pi1_template.uc.herepostingas">here posting as</label>
 			<label index="pi1_template.informationaboutcommentator">Information about the commentator</label>
 			<label index="pi1_template.informationaboutdislikeevaluator">Information about the person who made the dislike</label>
+			<label index="pi1_template.informationjustobtaineddislikes">Alert: This comment just obtained %s dislikes</label>
 			<label index="pi1_template.informationaboutyou">Our information about you</label>
 			<label index="pi1_template.admincommenttitle">Our reply to your comment:</label>
 			<label index="pi1_template.entercommentoncomment">Your comment will be a reply on the following comment:</label>
@@ -610,10 +613,14 @@
 			<label index="api_idislike_tx_rougetopline_onelike">Dislke girl</label>
 			<label index="api_idislike_tx_rougetopline_oneunlike">Undislike girl</label>
 			<label index="commentatorEmail.subject">New Comment on %s</label>
+			<label index="newUserEmail.subject">Account request from %s</label>
+			<label index="newUserEmail.usernameis">Your username is</label>
 			<label index="commentatorEmail.notificationsentto">Notification sent to</label>
 			<label index="commentatorEmail.salutation">Hello</label>
 			<label index="commentatorEmail.salutationformal">Dear</label>
 			<label index="commentatorEmail.message">Someone has added a new comment. Use the link below to get to the page and read it.</label>
+			<label index="newuserEmail.messageok">Your account was accepted by the administrator. You can login now.</label>
+			<label index="newuserEmail.messageko">Your account was not accepted by the administrator.</label>
 			<label index="comments_recent.pages">Webpage</label>
 			<label index="comments_recent.tt_content">Content</label>
 			<label index="comments_recent.tx_toctoc_comments_comments">Comment</label>

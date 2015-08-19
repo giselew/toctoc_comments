@@ -294,7 +294,7 @@ div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-wpp div.tx-tc-pvs-images {
 	border-color: #e3e3e3;
 }
 .tx-tc-ct-cap-message, .tx-toctoc-comments-required-error, .tx-tc-required-mark, .tx-tc-required-error {
-	color: #ff4d1b;
+	color: #b32e33;
 }
 #exposeMask {
 	background: #97b0ee;
@@ -519,7 +519,7 @@ span.tx-tc-emo-top-nav-off {
 	border-color: #cecece;
 }
 .tx-tc-warn {
-	color: #ff4d1b;
+	color: #b32e33;
 }
 .tx-tc-info {
 	color: #345A91;
@@ -543,4 +543,14 @@ div.tx-tc-searchmore, div.tx-tc-searchprev {
 }
 .tx-tc-foundserchterm {
 	color: #4e8fe0 !important;
+}
+.tx-tc-alert {
+	background-color: #f4d8e0;
+    border-color: #73564e;
+    color: #b32e33;
+}
+.tx-tc-information {
+	background-color: #dfe4e8;
+    border-color: #b5bec0;
+    color: #345A91;
 }

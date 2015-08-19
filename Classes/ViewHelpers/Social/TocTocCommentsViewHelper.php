@@ -30,6 +30,11 @@
  * @package TYPO3
  * @subpackage tx_news
  */
+
+if (version_compare(TYPO3_version, '6.3', '>')) {
+	(class_exists('Tx_Fluid_Core_ViewHelper_AbstractViewHelper', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper', 'Tx_Fluid_Core_ViewHelper_AbstractViewHelper');
+}
+
 class Tx_News_ViewHelpers_Social_TocTocCommentsViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	protected $escapingInterceptorEnabled = FALSE;

@@ -664,3 +664,20 @@
 	* Fixed Typo-error in setup.txt
 	* Fixed donation key check, now it checks the IP of the Server (before: IP of Backenduser)
 	* New addon extension for frontend: ASNC Siteban (toctoccommentssiteban) allows IP blocklist based ban from website access with a redirect to an appropriate page or site
+
+2015-08-19  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 7.4.1	
+	* Compatibility TYPO3 7.4
+	* Useragent for toctoc_comments Webpage preview function (that accesses other websites), IP-List requests to spamhaus.org,
+	  requests from sharrre, requests to facebook from the AJAX-Login now identify as 
+	  'TocTocCommentsExternalhit/1.0 (+https://www.toctoc.ch/toctoc_comments.html?L=2)'
+	* Added new TS-option for new user confirmation by administrator: plugin.tx_toctoccomments_pi2.register.signupAdminConfirmation 
+	* 'New user'-confirmation by administrator uses eID-interface for admin authorizations and send notification mail to new user.
+	  TS-Options and templates for email templates added: Textmail is advanced.notificationForNewUserEmailTemplate, HTML is advanced.notificationForNewUserHTMLEmailTemplate
+	  TS Options for Emailsendername and Emailadress for these templates possible with advanced.notificationForNewUserEmailName and advanced.notificationForNewUserEmail
+	* Added option for nice HTML-email-Template for "Forgot password"-Requests: advanced.notificationForPwdChangeHTMLEmailTemplate and a new mail template
+	* Updated the ViewHelpers for news (compatibility TYPO3 7). New ViewHelper social.TocTocCommentsSimpleCount replaces social.TocTocCommentsCount under TYPO3 7
+	* Fixed display of setting for sharing in TYPO3 backend page module
+	* Added entries to the reference index for new entries in tx_toctoc_ratings_iplog and tx_toctoc_comments_feuser_mm
+	* Fixed AJAX-Login for use of rsa on TYPO3 6.2 or newer.
+	* Dropped TypoScript-Options for language overwrites of the forgot password, and sign up button texts. Use normal overwriting with plugin.tx_toctoccomments_pi2._LOCAL_LANG

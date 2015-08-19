@@ -38,35 +38,35 @@
  *
  *
  *
- *  110: class tx_toctoccomments_pi2 extends tslib_pibase
- *  133:     protected function processRedirect()
- *  147:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  238:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  471:     protected function watermark($conf, $content)
- *  509:     protected function showForgot()
- *  589:     protected function showLogout()
- *  624:     protected function showLogin()
- *  770:     protected function getRSAKeyPair()
- *  807:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
- *  843:     protected function getPreserveGetVars()
- *  896:     protected function generatePassword($len)
- *  916:     protected function getDisplayText($label, $stdWrapArray=array())
- *  928:     protected function getUserFieldMarkers()
- *  970:     protected function validateRedirectUrl($url)
- * 1001:     protected function isInCurrentDomain($url)
- * 1013:     protected function isInLocalDomain($url)
- * 1054:     protected function isRelativeUrl($url)
- * 1070:     protected function generateAndSendHash($user)
- * 1140:     protected function changePassword($uid, $piHash)
- * 1262:     protected function showSignon()
- * 1621:     protected function getSignupCaptcha($required, $errcp, $cpval)
- * 1664:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
- * 1691:     protected function processSignupCaptcha($postData)
- * 1731:     protected function loginUser($facebookId)
- * 1758:     protected function storeUser($facebookUserProfile, $socialnetwork)
- * 1872:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
- * 1890:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
- * 1976:     protected function getCurrentIp()
+ *  113: class tx_toctoccomments_pi2 extends tslib_pibase
+ *  136:     protected function processRedirect()
+ *  150:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  248:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  483:     protected function watermark($conf, $content)
+ *  521:     protected function showForgot()
+ *  601:     protected function showLogout()
+ *  636:     protected function showLogin()
+ *  787:     protected function getRSAKeyPair()
+ *  824:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
+ *  860:     protected function getPreserveGetVars()
+ *  913:     protected function generatePassword($len)
+ *  933:     protected function getDisplayText($label, $stdWrapArray=array())
+ *  945:     protected function getUserFieldMarkers()
+ *  987:     protected function validateRedirectUrl($url)
+ * 1018:     protected function isInCurrentDomain($url)
+ * 1030:     protected function isInLocalDomain($url)
+ * 1071:     protected function isRelativeUrl($url)
+ * 1087:     protected function generateAndSendHash($user)
+ * 1259:     protected function changePassword($uid, $piHash)
+ * 1383:     protected function showSignon()
+ * 1801:     protected function getSignupCaptcha($required, $errcp, $cpval)
+ * 1844:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ * 1871:     protected function processSignupCaptcha($postData)
+ * 1911:     protected function loginUser($facebookId)
+ * 1939:     protected function storeUser($facebookUserProfile, $socialnetwork)
+ * 2089:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
+ * 2107:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
+ * 2197:     protected function getCurrentIp()
  *
  * TOTAL FUNCTIONS: 28
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -208,13 +208,14 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 		// Get storage
 			// Process the redirect
-		if (($this->logintype === 'login' || $this->logintype === 'logout' || $this->logintype === 'forgot' || $this->logintype === 'signup') && $this->redirectUrl && !$this->noRedirect) {
+		if (($this->logintype === 'login' || $this->logintype === 'logout' || $this->logintype === 'forgot' || $this->logintype === 'signup') &&
+				$this->redirectUrl && !$this->noRedirect) {
 			if (version_compare(TYPO3_version, '6.1', '>')) {
 				$fe_usercookieOK = $GLOBALS['TSFE']->fe_user->isCookieSet();
 			} else {
 				$fe_usercookieOK = $GLOBALS['TSFE']->fe_user->cookieId;
 			}
-			
+
 			if (!$fe_usercookieOK) {
 				$content .= $this->cObj->stdWrap($this->pi_getLL('cookie_warning', '', 1), $this->conf['cookieWarning_stdWrap.']);
 			}
@@ -248,6 +249,10 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 		$prefix=$this->prefixId;
 		$this->conf = $conf;
+
+		if (intval($this->conf['register.']['signupAdminConfirmation']) == 1) {
+			$this->conf['register.']['signupConfirmEmail'] = 0;
+		}
 		$this->conf['redirectMode'] = '';
 		$this->conf['redirectDisable'] = '';
 		$this->conf['redirectFirstMethod'] = '';
@@ -262,6 +267,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			//
 			$this->getRSAKeyPair();
 		}
+
 		if (!isset($this->cObj)) {
 			$this->cObj = t3lib_div::makeInstance('tslib_cObj');
 			$this->cObj->start('', '');
@@ -306,10 +312,11 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 					$this->storeUser($facebookUserProfile, 'facebook');
 					$this->loginUser($fbuser);
 				} catch (FacebookApiException $e) {
-					$this->fberror=$e;
+					$this->fberror = '<br />' . $e;
 					$fbuser = NULL;
 				}
 			}
+
 			$subpart = trim($this->cObj->getSubpart($this->template, '###TEMPLATE_FACEBOOK###'));
 			$thefacebooklogin=$this->pi_getLL('facebooklogin', '', 1);
 			$subpartArray = $linkpartArray = $markerArray = array(
@@ -329,6 +336,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		if (!isset($conf['google.']['ClientSecret']) || $conf['google.']['ClientSecret'] == '') {
 			$nogoogle = TRUE;
 		}
+
 		$contentgoogle = '';
 		if ($nogoogle == FALSE) {
 			if(($_POST['tx_toctoccomments_pi2']['googleLogin'] == '1') && ($_POST['tx_toctoccomments_pi2']['googleEncUser'] != '')) {
@@ -352,38 +360,30 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		$content = $this->pmain($content, $dochangepassword, $uid, $piHash);
 
 		if (t3lib_div::_GP('refreshcontent') != 'refresh') {
-			if ($conf['ll.'][$GLOBALS['TSFE']->lang . '.']['NewAccount'] == '') {
-				$conf['ll.'][$GLOBALS['TSFE']->lang . '.']['NewAccount'] = 'new account';
-			}
 
-			if ($conf['ll.'][$GLOBALS['TSFE']->lang . '.']['forgotpw'] == '') {
-				$conf['ll.'][$GLOBALS['TSFE']->lang . '.']['forgotpw'] = $this->pi_getLL('ll_forgot_header', '', 1);
-			}
-
-			$newuser='';
-
-			$forgotpw= '<span class="tx-tc-forgotpw link tx-tc-textlink" id="tx-tc-forgotpw-link">'  .
-						$conf['ll.'][$GLOBALS['TSFE']->lang . '.']['forgotpw'] . '</span>';
+			$newuser = '';
+			$forgotpw = '<span class="tx-tc-forgotpw link tx-tc-textlink" id="tx-tc-forgotpw-link">'  .
+						$this->pi_getLL('ll_forgot_header', '', 1) . '</span>';
 			$hideIfFacebookActiveClass = '';
 			$hideshowIfFacebookActiveClass = ' tx-tc-blockdisp';
-			if ((intval($conf['hideIfFaceBookActive']) ==1) && ($this->nofacebook == FALSE) && ($this->nogoogle == FALSE)){
+			if ((intval($conf['hideIfFaceBookActive']) == 1) && ($this->nofacebook == FALSE) && ($this->nogoogle == FALSE)){
 				$hideIfFacebookActiveClass = ' tx-tc-nodisp';
 				$hideshowIfFacebookActiveClass = ' tx-tc-nodisp';
 			}
 
-			if (intval($conf['register.']['enableSignup'])==1) {
+			if (intval($conf['register.']['enableSignup']) == 1) {
 				$buttonnewaccount = '<div class="tx-tc-login-form-iframe' . $hideIfFacebookActiveClass . '" id="tx-tc-buttonfornewaccount">
-					 		<input type="button" id="tx-tc-buttonfornewaccount-bt" value="' . $conf['ll.'][$GLOBALS['TSFE']->lang . '.']['ButtonNewAccount'] .
+					 		<input type="button" id="tx-tc-buttonfornewaccount-bt" value="' . $this->pi_getLL('sign_up', '', 1) .
 					 		'"	class="tx-tc-ct-submit tx-tc-login-button" /></div>';
 			}
 
 			$contentforgotpwarr=explode('###DIV_BLOCKLINKS###', $content);
 
-			if (count($contentforgotpwarr)>1) {
-				$contentarrlink=explode('</a>', $contentforgotpwarr[1]);
-				$contentarrlink[0]=$forgotpw;
-				$contentforgotpwarr[1]=implode('', $contentarrlink);
-				$content=implode('###DIV_BLOCKLINKS###', $contentforgotpwarr);
+			if (count($contentforgotpwarr) > 1) {
+				$contentarrlink = explode('</a>', $contentforgotpwarr[1]);
+				$contentarrlink[0] = $forgotpw;
+				$contentforgotpwarr[1] = implode('', $contentarrlink);
+				$content = implode('###DIV_BLOCKLINKS###', $contentforgotpwarr);
 			}
 
 			$policyLink = '';
@@ -391,7 +391,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 				$params = array();
 				$useCacheHashNeeded = intval($GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError']);
 				$no_cacheflag = 0;
-				if (intval($GLOBALS['TYPO3_CONF_VARS']['FE']['disableNoCacheParameter']) ==0) {
+				if (intval($GLOBALS['TYPO3_CONF_VARS']['FE']['disableNoCacheParameter']) == 0) {
 					if ($useCacheHashNeeded == 1) {
 						$no_cacheflag = 1;
 					}
@@ -405,7 +405,8 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 						'additionalParams' => t3lib_div::implodeArrayForUrl('', $params, '', 1),
 						'ATagParams' => 'rel="nofollow"',
 				);
-				$policyLink = '<div class="tx-tc-login-form-field tx-tc-login-policy">' . $this->cObj->typoLink($this->pi_getLL('policy_link', '', 1), $conflink) . '</div>';
+				$policyLink = '<div class="tx-tc-login-form-field tx-tc-login-policy">' . $this->cObj->typoLink($this->pi_getLL('policy_link', '', 1), $conflink) .
+				'</div>';
 			}
 
 			$content=strtr($content, array(
@@ -442,6 +443,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 			}
 		}
+
 		//watermark formfields
 		$content = $this->watermark($conf, $content);
 
@@ -459,10 +461,11 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 				);
 				$content = preg_replace($search, '', $content);
 				$answerarr = $redirect . 'toctoc-data-sep' . $content . 'toctoc-data-sep' . trim($this->conf['refreshIdList']);
-				$responsedec= base64_encode($answerarr);
+				$responsedec = base64_encode($answerarr);
 				echo $responsedec;
 				die();
 			}
+
 		}
 
 		$content='<div id="'.$prefix.'">'.$content.'</div>';
@@ -532,7 +535,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 				// look for user record
 				$data = $GLOBALS['TYPO3_DB']->fullQuoteStr($postData['forgot_email'], 'fe_users');
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
-						'uid, username, password, email',
+						'uid, username, password, email, first_name, last_name, name',
 						'fe_users',
 						'(email=' . $data .' OR username=' . $data . ') AND pid IN ('.$GLOBALS['TYPO3_DB']->cleanIntList($this->spid).') '.
 						$this->cObj->enableFields('fe_users')
@@ -636,8 +639,8 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 		$gpRedirectUrl = '';
 		$postData =  t3lib_div::_POST($this->prefixId);
-		$markerArray['###LEGEND###'] = $this->pi_getLL('oLabel_header_welcome', '', 1);
-		$dofp=0;
+		$markerArray['###LEGEND###'] = ''; //-> 7.4.0: $this->pi_getLL('oLabel_header_welcome', '', 1);
+		$dofp = 0;
 		if($this->logintype === 'login') {
 			if($this->userIsLoggedIn) {
 				// login success
@@ -653,9 +656,15 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			} else {
 				// login error
 				$markerArray['###STATUS_HEADER###'] = $this->getDisplayText('error_header', $this->conf['errorHeader_stdWrap.']);
-				$markerArray['###STATUS_MESSAGE###'] = $this->getDisplayText('error_message', $this->conf['errorMessage_stdWrap.']) . $this->fberror;
+				if ($this->fberror == 'waitconfirm') {
+					$markerArray['###STATUS_MESSAGE###'] = $this->getDisplayText('error_message_waitconfirm', $this->conf['errorMessage_stdWrap.']);
+
+				} else {
+					$markerArray['###STATUS_MESSAGE###'] = $this->getDisplayText('error_message', $this->conf['errorMessage_stdWrap.']);
+				}
+				
 				$gpRedirectUrl = t3lib_div::_GP('redirect_url');
-				$dofp=1;
+				$dofp = 1;
 			}
 		} else {
 			$dofp=1;
@@ -666,10 +675,10 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			} else {
 				// login form
 				if($this->logintype === 'forgot') {
-					$dofp=2;
+					$dofp = 2;
 				}
 				if($this->logintype === 'signup') {
-					$dofp=3;
+					$dofp = 3;
 				}
 				$markerArray['###STATUS_HEADER###'] = $this->getDisplayText('welcome_header', $this->conf['welcomeHeader_stdWrap.']);
 				$markerArray['###STATUS_MESSAGE###'] = $this->getDisplayText('welcome_message', $this->conf['welcomeMessage_stdWrap.']);
@@ -1120,18 +1129,120 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			$ret = $this->pi_getLL('ll_change_password_nolinkprefix_message');
 			return $ret;
 		}
-
+		$confpi1 = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_toctoccomments_pi1.'];
 		if (intval($this->conf['register.']['signupConfirmEmail']) == 1) {
 			$msg = sprintf($this->pi_getLL('ll_register_validate_reset_password', '', 0), $user['username'], $link, $validEndString);
 
 		} else {
 			$msg = sprintf($this->pi_getLL('ll_forgot_validate_reset_password', '', 0), $user['username'], $link, $validEndString);
 		}
+		$msg = str_replace("\r\n", "\n", $msg);
+		$msgarr = explode("\n", $msg);
+		$subject = array_shift($msgarr);
+		$dummy = array_shift($msgarr);
+		$msgbody = implode('<br>', $msgarr);
+		$msgbody = str_replace($link . '<br>', '', $msgbody);
+
 		// no RDCT - Links for security reasons
 		$oldSetting = $GLOBALS['TSFE']->config['config']['notification_email_urlmode'];
 		$GLOBALS['TSFE']->config['config']['notification_email_urlmode'] = 0;
-		// send the email
-		$this->cObj->sendNotifyEmail($msg, $user['email'], '', $this->conf['email_from'], $this->conf['email_fromName'], $this->conf['replyTo']);
+
+		require_once (t3lib_extMgm::extPath('toctoc_comments', 'pi1/toctoc_comment_lib.php'));
+		if (!(isset($this->lib))) {
+			$this->lib = new toctoc_comment_lib;
+		}
+
+		if (!(isset($this->lib->cObj))) {
+			$this->lib->cObj = t3lib_div::makeInstance('tslib_cObj');
+		}
+
+		if ($confpi1['HTMLEmail']) {
+			$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $confpi1['advanced.']['notificationForPwdChangeHTMLEmailTemplate']);
+			$usetemplateFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
+
+			$templateCode = @file_get_contents(PATH_site . $usetemplateFile);
+			$templatefilepath=PATH_site . $usetemplateFile;
+		}
+
+		if (intval($this->conf['register.']['signupConfirmEmail']) == 1) {
+			$pageTitle=$this->pi_getLL('userEmail.Setuppasswordhere');//'Set up your password here';
+			$messageType=$this->pi_getLL('userEmail.Signuppassword');//'Sign up, password';
+			//$subject = $this->pi_getLL('UserEmail.Setuppasswordsubject');
+		} else {
+			$pageTitle=$this->pi_getLL('userEmail.Resetpasswordhere');//''Reset your password here';
+			$messageType=$this->pi_getLL('userEmail.Resetpassword');//'Reset your password';
+			//$subject = $this->pi_getLL('UserEmail.Resetpasswordsubject');
+		}
+
+		if ($confpi1['HTMLEmail']) {
+			$linktologin = $link;
+
+			$infoleft='';
+
+			$myhomepagelinkarr = explode('//', t3lib_div::locationHeaderUrl(''));
+			$myhomepagelink = $myhomepagelinkarr[1];
+			$fromeIDreturn = '';
+
+			$notifiyusername = $user['username'];
+			if ($user['last_name'] != '') {
+				$salutation= $this->pi_getLL('userEmail.salutationformal');
+				$notifiyusername = $user['last_name'];
+				if ($user['first_name'] != '') {
+					$notifiyusername = $user['first_name'] . ' ' . $user['last_name'];
+				}
+
+			} else {
+				$salutation= $this->pi_getLL('userEmail.salutation');
+				if ($user['first_name'] != '') {
+					$notifiyusername = $user['first_name'];
+				}
+
+			}
+
+			$myhomepagetypoLink_URL = str_replace('https:', 'http:', t3lib_div::locationHeaderUrl(''));
+
+			$markerArray = array(
+					'###USER###' => $notifiyusername,
+					'###SALUTATION###' => $salutation,
+					'###MESSAGEBODY###' => $msgbody,
+					'###PAGETITLE####' => $pageTitle,
+					'###LINK_TO_COMMENT###' => $linktologin,
+					'###MESSAGETYPE###'  => $messageType,
+					'###INFOSLEFT###'  => $infoleft,
+					'###INFOSRIGHT###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
+					'###MYHOMEPAGE###'  => $myhomepagelink,
+					'###SITE_REL_PATH###' => $this->locationHeaderUrlsubDir(FALSE). t3lib_extMgm::siteRelPath('toctoc_comments'),
+					'###MYHOMEPAGELINK###'  => $myhomepagetypoLink_URL,
+					'###MYFONTFAMILY###'  => $confpi1['HTMLEmailFontFamily'],
+					'###MYHOMEPAGETITLE###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
+			);
+		}
+
+		if ($this->conf['email_fromName'] == '') {
+			$sendername = $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] . ' - ' . $this->pi_getLL('userEmail.Useradministration');
+		} else {
+			$sendername = str_replace('%site%', $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'], $this->conf['email_fromName']);
+		}
+
+		if (t3lib_div::validEmail($this->conf['email_from'])) {
+			if (t3lib_div::validEmail($user['email'])) {
+				if ($confpi1['HTMLEmail']) {	// If htmlmail lib is included, then generate a nice HTML-email
+					$content = $this->lib->t3substituteMarkerArray($templateCode, $markerArray);
+					$this->lib->send_mail($user['email'], $subject, '', $content,
+							$this->conf['email_from'], $sendername, $confpi1['spamProtect.']['checkSMTPService']);
+				} else {
+					$this->cObj->sendNotifyEmail($msg, $user['email'], '', $this->conf['email_from'], $sendername, $this->conf['replyTo']);
+				}
+			} else {
+				$ret = sprintf($this->pi_getLL('ll_error_invalid_email'), trim($user['email']));
+				return $ret;
+			}
+
+		} else {
+			$ret =  $this->pi_getLL('userEmail.invalid.email') . ' - (TS-Setup) email_from: '. $this->conf['email_from'];
+			return $ret;
+		}
+
 		// restore settings
 		$GLOBALS['TSFE']->config['config']['notification_email_urlmode'] = $oldSetting;
 
@@ -1142,8 +1253,8 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 	 * This function checks the hash from link and checks the validity. If it's valid it shows the form for
 	 * changing the password and process the change of password after submit, if not valid it returns the error message
 	 *
-	 * @param	[type]		$uid: ...
-	 * @param	[type]		$piHash: ...
+	 * @param	int		$uid: ...
+	 * @param	string		$piHash: ...
 	 * @return	string		The content.
 	 */
 	protected function changePassword($uid, $piHash) {
@@ -1162,7 +1273,8 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		$postData =  t3lib_div::_POST($this->prefixId);
 		$hash = explode('|', $piHash);
 		if (intval($uid) == 0) {
-			$markerArray['###STATUS_MESSAGE###'] = 'ERROR' . $this->getDisplayText('change_password_notvalid_message', $this->conf['changePasswordNotValidMessage_stdWrap.']);
+			$markerArray['###STATUS_MESSAGE###'] = 'ERROR' . $this->getDisplayText('change_password_notvalid_message',
+					$this->conf['changePasswordNotValidMessage_stdWrap.']);
 			$subpartArray['###CHANGEPASSWORD_FORM###'] = '';
 		} else {
 			$user = $this->pi_getRecord('fe_users', intval($uid));
@@ -1170,7 +1282,8 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			$compareHash = explode('|', $userHash);
 
 			if (!$compareHash || !$compareHash[1] || $compareHash[0] < time() || $hash[0] != $compareHash[0] || md5($hash[1]) != $compareHash[1]) {
-				$markerArray['###STATUS_MESSAGE###'] = 'ERROR' . $this->getDisplayText('change_password_notvalid_message', $this->conf['changePasswordNotValidMessage_stdWrap.']);
+				$markerArray['###STATUS_MESSAGE###'] = 'ERROR' . $this->getDisplayText('change_password_notvalid_message',
+						$this->conf['changePasswordNotValidMessage_stdWrap.']);
 				$subpartArray['###CHANGEPASSWORD_FORM###'] = '';
 			} else {
 				// all is fine, continue with new password
@@ -1299,10 +1412,12 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 				$errlastname ='';
 				$errcaptcha = '';
 				if (strlen($postData['password1']) < $minLength) {
-					$errpassword1 = sprintf($this->getDisplayText('change_password_tooshort_message', $this->conf['changePasswordTooShortMessage_stdWrap.']), $minLength);
+					$errpassword1 = sprintf($this->getDisplayText('change_password_tooshort_message',
+							$this->conf['changePasswordTooShortMessage_stdWrap.']), $minLength);
 					$errcount++;
 				} elseif ($postData['password1'] != $postData['password2']) {
-					$errpassword2 = sprintf($this->getDisplayText('change_password_notequal_message', $this->conf['changePasswordNotEqualMessage_stdWrap.']), $minLength);
+					$errpassword2 = sprintf($this->getDisplayText('change_password_notequal_message',
+							$this->conf['changePasswordNotEqualMessage_stdWrap.']), $minLength);
 					$errcount++;
 				}
 
@@ -1312,29 +1427,34 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 				}
 
 				if (trim($postData['signup_email']) == '') {
-						$errsignup_email = sprintf($this->getDisplayText('new_user_email_required', $this->conf['newEmailTooShortMessage_stdWrap.']), trim($postData['signup_email']));
+						$errsignup_email = sprintf($this->getDisplayText('new_user_email_required', $this->conf['newEmailTooShortMessage_stdWrap.']),
+								trim($postData['signup_email']));
 						$errcount++;
 				} else {
 					if (trim($postData['signup_email']) != '' && !t3lib_div::validEmail(trim($postData['signup_email']))) {
-						$errsignup_email = sprintf($this->getDisplayText('error_invalid_email', $this->conf['newEmailInvalidMessage_stdWrap.']), trim($postData['signup_email']));
+						$errsignup_email = sprintf($this->getDisplayText('error_invalid_email', $this->conf['newEmailInvalidMessage_stdWrap.']),
+								trim($postData['signup_email']));
 						$errcount++;
 					}
 				}
 
 				if (trim($postData['firstname']) == '') {
 					If (intval($this->conf['register.']['signupRequireFirstname'])==1) {
-						$errfirstname = sprintf($this->getDisplayText('new_user_firstname_required', $this->conf['newUserFirstnameRequiredMessage_stdWrap.']), $minUserLength);
+						$errfirstname = sprintf($this->getDisplayText('new_user_firstname_required', $this->conf['newUserFirstnameRequiredMessage_stdWrap.']),
+								$minUserLength);
 						$errcount++;
 					}
 				}
 				if (trim($postData['lastname']) == '') {
-					$errlastname =  sprintf($this->getDisplayText('new_user_lastname_required', $this->conf['newUserLastnameRequiredMessage_stdWrap.']), $minUserLength);
+					$errlastname =  sprintf($this->getDisplayText('new_user_lastname_required', $this->conf['newUserLastnameRequiredMessage_stdWrap.']),
+							$minUserLength);
 					$errcount++;
 				}
 				$captchaok = FALSE;
 
 				if ($errcount>0) {
-					$status_message[$smi] = sprintf($this->getDisplayText('signup_haderrors_message_error', $this->conf['newUserDataHasErrorsMessage_stdWrap.']), $errcount);
+					$status_message[$smi] = sprintf($this->getDisplayText('signup_haderrors_message_error', $this->conf['newUserDataHasErrorsMessage_stdWrap.']),
+							$errcount);
 					$smi++;
 				} else {
 					if ($postData['cpdone'] == '0') {
@@ -1467,9 +1587,11 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			}
 
 			// generate message
+			$markerArray['###STATUS_STYLE###'] = '';
 			if ((count($status_message)>0) || ($postData['cpdone'] == '0')) {
 				if ((count($status_message)>0)) {
 					$markerArray['###STATUS_MESSAGESO###'] = $this->cObj->stdWrap(implode('<br />', $status_message), $this->conf['signupErrorMessage_stdWrap.']);
+					$markerArray['###STATUS_STYLE###'] = ' tx-tc-alert';
 				} else {
 					$markerArray['###STATUS_MESSAGESO###'] = $this->getDisplayText('title_captcha', $this->conf['signupHeader_stdWrap.']);
 					$shwcap = TRUE;
@@ -1478,11 +1600,28 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			} else {
 				if ($this->logintype == 'signup') {
 					if (intval($this->conf['register.']['signupConfirmEmail']) != 1) {
-						$markerArray['###STATUS_MESSAGESO###'] = '<span class="tx-tc-nodisp">SIGNUPANDLOGINOK</span>' .
-																$this->cObj->stdWrap($this->pi_getLL('ll_signupOk_message', '', 1), $this->conf['signupOkMessage_stdWrap.']);
+						if (intval($this->conf['register.']['signupAdminConfirmation']) == 1) {
+							$markerArray['###STATUS_STYLE###'] = ' tx-tc-information';
+							$markerArray['###STATUS_MESSAGESO###'] = '<span class="tx-tc-nodisp">SIGNUPANDCONFIRM</span>';
+							$markerArray['###STATUS_MESSAGESO###'] .= $this->cObj->stdWrap($this->pi_getLL('ll_signupOk_AdminConfirmation', '', 1),
+									$this->conf['signupOkMessage_stdWrap.']);
+						} else {
+							$markerArray['###STATUS_MESSAGESO###'] = '<span class="tx-tc-nodisp">SIGNUPANDLOGINOK</span>';
+							$markerArray['###STATUS_MESSAGESO###'] .= $this->cObj->stdWrap($this->pi_getLL('ll_signupOk_message', '', 1),
+									$this->conf['signupOkMessage_stdWrap.']);
+						}
+
 					} else {
-						$markerArray['###STATUS_MESSAGESO###'] = '<span class="tx-tc-nodisp">SIGNUPANDCONFIRM</span>' .
-								$this->cObj->stdWrap($this->pi_getLL('ll_signupOk_messageconfirm', '', 1), $this->conf['signupOkMessage_stdWrap.']);
+						$markerArray['###STATUS_MESSAGESO###'] = '<span class="tx-tc-nodisp">SIGNUPANDCONFIRM</span>';
+						$markerArray['###STATUS_STYLE###'] = ' tx-tc-information';
+
+						if (intval($this->conf['register.']['signupAdminConfirmation']) == 1) {
+							$markerArray['###STATUS_MESSAGESO###'] .= $this->cObj->stdWrap($this->pi_getLL('ll_signupOk_messageconfirmAndAdminConfirmation', '', 1),
+									$this->conf['signupOkMessage_stdWrap.']);
+						} else {
+							$markerArray['###STATUS_MESSAGESO###'] .= $this->cObj->stdWrap($this->pi_getLL('ll_signupOk_messageconfirm', '', 1),
+									$this->conf['signupOkMessage_stdWrap.']);
+						}
 						// send confirmation mail
 						// generate hash
 						$hash = md5($this->generatePassword(3));
@@ -1517,6 +1656,39 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 						}
 
 					}
+
+					if (intval($this->conf['register.']['signupAdminConfirmation']) == 1) {
+						// set new user to hidden
+						$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+								'uid, username, first_name, last_name, email',
+								'fe_users',
+								'(email="' . $postData['signup_email'] .'") AND pid IN ('.$GLOBALS['TYPO3_DB']->cleanIntList($this->spid).') '.
+								$this->cObj->enableFields('fe_users')
+						);
+
+						if ($GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
+							$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+						}
+
+						if ($row) {
+							require_once (t3lib_extMgm::extPath('toctoc_comments', 'pi1/toctoc_comment_lib.php'));
+							if (!$this->lib) {
+								$this->lib = new toctoc_comment_lib;
+							}
+							$confpi1 = array();
+							$confpi1 = $this->lib->getDefaultConfig('tx_toctoccomments_pi1');
+							$requrl = t3lib_div::getIndpEnv('TYPO3_REQUEST_URL');
+							$langajax = $GLOBALS['TSFE']->lang;
+ 							$this->lib->sendNotificationEmail($row['uid'], 0, 0, 'adminconfirmsignup', $confpi1, $this, FALSE, $row, $GLOBALS['TSFE']->id,
+ 									$GLOBALS['TSFE']->page['title'], $requrl, 0, '', 0, $langajax);
+
+							$res = $GLOBALS['TYPO3_DB']->exec_UPDATEquery('fe_users', '(email="' . $postData['signup_email'] .
+									'") AND pid IN ('.$GLOBALS['TYPO3_DB']->cleanIntList($this->spid).') '.
+										$this->cObj->enableFields('fe_users'), array('disable' => 1));
+							// send mail to admin
+						}
+					}
+
 					$done = TRUE;
 					$subpartArray['###SIGNON_FORM###'] = '';
 				} else {
@@ -1740,20 +1912,21 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 	protected function loginUser($facebookId) {
 		$where = 'tx_toctoc_comments_facebook_id=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($facebookId, $this->tableName) .
 		' AND deleted=0';
+		if ($this->fberror != 'waitconfirm') {
+			$result = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $this->tableName, $where, '', '', 1);
+			if ($userToLogin = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result)){
+				$feUser = $GLOBALS['TSFE']->fe_user;
+				unset($feUser->user);
+				if($this->conf['facebook.']['makeSessionPermanent']) {
+					$feUser->is_permanent = 1;
+				}
 
-		$result = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $this->tableName, $where, '', '', 1);
-		if ($userToLogin = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result)){
-			$feUser = $GLOBALS['TSFE']->fe_user;
-			unset($feUser->user);
-			if($this->conf['facebook.']['makeSessionPermanent']) {
-				$feUser->is_permanent = 1;
+				$feUser->createUserSession($userToLogin);
+				$feUser->loginSessionStarted = TRUE;
+				$feUser->user = $feUser->fetchUserSession();
+				$GLOBALS['TSFE']->loginUser = 1;
+				$GLOBALS['TSFE']->initUserGroups(); // this is needed in case the redirection is to a restricted page.
 			}
-
-			$feUser->createUserSession($userToLogin);
-			$feUser->loginSessionStarted = TRUE;
-			$feUser->user = $feUser->fetchUserSession();
-			$GLOBALS['TSFE']->loginUser = 1;
-			$GLOBALS['TSFE']->initUserGroups(); // this is needed in case the redirection is to a restricted page.
 		}
 	}
 
@@ -1781,6 +1954,9 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			$user = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result);
 			if($user['tx_toctoc_comments_facebook_updated_time'] != '') {
 				if($user['tx_toctoc_comments_facebook_updated_time'] == $facebookUserProfile['updated_time']) {
+					if ($user['disable'] != 0) {
+						$this->fberror = 'waitconfirm';
+					}
 					/* no update needed since facebook profile was not updated */
 					return;
 				}
@@ -1821,6 +1997,10 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 		if($userFound) {
 			$userId = $user['uid'];
+			if ($user['disable'] ==1) {
+				$this->fberror = 'waitconfirm';
+			}
+
 			$updateWhere = 'uid=' . $user['uid'];
 			$GLOBALS['TYPO3_DB']->exec_UPDATEquery($this->tableName, $updateWhere, $fe_usersValues);
 		} else {
@@ -1828,8 +2008,37 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			$fe_usersValues['usergroup'] = $this->conf['register.']['usergroup'];
 			$fe_usersValues['password'] = t3lib_div::getRandomHexString(32);
 			$fe_usersValues['crdate'] = time();
+			$fe_usersValues['disable'] = intval($this->conf['register.']['signupAdminConfirmation']);
 			$GLOBALS['TYPO3_DB']->exec_INSERTquery($this->tableName, $fe_usersValues);
 			$userId = $GLOBALS['TYPO3_DB']->sql_insert_id();
+
+			if (intval($this->conf['register.']['signupAdminConfirmation']) == 1) {
+				$this->fberror = 'waitconfirm';
+				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+						'uid, username, first_name, last_name, email',
+						'fe_users',
+						'(uid=' . $userId .')'
+				);
+
+				if ($GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
+					$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+				}
+
+				if ($row) {
+					require_once (t3lib_extMgm::extPath('toctoc_comments', 'pi1/toctoc_comment_lib.php'));
+					if (!$this->lib) {
+						$this->lib = new toctoc_comment_lib;
+					}
+					$confpi1 = array();
+					$confpi1 = $this->lib->getDefaultConfig('tx_toctoccomments_pi1');
+					$requrl = t3lib_div::getIndpEnv('TYPO3_REQUEST_URL');
+					$langajax = $GLOBALS['TSFE']->lang;
+					$this->lib->sendNotificationEmail($row['uid'], 0, 0, 'adminconfirmsignup', $confpi1, $this, TRUE, $row, $GLOBALS['TSFE']->id,
+							$GLOBALS['TSFE']->page['title'], $requrl, 0, '', 0, $langajax);
+				}
+
+			}
+
 		}
 
  		if ($imagename != '') {
@@ -1909,7 +2118,9 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		$urlstr = str_replace('///', '//', $urlstr);
 		$urltofetch = $urlstr;
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20100101 Firefox/15.0.1');
+
+		$toctoccommentsuseragent = 'TocTocCommentsExternalhit/1.0 (+https://www.toctoc.ch/toctoc_comments.html?L=2)';
+		curl_setopt($ch, CURLOPT_USERAGENT, toctoccommentsuseragent);
 		curl_setopt($ch, CURLOPT_URL, $urltofetch);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -1954,14 +2165,16 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 					$newheader = 'Content-Type: image/jpeg';
 				} elseif ($ext == 'png') {
 					$newheader = 'Content-Type: image/png';
-				}  elseif ($ext == 'gif') {
+				} elseif ($ext == 'gif') {
 					$newheader = 'Content-Type: image/gif';
 				} elseif ($ext == 'bmp') {
 					$newheader = 'Content-Type: image/bmp';
 				}
+
 				$data = $data;
 				$newext = $ext;
 			}
+
 			curl_close($ch);
 			$savepathfilename = str_replace ('.' . $extorig, '.' . $newext, $savepathfilename);
 

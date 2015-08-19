@@ -285,7 +285,8 @@
 	  $comment_txt_crop = ''.$comment_txt;
 
 	  $tstamp = $row['crdate'];
-	  $time = ''.date('d.m.Y', $tstamp).' - '.date('H:i', $tstamp).'';
+	  $time = date('Y-m-d H:i:s', $tstamp);
+	  //$time = '' . date('d.m.Y', $tstamp) . ' - ' . date('H:i', $tstamp) . '';
 
 	  /*
 	  params2 = Edit

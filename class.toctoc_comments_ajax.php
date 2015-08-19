@@ -37,25 +37,25 @@
  *
  *
  *
- *   93: class toctoc_comments_ajax
- *  145:     public function __construct()
- *  668:     protected function initTSFE()
- *  714:     public function main()
- *  754:     public function handleCommentatorNotifications()
- *  765:     protected function updateCommentDisplay()
- *  783:     protected function updateComment()
- *  798:     protected function webpagepreview()
- *  810:     protected function previewcomment()
- *  821:     protected function commentsSearch()
- *  833:     protected function cleanupfup()
- *  847:     protected function getCaptcha($captchatype, $cid)
- *  982:     protected function chkcaptcha($cid, $code)
- * 1009:     protected function getUserCard()
- * 1022:     protected function updateCommentsView()
- * 1147:     protected function updateRating()
- * 1675:     protected function processDeleteSubmission()
- * 1756:     protected function processDenotifycommentSubmission()
- * 1807:     protected function recentCommentsClearCache()
+ *   95: class toctoc_comments_ajax
+ *  147:     public function __construct()
+ *  670:     protected function initTSFE()
+ *  716:     public function main()
+ *  756:     public function handleCommentatorNotifications()
+ *  767:     protected function updateCommentDisplay()
+ *  785:     protected function updateComment()
+ *  800:     protected function webpagepreview()
+ *  812:     protected function previewcomment()
+ *  823:     protected function commentsSearch()
+ *  835:     protected function cleanupfup()
+ *  849:     protected function getCaptcha($captchatype, $cid)
+ *  984:     protected function chkcaptcha($cid, $code)
+ * 1011:     protected function getUserCard()
+ * 1024:     protected function updateCommentsView()
+ * 1156:     protected function updateRating()
+ * 1712:     protected function processDeleteSubmission()
+ * 1793:     protected function processDenotifycommentSubmission()
+ * 1844:     protected function recentCommentsClearCache()
  *
  * TOTAL FUNCTIONS: 18
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -63,6 +63,7 @@
  */
 
 if (version_compare(TYPO3_version, '6.0', '<')) {
+	require_once(PATH_t3lib . 'class.t3lib_refindex.php');
 	require_once(PATH_tslib . 'class.tslib_pibase.php');
 	if (!version_compare(TYPO3_version, '4.6', '<')) {
 		require_once(PATH_t3lib . 'utility/class.t3lib_utility_math.php');
@@ -73,6 +74,7 @@ if (version_compare(TYPO3_version, '6.0', '<')) {
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('frontend') . 'Classes/Plugin/AbstractPlugin.php';
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/Utility/MathUtility.php';
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('lang') . 'Classes/LanguageService.php';
+	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/Database/ReferenceIndex.php';
 }
 if (version_compare(TYPO3_version, '6.3', '>')) {
 	(class_exists('t3lib_extMgm', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Utility\ExtensionManagementUtility', 't3lib_extMgm');
@@ -185,25 +187,6 @@ class toctoc_comments_ajax {
 		} elseif (!isset($GLOBALS['TCA']['pages']['ctrl'])) {
 			// make sure $GLOBALS['TCA'] is present
 			$this->initTSFE();
-			if (version_compare(TYPO3_version, '6.1', '>')) {
-				if (!is_array($GLOBALS['TCA']) || !isset($GLOBALS['TCA']['pages'])) {
-		            \TYPO3\CMS\Core\Core\Bootstrap::getInstance()->loadCachedTca();
-				}
-
-			}
-
-			if (!isset($GLOBALS['TCA'])) {
-				$GLOBALS['TCA'] = array();
-			}
-
-			if (!isset($GLOBALS['TCA']['pages'])) {
-				$GLOBALS['TCA']['pages'] = array();
-			}
-
-			if (!isset($GLOBALS['TCA']['pages']['columns'])) {
-				$GLOBALS['TCA']['pages']['columns'] = array();
-			}
-
 		}
 
 		if($this->cmd == 'showcomments') {
@@ -666,6 +649,29 @@ class toctoc_comments_ajax {
 	 * @return	void
 	 */
 	protected function initTSFE() {
+		if (version_compare(TYPO3_version, '6.1', '>')) {
+			if (!is_array($GLOBALS['TCA'])) {
+				\TYPO3\CMS\Core\Core\Bootstrap::getInstance()->loadCachedTca();
+			} else {
+				if (!isset($GLOBALS['TCA']['pages'])) {
+					\TYPO3\CMS\Core\Core\Bootstrap::getInstance()->loadCachedTca();
+				}
+			}
+		
+		}
+		
+		if (!isset($GLOBALS['TCA'])) {
+			$GLOBALS['TCA'] = array();
+		}
+		
+		if (!isset($GLOBALS['TCA']['pages'])) {
+			$GLOBALS['TCA']['pages'] = array();
+		}
+		
+		if (!isset($GLOBALS['TCA']['pages']['columns'])) {
+			$GLOBALS['TCA']['pages']['columns'] = array();
+		}
+		
 		try {
 // 			$GLOBALS['TT'] = new \TYPO3\CMS\Core\TimeTracker\NullTimeTracker();
  //			$GLOBALS['TT']->start();
@@ -1079,6 +1085,13 @@ class toctoc_comments_ajax {
 					'reference' => $pluginid,
 					'remote_addr' => $strCurrentIP
 			));
+			$newUid = $GLOBALS['TYPO3_DB']->sql_insert_id();
+			// Update reference index. This will show in theList view that someone refers to external record.
+			$refindex = t3lib_div::makeInstance('t3lib_refindex');
+			/* @var $refindex t3lib_refindex */
+			if (isset($GLOBALS['TCA']['tx_toctoc_comments_feuser_mm']['columns'])) {
+				$refindex->updateRefIndexTable('tx_toctoc_comments_feuser_mm', $newUid);
+			}
 		}
 
 		$GLOBALS['TYPO3_DB']->sql_query('COMMIT');
@@ -1460,6 +1473,13 @@ class toctoc_comments_ajax {
 									'isreview' => $isReview,
 									'remote_addr' => $strCurrentIP
 							));
+							$newUid = $GLOBALS['TYPO3_DB']->sql_insert_id();
+							// Update reference index. This will show in theList view that someone refers to external record.
+							$refindex = t3lib_div::makeInstance('t3lib_refindex');
+							/* @var $refindex t3lib_refindex */
+							if (isset($GLOBALS['TCA']['tx_toctoc_comments_feuser_mm']['columns'])) {
+								$refindex->updateRefIndexTable('tx_toctoc_comments_feuser_mm', $newUid);
+							}
 						}
 					}
 
@@ -1480,6 +1500,13 @@ class toctoc_comments_ajax {
 								'reference_scope' => $scopeid,
 								'remote_addr' => $strCurrentIP
 						));
+						$newUid = $GLOBALS['TYPO3_DB']->sql_insert_id();
+						// Update reference index. This will show in theList view that someone refers to external record.
+						$refindex = t3lib_div::makeInstance('t3lib_refindex');
+						/* @var $refindex t3lib_refindex */
+						if (isset($GLOBALS['TCA']['tx_toctoc_comments_feuser_mm']['columns'])) {
+							$refindex->updateRefIndexTable('tx_toctoc_comments_feuser_mm', $newUid);
+						}
 						$_SESSION['dislikeditem'] = array();
 						$_SESSION['dislikeditem']['pageid'] = $pageid;
 						$_SESSION['dislikeditem']['IP'] = $strCurrentIP;
@@ -1505,6 +1532,13 @@ class toctoc_comments_ajax {
 								'reference_scope' => $scopeid,
 								'remote_addr' => $strCurrentIP
 						));
+						$newUid = $GLOBALS['TYPO3_DB']->sql_insert_id();
+							// Update reference index. This will show in theList view that someone refers to external record.
+							$refindex = t3lib_div::makeInstance('t3lib_refindex');
+							/* @var $refindex t3lib_refindex */
+							if (isset($GLOBALS['TCA']['tx_toctoc_comments_feuser_mm']['columns'])) {
+								$refindex->updateRefIndexTable('tx_toctoc_comments_feuser_mm', $newUid);
+							}
 					}
 
 				}
@@ -1577,6 +1611,13 @@ class toctoc_comments_ajax {
 									'reference_scope' => $scopeid,
 									'ip' => $strCurrentIP
 							));
+							$newUid = $GLOBALS['TYPO3_DB']->sql_insert_id();
+							// Update reference index. This will show in theList view that someone refers to external record.
+							$refindex = t3lib_div::makeInstance('t3lib_refindex');
+							/* @var $refindex t3lib_refindex */
+							if (isset($GLOBALS['TCA']['tx_toctoc_ratings_iplog']['columns'])) {
+								$refindex->updateRefIndexTable('tx_toctoc_ratings_iplog', $newUid);
+							}
 						}
 
 					}

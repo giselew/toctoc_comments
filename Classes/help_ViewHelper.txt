@@ -11,6 +11,12 @@ Output Comments counter
 <nt:social.TocTocCommentsCount newsItem="{newsItem}">
 </nt:social.TocTocCommentsCount>
 
+Output Comments counter with TYPO3 7 or newer
+{namespace nt=Tx_News_ViewHelpers}
+<div class="toctoccomments">
+	<nt:social.TocTocCommentsSimpleCount newsItem="{newsItem}"></nt:social.TocTocCommentsSimpleCount>
+</div>
+
 Templates for news using toctoc_comments are in subfolder Resources/Private
 Open files with editor and search for toctoc, if you want to see the fluid parts concerning toctoc_comments
 

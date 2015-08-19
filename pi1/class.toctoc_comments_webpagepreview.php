@@ -406,12 +406,13 @@ class toctoc_comments_webpagepreview {
 				$urlstr=$urlarr[0] . '/';
 				$urlarr[0]='';
 			}
-
+			$toctoccommentsuseragent = 'TocTocCommentsExternalhit/1.0 (+https://www.toctoc.ch/toctoc_comments.html?L=2)';
+			
 			$urlstr.=implode('//', $urlarr);
 			$urlstr=str_replace('///', '//', $urlstr);
 			$urltofetch=$urlstr;
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20100101 Firefox/15.0.1');
+			curl_setopt($ch, CURLOPT_USERAGENT, $toctoccommentsuseragent);
 			curl_setopt($ch, CURLOPT_URL, $urltofetch);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

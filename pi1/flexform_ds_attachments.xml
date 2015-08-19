@@ -55,6 +55,13 @@
 								<title>LLL:EXT:toctoc_comments/pi1/locallang.xml:toctoc_comments_pi1.topwebpagepreview.wizard</title>
 								<icon>link_popup.gif</icon>
 								<script>wizard_edit.php</script>
+								<module type="array">
+									<name>wizard_element_browser</name>
+									<urlParameters type="array">
+										<mode>wizard</mode>
+										<act>edit</act>
+									</urlParameters>
+								</module>
 								<popup_onlyOpenIfSelected>1</popup_onlyOpenIfSelected>
 								<icon>edit2.gif</icon>
 								<JSopenParams>height=350,width=580,status=0,menubar=0,scrollbars=1</JSopenParams>

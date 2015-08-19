@@ -332,52 +332,14 @@
     		$infomessage .= $GLOBALS['LANG']->getLL('statssessionsfound') . ': ' . $countsessionrows . '';
     		$num_rows = count($sessionrows);
     		$totalsize=0;
+    		$minlastuse = microtime(TRUE);
+    		$microtime = $minlastuse;
+    		$maxlastuse = 0;
 			foreach ($sessionrows as $sessionrow) {
     			$editUid = $sessionrow['SessionName'] . $sessionrow['PHPCookie'];
     			$toctocuser = $sessionrow['toctoc_comments_user'];
     			$InitialName = $sessionrow['InitialName'];
-    			$ActiveTime = round($sessionrow['ActiveTime'], 0);
-    			$ActiveTimeday = round(($ActiveTime/(24*3600)), 0) % (24);
-    			$ActiveTimehour = round(($ActiveTime/3600), 0) % (60);
-    			$ActiveTimeminute = round(($ActiveTime/60), 0) % (60);
-    			$ActiveTimeseconds = $ActiveTime % (60);
-    			$ActiveTimeStr = '';
-    			if ($ActiveTimeday > 1) {
-    				$ActiveTimeStr .= $ActiveTimeday . ' ' . $GLOBALS['LANG']->getLL('days') . ' ';
-    			}
-    			
-    			if ($ActiveTimeday == 1) {
-    				$ActiveTimeStr .= $ActiveTimeday . ' ' . $GLOBALS['LANG']->getLL('day') . ' ';
-    			}
-    			 
-    			if ($ActiveTimehour > 1) {
-    				$ActiveTimeStr .= $ActiveTimehour . ' ' . $GLOBALS['LANG']->getLL('hours') . ' ';
-    			}
-    			
-    			if ($ActiveTimehour == 1) {
-    				$ActiveTimeStr .= $ActiveTimehour . ' ' . $GLOBALS['LANG']->getLL('hour') . ' ';
-    			}
-    			
-    			if ($ActiveTimeminute > 1) {
-    				$ActiveTimeStr .= $ActiveTimeminute . ' ' . $GLOBALS['LANG']->getLL('minutes') . ' ';
-    			}
-    			
-    			if ($ActiveTimeminute == 1) {
-    				$ActiveTimeStr .= $ActiveTimeminute . ' ' . $GLOBALS['LANG']->getLL('minute') . ' ';
-    			}
-    			
-				if ($ActiveTimeseconds > 1) {
-    				$ActiveTimeStr .= $ActiveTimeseconds . ' ' . $GLOBALS['LANG']->getLL('seconds') . ' ';
-    			}
-    			
-    			if ($ActiveTimeseconds == 1) {
-    				$ActiveTimeStr .= $ActiveTimeseconds . ' ' . $GLOBALS['LANG']->getLL('second') . ' ';
-    			}
-    			
-    			if (($ActiveTimeseconds == 0) && ($ActiveTimeStr == '')) {
-    				$ActiveTimeStr .= '<1 ' . $GLOBALS['LANG']->getLL('second') . ' ';
-    			}
-    			
+    			$ActiveTimeStr =$this->activetime($sessionrow['ActiveTime']);
     			if ($ActiveTimeStr != '') {
     				$ActiveTimeStr = ' ' . $GLOBALS['LANG']->getLL('active') . ': ' . $ActiveTimeStr;
     			}
@@ -425,6 +387,14 @@
     			}
     			
     			$totalsize+=$sessionrow['Sessionsize'];
+    			if ($minlastuse > $sessionrow['SessionLastuseTs']) {
+    				$minlastuse = $sessionrow['SessionLastuseTs'];
+    			}
+    			
+    			if ($maxlastuse < $sessionrow['SessionLastuseTs']) {
+    				$maxlastuse = $sessionrow['SessionLastuseTs'];
+    			}
+    			
     			$contenttable .= '
 		    					<tr>
 		    					<td class="img tx-tc-be-dispnone">' . $sessionrow['SessionLastuseTs']. '</td>
@@ -443,10 +413,25 @@
 					';
 			}
 			
+			$usetime = $microtime - $minlastuse;
+			$ActiveTimeStr =$this->activetime($usetime);
+			$usetimestr = '';
+			
+			if ($usetime != 0) {
+				$usetimestr = '<br>' . $GLOBALS['LANG']->getLL('timesincefirstsession') . ': ' . $ActiveTimeStr;
+				$datemin = date('Y-m-d H:i:s', $minlastuse);
+				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('COUNT(hash) AS typo3sessions', 'fe_session_data', 'tstamp>' . $minlastuse, '', '');
+				while($row=$GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+					if ($row[typo3sessions]) {
+						$usetimestr .= '<br>' . $GLOBALS['LANG']->getLL('numberTYPO3sessions') . ' ' . $datemin . ': ' .  $row[typo3sessions];
+					}
+				}
+			}			
+			
 			$contenttable .= '
 			  </table>
 			';
-			$infomessage .= ', ' . $GLOBALS['LANG']->getLL('totalsize') . ': ' . $this->human_filesize($totalsize);
+			$infomessage .= ', ' . $GLOBALS['LANG']->getLL('totalsize') . ': ' . $this->human_filesize($totalsize) . $usetimestr;
     	} else {
     		$infomessage .= $GLOBALS['LANG']->getLL('nosessionsfound');
     	}

@@ -22,8 +22,8 @@
  * Details: http://www.toctoc.ch/
  * Example
  * ==============
- * <n:social.TocTocCommentsCount newsItem="{newsItem}"></n:social.TocTocCommentsCount>
- *
+ * {namespace nt=Tx_News_ViewHelpers}
+ * <nt:social.TocTocCommentsSimpleCount newsItem="{newsItem}"></nt:social.TocTocCommentsSimpleCount>*
  * @package TYPO3
  * @subpackage tx_news
  */
@@ -34,13 +34,16 @@ if (version_compare(TYPO3_version, '6.0', '<')) {
 }
 if (version_compare(TYPO3_version, '6.3', '>')) {
 	(class_exists('Tx_Fluid_Core_ViewHelper_AbstractViewHelper', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper', 'Tx_Fluid_Core_ViewHelper_AbstractViewHelper');
+	(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
+	(class_exists('language', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Lang\LanguageService', 'language');
+	(class_exists('tslib_cObj', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer', 'tslib_cObj');
 }
 
 	/**
 	 * [Describe function...]
 	 *
 	 */
-class Tx_News_ViewHelpers_Social_TocTocCommentsCountViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_News_ViewHelpers_Social_TocTocCommentsSimpleCountViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	protected $escapingInterceptorEnabled = FALSE;
 
@@ -48,11 +51,6 @@ class Tx_News_ViewHelpers_Social_TocTocCommentsCountViewHelper extends Tx_Fluid_
 	 * @var Tx_News_Service_SettingsService
 	 */
 	protected $pluginSettingsService;
-	protected $detailPidDeterminationCallbacks = array(
-			'flexform' => 'getDetailPidFromFlexform',
-			'categories' => 'getDetailPidFromCategories',
-			'default' => 'getDetailPidFromDefaultDetailPid',
-	);
 
 	/**
 	 * @param	[type]		$Tx_News_Service_SettingsService $pluginSettingsService: ...
@@ -62,7 +60,6 @@ class Tx_News_ViewHelpers_Social_TocTocCommentsCountViewHelper extends Tx_Fluid_
 	public function injectSettingsService(Tx_News_Service_SettingsService $pluginSettingsService) {
 		$this->pluginSettingsService = $pluginSettingsService;
 	}
-
 	/**
 	 * Render TocTocComments thread
 	 *
@@ -88,12 +85,12 @@ class Tx_News_ViewHelpers_Social_TocTocCommentsCountViewHelper extends Tx_Fluid_
 			default:
 				$detailPid = 0;
 				$detailPidDeterminationMethods = t3lib_div::trimExplode(',', $settings['detailPidDetermination'], TRUE);
-
+	
 				// if TS is not set, prefer flexform setting
 				if (!isset($settings['detailPidDetermination'])) {
 					$detailPidDeterminationMethods[] = 'flexform';
 				}
-
+	
 				foreach ($detailPidDeterminationMethods as $determinationMethod) {
 					if ($callback = $this->detailPidDeterminationCallbacks[$determinationMethod]) {
 						if ($detailPid = call_user_func(array($this, $callback), $settings, $newsItem)) {
@@ -101,15 +98,15 @@ class Tx_News_ViewHelpers_Social_TocTocCommentsCountViewHelper extends Tx_Fluid_
 						}
 					}
 				}
-
+	
 				if (!$detailPid) {
 					$detailPid = $GLOBALS['TSFE']->id;
 				}
-
+	
 				$configuration['useCacheHash'] = 1;
 				$configuration['parameter'] = $detailPid;
 				$configuration['additionalParams'] .= '&tx_news_pi1[news]=' . $newsItem->getUid();
-
+	
 				if ((int)$tsSettings['link']['skipControllerAndAction'] !== 1) {
 					$configuration['additionalParams'] .= '&tx_news_pi1[controller]=News' .
 							'&tx_news_pi1[action]=detail';
@@ -117,7 +114,7 @@ class Tx_News_ViewHelpers_Social_TocTocCommentsCountViewHelper extends Tx_Fluid_
 				// Add date as human readable (30/04/2011)
 				if ($tsSettings['link']['hrDate'] == 1 || $tsSettings['link']['hrDate']['_typoScriptNodeValue'] == 1) {
 					$dateTime = $newsItem->getDatetime();
-
+	
 					if (!empty($tsSettings['link']['hrDate']['day'])) {
 						$configuration['additionalParams'] .= '&tx_news_pi1[day]=' . $dateTime->format($tsSettings['link']['hrDate']['day']);
 					}
@@ -133,63 +130,20 @@ class Tx_News_ViewHelpers_Social_TocTocCommentsCountViewHelper extends Tx_Fluid_
 			if (t3lib_div::inList($tsSettings['link']['typesOpeningInNewWindow'], $newsType)) {
 				$this->tag->addAttribute('target', '_blank');
 			}
-
+	
 		}
-
+	
 		$url = $this->cObj->typoLink_URL($configuration);
 		if ($uriOnly) {
 			return $url;
 		}
-
+	
 		$this->tag->addAttribute('href', $url);
 		$this->tag->setContent($this->renderChildren());
 		$ret = $this->tag->render();
 		return $ret;
 	}
-
-	/**
-	 * Gets detailPid from categories of the given news item. First will be return.
-	 *
-	 * @param	array		$settings
-	 * @param	Tx_News_Domain_Model_News		$newsItem
-	 * @return	int
-	 */
-	protected function getDetailPidFromCategories($settings, $newsItem) {
-		$detailPid = 0;
-		$dummy = $settings;
-		foreach ($newsItem->getCategories() as $category) {
-			if ($detailPid = (int)$category->getSinglePid()) {
-				break;
-			}
-		}
-		return $detailPid;
-	}
-
-	/**
-	 * Gets detailPid from defaultDetailPid setting
-	 *
-	 * @param	array		$settings
-	 * @param	Tx_News_Domain_Model_News		$newsItem
-	 * @return	int
-	 */
-	protected function getDetailPidFromDefaultDetailPid($settings, $newsItem) {
-		$dummy = $newsItem;
-		return (int)$settings['defaultDetailPid'];
-	}
-
-	/**
-	 * Gets detailPid from flexform of current plugin.
-	 *
-	 * @param	array		$settings
-	 * @param	Tx_News_Domain_Model_News		$newsItem
-	 * @return	int
-	 */
-	protected function getDetailPidFromFlexform($settings, $newsItem) {
-		$dummy = $newsItem;
-		return (int)$settings['detailPid'];
-
-	}
-
+	
 	/**
 	 * [Describe function...]
 	 *
@@ -268,39 +222,6 @@ class Tx_News_ViewHelpers_Social_TocTocCommentsCountViewHelper extends Tx_Fluid_
 			unset($lang);
 		}
 		return $code;
-	}
-	/**
-	 * Attempts to build URL to item.
-	 * Firsts it checks if marker value is not empty. If yes, it treats it as a
-	 * link to item and attempts to extract the link. If value is empty, it uses item
-	 * uid to manually create link
-	 *
-	 * @param	string		$marker	Marker value with link
-	 * @param	int		$itemUid	Item uid
-	 * @param	tx_ttnews		$pObj	Reference to parent object
-	 * @return	string		Generated URL to item
-	 * @access private
-	 */
-	private function getItemLink($itemUid) {
-		$result = '';
-
-		if (isset($GLOBALS['TSFE']->register['newsMoreLink']) &&
-				($pos = strpos($GLOBALS['TSFE']->register['newsMoreLink'], 'href="')) !== FALSE) {
-			$value = substr($GLOBALS['TSFE']->register['newsMoreLink'], $pos + 6);
-			$result = substr($value, 0, strpos($value, '"'));
-		}
-		if (!$result) {
-			$params = array(
-					'additionalParams' => '&tx_news[news]=' . $itemUid,
-					'no_cache' => $GLOBALS['TSFE']->no_cache,
-					'parameter' => $GLOBALS['TSFE']->id,
-					'useCacheHash' => !$GLOBALS['TSFE']->no_cache,
-					'returnLast' => 'url',
-			);
-			$result = $this->cObj->typolink('|', $params);
-		}
-
-		return $result;
 	}
 	/**
 	 * Retrieves template for custom marker
