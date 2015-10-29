@@ -1,0 +1,415 @@
+// sharrre boxmodel
+.sharrre .shrbox {
+	clear: both;
+	float: left;
+	padding: 0 2px 0 2px;
+	position: relative;
+	white-space: nowrap;
+}
+.sharrre .shrbox:hover .shrmiddle {
+	height: auto;
+	top: 8px;
+	margin-top: 8px;
+	opacity: 0.9;
+}
+.sharrre .shrboxopen {
+	clear: both;
+	float: left;
+	position: relative;
+	white-space: nowrap;
+}
+.sharrre .shrleft, .share {
+	cursor: pointer;
+	display: block;
+	float: left;
+	white-space: nowrap;
+}
+.sharrre a.share {
+	 white-space: normal;
+}
+.sharrre .shrboxopen {
+	height: auto;
+	visibility: visible;
+}
+.sharrre .shrmiddleopen {
+	top: 0;
+	z-index: 4;
+	margin: 0 4px 0 0;
+	border-radius: 2px 2px 2px 2px;
+	border-width: 1px;
+	border-style: solid;
+	overflow: visible;
+	display: inline;
+	float: left;
+	text-align: left;
+	white-space: nowrap;
+}
+.shrleft {
+	margin: 0 4px 0 0;
+}
+.sharrre .shrmiddle {
+	border-radius: 3px 3px 3px 3px;
+	border-width: 1px;
+	border-style: solid;
+	overflow: visible;
+	display: inline;
+	padding: 4px;
+	position: absolute;
+	text-align: left;
+	white-space: nowrap;
+}
+.sharrre .shrmiddle span, .sharrre .shrmiddleopen span {
+	font-weight: bold;
+	padding: 0 4px 0 4px;
+	text-align: center;
+	min-width: 8px;
+}
+.sharrre .shrright, .sharrre .shrrightopen {
+	margin: 0;
+	text-align: left;
+	float: right;
+}
+.shrright .share, .shrrightopen .share {
+ 	float: right !important;
+}
+.shrbox .share, .shrboxopen .share {
+ 	margin-left: 4px;
+}
+.shrright, .shrrightopen {
+	white-space: normal;
+}
+.sharrre .shrmiddle a:hover, .sharrre .shrmiddleopen a:hover {
+	text-decoration: none;
+}
+div.sharrre {
+	float: left;
+}
+.sharrre .button {
+	top: 6px;
+	margin: 0 4px 0 4px;
+	float: left;
+	position: absolute;
+}
+.sharrre .buttons {
+	padding: 5px;
+	max-height: 70px;
+	height: 70px;
+	position: absolute;
+	z-index: 10;
+}
+.sharrre .share {
+	float: left;
+}
+.sharrre .count {
+	float: left;
+	margin-right: 5px;
+}
+.sharrre .box {
+	float: left;
+	margin: 0 4px 0 4px;
+}
+.tx-tc-sharrrearea-popup {
+	white-space: normal;
+	margin: 0;
+	float: left;
+}
+.addthis_toolbox {
+	padding: 0 0 4px 0;
+}
+.addthis_toolbox a {
+	height: 20px;
+}
+a.addthis_counter .addthis_pill_style {
+	height: auto;
+}
+/* sharrre design 1 specifics */
+.sharrre .shrd1 {
+	display: none;
+   	z-index:4;
+}
+.sharrre .shrbox:hover .shrd1 {
+	display: block;
+}
+/* sharrre design 2 specifics */
+.shrdes2 {
+	margin-top: 0 !important;
+	float: left;
+}
+.shrdes2 .box a:hover {
+	text-decoration:underline;
+}
+.shrdes2 .facebook {
+	float:left;
+	z-index: 3;
+	top: 6px;
+}
+.shrdes2 .twitter {
+	z-index: 2;
+}
+.shrdes2 .googleplus {
+	z-index: 2;
+}
+.shrdes2 .pinterest {
+	top: 42px !important;
+}
+.shrdes2 .buttons {
+	border-radius: 3px 3px 3px 3px;
+	border-width: 1px;
+	border-style: solid;
+	height: auto !important;
+	width: inherit;
+	min-height: 70px;
+	max-height: auto !important;
+	display: table;
+}
+.shrdes2 .button {
+	position: relative;
+	top: 0;
+	height: 70px;
+}
+.tx-tc-sharrrearea-popup .tx-tc-shareicon, .shrdes4right .tx-tc-shareicon, .shrdes5right .tx-tc-shareicon  {
+	border: 0;
+	height: 16px;
+	width: 16px;
+   	float: left;
+	margin: 3px 4px -3px 0;
+}
+.shrdes4right .tx-tc-shareicon, .shrdes5right .tx-tc-shareicon  {
+	margin: 2px 8px -2px 0;
+}
+.shrrightopen .share, .shrboxopen .shrleft, .shrdes4right .tx-tc-shareicon, .shrdes5right .tx-tc-shareicon {
+	cursor: initial;
+	float: left;
+	white-space: nowrap;
+ 	color: initial !important;
+}
+.shrrightopen .share:hover, .shrboxopen .shrleft:hover, .shrdes4right .tx-tc-shareicon, .shrdes4right .share, .shrdes5right .tx-tc-shareicon, .shrdes5right .share {
+	cursor: initial !important;
+	color: initial !important;
+}
+.shrdes4right .share, .shrdes5right .share {
+	float: right !important;
+	margin-left: 4px;
+}
+.shrdes5right .share {
+	text-indent: 20px;
+}
+.shrdes5right .tx-tc-shareicon {
+    position: absolute;
+}    
+.shrboxopen .tx-tc-shareicon {
+	border: 0;
+	height: 16px;
+	width: 16px;
+	display: inline-block;
+}
+.shrdes2 .tx-tc-working-s {
+	border: 0;
+	height: 16px;
+	width: 16px;
+	display: inline-block;
+	margin: 3px 0px -3px 8px;
+	float: right;
+	opacity: 1;
+	position: relative;
+	top: 0;
+}
+.shrbox .tx-tc-shareicon, .shrboxopen .tx-tc-shareicon {
+	margin: 2px 8px -2px 4px;
+	float: left;
+}
+/* sharrre design 4 specifics */
+.shrdes4right {
+	margin: 50px 0px 4px 8px;
+}
+.shrdes4 {
+	float: left;
+	line-height: 19px;
+	margin-top: 0px;
+	min-height: 76px;
+}
+.shrdes4 .box a:hover{
+	text-decoration:underline;
+}
+.shrdes4 .facebook {
+	float: left;
+	z-index: 3;
+	top: 0px;
+}
+.shrdes4 .twitter {
+	float: left;
+	z-index: 2;
+	top: 0px;
+}
+.shrdes4 .linkedin {
+	float: left;
+	top: 0px;
+}
+.shrdes4 .googleplus {
+	z-index: 2;
+	overflow: hidden;
+	top: 0px;
+}
+.shrdes4 .pinterest {
+	top: 42px;
+	z-index: 3;
+}
+.shrdes4 .digg, .shrdes4 .delicious, .shrdes4 .stumbleupon {
+	top: 0px;
+}
+.shrdes4 .button {
+	float: left;
+	height: 60px;
+	padding: 4px;
+	position: relative;
+	margin: 0px;
+}
+.shrdes4 .buttons {
+	padding: 0;
+   	height: inherit;
+	max-height: inherit;
+	padding: inherit;
+	position: inherit;
+}
+.tx-tx-share-in-review {
+	line-height: @reviewLineHeight;
+}
+.shrdes2 .buttons {
+	background: none repeat scroll 0 0 @color-website-background;
+	border-color: @color-border-share-2 @color-border-share-2 @color-border-share-1;
+	-webkit-box-shadow: 0 1px 2px @color-hr;
+	-moz-box-shadow: 0 1px 2px @color-hr;
+	box-shadow: 0 1px 2px @color-hr;
+}
+.shrdes4 .count {
+	border-right:1px solid @color-border-generic;
+}
+.shrdes4 .buttons {
+	background: none repeat scroll 0 0 @color-website-background;
+	-webkit-box-shadow: 0 1px 2px @color-hr;
+	-moz-box-shadow: 0 1px 2px @color-hr;
+	box-shadow: 0 1px 2px @color-hr;
+}
+.shrdes5right {
+	margin: 50px 0px 4px 8px;
+}
+.shrdes5 {
+	float: left;
+	line-height: 19px;
+	margin-top: 0px;
+	min-height: 76px;
+	position: relative;
+	width: auto;
+    word-break: break-all;
+}
+.shrdes5 .box a:hover{
+	text-decoration: underline;
+}
+.shrdes5 .facebook {
+	float: left;
+	z-index: 3;
+	top: 0px;
+}
+.shrdes5 .twitter {
+	float: left;
+	z-index: 2;
+	top: 0px;
+}
+.shrdes5 .linkedin {
+	float: left;
+	top: 0px;
+}
+.shrdes5 .googleplus {
+	z-index: 2;
+	overflow: hidden;
+	top: 0px;
+}
+.shrdes5 .pinterest {
+	top: 42px;
+	z-index: 3;
+}
+.shrdes5 .digg, .shrdes5 .delicious, .shrdes5 .stumbleupon {
+	top: 0px;
+}
+.shrdes5 .button {
+	float: left;
+	height: 60px;
+	padding: 4px;
+	position: relative;
+	margin: 0px;
+}
+.shrdes5 .buttons {
+   	height: inherit;
+	max-height: inherit;
+	padding: inherit;
+	position: inherit;
+}
+.shrdes4 .facebook {
+	left: @leftShareFb;
+}
+.shrdes5 .count {
+	border-right:1px solid @color-border-generic;
+}
+.shrdes5 .buttons {
+	background: none repeat scroll 0 0 @color-website-background;
+	-webkit-box-shadow: 0 1px 2px @color-hr;
+	-moz-box-shadow: 0 1px 2px @color-hr;
+	box-shadow: 0 1px 2px @color-hr;
+}
+.shrdes5 .facebook {
+	left: @leftShareFb;
+}
+// sharrre colors
+.sharrre .shrmiddleopen {
+	background-color: @color-website-background;
+	border-color: @color-border-sharrre;
+}
+.sharrre .shrleft, .share {
+	color: @color-border-button-border;
+}
+.sharrre .shrleft:hover, .share:hover {
+	color: @color-background-button;
+}
+.sharrre .shrmiddle {
+	background-color: @color-website-background;
+	border-color: @color-border-sharrre;
+}
+.tx-tc-sharrrearea-popup {
+    color: inherit;
+}
+.tx-tc-shareicon {
+	background-image: ~"url('@{theme-path}share.png')";
+}
+.tx-tc-shrdes5coverimage {
+	width: 100%;
+	height: 100%;
+}
+.shrdes5cover {
+  	height: 100%;
+    opacity: 0.5;
+    position: absolute;
+    width: 100%;
+    z-index: 5;
+}
+.tx-tc-shrdes5covertext {
+  	height: 100%;
+    position: absolute;
+    right: 0;
+    z-index: 5;
+    font-size: 70%;
+    word-break: break-all;
+    top: -12px;
+    max-height: 50px;
+    min-width: 100px;
+    display: none;
+}
+.tx-tc-hidedes5detail {
+	display: none;
+}
+.tx-tc-hidedes5detailtotalsbox {
+	min-height: auto !important;
+}
+.tx-tc-hidedes5detailtotal {
+	margin-top: 0 !important;
+	margin-left: 0 !important;
+}

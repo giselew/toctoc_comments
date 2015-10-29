@@ -1,0 +1,36 @@
+.if(...) {}
+.if(@condition, @callback...) when (@condition) {
+    @callback();
+    .-then();
+}
+.if(@condition, @callback...) when not(@condition) {
+    .-else(...){};
+    @callback();
+    @one:      extract(@condition, 1);
+    @two:      extract(@condition, 3);
+    @operator: extract(@condition, 2);
+    .-return(lt) {
+        & when    (@one < @two) {.if(true, @callback);}
+        & when not (@one < @two) {.-else();}
+    }
+    .-return(lte) {
+        & when    (@one <= @two) {.if(true, @callback);}
+        & when not(@one <= @two) {.-else();}
+    }
+    .-return(gt) {
+        & when    (@one > @two) {.if(true, @callback);}
+        & when not(@one > @two) {.-else();}
+    }
+    .-return(gte) {
+        & when    (@one >= @two) {.if(true, @callback);}
+        & when not(@one >= @two) {.-else();}
+    }
+    .-return(eq) {
+        & when    (@one = @two) {.if(true, @callback);}
+        & when not(@one = @two) {.-else();}
+    }
+    .-return(...) when (default()) {
+        .-else();
+    }
+    .-return(@operator);
+}
