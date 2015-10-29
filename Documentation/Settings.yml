@@ -1,0 +1,11 @@
+# This is the project specific Settings.yml file.
+# Place Sphinx specific build information here.
+# Settings given here will replace the settings of 'conf.py'.
+
+---
+conf.py:
+  copyright: 2012-2015
+  project: EXT: AJAX Social Network Components
+  version: 7.4
+  release: 7.4.2
+...

@@ -1,0 +1,172 @@
+Boxmodel
+Borderradius small
+CSS
+border-radius: 2px 2px 2px 2px;
+Selectors
+.tx-tc-ct-box-picturecrop322 img
+.tx-tc-userpic, .tx-tc-userpicf, .tx-tc-avatarpicf, .tx-tc-avatarpic
+.txtc_details
+.tx-tc-ct-editbutton, .tx-tc-ct-deletebutton, .tx-tc-ct-denotifybutton
+***
+
+Boxmodel
+Borderradius big
+CSS
+border-radius: 4px 4px 4px 4px;
+Selectors
+.txtc_overlay
+.tx-tc-ct-highlight
+.tx-tc-recent-cts-article
+#confirm-container .buttons div
+.tx-tc-pvs-nopreviewpic
+.tx-tc-cap-image
+.tx-tc-ct-submit, .tx-tc-ct-reset, .tx-tc-ct-submit-loggedin
+***
+
+Boxmodel
+Borderradius middle
+CSS
+border-radius: 3px 3px 3px 3px;
+Selectors
+.sharrre .shrmiddle
+.tx-tcresponse-text
+div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-wpp, div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-img
+.tx-tc-cts .tx-tc-ct-wpp
+.tx-tc-ct-rybox
+.tx-tc-ct-ry-frameover
+.tx-tc-ct-ry-frame
+.tx-tc-pvs-prevnext
+***
+
+Boxmodel
+Image width in attachment Showcase
+CSS
+max-width: 700px;
+max-width: {1}px;
+Selectors
+.txtc_overlay img.tx-tc-images-img-browse
+***
+
+Boxmodel
+Description width in attachment Showcase
+CSS
+width:170px;
+width:{2}px;
+Selectors
+.txtc_details
+***
+
+Boxmodel
+Maximal width of Showcase
+CSS
+max-width:900px;
+max-width:{3}px;
+Rules
+{3}=30+{1}+{2}
+Selectors
+.txtc_overlay
+
+***
+
+Boxmodel
+Dimensions of pics in F/M Avatar selector
+CSS
+width: 18px;
+CSS
+height: 18px;
+Selectors
+.tx-tc-avatarpic, .tx-tc-avatarpicf
+***
+
+Boxmodel
+Bordersize of user pics
+CSS
+border-width: 1px;
+Selectors
+.tx-tc-userpic, .tx-tc-userpicf, .tx-tc-avatarpic, .tx-tc-avatarpicf, .tx-tc-ct-uc-pic .tx-tc-userpic, .tx-tc-ct-uc-pic .tx-tc-userpicf, .tx-tc-ct-box-picturecrop322 img
+.tx-tc-userpic, .tx-tc-userpicf, .tx-tc-avatarpicf, .tx-tc-avatarpic
+.tx-tc-userpic, .tx-tc-userpicf, .tx-tc-ct-box-picturecrop322 img
+.tx-tc-ct-rybox .tx-tc-userpic, .tx-tc-ct-rybox .tx-tc-userpicf
+***
+
+Boxmodel
+1. Fontsize 100% Plugin-Container
+CSS
+font-size:100%;
+Selectors
+.toctoc-comments-pi1
+***
+
+Boxmodel
+1.1 Fontsize 100% Formbox
+CSS
+font-size:100%;
+Selectors
+div.tx-tc-pi1
+***
+
+Boxmodel
+1.1.1 Fontsize forced size 100% of the font of the labels in the form
+CSS
+font-size:100%;
+Selectors
+.tx-tcfh
+***
+
+Boxmodel
+1.1.2 Fontsize forced size 120% of the font in textarea
+CSS
+font-size: 120%;
+Selectors
+textarea.tx-tc-ctinput-textarea, textarea.tx-tc-ctinput-textarea-rq
+***
+
+Boxmodel
+1.2 Fontsize forced size 100% of the comments-list
+CSS
+font-size: 100%;
+Selectors
+.tx-tc-cts
+***
+
+Boxmodel
+1.3 Fontsize forced size 110% in other controls: comment, reply, preview, messages over the form
+CSS
+font-size: 110%;
+Selectors
+.tx-tc-ct-ry-frame
+.tx-tc-ct-ry-frameover
+.tx-tc-ct-prv-frame
+.tx-tc-text, .tx-tc-text-top
+.tx-tc-ftm-text
+***
+
+Boxmodel
+2 Fontsize forced size 110% of text in usercards
+CSS
+font-size: 110%;
+Selectors
+.tx-tc-ct-uc
+***
+
+
+Boxmodel
+Line-Height 14 (Recent comments list)
+CSS
+line-height: 14px;
+Selectors
+.tx-tc-recent-cts-entry
+.tx-tc-recent-cts-title
+***
+
+Boxmodel
+Line-Height26 ConfirmBoxes header and buttons
+CSS
+height: 26px;
+CSS	
+line-height: 26px;
+Selectors
+#confirm-container .header
+#confirm-container .buttons
+#confirm-container .buttons div
+***

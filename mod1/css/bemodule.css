@@ -1,0 +1,160 @@
+div.typo3-bigDoc, div.typo3-noDoc, div.typo3-smallDoc, div.typo3-mediumDoc {
+	height: 99%;
+	overflow: auto;
+}
+div.typo3-bigDoc {
+	width: 97%;
+}
+.div-float {
+	float: right;
+}
+table.tablesorter {
+	margin: 10px 0pt 15px;
+	width: 100%;
+	text-align: left;
+	/* border-collapse: collapse; */
+}
+table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+	background-color: #a4a5a7;
+	padding: 4px;
+	color: #fff;
+}
+table.tablesorter thead tr .header {
+	background-image: url('../img/bg.gif');
+	background-repeat: no-repeat;
+	background-position: right 7px;
+	cursor: pointer;
+	padding-right: 20px;
+}
+table.tablesorter tbody td {
+	color: #292a2d;
+	padding: 4px;
+	background-color: #FFF;
+	vertical-align: top;
+}
+table.tablesorter tbody tr.odd td {
+	background-color: #d8d9db;
+}
+table.tablesorter thead tr .headerSortUp {
+	background-image: url('../img/asc.gif');
+}
+table.tablesorter thead tr .headerSortDown {
+	background-image: url('../img/desc.gif');
+}
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+	background-color: #5475C8;
+}
+.pagenav {
+	float: left;
+}
+.clearit {
+	clear: both;
+	font-size: 0;
+	height: 0;
+}
+fieldset {
+	border: none;
+}
+#pager img {
+	vertical-align: middle;
+	cursor: pointer;
+}
+#pager input.pagedisplay {
+	border: 1px solid #a4a5a7;
+	outline: none;
+	font-size: 10px;
+	padding: 2px;
+	width: 50px;
+}
+#pager select.pagesize {
+	outline: none;
+	vertical-align: middle;
+	font-size: 10px;
+	border: 1px solid #a4a5a7;
+}
+span.show_comments {
+	vertical-align: middle;
+	font-size: 10px;
+}
+td.tx-tc-be-report {
+	min-width: 200px;
+	font-size: 110%;
+}
+td.tx-tc-be-email {
+	max-width: 120px;
+	word-wrap: break-word;
+}
+span.reportoptionstitle {
+	font-weight: bold;
+}
+div.reportoptions {
+	padding: 4px 2px;
+	background-color: #FFF;
+	vertical-align: top;
+}
+.tx-tc-alert, .tx-tc-information {
+	border: 1px solid transparent;
+    border-radius: 2px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+.tx-tc-alert {
+	background-color: #f4d8e0;
+    border-color: #73564e;
+    color: #b32e33;
+}
+.tx-tc-information {
+	background-color: #dfe4e8;
+    border-color: #b5bec0;
+    color: #345A91;
+}
+.tx-tc-title, .tx-tc-reporttitle {
+	font-size: 110%;
+	font-weight: bold;
+}
+.tx-tc-label {
+	padding-right: 4px;
+}
+.tx-tc-be-dispnone, #rep1options, #rep2options, #rep3options, #rep4options, #repsubmit {
+	display:none;
+}
+#repsubmit {
+	margin: 4px 0;
+}
+sup {
+	margin: 0 2px;
+	border: 1px solid transparent;
+    border-radius: 2px;
+	background-color: #d9edf7;
+    border-color: #bce8f1;
+    color: #31708f;
+}
+sup.tx-tc-alert {
+	margin: 0 2px;
+	border: 1px solid transparent;
+    border-radius: 2px;
+	background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;	
+	padding: 0px;
+}
+a.tx-tc-externallink {
+	color: #5475C8;
+	text-decoration: none;
+}
+a.tx-tc-externallink:hover {
+	text-decoration: underline;
+}
+div.tx-tc-reportoptionarea {
+	margin-top: 5px;
+}
+.typo3-bigDoc hr {
+	margin-top: 0px !important;
+	margin-bottom: 5px;
+	border-width: 0;
+	height: 1px;
+	background-color: #5475C8;
+}
+#ext-toctoc-comments-mod1-index-php .tx-tc-donationmessage {
+	float: right;
+}
