@@ -41,9 +41,9 @@
  *   63: class toctoc_comments_commentreport extends toctoc_comment_lib
  *   74:     public function generateReport ($content, $conf, $pObj, $piVars)
  *  103:     protected function processReportForm(&$errors, $conf, $pObj, $piVars)
- *  267:     protected function showReportThanks($pObj)
- *  282:     protected function showReportForm($errors, $conf, $pObj, $piVars)
- *  384:     protected function getReportCaptcha($required, $error, $conf, $pObj)
+ *  269:     protected function showReportThanks($pObj)
+ *  284:     protected function showReportForm($errors, $conf, $pObj, $piVars)
+ *  388:     protected function getReportCaptcha($required, $error, $conf, $pObj)
  *
  * TOTAL FUNCTIONS: 5
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -319,7 +319,7 @@ class toctoc_comments_commentreport extends toctoc_comment_lib {
 		}
 
 		$markers = array(
-				'###ACTION###' => $this->pi_getPageLink($GLOBALS['TSFE']->id),
+				'###ACTION###' => $this->pi_getPageLink($GLOBALS['TSFE']->id, '', $_GET),
 				'###INFO###' => $piVars['info'],
 				'###FROM###' => htmlspecialchars($piVars['from']),
 				'###LABELSTYLE###' => $labelstyle,

@@ -38,9 +38,9 @@
  *
  *   67: class toctoc_comments_eID
  *   81:     public function init()
- *  206:     public function main()
- *  468:     protected function processReponseOutput()
- *  564:     protected function ipBlock()
+ *  207:     public function main()
+ *  469:     protected function processReponseOutput()
+ *  565:     protected function ipBlock()
  *
  * TOTAL FUNCTIONS: 4
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -74,7 +74,7 @@ class toctoc_comments_eID {
 	private $notifications;
 	private $notificationscoi;
 	private $messageinternal = '';
-	private $clearCacheNeeded = TRUE;
+	public $clearCacheNeeded = TRUE;
 	private $cObj;
 	private $data;
 
@@ -101,6 +101,7 @@ class toctoc_comments_eID {
 		}
 
 		$GLOBALS['LANG']->includeLLFile('EXT:toctoc_comments/locallang_eID.xml');
+		$GLOBALS['LANG']->includeLLFile('EXT:toctoc_comments/pi1/locallang.xml', TRUE, TRUE);
 		if (version_compare(TYPO3_version, '6.1', '<')) {
 			tslib_eidtools::connectDB();
 		}
@@ -290,6 +291,9 @@ class toctoc_comments_eID {
 										$commentcount = intval($rowsb[0]['count_comments'])+1;
 										$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_toctoc_comments_user', 'toctoc_comments_user="' . $rowsa[0]['tuser'] . '"
 												AND deleted = 0 and pid=' . $this->conf['storagePid'] . '', array('comment_count' => $commentcount));
+										$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_toctoc_comments_comments', 'uid=' . $this->uid, array('hidden' => 0));
+										$this->clearCacheNeeded=TRUE;
+										
 									}
 
 								}

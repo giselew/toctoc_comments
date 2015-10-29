@@ -45,9 +45,13 @@
 				                    <numIndex index="0">LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.code.I.6</numIndex>
 				                    <numIndex index="1">6</numIndex>
 				                </numIndex>
-				         	<numIndex index="6" type="array">
+				         	<numIndex index="7" type="array">
 				                    <numIndex index="0">LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.code.I.7</numIndex>
 				                    <numIndex index="1">7</numIndex>
+				                </numIndex>
+				                <numIndex index="8" type="array">
+				                    <numIndex index="0">LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.code.I.8</numIndex>
+				                    <numIndex index="1">8</numIndex>
 				                </numIndex>
 				            </items>
 				            <minitems>0</minitems>

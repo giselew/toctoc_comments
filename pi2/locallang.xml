@@ -19,7 +19,7 @@
 Be certain that you enter them precisely as they are, including upper/lower case.
 Another possibility is that cookies might be disabled in your web browser.</label>
 			<label index="ll_error_message_waitconfirm">An error occurred during login. 
-			Your account needs first to be appoved first by the administrator.
+			Your account needs first to be approved first by the administrator.
 You will receive a notification about approval or refusal by email</label>
 			<label index="ll_success_header">Login successful</label>
 			<label index="ll_success_message">You are logged in as '###USER###'</label>
@@ -30,6 +30,8 @@ You will receive a notification about approval or refusal by email</label>
 			<label index="ll_signupOk_messageconfirmAndAdminConfirmation">Sign up successful, you receive an email with a link where change your password first. But you need first to wait for the confirmation email by the admin. Only then you will be able to login.</label>
 			<label index="ll_signupOk_AdminConfirmation">Sign up successful, but you need first to wait for the confirmation email by the admin. Only then you will be able to login.</label>
 			<label index="facebooklogin">Log in</label>
+			<label index="facebookloginerrormail">Email missing in reply from facebook</label>
+			<label index="facebookloginerrorinvalidreply">No valid reply from Facebook</label>
 			<label index="cookie_warning">Warning: There is a possibility that cookies are not enabled in your web browser! If your login disappears on your next click that is the case and you should enable cookies (or accept cookies from this website) immediately!</label>
 			<label index="username">Username:</label>
 			<label index="firstname">First name:</label>
@@ -95,6 +97,8 @@ For security reasons, this link is only active until %s. If you do not visit the
 			<label index="email.textsignedupfromip">Signed up from IP</label>
 			<label index="email.approvalsignupemail">Sign up approval</label>
 			<label index="email.textconfirmationfornewuser">Confirmation needed for new user</label>
+			<label index="email.textconfirmationfornewusergoogle">from Google+</label>
+			<label index="email.textconfirmationfornewuserfacebook">from Facebook</label>
 			<label index="email.subjectadminconfirmsignup">New user approval needed</label>
 			<label index="userEmail.Setuppasswordhere">Set up your password here</label>
 			<label index="userEmail.Signuppassword">Sign up, password</label>

@@ -112,10 +112,9 @@ class SEOstats
 	 */
     public static function cURL($url) {
     
-    				$toctoccommentsuseragent = 'TocTocCommentsExternalhit/1.0 (+https://www.toctoc.ch/toctoc_comments.html?L=2)';
- $ch  = curl_init($url);
-				$urltofetch = 'https://'.$donationserver.'/index.php?eID=toctoc_donations&data=' . $dataout;
-				curl_setopt($ch, CURLOPT_USERAGENT, toctoccommentsuseragent);
+    	$toctoccommentsuseragent = 'TocTocCommentsExternalhit/1.1 (+https://www.toctoc.ch/en/home/toctoc-comments/)';
+    	$ch = curl_init($url);
+	curl_setopt($ch, CURLOPT_USERAGENT, toctoccommentsuseragent);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -125,6 +124,7 @@ class SEOstats
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1);
         }
+        
         $str = curl_exec($ch);
         curl_close($ch);
         return $str;

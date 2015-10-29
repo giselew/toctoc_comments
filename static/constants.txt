@@ -554,7 +554,7 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Attachments//32; type=string; Soundcloud Client Secret: Secret matching the Soundcloud Client ID
 	soundcloudClientSecret = 
 	
-	# cat=plugin.tx_toctoccomments_pi1: Top ratings//01; type=options[likes=0,votes=1,both by rating=2,both by likes=3]; label=Composition - what to show?: Show top ratings for likes (0), votes(1) or both together(2 oder 3)
+	# cat=plugin.tx_toctoccomments_pi1: Top ratings//01; type=options[likes=0,votes=1,both by rating=2,both by likes=3]; label=Composition - what to show?: Show top ratings for likes (0), votes(1) or both together(2 or 3)
 	topRatingsMode = 2	
 	
 	# cat=plugin.tx_toctoccomments_pi1: Top ratings//02; type=int+; label=Number of days: How many days should be checked for top ratings
@@ -575,16 +575,16 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Theme//02; type=string; label=Font Family for theme: used for textareas
 	themeFontFamily = tahoma,verdana,arial,sans-serif
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//02; type=string; label=Boxmodel filename: To apply as Boxmodel on the CSS select an existing boxmdel here, value like myboxmodel.txt
+	# cat=plugin.tx_toctoccomments_pi1: Theme//02; type=string; label=Boxmodel filename: To apply as Boxmodel on the CSS select an existing boxmdel here, value like myboxmodel.txt or myboxmodel (.txt is no longer needed since v 8.0.0)
 	selectedBoxmodel = 
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//03; type=int+; label=Textarea lineheight:Lineheight of textareas of forms, 16 - 30.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//03; type=int+; label=Textarea lineheight:Lineheight of textareas of forms, 10 - 60.
 	boxmodelTextareaLineHeight = 30
 	
 	# cat=plugin.tx_toctoccomments_pi1: Theme//04; type=int+; label=Textarea number of lines: How many lines the textarea contains ? 1 - 6.
 	boxmodelTextareaNbrLines = 1
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//05; type=int+; label=Boxmodel element x-spacing:Horizontal spacing between elements in the boxmodel, 0 - 10.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//05; type=int+; label=Boxmodel element x-spacing:Horizontal spacing between elements in the boxmodel, 0 - 20.
 	boxmodelSpacing = 10
 	
 	# cat=plugin.tx_toctoccomments_pi1: Theme//06; type=int+; label=CSS-Lineheight:Lineheight in the plugin, 14 - 40.
@@ -623,6 +623,9 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Theme//16; type=boolean; label=No tooltips on emojis:When set to 1, then smiles and emojis have no tooltips
 	emojiNoToolTips = 0
 	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//17; type=boolean; label=Create CSS from LESS (1, default) or use traditional way (CSS, PHP, Boxmodels and THemes) (0)
+	refreshCSSFromLESS = 1
+	
 	# cat=plugin.tx_toctoccomments_pi1: Debug//01; type=boolean; label=Use debug: Use of debugging messages such as show run-times, caching and session resets.
 	useDebug = 0
 	
@@ -650,8 +653,11 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: dataProtect//16; type=boolean; label=Show TocToc disclaimer:Shows the software creators disclaimer in the disclaimer
 	disclaimerFromTocToc = 1
 	
-	# cat=plugin.tx_toctoccomments_pi1: Sharing//03; type=boolean; label=Use Sharing:Use of Share-Link for Facebook, Google and Twitter
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//02; type=boolean; label=Use Sharing:Use of Share-Link for Facebook, Google and Twitter
 	useSharing = 1
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//03; type=boolean; label=Use Sharing:Use only the sharing feature
+	useOnlySharing = 0
 	
 	# cat=plugin.tx_toctoccomments_pi1: Sharing//04; type=options[Default popup=0,Buttons popup=1,Default open=2,Buttons open=3,Add This small=4]; label=Use Sharingdesign: Use Design with (default) or without buttons
 	useSharingDesign = 0
@@ -662,8 +668,8 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Sharing//06; type=boolean; label=Don't Use Googleplus sharing :Use of Share-Link for Google+ is suppressed
 	dontUseSharingGoogle = 0
 
-	# cat=plugin.tx_toctoccomments_pi1: Sharing//07; type=boolean; label=Don't Use Twitter sharing :Use of Share-Link for Twitter is suppressed
-	dontUseSharingTwitter = 0
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//07; type=boolean; label=Don't Use Twitter sharing :Use of Share-Link for Twitter is suppressed. Enabling Twitter disables display of the Shares total (because Twitter does not allow anymore anonymous requests for sharetotals)
+	dontUseSharingTwitter = 1
 
 	# cat=plugin.tx_toctoccomments_pi1: Sharing//08; type=boolean; label=Don't Use LinkedIn sharing :Use of Share-Link for LinkedIn is suppressed
 	dontUseSharingLinkedIn = 0
@@ -675,7 +681,7 @@ plugin.tx_toctoccomments_pi1 {
 	dontUseSharingPinterest = 0
 	
 	# cat=plugin.tx_toctoccomments_pi1: Sharing//09; type=boolean; label=Don't Use Digg sharing :Use of Share-Link for Digg is suppressed
-	dontUseSharingDigg = 0
+	dontUseSharingDigg = 1
 	
 	# cat=plugin.tx_toctoccomments_pi1: Sharing//09; type=boolean; label=Don't Use Delicious sharing :Use of Share-Link for Delicious is suppressed
 	dontUseSharingDelicious = 0
@@ -684,20 +690,26 @@ plugin.tx_toctoccomments_pi1 {
 	dontUseSharingAddThisMore = 0
 	
 	# cat=plugin.tx_toctoccomments_pi1: Sharing//11; type=string; label=Add This:Your ID string for Add This, like ra-41230c846b24bb7c
-	AddThisID= 
+	AddThisID = 
 	
-	# cat=plugin.tx_toctoccomments_pi1: Sharing//11; type=string; label=Sharing line title: optional title for sharing line, it replaces text "share this page" after the total number of users who shared
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//13; type=string; label=Sharing line title: optional title for sharing line, it replaces text "share this page" after the total number of users who shared
 	shareUsersTotalText =
 	
-	# cat=plugin.tx_toctoccomments_pi1: Sharing//11; type=boolean; label=Use icon: use an icon in the sharing line
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//15; type=boolean; label=Use icon: use an icon in the sharing line
 	useShareIcon = 1
 	
-	# cat=plugin.tx_toctoccomments_pi1: Sharing//11; type=string; label=Text for sharer:optional text for shared item on Twitter, as shown in the share-message of the social network sharers
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//17; type=string; label=Text for sharer:optional text for shared item on Twitter, as shown in the share-message of the social network sharers
 	shareDataText =	
 	
-	# cat=plugin.tx_toctoccomments_pi1: Sharing//11; type=string; label=Page URL:Page URL you want to share. If left empty the current URL will be shared
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//19; type=string; label=Page URL:Page URL you want to share. If left empty the current URL will be shared
 	sharePageURL =	
-		
+	
+	# cat=plugin.tx_toctoccomments_pi1: Sharing//21; type=boolean; label=Dont show share count:If set to 1, the sharing totals won't be displayed
+	noShareCount = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Top Sharings//01; type=options[sharer=0,page=1]; label=Composition if report - what to show?: Show top sharings for each sharer (0), each page (1)
+	topSharingsMode	= 0	
+	
 	# cat=plugin.tx_toctoccomments_pi1: userCenter//01; type=string; label=Comment-Lists:Comment-Lists to be distinguished in user center. comma-separated list. Possible values are Reviews, Plugintotablemap, Commentsoncomments. Normal comments are always shown as a list, also iLikes und Votings will always have their lists.
 	uCLists = Reviews, Plugintotablemap, Commentsoncomments
 	

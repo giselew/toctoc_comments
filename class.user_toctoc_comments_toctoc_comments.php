@@ -243,13 +243,13 @@ class user_toctoc_comments_toctoc_comments {
 						'lang' => $langreq,
 						'extensionkey' => 'toctoccommentsce',
 						'extension' => 'toctoc_comments',
-						'version' => '741',
+						'version' => '800',
 						'hostname' => $curipres,
 						'typo3version' => TYPO3_version,
 				);
 
 				$dataout = rawurlencode(base64_encode(serialize($dataarr)));
-				$toctoccommentsuseragent = 'TocTocCommentsDonationsExternalhit/1.0 (+https://www.toctoc.ch/toctoc_comments.html?L=2)';
+				$toctoccommentsuseragent = 'TocTocCommentsDonationsExternalhit/1.1 (+https://www.toctoc.ch/en/home/toctoc-comments/)';
 
 				$urltofetch = 'https://'.$donationserver.'/index.php?eID=toctoc_donations&data=' . $dataout;
 				curl_setopt($ch, CURLOPT_USERAGENT, toctoccommentsuseragent);

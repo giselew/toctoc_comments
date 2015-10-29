@@ -53,7 +53,7 @@ $editTable = 'tx_toctoc_comments_ipbl_static';
 		    			$alertmsg = 1;
 		    		} else {
 		    			$ch = curl_init();
-					$toctoccommentsuseragent = 'TocTocCommentsExternalhit/1.0 (+https://www.toctoc.ch/toctoc_comments.html?L=2)';
+					$toctoccommentsuseragent = 'TocTocCommentsExternalhit/1.1 (+https://www.toctoc.ch/en/home/toctoc-comments/)';
 
 			    		$urltofetch = 'http://www.spamhaus.org/DROP/drop.lasso';
 					curl_setopt($ch, CURLOPT_USERAGENT, toctoccommentsuseragent);

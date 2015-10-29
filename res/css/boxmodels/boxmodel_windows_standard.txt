@@ -113,6 +113,7 @@ Selectors
 .txtc_overlay
 .tx-tc-ct-highlight
 .tx-tc-recent-cts-article
+.tx-tc-topsharing-article
 #confirm-container .buttons div
 .tx-tc-pvs-nopreviewpic
 .tx-tc-cap-image

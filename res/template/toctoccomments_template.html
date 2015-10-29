@@ -3,17 +3,17 @@
 <!-- ###HEADER_ADDITIONS### begin -->
 ###JQUERYTOOLS###
 <link href="###BOXMODEL###" type="text/css" rel="stylesheet" />
-<link href="###SITE_REL_PATH###res/css/flowplayer/functional.css" rel="stylesheet" type="text/css"/>
+<link href="###SITE_REL_PATH###contrib/flowplayer/css/functional.css" rel="stylesheet" type="text/css"/>
 ###EMOJICSS###
 <script type="text/javascript" src="###SITE_REL_PATH###res/js/temp/tx-tc-###LANCODE###.js"></script>
 <!-- ALL jQuery Tools. No jQuery library -->
 ###JSSERVERVARS###
 <script type="text/javascript" src="###JSMAIN###"></script>###AJAXLOGINJS###
-<script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.sharrre-1.3.5.js"></script>
+<script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.toctoc.sharrre-1.3.5.js"></script>
 <script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.elastic-1.6.min.js"></script>
 <script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.txtc-simplemodal.1.4.4.min.js"></script>
 <script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.watermark.js"></script>
-<script type="text/javascript" src="###SITE_REL_PATH###res/js/flowplayer.min.js"></script>
+<script type="text/javascript" src="###SITE_REL_PATH###contrib/flowplayer/js/flowplayer.min.js"></script>
 ###EMOJIJS###
 <!-- ###ADDITIONAL_CSS### begin -->
 <link rel="stylesheet" href="###CSS_FILE###" />
@@ -498,7 +498,7 @@
 
 <!-- ###SUBFORMATTACHMENTVIDHTML5### begin -->
 <div class="tx-tc-vid-embed tx-tc-nodisp" id="tx-tc-cts-vid-box-###IDPLUS###p###CID###">
-	<div class="flowplayer" data-swf="###SITE_REL_PATH###res/flowplayer/flowplayer.swf" data-ratio="0.417">
+	<div class="flowplayer" data-swf="###SITE_REL_PATH###contrib/flowplayer/player/flowplayer.swf" data-ratio="0.417">
 		###VIDEOHTML###
 	</div>
 </div>
@@ -851,6 +851,58 @@
 </div>
 <!-- ###USERCENTERCOMMENT_LIST### end -->
 
+<hr size="1" />
+<h1>topsharinsg</h1>
+
+<!-- ###TOPSHARINGS### begin -->
+<div class="tx-tc-title tx-tc-title-topsharings">###TOPSHARINGSOFTITLE###</div>
+###TOPSHARINGSCONTENT###
+<!-- ###TOPSHARINGS### end -->
+
+<!-- ###TOPSHARINGS_DROP_DOWN### begin -->
+<div class="tx-tc-dropdown tx-tc-width100 tx-tc-textlink" id="tx-tc-dropdown_###DROPDOWNID###" title="###DROPDOWNTIPTEXT###">
+	<div class="tx-tc-fleft tx-tc-width88 tx-tc-dropdowntitle###SHARERCSS###">###TITLE###</div>
+		<div class="tx-tc-ct-box-ctclose">
+			<span id="tx-tc-dropupdown_###DROPDOWNID###" class="tx-tc-dropupdown tx-tc-Drop###DROPUPORDOWN###Button">
+			</span>
+		</div>
+	</div>
+<div class="tx-tc-opendropdown tx-tc-width100" id="tx-tc-dropupdown_###DROPDOWNID###-content">###CONTENT###</div>
+<!-- ###TOPSHARINGS_DROP_DOWN### end -->	
+
+<!-- ###TOPSHARINGS_DROPDOWNSHOWMORE### begin -->
+<div class="tx-tc-opendropdown tx-tc-width100" id="tx-tc-dropupdown_rc###DROPDOWNID###-content" style="display: none;">###CONTENT###</div>
+<div class="tx-tc-dropdown tx-tc-width100 tx-tc-textlink" id="tx-tc-dropdown_rc###DROPDOWNID###" title="###DROPDOWNTIPTEXT###">
+	<div class="tx-tc-fleft tx-tc-width88 tx-tc-showmore" id="tx-tc-dropdownshowmore_rc###DROPDOWNID###">###TITLE###</div>
+	<div class="tx-tc-ct-box-ctclose">
+		<span class="tx-tc-dropupdown tx-tc-Drop###DROPUPORDOWN###Button" id="tx-tc-dropupdown_rc###DROPDOWNID###">
+		</span>
+	</div>
+</div>
+<!-- ###TOPSHARINGS_DROPDOWNSHOWMORE### end -->			
+
+<!-- ###TOPSHARINGSSHAREURL_LIST### begin -->
+<div class="tx-tc-box-topsharing">
+	<!-- ###SINGLE_TOPSHARINGSSHAREURL### begin -->
+	<div class="tx-tc-topsharing-bysharer">
+		<span class="tx-tc-topsharing-count">###SHARECOUNT###</span>
+		<span class="tx-tc-topsharing-url">###SHAREURL###</span>
+		
+	</div>
+	<!-- ###SINGLE_TOPSHARINGSSHAREURL### end -->
+	</div>
+<!-- ###TOPSHARINGSSHAREURL_LIST### end -->
+<!-- ###TOPSHARINGSSHARER_LIST### begin -->
+<div class="tx-tc-box-topsharing">
+	<!-- ###SINGLE_TOPSHARINGSSHARER### begin -->
+	<div class="tx-tc-topsharing-byurl">
+        <span class="tx-tc-topsharing-count sharer###SHARER###" title="###SHARER###">###SHARECOUNT###</span>
+	</div>
+	<!-- ###SINGLE_TOPSHARINGSSHARER### end -->
+</div>
+<!-- ###TOPSHARINGSSHARER_LIST### end -->
+
+
 <!-- ###RECENTNO_COMMENTS### begin -->
 <div class="tx-tc-box-recent-cts">
 	###LL_TEXT_NO_COMMENTS###
@@ -989,12 +1041,16 @@
 
 <div id="shareme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###"></div>
 <script type="text/javascript">
-    var thetemplate###CID### = String('<div id="sharebox###CID###" class="shrbox"><div class="shrleft">###ARTICLESHARE###</div><div class="shrmiddle shrd1" id="sharrremiddle###CID###">###SHAREHTML_FACEBOOK######SHAREHTML_TWITTER######SHAREHTML_GOOGLE######SHAREHTML_LINKEDIN######SHAREHTML_STUMBLEUPON######SHAREHTML_PINTEREST######SHAREHTML_DIGG######SHAREHTML_DELICIOUS###</div><div id="shareright###CID###" class="shrright">###SHAREICON###{total}</div></div>'); 
+    var thetemplate###CID### = String('<div id="sharebox###CID###" class="shrbox"><div class="shrleft">###ARTICLESHARE###</div><div class="shrmiddle shrd1" id="sharrremiddle###CID###">###SHAREHTML_FACEBOOK######SHAREHTML_TWITTER######SHAREHTML_GOOGLE######SHAREHTML_LINKEDIN######SHAREHTML_STUMBLEUPON######SHAREHTML_PINTEREST######SHAREHTML_DIGG######SHAREHTML_DELICIOUS###</div><div id="shareright###CID###" class="shrright ###SHARETOTALVISIBLE###">###SHAREICON###{total}</div></div>'); 
     $('#shareme###CID###').sharrre({
 	    share: {
 	        ###SHARELIST_TWITTER######SHARELIST_FACEBOOK######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON######SHARELIST_PINTEREST######SHARELIST_DIGG######SHARELIST_DELICIOUS###
 	    },
 	    template: thetemplate###CID###,
+	    externalRef: ###EXTREF###,
+	    externalPrefix: ###EXTPREFIX###,
+	    boxvisibleclass: ' ###SHARETOTALVISIBLE###',
+	    titlewithouttotal: '###TITLEWITHOUTTOTAL###',
 	    enableHover: false,
 	    enableTracking: true,
 	    render: function(api, options){
@@ -1018,6 +1074,10 @@
 		###SHARELIST_FACEBOOK######SHARELIST_TWITTER######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON######SHARELIST_PINTEREST######SHARELIST_DIGG######SHARELIST_DELICIOUS###
 	},
 	enableTracking: true,
+    externalRef: ###EXTREF###,
+    externalPrefix: ###EXTPREFIX###,
+    boxvisibleclass: ' ###SHARETOTALVISIBLE###',
+    titlewithouttotal: '###TITLEWITHOUTTOTAL###',
 	buttons: {
 		###SHAREBUTTON_FACEBOOK######SHAREBUTTON_TWITTER######SHAREBUTTON_GOOGLE######SHAREBUTTON_LINKEDIN######SHAREBUTTON_STUMBLEUPON######SHAREBUTTON_PINTEREST######SHAREBUTTON_DIGG######SHAREBUTTON_DELICIOUS###
 	},
@@ -1077,12 +1137,16 @@
 <!-- ###SHARRREDESIGN3### begin -->
 <div id="shareme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###"></div>
 <script type="text/javascript">
-	var thetemplate###CID### = '<div id="sharebox###CID###" class="shrboxopen"><div class="shrleft">###ARTICLESHARE###</div><div class="shrmiddleopen" id="sharrremiddle###CID###">###SHAREHTML_FACEBOOK######SHAREHTML_TWITTER######SHAREHTML_GOOGLE######SHAREHTML_LINKEDIN######SHAREHTML_STUMBLEUPON######SHAREHTML_PINTEREST######SHAREHTML_DIGG######SHAREHTML_DELICIOUS###</div><div id="shareright###CID###" class="shrrightopen">###SHAREICON###{total}</div></div>';
+	var thetemplate###CID### = '<div id="sharebox###CID###" class="shrboxopen"><div class="shrleft">###ARTICLESHARE###</div><div class="shrmiddleopen" id="sharrremiddle###CID###">###SHAREHTML_FACEBOOK######SHAREHTML_TWITTER######SHAREHTML_GOOGLE######SHAREHTML_LINKEDIN######SHAREHTML_STUMBLEUPON######SHAREHTML_PINTEREST######SHAREHTML_DIGG######SHAREHTML_DELICIOUS###</div><div id="shareright###CID###" class="shrrightopen ###SHARETOTALVISIBLE###">###SHAREICON###{total}</div></div>';
     $('#shareme###CID###').sharrre({
 	    share: {
 	        ###SHARELIST_TWITTER######SHARELIST_FACEBOOK######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON######SHARELIST_PINTEREST######SHARELIST_DIGG######SHARELIST_DELICIOUS###
 	    },
 	    template: thetemplate###CID###,
+	    externalRef: ###EXTREF###,
+	    externalPrefix: ###EXTPREFIX###,
+	    boxvisibleclass: ' ###SHARETOTALVISIBLE###',
+	    titlewithouttotal: '###TITLEWITHOUTTOTAL###',
 	    enableHover: false,
 	    enableTracking: true,
 	    render: function(api, options){
@@ -1098,7 +1162,7 @@
 <div id="sharemearea###CID###" class="shrdes4">
     <div id="shareme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###"></div>
 	<script type="text/javascript">
-		$('#sharemearea###CID###').sharrre({
+		$('#shareme###CID###').sharrre({
 		share: {
 			###SHARELIST_FACEBOOK######SHARELIST_TWITTER######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON######SHARELIST_PINTEREST######SHARELIST_DIGG######SHARELIST_DELICIOUS###
 		},
@@ -1106,6 +1170,10 @@
 			###SHAREBUTTON_FACEBOOK######SHAREBUTTON_TWITTER######SHAREBUTTON_GOOGLE######SHAREBUTTON_LINKEDIN######SHAREBUTTON_STUMBLEUPON######SHAREBUTTON_PINTEREST######SHAREBUTTON_DIGG######SHAREBUTTON_DELICIOUS###
 		},
 		enableHover: false,
+	    externalRef: ###EXTREF###,
+	    externalPrefix: ###EXTPREFIX###,
+	    boxvisibleclass: ' ###SHARETOTALVISIBLE###',
+	    titlewithouttotal: '###TITLEWITHOUTTOTAL###',
 		enableCounter: false,
 		enableTracking: true
 		}); 
@@ -1114,7 +1182,7 @@
 <div id="sharemecntarea###CID###" class="shrdes4 shrdes4cnt">
 	<div id="sharecntme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###"></div>
 	<script type="text/javascript">
-		var thetemplateshrdes4###CID### = '<div id="shrdes4right###CID###" class="shrdes4right">###SHAREICON###{total}</div>';
+		var thetemplateshrdes4###CID### = '<div id="shrdes4right###CID###" class="shrdes4right ###SHARETOTALVISIBLE###">###SHAREICON###{total}</div>';
 		$('#sharecntme###CID###').sharrre({
 		share: {
 			###SHARELIST_FACEBOOK######SHARELIST_TWITTER######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON######SHARELIST_PINTEREST######SHARELIST_DIGG######SHARELIST_DELICIOUS###
@@ -1123,6 +1191,8 @@
 			###SHAREBUTTON_FACEBOOK######SHAREBUTTON_TWITTER######SHAREBUTTON_GOOGLE######SHAREBUTTON_LINKEDIN######SHAREBUTTON_STUMBLEUPON######SHAREBUTTON_PINTEREST######SHAREBUTTON_DIGG######SHAREBUTTON_DELICIOUS###
 		},
 		template: thetemplateshrdes4###CID###,
+	    externalRef: ###EXTREF###,
+	    externalPrefix: ###EXTPREFIX###,
 		enableHover: false,
 		enableCounter: true,
 		enableTracking: false
@@ -1131,5 +1201,56 @@
 	</script>  
 </div>
 <!-- ###SHARRREDESIGN4### end -->
+
+
+<!-- ###SHARRREDESIGN5### begin -->
+<div id="sharemearea###CID###" class="shrdes5###HIDEDETAILSCSS###">
+	<div class="shrdes5cover">###COVERIMAGE###</div>
+    <div id="shareme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###"></div>
+	<script type="text/javascript">
+		$('#shareme###CID###').sharrre({
+		share: {
+			###SHARELIST_FACEBOOK######SHARELIST_TWITTER######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON######SHARELIST_PINTEREST######SHARELIST_DIGG######SHARELIST_DELICIOUS###
+		},
+		buttons: {
+			###SHAREBUTTON_FACEBOOK######SHAREBUTTON_TWITTER######SHAREBUTTON_GOOGLE######SHAREBUTTON_LINKEDIN######SHAREBUTTON_STUMBLEUPON######SHAREBUTTON_PINTEREST######SHAREBUTTON_DIGG######SHAREBUTTON_DELICIOUS###
+		},
+		enableHover: false,
+	    externalRef: ###EXTREF###,
+	    externalPrefix: ###EXTPREFIX###,
+	    boxvisibleclass: ' ###SHARETOTALVISIBLE###',
+	    titlewithouttotal: '###TITLEWITHOUTTOTAL###',
+		enableCounter: false,
+		enableTracking: true
+		}); 
+	</script>     
+</div>
+<div id="sharemecntarea###CID###" class="shrdes5 shrdes5cnt###HIDEDETAILSCSSTOTALSBOX###">
+	<div id="sharecntme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###"></div>
+	<script type="text/javascript">
+		var thetemplateshrdes5###CID### = '<div id="shrdes5right###CID###" class="shrdes5right###HIDEDETAILSCSSTOTAL###">###SHAREICON###{total}</div>';
+		$('#sharecntme###CID###').sharrre({
+		share: {
+			###SHARELIST_FACEBOOK######SHARELIST_TWITTER######SHARELIST_GOOGLE######SHARELIST_LINKEDIN######SHARELIST_STUMBLEUPON######SHARELIST_PINTEREST######SHARELIST_DIGG######SHARELIST_DELICIOUS###
+		},
+		buttons: {
+			###SHAREBUTTON_FACEBOOK######SHAREBUTTON_TWITTER######SHAREBUTTON_GOOGLE######SHAREBUTTON_LINKEDIN######SHAREBUTTON_STUMBLEUPON######SHAREBUTTON_PINTEREST######SHAREBUTTON_DIGG######SHAREBUTTON_DELICIOUS###
+		},
+		template: thetemplateshrdes5###CID###,
+	    externalRef: ###EXTREF###,
+	    externalPrefix: ###EXTPREFIX###,
+	    boxvisibleclass: ' ###SHARETOTALVISIBLE###',
+	    titlewithouttotal: '###TITLEWITHOUTTOTAL###',
+		enableHover: false,
+		enableCounter: true,
+		enableTracking: false
+		});
+		var thiscovertext = document.getElementById('shrdes5covertext###CID###');
+		if (thiscovertext) {
+			thiscovertext.style.display = 'block';
+		}
+	</script>  
+</div>
+<!-- ###SHARRREDESIGN5### end -->
 </body>
 </html>

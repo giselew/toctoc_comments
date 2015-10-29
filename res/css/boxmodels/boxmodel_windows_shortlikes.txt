@@ -121,6 +121,7 @@ Selectors
 .txtc_overlay
 .tx-tc-ct-highlight
 .tx-tc-recent-cts-article
+.tx-tc-topsharing-article
 #confirm-container .buttons div
 .tx-tc-pvs-nopreviewpic
 .tx-tc-cap-image
@@ -263,9 +264,9 @@ Selectors
 Boxmodel
 Action forms frame position
 CSS
-margin: 0;
-CSS
-padding: 0;
+float: right;
+CSS	
+margin: 1px 0px -15px 10px;
 Selectors
 .tx-tc-ct-actionforms
 ***
@@ -342,9 +343,17 @@ Selectors
 Boxmodel
 box for ilikes
 CSS
-padding: 0px;
+padding: 0;
 Selectors
 .tx-tc-overrating
+***
+
+Boxmodel
+box for ilikes 2
+CSS
+margin: 0 0 -22px;
+Selectors
+.tx-tc-ct-box-cttxt .tx-tc-overrating
 ***
 
 Boxmodel

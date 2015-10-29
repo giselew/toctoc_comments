@@ -11,7 +11,7 @@ plugin.tx_toctoccomments_pi1 {
   includeLibs = EXT:toctoc_comments/pi1/class.toctoc_comments_pi1.php
   userFunc = tx_toctoccomments_pi1->main
 
-  # mode for plugin, '' (empty) : normal, 1: recent comments, 2: report bad comment, 3: topratings, 4:other reports, 5: ajax login, 6: user center, 7: comments search
+  # mode for plugin, '' (empty) : normal, 1: recent comments, 2: report bad comment, 3: topratings, 4: other reports, 5: ajax login, 6: user center, 7: comments search, 8: topsharings
   pluginmode =
 
   # code for commenting parts, commenting style, possible: "FORM,COMMENTS" (default), "COMMENTS,FORM" or "COMMENTS"
@@ -346,8 +346,9 @@ plugin.tx_toctoccomments_pi1 {
   sharing {
  	// sharing option valid since version 6
     useSharing = {$plugin.tx_toctoccomments_pi1.useSharing}
+    useOnlySharing = {$plugin.tx_toctoccomments_pi1.useOnlySharing}
 
-    # if you dont use the sharing components at all you can set this to 1
+    # if you dont use the sharing components at all you can set this to 1 (applies only if you don't use LESS)
     sharingNoCalculatedCSS = 0
 
     useSharingDesign = {$plugin.tx_toctoccomments_pi1.useSharingDesign}
@@ -365,8 +366,12 @@ plugin.tx_toctoccomments_pi1 {
     shareUsersTotalText = {$plugin.tx_toctoccomments_pi1.shareUsersTotalText}
     shareDataText = {$plugin.tx_toctoccomments_pi1.shareDataText}
     sharePageURL = {$plugin.tx_toctoccomments_pi1.sharePageURL}
+	# when a sharePageURL is given then staticMode is activated automatically and the sharing component displays in static mode
+	staticMode = 0
+	staticModeNoDetails = 1	
     useShareIcon = {$plugin.tx_toctoccomments_pi1.useShareIcon}
- }
+    noShareCount = {$plugin.tx_toctoccomments_pi1.noShareCount}
+  }
 
   spamProtect {
     requireApproval = {$plugin.tx_toctoccomments_pi1.requireApproval}
@@ -601,6 +606,12 @@ plugin.tx_toctoccomments_pi1 {
     # enable last viewed date
     showCountTopViewsLastView = 1
   }
+  
+  topSharings {
+    topSharingsMode = {$plugin.tx_toctoccomments_pi1.topSharingsMode}
+    # if you want to visualize how the ratings were some days ago
+    topSharingsLookBackDays = 0
+  }
 
   theme {
     # color theme (CSS)is used by the extension in frontend
@@ -652,6 +663,8 @@ plugin.tx_toctoccomments_pi1 {
     # set this to 0 if you want to force CSS-generation, 1 for normal mode (changes in boxmodel or conf trigger refreshs)
     # or 2 for frozen CSS (files must exist!)
     freezeLevelCSS = 1
+    
+    refreshCSSFromLESS= {$plugin.tx_toctoccomments_pi1.refreshCSSFromLESS}
   }
 
   debug {

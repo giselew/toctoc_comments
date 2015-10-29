@@ -27,6 +27,7 @@
 			<label index="tt_content.toctoc_comments_pi1.code.I.5">AJAX Login</label>
 			<label index="tt_content.toctoc_comments_pi1.code.I.6">User Center</label>
 			<label index="tt_content.toctoc_comments_pi1.code.I.7">Search Comments</label>
+			<label index="tt_content.toctoc_comments_pi1.code.I.8">Top Sharings</label>
 			<label index="tt_content.toctoc_comments_pi1.code.I.u">Check the plugin configuration</label>
 			<label index="tt_content.toctoc_comments_pi1.numbertopRatings">Number of top ratings</label>
 			<label index="tt_content.toctoc_comments_pi1.topRatingsDays">Number of past days for top ratings</label>
@@ -79,6 +80,14 @@
 			<label index="tt_content.toctoc_comments_pi1.useScopesForVote">Use scope(s) for voting:</label>
 			<label index="tt_content.toctoc_comments_pi1.useOverallScopeForVote">Use overall for scoped voting:</label>
 			<label index="tt_content.toctoc_comments_pi1.useSharing">use Sharing:</label>
+			<label index="tt_content.toctoc_comments_pi1.useOnlySharing">use only sharing:</label>
+			<label index="tt_content.toctoc_comments_pi1.useSharingDesign">Use sharing design:</label>
+			<label index="tt_content.toctoc_comments_pi1.useSharingDesign.I.0">Default popup</label>
+			<label index="tt_content.toctoc_comments_pi1.useSharingDesign.I.1">Buttons popup</label>
+			<label index="tt_content.toctoc_comments_pi1.useSharingDesign.I.2">Default open</label>
+			<label index="tt_content.toctoc_comments_pi1.useSharingDesign.I.3">Buttons open</label>
+			<label index="tt_content.toctoc_comments_pi1.useSharingDesign.I.4">Add This!</label>
+			<label index="tt_content.toctoc_comments_pi1.useSharingDesign.I.5">Static (with buttons open)</label>
 			<label index="tt_content.toctoc_comments_pi1.dontUseSharingFacebook">don't use Sharing for Facebook:</label>
 			<label index="tt_content.toctoc_comments_pi1.dontUseSharingGoogle">don't use Sharing for Google+:</label>
 			<label index="tt_content.toctoc_comments_pi1.dontUseSharingTwitter">don't use Sharing for Twitter:</label>
@@ -459,7 +468,13 @@
 			<label index="pi1_template.commentssearch_commentsalltime">Comments made all time</label>
 			<label index="pi1_template.commentssearch_alltime">no limit</label>
 			<label index="pi1_template.searchcommentsfoundtextbeforenr">Found</label>
-			<label index="pi1_template.searchcommentsfoundtextafternr">comments containing</label>
+			<label index="pi1_template.text_topsharingstitle">Top sharings</label>
+			<label index="pi1_template.text_topsharings_showorhidesharers">Show or hide sharers</label>
+			<label index="pi1_template.text_topsharings_showorhidesharedurls">Show or hide shared urls</label>
+			<label index="pi1_template.topsharings_sharesintotal">shares in total</label>
+			<label index="pi1_template.topsharings_sharedas">Shared as</label>
+			<label index="pi1_template.topsharings_webpages">webpages</label>
+			<label index="pi1_template.sharingclosed">Sharing closed</label>
 			<label index="eid_template.titleprocessing">Processing</label>
 			<label index="eid_template.pleasewaitprocessing">Please wait, processing ...</label>
 			<label index="eid_template.processingdone">Processing finished</label>
@@ -615,6 +630,8 @@
 			<label index="commentatorEmail.subject">New Comment on %s</label>
 			<label index="newUserEmail.subject">Account request from %s</label>
 			<label index="newUserEmail.usernameis">Your username is</label>
+			<label index="newUserEmail.usernameisGoogle">To login use the Google+-button</label>
+			<label index="newUserEmail.usernameisFacebook">To login use the Facebook-button</label>
 			<label index="commentatorEmail.notificationsentto">Notification sent to</label>
 			<label index="commentatorEmail.salutation">Hello</label>
 			<label index="commentatorEmail.salutationformal">Dear</label>

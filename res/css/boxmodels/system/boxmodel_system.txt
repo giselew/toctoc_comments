@@ -83,7 +83,7 @@ CSS
 margin-bottom: 10px;
 margin-bottom: {boxmodelSpacing}px;
 Selectors
-.tx-tc-title-usercenter, .tx-tc-opendropdown
+.tx-tc-title-usercenter, .tx-tc-opendropdown, .tx-tc-title-topsharings
 ***	
 	
 Boxmodel
@@ -147,7 +147,6 @@ line-height: {b26}px;
 Rules
 {b26}=4+{boxmodelTextareaLineHeight}
 Selectors
-div.tx-tc-ct-form-field-1
 .tx-tc-ct-form-field-cap
 ***
 
@@ -311,7 +310,7 @@ Selectors
 Boxmodel
 Padding base 17 0
 CSS
-+padding: 0px 0 0;
+padding: 0px 0 0;
 padding: {228}px 0 0;
 Rules
 {228}={boxmodelLineHeightHalf}
@@ -1033,4 +1032,42 @@ margin-top: 3px;
 margin-top: {ratingMarginTop}px;
 Selectors
 p.tx-tc-text img.tx-tc-popularity-pic
- ***
+***
+ 
+Boxmodel
+topsharing-count, margin-right
+CSS
+margin-right: 10px;
+margin-right: {boxmodelSpacing}px;
+Selectors
+.tx-tc-topsharing-count
+***
+
+Boxmodel
+sysmessage line height
+CSS
+line-height: 22px;
+line-height: {sysmh}px;
+Rules
+{sysmh}=-4+{boxmodelLineHeight}
+Selectors
+.tx-tc-sysmessage
+***
+
+Boxmodel
+short iLike right margin on top
+CSS
+margin-right: 5px;
+margin-right: {boxmodelLineHeightHalf}px;
+Selectors
+.tx-tc-text-top .tx-tc-atrts-dp .tx-tc-myrts-ilke
+***
+
+Boxmodel
+short disilke left margin aside comments
+CSS
+margin-left: 5px;
+margin-left: {boxmodelLineHeightHalf}px;
+Selectors
+div.tx-tc-overrating div.tx-tc-myrts-disilke
+***

@@ -258,6 +258,28 @@ CREATE TABLE tx_toctoc_comments_attachment_mm (
 
 
 #
+# Table structure for table 'tx_toctoc_comments_sharing'
+#
+CREATE TABLE tx_toctoc_comments_sharing (
+	uid int(11) unsigned NOT NULL auto_increment,
+	pid int(11) unsigned DEFAULT '0' NOT NULL,
+	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
+	crdate int(11) unsigned DEFAULT '0' NOT NULL,
+	deleted tinyint(1) unsigned DEFAULT '0' NOT NULL,
+	reference int(11) unsigned DEFAULT '0' NOT NULL,
+	external_ref varchar(255) DEFAULT '' NOT NULL,
+	external_prefix varchar(255) DEFAULT '' NOT NULL,
+	sharer varchar(255) DEFAULT '' NOT NULL,
+   	shareurl tinytext NOT NULL, 
+    	sharecount int(11) DEFAULT '0' NOT NULL,
+    	sys_language_uid int(11) unsigned DEFAULT '0' NOT NULL,
+ 	PRIMARY KEY (uid),
+	KEY shr_sharer (sharer,shareurl(64))
+	KEY shr_url (shareurl(64))
+);
+
+
+#
 # Table structure for table 'tx_toctoc_comments_prefixtotable'
 #
 CREATE TABLE tx_toctoc_comments_prefixtotable (

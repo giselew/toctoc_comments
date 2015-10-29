@@ -42,16 +42,16 @@
  *  352:     protected function timepoint($startpoint, $datainfo, $showtotal = FALSE)
  *  378:     protected function check_pvs_url($value)
  *  398:     protected function file_pvs_get_contents_curl($urltofetch, $ext, $savepathfilename = '')
- *  561:     public function saveAndResize($filename, $new_width, $new_height, $pathAndFilename, $ext)
- *  917:     public function previewsite ($pObj=NULL, $pObjParent=NULL)
- * 1577:     private function pvs_fetch_images($strextraction, $iscss, $cssfile='')
- * 1756:     protected function pvs_fetch_css($strextraction,&$strouthtml, $iscss, $cssfile='')
- * 1885:     protected function checklogopattern($strtest)
- * 1917:     protected function checkimagepattern($strtest)
- * 1949:     protected function checkvideocontent($html)
- * 2273:     protected function croptitleordesc($description)
- * 2302:     protected function cleanouttitleordesc($title)
- * 2379:     protected function checkandcorrUTF8($strtocheck)
+ *  562:     public function saveAndResize($filename, $new_width, $new_height, $pathAndFilename, $ext)
+ *  918:     public function previewsite ($pObj=NULL, $pObjParent=NULL)
+ * 1581:     private function pvs_fetch_images($strextraction, $iscss, $cssfile='')
+ * 1760:     protected function pvs_fetch_css($strextraction,&$strouthtml, $iscss, $cssfile='')
+ * 1889:     protected function checklogopattern($strtest)
+ * 1921:     protected function checkimagepattern($strtest)
+ * 1953:     protected function checkvideocontent($html)
+ * 2277:     protected function croptitleordesc($description)
+ * 2306:     protected function cleanouttitleordesc($title)
+ * 2383:     protected function checkandcorrUTF8($strtocheck)
  *
  * TOTAL FUNCTIONS: 14
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -406,8 +406,8 @@ class toctoc_comments_webpagepreview {
 				$urlstr=$urlarr[0] . '/';
 				$urlarr[0]='';
 			}
-			$toctoccommentsuseragent = 'TocTocCommentsExternalhit/1.0 (+https://www.toctoc.ch/toctoc_comments.html?L=2)';
-			
+			$toctoccommentsuseragent = 'TocTocCommentsExternalhit/1.1 (+https://www.toctoc.ch/en/home/toctoc-comments/)';
+
 			$urlstr.=implode('//', $urlarr);
 			$urlstr=str_replace('///', '//', $urlstr);
 			$urltofetch=$urlstr;
@@ -924,7 +924,10 @@ class toctoc_comments_webpagepreview {
 
 		$issoundcloud = FALSE;
 		if (($scs !='') && ($sci !='') && (str_replace('soundcloud.com', '', $this->url ) != $this->url)) {
-			require_once 'Soundcloud/Soundcloud.php';
+			$fullpath = dirname(__FILE__);
+			$fullpath = str_replace('pi1', 'contrib', $fullpath);
+			require_once($fullpath . '/soundcloud/Soundcloud.php');
+
 			// create a client object with your app credentials
 			$client = new Services_Soundcloud($sci);
 

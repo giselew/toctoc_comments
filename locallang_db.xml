@@ -139,6 +139,14 @@
 			<label index="tx_toctoccommentsce_with_ratings.tx_toctoccommentsce_comments">With ratings</label>
 			<label index="tx_toctoccommentsce_with_sharing.description">Enable sharing</label>
 			<label index="tx_toctoccommentsce_with_sharing.tx_toctoccommentsce_comments">With sharing</label>
+			<label index="tx_toctoc_comments_sharing">Shares</label>
+			<label index="tx_toctoc_comments_sharing.sharer">Sharer:</label>
+			<label index="tx_toctoc_comments_sharing.shareurl">Shared URL:</label>
+			<label index="tx_toctoc_comments_sharing.crdate">Share count time:</label>
+			<label index="tx_toctoc_comments_sharing.sharecount">Share count:</label>
+			<label index="tx_toctoc_comments_sharing.reference">Shared page:</label>
+			<label index="tx_toctoc_comments_sharing.external_ref">Sharing for page or record:</label>
+			<label index="tx_toctoc_comments_sharing.external_prefix">External prefix for this sharing:</label>
 		</languageKey>
 	</data>
 	<orig_hash type="array">

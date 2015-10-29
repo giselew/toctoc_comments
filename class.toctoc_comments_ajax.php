@@ -37,27 +37,28 @@
  *
  *
  *
- *   95: class toctoc_comments_ajax
- *  147:     public function __construct()
- *  670:     protected function initTSFE()
- *  716:     public function main()
- *  756:     public function handleCommentatorNotifications()
- *  767:     protected function updateCommentDisplay()
- *  785:     protected function updateComment()
- *  800:     protected function webpagepreview()
- *  812:     protected function previewcomment()
- *  823:     protected function commentsSearch()
- *  835:     protected function cleanupfup()
- *  849:     protected function getCaptcha($captchatype, $cid)
- *  984:     protected function chkcaptcha($cid, $code)
- * 1011:     protected function getUserCard()
- * 1024:     protected function updateCommentsView()
- * 1156:     protected function updateRating()
- * 1712:     protected function processDeleteSubmission()
- * 1793:     protected function processDenotifycommentSubmission()
- * 1844:     protected function recentCommentsClearCache()
+ *   96: class toctoc_comments_ajax
+ *  148:     public function __construct()
+ *  662:     protected function initTSFE()
+ *  731:     public function main()
+ *  772:     private function checksharre()
+ *  844:     public function handleCommentatorNotifications()
+ *  855:     protected function updateCommentDisplay()
+ *  873:     protected function updateComment()
+ *  888:     protected function webpagepreview()
+ *  900:     protected function previewcomment()
+ *  911:     protected function commentsSearch()
+ *  923:     protected function cleanupfup()
+ *  937:     protected function getCaptcha($captchatype, $cid)
+ * 1072:     protected function chkcaptcha($cid, $code)
+ * 1099:     protected function getUserCard()
+ * 1112:     protected function updateCommentsView()
+ * 1244:     protected function updateRating()
+ * 1800:     protected function processDeleteSubmission()
+ * 1881:     protected function processDenotifycommentSubmission()
+ * 1932:     protected function recentCommentsClearCache()
  *
- * TOTAL FUNCTIONS: 18
+ * TOTAL FUNCTIONS: 19
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -165,13 +166,19 @@ class toctoc_comments_ajax {
 			$GLOBALS['LANG'] = t3lib_div::makeInstance('language');
 			$GLOBALS['LANG']->init($_SESSION['activelang'] ? $_SESSION['activelang'] : 'default');
 			$GLOBALS['LANG']->includeLLFile('EXT:toctoc_comments/locallang_ajax.xml');
+			$GLOBALS['LANG']->includeLLFile('EXT:toctoc_comments/pi1/locallang.xml', TRUE, TRUE);
 		} else {
 			$GLOBALS['LANG'] = t3lib_div::makeInstance('language');
 			$GLOBALS['LANG']->init($data['lang'] ? $data['lang'] : 'default');
 			$GLOBALS['LANG']->includeLLFile('EXT:toctoc_comments/locallang_ajax.xml');
+			$GLOBALS['LANG']->includeLLFile('EXT:toctoc_comments/pi1/locallang.xml', TRUE, TRUE);
 			$this->commonObj = t3lib_div::makeInstance('toctoc_comments_common');
-		}
 
+			if (!isset($_SESSION['activelang'])) {
+				$sessionTimeout=3*1440;
+				$this->commonObj->start_toctoccomments_session($sessionTimeout);
+			}
+		}
 		if (version_compare(TYPO3_version, '4.5', '<')) {
 		// Initialize FE user object:
 			$feUserObj = tslib_eidtools::initFeUser();
@@ -359,7 +366,11 @@ class toctoc_comments_ajax {
 			$this->commenttitle = $updatearr['commenttitle'];
 			$this->pid = t3lib_div::_GP('pid');
 		} elseif ($this->cmd == 'rcclearcache') {
-				$this->pid = t3lib_div::_GP('pid');
+			$this->pid = t3lib_div::_GP('pid');
+		} elseif ($this->cmd == 'checksharre') {
+			$this->storagePid= t3lib_div::_GP('storagePid');
+			$this->conf = $data;
+			$this->pageid = t3lib_div::_GP('pageid');
 		} else {
 			// More Sanity checks
 
@@ -657,21 +668,21 @@ class toctoc_comments_ajax {
 					\TYPO3\CMS\Core\Core\Bootstrap::getInstance()->loadCachedTca();
 				}
 			}
-		
+
 		}
-		
+
 		if (!isset($GLOBALS['TCA'])) {
 			$GLOBALS['TCA'] = array();
 		}
-		
+
 		if (!isset($GLOBALS['TCA']['pages'])) {
 			$GLOBALS['TCA']['pages'] = array();
 		}
-		
+
 		if (!isset($GLOBALS['TCA']['pages']['columns'])) {
 			$GLOBALS['TCA']['pages']['columns'] = array();
 		}
-		
+
 		try {
 // 			$GLOBALS['TT'] = new \TYPO3\CMS\Core\TimeTracker\NullTimeTracker();
  //			$GLOBALS['TT']->start();
@@ -746,10 +757,83 @@ class toctoc_comments_ajax {
 			$this->cleanupfup();
 		} elseif ($this->cmd == 'rcclearcache'){
 			$this->recentCommentsClearCache();
+		} elseif ($this->cmd == 'checksharre') {
+			$this->checksharre();
 		} else {
 			$this->updateCommentDisplay();
 		}
 
+	}
+	/**
+	 * checks the sharrre-array from the client against the DB and maintains the sharing-table
+	 *
+	 * @return	string		empty
+	 */
+	private function checksharre() {
+		$ret = '';
+		$countsharings = count($this->conf);
+		for ($i = 0;$i < $countsharings; $i++) {
+			$dataWhere = 'deleted=0 AND pid=' . intval($this->storagePid) . ' AND reference="' . $this->pageid . '" AND sharer="' .
+					$this->conf[$i]['sharer'] . '" AND external_prefix="' .
+					$this->conf[$i]['external_prefix'] . '" AND external_ref="' .
+					$this->conf[$i]['external_ref'] . '" AND sys_language_uid=' .
+					$this->conf[$i]['lang'] . ' AND shareurl="' . $this->conf[$i]['url'] . '"';
+
+			list($row) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('crdate AS LastChangedTime, uid AS uid, sharecount AS sharecount',
+					'tx_toctoc_comments_sharing', $dataWhere, '', 'crdate DESC', 1);
+
+			if (intval($row['sharecount']) != intval($this->conf[$i]['count'])) {
+				$continuewithinsert = TRUE;
+				if (intval($row['sharecount']) == 1 && intval($this->conf[$i]['count']) == 0) {
+					// to reset to 0 can come from a missing total.
+					if ((time() - $row['LastChangedTime']) < 86000) {
+						// please - this only after a day after the last insert
+						$continuewithinsert = FALSE;
+					}
+
+				}
+
+				if (intval($row['sharecount']) - intval($this->conf[$i]['count']) > 1) {
+					// felt down by more than 1 since last observation
+					if ((time() - $row['LastChangedTime']) < 86000) {
+						// also this only after a day after the last insert
+						$continuewithinsert = FALSE;
+					}
+
+				}
+
+				if ($continuewithinsert == TRUE) {
+				//insert the sharer with the new count
+					$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_sharing', array(
+						'crdate' => time(),
+						'reference' => $this->pageid,
+						'tstamp' => time(),
+						'sharecount' => $this->conf[$i]['count'],
+						'pid' => $this->storagePid,
+						'sharer' => $this->conf[$i]['sharer'],
+						'shareurl' => $this->conf[$i]['url'],
+						'external_ref' => $this->conf[$i]['external_ref'],
+						'external_prefix' => $this->conf[$i]['external_prefix'],
+						'sys_language_uid' => $this->conf[$i]['lang'],
+					));
+
+					$this->conf[$i]['sharer'] . ' with url ' . $this->conf[$i]['url'] . ', count: ' . $this->conf[$i]['count'] . ' ----';
+
+					$newUid = $GLOBALS['TYPO3_DB']->sql_insert_id();
+					// Update reference index. This will show in theList view that someone refers to external record.
+					$refindex = t3lib_div::makeInstance('t3lib_refindex');
+					/* @var $refindex t3lib_refindex */
+					if (isset($GLOBALS['TCA']['tx_toctoc_comments_sharing']['columns'])) {
+						$refindex->updateRefIndexTable('tx_toctoc_comments_sharing', $newUid);
+					}
+
+				}
+
+			}
+
+		}
+
+		echo '';
 	}
 
 	/**

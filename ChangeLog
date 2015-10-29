@@ -681,3 +681,32 @@
 	* Added entries to the reference index for new entries in tx_toctoc_ratings_iplog and tx_toctoc_comments_feuser_mm
 	* Fixed AJAX-Login for use of rsa on TYPO3 6.2 or newer.
 	* Dropped TypoScript-Options for language overwrites of the forgot password, and sign up button texts. Use normal overwriting with plugin.tx_toctoccomments_pi2._LOCAL_LANG
+
+2015-08-25  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 7.4.2	
+	* Added little documentation in rst-format
+	* Useragent for toctoc_comments (see above version 7.4.1) now identifies as 'TocTocCommentsExternalhit/1.1 (+https://www.toctoc.ch/en/home/toctoc-comments/)', as we updated our site
+
+2015-10-29  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 8.0.0
+	* Updated the documentation to the rst-format
+	* Added support for LESS: All of the frontends CSS can be accessed in a LESS-model in res/less: theme.refreshCSSFromLESS = 1	
+	  For the new LESS-Mode in themes new .less-files holding the themes colors and background-images are available
+	* Deprecated features
+	  /res/css/boxmodel/is deprecated, boxmodel.txt-files will be dropped with Version 9.
+	  /res/css/tx-tc-version.css is deprecated, it will be dropped with Version 9.
+	  /res/css/themes/default/css/tx-tc-version-theme.css is deprecated, it will be dropped with Version 9.
+	  /res/css/themes/*/theme.txt are deprecated, they will be dropped with Version 9.
+	* Added optimize-step in CSS-generation which merges identical CSS-Selectors
+	  (coming from different LESS-files, like colors, configuration-CSS, boxmodel- and static CSS)
+	* Added Pluginmode 8: Top Sharings. They can be grouped by sharer or by shared page.
+	* New static mode for sharings - sharings are shown but no new shares are possible. Automatically forces static mode if specific shared url is set up.
+	* Fixed missing ';' after a variable declaration in generated JavaScript (caused errors with extension HTML minifiy)
+	* Fixed missing refresh of user picture after change of user picture by current user
+	* Fixed incomplete function call in usercenter, under certain conditions it caused a PHP-error when loading usercenter
+	* ! toctoc_comments AJAX login is not compatible with extension "connetation:// w2p"
+	* dropped res/js/jquery.tools.min.js 
+	* dropped support for old sharing settings in section advanced.
+	* moved flowplayer to new directory contrib/flowplayer
+	* Fixed some issues with links when cHash is active, Comment report links did not work and some normal links (eg link to policy) had a non necessary ?no_cache=1.
+	* Fixed issue with "English only"-notification-e-mail, with some AJAX-replies and in eId-interface (Approval messages) (TYPO3 6.2 and newer)

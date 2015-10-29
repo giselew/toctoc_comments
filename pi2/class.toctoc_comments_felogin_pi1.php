@@ -42,31 +42,31 @@
  *  136:     protected function processRedirect()
  *  150:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
  *  248:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  483:     protected function watermark($conf, $content)
- *  521:     protected function showForgot()
- *  601:     protected function showLogout()
- *  636:     protected function showLogin()
- *  787:     protected function getRSAKeyPair()
- *  824:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
- *  860:     protected function getPreserveGetVars()
- *  913:     protected function generatePassword($len)
- *  933:     protected function getDisplayText($label, $stdWrapArray=array())
- *  945:     protected function getUserFieldMarkers()
- *  987:     protected function validateRedirectUrl($url)
- * 1018:     protected function isInCurrentDomain($url)
- * 1030:     protected function isInLocalDomain($url)
- * 1071:     protected function isRelativeUrl($url)
- * 1087:     protected function generateAndSendHash($user)
- * 1259:     protected function changePassword($uid, $piHash)
- * 1383:     protected function showSignon()
- * 1801:     protected function getSignupCaptcha($required, $errcp, $cpval)
- * 1844:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
- * 1871:     protected function processSignupCaptcha($postData)
- * 1911:     protected function loginUser($facebookId)
- * 1939:     protected function storeUser($facebookUserProfile, $socialnetwork)
- * 2089:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
- * 2107:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
- * 2197:     protected function getCurrentIp()
+ *  484:     protected function watermark($conf, $content)
+ *  522:     protected function showForgot()
+ *  602:     protected function showLogout()
+ *  637:     protected function showLogin()
+ *  789:     protected function getRSAKeyPair()
+ *  826:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
+ *  862:     protected function getPreserveGetVars()
+ *  915:     protected function generatePassword($len)
+ *  935:     protected function getDisplayText($label, $stdWrapArray=array())
+ *  947:     protected function getUserFieldMarkers()
+ *  989:     protected function validateRedirectUrl($url)
+ * 1020:     protected function isInCurrentDomain($url)
+ * 1032:     protected function isInLocalDomain($url)
+ * 1073:     protected function isRelativeUrl($url)
+ * 1089:     protected function generateAndSendHash($user)
+ * 1261:     protected function changePassword($uid, $piHash)
+ * 1385:     protected function showSignon()
+ * 1803:     protected function getSignupCaptcha($required, $errcp, $cpval)
+ * 1846:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ * 1873:     protected function processSignupCaptcha($postData)
+ * 1913:     protected function loginUser($facebookId)
+ * 1941:     protected function storeUser($facebookUserProfile, $socialnetwork)
+ * 2091:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
+ * 2109:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
+ * 2199:     protected function getCurrentIp()
  *
  * TOTAL FUNCTIONS: 28
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -103,7 +103,7 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 
 }
 
-require_once(t3lib_extmgm::extPath('toctoc_comments', 'pi2/facebook.php'));
+require_once(t3lib_extmgm::extPath('toctoc_comments', 'contrib/facebook/facebook.php'));
 
 
 /**
@@ -309,12 +309,26 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 					}
 
 					$facebookUserProfile = $facebook->api('/me');
-					$this->storeUser($facebookUserProfile, 'facebook');
-					$this->loginUser($fbuser);
+					if (trim($facebookUserProfile['email']) == '') {
+						$this->fberror = $this->pi_getLL('facebookloginerrormail', '', 1);
+					} else {
+						$this->storeUser($facebookUserProfile, 'facebook');
+						$this->loginUser($fbuser);
+					}
+
 				} catch (FacebookApiException $e) {
-					$this->fberror = '<br />' . $e;
+					$this->fberror = 'Facebook-api error: ' . $e;
 					$fbuser = NULL;
 				}
+			} else {
+				if (($_POST['tx_toctoccomments_pi2']['fbLogin'] == '1') && !$fbuser)  {
+					$this->fberror = $this->pi_getLL('facebookloginerrorinvalidreply', '', 1);
+				}
+			}
+
+			$fbstatustext = '';
+			if (trim($this->fberror) != '') {
+				$fbstatustext = '<div style="float: none; display: inline-block;"><span class="tx-tc-required-error">' . $this->fberror . '</span></div>';
 			}
 
 			$subpart = trim($this->cObj->getSubpart($this->template, '###TEMPLATE_FACEBOOK###'));
@@ -325,7 +339,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			$fbbutton = trim($this->cObj->substituteMarkerArrayCached($subpart, $markerArray, $subpartArray, $linkpartArray));
      		$contentfb .= '
 			<div id="facebookauth">' . $fbbutton . '</div>
-';
+' . $fbstatustext;
 		}
 
 		$nogoogle = FALSE;
@@ -388,21 +402,8 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 			$policyLink = '';
 			if (intval($conf['policyPid']) > 0) {
-				$params = array();
-				$useCacheHashNeeded = intval($GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError']);
-				$no_cacheflag = 0;
-				if (intval($GLOBALS['TYPO3_CONF_VARS']['FE']['disableNoCacheParameter']) == 0) {
-					if ($useCacheHashNeeded == 1) {
-						$no_cacheflag = 1;
-					}
-
-				}
-
 				$conflink = array(
-						'useCacheHash'     => $useCacheHashNeeded,
-						'no_cache'         => $no_cacheflag,
-						'parameter'        => intval($conf['policyPid']),
-						'additionalParams' => t3lib_div::implodeArrayForUrl('', $params, '', 1),
+						'parameter' => intval($conf['policyPid']),
 						'ATagParams' => 'rel="nofollow"',
 				);
 				$policyLink = '<div class="tx-tc-login-form-field tx-tc-login-policy">' . $this->cObj->typoLink($this->pi_getLL('policy_link', '', 1), $conflink) .
@@ -662,7 +663,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 				} else {
 					$markerArray['###STATUS_MESSAGE###'] = $this->getDisplayText('error_message', $this->conf['errorMessage_stdWrap.']);
 				}
-				
+
 				$gpRedirectUrl = t3lib_div::_GP('redirect_url');
 				$dofp = 1;
 			}
@@ -2088,7 +2089,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 	 * @return	string		$imgname
 	 */
 	private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork) {
-		$imageUrl = 'http://graph.facebook.com/' . $facebookUserId. '/picture?width=300&height=300 ';
+		$imageUrl = 'http://graph.facebook.com/' . $facebookUserId. '/picture?width=300&height=300';
 		if ($url !='') {
 			$imageUrl =$url;
 		}
@@ -2119,7 +2120,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		$urltofetch = $urlstr;
 		$ch = curl_init();
 
-		$toctoccommentsuseragent = 'TocTocCommentsExternalhit/1.0 (+https://www.toctoc.ch/toctoc_comments.html?L=2)';
+		$toctoccommentsuseragent = 'TocTocCommentsExternalhit/1.1 (+https://www.toctoc.ch/en/home/toctoc-comments/)';
 		curl_setopt($ch, CURLOPT_USERAGENT, toctoccommentsuseragent);
 		curl_setopt($ch, CURLOPT_URL, $urltofetch);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);

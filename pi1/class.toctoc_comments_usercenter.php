@@ -95,7 +95,7 @@ class toctoc_comments_usercenter extends toctoc_comment_lib {
 
 			 if ($mpics == TRUE) {
 				$rowsfeuser = array();
-				$rowsfeuser = $this->getBaseFeUsersArray($pObj, $fromAjax, $GLOBALS['TSFE']->fe_user->user['uid']);
+				$rowsfeuser = $this->getBaseFeUsersArray($pObj, $fromAjax, $GLOBALS['TSFE']->fe_user->user['uid'], '', $conf);
 				$usergenderexistsstr='';
 				if (count($rowsfeuser)>0) {
 					if (array_key_exists('gender', $rowsfeuser)) {

@@ -17,6 +17,7 @@ Selectors
 .txtc_overlay
 .tx-tc-ct-highlight
 .tx-tc-recent-cts-article
+.tx-tc-topsharing-article
 #confirm-container .buttons div
 .tx-tc-pvs-nopreviewpic
 .tx-tc-cap-image
@@ -428,15 +429,6 @@ Selectors
 ***
 
 Boxmodel
-Line-Height 14 (Recent comments list)
-CSS
-line-height: 14px;
-Selectors
-.tx-tc-recent-cts-entry
-.tx-tc-recent-cts-title
-***
-
-Boxmodel
 Height of form fields
 CSS
 min-height: 30px;
@@ -569,16 +561,6 @@ CSS
 +font-size: 88%;
 Selectors
 .tx-tc-nbrsubcomments
-***
-
-Boxmodel
-Action forms frame position
-CSS
-margin: 0;
-CSS
-padding: 0;
-Selectors
-.tx-tc-ct-actionforms
 ***
 
 Boxmodel

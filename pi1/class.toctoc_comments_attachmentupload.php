@@ -437,7 +437,7 @@ class toctoc_comments_attachmentupload {
 	 */
 	protected function create_thumbnail_frompdf($pdffile, $pdffilejpg, $impath, $isgm) {
 		$data='';
-		
+
 		if ($isgm == TRUE) {
 			$txexeccommand= '"' . $impath . '  -geometry 90x116! -colorspace RGB -quality 95 "' . $pdffile . '[0]" "' . $pdffilejpg . '"';
 		} else {
