@@ -39,8 +39,8 @@
  *   67: class toctoc_comments_eID
  *   81:     public function init()
  *  207:     public function main()
- *  469:     protected function processReponseOutput()
- *  565:     protected function ipBlock()
+ *  472:     protected function processReponseOutput()
+ *  568:     protected function ipBlock()
  *
  * TOTAL FUNCTIONS: 4
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -293,7 +293,7 @@ class toctoc_comments_eID {
 												AND deleted = 0 and pid=' . $this->conf['storagePid'] . '', array('comment_count' => $commentcount));
 										$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_toctoc_comments_comments', 'uid=' . $this->uid, array('hidden' => 0));
 										$this->clearCacheNeeded=TRUE;
-										
+
 									}
 
 								}

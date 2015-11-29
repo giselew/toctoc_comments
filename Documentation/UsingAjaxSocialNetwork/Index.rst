@@ -27,3 +27,6 @@ it's always working and easy.
     Community2/Index
     Cwtcommunity1/Index
     UseInOtherPi1extensions/Index
+    
+    
+See also :ref:`comments-and-ratings-on`

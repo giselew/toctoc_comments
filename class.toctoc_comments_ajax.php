@@ -53,10 +53,10 @@
  * 1072:     protected function chkcaptcha($cid, $code)
  * 1099:     protected function getUserCard()
  * 1112:     protected function updateCommentsView()
- * 1244:     protected function updateRating()
- * 1800:     protected function processDeleteSubmission()
- * 1881:     protected function processDenotifycommentSubmission()
- * 1932:     protected function recentCommentsClearCache()
+ * 1355:     protected function updateRating()
+ * 1914:     protected function processDeleteSubmission()
+ * 1995:     protected function processDenotifycommentSubmission()
+ * 2046:     protected function recentCommentsClearCache()
  *
  * TOTAL FUNCTIONS: 19
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -1138,6 +1138,117 @@ class toctoc_comments_ajax {
 			$setPluginCacheControlTstamppluginid=$pluginid;
 		}
 
+		// seen compress to viewMaxAge
+		if (intval($_SESSION['viewMaxAgeDone']) == 0) {
+			$compressAgeDifferenceSeconds = intval($this->conf['advanced.']['viewMaxAge'])*86000;
+			$compressAgeTime = time() - $compressAgeDifferenceSeconds;
+			$_SESSION['viewMaxAgeDone']=1;
+
+			$dataWhere = 'tstampseen < ' . $compressAgeTime . ' AND seen=1 AND deleted=0 AND reference_scope=0 AND toctoc_comments_user<>"0.0.0.127.0"';
+			$limitrows = 100000;
+
+			/* @var $refindex t3lib_refindex */
+			$refindex = t3lib_div::makeInstance('t3lib_refindex');
+
+			Do {
+				$GLOBALS['TYPO3_DB']->sql_query('START TRANSACTION');
+				$rows = array();
+				$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('(ilike+idislike+myrating) as rateval, pagetstampseen AS pagetstampseen,
+						tstampseen AS tstampseen, pid AS pid, reference AS reference, seen AS seen, uid AS uid',
+						'tx_toctoc_comments_feuser_mm',
+						$dataWhere,
+						'',
+						'',
+						$limitrows);
+				// brings all 'too old' seens
+				$limitrows = count($rows);
+
+				if ($limitrows > 0) {
+					$arr127 = array();
+					$arr127cnt = 0;
+
+					foreach($rows as $row) {
+						$arr127[$arr127cnt] = array();
+						$arr127[$arr127cnt]['reference'] = $row['reference'];
+						$arr127[$arr127cnt]['pid'] = $row['pid'];
+						$arr127[$arr127cnt]['tstampseen'] = $row['tstampseen'];
+						$arr127[$arr127cnt]['pagetstampseen'] = $row['pagetstampseen'];
+
+						$dataWhereup = 'uid=' . $row['uid'];
+						if ($row['rateval'] > 0) {
+							//update to 0
+							$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET seen=0,
+									pagetstampseen=NULL, tstampseen=NULL WHERE ' . $dataWhereup);
+
+						} else {
+							// delete
+							$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_feuser_mm WHERE ' . $dataWhereup);
+
+						}
+						$arr127cnt++;
+					}
+
+					foreach($arr127 as $row) {
+						$dataWhere = 'pid=' . intval($row['pid']) . ' AND deleted=0 AND reference_scope=0 AND reference="' . $row['reference'] .
+						'" AND toctoc_comments_user="0.0.0.127.0"';
+						$rows127 = array();
+						$rows127 = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('pagetstampseen AS pagetstampseen, tstampseen AS tstampseen, seen AS seen, uid AS uid',
+								'tx_toctoc_comments_feuser_mm', $dataWhere);
+
+						if (count($rows127) > 0) {
+							if ($rows127[0]['uid'] > 0) {
+								$dataWhereup = 'uid=' . $rows127[0]['uid'];
+								if ((($rows127[0]['tstampseen'] > $row['tstampseen']) && (intval($row['tstampseen'])>0)) ||
+										((intval($rows127[0]['tstampseen'])==0) && (intval($row['tstampseen'])>0))) {
+									$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET tstamp = ' . $row['tstampseen'] .
+											', crdate = ' . $row['tstampseen'] .
+											', tstampseen = ' . $row['tstampseen'] .
+											', seen=' . (intval($rows127[0]['seen']) + 1)  .
+											' WHERE ' . $dataWhereup);
+								} else {
+									$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET seen=' . (intval($rows127[0]['seen']) + 1)  . ' WHERE ' . $dataWhereup);
+								}
+
+							}
+						} else {
+							$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_feuser_mm', array(
+									'crdate' => $row['tstampseen'],
+									'tstampseen' => $row['tstampseen'],
+									'pagetstampseen' => $row['pagetstampseen'],
+									'tstamp' => $row['tstampseen'],
+									'seen' => 1,
+									'pid' => $row['pid'],
+									'idislike' => 0,
+									'myrating' => 0,
+									'toctoc_commentsfeuser_feuser' => 0,
+									'toctoc_comments_user' => '0.0.0.127.0',
+									'reference' => $row['reference'],
+									'reference_scope' => 0,
+									'remote_addr' => '0.0.0.127'
+							));
+
+							$newUid = $GLOBALS['TYPO3_DB']->sql_insert_id();
+							// Update reference index. This will show in theList view that someone refers to external record.
+							if (isset($GLOBALS['TCA']['tx_toctoc_comments_feuser_mm']['columns'])) {
+								$refindex->updateRefIndexTable('tx_toctoc_comments_feuser_mm', $newUid);
+							}
+						}
+
+					}
+
+				}
+
+				$GLOBALS['TYPO3_DB']->sql_query('COMMIT');
+			} while ($limitrows > 10);
+		// delete orphans in tx_toctoc_comments_user
+			$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_user WHERE
+				vote_count = 0 AND like_count = 0 AND dislike_count = 0 AND
+				toctoc_comments_user NOT IN (SELECT DISTINCT toctoc_comments_user FROM tx_toctoc_comments_feuser_mm) AND
+				toctoc_comments_user NOT IN (SELECT DISTINCT toctoc_comments_user FROM tx_toctoc_comments_comments)');
+		}
+
+		// seen compress to viewMaxAge end
+
 		$dataWhere = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND reference="' . $pluginid . '" AND toctoc_comments_user=' .
 						$fetoctocusertoquery .'';
 		list($row) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('seen AS seenrows, uid AS insertedrows', 'tx_toctoc_comments_feuser_mm', $dataWhere);
@@ -1251,9 +1362,12 @@ class toctoc_comments_ajax {
 		$pageid= $this->pageid;
 		$ratingarr=explode('-', $this->ref);
 		$scopeid =0;
-		if (count($ratingarr)==2) {
-			$this->ref=$ratingarr[0];
-			$scopeid =intval($ratingarr[1]);
+		$countratingarr = count($ratingarr);
+		if ($countratingarr==2) {
+			//if ((trim($ratingarr[$countratingarr-1]) == '0') || (intval($ratingarr[$countratingarr-1]) > 0)) {
+				$this->ref=$ratingarr[0];
+				$scopeid =intval($ratingarr[1]);
+			//}
 		}
 
 		$ratingsmode='';
@@ -1684,8 +1798,8 @@ class toctoc_comments_ajax {
 
 				}
 
-				if(($this->conf['advanced.']['enableUrlLog']) || (!($this->conf['ratings.']['disableIpCheck']))) {
-					if((strpos($this->cmd, 'ote') !== FALSE)) {
+				if (($this->conf['advanced.']['enableUrlLog']) || (!($this->conf['ratings.']['disableIpCheck']))) {
+					if ((strpos($this->cmd, 'ote') !== FALSE)) {
 						if ($ratingsmode == '') {
 							$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_ratings_iplog', array(
 									'pid' => $this->conf['storagePid'],

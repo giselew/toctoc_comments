@@ -321,7 +321,7 @@
 	  if ($row[$approvedField])	{
 	    $content .='
 	      <td class="img"><a href="'.$this->doc->issueCommand($params6).'">
-	      <img src="'.$GLOBALS['BACK_PATH'].'../typo3conf/ext/toctoc_comments/icon_tx_toctoc_comments.gif" border="0" title="'.
+	      <img src="'.$GLOBALS['BACK_PATH'].'../typo3conf/ext/toctoc_comments' . $this->picpathtoctoc . '/icon_tx_toctoc_comments.gif" border="0" title="'.
 	      $GLOBALS['LANG']->getLL('disapprove').'" align="top" alt=""
 	      /></a></td>
 	    ';
@@ -330,14 +330,14 @@
 	  else {
 	    $content .= '
 	      <td class="img"><a href="'.$this->doc->issueCommand($params7).'">
-	      <img src="'.$GLOBALS['BACK_PATH'].'../typo3conf/ext/toctoc_comments/icon_tx_toctoc_comments_not_approved.gif" border="0" title="'.
+	      <img src="'.$GLOBALS['BACK_PATH'].'../typo3conf/ext/toctoc_comments' . $this->picpathtoctoc . '/icon_tx_toctoc_comments_not_approved.gif" border="0" title="'.
 	    $GLOBALS['LANG']->getLL('approve').'" align="top" alt="" /></a></td>';
 	  }
 
 	  if ($row[$hiddenField])	{
 	    $content .='
 	      <td class="img"><a href="'.$this->doc->issueCommand($params4).'">
-	      <img src="'.$GLOBALS['BACK_PATH'].'sysext/t3skin/icons/gfx/button_unhide.gif" border="0" title="'.
+	      <img src="'.$GLOBALS['BACK_PATH'] . $this->picpathsysext . 'button_unhide.gif" border="0" title="'.
 	      $GLOBALS['LANG']->getLL('show').'" align="top" alt=""
 	      /></a></td>
 	    ';
@@ -346,7 +346,7 @@
 	  else {
 	    $content .= '
 	      <td class="img"><a href="'.$this->doc->issueCommand($params5).'">
-	      <img src="'.$GLOBALS['BACK_PATH'].'sysext/t3skin/icons/gfx/button_hide.gif" border="0" title="'.
+	      <img src="'.$GLOBALS['BACK_PATH'] . $this->picpathsysext . 'button_hide.gif" border="0" title="'.
 	    $GLOBALS['LANG']->getLL('hide').'" align="top" alt="" /></a></td>';
 	  }
 	  
@@ -356,12 +356,12 @@
 	  
 	  $content .= '
 	    <td class="img"><a href="#" onclick="'.htmlspecialchars(t3lib_BEfunc::editOnClick($params2, $GLOBALS['BACK_PATH'])).'">
-	      <img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], 'gfx/edit2.gif', 'width="11" height="12"').' title="'.
+	      <img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], $this->picpathgfx . 'edit2.gif', '').' title="'.
 	      $GLOBALS['LANG']->getLL('edit').'" border="0" alt="" /></a>
 	    </td>
 	    <td class="img"><a href="'.$this->doc->issueCommand($params3).'"
 	      onclick="return confirm(unescape(\''.rawurlencode(''.$GLOBALS['LANG']->getLL('delete_txt').'').'\'));">
-	      <img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], 'gfx/garbage.gif', 'width="11" height="12"').' title="'.
+	      <img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], $this->picpathgfx . 'garbage.gif', '').' title="'.
 	      $GLOBALS['LANG']->getLL('delete').'" alt="" /></a>
 	    </td>
 	    <td>

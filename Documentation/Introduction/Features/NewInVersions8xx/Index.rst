@@ -26,4 +26,5 @@ New in versions 8.x.x
 - Added Pluginmode 8: Top Sharings. They can be grouped by sharer or by shared page.
 - New static mode for sharings - sharings are shown but no new shares are possible. Automatically forces static mode if specific shared url is set up.
 - documentation available in rst-format
+- 8.1.0 brings possibility to comment and rate records of extensions with non numeric showUid-Parameter (no tables in TYPO3)
 

@@ -710,3 +710,18 @@
 	* moved flowplayer to new directory contrib/flowplayer
 	* Fixed some issues with links when cHash is active, Comment report links did not work and some normal links (eg link to policy) had a non necessary ?no_cache=1.
 	* Fixed issue with "English only"-notification-e-mail, with some AJAX-replies and in eId-interface (Approval messages) (TYPO3 6.2 and newer)
+	
+2015-11-29  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 8.1.0
+	* TYPO3 7.6 compatibility release
+	* Added support for comments and ratings on extensions without numeric ShowUid-parameter value (e.g. the Sphinx rest documentation viewer)
+	* Fixed wrong links from Top-Ratings to Comments in Extensions with Multiparameter-Table-to-Plugin-Map ShowUid-Parameter (community-comments when using cHash)
+	* Fixed worst problems with deprecated $TCA creating Configuration/TCA folder and its contained files for TYPO3 7
+	* Fixed missing margins in the backend modules design under TYPO3 newer 6.1
+	* Fixed missing fields in Backend Plugin under TYPO3 7.6
+	* Fixed missing Icons under TYPO3 7.6 in Backend-module->Comments
+	* Fixed AJAX-Login with rsa enabled and TYPO3 newer than 7.3
+	* Removed recent comments links to comments on hidden or deleted records of other extensions
+	* Deleted a totally meaningless line of code in class.toctoc_comments_pi1.php
+	* Implemented finally the debugMode-Option from Extensionmanager-Configuration
+	

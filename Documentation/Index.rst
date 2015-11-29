@@ -30,7 +30,7 @@ EXT: AJAX Social Network Components
         comments list, a report bad comment form and several charts. Four looks for ratings by
         voting stars and Facebook-like iLikes, usage of scopes for categorizing ratings. For ratings
         there is a plugin-mode for top ratings. Many options for spam- and data-protection. AJAX
-        runs with jQuery.	ViewHelpers for extension news. Comments, reviews or ratings can trigger
+        runs with jQuery. ViewHelpers for extension news. Comments, reviews or ratings can trigger
         records in other extensions DETAIL-views and LIST-views (LIST-view tt_news, news, modify all
         other pi1-extensions in PHP and implement a new marker or ViewHelper for comments and
         ratings in LIST-views). Includes full featured AJAX Login and Sign Up, including login with
@@ -63,7 +63,7 @@ EXT: AJAX Social Network Components
      
     The full manual can be found in directory doc of toctoc_comments as OpenOffice-file. 
      
-    It is also **available as pdf** - click on the following link to open it: `www.toctoc.ch/fileadmin/download/manual_toctoc_comments_800.pdf <https://www.toctoc.ch/fileadmin/download/manual_toctoc_comments_800.pdf>`_.
+    It is also **available as pdf** - click on the following link to open it: `www.toctoc.ch/fileadmin/download/manual_toctoc_comments_810.pdf <https://www.toctoc.ch/fileadmin/download/manual_toctoc_comments_810.pdf>`_.
 
 
     **Table of Contents**

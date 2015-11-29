@@ -397,8 +397,6 @@ Boxmodel
 top ilikes on the right
 CSS
 margin-bottom: -4px;
-CSS
-margin-top: 1px;
 Selectors
 .tx-tc-rts-li, .tx-tc-rts-li-text
 ***
@@ -439,14 +437,6 @@ Selectors
 .tx-tc-ct-cnt
 .tx-tc-ntf-box
 ***
-
-Boxmodel
-margin-top
-CSS
-margin-top: 4px;
-Selectors 
-.tx-tc-myrts-dp, .tx-tc-atrts-ilike-dp
-*** 
 
 Boxmodel
 sharrre area

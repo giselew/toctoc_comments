@@ -243,7 +243,7 @@ class user_toctoc_comments_toctoc_comments {
 						'lang' => $langreq,
 						'extensionkey' => 'toctoccommentsce',
 						'extension' => 'toctoc_comments',
-						'version' => '800',
+						'version' => '810',
 						'hostname' => $curipres,
 						'typo3version' => TYPO3_version,
 				);

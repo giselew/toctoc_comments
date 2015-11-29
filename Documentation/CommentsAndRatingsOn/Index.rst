@@ -71,7 +71,11 @@ tx_cwtcommunity_pi1       fe_users                                       action=
 tx_news_pi1               tx_news_domain_model_news                      news                       title teaser tstamp sys_language_uid, bodytext
 ------------------------  ---------------------------------------------  -------------------------  -------------------------------------------------  --------------------------------------------------
 tx_camaliga_pi1           tx_camaliga_domain_model_content               content                    title tstamp image sys_language_uid, shortdesc
+------------------------  ---------------------------------------------  -------------------------  -------------------------------------------------  --------------------------------------------------
+tx_restdoc_pi1            tx_restdoc_pi1                                 doc                        NA
 ========================  =============================================  =========================  =================================================  ==================================================
+
+NA: Not available for extensions without TYPO3-tables or/and non-numeric showUid (Optional URL parameter) – Parameter.
 
 
 Adding entries to table “Plugin to table map”
@@ -96,7 +100,12 @@ Optional URL parameter
 Some extensions use names other than “showUid” to refer to a single record.
 
 Our extension needs to know the name of this URL parameter to find the record's
-uid. 
+uid.
+
+Since toctoc_comments 8.1.0 also non numeric showUid-Parmeters can be mapped. 
+Typically the extensions using non-numeric showUid parameters do not maintain TYPO3 tables,
+That's why for these extensions “displayfields” is not available (must be left empty) – as 
+it references normally fields in the according TYPO3 table.
 
 Why optional ?
 """"""""""""""
@@ -189,3 +198,4 @@ table: fe_users
 
 showUid parameter: user
 
+See also :ref:`using-ajax-social-network`

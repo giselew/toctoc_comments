@@ -29,43 +29,44 @@
  *
  *
  *
- *  107: class tx_toctoccomments_pi1 extends tslib_pibase
- *  193:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
- * 2609:     protected function checkJSLoc()
- * 2896:     protected function checkCSSTheme()
- * 3042:     protected function checkCSSLoc()
- * 3718:     protected function makesharingcss($CSSmode = TRUE)
- * 3785:     protected function initprefixToTableMap()
- * 3821:     protected function initexternaluid($withinitprefixToTableMap)
- * 3960:     protected function init()
- * 4549:     protected function mergeConfiguration()
- * 4897:     protected function fetchConfigValue($param)
- * 4925:     protected function ae_detect_ie()
- * 4948:     protected function boxmodel()
- * 6237:     protected function crunchcss($buffer)
- * 6264:     protected function calculate_string( $mathString )
- * 6287:     protected function locationHeaderUrlsubDir()
- * 6306:     protected function currentPageName()
- * 6334:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
- * 6369:     protected function doClearCache ($forceclear=FALSE)
- * 6403:     protected function InitCachingVariables ()
- * 6428:     protected function getPluginCacheControlTstamp ($external_ref_uid)
- * 6439:     protected function getLastUserAdditionTstamp ()
- * 6462:     protected function initLegacyCache ()
- * 6476:     protected function check_scopes()
- * 6634:     protected function initializeprefixtotablemap()
- * 6674:     protected function sharrrejs()
- * 6756:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
- * 6809:     private function resolveBackPath($pathStr)
- * 6844:     private function dirname($path)
- * 6858:     private function revExplode($delimiter, $string, $count = 0)
- * 6874:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 6897:     public function createLinks($text, $conf = NULL)
- * 6920:     protected function getThemeTmageDimension($filename, $returnindex)
- * 6940:     protected function checktoctoccommentsuser()
- * 7058:     protected function fbgoogle_lan($isfacebook)
+ *  108: class tx_toctoccomments_pi1 extends tslib_pibase
+ *  195:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
+ * 2614:     protected function checkJSLoc()
+ * 2901:     protected function checkCSSTheme()
+ * 3047:     protected function checkCSSLoc()
+ * 3723:     protected function makesharingcss($CSSmode = TRUE)
+ * 3790:     protected function initprefixToTableMap()
+ * 3826:     protected function initexternaluid($withinitprefixToTableMap)
+ * 3977:     protected function init()
+ * 4572:     protected function mergeConfiguration()
+ * 4920:     protected function fetchConfigValue($param)
+ * 4948:     protected function ae_detect_ie()
+ * 4971:     protected function boxmodel()
+ * 6260:     protected function crunchcss($buffer)
+ * 6287:     protected function calculate_string( $mathString )
+ * 6310:     protected function locationHeaderUrlsubDir()
+ * 6329:     protected function currentPageName()
+ * 6357:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
+ * 6392:     protected function doClearCache ($forceclear=FALSE)
+ * 6426:     protected function InitCachingVariables ()
+ * 6451:     protected function getPluginCacheControlTstamp ($external_ref_uid)
+ * 6462:     protected function getLastUserAdditionTstamp ()
+ * 6485:     protected function initLegacyCache ()
+ * 6499:     protected function check_scopes()
+ * 6657:     protected function initializeprefixtotablemap()
+ * 6697:     protected function sharrrejs()
+ * 6779:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
+ * 6832:     private function resolveBackPath($pathStr)
+ * 6867:     private function dirname($path)
+ * 6881:     private function revExplode($delimiter, $string, $count = 0)
+ * 6897:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 6920:     public function createLinks($text, $conf = NULL)
+ * 6943:     protected function getThemeTmageDimension($filename, $returnindex)
+ * 6963:     protected function checktoctoccommentsuser()
+ * 7081:     protected function getExternalUidShortId()
+ * 7104:     protected function fbgoogle_lan($isfacebook)
  *
- * TOTAL FUNCTIONS: 34
+ * TOTAL FUNCTIONS: 35
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -110,11 +111,12 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '800';
+	public $extVersion = '810';
 	public $extLESSVersion = 'toctoc_comments-LESS.1';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
 	public $externalUid;						// UID of external record
+	public $externalUidString = '';
 	public $showUidParam = 'showUid';			// Name of 'showUid' GET parameter (different for tt_news!)
 	public $where;								// SQL WHERE for records
 	public $where_dpck;						// SQL WHERE for double post checks
@@ -407,6 +409,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		if($numMatches > 0) {
 			// Found a match
 			if (intval($this->conf['dontSkipSearchEngines']) == 0) {
+				$this->pi_USER_INT_obj = 1;
 				return 'botMessage_' . $this->extKey . '_' . $this->extVersion;
 			}
 			$this->conf['advanced.']['useSessionCache'] = 0;
@@ -656,27 +659,31 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		}
 
 		if (intval($this->conf['theme.']['boxmodelInputFieldSize'])<12) {
-			$this->conf['theme.']['boxmodelInputFieldSize'] =12;
+			$this->conf['theme.']['boxmodelInputFieldSize'] = 12;
 		}
 
-		if (intval($this->conf['advanced.']['showCountViews'])==0) {
-			$this->conf['advanced.']['showCountCommentViews'] =0;
+		if (intval($this->conf['advanced.']['showCountViews'])== 0) {
+			$this->conf['advanced.']['showCountCommentViews'] = 0;
 		}
 
-		if (intval($this->conf['advanced.']['activityMultiplicatorRating'])<1) {
-			$this->conf['advanced.']['activityMultiplicatorRating'] =1;
+		if (intval($this->conf['advanced.']['viewMaxAge'])==0) {
+			$this->conf['advanced.']['viewMaxAge'] = 28;
 		}
 
-		if (intval($this->conf['advanced.']['activityMultiplicatorComment'])<1) {
-			$this->conf['advanced.']['activityMultiplicatorComment'] =1;
+		if (intval($this->conf['advanced.']['activityMultiplicatorRating']) < 1) {
+			$this->conf['advanced.']['activityMultiplicatorRating'] = 1;
 		}
 
-		if (intval($this->conf['ratings.']['dlikeCtsNotifLvl'])<1) {
-			$this->conf['ratings.']['dlikeCtsNotifLvl'] =1;
+		if (intval($this->conf['advanced.']['activityMultiplicatorComment']) < 1) {
+			$this->conf['advanced.']['activityMultiplicatorComment'] = 1;
 		}
 
-		if (intval($this->conf['ratings.']['dlikeCtsNotifLvl'])>99) {
-			$this->conf['ratings.']['dlikeCtsNotifLvl'] =99;
+		if (intval($this->conf['ratings.']['dlikeCtsNotifLvl']) <  1) {
+			$this->conf['ratings.']['dlikeCtsNotifLvl'] = 1;
+		}
+
+		if (intval($this->conf['ratings.']['dlikeCtsNotifLvl'])> 99) {
+			$this->conf['ratings.']['dlikeCtsNotifLvl'] = 99;
 		}
 
 		if (intval($this->conf['ratings.']['useLikeDislikeStyle']) == 1) {
@@ -896,11 +903,9 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 		}
 
-		$this->conf['optionalRecordId'] . ',externalPrefix ' . $this->conf['externalPrefix'] . '<br>';
-
-		$contentelementMultiReference='';
+		$contentelementMultiReference = '';
 		if (($this->conf['externalPrefix'] != 'pages') && ($this->lhookTablePrefix == '')) {
-			$contentelementMultiReference=''. $this->conf['storagePid'];
+			$contentelementMultiReference = '' . $this->conf['storagePid'];
 		}
 
 		$optionalRecordIdlhookTablePrefix='';
@@ -3946,8 +3951,20 @@ sharrre design 2 and 4, calculated specifics
 			}
 
 		}
-
 		$this->foreignTableName = $this->conf['prefixToTableMap.'][$this->conf['externalPrefix']];
+		// exts without table and string identiers
+		if (intval($this->externalUid)==0) {
+			$this->externalUid = (is_array($ar) ? $ar[$this->showUidParam] : FALSE);
+			if (trim($this->externalUid) != '') {
+				$this->externalUid = str_replace('-', '7g8', $this->externalUid);
+				$this->externalUid = $this->getExternalUidShortId();
+				$this->externalUidString = $this->externalUid;
+				$this->foreignTableName = $this->conf['externalPrefix'] . '6g9' . $this->showUidParam;
+
+			}
+
+		}
+
 		$_SESSION['commentListRecord']=$this->foreignTableName . '_' . $this->externalUid;
 		return TRUE;
 	}
@@ -4166,13 +4183,21 @@ sharrre design 2 and 4, calculated specifics
 					$rsajsenc = '/rsaauth_min.js';
 					$rsascript='<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/' . $rsajsloc . $rsajsenc . '"></script>';
 				}
-
-				$rsajsstr = '<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/' . $rsajsloc . '/jsbn/jsbn.js"></script>
+				$plsUseRSA = 0;
+				if (version_compare(TYPO3_version, '7.4', '<')) {
+					$rsajsstr = '<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/' . $rsajsloc . '/jsbn/jsbn.js"></script>
 						<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/' . $rsajsloc . '/jsbn/prng4.js"></script>
 						<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/' . $rsajsloc . '/jsbn/rng.js"></script>
 						<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/' . $rsajsloc . '/jsbn/rsa.js"></script>
 						<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/' . $rsajsloc . '/jsbn/base64.js"></script>
 						' . $rsascript . '';
+				} else {
+					$rsajsstr = $rsascript . '';
+					if ((t3lib_extMgm::isLoaded('rsaauth')) && (t3lib_extMgm::isLoaded('saltedpasswords')) &&
+							($GLOBALS['TYPO3_CONF_VARS']['FE']['loginSecurityLevel'] == 'rsa')) {
+						$plsUseRSA = 1;
+					}
+				}
 
 				if ((intval($this->conf['advanced.']['loginRequired']) == 0) && ($this->conf['pluginmode'] != 5)) {
 					$locLoginFormhtml= '	var tclogincard ="";
@@ -4286,7 +4311,7 @@ sharrre design 2 and 4, calculated specifics
 				$jscontent .= '	var maxCommentLength = ' . intval($this->conf['maxCommentLength']) . ';' . "\n";
 				$jscontent .= '	var selectedTheme = "' . $this->conf['theme.']['selectedTheme'] . '";' . "\n";
 				$jscontent .= '	var boxmodelTextareaAreaTotalHeight = ' . intval($this->boxmodelTextareaAreaTotalHeight) . ';' . "\n";
-
+				$jscontent .= '	var plsUseRSA = ' . $plsUseRSA . ';' . "\n";
 				$jscontent .= '	var boxmodelTextareaHeight = ' . intval($this->boxmodelTextareaHeight) . ';' . "\n";
 				if ($this->conf['theme.']['boxmodelLabelInputPreserve']==0) {
 					$jscontent .= '	var boxmodelLabelWidth = ' . intval($this->conf['theme.']['boxmodelLabelWidth']) . ';' . "\n";
@@ -6660,6 +6685,8 @@ sharrre design 2 and 4, calculated specifics
 					", 1359299671, 1359299671, 0, 'tx_cwtcommunity_pi1', 'fe_users', 'action=getviewprofile&uid', '', '', 0)");
 			$GLOBALS['TYPO3_DB']->sql_query('INSERT INTO tx_toctoc_comments_prefixtotable VALUES (11, ' . $this->conf['storagePid'] .
 					", 1360836115, 1360836115, 0, 'tx_news_pi1', 'tx_news_domain_model_news', 'news', '', '', 0)");
+			$GLOBALS['TYPO3_DB']->sql_query('INSERT INTO tx_toctoc_comments_prefixtotable VALUES (12, ' . $this->conf['storagePid'] .
+					", 1360836119, 1360836119, 0, 'tx_restdoc_pi1', 'tx_restdoc_pi1', 'doc', '', '', 0)");
 		}
 
 	}
@@ -7046,6 +7073,29 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 
 		}
 
+	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @return	[type]		...
+	 */
+	protected function getExternalUidShortId() {
+		$externalUid = $this->externalUid;
+
+		$dataWhere = 'externaluid = "' . $externalUid . '"';
+		list($row) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('uid',
+				'tx_toctoc_comments_longuidreference', $dataWhere);
+		if (intval($row['uid']) === 0) {
+			$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_longuidreference', array(
+					'externaluid' => $externalUid,
+			));
+			$externalUid = 'ext' . $GLOBALS['TYPO3_DB']->sql_insert_id();
+		} else {
+			$externalUid = 'ext' . $row['uid'];
+		}
+
+		return $externalUid;
 	}
 	/**
 	 * Translates current TYPO3 languague to Facebook or Google Language Code

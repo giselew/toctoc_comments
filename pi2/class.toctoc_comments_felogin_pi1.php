@@ -38,35 +38,35 @@
  *
  *
  *
- *  113: class tx_toctoccomments_pi2 extends tslib_pibase
- *  136:     protected function processRedirect()
- *  150:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  248:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  484:     protected function watermark($conf, $content)
- *  522:     protected function showForgot()
- *  602:     protected function showLogout()
- *  637:     protected function showLogin()
- *  789:     protected function getRSAKeyPair()
- *  826:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
- *  862:     protected function getPreserveGetVars()
- *  915:     protected function generatePassword($len)
- *  935:     protected function getDisplayText($label, $stdWrapArray=array())
- *  947:     protected function getUserFieldMarkers()
- *  989:     protected function validateRedirectUrl($url)
- * 1020:     protected function isInCurrentDomain($url)
- * 1032:     protected function isInLocalDomain($url)
- * 1073:     protected function isRelativeUrl($url)
- * 1089:     protected function generateAndSendHash($user)
- * 1261:     protected function changePassword($uid, $piHash)
- * 1385:     protected function showSignon()
- * 1803:     protected function getSignupCaptcha($required, $errcp, $cpval)
- * 1846:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
- * 1873:     protected function processSignupCaptcha($postData)
- * 1913:     protected function loginUser($facebookId)
- * 1941:     protected function storeUser($facebookUserProfile, $socialnetwork)
- * 2091:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
- * 2109:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
- * 2199:     protected function getCurrentIp()
+ *  117: class tx_toctoccomments_pi2 extends tslib_pibase
+ *  140:     protected function processRedirect()
+ *  154:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  252:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  488:     protected function watermark($conf, $content)
+ *  526:     protected function showForgot()
+ *  606:     protected function showLogout()
+ *  641:     protected function showLogin()
+ *  793:     protected function getRSAKeyPair()
+ *  830:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
+ *  866:     protected function getPreserveGetVars()
+ *  919:     protected function generatePassword($len)
+ *  939:     protected function getDisplayText($label, $stdWrapArray=array())
+ *  951:     protected function getUserFieldMarkers()
+ *  993:     protected function validateRedirectUrl($url)
+ * 1024:     protected function isInCurrentDomain($url)
+ * 1036:     protected function isInLocalDomain($url)
+ * 1077:     protected function isRelativeUrl($url)
+ * 1093:     protected function generateAndSendHash($user)
+ * 1265:     protected function changePassword($uid, $piHash)
+ * 1389:     protected function showSignon()
+ * 1807:     protected function getSignupCaptcha($required, $errcp, $cpval)
+ * 1850:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ * 1877:     protected function processSignupCaptcha($postData)
+ * 1917:     protected function loginUser($facebookId)
+ * 1945:     protected function storeUser($facebookUserProfile, $socialnetwork)
+ * 2095:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
+ * 2113:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
+ * 2203:     protected function getCurrentIp()
  *
  * TOTAL FUNCTIONS: 28
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -95,10 +95,14 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 	(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
 	(class_exists('t3lib_utility_Math', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\MathUtility', 't3lib_utility_Math');
 	(class_exists('tslib_cObj', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer', 'tslib_cObj');
-	(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
+	if (!t3lib_extMgm::isLoaded('compatibility6'))  {
+		(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
+	}
 	(class_exists('t3lib_utility_Array', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Utility\ArrayUtility', 't3lib_utility_Array');
 	if ((t3lib_extMgm::isLoaded('saltedpasswords')) && ($GLOBALS['TYPO3_CONF_VARS']['FE']['loginSecurityLevel']))  {
-		(class_exists('tx_saltedpasswords_div', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Saltedpasswords\Utility\SaltedPasswordsUtility', 'tx_saltedpasswords_div');
+		if (!t3lib_extMgm::isLoaded('compatibility6'))  {
+			(class_exists('tx_saltedpasswords_div', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Saltedpasswords\Utility\SaltedPasswordsUtility', 'tx_saltedpasswords_div');
+		}
 	}
 
 }

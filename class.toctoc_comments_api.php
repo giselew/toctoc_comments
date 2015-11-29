@@ -41,27 +41,27 @@ require_once(t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments
  *
  *
  *   74: class toctoc_comments_api
- *  106:     public function __construct()
- *  136:     public function comments_getComments_fe_user($params, $conf)
- *  155:     public function getwebpagepreview($cmd, $cid, $data, $conf)
- *  171:     public function cleanupfup($previewid, $conf, $originalfilename)
- *  185:     public function handleCommentatorNotifications($ref, $conf = NULL, $notfromeID =FALSE, $pid)
- *  203:     public function handleeID($ref, $conf, $messagetodisplay, $returnurl)
- *  224:     public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $commentspics, $scopeid=0, $isReview = 0)
- *  245:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $commentid)
- *  259:     public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
+ *  107:     public function __construct()
+ *  137:     public function comments_getComments_fe_user($params, $conf)
+ *  156:     public function getwebpagepreview($cmd, $cid, $data, $conf)
+ *  172:     public function cleanupfup($previewid, $conf, $originalfilename)
+ *  186:     public function handleCommentatorNotifications($ref, $conf = NULL, $notfromeID =FALSE, $pid)
+ *  204:     public function handleeID($ref, $conf, $messagetodisplay, $returnurl)
+ *  225:     public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $commentspics, $scopeid=0, $isReview = 0)
+ *  246:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $commentid)
+ *  260:     public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
 			$feuserid = 0, $cmd, $piVars, $cid, $datathis, $AjaxData, $userpic, $commentspics, $check='',
 			$extref='', $tctreestate  = NULL, $commentreplyid=0, $isrefresh=0, $confSess = array())
- *  323:     public function updateComment($conf, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
- *  335:     public function previewcomment($data, $conf)
- *  348:     public function commentsSearch($data, $conf, $cid)
- *  366:     public function isVoted($ref, $scopeid, $feuser, $fromAjax)
- *  376:     public function initCaches()
- *  387:     public function enableFields($table)
- *  399:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
- *  408:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
- *  423:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- *  446:     public function createLinks($text, $conf = NULL)
+ *  325:     public function updateComment($conf, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
+ *  337:     public function previewcomment($data, $conf)
+ *  350:     public function commentsSearch($data, $conf, $cid)
+ *  368:     public function isVoted($ref, $scopeid, $feuser, $fromAjax)
+ *  378:     public function initCaches()
+ *  389:     public function enableFields($table)
+ *  401:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
+ *  410:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ *  425:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ *  448:     public function createLinks($text, $conf = NULL)
  *
  * TOTAL FUNCTIONS: 19
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -90,6 +90,7 @@ class toctoc_comments_api {
 	public $pi_checkCHash = TRUE;				// Required for caching.
 
 	public $externalUid;						// UID of external record
+	public $externalUidString = '';						// UID of external record
 	public $showUidParam = 'showUid';			// Name of 'showUid' GET parameter (different for tt_news!)
 	public $where;								// SQL WHERE for records
 	public $where_dpck;						// SQL WHERE for double post checks
@@ -263,6 +264,7 @@ class toctoc_comments_api {
 			$extref='', $tctreestate  = NULL, $commentreplyid=0, $isrefresh=0, $confSess = array()) {
 			if ($fromAjax) {
 				$this->externalUid = $datathis['externalUid'];
+				$this->externalUidString = $datathis['externalUidString'];
 				$this->showUidParam = $datathis['showUidParam'];
 				$this->where = $datathis['where'];
 				$this->where_dpck  = $datathis['where_dpck'];

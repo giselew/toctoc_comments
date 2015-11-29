@@ -1,6 +1,5 @@
 div.typo3-bigDoc, div.typo3-noDoc, div.typo3-smallDoc, div.typo3-mediumDoc {
 	height: 99%;
-	overflow: auto;
 }
 div.typo3-bigDoc {
 	width: 97%;

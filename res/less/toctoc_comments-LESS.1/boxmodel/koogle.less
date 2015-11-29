@@ -79,10 +79,6 @@ div.tx-tc-cts-ct-dp div.tx-tc-ct-box div.tx-tc-ct-box-cttxt p.tx-tc-text {
 
 // Line-Height 18 and new margin of topratingsarea (ratings on top, ilke and comment..., overwrite system)
 
-.tx-tc-text {
-	line-height: 26px;
-}
-
 // padding topratingsarea (ratings on top, ilke and comment..., overwrite system)
 
 .tx-tc-text, .tx-tc-text-top {
@@ -120,8 +116,6 @@ div.tx-tc-cts-ct-dp div.tx-tc-ct-box div.tx-tc-ct-box-cttxt p.tx-tc-text {
 	line-height: 25px;
 	margin: 0 0 0 2px;
 }
-
-// width of topratingsarea
 
 .tx-tc-text {
 	width: 91%;
@@ -182,12 +176,12 @@ div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-wpp {
 
 // Margin of ilikes depends on ratingMarginTop, but needs adaption here by (25-18/2) -> 4+1 =5
 .tx-tc-myrts-ilke img, .tx-tc-myrts-ilke .tx_toctoc_comments_static_ilike img, img.tx-tc-trt-rating-like-only {
-	margin: (5+@ratingMarginTop) 6px 0 0;
+	margin: (3+@ratingMarginTop) 6px 0 0;
 }
 
 // Margin of disilikes depends on ratingMarginTop, but needs adaption here
 .tx-tc-myrts-disilke img, .tx-tc-myrts-disilke .tx_toctoc_comments_static_ilike img {
-	margin: (5+@ratingMarginTop) 6px 0 0;
+	margin: (3+@ratingMarginTop) 6px 0 0;
 
 }
 
@@ -592,26 +586,17 @@ div.tx-tc-pi1 {
 	line-height:2em;
 }
 
-// Margin of voting stars if design 1 is active
-.tx-tc-overrating-voting .tx-tc-rts-dp {
-	margin: -8px 0 0;
-}
-
-// padding for commenttext area p
-.tx-tc-overrating + .tx-tc-text {
-	margin: -5px 0 0;
-}
-
 // Margin of rating text in comments
-.tx-tc-cts-ct-dp .tx-tc-ct-box .tx-tc-ct-box-cttxt .tx-tc-rt .tx-tc-rts-area .tx-tc-rts-container .tx-tc-rts-li .tx-tc-rts .tx-tc-myrts-myrt, .tx-tc-cts-ct-dp .tx-tc-ct-box .tx-tc-ct-box-cttxt .tx-tc-rt .tx-tc-rts-area .tx-tc-rts-container .tx-tc-rts-li .tx-tc-rts .tx-tc-rts-text {
+.tx-tc-cts-ct-dp .tx-tc-ct-box .tx-tc-ct-box-cttxt .tx-tc-rt .tx-tc-rts-area .tx-tc-rts-container .tx-tc-rts-li .tx-tc-rts .tx-tc-myrts-myrt {
+	margin: 0 4px -2px 0;
+} 
+.tx-tc-cts-ct-dp .tx-tc-ct-box .tx-tc-ct-box-cttxt .tx-tc-rt .tx-tc-rts-area .tx-tc-rts-container .tx-tc-rts-li .tx-tc-rts .tx-tc-rts-text,
+.tx-tc-cts-ct-dp .tx-tc-ct-box .tx-tc-ct-box-cttxt .tx-tc-overrating-voting .tx-tc-rts-text,
+.tx-tc-cts-ct-dp .tx-tc-ct-box .tx-tc-ct-box-cttxt .tx-tc-overrating-voting .tx-tc-myrts-myrt {
 	margin: 2px 4px -2px 0;
 }
 
 // padding for comments_static_ilike
-
-.tx_toctoc_comments_static_ilike {
-	padding: 0 4px 0 1px;
-}
 
 // report margin right
 .tx-tc-ct-report {
@@ -631,10 +616,7 @@ div.tx-tc-pi1 {
 
 // top margin commentdates in commentslist
 .tx-tc-rts .tx-tc-commentviews {
-	margin: 1px 2px 0 0;
-}
-.tx-tc-ct-box-cttxt .tx-tc-rts-li .tx-tc-ctdate {
-	margin: 1px 2px 0 0;
+	margin: 0 2px 0 0;
 }
 
 // margin for sharrre so it fits in top plugin line

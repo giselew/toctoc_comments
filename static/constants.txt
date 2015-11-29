@@ -253,6 +253,9 @@ plugin.tx_toctoccomments_pi1 {
     
  	# cat=plugin.tx_toctoccomments_pi1: Advanced//58;  type=boolean; label=Long view count text:Shows the text for counting of views in a longer format - Short - 909 Views since 21.12.2012. Long - 909 people saw this content since 21.12.2012 
     showCountViewsLongFormat = 0
+    
+    # cat=plugin.tx_toctoccomments_pi1: Advanced//581;  type=int+; label=Maximal age for a view, in days: After this delay a subsequent viewcounts as new view
+    viewMaxAge = 28
  
     # cat=plugin.tx_toctoccomments_pi1: Advanced//59;  type=int+; label=Activity-calculation, multiplicand for number of ratings: For the value of an activity ratings might be considered more than views, with this ratings are given more value than simple views in the calculation of the activity-value 
     activityMultiplicatorRating = 2

@@ -895,6 +895,10 @@ Rules
 {22bbhgtr}={ratingLineHeight}
 Selectors
 .tx-tc-scopetitle, .tx-tc-scopetitlebold
+.tx-tc-text-top .tx-tc-atrts-dp
+.tx-tc-text-top .tx-tc-sharrrearea-popup
+.tx-tc-text-top .tx-tc-atrts-ctlink
+.tx-tc-text-top .tx-tc-rts-area
 ***
 
 Boxmodel
@@ -1058,16 +1062,16 @@ Boxmodel
 short iLike right margin on top
 CSS
 margin-right: 5px;
-margin-right: {boxmodelLineHeightHalf}px;
+margin-right: {boxmodelSpacingHalf}px;
 Selectors
 .tx-tc-text-top .tx-tc-atrts-dp .tx-tc-myrts-ilke
 ***
 
 Boxmodel
-short disilke left margin aside comments
+short iLike right margin incomment lists (overall)
 CSS
-margin-left: 5px;
-margin-left: {boxmodelLineHeightHalf}px;
+margin: 0 4px 0 0;
+margin: 0 {boxmodelSpacingHalf}px 0 0;
 Selectors
-div.tx-tc-overrating div.tx-tc-myrts-disilke
+.tx-tc-myrts-ilke
 ***

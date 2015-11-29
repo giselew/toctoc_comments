@@ -41,7 +41,7 @@
  *   68:     public function mainRecentComments($pObj, $conf, $feuserid)
  *  151:     public function comments_getRecentComments($rows, $conf, $pObj, $fromusercenterid = 0, $usercenterlistid = 0,
 			$fromAjax = FALSE, $searchincomments = '')
- *  638:     protected function createRCLinks($text, $refID, $commentID, $prefix, $externalprefix, $singlePid, $conf, $show_uid, $okrowsi)
+ *  654:     protected function createRCLinks($text, $refID, $commentID, $prefix, $externalprefix, $singlePid, $conf, $show_uid, $okrowsi)
  *
  * TOTAL FUNCTIONS: 3
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -190,7 +190,12 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 			$mmtable=substr($row['external_ref'], 0, $posbeforeid-1);
 			$refID = substr($row['external_ref'], $posbeforeid);
 
-			$where = $mmtable. '.uid = ' . $refID;
+			if (is_array($GLOBALS['TCA'][$mmtable])) {
+				$where = $mmtable. '.uid = ' . $refID . $this->enableFields($mmtable, $pObj, $fromAjax);
+			} else {
+				$where = $mmtable. '.uid = ' . $refID;
+			}
+
 			$targetfortitle='title';
 			if ($mmtable== 'tx_wecstaffdirectory_info') {
 				$targetfortitle='full_name';
@@ -252,15 +257,26 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 			}
 
 			if ($ownershipok==1) {
-				$rowstitle = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
-						$mmtable . '.' . $targetfortitle . ' AS refTitle',
-						$mmtable,
-						$where,
-						'',
-						'',
-						''
-				);
-				$row['refTitle']=$rowstitle[0]['refTitle'];
+				$rowstitle = array();
+
+				if (is_array($GLOBALS['TCA'][$mmtable])) {
+					$rowstitle = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+							$mmtable . '.' . $targetfortitle . ' AS refTitle',
+							$mmtable,
+							$where,
+							'',
+							'',
+							''
+					);
+					if (trim($rowstitle[0]['refTitle']) == '') {
+						$ownershipok=0;
+					} else {
+						$row['refTitle']=$rowstitle[0]['refTitle'];
+					}
+				} else {
+					$row['refTitle']='';
+				}
+
 				$itemtitle = 'News';
 				$cttitle = str_replace(':', '', $this->pi_getLLWrap($pObj, 'pi1_template.textcommentlink', $fromAjax));
 				$itemtitle = ucfirst($this->pi_getLLWrap($pObj, 'comments_recent.' . $mmtable .'', $fromAjax));
@@ -382,7 +398,7 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 					// if not: artificial content element id, link should work
 				}
 
-				if ($skiprow==FALSE) {
+				if (($skiprow==FALSE) && ($ownershipok==1)) {
 
 					$row['firstname']=$this->applyStdWrap(htmlspecialchars($row['firstname']), 'firstName_stdWrap', $conf);
 					$row['lastname']=$this->applyStdWrap(htmlspecialchars($row['lastname']), 'lastName_stdWrap', $conf);
@@ -649,6 +665,16 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 				$getparams = $show_uid;
 			}
 
+			if (str_replace('ext', '', $refID) != $refID) {
+			 	$dataWhereuidrow = 'uid = ' . intval(str_replace('ext', '', $refID));
+				list($uidrow) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('externaluid',
+					'tx_toctoc_comments_longuidreference', $dataWhereuidrow);
+
+				if (trim($uidrow['externaluid']) != '') {
+					$refID = $uidrow['externaluid'];
+				}
+			}
+
 			$params = array(
 	                $getparams => $refID,
 					'toctoc_comments_pi1[anchor]'=>substr($conf['recentcomments.']['anchorPre'], 1).$commentID,
@@ -668,12 +694,14 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
         		}
 
         	}
+        	$addparams = t3lib_div::implodeArrayForUrl('', $params, '', 1);
+        	$addparams = str_replace('7g8', '-', $addparams);
 
  			$conflink = array(
         		'useCacheHash'     => $useCacheHashNeeded,
         		'no_cache'         => $no_cacheflag,
         		'parameter'        => $singlePid.$conf['recentcomments.']['anchorPre'].$commentID,
-        		'additionalParams' => t3lib_div::implodeArrayForUrl('', $params, '', 1),
+        		'additionalParams' => $addparams,
 				'ATagParams' => 'rel="nofollow"',
  				'forceAbsoluteUrl' => 1,
         	);

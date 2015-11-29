@@ -119,7 +119,6 @@ $editTable = 'tx_toctoc_comments_ipbl_static';
 		    					$newIPsArr[$iIP] = $bannedIP;
 		    					$iIP++;
 		    					$infomessage .= '' . trim($rowarr[0] . 'GMT');
-		    					//$infomessage .= '<br>' . $bannedIP . '';
 		    				} else {
 		    					if ($foundExpires == FALSE) {
 		    						$infomessage .= '' . $datarow;
@@ -144,6 +143,7 @@ $editTable = 'tx_toctoc_comments_ipbl_static';
 				    		// now delete and then INSERT
 				    		$upd = $GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_ipbl_static', '');
 				    		foreach ($newIPsArr as $newIP) {
+				    			if (trim($newIP) != '') {
 				    			$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_ipbl_static', array(
 				    					'pid' => $storagePid,
 				    					'tstamp' => time(),
@@ -151,6 +151,7 @@ $editTable = 'tx_toctoc_comments_ipbl_static';
 				    					'ipaddr' => $newIP,
 				    					'comment' => 'DROP lasso',
 				    			));
+				    			}
 				    		}
 				    	}
 				    	$infomessage .= '<br>' . $cntnewIPs . ' ' . $GLOBALS['LANG']->getLL('bannedipsrefreshed') . ' in SysFolder ' . $storagePid;

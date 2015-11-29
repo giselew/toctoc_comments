@@ -408,8 +408,6 @@ CSS
 float: right;
 CSS
 margin-bottom: -4px;
-CSS
-margin-top: 1px;
 Selectors
 .tx-tc-rts-li, .tx-tc-rts-li-text
 ***

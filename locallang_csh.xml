@@ -117,8 +117,6 @@ title tstamp image sys_language_uid, short</label>
 			<label index="topratingsimagesfolder.details">If in displayfileds an image is specified, then we need to now the folder containing the images of the extension, Normally this is uploads/pics/, but it can be another folder which can be specified here.</label>
 			<label index="topratingsdetailpage.description">Force a detail page for top ratings and other charts</label>
 			<label index="topratingsdetailpage.details">Some website allow their records to be rated on overview pages and also on detailpages. It concerns mainly the extensions tt_products and tt_news. So linking the rated item to the overview page is a bad idea - here you can force the page which displays the detail records.</label>
-	
-			
 		</languageKey>
 	</data>
 	<orig_hash type="array">

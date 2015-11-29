@@ -65,15 +65,6 @@ Selectors
 ***
 
 Boxmodel
-Margin of i(dis)likes images
-CSS
-margin: 5px 3px -5px 0px;
-Selectors
-.tx-tc-myrts-ilke img
-.tx-tc-myrts-disilke img
-***
-
-Boxmodel
 Code
 CSS
 font-size: 100%;
@@ -343,8 +334,6 @@ Selectors
 
 Boxmodel
 Disqus customize for smaller function lines
-CSS
-line-height: 26px;
 CSS
 margin: 0;
 Selectors

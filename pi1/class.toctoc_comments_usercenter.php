@@ -328,20 +328,30 @@ class toctoc_comments_usercenter extends toctoc_comment_lib {
 						}	$subParts = array(
 								'###SINGLE_USERCENTERCOMMENT###' => $librecentcomments->comments_getRecentComments($rows, $conf, $pObj, 1, '2i'.$rowstablemap[$i]['external_prefix']),
 						);
+
 						$markers = array();
 						$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTERCOMMENT_LIST###');
 						$extpreffortext = 'pages';
+
 						if ((trim($rowstablemap[$i]['external_prefix'])=='tt_products') || (trim($rowstablemap[$i]['external_prefix']) == 'tx_commerce_pi1')) {
-							$extpreffortext ='tt_products';
+							$extpreffortext = 'tt_products';
 						} elseif  (trim($rowstablemap[$i]['external_prefix'])=='tx_wecstaffdirectory_pi1') {
-							$extpreffortext ='tx_wecstaffdirectory_pi1';
+							$extpreffortext = 'tx_wecstaffdirectory_pi1';
 						} elseif  (trim($rowstablemap[$i]['external_prefix'])=='tx_album3x_pi1') {
-							$extpreffortext ='tx_album3x_pi1';
+							$extpreffortext = 'tx_album3x_pi1';
 						} elseif   ((trim($rowstablemap[$i]['external_prefix'])=='tx_mininews_pi1') || (trim($rowstablemap[$i]['external_prefix'])=='tx_ttnews') ||
 								(trim($rowstablemap[$i]['external_prefix'])=='tx_news_pi1')) {
-							$extpreffortext ='tx_ttnews';
+							$extpreffortext = 'tx_ttnews';
+						} else {
+							$extpreffortext = trim($rowstablemap[$i]['external_prefix']);
 						}
-						$pttmtext = $this->pi_getLLWrap($pObj, 'pi1_template.text_on', FALSE) . ' ' . $this->pi_getLLWrap($pObj, 'api_top' . $extpreffortext . 'item', $fromAjax);
+
+						$exttext = $this->pi_getLLWrap($pObj, 'api_top' . $extpreffortext . 'item', $fromAjax);
+						if ($exttext == '') {
+							$exttext = 'Extension ' . trim($rowstablemap[$i]['external_prefix']);
+						}
+
+						$pttmtext = trim($this->pi_getLLWrap($pObj, 'pi1_template.text_on', FALSE) . ' ' . $exttext);
 
 						if  ((trim($rowstablemap[$i]['external_prefix'])=='tx_community') || (trim($rowstablemap[$i]['external_prefix'])=='tx_cwtcommunity_pi1')) {
 							$pttmtext =$this->pi_getLLWrap($pObj, 'pi1_template.text_usercenter_incommunity', FALSE);
@@ -351,9 +361,7 @@ class toctoc_comments_usercenter extends toctoc_comment_lib {
 						$carr = explode('"tx-tc-recent-cts-article"', $content);
 						$countrows = count($carr) -1;
 						$boxtitle = $this->pi_getLLWrap($pObj, 'pi1_template.text_usercentercomments_title', FALSE) . ' ' . $pttmtext. ' ('.$countrows.')';
-						$tmpret=
 						$retstr .= $this->t3substituteMarkerArray($this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTER_DROP_DOWN###'),
-
 								array(
 										'###DROPDOWNID###' => '2'.$rowstablemap[$i]['external_prefix'],
 										'###DROPDOWNTIPTEXT###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercentercomments_showorhideuserinformation', FALSE),

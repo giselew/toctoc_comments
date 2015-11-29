@@ -388,6 +388,13 @@ showCountViewsLongFormat                                                        
                                                                                             format: Short: 909 Views since 21.12.2012. Long: 909
                                                                                             people saw this content since 21.12.2012
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
+viewMaxAge                                                                      int+        Maximal age for a view, in days: After this delay a      28
+                                                                                            subsequent viewcounts as new view.
+                                                                                            This option controls the size of table
+                                                                                            tx_toctoc_comments_feuser_mm
+                                                                                            
+                                                                                            (V 8.1.0.)
+------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
 activityMultiplicatorRating                                                     int+        or calculation of activity, multiplicand for number of   2
                                                                                             ratings: For the value of an activity ratings might be
                                                                                             considered more than views, with this ratings are given

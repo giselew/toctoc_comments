@@ -65,11 +65,11 @@ CREATE TABLE tx_toctoc_comments_feuser_mm (
 	pagetstampmyrating int(11) unsigned DEFAULT '0' NOT NULL,
 	pagetstampseen int(11) unsigned DEFAULT '0' NOT NULL,
 	isreview int(1) DEFAULT '0' NOT NULL,
-
 	PRIMARY KEY (reference,reference_scope,toctoc_comments_user,pid),
 	KEY uid (uid),
 	KEY idxcntilike (ilike),
 	KEY idxcntidislike (idislike),
+	KEY idxcntseen (seen),
 	KEY fastaccess (deleted,reference,reference_scope,toctoc_commentsfeuser_feuser)
 );
 
@@ -160,7 +160,7 @@ CREATE TABLE tx_toctoc_ratings_iplog (
 	reference_scope int(11) DEFAULT '0' NOT NULL,
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY ip_check (reference,reference_scope,ip)
+	KEY ip_check (reference,reference_scope,ip(64))
 );
 
 #
@@ -174,16 +174,13 @@ CREATE TABLE tx_toctoc_ratings_scope (
 	cruser_id int(11) DEFAULT '0' NOT NULL,
 	sorting int(10) DEFAULT '0' NOT NULL,
 	deleted tinyint(4) DEFAULT '0' NOT NULL,
-	hidden tinyint(4) DEFAULT '0' NOT NULL,
-	
+	hidden tinyint(4) DEFAULT '0' NOT NULL,	
 	scope_title varchar(255) DEFAULT '' NOT NULL,
 	scope_description varchar(255) DEFAULT '' NOT NULL,
 	display_order tinyint(10) DEFAULT '0' NOT NULL,
-	sys_language_uid int(11) DEFAULT '0' NOT NULL,
-	
+	sys_language_uid int(11) DEFAULT '0' NOT NULL,	
 	l18n_parent int(11) DEFAULT '0' NOT NULL,
 	l18n_diffsource mediumblob NOT NULL,
-
 	t3ver_oid int(11) DEFAULT '0' NOT NULL,
 	t3ver_id int(11) DEFAULT '0' NOT NULL,
 	t3ver_wsid int(11) DEFAULT '0' NOT NULL,
@@ -192,8 +189,7 @@ CREATE TABLE tx_toctoc_ratings_scope (
 	t3ver_stage tinyint(4) DEFAULT '0' NOT NULL,
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
-	t3_origuid int(11) DEFAULT '0' NOT NULL,
-	
+	t3_origuid int(11) DEFAULT '0' NOT NULL,	
 	PRIMARY KEY (uid),
 	KEY scope (sys_language_uid,scope_title),
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid)	
@@ -234,7 +230,6 @@ CREATE TABLE tx_toctoc_comments_attachment (
 	title tinytext NOT NULL,
 	description tinytext NOT NULL,
 	attachmentfilesize int(11) DEFAULT '0' NOT NULL,
-
 	PRIMARY KEY (uid),
 	KEY att_url (attachmentvariant,systemurltext(64))
 );
@@ -311,10 +306,9 @@ CREATE TABLE tx_toctoc_comments_ipbl_local (
 	ipaddr varchar(255) DEFAULT '' NOT NULL,
 	blockfe int(11) DEFAULT '0' NOT NULL,
 	comment text,
-
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY ipaddr (ipaddr)
+	KEY ipaddr (ipaddr(50))
 );
 
 #
@@ -328,10 +322,9 @@ CREATE TABLE tx_toctoc_comments_ipbl_static (
 	cruser_id int(11) DEFAULT '0' NOT NULL,
 	ipaddr varchar(80) DEFAULT '' NOT NULL,
 	comment text,
-
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY ipaddr (ipaddr(22))
+	KEY ipaddr (ipaddr)
 );
 
 #
@@ -374,6 +367,16 @@ CREATE TABLE tx_toctoc_comments_cache_mailconf (
     id int(11) NOT NULL auto_increment,
     mailconf text NOT NULL, 
     PRIMARY KEY (id)
+);
+
+#
+# TABLE STRUCTURE FOR TABLE 'tx_toctoc_comments_longuidreference'
+#
+CREATE TABLE tx_toctoc_comments_longuidreference (
+    uid int(11) NOT NULL auto_increment,
+    externaluid varchar(255) DEFAULT '' NOT NULL,
+    PRIMARY KEY (uid),
+    KEY external_uid (externaluid)
 );
 
 #

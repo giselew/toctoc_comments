@@ -289,6 +289,7 @@ plugin.tx_toctoccomments_pi1 {
     showCountCommentViews = {$plugin.tx_toctoccomments_pi1.showCountCommentViews}
     countCommentViews = {$plugin.tx_toctoccomments_pi1.countCommentViews}
     showCountViewsLongFormat = {$plugin.tx_toctoccomments_pi1.showCountViewsLongFormat}
+    viewMaxAge = {$plugin.tx_toctoccomments_pi1.viewMaxAge}
 
     # For calculation of activity, multiplicator for number of ratings
     activityMultiplicatorRating = {$plugin.tx_toctoccomments_pi1.activityMultiplicatorRating}
@@ -704,7 +705,7 @@ plugin.tx_toctoccomments_pi2 {
   templateFile = typo3conf/ext/toctoc_comments/res/template/toctoccomments_template_felogin_pi1.html
 
   userFunc = tx_toctoccomments_pi2->main
-  # over write fe_login setup here: make sure that feloginBaseURL and storagePid are set to correct values
+  # make sure that feloginBaseURL and storagePid are set to correct values
 
   # CSS-ids that should be refreshed outside the plugin after logouts logins
   refreshIdList=

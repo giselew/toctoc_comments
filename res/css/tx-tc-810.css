@@ -214,7 +214,7 @@ img.tx-tc-cap-image-rf {
 }
 .tx-tc-myrts-ilke {
 	float: left;
-	margin: 0;
+	margin: 0 4px 0 0;
 }
 .tx-tc-myrts-disilke {
 	float: left;
@@ -850,6 +850,7 @@ a.addthis_counter .addthis_pill_style {
 .shrbox .tx-tc-shareicon, .shrboxopen .tx-tc-shareicon {
 	margin: 2px 8px -2px 4px;
 	float: left;
+	margin-top: 2px !important;
 }
 /* sharrre design 4 specifics */
 .shrdes4right {
@@ -1262,6 +1263,12 @@ div.tx-tc-ct-img {
 .tx-tc-rts-li, .tx-tc-rts-li-text {
 	float: left;
 }
+.tx-tc-text-top .tx-tc-sharrrearea-popup {
+	line-height: 16px;
+}
+.tx-tc-text-top .tx-tc-atrts-dp {
+	line-height: 16px;
+}
 .tx-tc-rts-li-text-hide {
 	float: left;
 	height: 0;
@@ -1296,6 +1303,12 @@ div.tx-tc-ct-img {
 }
 .tx-tc-text-top .tx-tc-yourreview {
 	font-weight: normal;
+}
+.tx-tc-text-top .tx-tc-atrts-ctlink {
+	line-height: 16px;
+}
+.tx-tc-text-top .tx-tc-rts-area {
+	line-height: 16px;
 }
 .tx-tc-ctdate {
 	float: left;
@@ -2237,7 +2250,7 @@ span.tx-tc-emo-top-nav-on, span.tx-tc-emo-top-nav-off {
 	float: right;
 	height: 26px;
 	width: 28px;
-	margin-right: -30px;
+	margin-right: -28px;
 	margin-top: -26px;
 	margin-left: 4px;
 }
@@ -2513,6 +2526,9 @@ div.tx-tc-cts-ct-dp div.tx-tc-ct-box div.tx-tc-ct-box-cttxt p.tx-tc-text {
 	display: table;
 	width: -moz-available;
 	padding: 4px 30px 0 0;
+}
+div.tx-tc-cts-ct-dp div.tx-tc-ct-box div.tx-tc-ct-box-cttxt .tx-tc-overrating + p.tx-tc-text {
+    display: block;
 }
 @media (max-width: 350px) {
 	div.tx-tc-cts-ct-dp div.tx-tc-ct-box div.tx-tc-ct-box-cttxt p.tx-tc-text {
@@ -3229,9 +3245,6 @@ div.tx-tc-searchmore, div.tx-tc-searchprev {
 .tx-tc-hidedes5detailtotal {
 	margin-top: 0 !important;
 	margin-left: 0 !important;
-}
-div.tx-tc-overrating div.tx-tc-myrts-disilke {
-	margin-left: 5px;
 }
 .tx-tc-text-top .tx-tc-atrts-dp .tx-tc-myrts-ilke {
 	margin-right: 5px;

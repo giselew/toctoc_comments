@@ -39,10 +39,10 @@
  *
  *   60: class toctoc_comments_charts extends toctoc_comment_lib
  *   69:     public function topratings ($conf, $pObj, $fromusercenterid = 0)
- * 1322:     public function topsharings ($conf, $pObj)
- * 1741:     private function human_sharesize($bytes, $decimals = 1)
- * 1761:     private function enrichrows($conf, $rowsmerged, $pObj, $show_uid, $input_sys_language_uid = FALSE)
- * 2425:     private function initconf($pidcond, $conf, $restrictor)
+ * 1350:     public function topsharings ($conf, $pObj)
+ * 1782:     private function human_sharesize($bytes, $decimals = 1)
+ * 1802:     private function enrichrows($conf, $rowsmerged, $pObj, $show_uid, $input_sys_language_uid = FALSE)
+ * 2542:     private function initconf($pidcond, $conf, $restrictor)
  *
  * TOTAL FUNCTIONS: 5
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -224,12 +224,14 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 
 				 $sumvotingfound= $sumvotingfound+($rowsmerged1['sumilikedislikevote']);
 				$i++;
+
 			}
 
 		} elseif ($conf['topRatings.']['topRatingsMode']==1){
 			$querymerged='SELECT DISTINCT MIN(pagetstampmyrating) as pageid,
 					reference As ref,
-					(CASE WHEN myrating = 0 THEN 0 ELSE 1 END) *(CASE WHEN deleted = 0 THEN 1 ELSE 0 END) *(CASE WHEN reference_scope = 0 THEN 1 ELSE 0 END) *
+					(CASE WHEN myrating = 0 THEN 0 ELSE 1 END) *(CASE WHEN deleted = 0 THEN 1 ELSE 0 END) *
+					(CASE WHEN reference_scope = 0 THEN 1 ELSE 0 END) *
 					(CASE WHEN tstampmyrating > '.
 					$datesince.' THEN 1 ELSE' . $addonsqlforoldratings .'END) as okdate,
 					sum(myrating)/' . $conf['ratings.']['maxValue'] . ' as sumilikedislike,
@@ -250,7 +252,29 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 				$rowsmerged[$i]['voting'] = round($rowsmerged1['sumilikedislikevote'], 1);
 				$rowsmerged[$i]['nbrvotes'] = $rowsmerged1['nbrvotes'];
 				$rowsmerged[$i]['likecount'] = round($rowsmerged1['sumilikedislike'], 1);
-				$rowsmerged[$i]['ref'] = $rowsmerged1['ref'];
+				// need to handle this... tx_restdoc_pi16g9doc_CommentsAndRatingsOn7g8Index
+				$fixedref = $rowsmerged1['ref'];
+				$arrref = explode('6g9', $rowsmerged1['ref']);
+				if (count($arrref) > 1) {
+
+					$refpart1 = $arrref[0];
+					$arrreffromrest = explode('_', $arrref[1]);
+					array_shift($arrreffromrest);
+
+					$tmpexternalUid = implode('_', $arrreffromrest);
+					$dataWhereuidrow = 'uid = ' . intval(str_replace('ext', '', $tmpexternalUid));
+					list($uidrow) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('externaluid',
+							'tx_toctoc_comments_longuidreference', $dataWhereuidrow);
+
+					if (trim($uidrow['externaluid']) != '') {
+						$tmpexternalUid = $uidrow['externaluid'];
+					}
+
+					$refpart2 = str_replace('7g8', '-', $tmpexternalUid);
+					$fixedref = $refpart1 . '_' . $refpart2;
+				}
+
+				$rowsmerged[$i]['ref'] = $fixedref;
 				$rowsmerged[$i]['pageid'] = $rowsmerged1['pageid'];
 				$rowsmerged[$i]['sumilikedislike'] = $rowsmerged1['sumilikedislike'];
 				$rowsmerged[$i]['sumilikedislikevote'] = $rowsmerged1['sumilikedislikevote'];
@@ -266,8 +290,14 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 
 				$sumlikecountfound = $sumlikecountfound+$rowsmerged1['sumilikedislike'];
 
+				//if (str_replace('tx_restdoc_pi', '', $rowsmerged1['ref']) != $rowsmerged1['ref']) {
+					//print_r($rowsmerged[$i]); print '<br>';
+				//}
+
 				$i++;
+
 			}
+			//print $querymerged;
 
 		} elseif (($conf['topRatings.']['topRatingsMode']==3) || ($conf['topRatings.']['topRatingsMode']==2)){
 
@@ -378,7 +408,6 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					}
 
 				}
-
 			}
 
 			$iout=0;
@@ -959,7 +988,6 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 			if ($ownershipok==1) {
 				$skiprow=FALSE;
 				if ($skiprow==FALSE) {
-
 				 	$commentID = $row['refID'];
 					if ($prefix == 'tt_content_') {
 						$exticon= '/typo3/sysext/cms/ext_icon.gif">';
@@ -995,7 +1023,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 						$row['image']=$imgarr[0];
 					}
 
-					if (strpos ($row['topratingsimagesfolder'], '/')>1) {
+					if (strpos($row['topratingsimagesfolder'], '/')>1) {
 						//there is a path
 						if (trim ($row['image']) != '') {
 							//there is an image
@@ -1398,16 +1426,28 @@ AND pages.deleted = 0 and pages.hidden= 0';
 
 		$comma ='';
 		$in = '';
+		$paramarr = array();
+		if ($no_cacheflag == 1) {
+			$paramarr['no_cache']=1;
+		}
+
+		$params=t3lib_div::implodeArrayForUrl('', $paramarr, '', 1);
+
 		while ($rowspages = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultpages)) {
 			$conflink = array(
 					'useCacheHash'     => $useCacheHashNeeded,
-					'no_cache'         => $no_cacheflag,
 					'parameter'        => $rowspages['uid'],
+					'additionalParams' => $params,
 					'ATagParams' => 'rel="nofollow"',
 					'forceAbsoluteUrl' => 1,
 				);
 			$textorig = $rowspages['title'];
 			$text = $this->cObj->typoLink($textorig, $conflink);
+			if (str_replace('cHash=', '', $text) == $text) {
+				$text = str_replace('&no_cache=1', '', $text);
+				$text = str_replace('?no_cache=1', '', $text);
+			}
+
 			$linkpurearr = explode('"', $text);
 			$linkpure = $linkpurearr[1];
 			if (strlen($textorig) < strlen($text)) {
@@ -1682,6 +1722,7 @@ AND pages.deleted = 0 and pages.hidden= 0';
 						' ' . $outputedshares[$o]['url'] . '</small>';
 			}
 			$countoutput=intval($outputedshares[$o]['sharecount']);
+			$this->grandtotalsharecount += $countoutput;
 			$countoutputfmt=$this->human_sharesize($countoutput);
 			if ($conf['topSharings.']['topSharingsMode']== 0) {
 				$subParts = array(
@@ -1776,6 +1817,19 @@ AND pages.deleted = 0 and pages.hidden= 0';
 			$this->mmtable=substr($pageidrecord, 0, $posbeforeid-1);
 
 			$refID = substr($pageidrecord, $posbeforeid);
+
+			if (str_replace('ext', '', $refID) != $refID) {
+				$dataWhereuidrow = 'uid = ' . intval(str_replace('ext', '', $refID));
+				list($uidrow) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('externaluid',
+						'tx_toctoc_comments_longuidreference', $dataWhereuidrow);
+
+				if (trim($uidrow['externaluid']) != '') {
+					$rowsmerged[$i]['ref'] = str_replace($refID, $uidrow['externaluid'], $rowsmerged[$i]['ref']);
+					$refID = $uidrow['externaluid'];
+				}
+
+			}
+
 			if (!is_array($_SESSION['prefixes'])) {
 				$displayfieldsareset = FALSE;
 				$topratingsimagesfolderset = FALSE;
@@ -1941,158 +1995,130 @@ AND pages.deleted = 0 and pages.hidden= 0';
 			// read from Session or Prefixtotable map the fields
 			$rowsmerged[$i]['refID']=$refID;
 
-			if (($conf['topRatings.']['topRatingsExternalPrefix']=='') || ($this->mmtabletoexternalprefix==TRUE)) {
-				$this->mmtabletoexternalprefix=TRUE;
-				$conf['topRatings.']['topRatingsExternalPrefix']=$_SESSION['prefixes']['tbl' . $this->mmtable]['pi1_key'];
+			if (($conf['topRatings.']['topRatingsExternalPrefix'] == '') || ($this->mmtabletoexternalprefix == TRUE)) {
+				$this->mmtabletoexternalprefix = TRUE;
+				$conf['topRatings.']['topRatingsExternalPrefix'] = $_SESSION['prefixes']['tbl' . $this->mmtable]['pi1_key'];
 			}
 
-			$rowsmerged[$i]['pi1_key']=$_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['pi1_key'];
-			$rowsmerged[$i]['pi1_table']=$_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['pi1_table'];
-			$rowsmerged[$i]['show_uid']=$_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['show_uid'];
-			$rowsmerged[$i]['topratingsdetailpage']=$_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['topratingsdetailpage'];
-			$rowsmerged[$i]['topratingsimagesfolder']=$_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['topratingsimagesfolder'];
-			$tmmtable =$this->mmtable;
-			$where = 'uid=' . $refID . ' ' . $this->enableFields($tmmtable, $pObj);
-			$tmpdisplayfields = $_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['displayfields'];
-			if ($this->mmtable== 'pages') {
-				if ($rowsmerged[$i]['lang'] == 0) {
-					$tmpdisplayfields = str_replace('sys_language_uid, ', '', $tmpdisplayfields);
+			$rowsmerged[$i]['pi1_key'] = $_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['pi1_key'];
+			$rowsmerged[$i]['pi1_table'] = $_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['pi1_table'];
+			$rowsmerged[$i]['show_uid'] = $_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['show_uid'];
+			$rowsmerged[$i]['topratingsdetailpage'] = $_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['topratingsdetailpage'];
+			$rowsmerged[$i]['topratingsimagesfolder'] = $_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['topratingsimagesfolder'];
+			$tmmtable = $this->mmtable;
+			$rowsdisplay = array();
+			$deadtca = TRUE;
+			if (intval($refID) != 0) {
+				if (is_array($GLOBALS['TCA'][$tmmtable])) {
+					$deadtca = FALSE;
+					$where = 'uid=' . $refID . ' ' . $this->enableFields($tmmtable, $pObj);
+					$tmpdisplayfields = $_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['displayfields'];
+					if ($this->mmtable == 'pages') {
+						if ($rowsmerged[$i]['lang'] == 0) {
+							$tmpdisplayfields = str_replace('sys_language_uid, ', '', $tmpdisplayfields);
+						}
+					}
+
+					$sorting = '';
+					$addparamforextensionswithoutsyslanguid = '';
+					If ((strrpos($tmpdisplayfields, 'sys_language_uid') > 0) &&
+							($GLOBALS['TSFE']->sys_language_uid > 0)) {
+						$where = '((uid=' . $refID . ') OR (l18n_parent=' . $refID . ' AND sys_language_uid=' . $GLOBALS['TSFE']->sys_language_uid . ')) '  .
+								$this->enableFields($tmmtable, $pObj);
+						$sorting = 'sys_language_uid DESC';
+					}
+
+					if (($this->mmtable == 'pages') || ($this->mmtable == 'pages_language_overlay')) {
+						if ($input_sys_language_uid != 0) {
+							$tmmtable = 'pages_language_overlay';
+							$where = '(pid=' . $refID . ' AND sys_language_uid=' . $input_sys_language_uid . ') '  .
+									$this->enableFields($tmmtable, $pObj);
+						}  else {
+							$where = '(uid=' . $refID . ') '  .
+									$this->enableFields($tmmtable, $pObj);
+							$sorting = '';
+						}
+					}
+
+					If ((strrpos($tmpdisplayfields, 'sys_language_uid') == 0) &&
+							($GLOBALS['TSFE']->sys_language_uid > 0)) {
+						if (($this->mmtable != 'tx_toctoc_comments_comments') && ($this->mmtable != 'pages') && ($this->mmtable != 'pages_language_overlay')) {
+							$addparamforextensionswithoutsyslanguid = '&L=0';
+						}
+
+					}
 				}
-			}
 
-			$sorting = '';
-			$addparamforextensionswithoutsyslanguid='';
-			If ((strrpos($tmpdisplayfields, 'sys_language_uid')>0) &&
-					($GLOBALS['TSFE']->sys_language_uid>0)) {
-				$where = '((uid=' . $refID . ') OR (l18n_parent=' . $refID . ' AND sys_language_uid=' . $GLOBALS['TSFE']->sys_language_uid . ')) '  .
-						$this->enableFields($tmmtable, $pObj);
-				$sorting = 'sys_language_uid DESC';
-			}
-
-			if (($this->mmtable== 'pages') || ($this->mmtable== 'pages_language_overlay')) {
+			} else {
+				$deadtca = FALSE;
+				$displayfieldsforselect = 'title crdate sys_language_uid, subtitle';
+				$tmpdisplayfields = $displayfieldsforselect;
+				If ($GLOBALS['TSFE']->sys_language_uid > 0) {
+					$sorting = 'sys_language_uid DESC';
+				}
 				if ($input_sys_language_uid != 0) {
 					$tmmtable = 'pages_language_overlay';
-					$where = '(pid=' . $refID . ' AND sys_language_uid=' . $input_sys_language_uid . ') '  .
+					$where = '(pid=' . $rowsmerged[$i]['topratingsdetailpage'] . ' AND sys_language_uid=' . $input_sys_language_uid . ') '  .
 							$this->enableFields($tmmtable, $pObj);
 				}  else {
-					$where = '(uid=' . $refID . ') '  .
+					$tmmtable = 'pages';
+					$where = '(uid=' . $rowsmerged[$i]['topratingsdetailpage'] . ') '  .
 							$this->enableFields($tmmtable, $pObj);
 					$sorting = '';
 				}
 			}
 
-			If ((strrpos($tmpdisplayfields, 'sys_language_uid')==0) &&
-					($GLOBALS['TSFE']->sys_language_uid>0)) {
-				if (($this->mmtable != 'tx_toctoc_comments_comments') && ($this->mmtable != 'pages') && ($this->mmtable != 'pages_language_overlay')) {
-					$addparamforextensionswithoutsyslanguid='&L=0';
+			if ($deadtca == FALSE) {
+				$displayfieldsarrexplode1 = explode(', ', $tmpdisplayfields);
+				$displayfieldsarrexplode2=array();
+				$longtextdisplayfield = '';
+				if (count($displayfieldsarrexplode1)>1) {
+					$longtextdisplayfield = $displayfieldsarrexplode1[1];
+					$countdisplayfieldsarrexplode1 = count($displayfieldsarrexplode1);
+					for ($g=0; $g<$countdisplayfieldsarrexplode1; $g++){
+						$displayfieldsarrexplode2 = array_merge($displayfieldsarrexplode2, explode(' ', $displayfieldsarrexplode1[$g]));
+					}
+
+					$displayfieldsforselect = implode (', ', $displayfieldsarrexplode2);
+				} else {
+					$displayfieldsarrexplode2 = explode(' ', $tmpdisplayfields);
+					$displayfieldsforselect = implode (', ', $displayfieldsarrexplode2);
+				}
+				// Select data from Table
+				if ($this->mmtable == 'tt_content') {
+					$displayfieldsforselect .= ', uid';
+				}
+				if (intval($refID) != 0) {
+					if (($this->mmtable == 'pages') || ($this->mmtable == 'pages_language_overlay')) {
+						if ($input_sys_language_uid == 0) {
+							$displayfieldsforselect = str_replace('sys_language_uid,', '', $displayfieldsforselect);
+						}
+					}
+				} else {
+					if ($input_sys_language_uid == 0) {
+						$displayfieldsforselect = str_replace('sys_language_uid,', '', $displayfieldsforselect);
+					}
 				}
 
-			}
-			$displayfieldsarrexplode1= explode(', ', $tmpdisplayfields);
-			$displayfieldsarrexplode2=array();
-			$longtextdisplayfield='';
-			if (count($displayfieldsarrexplode1)>1) {
-				$longtextdisplayfield=$displayfieldsarrexplode1[1];
-				$countdisplayfieldsarrexplode1=count($displayfieldsarrexplode1);
-				for ($g=0; $g<$countdisplayfieldsarrexplode1; $g++){
-					$displayfieldsarrexplode2 = array_merge($displayfieldsarrexplode2, explode(' ', $displayfieldsarrexplode1[$g]));
-				}
-
-				$displayfieldsforselect = implode (', ', $displayfieldsarrexplode2);
-			} else {
-				$displayfieldsarrexplode2 = explode(' ', $tmpdisplayfields);
-				$displayfieldsforselect = implode (', ', $displayfieldsarrexplode2);
-			}
-			// Select data from Table
-			if ($this->mmtable=='tt_content') {
-				$displayfieldsforselect .= ', uid';
-			}
-
-			if (($this->mmtable== 'pages') || ($this->mmtable== 'pages_language_overlay')) {
-				if ($input_sys_language_uid == 0) {
-					$displayfieldsforselect = str_replace('sys_language_uid,', '', $displayfieldsforselect);
-				}
-			}
-
-			$rowsdisplay = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
-					$displayfieldsforselect,
-					$tmmtable,
-					$where,
-					'',
-					$sorting,
-					''
-			);
-			$rowsdisplaycompressed = array();
-
-			// Create link text, cropping texts to topRatingsTextCropLength chars max
-			if (count($rowsdisplay)>0) {
-				if ($this->mmtable=='tt_content') {
-					$tt_contentUid = $rowsdisplay[0]['uid'];
-					$syslanid = $rowsdisplay[0]['sys_language_uid'];
-				}
-				$k=0;
+				$rowsdisplay = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+						$displayfieldsforselect,
+						$tmmtable,
+						$where,
+						'',
+						$sorting,
+						''
+				);
 				$rowsdisplaycompressed = array();
-				foreach($rowsdisplay[0] as $key=>$val) {
-					$tmpdisplayfieldswork=$tmpdisplayfields;
-					if (($key== 'crdate') || ($key== 'tstamp') || ($key== 'datetime') || ($key== 'start_date')) {
-						$rowsdisplaycompressed[4] = $this->formatDate($val, $pObj, FALSE, $conf);
-					} elseif ((substr($key, 0, 5)== 'image') || (substr($key, 0, 5)== 'photo') || ($key== 'picture')) {
-						if (intval($val) == 0) {
-							$rowsdisplaycompressed[3] = $val;
-						} else {
-							$dataWhereContentPic = 'sys_file_reference.tablenames="tt_content" AND sys_file_reference.uid_foreign=tt_content.uid ' .
-									'AND sys_file_reference.deleted=0 AND sys_file_reference.uid_local=sys_file.uid ' .
-									'AND sys_file_reference.sys_language_uid=' .$syslanid .' AND tt_content.uid = ' . $tt_contentUid;
 
-							$sqlstr = 'SELECT sys_file_reference.uid, sys_file_reference.uid, sys_file_reference.pid, sys_file_reference.uid_foreign,
-											sys_file_reference.uid_local,sys_file.name AS image6, tt_content.image FROM ' .
-													'tt_content, sys_file_reference , sys_file WHERE ' . $dataWhereContentPic;
-							$resultContentPic = $GLOBALS['TYPO3_DB']->sql_query($sqlstr);
-							$rowStats = array();
-							$rowStats = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultContentPic);
-							if (count($rowStats) >0) {
-								if ($rowStats['image6']) {
-									$rowsdisplaycompressed[3] = $rowStats['image6'];
-								} else {
-									$rowsdisplaycompressed[3] = $rowStats[0]['image6'];
-								}
-							} else {
-								$rowsdisplaycompressed[3] = '';
-							}
-
-						}
-					} elseif ($key== 'sys_language_uid') {
-						$rowsdisplaycompressed[2] = $val;
-					} elseif ($key== 'uid') {
-						$rowsdisplaycompressed[5] = $val;
-					} else {
-						$rowsdisplaycompressed[$k] = $rowsdisplaycompressed[$k] . ' ' . $val;  //ex.: first_name last_name - this gets concat here
+				// Create link text, cropping texts to topRatingsTextCropLength chars max
+				if (count($rowsdisplay)>0) {
+					if ($this->mmtable=='tt_content') {
+						$tt_contentUid = $rowsdisplay[0]['uid'];
+						$syslanid = $rowsdisplay[0]['sys_language_uid'];
 					}
-
-					if (str_replace($key . ' ', '', $tmpdisplayfieldswork)==$tmpdisplayfields){
-						//not in sequence, the second string has to be started, because the displayfield is not separated by ' ' but by ', '
-
-						if ($rowsdisplaycompressed[$k]==''){
-							$rowsdisplaycompressed[$k]=$val;
-						}
-
-						$rowsdisplaycompressed[$k]=trim($rowsdisplaycompressed[$k] );
-						$k++;
-					}
-
-				}
-
-			}
-
-			If (($conf['topRatings.']['topRatingsOriginalLangDisplay']==1) || ($rowsdisplaycompressed[0]=='')) {
-				if (count($rowsdisplay)>1) {
-					$rowsdisplaycompressedzerosave=$rowsdisplaycompressed[0];
-					$rowsdisplaycompressed[0]='';
-
-					// 2 records found, 2nd is language original
-					// or if we donm't find vaild title in orgig language
 					$k=0;
-					foreach($rowsdisplay[1] as $key=>$val) {
+					$rowsdisplaycompressed = array();
+					foreach($rowsdisplay[0] as $key=>$val) {
 						$tmpdisplayfieldswork=$tmpdisplayfields;
 						if (($key== 'crdate') || ($key== 'tstamp') || ($key== 'datetime') || ($key== 'start_date')) {
 							$rowsdisplaycompressed[4] = $this->formatDate($val, $pObj, FALSE, $conf);
@@ -2124,24 +2150,19 @@ AND pages.deleted = 0 and pages.hidden= 0';
 						} elseif ($key== 'sys_language_uid') {
 							$rowsdisplaycompressed[2] = $val;
 						} elseif ($key== 'uid') {
-							$rowsdisplaycompressed[6] = $val;
+							$rowsdisplaycompressed[5] = $val;
 						} else {
-							if ($key!= $longtextdisplayfield) {
-								If (($rowsdisplaycompressed[$k]=='') || ($conf['topRatings.']['topRatingsOriginalLangDisplay']==1)) {
-									$rowsdisplaycompressed[$k] = $rowsdisplaycompressed[$k] . ' ' . $val;
-								}
-
-							}
-
+							$rowsdisplaycompressed[$k] = $rowsdisplaycompressed[$k] . ' ' . $val;  //ex.: first_name last_name - this gets concat here
 						}
 
 						if (str_replace($key . ' ', '', $tmpdisplayfieldswork)==$tmpdisplayfields){
-							//not in sequence
-							if ($rowsdisplaycompressed[$k]==''){
-								$rowsdisplaycompressed[$k]=$val;
+							//not in sequence, the second string has to be started, because the displayfield is not separated by ' ' but by ', '
+
+							if ($rowsdisplaycompressed[$k] == ''){
+								$rowsdisplaycompressed[$k] = $val;
 							}
 
-							$rowsdisplaycompressed[$k]=trim($rowsdisplaycompressed[$k] );
+							$rowsdisplaycompressed[$k] = trim($rowsdisplaycompressed[$k]);
 							$k++;
 						}
 
@@ -2149,118 +2170,207 @@ AND pages.deleted = 0 and pages.hidden= 0';
 
 				}
 
-			}
+				If (($conf['topRatings.']['topRatingsOriginalLangDisplay']==1) || ($rowsdisplaycompressed[0]=='')) {
+					if (count($rowsdisplay)>1) {
+						$rowsdisplaycompressedzerosave=$rowsdisplaycompressed[0];
+						$rowsdisplaycompressed[0]='';
 
-			if (count($rowsdisplay)>0) {
-				if ($rowsdisplaycompressed[0]!=''){
-					//title
-					$text=$rowsdisplaycompressed[0];
-					$rowsdisplaycompressed[0]=$text;
-				} else {
-					$rowsdisplaycompressed[0]='no title';
-				}
+						// 2 records found, 2nd is language original
+						// or if we don't find vaild title in orig. language
+						$k=0;
+						foreach($rowsdisplay[1] as $key=>$val) {
+							$tmpdisplayfieldswork=$tmpdisplayfields;
+							if (($key== 'crdate') || ($key== 'tstamp') || ($key== 'datetime') || ($key== 'start_date')) {
+								$rowsdisplaycompressed[4] = $this->formatDate($val, $pObj, FALSE, $conf);
+							} elseif ((substr($key, 0, 5)== 'image') || (substr($key, 0, 5)== 'photo') || ($key== 'picture')) {
+								if (intval($val) == 0) {
+									$rowsdisplaycompressed[3] = $val;
+								} else {
+									$dataWhereContentPic = 'sys_file_reference.tablenames="tt_content" AND sys_file_reference.uid_foreign=tt_content.uid ' .
+											'AND sys_file_reference.deleted=0 AND sys_file_reference.uid_local=sys_file.uid ' .
+											'AND sys_file_reference.sys_language_uid=' .$syslanid .' AND tt_content.uid = ' . $tt_contentUid;
 
-				if ($rowsdisplaycompressed[1]!=''){
-					//long text
-					$textdirty=$rowsdisplaycompressed[1];
+									$sqlstr = 'SELECT sys_file_reference.uid, sys_file_reference.uid, sys_file_reference.pid, sys_file_reference.uid_foreign,
+													sys_file_reference.uid_local,sys_file.name AS image6, tt_content.image FROM ' .
+															'tt_content, sys_file_reference , sys_file WHERE ' . $dataWhereContentPic;
+									$resultContentPic = $GLOBALS['TYPO3_DB']->sql_query($sqlstr);
+									$rowStats = array();
+									$rowStats = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultContentPic);
+									if (count($rowStats) >0) {
+										if ($rowStats['image6']) {
+											$rowsdisplaycompressed[3] = $rowStats['image6'];
+										} else {
+											$rowsdisplaycompressed[3] = $rowStats[0]['image6'];
+										}
+									} else {
+										$rowsdisplaycompressed[3] = '';
+									}
 
-					$search = array('@<script[^>]*?>.*?</script>@si', // Strip out javascript
-							'@<[\/\!]*?[^<>]*?>@si',           // Strip out HTML tags
-							'@<style[^>]*?>.*?</style>@siU',   // Strip style tags properly
-							'@<![\s\S]*?--[ \t\n\r]*>@',        // Strip multi-line comments including CDATA
-					);
-					$text = preg_replace($search, '', $textdirty);
+								}
+							} elseif ($key== 'sys_language_uid') {
+								$rowsdisplaycompressed[2] = $val;
+							} elseif ($key== 'uid') {
+								$rowsdisplaycompressed[6] = $val;
+							} else {
+								if ($key!= $longtextdisplayfield) {
+									If (($rowsdisplaycompressed[$k]=='') || ($conf['topRatings.']['topRatingsOriginalLangDisplay']==1)) {
+										$rowsdisplaycompressed[$k] = $rowsdisplaycompressed[$k] . ' ' . $val;
+									}
 
-					if (strlen($text)>$conf['topRatings.']['TextCropLength']) {
-						$bbterminatorarr=array();
+								}
 
-						$textcroppedleft = substr($text, 0, $conf['topRatings.']['TextCropLength']);
-						$textcroppedright = substr($text, $conf['topRatings.']['TextCropLength']);
-						$textcroppedrightarr = explode(' ', $textcroppedright);
-						if (count($textcroppedrightarr)>1) {
+							}
 
-							$testbblen=strlen($textcroppedleft .$textcroppedrightarr[0]);
+							if (str_replace($key . ' ', '', $tmpdisplayfieldswork)==$tmpdisplayfields){
+								//not in sequence
+								if ($rowsdisplaycompressed[$k]==''){
+									$rowsdisplaycompressed[$k]=$val;
+								}
 
-							$bbterminatorarr= $this->checkbbcrop($text, $testbblen, $conf, $pObj);
+								$rowsdisplaycompressed[$k]=trim($rowsdisplaycompressed[$k] );
+								$k++;
+							}
 
-							$textcroppedleft .=$textcroppedrightarr[0] . $bbterminatorarr[0] . '...';
-							$text =$textcroppedleft;
 						}
 
 					}
 
-					$text = nl2br($this->createLinks($text, $conf));
-					$text = $this->replaceSmilies($text, $conf);
-					$text =$this->replaceBBs($text, $pObj, $conf, FALSE);
-					$text =$this->addleadingspace($text);
-					$text = $this->makeemoji($text, $conf, 'topratings');
-					$text = str_replace('"> <a', '">&nbsp;<a', $text);
-					$rowsdisplaycompressed[1]=$text;
 				}
 
-				$text = $rowsdisplaycompressed[0];
-				$useCacheHashNeeded = intval($GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError']);
-				$no_cacheflag = 0;
-				if (intval($GLOBALS['TYPO3_CONF_VARS']['FE']['disableNoCacheParameter']) == 0) {
-					if ($useCacheHashNeeded == 1) {
-						$no_cacheflag = 1;
+				if (count($rowsdisplay)>0) {
+					if ($rowsdisplaycompressed[0]!=''){
+						//title
+						$text=$rowsdisplaycompressed[0];
+						$rowsdisplaycompressed[0]=$text;
+					} else {
+						$rowsdisplaycompressed[0]='no title';
 					}
 
-				}
+					if ($rowsdisplaycompressed[1]!=''){
+						//long text
+						$textdirty=$rowsdisplaycompressed[1];
 
-				$show_uid = $_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['show_uid'];
-				$externalprefix = $conf['topRatings.']['topRatingsExternalPrefix'];
-				if ($show_uid == '') {
-					$show_uid = 'uid';
-				}
+						$search = array('@<script[^>]*?>.*?</script>@si', // Strip out javascript
+								'@<[\/\!]*?[^<>]*?>@si',           // Strip out HTML tags
+								'@<style[^>]*?>.*?</style>@siU',   // Strip style tags properly
+								'@<![\s\S]*?--[ \t\n\r]*>@',        // Strip multi-line comments including CDATA
+						);
+						$text = preg_replace($search, '', $textdirty);
 
-				if (strpos($show_uid, '&') === FALSE) {
-					$getparamsl = $externalprefix .'[' . $show_uid . ']';
-				} else {
-					$getparamsl = $show_uid;
-				}
+						if (strlen($text)>$conf['topRatings.']['TextCropLength']) {
+							$bbterminatorarr=array();
 
-				$params = '';
-				$paramarr = array();
-				if ($this->mmtable=='tx_toctoc_comments_comments') {
-					//link to comment
-					$rowsdisplay = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
-							'external_ref, external_prefix, external_ref_uid',
-							'tx_toctoc_comments_comments',
-							'uid='.$refID,
-							'',
-							'',
-							''
-					);
-					$additionalurlparamsforrecord = '';
-					if (count($rowsdisplay) > 0) {
-						$tmpextref=$rowsdisplay[0]['external_ref'];
-						if (str_replace('pages_', '', $tmpextref)!=$rowsdisplay[0]['external_ref']) {
-							if ($rowsmerged[$i]['pageid'] == 0) {
-								$rowsmerged[$i]['pageid'] = intval(str_replace('pages_', '', $tmpextref));
+							$textcroppedleft = substr($text, 0, $conf['topRatings.']['TextCropLength']);
+							$textcroppedright = substr($text, $conf['topRatings.']['TextCropLength']);
+							$textcroppedrightarr = explode(' ', $textcroppedright);
+							if (count($textcroppedrightarr)>1) {
+
+								$testbblen=strlen($textcroppedleft .$textcroppedrightarr[0]);
+
+								$bbterminatorarr= $this->checkbbcrop($text, $testbblen, $conf, $pObj);
+
+								$textcroppedleft .=$textcroppedrightarr[0] . $bbterminatorarr[0] . '...';
+								$text =$textcroppedleft;
 							}
 
-						} else {
-							// build url-params for record
-							$show_uidtmp = $_SESSION['prefixes'][$rowsdisplay[0]['external_prefix']]['show_uid'];
-							if ($show_uidtmp == '') {
-								$show_uidtmp = 'uid';
-							}
+						}
 
-							$refidtmp = substr($rowsdisplay[0]['external_ref'], 1+strrpos($rowsdisplay[0]['external_ref'], '_'));
-							$mmtabletmp = substr($rowsdisplay[0]['external_ref'], 0, strrpos($rowsdisplay[0]['external_ref'], '_'));
-							$paramarr[$rowsdisplay[0]['external_prefix'] .'[' . $show_uidtmp . ']'] = $refidtmp;
-							// now is that record still online ?
-							$rowsmm = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('uid, pid AS pageid',
-									$mmtabletmp,
-									'uid =' . $refidtmp . ' ' . $this->enableFields($mmtabletmp, $pObj),
-									'',
-									'');
-							if (count($rowsmm) == 0) {
-								$rowsmerged[$i]['pageid'] = 0;
-							} else {
+						$text = nl2br($this->createLinks($text, $conf));
+						$text = $this->replaceSmilies($text, $conf);
+						$text =$this->replaceBBs($text, $pObj, $conf, FALSE);
+						$text =$this->addleadingspace($text);
+						$text = $this->makeemoji($text, $conf, 'topratings');
+						$text = str_replace('"> <a', '">&nbsp;<a', $text);
+						$rowsdisplaycompressed[1]=$text;
+					}
+
+					$text = $rowsdisplaycompressed[0];
+					$useCacheHashNeeded = intval($GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError']);
+					$no_cacheflag = 0;
+					if (intval($GLOBALS['TYPO3_CONF_VARS']['FE']['disableNoCacheParameter']) == 0) {
+						if ($useCacheHashNeeded == 1) {
+							$no_cacheflag = 1;
+						}
+
+					}
+
+					$show_uid = $_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['show_uid'];
+					$externalprefix = $conf['topRatings.']['topRatingsExternalPrefix'];
+					if ($show_uid == '') {
+						$show_uid = 'uid';
+					}
+
+					if (strpos($show_uid, '&') === FALSE) {
+						$getparamsl = $externalprefix .'[' . $show_uid . ']';
+					} else {
+						$getparamsl = $show_uid;
+					}
+
+					$params = '';
+					$paramarr = array();
+					if ($this->mmtable=='tx_toctoc_comments_comments') {
+						//link to comment
+						$rowsdisplay = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+								'external_ref, external_prefix, external_ref_uid',
+								'tx_toctoc_comments_comments',
+								'uid='.$refID,
+								'',
+								'',
+								''
+						);
+						$additionalurlparamsforrecord = '';
+						if (count($rowsdisplay) > 0) {
+							$tmpextref=$rowsdisplay[0]['external_ref'];
+							if (str_replace('pages_', '', $tmpextref)!=$rowsdisplay[0]['external_ref']) {
 								if ($rowsmerged[$i]['pageid'] == 0) {
-									// only for old ratings with no pageid in the stats, we get the page over the content element id from tt_content
+									$rowsmerged[$i]['pageid'] = intval(str_replace('pages_', '', $tmpextref));
+								}
+
+							} else {
+								// build url-params for record
+								$show_uidtmp = trim($_SESSION['prefixes'][$rowsdisplay[0]['external_prefix']]['show_uid']);
+								if ($show_uidtmp == '') {
+									$show_uidtmp = 'uid';
+								}
+
+								if (strpos($show_uidtmp, '&')===FALSE) {
+									$getparams = $rowsdisplay[0]['external_prefix'] .'[' . $show_uidtmp . ']';
+								} else {
+									$getparams = $show_uidtmp;
+								}
+
+								$refidtmp = trim(substr($rowsdisplay[0]['external_ref'], 1+strrpos($rowsdisplay[0]['external_ref'], '_')));
+								$paramarr[$getparams] = $refidtmp;
+
+								$mmtabletmp = substr($rowsdisplay[0]['external_ref'], 0, strrpos($rowsdisplay[0]['external_ref'], '_'));
+
+								// now is that record still online ?
+								if (intval($refidtmp) > 0) {
+									$rowsmm = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('uid, pid AS pageid',
+											$mmtabletmp,
+											'uid =' . $refidtmp . ' ' . $this->enableFields($mmtabletmp, $pObj),
+											'',
+											'');
+									if (count($rowsmm) == 0) {
+										$rowsmerged[$i]['pageid'] = 0;
+									} else {
+										if ($rowsmerged[$i]['pageid'] == 0) {
+											// only for old ratings with no pageid in the stats, we get the page over the content element id from tt_content
+											$contentidtmp = substr($rowsdisplay[0]['external_ref_uid'], 1+strrpos($rowsdisplay[0]['external_ref_uid'], '_'));
+											$rowspage = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('uid, pid AS pageid',
+													'tt_content',
+													'uid =' . $contentidtmp,
+													'',
+													'');
+											if (count($rowspage) > 0) {
+												$rowsmerged[$i]['pageid'] = intval($rowspage[0]['pageid']);
+											}
+
+										}
+
+									}
+								} else {
+									$rowsmerged[$i]['pageid'] = 0;
 									$contentidtmp = substr($rowsdisplay[0]['external_ref_uid'], 1+strrpos($rowsdisplay[0]['external_ref_uid'], '_'));
 									$rowspage = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('uid, pid AS pageid',
 											'tt_content',
@@ -2270,144 +2380,151 @@ AND pages.deleted = 0 and pages.hidden= 0';
 									if (count($rowspage) > 0) {
 										$rowsmerged[$i]['pageid'] = intval($rowspage[0]['pageid']);
 									}
-
 								}
 
 							}
 
 						}
 
-					}
+						$paramtl = $rowsmerged[$i]['pageid'] . $conf['recentcomments.']['anchorPre'] . $refID;
+						$paramarr['toctoc_comments_pi1[anchor]']=substr($conf['recentcomments.']['anchorPre'], 1) . $refID;
+					} elseif ($this->mmtable == 'tt_content') {
+						if ($rowsmerged[$i]['pageid'] == 0) {
+							// only for old ratings with no pageid in the stats, we get the page over the content element id from tt_content
+							$contentidtmp=substr($rowsdisplay[0]['external_ref_uid'], 1+strrpos($rowsdisplay[0]['external_ref_uid'], '_'));
+							$rowspage = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('uid, pid AS pageid',
+									'tt_content',
+									'uid =' . $refID,
+									'',
+									'');
+							if (count($rowspage) > 0) {
+								$rowsmerged[$i]['pageid'] = intval($rowspage[0]['pageid']);
+							}
 
-					$paramtl = $rowsmerged[$i]['pageid'] . $conf['recentcomments.']['anchorPre'] . $refID;
-					$paramarr['toctoc_comments_pi1[anchor]']=substr($conf['recentcomments.']['anchorPre'], 1) . $refID;
-				} elseif ($this->mmtable == 'tt_content') {
-					if ($rowsmerged[$i]['pageid'] == 0) {
-						// only for old ratings with no pageid in the stats, we get the page over the content element id from tt_content
-						$contentidtmp=substr($rowsdisplay[0]['external_ref_uid'], 1+strrpos($rowsdisplay[0]['external_ref_uid'], '_'));
-						$rowspage = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('uid, pid AS pageid',
-								'tt_content',
-								'uid =' . $refID,
-								'',
-								'');
-						if (count($rowspage) > 0) {
-							$rowsmerged[$i]['pageid'] = intval($rowspage[0]['pageid']);
+						}
+						$paramarr['L']=0;
+						//lang params
+						if (($rowsdisplaycompressed[2] >0) && ($GLOBALS['TSFE']->sys_language_uid==0)) {
+							if ($conf['advanced.']['useMultilingual'] == 1) {
+								$paramarr['L']=$rowsdisplaycompressed[2];
+							} else {
+								$paramarr['L']=0;
+							}
+
 						}
 
-					}
-					$paramarr['L']=0;
-					//lang params
-					if (($rowsdisplaycompressed[2] >0) && ($GLOBALS['TSFE']->sys_language_uid==0)) {
-						if ($conf['advanced.']['useMultilingual'] == 1) {
+						if (($rowsdisplaycompressed[2] == 0) && ($GLOBALS['TSFE']->sys_language_uid > 0)) {
+							$paramarr['L']=0;
+						}
+
+						if (($rowsdisplaycompressed[2] > 0) && ($GLOBALS['TSFE']->sys_language_uid > 0)) {
 							$paramarr['L']=$rowsdisplaycompressed[2];
-						} else {
+						}
+
+						$paramtl = $rowsmerged[$i]['pageid'] . '#tx-tc-cts-att_content_' . $refID;
+					} elseif (($this->mmtable == 'pages') || ($this->mmtable == 'pages_language_overlay')){
+						$paramtl = $rowsmerged[$i]['reference'];
+						if ($GLOBALS['TSFE']->sys_language_uid != 0) {
+							$paramarr['L']=0;
+						}
+						$texttip='';
+						if (intval($rowsmerged[$i]['lang']) != 0) {
+							$paramarr['L']=intval($rowsmerged[$i]['lang']);
+							$rowspage = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('title, flag',
+									'sys_language',
+									'uid =' . intval($rowsmerged[$i]['lang']),
+									'',
+									'');
+
+							if (count($rowspage) > 0) {
+								$texttip = ' title= "' . $rowspage[0]['title'] . '"';
+								$text .= ' (' . strtolower(substr($rowspage[0]['title'], 0, 2)). ')';
+							}
+
+						}
+
+					} else {
+						if (intval($_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['topratingsdetailpage'])!=0) {
+							$paramtl = $_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['topratingsdetailpage'];
+							$rowsmerged[$i]['pageid'] = $_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['topratingsdetailpage'];
+						}  else {
+							$paramtl = $rowsmerged[$i]['pageid'];
+						}
+
+						$paramarr['L']=intval($rowsmerged[$i]['lang']);
+
+						if (strpos($getparamsl, '&') == 1) {
+							$getparamsl = substr($getparamsl, 1);
+						}
+
+						$paramarr[$getparamsl] = $refID;
+						if (strpos($addparamforextensionswithoutsyslanguid, 'L=0') > 0) {
 							$paramarr['L']=0;
 						}
 
 					}
 
-					if (($rowsdisplaycompressed[2] == 0) && ($GLOBALS['TSFE']->sys_language_uid > 0)) {
-						$paramarr['L']=0;
+					if ($no_cacheflag == 1) {
+						$paramarr['no_cache']=1;
 					}
 
-					if (($rowsdisplaycompressed[2] > 0) && ($GLOBALS['TSFE']->sys_language_uid > 0)) {
-						$paramarr['L']=$rowsdisplaycompressed[2];
+					$params=t3lib_div::implodeArrayForUrl('', $paramarr, '', 1);
+
+					// '7g8' is replacement string for '-' in extensions with non integer showUid
+					$params = str_replace('7g8', '-', $params);
+
+					$conflink = array(
+							'useCacheHash'     => $useCacheHashNeeded,
+							'parameter'        => $paramtl,
+							'additionalParams' => $params,
+							'ATagParams' => 'rel="nofollow"' . $texttip,
+							'forceAbsoluteUrl' => 1,
+					);
+
+					$rowsmerged[$i]['linktext'] = $text;
+					if ($rowsmerged[$i]['pageid'] == '') {
+						$rowsmerged[$i]['pageid'] = $rowsmerged[$i]['reference'];
 					}
 
-					$paramtl = $rowsmerged[$i]['pageid'] . '#tx-tc-cts-att_content_' . $refID;
-				} elseif (($this->mmtable == 'pages') || ($this->mmtable == 'pages_language_overlay')){
-					$paramtl = $rowsmerged[$i]['reference'];
-					if ($GLOBALS['TSFE']->sys_language_uid != 0) {
-						$paramarr['L']=0;
+					$text = $this->cObj->typoLink($text, $conflink);
+					//$text = $this->cObj->typoLink($textorig, $conflink);
+					if (str_replace('cHash=', '', $text) == $text) {
+						$text = str_replace('&no_cache=1', '', $text);
+						$text = str_replace('?no_cache=1', '', $text);
 					}
-					$texttip='';
-					if (intval($rowsmerged[$i]['lang']) != 0) {
-						$paramarr['L']=intval($rowsmerged[$i]['lang']);
-						$rowspage = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('title, flag',
-								'sys_language',
-								'uid =' . intval($rowsmerged[$i]['lang']),
-								'',
-								'');
 
-						if (count($rowspage) > 0) {
-							$texttip = ' title= "' . $rowspage[0]['title'] . '"';
-							$text .= ' (' . strtolower(substr($rowspage[0]['title'], 0, 2)). ')';
+					$linkpurearr = explode('"', $text);
+					$linkpure = $linkpurearr[1];
+					$text = str_replace('href="', 'href="javascript:recentct(1,\'' . $_SESSION['commentListCount'].$irank . '\',' .
+							$rowsmerged[$i]['pageid'] . ',\'', $text);
+					$text = str_replace('" rel="nofollow', '\')" rel="nofollow', $text);
+
+					$rowsdisplaycompressed[0] = $text;
+					$rowsmerged[$i]['link'] = $rowsdisplaycompressed[0];
+
+					$rowsmerged[$i]['text'] = $rowsdisplaycompressed[1];
+					$rowsmerged[$i]['language'] = $rowsdisplaycompressed[2];
+					$rowsmerged[$i]['image'] = $rowsdisplaycompressed[3];
+					$rowsmerged[$i]['date'] = $rowsdisplaycompressed[4];
+					$rowsmerged[$i]['linkfinalpure'] = $linkpure;
+					$rowsmerged[$i]['isok'] = 1;
+					if (strpos($rowsmerged[$i]['link'], 'href=') == 0) {
+						$rowsmerged[$i]['isok'] = 0;
+					} else {
+
+						if ($conf['topSharings.']['topSharingsMode'] == 1) {
+							$this->grandtotalshareurlcount += 1;
 						}
 
 					}
 
 				} else {
-					if (intval($_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['topratingsdetailpage'])!=0) {
-						$paramtl = $_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['topratingsdetailpage'];
-						$rowsmerged[$i]['pageid'] = $_SESSION['prefixes'][$conf['topRatings.']['topRatingsExternalPrefix']]['topratingsdetailpage'];
-					}  else {
-						$paramtl = $rowsmerged[$i]['pageid'];
-					}
-
-					$paramarr['L']=intval($rowsmerged[$i]['lang']);
-
-					if (strpos($getparamsl, '&') == 1) {
-						$getparamsl = substr($getparamsl, 1);
-					}
-
-					$paramarr[$getparamsl]=$refID;
-					if (strpos($addparamforextensionswithoutsyslanguid, 'L=0') > 0) {
-						$paramarr['L']=0;
-					}
-
-				}
-
-				if ($no_cacheflag == 1) {
-					$paramarr['no_cache']=1;
-				}
-
-				$params=t3lib_div::implodeArrayForUrl('', $paramarr, '', 1);
-				$conflink = array(
-						'useCacheHash'     => $useCacheHashNeeded,
-						'parameter'        => $paramtl,
-						'additionalParams' => $params,
-						'ATagParams' => 'rel="nofollow"' . $texttip,
-						'forceAbsoluteUrl' => 1,
-				);
-
-				$rowsmerged[$i]['linktext'] = $text;
-				if ($rowsmerged[$i]['pageid'] == '') {
-					$rowsmerged[$i]['pageid'] = $rowsmerged[$i]['reference'];
-				}
-
-				$text = $this->cObj->typoLink($text, $conflink);
-				$linkpurearr = explode('"', $text);
-				$linkpure = $linkpurearr[1];
-				$text = str_replace('href="', 'href="javascript:recentct(1, \'' . $_SESSION['commentListCount'].$irank . '\', ' .
-						$rowsmerged[$i]['pageid'] . ', \'', $text);
-				$text = str_replace('" rel="nofollow', '\')" rel="nofollow', $text);
-
-				$rowsdisplaycompressed[0] = $text;
-				$rowsmerged[$i]['link'] = $rowsdisplaycompressed[0];
-
-				$rowsmerged[$i]['text'] = $rowsdisplaycompressed[1];
-				$rowsmerged[$i]['language'] = $rowsdisplaycompressed[2];
-				$rowsmerged[$i]['image'] = $rowsdisplaycompressed[3];
-				$rowsmerged[$i]['date'] = $rowsdisplaycompressed[4];
-				$rowsmerged[$i]['linkfinalpure'] = $linkpure;
-				$rowsmerged[$i]['isok'] = 1;
-				if (strpos($rowsmerged[$i]['link'], 'href=') == 0) {
 					$rowsmerged[$i]['isok'] = 0;
-				} else {
-					$this->grandtotalsharecount += intval($rowsmerged[$i]['sharecount']);
-					if ($conf['topSharings.']['topSharingsMode'] == 1) {
-						$this->grandtotalshareurlcount += 1;
-					}
-
 				}
 
-			} else {
-				$rowsmerged[$i]['isok'] = 0;
+				$rowsmerged[$i]['rank'] = $irank;
+				$irank = $irank+$rowsmerged[$i]['isok'];
 			}
-
-			$rowsmerged[$i]['rank'] = $irank;
-			$irank = $irank+$rowsmerged[$i]['isok'];
-
 		}
 
 		return $rowsmerged;
