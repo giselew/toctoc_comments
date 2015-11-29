@@ -1,0 +1,53 @@
+.tx-tc-tooltip.bottom, .tx-tc-tooltip2.bottom, .tx-tc-tooltipemoji.bottom {
+	padding-top: 4px;
+}
+.tx-tc-tooltip2 {
+	display: none;
+	padding: 3px 3px 10px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: bottom;
+	font-weight: normal;
+	font-size: 100%;
+	z-index: 5;
+	word-wrap: break-word;
+	border-radius: 3px;
+}
+.tx-tc-tooltip {
+	display: none;
+	padding: 4px 4px 12px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: bottom;
+	font-weight: normal;
+	font-size: 100%;
+	border-radius: 2px;
+	z-index: 91;
+	word-wrap: break-word;
+}
+.tx-tc-tooltipemoji {
+	display: none;
+	padding: 4px 4px 12px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: bottom;
+	font-weight: normal;
+	border-radius: 4px;
+	font-size: 90%;
+	z-index: 91;
+	max-width: 122px;
+	word-wrap: break-word;
+	text-align: center;
+}
+.tx-tc-tooltip {
+	background-image: ~"url('@{theme-path}tiparrow.png')";
+	color: @color-website-background;
+}
+.tx-tc-tooltip2 {
+	background-image: ~"url('@{theme-path}black.png')";
+	color: @color-website-background;
+}
+.tx-tc-tooltipemoji {
+	background-image: ~"url('@{theme-path}tipemo.png')";
+	color: @color-website-background;
+}
