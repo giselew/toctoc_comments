@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<description>CSH for additional tt_content fields</description>
+		<type>CSH</type>
+		<csh_table>tt_content</csh_table>
+		<fileId>EXT:toctoc_comments/pi1/locallang_cecsh.xml</fileId>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index=".alttitle">Comments and ratings</label>
+			<label index="_.image">EXT:toctoccommentsce/ext_icon.gif</label>
+			<label index=".image_descr">The options you can setup for commenting in a content element are sent to extension toctoc_comments.
+Note that the basic configuration of toctoc_comments is responsible for all other aspects of the look and feel of the commenting feature.</label>
+			<label index="tx_toctoccommentsce_pluginmode.description">Defines operation mode of the plugin</label>
+			<label index="tx_toctoccommentsce_pluginmode.details">&quot;Normal&quot; mode for use of social network components, including commenting, reviews, ratings and sharing. 
+The other operation modes show specific views on the data: 
+&quot;Recent Comments&quot; displays a recent comments list. 
+&quot;Top ratings&quot; displays top rated records. 
+&quot;User Center&quot; displays all comments and ratings of a logged in user. 
+&quot;Search comments&quot; displays a form for searching comments.</label>
+			<label index="tx_toctoccommentsce_external_ref.description">Plugin to table map for linking records of other extensions to &quot;Comments and ratings&quot;</label>
+			<label index="tx_toctoccommentsce_external_ref.details">The plugin to table map triggers specific records like News, Products or other records with associated comments, reviews or ratings. 
+If you miss Plugin to table maps in your database you can let import a first set of them by toctoc_comments. 
+Please refer to toctoc_comments extensions configuration in extension manager, option database.importDataprefixtotable</label>
+			<label index="tx_toctoccommentsce_enable_comments.description">Enable Comments, reviews, ratings or sharing</label>
+			<label index="tx_toctoccommentsce_enable_comments.details">Enable this adds after the content element Comments, reviews, ratings or sharing</label>
+			<label index="tx_toctoccommentsce_with_comments.description">Comments or reviews</label>
+			<label index="tx_toctoccommentsce_with_comments.details">Show comments or reviews (or none of both)</label>
+			<label index="tx_toctoccommentsce_with_ratings.description">Enable ratings</label>
+			<label index="tx_toctoccommentsce_with_ratings.details">Enables web site visitors to rate comments or records.</label>
+			<label index="tx_toctoccommentsce_with_sharing.description">Enable sharing</label>
+			<label index="tx_toctoccommentsce_with_sharing.details">Enables sharing for social networks like Facebook, Google and Twitter</label>
+			<label index="tx_toctoccommentsce_msg.description">Donation message</label>
+			<label index="tx_toctoccommentsce_msg.details">This message either displays a link for you to make a donation for this wonderful software, or if you did, it displays a honourable donor message.</label>
+		</languageKey>
+	</data>
+	<orig_hash type="array">
+	</orig_hash>
+	<orig_text type="array">
+	</orig_text>
+</T3locallang>

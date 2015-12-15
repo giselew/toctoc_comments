@@ -1,0 +1,89 @@
+.tx-tc-trt-rating {
+    margin: 0 @boxmodelSpacing 0 0;
+    padding: 0 @boxmodelSpacing;
+ }
+ .tx-tc-trl-rank {
+	width: @topRatingsNumberWidth;
+}
+.tx-tc-trt-rating {
+    line-height: (@boxmodelLineHeight+4);
+}
+.tx-tc-trtpic {
+	margin: 0 @boxmodelSpacing 0 0;
+}
+.tx-tc-trt-listdesc {
+	margin-bottom: (2*@boxmodelSpacing);
+}
+.tx-tc-trt-cts-article {
+	margin: @boxmodelSpacing 0 (2*@boxmodelSpacing) 0;
+}
+.tx-tc-trt-rating-rating-wrap .tx-tc-rts-dp {
+	top: @ratingMarginTop;
+}
+.tx-tc-trt-rating-rating-wrap .tx-tc-rws-toparea .tx-tc-rts-dp {
+	top: @reviewMarginTop;
+}
+.tx-tc-trt-userisz {
+	min-height: @topRatingsImageSize;
+}
+.tx-tc-trt-rating-img + .tx-tc-trt-rating-detail .tx-tc-mrgcntnp-left {
+	margin-left: @boxmodelSpacing;
+}
+.tx-tc-mrgcnt-left {
+	margin-left: @boxmodelSpacing;
+}
+.tx-tc-trtpic {
+	border-radius: 3px 3px 3px 3px;
+	border-style: solid;
+	border-width: 1px;
+}
+.tx-tc-trt-entry {
+	padding-bottom: 2px;
+	margin-bottom: 2px;
+	display: table;
+}
+.tx-tc-trt-rating-img + .tx-tc-trt-rating-detail .tx-tc-trt-rating-rating-wrap {
+	margin-left: @boxmodelSpacing;
+}
+.tx-tc-trt-rating-rating-wrap {
+	line-height: @ratingLineHeight;
+	display: table;
+}
+.tx-tc-trt-rating-rating-wrap .tx-tc-rts-container .tx-tc-rts-li {
+	height: @ratingLineHeight;
+}
+.tx-tc-opendropdown .tx-tc-trt-cts-article {
+	padding: 0 4px;
+}
+.tx-tc-trt-content {
+	display: table;
+	margin-right: 2px;
+}
+.tx-tc-box-trt-cts {
+	padding: 4px;
+}
+/* used in top ratings, backgrounds of ranks */
+.tx-tc-rank1 {
+	background-color: @color-rank-1;
+}
+.tx-tc-rank2 {
+	background-color: @color-rank-2;
+}
+.tx-tc-rank3 {
+	background-color: @color-rank-3;
+}
+
+.tx-tc-trt-rating {
+	border-color: @color-border-sharrre;
+	background-image: ~"url('@{theme-path}bgrank.png')";
+	background-color: @color-border-topratings;
+}
+.tx-tc-trtpic {
+	border-color: @color-border-userpic;
+}
+.tx-tc-trtpic:hover {
+	border-color: @color-background-button;
+}
+.tx-tc-atrts-dp .tx-tc-rts-text {
+	color: @color-voting-text;
+}
