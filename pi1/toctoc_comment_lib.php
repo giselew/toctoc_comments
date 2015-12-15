@@ -3940,6 +3940,9 @@ class toctoc_comment_lib extends tslib_pibase {
 								'###CID###' => $tmpcid,
 								'###UID###' => $iuid,
 								'###CHECK###' => $check,
+								'###PCID###' => 0,
+								'###REFSHOW###' => 0,
+								'###EXTREF###'=> 0,
 						));
 						$submithtml=$submithtmlSub;
 
@@ -4675,6 +4678,7 @@ class toctoc_comment_lib extends tslib_pibase {
 				$corrimage = str_replace ('>', ' ', $tempMarkers['###IMAGE###']);
 				$corrimage = $corrimage . '">';
 				$corrimage = str_replace('"" ">', '"">', $corrimage);
+				$corrimage = str_replace(' ">', '>', $corrimage);
 				$tempMarkers['###IMAGE###'] = $corrimage;
 			}
 
@@ -7146,9 +7150,12 @@ class toctoc_comment_lib extends tslib_pibase {
 		if (count($outputcidarr) >0) {
 
 			$toreplacecid = $outputcidarr[0];
-			$imagetag = str_replace('alt=""', 'title="' . trim(htmlspecialchars($_SESSION['submitCommentVars'][$cid]['firstname']) . ' ' .
+			if (str_replace('title="', '', $imagetag) == $imagetag) {
+				$imagetag = str_replace('alt=""', 'title="' . trim(htmlspecialchars($_SESSION['submitCommentVars'][$cid]['firstname']) . ' ' .
 					htmlspecialchars($_SESSION['submitCommentVars'][$cid]['lastname'])) .'"', $imagetag);
+			}
 			$imagetag = str_replace(' title=""', '', $imagetag);
+			$imagetag = str_replace('alt="" >', 'alt="" />', $imagetag);
 
 			$imagetag = str_replace('tx-tc-uimg-' . $toreplacecid . '"', 'tx-tc-uimg-' . $output_cid . '"', $imagetag);
 			if (!(strpos($imagetag, '6g9') > 1)) {
@@ -7531,8 +7538,8 @@ class toctoc_comment_lib extends tslib_pibase {
 
 						if ((!$piVars['imagetag']) || $reloadpivars) {
 
-							$userimagesize=$conf['UserImageSize'];
-							$userimagestyle='';
+							$userimagesize = $conf['UserImageSize'];
+							$userimagestyle = '';
 							$commentuserimagepath = $conf['advanced.']['FeUserImagePath'];
 							if (($keyFeUserDbField !='') || ($keyFeUserDbField)) {
 								$userimagesarr=explode(',', $keyFeUserDbField);
@@ -16954,16 +16961,16 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 				if (!(isset($pObj->cObj))) {
 					$pObj->cObj = t3lib_div::makeInstance('tslib_cObj');
 				}
-
+				$buildimagesize = $imagesize;
 				$img = array();
 				$img['file'] = GIFBUILDER;
-				$img['file.']['XY'] = '' . $imagesize .',' . $imagesize . '';
+				$img['file.']['XY'] = '' . $buildimagesize .',' . $buildimagesize . '';
 				$img['file.']['10'] = IMAGE;
 				$img['file.']['10.']['file'] = $userimgFile;
-				$img['file.']['10.']['file.']['width'] = $imagesize .'c';
-				$img['file.']['10.']['file.']['height'] = $imagesize .'c';
+				$img['file.']['10.']['file.']['width'] = $buildimagesize .'c';
+				$img['file.']['10.']['file.']['height'] = $buildimagesize .'c';
 				$img['params'] = 'class="' . $profileimgclass . $classonline . $userimagestyle . '"' . $imgalign . ' title="'.$usernametitle.'" id="' . $cssid . '"';
-				$tmpimgstr = $pObj->cObj->IMAGE($img);
+				$tmpimgstr = $pObj->cObj->IMAGE($img);				
 			}
 		}
 		if ($tmpimgstr == '') {

@@ -27,4 +27,4 @@ New in versions 8.x.x
 - New static mode for sharings - sharings are shown but no new shares are possible. Automatically forces static mode if specific shared url is set up.
 - documentation available in rst-format
 - 8.1.0 brings possibility to comment and rate records of extensions with non numeric showUid-Parameter (no tables in TYPO3)
-
+- 8.1.0 had a problem with an empty file in the TER-version, 8.1.1. fixes this problem. See changeLog for the complete list of fixes and optimizations.

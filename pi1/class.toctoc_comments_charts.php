@@ -269,9 +269,15 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					if (trim($uidrow['externaluid']) != '') {
 						$tmpexternalUid = $uidrow['externaluid'];
 					}
-
+					
+					$tmpexternalUidarr = explode('@page', $tmpexternalUid);
+					if (count($tmpexternalUidarr) >1) {
+						$tmpexternalUid = array_shift($tmpexternalUidarr);						
+					}
+					
 					$refpart2 = str_replace('7g8', '-', $tmpexternalUid);
 					$fixedref = $refpart1 . '_' . $refpart2;
+					$sprint= TRUE;
 				}
 
 				$rowsmerged[$i]['ref'] = $fixedref;
@@ -290,14 +296,9 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 
 				$sumlikecountfound = $sumlikecountfound+$rowsmerged1['sumilikedislike'];
 
-				//if (str_replace('tx_restdoc_pi', '', $rowsmerged1['ref']) != $rowsmerged1['ref']) {
-					//print_r($rowsmerged[$i]); print '<br>';
-				//}
-
 				$i++;
 
 			}
-			//print $querymerged;
 
 		} elseif (($conf['topRatings.']['topRatingsMode']==3) || ($conf['topRatings.']['topRatingsMode']==2)){
 
@@ -392,8 +393,33 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 			$rowsmergedout=array();
 
 			while ($rowsmerged = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultmerged)) {
-				// cleanup UNION result, resort and limit to top x
+				// cleanup UNION result, resort and limit to top x				$fixedref = $rowsmerged1['ref'];
+				
+				$arrref = explode('6g9', $rowsmerged['ref']);
+				
+				if (count($arrref) > 1) {
 
+					$refpart1 = $arrref[0];
+					$arrreffromrest = explode('_', $arrref[1]);
+					array_shift($arrreffromrest);
+
+					$tmpexternalUid = implode('_', $arrreffromrest);
+					$dataWhereuidrow = 'uid = ' . intval(str_replace('ext', '', $tmpexternalUid));
+					list($uidrow) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('externaluid',
+							'tx_toctoc_comments_longuidreference', $dataWhereuidrow);
+
+					if (trim($uidrow['externaluid']) != '') {
+						$tmpexternalUid = $uidrow['externaluid'];
+					}
+					$tmpexternalUidarr = explode('@page', $tmpexternalUid);
+					if (count($tmpexternalUidarr) >1) {
+						$tmpexternalUid = array_shift($tmpexternalUidarr);						
+					}
+					$refpart2 = str_replace('7g8', '-', $tmpexternalUid);
+					$fixedref = $refpart1 . '_' . $refpart2;
+					$rowsmerged['ref'] = $fixedref;
+				}
+				
 				if ($currentref!=$rowsmerged['ref']) {
 					$currentref=$rowsmerged['ref'];
 					$rowsmergedout[$i]=$rowsmerged;
@@ -498,6 +524,32 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 				$rowsmerged[$i]['voting'] = $viewscounter;
 				$rowsmerged[$i]['nbrvotes'] = $rowsmerged1['nbrvotes'];
 				$rowsmerged[$i]['likecount'] = $viewscounter;
+				
+				$arrref = explode('6g9', $rowsmerged1['ref']);
+				
+				if (count($arrref) > 1) {
+				
+					$refpart1 = $arrref[0];
+					$arrreffromrest = explode('_', $arrref[1]);
+					array_shift($arrreffromrest);
+				
+					$tmpexternalUid = implode('_', $arrreffromrest);
+					$dataWhereuidrow = 'uid = ' . intval(str_replace('ext', '', $tmpexternalUid));
+					list($uidrow) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('externaluid',
+							'tx_toctoc_comments_longuidreference', $dataWhereuidrow);
+				
+					if (trim($uidrow['externaluid']) != '') {
+						$tmpexternalUid = $uidrow['externaluid'];
+					}
+					$tmpexternalUidarr = explode('@page', $tmpexternalUid);
+					if (count($tmpexternalUidarr) >1) {
+						$tmpexternalUid = array_shift($tmpexternalUidarr);						
+					}
+					$refpart2 = str_replace('7g8', '-', $tmpexternalUid);
+					$fixedref = $refpart1 . '_' . $refpart2;
+					$rowsmerged1['ref'] = $fixedref;
+				}
+				
 				$rowsmerged[$i]['ref'] = $rowsmerged1['ref'];
 				$rowsmerged[$i]['pageid'] = $rowsmerged1['pageid'];
 				$rowsmerged[$i]['sumilikedislike'] = $viewscounter;
@@ -694,6 +746,31 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 				$rowsmerged[$i]['voting'] = $viewscounter;
 				$rowsmerged[$i]['nbrvotes'] = $rowsmerged1['nbrvotes'];
 				$rowsmerged[$i]['likecount'] = $viewscounter;
+				$arrref = explode('6g9', $rowsmerged1['ref']);
+				
+				if (count($arrref) > 1) {
+				
+					$refpart1 = $arrref[0];
+					$arrreffromrest = explode('_', $arrref[1]);
+					array_shift($arrreffromrest);
+				
+					$tmpexternalUid = implode('_', $arrreffromrest);
+					$dataWhereuidrow = 'uid = ' . intval(str_replace('ext', '', $tmpexternalUid));
+					list($uidrow) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('externaluid',
+							'tx_toctoc_comments_longuidreference', $dataWhereuidrow);
+				
+					if (trim($uidrow['externaluid']) != '') {
+						$tmpexternalUid = $uidrow['externaluid'];
+					}
+					$tmpexternalUidarr = explode('@page', $tmpexternalUid);
+					if (count($tmpexternalUidarr) >1) {
+						$tmpexternalUid = array_shift($tmpexternalUidarr);						
+					}
+					$refpart2 = str_replace('7g8', '-', $tmpexternalUid);
+					$fixedref = $refpart1 . '_' . $refpart2;
+					$rowsmerged1['ref'] = $fixedref;
+				}
+				
 				$rowsmerged[$i]['ref'] = $rowsmerged1['ref'];
 				if ((intval($rowsmerged1['pageid'])>0) && (intval($rowsmerged1['pageid']) !=1377017087)) {
 					$rowsmerged[$i]['pageid'] = $rowsmerged1['pageid'];
@@ -813,9 +890,8 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 		// now $rowsmerged contains the data to build the list
 		$irank=0;
 
-		if ((count($rowsmerged)>0) && ($rowsmerged[0]['nbrvotes']!='')) {
+		if ((count($rowsmerged)>0) && ($rowsmerged[0]['nbrvotes']!='')) {	
 			$rowsmerged = $this->enrichrows($conf, $rowsmerged, $pObj, $show_uid);
-
 		}
 
 		$rowsmergedclean= array();
@@ -1817,7 +1893,6 @@ AND pages.deleted = 0 and pages.hidden= 0';
 			$this->mmtable=substr($pageidrecord, 0, $posbeforeid-1);
 
 			$refID = substr($pageidrecord, $posbeforeid);
-
 			if (str_replace('ext', '', $refID) != $refID) {
 				$dataWhereuidrow = 'uid = ' . intval(str_replace('ext', '', $refID));
 				list($uidrow) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('externaluid',
@@ -2056,6 +2131,11 @@ AND pages.deleted = 0 and pages.hidden= 0';
 				If ($GLOBALS['TSFE']->sys_language_uid > 0) {
 					$sorting = 'sys_language_uid DESC';
 				}
+				
+				if ($rowsmerged[$i]['topratingsdetailpage'] == 0) {					
+					$rowsmerged[$i]['topratingsdetailpage'] = $rowsmerged[$i]['pageid'];
+				}
+				
 				if ($input_sys_language_uid != 0) {
 					$tmmtable = 'pages_language_overlay';
 					$where = '(pid=' . $rowsmerged[$i]['topratingsdetailpage'] . ' AND sys_language_uid=' . $input_sys_language_uid . ') '  .
@@ -2340,6 +2420,18 @@ AND pages.deleted = 0 and pages.hidden= 0';
 								}
 
 								$refidtmp = trim(substr($rowsdisplay[0]['external_ref'], 1+strrpos($rowsdisplay[0]['external_ref'], '_')));
+								
+								if (str_replace('ext', '', $refidtmp) != $refidtmp) {
+									$dataWhereuidrow = 'uid = ' . intval(str_replace('ext', '', $refidtmp));
+									list($uidrow) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('externaluid',
+											'tx_toctoc_comments_longuidreference', $dataWhereuidrow);
+								
+									if (trim($uidrow['externaluid']) != '') {
+										$refidtmp = $uidrow['externaluid'];
+									}
+								
+								}
+								
 								$paramarr[$getparams] = $refidtmp;
 
 								$mmtabletmp = substr($rowsdisplay[0]['external_ref'], 0, strrpos($rowsdisplay[0]['external_ref'], '_'));
@@ -2457,7 +2549,19 @@ AND pages.deleted = 0 and pages.hidden= 0';
 							$getparamsl = substr($getparamsl, 1);
 						}
 
+						if (str_replace('ext', '', $refID) != $refID) {
+							$dataWhereuidrow = 'uid = ' . intval(str_replace('ext', '', $refID));
+							list($uidrow) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('externaluid',
+									'tx_toctoc_comments_longuidreference', $dataWhereuidrow);
+						
+							if (trim($uidrow['externaluid']) != '') {
+								$refID = $uidrow['externaluid'];
+							}
+						
+						}
+						
 						$paramarr[$getparamsl] = $refID;
+						
 						if (strpos($addparamforextensionswithoutsyslanguid, 'L=0') > 0) {
 							$paramarr['L']=0;
 						}
@@ -2471,6 +2575,18 @@ AND pages.deleted = 0 and pages.hidden= 0';
 					$params=t3lib_div::implodeArrayForUrl('', $paramarr, '', 1);
 
 					// '7g8' is replacement string for '-' in extensions with non integer showUid
+					$tmpexternalUidarr = explode('%40page', $params);
+					if (count($tmpexternalUidarr) >1) {
+						$params = array_shift($tmpexternalUidarr);
+						$tmpexternalUid = implode ('', $tmpexternalUidarr);
+						$tmpexternalUidarr = explode('&', $tmpexternalUid);
+						if (count($tmpexternalUidarr) >1) {
+							array_shift($tmpexternalUidarr);
+							$tmpexternalUid = implode('&', $tmpexternalUidarr); 
+							$params .= '&' . $tmpexternalUid;
+							$params = str_replace('&&', '&', $params);
+						}					
+					}
 					$params = str_replace('7g8', '-', $params);
 
 					$conflink = array(

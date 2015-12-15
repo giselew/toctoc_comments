@@ -84,16 +84,7 @@ class toctoc_comments_usercenter extends toctoc_comment_lib {
 		$pidcond='deleted=0 AND approved=1 AND hidden=0 AND ';
 		$UserImage = '';
 		if (intval($conf['useUserImage']) != 0) {
-			$mpics = FALSE;
-			 if (!isset($_SESSION['userAJAXimage'])) {
-			 	$mpics = TRUE;
-			 } else {
-			 	if (trim($_SESSION['userAJAXimage'])=='') {
-			 		$mpics = TRUE;
-			 	}
-			 }
 
-			 if ($mpics == TRUE) {
 				$rowsfeuser = array();
 				$rowsfeuser = $this->getBaseFeUsersArray($pObj, $fromAjax, $GLOBALS['TSFE']->fe_user->user['uid'], '', $conf);
 				$usergenderexistsstr='';
@@ -106,9 +97,7 @@ class toctoc_comments_usercenter extends toctoc_comment_lib {
 
 				$this->build_AJAXImages($conf, $pObj, $usergenderexistsstr, $fromAjax);
 				$UserImage=$this->getAJAXimage($GLOBALS['TSFE']->fe_user->user['uid'], 0, $conf);
-			 } else {
-			 	$UserImage = $_SESSION['userAJAXimage'];
-			 }
+
 			$UserImage = str_replace(' tx-tc-nodisp', '', $UserImage);
 			$UserImage = str_replace(' align="left"', '', $UserImage);
 			$UserImage = str_replace('  title', ' title', $UserImage);

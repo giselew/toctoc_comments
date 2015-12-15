@@ -111,7 +111,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '810';
+	public $extVersion = '811';
 	public $extLESSVersion = 'toctoc_comments-LESS.1';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
@@ -3956,7 +3956,7 @@ sharrre design 2 and 4, calculated specifics
 		if (intval($this->externalUid)==0) {
 			$this->externalUid = (is_array($ar) ? $ar[$this->showUidParam] : FALSE);
 			if (trim($this->externalUid) != '') {
-				$this->externalUid = str_replace('-', '7g8', $this->externalUid);
+				$this->externalUid = str_replace('-', '7g8', $this->externalUid) . '@page' . $GLOBALS['TSFE']->id;
 				$this->externalUid = $this->getExternalUidShortId();
 				$this->externalUidString = $this->externalUid;
 				$this->foreignTableName = $this->conf['externalPrefix'] . '6g9' . $this->showUidParam;
@@ -4673,18 +4673,6 @@ sharrre design 2 and 4, calculated specifics
 		$this->fetchConfigValue('advanced.commentReview');
 		$this->fetchConfigValue('advanced.commentingClosed');
 		$this->fetchConfigValue('advanced.closeCommentsAfter');
-// 		$this->fetchConfigValue('advanced.useSharing');
-// 		$this->fetchConfigValue('advanced.dontUseSharingFacebook');
-// 		$this->fetchConfigValue('advanced.dontUseSharingGoogle');
-// 		$this->fetchConfigValue('advanced.dontUseSharingTwitter');
-// 		$this->fetchConfigValue('advanced.dontUseSharingLinkedIn');
-// 		$this->fetchConfigValue('advanced.dontUseSharingStumbleupon');
-// 		$this->fetchConfigValue('advanced.initialViewsCount');
-// 		$this->fetchConfigValue('advanced.initialViewsDate');
-// 		$this->fetchConfigValue('advanced.shareUsersTotalText');
-// 		$this->fetchConfigValue('advanced.shareDataText');
-// 		$this->fetchConfigValue('advanced.sharePageURL');
-
 		$this->fetchConfigValue('sharing.useSharingV2');
 		$this->fetchConfigValue('sharing.dontUseSharingFacebookV2');
 		$this->fetchConfigValue('sharing.dontUseSharingGoogleV2');
@@ -7082,7 +7070,21 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 	 */
 	protected function getExternalUidShortId() {
 		$externalUid = $this->externalUid;
+// updatecheck 8.0.0 -> 8.1.1:
 
+		$querymerged='SELECT uid, externaluid FROM tx_toctoc_comments_longuidreference WHERE externaluid NOT LIKE "%@page%"';
+		$resultmerged1= $GLOBALS['TYPO3_DB']->sql_query($querymerged);
+		while ($rowsmerged1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultmerged1)) {
+			$dataWhere = 'reference LIKE "%_ext' .$rowsmerged1['uid']. '%"';
+			list($row) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('reference, pagetstampseen',
+					'tx_toctoc_comments_feuser_mm', $dataWhere);
+			if (intval($row['pagetstampseen']) != 0) {
+				$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_longuidreference SET ' .
+						'externaluid="' . $rowsmerged1['externaluid'] . '@page' . $row['pagetstampseen'] . '"' .
+						' WHERE uid=' . $rowsmerged1['uid']);
+			}
+		}
+		
 		$dataWhere = 'externaluid = "' . $externalUid . '"';
 		list($row) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('uid',
 				'tx_toctoc_comments_longuidreference', $dataWhere);

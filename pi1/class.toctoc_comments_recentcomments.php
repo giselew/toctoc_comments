@@ -695,6 +695,18 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 
         	}
         	$addparams = t3lib_div::implodeArrayForUrl('', $params, '', 1);
+        	$tmpexternalUidarr = explode('%40page', $addparams);
+		if (count($tmpexternalUidarr) >1) {
+			$addparams = array_shift($tmpexternalUidarr);
+			$tmpexternalUid = implode ('', $tmpexternalUidarr);
+			$tmpexternalUidarr = explode('&', $tmpexternalUid);
+			if (count($tmpexternalUidarr) >1) {
+				array_shift($tmpexternalUidarr);
+				$tmpexternalUid = implode('&', $tmpexternalUidarr); 
+				$addparams .= '&' . $tmpexternalUid;
+				$addparams = str_replace('&&', '&', $addparams);
+			}					
+		}
         	$addparams = str_replace('7g8', '-', $addparams);
 
  			$conflink = array(

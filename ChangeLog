@@ -724,4 +724,17 @@
 	* Removed recent comments links to comments on hidden or deleted records of other extensions
 	* Deleted a totally meaningless line of code in class.toctoc_comments_pi1.php
 	* Implemented finally the debugMode-Option from Extensionmanager-Configuration
+	* Added option advanced.viewMaxAge with of default of 28 days. views older than this delay are aggregated and associateded in the database to an anonymous user
+	  This allows to control size increasement of table tx_toctoc_comments_feuser_mm
+	
+2015-12-16  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 8.1.1
+	* Fixed empty file in LESS-compiler distributed in TER-version of 8.1.0.
+	* Fixed occasional too small user pic in user center
+	* Fixed missing links in top ratings for ratings on records from extensions with no numeric showUid (tx_restdoc)
+	* Fixed problem with comments on extensions with no numeric showuid, they were constraint to only one page per plugin-to-tablemap.
+	* Fixed another problem with bad looking HTML in userpictures
+	* Fixed unused markers in HTML for comment denotifications
+	* Handling for option advanced.viewMaxAge has been optimized to happen only once per day.
+	* Fixed opacity change of the plugin when a user tries to login without username given in AJAX-Login mode
 	
