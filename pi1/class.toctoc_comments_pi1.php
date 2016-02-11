@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 - 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
+*  (c) 2012 - 2016 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -39,32 +39,32 @@
  * 3826:     protected function initexternaluid($withinitprefixToTableMap)
  * 3977:     protected function init()
  * 4572:     protected function mergeConfiguration()
- * 4920:     protected function fetchConfigValue($param)
- * 4948:     protected function ae_detect_ie()
- * 4971:     protected function boxmodel()
- * 6260:     protected function crunchcss($buffer)
- * 6287:     protected function calculate_string( $mathString )
- * 6310:     protected function locationHeaderUrlsubDir()
- * 6329:     protected function currentPageName()
- * 6357:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
- * 6392:     protected function doClearCache ($forceclear=FALSE)
- * 6426:     protected function InitCachingVariables ()
- * 6451:     protected function getPluginCacheControlTstamp ($external_ref_uid)
- * 6462:     protected function getLastUserAdditionTstamp ()
- * 6485:     protected function initLegacyCache ()
- * 6499:     protected function check_scopes()
- * 6657:     protected function initializeprefixtotablemap()
- * 6697:     protected function sharrrejs()
- * 6779:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
- * 6832:     private function resolveBackPath($pathStr)
- * 6867:     private function dirname($path)
- * 6881:     private function revExplode($delimiter, $string, $count = 0)
- * 6897:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 6920:     public function createLinks($text, $conf = NULL)
- * 6943:     protected function getThemeTmageDimension($filename, $returnindex)
- * 6963:     protected function checktoctoccommentsuser()
- * 7081:     protected function getExternalUidShortId()
- * 7104:     protected function fbgoogle_lan($isfacebook)
+ * 4908:     protected function fetchConfigValue($param)
+ * 4936:     protected function ae_detect_ie()
+ * 4959:     protected function boxmodel()
+ * 6248:     protected function crunchcss($buffer)
+ * 6275:     protected function calculate_string( $mathString )
+ * 6298:     protected function locationHeaderUrlsubDir()
+ * 6317:     protected function currentPageName()
+ * 6345:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
+ * 6380:     protected function doClearCache ($forceclear=FALSE)
+ * 6414:     protected function InitCachingVariables ()
+ * 6439:     protected function getPluginCacheControlTstamp ($external_ref_uid)
+ * 6450:     protected function getLastUserAdditionTstamp ()
+ * 6473:     protected function initLegacyCache ()
+ * 6487:     protected function check_scopes()
+ * 6645:     protected function initializeprefixtotablemap()
+ * 6687:     protected function sharrrejs()
+ * 6769:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
+ * 6822:     private function resolveBackPath($pathStr)
+ * 6857:     private function dirname($path)
+ * 6871:     private function revExplode($delimiter, $string, $count = 0)
+ * 6887:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 6910:     public function createLinks($text, $conf = NULL)
+ * 6933:     protected function getThemeTmageDimension($filename, $returnindex)
+ * 6953:     protected function checktoctoccommentsuser()
+ * 7071:     protected function getExternalUidShortId()
+ * 7117:     protected function fbgoogle_lan($isfacebook)
  *
  * TOTAL FUNCTIONS: 35
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -111,7 +111,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '811';
+	public $extVersion = '812';
 	public $extLESSVersion = 'toctoc_comments-LESS.1';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
@@ -7074,6 +7074,7 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 
 		$querymerged='SELECT uid, externaluid FROM tx_toctoc_comments_longuidreference WHERE externaluid NOT LIKE "%@page%"';
 		$resultmerged1= $GLOBALS['TYPO3_DB']->sql_query($querymerged);
+		$dodelete = FALSE;
 		while ($rowsmerged1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultmerged1)) {
 			$dataWhere = 'reference LIKE "%_ext' .$rowsmerged1['uid']. '%"';
 			list($row) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('reference, pagetstampseen',
@@ -7083,8 +7084,16 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 						'externaluid="' . $rowsmerged1['externaluid'] . '@page' . $row['pagetstampseen'] . '"' .
 						' WHERE uid=' . $rowsmerged1['uid']);
 			}
+
+			$dodelete = TRUE;
 		}
-		
+
+		if ($dodelete) {
+			// After an update there must be no more records without the @page in externaluid
+			$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_longuidreference ' .
+					' WHERE externaluid NOT LIKE "%@page%"');
+		}
+
 		$dataWhere = 'externaluid = "' . $externalUid . '"';
 		list($row) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('uid',
 				'tx_toctoc_comments_longuidreference', $dataWhere);

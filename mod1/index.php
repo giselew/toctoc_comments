@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 - 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
+*  (c) 2012 - 2016 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -388,9 +388,85 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 			$selected3 = '';
 			$selected2 = '';
 		}
+		
+		$newcomments = 0;
+		$newusers = 0;
+		$newsince = intval($this->extConf['new_Hours']);
+		
+		if ($newsince== 0) {
+			$newsince = 24;
+		}
+		
+		$newsincehours = $newsince;
+		
+		$newsincedays= intval($newsincehours/24);
+		$txthout = '';
+		if ($newsincedays > 0) {
+			if ($newsincedays > 1) {
+				$txthout = $newsincedays . ' ' . $GLOBALS['LANG']->getLL('days') . ' ';
+			} else {
+				$txthout = '1 ' . $GLOBALS['LANG']->getLL('day') . ' ';
+			}
+			
+		}
+		
+		$newsincehours = $newsincehours % (24);
+		if ($newsincehours > 1) {
+			$txthout .= $newsincehours . ' ' . $GLOBALS['LANG']->getLL('hours');
+		} elseif ($newsincehours == 1) {
+			$txthout .= $newsincehours . ' ' . $GLOBALS['LANG']->getLL('hour');
+		}
+		
+		$newsince = time() - $newsince*3600;
+		$recs = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('count(*) AS t', 'tx_toctoc_comments_comments', 'crdate > ' . $newsince);
+		
+		if (count($recs)>0) {
+			if ($recs[0]['t'] != 0) {
+				// new comments
+				$newcomments = $recs[0]['t'];
+			}
+		}
+		
+		$recs = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('count(*) AS t', 'tx_toctoc_comments_user', 'crdate > ' . $newsince);
+		if (count($recs)>0) {
+			if ($recs[0]['t'] != 0) {
+				// new users
+				$newusers = $recs[0]['t'];
+			}
+		}
+		
+		$newsmessage='';
+		If ($newusers+$newcomments > 0) {
+			$txtsince = $GLOBALS['LANG']->getLL('sysnewssince');
+			$newsmessage='<div class="tx-tc-title tx-tc-newstitle tx-tc-information">'.$GLOBALS['LANG']->getLL('sysnews').'</div>
+<div class="tx-tc-textbody">';
+			If ($newcomments > 1) {
+				$newsmessage .= trim('<div class="tx-tc-newcommentstar"><span class="tx-tc-star">*</span></div>' . $newcomments . ' ' . $GLOBALS['LANG']->getLL('nnewcomments'). ' ' . $txtsince) . ' '. $txthout;
+			}
+			
+			If ($newcomments == 1) {
+				$newsmessage .= trim('<div class="tx-tc-newcommentstar"><span class="tx-tc-star">*</span></div>' . $GLOBALS['LANG']->getLL('onenewcomment'). ' ' . $txtsince) . ' ' . $txthout;
+			}
+			
+			If ($newcomments > 0) {
+				$newsmessage .= '<br />';
+				$txthout = '';	
+				$txtsince = '';
+			}
+			
+			If ($newusers > 1) {
+				$newsmessage .= trim('<div class="tx-tc-newuserstar"><span class="tx-tc-star">*</span></div>' . $newusers . ' ' . $GLOBALS['LANG']->getLL('nnewusers'). ' ' . $txtsince . ' '. $txthout);
+			}
+			
+			If ($newusers == 1) {
+				$newsmessage .= trim('<div class="tx-tc-newuserstar"><span class="tx-tc-star">*</span></div>' . $GLOBALS['LANG']->getLL('onenewuser'). ' ' . $txtsince . ' '. $txthout);
+			}
+			
+			$newsmessage .= '</div>';
+		}
 
 		$content .= '
-		<div>
+		<div class="tx-tc-50">
 		  <span class="tx-tc-title">'.$GLOBALS['LANG']->getLL('function').'</span>
 		  <select name="admincommand" size="1">
 		    <option value="1" ' . $selected1 . '>' . $GLOBALS['LANG']->getLL('function1') . '</option>
@@ -400,6 +476,9 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 		  </select>
 		  <input type="submit" name="actadmincommand" value="'.$GLOBALS['LANG']->getLL('go').'" />
 		</div>
+		<div class="tx-tc-50">
+		  		' . $newsmessage . ' 
+		</div>  		
 		<div class="clearit">&nbsp;</div>
 		';
 
@@ -881,7 +960,7 @@ class  toctoc_comments_module1 extends t3lib_SCbase {
 	 * Checks static blocking lists.
 	 *
 	 * @param	int		$activetimestamdiff	Difference between timestamps
-	 * @return	$ActiveTimeStr		string reprersentation of time difference
+	 * @return	$ActiveTimeStr		string representation of time difference
 	 */
 	private function activetime($activetimestamdiff) {
 		$ActiveTime = round($activetimestamdiff, 0);

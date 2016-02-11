@@ -2,7 +2,7 @@ div.typo3-bigDoc, div.typo3-noDoc, div.typo3-smallDoc, div.typo3-mediumDoc {
 	height: 99%;
 }
 div.typo3-bigDoc {
-	width: 97%;
+	width: 100%;
 }
 .div-float {
 	float: right;
@@ -17,6 +17,9 @@ table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	background-color: #a4a5a7;
 	padding: 4px;
 	color: #fff;
+}
+table.tablesorter thead tr {
+	vertical-align: top;
 }
 table.tablesorter thead tr .header {
 	background-image: url('../img/bg.gif');
@@ -91,6 +94,9 @@ div.reportoptions {
 	background-color: #FFF;
 	vertical-align: top;
 }
+.tx-tc-textbody {
+	padding: 5px;
+}
 .tx-tc-alert, .tx-tc-information {
 	border: 1px solid transparent;
     border-radius: 2px;
@@ -156,4 +162,31 @@ div.tx-tc-reportoptionarea {
 }
 #ext-toctoc-comments-mod1-index-php .tx-tc-donationmessage {
 	float: right;
+}
+.tx-tc-newstitle {
+	margin-bottom: 0px !important;
+}
+.tx-tc-newcommentstar, .tx-tc-newuserstar {
+	float: left;
+}
+.tx-tc-star {
+	font-weight: 700;
+	padding-right: 5px;
+}
+.tx-tc-newuserstar {
+	color: #0094df;
+	
+}
+.tx-tc-newcommentstar {
+	color: #da2c36;
+}
+.tx-tc-50 {
+	width: 50%;
+	float: left;
+}
+@media (max-width: 480px) {
+	.tx-tc-50 {
+		width: 100%;
+		margin-bottom: 5px;
+	}
 }

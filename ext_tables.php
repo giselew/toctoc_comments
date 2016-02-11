@@ -34,6 +34,31 @@ if (TYPO3_MODE == 'BE') {
 			);
 				
 		} else {
+			$act = '';
+			$extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['toctoc_comments']);
+			$newsince = intval($extConf['new_Hours']);
+			if ($newsince== 0) {
+				$newsince = 6;
+			}
+			if($GLOBALS['TYPO3_DB']) {
+				$newsince = time() - $newsince*3600;
+				$recs = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('count(*) AS t', 'tx_toctoc_comments_comments', 'crdate > ' . $newsince);
+				if (count($recs)>0) {
+					if ($recs[0]['t'] != 0) {
+						// new comments
+						$act .= 'c';
+					}
+				}
+				$recs = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('count(*) AS t', 'tx_toctoc_comments_user', 'crdate > ' . $newsince);
+				if (count($recs)>0) {
+					if ($recs[0]['t'] != 0) {
+						// new users
+						$act .= 'u';
+					}
+				}
+			}
+			$modimg = 'CommentsModuleIcon' . $act . '.png';
+
 			\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addModule(
 					'web',
 					'toctoccommentsbeM1',
@@ -45,7 +70,7 @@ if (TYPO3_MODE == 'BE') {
 							'name' => 'web_toctoccommentsbeM1',
 							'labels' => array(
 									'tabs_images' => array(
-											'tab' => 'CommentsModuleIcon.png',
+											'tab' => $modimg,
 									),
 									'll_ref' => 'LLL:EXT:toctoc_comments/mod1/locallang_mod.xml',
 							),

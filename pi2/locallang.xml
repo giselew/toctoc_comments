@@ -46,6 +46,7 @@ You will receive a notification about approval or refusal by email</label>
 			<label index="change_password">Set new password</label>
 			<label index="reset_password">Reset Password</label>
 			<label index="enter_captcha">Captcha:</label>
+			<label index="enter_captcha_errornotloaded">Systemmessage: Captcha extension is not loaded! Please contact the admin</label>
 			<label index="title_captcha">Please enter the captcha shown below</label>
 			<label index="error_wrong_captcha">The captcha was wrong, please try again</label>
 			<label index="ll_change_password_message">Please enter your new password twice. Password needs a minimum length of %s chars.</label>

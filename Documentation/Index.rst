@@ -63,7 +63,7 @@ EXT: AJAX Social Network Components
      
     The full manual can be found in directory doc of toctoc_comments as OpenOffice-file. 
      
-    It is also **available as pdf** - click on the following link to open it: `www.toctoc.ch/fileadmin/download/manual_toctoc_comments_811.pdf <https://www.toctoc.ch/fileadmin/download/manual_toctoc_comments_811.pdf>`_.
+    It is also **available as pdf** - click on the following link to open it: `www.toctoc.ch/fileadmin/download/manual_toctoc_comments_812.pdf <https://www.toctoc.ch/fileadmin/download/manual_toctoc_comments_811.pdf>`_.
 
 
     **Table of Contents**

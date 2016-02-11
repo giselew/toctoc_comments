@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 - 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
+*  (c) 2012 - 2016 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -144,13 +144,15 @@ $editTable = 'tx_toctoc_comments_ipbl_static';
 				    		$upd = $GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_ipbl_static', '');
 				    		foreach ($newIPsArr as $newIP) {
 				    			if (trim($newIP) != '') {
-				    			$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_ipbl_static', array(
-				    					'pid' => $storagePid,
-				    					'tstamp' => time(),
-				    					'crdate' => time(),
-				    					'ipaddr' => $newIP,
-				    					'comment' => 'DROP lasso',
-				    			));
+					    			$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_ipbl_static', array(
+					    					'pid' => $storagePid,
+					    					'tstamp' => time(),
+					    					'crdate' => time(),
+					    					'ipaddr' => $newIP,
+					    					'comment' => 'DROP lasso',
+					    			));
+				    			} else {
+				    				$cntnewIPs = $cntnewIPs - 1;
 				    			}
 				    		}
 				    	}

@@ -215,6 +215,12 @@
 			<label index="entriesaggregatelist">Entries in aggregate list</label>
 			<label index="timesincefirstsession">Time since first session</label>
 			<label index="numberTYPO3sessions">Number of TYPO3 DB-sessions since</label>
+			<label index="sysnews">New comments or users</label>
+			<label index="onenewcomment">1 new comment</label>
+			<label index="nnewcomments">new comments</label>
+			<label index="onenewuser">1 new user</label>
+			<label index="nnewusers">new users</label>
+			<label index="sysnewssince">since</label>
 		</languageKey>
 	</data>
 	<orig_hash type="array">

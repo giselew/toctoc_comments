@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-* (c) 2012 - 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
+* (c) 2012 - 2016 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -38,37 +38,38 @@
  *
  *
  *
- *  117: class tx_toctoccomments_pi2 extends tslib_pibase
- *  140:     protected function processRedirect()
- *  154:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  252:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  488:     protected function watermark($conf, $content)
- *  526:     protected function showForgot()
- *  606:     protected function showLogout()
- *  641:     protected function showLogin()
- *  793:     protected function getRSAKeyPair()
- *  830:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
- *  866:     protected function getPreserveGetVars()
- *  919:     protected function generatePassword($len)
- *  939:     protected function getDisplayText($label, $stdWrapArray=array())
- *  951:     protected function getUserFieldMarkers()
- *  993:     protected function validateRedirectUrl($url)
- * 1024:     protected function isInCurrentDomain($url)
- * 1036:     protected function isInLocalDomain($url)
- * 1077:     protected function isRelativeUrl($url)
- * 1093:     protected function generateAndSendHash($user)
- * 1265:     protected function changePassword($uid, $piHash)
- * 1389:     protected function showSignon()
- * 1807:     protected function getSignupCaptcha($required, $errcp, $cpval)
- * 1850:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
- * 1877:     protected function processSignupCaptcha($postData)
- * 1917:     protected function loginUser($facebookId)
- * 1945:     protected function storeUser($facebookUserProfile, $socialnetwork)
- * 2095:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
- * 2113:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
- * 2203:     protected function getCurrentIp()
+ *  118: class tx_toctoccomments_pi2 extends tslib_pibase
+ *  141:     protected function processRedirect()
+ *  155:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  253:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  489:     protected function watermark($conf, $content)
+ *  527:     protected function showForgot()
+ *  607:     protected function showLogout()
+ *  642:     protected function showLogin()
+ *  794:     protected function getRSAKeyPair()
+ *  831:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
+ *  867:     protected function getPreserveGetVars()
+ *  920:     protected function generatePassword($len)
+ *  940:     protected function getDisplayText($label, $stdWrapArray=array())
+ *  952:     protected function getUserFieldMarkers()
+ *  994:     protected function validateRedirectUrl($url)
+ * 1025:     protected function isInCurrentDomain($url)
+ * 1037:     protected function isInLocalDomain($url)
+ * 1078:     protected function isRelativeUrl($url)
+ * 1094:     protected function generateAndSendHash($user)
+ * 1266:     protected function changePassword($uid, $piHash)
+ * 1390:     protected function showSignon()
+ * 1808:     protected function getSignupCaptcha($required, $errcp, $cpval)
+ * 1851:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ * 1878:     protected function processSignupCaptcha($postData)
+ * 1918:     protected function loginUser($facebookId)
+ * 1946:     protected function storeUser($facebookUserProfile, $socialnetwork)
+ * 2093:     private function registerUserGroup()
+ * 2155:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
+ * 2173:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
+ * 2263:     protected function getCurrentIp()
  *
- * TOTAL FUNCTIONS: 28
+ * TOTAL FUNCTIONS: 29
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -1572,7 +1573,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 							$record['password'] = $postData['password1'];
 							$record['username'] = $postData['user'];
 							$record['pid'] = $postData['pid'];
-							$record['usergroup'] = $this->conf['register.']['usergroup'];
+							$record['usergroup'] = $this->registerUserGroup();
 							$record['email'] = $postData['signup_email'];
 							$record['image'] = '';
 
@@ -1837,6 +1838,10 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			));
 			$retstr = $this->cObj->substituteMarkerArrayCached($template, $markerArray, $subpartArray, $linkpartArray);
 			return $retstr;
+		} elseif (($captchaType == 2) || ($captchaType == 1))  {
+			
+			$retstr = '<span class="tx-tc-required-error">' . $this->pi_getLL('enter_captcha_errornotloaded', '', 1) . '</span>';
+			return $retstr;
 		}
 
 		return '';
@@ -2010,7 +2015,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			$GLOBALS['TYPO3_DB']->exec_UPDATEquery($this->tableName, $updateWhere, $fe_usersValues);
 		} else {
 			$fe_usersValues['tx_toctoc_comments_facebook_id'] = $facebookUserProfile['id'];
-			$fe_usersValues['usergroup'] = $this->conf['register.']['usergroup'];
+			$fe_usersValues['usergroup'] = $this->registerUserGroup();
 			$fe_usersValues['password'] = t3lib_div::getRandomHexString(32);
 			$fe_usersValues['crdate'] = time();
 			$fe_usersValues['disable'] = intval($this->conf['register.']['signupAdminConfirmation']);
@@ -2083,6 +2088,65 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			$_SESSION['AJAXimagesTimeStamp'] = microtime(TRUE);
  		}
 
+	}
+	/**
+	 * checks conf['register.']['usergroup'], handles missing usergroup and adjusts conf['register.']['usergroup'] to correct usergroup
+	 *
+	 * @return	string		$conf['register.']['usergroup']
+	 */
+	private function registerUserGroup() {
+		// check if $this->conf['register.']['usergroup'] exists, if not handle it
+		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+				'uid',
+				'fe_groups',
+				'uid=' . $this->conf['register.']['usergroup'] . ' AND pid = ' . $this->conf['storagePid'] . ' ' .
+				$this->cObj->enableFields('fe_groups')
+		);
+		$row=array();
+		if ($GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
+			$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+		}
+
+		if (count($row)>0) {
+			// good, user group exists like specified in config
+			if (count($row[0])>0) {
+				$this->conf['register.']['usergroup'] = $row[0]['uid'];
+			} else {
+				$this->conf['register.']['usergroup'] = $row['uid'];
+			}
+		} else {
+			// less good, user group does not exists like specified in config
+			// but could have been created under another uid in the right pid, so lets check if usergroup with title "toctoc_comments" exists
+			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+					'uid',
+					'fe_groups',
+					'title="toctoc_comments" AND pid = ' . $this->conf['storagePid'] . ' ' .
+					$this->cObj->enableFields('fe_groups')
+			);
+			$row=array();
+			if ($GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
+				$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+			}
+
+			if (count($row)>0) {
+				if (count($row[0])>0) {
+					$this->conf['register.']['usergroup'] = $row[0]['uid'];
+				} else {
+					$this->conf['register.']['usergroup'] = $row['uid'];
+				}
+			} else {
+				// no usable usergroup, we create usergroup with title "toctoc_comments"
+				$userId = 0;
+				$record=array();
+				$record['crdate'] = $record['tstamp'] = time();
+				$record['title'] = 'toctoc_comments';
+				$record['description'] = 'Usergroup automatically created by extension toctoc_comments';
+				$record['pid'] = $this->conf['storagePid'];
+				$GLOBALS['TYPO3_DB']->exec_INSERTquery('fe_groups', $record);
+				$this->conf['register.']['usergroup'] = $GLOBALS['TYPO3_DB']->sql_insert_id();
+			}
+		}
+		return $this->conf['register.']['usergroup'];
 	}
 	/**
 	 * copy Image from Facebook

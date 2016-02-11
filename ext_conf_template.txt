@@ -4,6 +4,9 @@ donationSecret =
 # cat=basic//02; type=int+; label=Backend-Module, max. records shown: How much comments should be displayed per page
 max_records = 10
 
+# cat=basic//03; type=int+; label=Backend-Module, Shows different module icon on new records: How much hours a user or comment is considered as new
+new_Hours = 24
+
 # cat=basic//04; type=int+; label=Backend-Module, comment crop: Set the crop size of the comment field in the backend
 text_crop = 55
 

@@ -105,7 +105,7 @@ plugin.tx_toctoccomments_pi1 {
 	userCommentResponseLevels = 3
 	
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//08; type=int+; label=Levels of Expanded comments on comments: When displaying comments on comments this sets how many levels are expanded. values from 1 (none) to 20  are allowed
-	userCommentResponseLevelExpanded = 1
+	userCommentResponseLevelExpanded = 2
 	
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//09; type=boolean; label=Show comments of FE Users:If set to 0 comments of FE users are shown only after login.
 	showFeUsercomments = 1

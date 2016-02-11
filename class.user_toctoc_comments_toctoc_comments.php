@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
+*  (c) 2015 - 2016 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -243,7 +243,7 @@ class user_toctoc_comments_toctoc_comments {
 						'lang' => $langreq,
 						'extensionkey' => 'toctoccommentsce',
 						'extension' => 'toctoc_comments',
-						'version' => '811',
+						'version' => '812',
 						'hostname' => $curipres,
 						'typo3version' => TYPO3_version,
 				);

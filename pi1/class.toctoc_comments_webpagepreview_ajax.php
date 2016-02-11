@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 - 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
+*  (c) 2012 - 2016 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -93,9 +93,9 @@ public $extKey = 'toctoc_comments';
 		$conf['attachments.']=$dataconfatt['conf'];
 		$websitepreviewareaimagewidth =  $conf['attachments.']['webpagePreviewHeight'] + 10;
 
-		$awaitgoogle =$dataconfatt['awaitgoogle'];
-		$txtimage = $dataconfatt['txtimage'];
-		$txtimages = $dataconfatt['txtimages'];
+		$awaitgoogle = base64_decode($dataconfatt['awaitgoogle']);	
+		$txtimage = base64_decode($dataconfatt['txtimage']);	
+		$txtimages = base64_decode($dataconfatt['txtimages']);
 
 		if ($conf['attachments.']['maxCharsPreviewTitle']!='') {
 			if ($conf['attachments.']['maxCharsPreviewTitle']>250) {

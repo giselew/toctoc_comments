@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
 *
-*  (c) 2013 - 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
+*  (c) 2013 - 2016 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -83,6 +83,10 @@ class toctoc_comments_attachmentupload {
 		$ajaxdataarr=$post['toctoc_comments_pi1']['ajax'];
 		$cid=$post['toctoc_comments_pi1']['cid'];
 		$dataajaxatt = unserialize(base64_decode($ajaxdataarr));
+		$dataajaxatt['awaitgoogle'] = base64_decode($dataajaxatt['awaitgoogle']);
+		$dataajaxatt['txtimage'] = base64_decode($dataajaxatt['txtimage']);
+		$dataajaxatt['txtimages'] = base64_decode($dataajaxatt['txtimages']);
+		
 		$ajaxdataarrcz=array();
 		$ajaxdataarrcz['attachments2.']=array();
 		$ajaxdataarrcz['attachments2.']=$dataajaxatt['conf'];

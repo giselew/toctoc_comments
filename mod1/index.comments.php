@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 - 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
+*  (c) 2012 - 2016 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,7 +28,7 @@
     // params = Create New
     $params = '&edit['.$editTable.']['.$pid.']=new&defVals['.$editTable.']';
     $content .= '<a href="#" onclick="'.htmlspecialchars(t3lib_BEfunc::editOnClick($params, $GLOBALS['BACK_PATH'])).'">
-    <img src="sysext/t3skin/icons/gfx/new_el.gif" title="'.$GLOBALS['LANG']->getLL('newcomment').'" border="0" alt="" />
+    <img src="'. $GLOBALS['BACK_PATH'] . $this->picpathsysext . 'new_el.gif" title="'.$GLOBALS['LANG']->getLL('newcomment').'" border="0" alt="" />
     </a><br /><br />';
 	$infomessage = '';
 	$alertmsg = 0;

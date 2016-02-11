@@ -738,3 +738,14 @@
 	* Handling for option advanced.viewMaxAge has been optimized to happen only once per day.
 	* Fixed opacity change of the plugin when a user tries to login without username given in AJAX-Login mode
 	
+2016-01-08  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 8.1.2
+	* Added Extension Configuration option new_Hours. If there's a new comment or new user newer than the specified time, 
+	  then the backend module icon changes and gets one or two stars. In backend module you find then more detailed information about the news.
+	* Fixed occasional bug in handling of option advanced.viewMaxAge
+	* Added handling for missing usergroup on fresh installs of the AJAX-Login component
+	* Fixed another bug with userpictures, where under certain conditions the fe_users-picture was not considered correctly
+	  Condition: User never made a like or rating and no view is registered, which can happen after all views of a user become older than advanced.viewMaxAge
+	    
+	
+	
