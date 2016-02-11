@@ -1,0 +1,93 @@
+.tx-tc-dtadyn {
+	min-height: @taheight;
+	padding: 0 @tapadding 0 0;
+}
+.tx-tc-hhalfbm {
+	margin-left: @boxmodelSpacing;
+	font-weight: bold;
+}
+.tx-tc-ntf-check {
+    margin: @topMarginCheckBox 8px 0 0 !important;
+    line-height:@boxmodelLineHeight !important;
+}
+textarea.tx-tc-ctinput-textarea, textarea.tx-tc-ctinput-textarea-rq {
+	height: @taheight;
+}
+
+.tx-tc-frmsqrhgt {
+	height: (4 + @boxmodelTextareaLineHeight * @boxmodelTextareaNbrLines + 2 * @boxmodelSpacing);
+}
+.tx-tc-mihgt-ctbox {
+	min-height:@minheightcommentbox;
+}
+.tx-tc-pi1 .tx-tc-cts-form-fieldtextarea, .tx-tc-pi1 .tx-tc-cts-form-fieldtextarea-1 {
+	margin: 0;
+	padding: 4px 0;
+}
+.tx-tc-ct-ry-report-line .tx-tc-pi1 .tx-tc-cts-form-fieldtextarea, .tx-tc-pi1 .tx-tc-cts-form-fieldtextarea-1 {
+	min-height: 28px;
+}
+
+
+.tx-tc-ct-form-field-fup textarea.tx-tc-ctinput-textarea, .tx-tc-ct-form-field-fup textarea.tx-tc-ctinput-textarea-rq {
+	float: left;
+	margin-top: 4px;
+	margin-left: 4px;
+}
+.tx-tc-ct-ry-report-line textarea.tx-tc-ctinput-textarea, .tx-tc-ct-ry-report-line textarea.tx-tc-ctinput-textarea-rq {
+	margin: 5px 2px 0px -2px;
+}
+
+/**/
+form.tx-tc-form-for-newcomment {
+    padding: 0 0 round((3/2)*@boxmodelSpacing);
+	border: 0 none;
+	left: 0;
+	margin: 0;
+	min-height: 32px;
+	top: 0;
+}
+textarea.tx-tc-ctinput-textarea when (@usethemeFontFamilyForPlugin = true) {
+	font-family: @themeFontFamily;
+}
+textarea.tx-tc-ctinput-textarea-rq when (@usethemeFontFamilyForPlugin = true) {
+	font-family: @themeFontFamily;
+}
+input.tx-tc-ct-input when (@usethemeFontFamilyForPlugin = true) {
+	font-family: @themeFontFamily;
+}
+.tx-tc-ct-form-gender  when (@boxmodelLabelInputPreserve = true) {
+	padding: ~"@{boxmodelSpacingHalfRoundedFloor} !important";
+}
+.tx-tc-ct-rply .tx-tc-divtextarea {
+	visibility: inherit;
+}
+
+.tx-tc-ct-form-field-upload {
+	font-size: 100%;
+	margin: 10px 0 0;
+	min-height: 20px;
+	padding: 0;
+	width: 20px;
+}
+
+.tx-tc-upload {
+	opacity: 0.4;
+}
+.tx-tc-upload:hover {
+	opacity: 1;
+}
+.tx-tc-ct-form-gender {
+	float: left;
+	margin: 0 0 0 4px;
+}
+.tx-toctoc-comments-required-error, .tx-tc-required-mark, .tx-tc-required-error {
+	color: @color-error-text;
+}
+.tx-tc-ct-label-commenttitle {
+	color: @color-commenttitle-text;
+}
+.tx-tc-ct-prv-frameover {
+	background-image: ~"url('@{theme-path}white90.png')";
+	border-color: @color-border-generic;
+}

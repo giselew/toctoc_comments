@@ -1,0 +1,27 @@
+TocToc_Comments Text Template for email notification to ciommentator
+
+Valid Markers:
+
+###SALUTATION###
+###MESSAGE###
+###USER###
+###LINK_TO_COMMENT###
+###MESSAGETYPE###
+###MYHOMEPAGE###
+###MYHOMEPAGETITLE###
+
+
+<!--###COMMENTS_RECIPENT_MAIL### start-->
+
+###MESSAGETYPE### - ###MYHOMEPAGE###
+
+###SALUTATION### ###USER###
+###MESSAGE###
+
+###LINK_TO_COMMENT###
+
+###DENOTIFYLINK###
+
+###MYHOMEPAGETITLE###
+	
+<!--###COMMENTS_RECIPENT_MAIL### stop-->
