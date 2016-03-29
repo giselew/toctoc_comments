@@ -4,10 +4,10 @@
 
 ---
 conf.py:
-  copyright: 2012-2015
+  copyright: 2012-2016
   project: EXT: AJAX Social Network Components
-  version: 8.1
-  release: 8.1.2
+  version: 9.0
+  release: 9.0.1
   latex_documents:
   - - Index
     - restdoc.tex

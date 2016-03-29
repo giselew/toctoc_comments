@@ -18,7 +18,7 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 $tx_toctoc_comments_sysconf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['toctoc_comments']);
 $toctoc_ratings_debug_mode_disabled = !intval($tx_toctoc_comments_sysconf['debugMode']);
 
-$tx_toctoc_comments_comments = [
+$tx_toctoc_comments_comments = array(
 	'ctrl' => array (
 		'title'     => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_ratings_data',
 		'label'     => 'reference',
@@ -93,7 +93,7 @@ $tx_toctoc_comments_comments = [
 	'types' => array (
 		'0' => array ('showitem' => 'reference,reference_scope;;;;1-1-1, rating, vote_count')
 	),
-];
+);
 	
 return $tx_toctoc_comments_comments;
 ?>

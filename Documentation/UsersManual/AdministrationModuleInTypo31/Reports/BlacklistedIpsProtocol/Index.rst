@@ -18,4 +18,4 @@ IP-lists accesses a page holding **toctoc_comments** .
 You can visualize the protocol either by protocol entries, by day and Blacklisted IPs, or by
 Blacklisted IPs only.
 
-.. figure:: /Images/image-63.jpg
+.. figure:: /Images/backendReportBlacklist.jpg

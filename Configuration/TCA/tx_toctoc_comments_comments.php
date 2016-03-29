@@ -20,7 +20,7 @@ if (version_compare(TYPO3_version, '7.6', '<')) {
 	$iconfilepath = 'EXT:toctoc_comments/';
 }
 
-$tx_toctoc_comments_comments = [
+$tx_toctoc_comments_comments = array (
 	'ctrl' => array (
 		'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments',
 		'label' => 'content',
@@ -41,7 +41,7 @@ $tx_toctoc_comments_comments = [
 		'searchFields' => 'uid,content',
 	),
 	'interface' => array (
-			'showRecordFieldList' => 'content,commenttitle,firstname,lastname,email,location,homepage,remote_addr,toctoc_comments_user,external_ref,external_ref_uid,tx_commentsresponse_response',
+			'showRecordFieldList' => 'content,commenttitle,firstname,lastname,gender,email,location,homepage,remote_addr,toctoc_comments_user,external_ref,external_ref_uid,tx_commentsresponse_response',
 			'maxDBListItems' => 50,
 	),
 	'columns' => array (
@@ -126,6 +126,17 @@ $tx_toctoc_comments_comments = [
 							'type' => 'input',
 							'eval' => 'trim',
 					),
+			),
+			'gender' => array (
+					'exclude' => '1',
+					'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:fe_users.gender',
+					'config' => array (
+							'type' => 'radio',
+							'items' => array (
+									array('LLL:EXT:toctoc_comments/locallang_db.xml:fe_users.gender.I.0', '0'),
+									array('LLL:EXT:toctoc_comments/locallang_db.xml:fe_users.gender.I.1', '1')
+							),
+					)
 			),
 			'email' => array (
 					'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.email',
@@ -224,10 +235,10 @@ $tx_toctoc_comments_comments = [
 			),
 	),
 	'types' => array (
-			0 => array ('showitem' => 'hidden;;;;1,approved;;;;2-2-2,firstname,lastname,commenttitle;;;;3-3-3,toctoc_comments_user,toctoc_commentsfeuser_feuser,'.
+			0 => array ('showitem' => 'hidden;;;;1,approved;;;;2-2-2,firstname,lastname,gender,commenttitle;;;;3-3-3,toctoc_comments_user,toctoc_commentsfeuser_feuser,'.
 					'remote_addr;;;;4-4-4,email,homepage,location,content,tx_commentsnotify_notify;;;;5-5-5,external_prefix,external_ref,external_ref_uid,tx_commentsresponse_response'),
 	),
-];
+);
 	
 return $tx_toctoc_comments_comments;
 ?>

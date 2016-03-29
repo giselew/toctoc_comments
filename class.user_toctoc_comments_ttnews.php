@@ -179,7 +179,7 @@ class user_toctoc_comments_ttnews {
 			if (($poscommentsplugin > $beginlist) && ($poscommentsplugin < $endlist)) {
 
 				include_once (t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments_pi1.php'));
-				$lib = new tx_toctoccomments_pi1;
+				$lib = t3lib_div::makeInstance('tx_toctoccomments_pi1');
 				switch ($pObj->theCode) {
 					case 'LATEST':
 					case 'LIST':
@@ -201,7 +201,7 @@ class user_toctoc_comments_ttnews {
 						}
 
 						$markerArray['###TX_TOCTOCCOMMENTS###'] = $lib->main($content, $conftc, 'tx_ttnews', $row['uid'], $this->cObj);
-						unset($lib);
+						//unset($lib);
 						break;
 				}
 

@@ -11,23 +11,24 @@
 User Administration
 ^^^^^^^^^^^^^^^^^^^
 
-In the administration menu select
-“Users”
+In the overview click on *List Users*. 
+It shows the (toctoc_comments)-users on the active page of the TYPO3 page-tree, 
+on the root-level it shows all users available.
 
 
 
 
-.. figure:: /Images/image-6.jpg
+.. figure:: /Images/backendUsers.jpg
 
 For users there is a little report showing
 their activities.
 
-
-
-
-.. figure:: /Images/image-7.jpg
-
 For users 3 bulk actions are available.
+
+
+
+.. figure:: /Images/backendUsersBultActs.jpg
+
 Note that with “Kill selected users data from DB” all data from the selected user is removed
 from the database.
 
@@ -43,7 +44,7 @@ physical delete from fe_users.
 
 
 
-.. figure:: /Images/image-12.jpg
+.. figure:: /Images/backendUsersBultActMerge.jpg
 
 Merging users into a user is the 3rd bulk
 action possible in user administration

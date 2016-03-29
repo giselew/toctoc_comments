@@ -14,5 +14,4 @@ t3lib_extMgm::addStaticFile('toctoc_comments', 'static/', 'AJAX Social Network C
 
 t3lib_extMgm::addPiFlexFormValue('toctoc_comments_pi1', 'FILE:EXT:toctoc_comments/pi1/flexform_ds.xml');
 
-
 ?>

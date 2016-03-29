@@ -1,3 +1,22 @@
 body {
 	padding: 24px;
+	line-height: inherit;
+}
+* {
+    box-sizing: content-box;
+}
+*::before, *::after {
+    box-sizing: content-box;
+}
+form .tx-tc-panelbar {
+    padding: 5px 5px 9px;
+}
+form .tx-tc-titleicon {
+    margin: 2px 4px 0 3px;
+}
+.tx-tc-100 fieldset {
+	float: left !important;
+}
+* {
+    box-sizing: content-box !important;
 }

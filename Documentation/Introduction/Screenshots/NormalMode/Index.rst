@@ -132,7 +132,7 @@ Login is made with AJAX.
 
 .. figure:: /Images/image-21.jpg
 
-Commenting, login required, login
+Commenting, login required, loginprocess
 
 When logged in the user can save comments. 
 
@@ -148,4 +148,4 @@ Rating and voting
 
 .. figure:: /Images/image-14.jpg
 
-This screenshot shows the plugin with only sharing, iLike and voting enabled.
+This screenshot shows the plugin with iLike and voting enabled.

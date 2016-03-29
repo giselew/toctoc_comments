@@ -14,11 +14,16 @@ Reports
 .. index::
 	single: Administration; Controlling system usage
 
-In the administration menu select “Reports” and click “Go”
+In the overview click on *List Reports*
 
-A dropdown menu is shown where you can select and optionally give some conditions for the reports
+The Reports panel is shown where you can select the reports. 
+There are 4 Reports if data present.
 
-There are 4 Reports
+
+
+
+.. figure:: /Images/backendReportSelection.jpg
+
 
 .. toctree::
     :maxdepth: 2

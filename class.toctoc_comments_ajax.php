@@ -37,28 +37,29 @@
  *
  *
  *
- *   96: class toctoc_comments_ajax
- *  148:     public function __construct()
- *  662:     protected function initTSFE()
- *  731:     public function main()
- *  772:     private function checksharre()
- *  844:     public function handleCommentatorNotifications()
- *  855:     protected function updateCommentDisplay()
- *  873:     protected function updateComment()
- *  888:     protected function webpagepreview()
- *  900:     protected function previewcomment()
- *  911:     protected function commentsSearch()
- *  923:     protected function cleanupfup()
- *  937:     protected function getCaptcha($captchatype, $cid)
- * 1072:     protected function chkcaptcha($cid, $code)
- * 1099:     protected function getUserCard()
- * 1112:     protected function updateCommentsView()
- * 1403:     protected function updateRating()
- * 1968:     protected function processDeleteSubmission()
- * 2049:     protected function processDenotifycommentSubmission()
- * 2100:     protected function recentCommentsClearCache()
+ *   97: class toctoc_comments_ajax
+ *  149:     public function __construct()
+ *  687:     protected function initTSFE()
+ *  745:     public function main()
+ *  792:     private function checksharre()
+ *  873:     public function handleCommentatorNotifications()
+ *  884:     protected function updateCommentDisplay()
+ *  902:     protected function updateComment()
+ *  917:     protected function webpagepreview()
+ *  929:     protected function previewcomment()
+ *  940:     protected function commentsSearch()
+ *  952:     protected function cleanupfup()
+ *  966:     public function getCaptcha($captchatype, $cid)
+ *  983:     public function chkcaptcha($cid, $code)
+ *  996:     protected function getUserCard()
+ * 1008:     protected function getCurrentIp()
+ * 1021:     protected function updateCommentsView()
+ * 1311:     protected function updateRating()
+ * 1876:     protected function processDeleteSubmission()
+ * 1957:     protected function processDenotifycommentSubmission()
+ * 2008:     protected function recentCommentsClearCache()
  *
- * TOTAL FUNCTIONS: 19
+ * TOTAL FUNCTIONS: 20
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -101,7 +102,7 @@ class toctoc_comments_ajax {
 	private $cmd;
 	private $rating;
 	private $votes;
-	private $conf;
+	public $conf;
 	private $piVars;
 	private $cid;
 	private $AjaxData;
@@ -156,13 +157,26 @@ class toctoc_comments_ajax {
 
 		$data_str = t3lib_div::_GP('data');
 		$data = unserialize(base64_decode($data_str));
+
+		$nosessclose = FALSE;
+		if (str_replace('preview', '', t3lib_div::_GP('cmd')) != t3lib_div::_GP('cmd')){
+			if (t3lib_div::_GP('cmd') != 'previewcomment'){
+				$nosessclose = TRUE;
+			}
+		}
+
 		if (version_compare(TYPO3_version, '4.3.99', '>') && (!isset($data['lang']))) {
 			$this->commonObj = t3lib_div::makeInstance('toctoc_comments_common');
-			if (!isset($_SESSION['activelang'])) {
-				$sessionTimeout=3*1440;
-				$this->commonObj->start_toctoccomments_session($sessionTimeout);
-			}
+			if ($nosessclose == FALSE) {
 
+				if (!isset($_SESSION['activelang'])) {
+					$sessionTimeout=1440;
+					$this->commonObj->start_toctoccomments_session($sessionTimeout);
+				}
+
+			} else {
+				session_start();
+			}
 			$GLOBALS['LANG'] = t3lib_div::makeInstance('language');
 			$GLOBALS['LANG']->init($_SESSION['activelang'] ? $_SESSION['activelang'] : 'default');
 			$GLOBALS['LANG']->includeLLFile('EXT:toctoc_comments/locallang_ajax.xml');
@@ -172,13 +186,24 @@ class toctoc_comments_ajax {
 			$GLOBALS['LANG']->init($data['lang'] ? $data['lang'] : 'default');
 			$GLOBALS['LANG']->includeLLFile('EXT:toctoc_comments/locallang_ajax.xml');
 			$GLOBALS['LANG']->includeLLFile('EXT:toctoc_comments/pi1/locallang.xml', TRUE, TRUE);
-			$this->commonObj = t3lib_div::makeInstance('toctoc_comments_common');
 
-			if (!isset($_SESSION['activelang'])) {
-				$sessionTimeout=3*1440;
-				$this->commonObj->start_toctoccomments_session($sessionTimeout);
+			$this->commonObj = t3lib_div::makeInstance('toctoc_comments_common');
+			if ($nosessclose == FALSE) {
+				if (!isset($_SESSION['activelang'])) {
+					$sessionTimeout=1440;
+					$this->commonObj->start_toctoccomments_session($sessionTimeout);
+				}
+			} else {
+				session_start();
 			}
+
+			$_SESSION['activelang'] = ($data['lang'] ? $data['lang'] : 'default');
 		}
+
+		if (isset($data['langid'])) {
+			$_SESSION['activelangid'] = intval($data['langid']);
+		}
+
 		if (version_compare(TYPO3_version, '4.5', '<')) {
 		// Initialize FE user object:
 			$feUserObj = tslib_eidtools::initFeUser();
@@ -186,6 +211,7 @@ class toctoc_comments_ajax {
 		if (version_compare(TYPO3_version, '6.1', '<')) {
 			tslib_eidtools::connectDB();
 		}
+
 		// is there any possible valid cmd what the script shall do?
 		$this->cmd = t3lib_div::_GP('cmd');
 
@@ -236,7 +262,6 @@ class toctoc_comments_ajax {
 				exit();
 			}
 			$this->conf = $this->commonObj->unmirrorConf($confdiffarray);
-			//print 'storagePid AAJX'. $this->conf['storagePid'];
 
 			if($this->conf == '') {
 				echo $GLOBALS['LANG']->getLL('session_expired');
@@ -299,7 +324,7 @@ class toctoc_comments_ajax {
 
 			$data_strtmp = t3lib_div::_GP('dataconfatt');
 			$dataconfatt = unserialize(base64_decode($data_strtmp));
-			$this->conf['attachments.']=$dataconfatt['conf'];
+			$this->conf = $dataconfatt['conf'];
 
 			$this->previewid = t3lib_div::_GP('previewid');
 			if(!is_array($this->conf)) {
@@ -684,11 +709,7 @@ class toctoc_comments_ajax {
 		}
 
 		try {
-// 			$GLOBALS['TT'] = new \TYPO3\CMS\Core\TimeTracker\NullTimeTracker();
- //			$GLOBALS['TT']->start();
-
 			/** @var $frontend TypoScriptFrontendController */
-			//$GLOBALS['TSFE'] = t3lib_div::makeInstance('tslib_fe', $GLOBALS['TYPO3_CONF_VARS'], t3lib_div::_GP('id'), 0);
 
 			if (version_compare(TYPO3_version, '4.8', '>')) {
 				$frontend = t3lib_div::makeInstance(
@@ -700,17 +721,10 @@ class toctoc_comments_ajax {
 			}
 			$GLOBALS['TSFE'] = & $frontend;
 
-//			$frontend->connectToDB();
 			$frontend->initFEuser();
-//			$frontend->checkAlternativeIdMethods();
 			$frontend->determineId();
 			$frontend->initTemplate();
- //			$frontend->getFromCache();
  			$frontend->getConfigArray();
-// 			$frontend->settingLanguage();
-// 			$frontend->settingLocale();
-			//     $frontend->newCObj();
-
 			//       // Get linkVars, absRefPrefix, etc
 			if (version_compare(TYPO3_version, '4.8', '>')) {
 				\TYPO3\CMS\Frontend\Page\PageGenerator::pagegenInit();
@@ -729,6 +743,7 @@ class toctoc_comments_ajax {
 	 * @return	void
 	 */
 	public function main() {
+		$nosessclose = FALSE;
 		if((strpos($this->cmd, 'ote') !== FALSE) || (strpos($this->cmd, 'like') !== FALSE)) {
 			$this->updateRating();
 		} elseif ($this->cmd == 'commentsview') {
@@ -752,6 +767,7 @@ class toctoc_comments_ajax {
 		} elseif ($this->cmd == 'previewcomment'){
 			$this->previewcomment();
 		} elseif (strstr($this->cmd, 'preview')){
+			$nosessclose = TRUE;
 			$this->webpagepreview();
 		} elseif ($this->cmd == 'cleanupfup'){
 			$this->cleanupfup();
@@ -763,6 +779,10 @@ class toctoc_comments_ajax {
 			$this->updateCommentDisplay();
 		}
 
+		if ($nosessclose == FALSE) {
+			$this->commonObj->stop_toctoccomments_session();
+		}
+
 	}
 	/**
 	 * checks the sharrre-array from the client against the DB and maintains the sharing-table
@@ -772,17 +792,25 @@ class toctoc_comments_ajax {
 	private function checksharre() {
 		$ret = '';
 		$countsharings = count($this->conf);
+		$protocol = 'confcountsharings: ' . $countsharings . '<br>';
 		for ($i = 0;$i < $countsharings; $i++) {
 			$dataWhere = 'deleted=0 AND pid=' . intval($this->storagePid) . ' AND reference="' . $this->pageid . '" AND sharer="' .
 					$this->conf[$i]['sharer'] . '" AND external_prefix="' .
 					$this->conf[$i]['external_prefix'] . '" AND external_ref="' .
 					$this->conf[$i]['external_ref'] . '" AND sys_language_uid=' .
 					$this->conf[$i]['lang'] . ' AND shareurl="' . $this->conf[$i]['url'] . '"';
+			$protocol .= '<br>'. 'sharer: ' . $this->conf[$i]['sharer'] . ' with ' . intval($this->conf[$i]['count']) . '<br>';
+			$protocol .= '<br>'. 'url: ' . $this->conf[$i]['url'] . '<br>';
 
 			list($row) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('crdate AS LastChangedTime, uid AS uid, sharecount AS sharecount',
 					'tx_toctoc_comments_sharing', $dataWhere, '', 'crdate DESC', 1);
 
+			$protocol .= 'sharecount: ' . intval($row['sharecount']) . '<br>';
+			$protocol .= 'confcount: ' . intval($this->conf[$i]['count']) . '<br>';
+			$protocol .= 'dataWhere: ' . $dataWhere . '<br>';
+
 			if (intval($row['sharecount']) != intval($this->conf[$i]['count'])) {
+
 				$continuewithinsert = TRUE;
 				if (intval($row['sharecount']) == 1 && intval($this->conf[$i]['count']) == 0) {
 					// to reset to 0 can come from a missing total.
@@ -804,6 +832,7 @@ class toctoc_comments_ajax {
 
 				if ($continuewithinsert == TRUE) {
 				//insert the sharer with the new count
+					$protocol .= 'insert the sharer ' . $this->conf[$i]['sharer'] . ' with the new count: ' . $this->conf[$i]['count'] . '<br>';
 					$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_sharing', array(
 						'crdate' => time(),
 						'reference' => $this->pageid,
@@ -833,7 +862,7 @@ class toctoc_comments_ajax {
 
 		}
 
-		echo '';
+		echo '';//$protocol;
 	}
 
 	/**
@@ -934,160 +963,28 @@ class toctoc_comments_ajax {
 	 * @param	int		$cid: content element id
 	 * @return	image
 	 */
-	protected function getCaptcha($captchatype, $cid) {
-		$sessionTimeout=3*1440;
-		$this->commonObj->start_toctoccomments_session($sessionTimeout);
+	public function getCaptcha($captchatype, $cid) {
 
-		$string = '';
-		$reportstr = '';
-		$dir = 'typo3conf/ext/toctoc_comments/pi1/fonts/';
-		$sessionindex = 'random_number' . $cid . '';
-		if($captchatype === '1') {
-			//sr_freecap style
-			if (intval($this->capchafreecapnumberchars) > 10) {
-				$this->capchafreecapnumberchars = 10;
-			}
+		require_once(t3lib_extMgm::extPath('toctoc_comments') . 'pi1/class.toctoc_comments_captcha.php');
+		$freeCap = t3lib_div::makeInstance('toctoc_comments_captcha');
 
-			if (intval($this->capchafreecapnumberchars) < 3) {
-				$this->capchafreecapnumberchars = 3;
-			}
+		$cap = $freeCap->getCaptcha($captchatype, $cid);
+		return $cap;
 
-			if (intval($this->capchafreecapheight) > 50) {
-				$this->capchafreecapheight = 50;
-			}
-
-			if (intval($this->capchafreecapheight) < 23) {
-				$this->capchafreecapheight = 23;
-			}
-
-			for($i = 0; $i < $this->capchafreecapnumberchars; $i++) {
-				$string .= chr(rand(97, 122));
-			}
-
-			$widthcap= 18*$this->capchafreecapnumberchars;
-			$botcap= $this->capchafreecapheight-4;
-			$_SESSION[$sessionindex] = $string;
-			$image = imagecreatetruecolor($widthcap, $this->capchafreecapheight);
-
-			// random number 1 or 2
-			$num = rand(1, 2);
-			// font style
-			if($num == 1) {
-				$font = 'Capture it 2.ttf';
-			} else {
-				$font = 'Walkway rounded.ttf';
-			}
-
-			// random number 1 or 2
-			$num2 = rand(1, 2);
-			$reportstr .= ', dir.font: ' . $dir . $font;
-
-			$bgcols = explode(',', $this->capchafreecapbackgoundcolor);
-			if (count($bgcols) != 3) {
-				$this->capchafreecapbackgoundcolor = '255,255,255';
-				$bgcols = explode(',', $this->capchafreecapbackgoundcolor);
-			}
-
-			for($i = 0; $i < 3; $i++) {
-				if (intval($bgcols[$i]) > 255) {
-					$bgcols[$i]='255';
-				}
-
-				if (intval($bgcols[$i]) < 0 ) {
-					$bgcols[$i]='0';
-				}
-
-			}
-
-			$colorcols = explode(',', $this->capchafreecaptextcolor);
-			if (count($colorcols) != 3) {
-				$this->capchafreecaptextcolor = '255,255,255';
-				$colorcols = explode(',', $this->capchafreecaptextcolor);
-			}
-
-			for($i = 0; $i < 3; $i++) {
-				if (intval($colorcols[$i]) > 255) {
-					$colorcols[$i]='255';
-				}
-
-				if (intval($colorcols[$i]) < 0 ) {
-					$colorcols[$i]='0';
-				}
-
-			}
-
-			// color
-			$color = imagecolorallocate($image, $bgcols[0], $bgcols[1], $bgcols[2]);
-			$white = imagecolorallocate($image, $bgcols[0], $bgcols[1], $bgcols[2]);
-			imagefilledrectangle($image, 0, 0, $widthcap, $this->capchafreecapheight, $white);
-			$angle = - 10;
-			$toctocblue = imagecolorallocate($image, $colorcols[0], $colorcols[1], $colorcols[2]);
-
-			for($i = 1; $i < ($this->capchafreecapnumberchars+1); $i++) {
-				$offset =(($i - 1) * 17) + 5;
-				$modi = $i % 2;
-				$angle = - 10 + 20 * $modi;
-				if ($modi) {
-					$botcapput=$botcap;
-				} else {
-					$botcapput=19;
-				}
-
-				$toctocblue = imagecolorallocate($image, $colorcols[0], ($colorcols[1] + intval($angle / 2) + $i * 2), ($colorcols[2] - $i * 2));
-				imagettftext($image, 17, $angle, $offset, $botcapput, $toctocblue, $dir . $font, substr($_SESSION[$sessionindex], $i - 1, 1));
-			}
-
-		} else {
-			$word_1 = '';
-			$word_2 = '';
-
-			for($i = 0; $i < 4; $i++) {
-				$word_1 .= chr(rand(97, 122));
-			}
-
-			for($i = 0; $i < 4; $i++) {
-				$word_2 .= chr(rand(97, 122));
-			}
-
-			$_SESSION[$sessionindex] = $word_1 . ' ' . $word_2;
-			$image = imagecreatetruecolor(165, 50);
-			$font = 'recaptchaFont.ttf';
-			$color = imagecolorallocate($image, 0, 0, 0);
-			$white = imagecolorallocate($image, 255, 255, 255);
-			imagefilledrectangle($image, 0, 0, 709, 99, $white);
-			imagettftext($image, 22, 0, 5, 30, $color, $dir . $font, $_SESSION[$sessionindex]);
-		}
-
-		header('Content-type: image/png');
-		$retstr = imagepng($image);
-		return $retstr;
 	}
 /**
  * Checks a captcha entry
  *
  * @param	string		$cid: content element id
  * @param	string		$code: captcha code
+ * @param	[type]		$noecho: ...
  * @return	int
  */
-	protected function chkcaptcha($cid, $code) {
-		$sessionTimeout=3*1440;
-		$this->commonObj->start_toctoccomments_session($sessionTimeout);
+	public function chkcaptcha($cid, $code) {
 
-		if($code) {
-			$sessionindex = 'random_number' . $cid . '';
-			if(strtolower($code) == strtolower($_SESSION[$sessionindex])) {
-				$_SESSION[$sessionindex] = '';
-				echo 1;
-				// submitted
-			} else {
-				// invalid code
-				echo 0;
-			}
-
-		} else {
-			echo 0;
-			// invalid code
-		}
+		require_once(t3lib_extMgm::extPath('toctoc_comments') . 'pi1/class.toctoc_comments_captcha.php');
+		$freeCap = t3lib_div::makeInstance('toctoc_comments_captcha');
+		$freeCap->chkcaptcha($cid, $code, FALSE);
 
 	}
 
@@ -1103,6 +1000,18 @@ class toctoc_comments_ajax {
 		$content = $apiObj->getUserCard($this->basedimgstr, $this->basedtoctocuid, $this->conf, $this->commentid);
 		print($content);
 	}
+	/**
+	 * Retrieves current IP address
+	 *
+	 * @return	string		Current IP address
+	 */
+	protected function getCurrentIp() {
+		if (preg_match('/^\d{2,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/', $_SERVER['HTTP_X_FORWARDED_FOR'])) {
+			return $_SERVER['HTTP_X_FORWARDED_FOR'];
+		}
+
+		return $_SERVER['REMOTE_ADDR'];
+	}
 
 		/**
  * Updates rating data and outputs new result
@@ -1111,8 +1020,8 @@ class toctoc_comments_ajax {
  */
 	protected function updateCommentsView() {
 		$feusertoinsert = intval($this->feuser);
-		$apiObj = t3lib_div::makeInstance('toctoc_comments_api');
-		$strCurrentIP = $apiObj->lib->getCurrentIp();
+		//$apiObj = t3lib_div::makeInstance('toctoc_comments_api');
+		$strCurrentIP = $this->getCurrentIp();
 		$pageid= $this->pageid;
 		$GLOBALS['TYPO3_DB']->sql_query('START TRANSACTION');
 		$pluginid= $this->pluginid;
@@ -1437,7 +1346,7 @@ class toctoc_comments_ajax {
 			$fetoctocusertoinsert = '';
 			$fetoctocusertoquery = '';
 
-			$strCurrentIP = $apiObj->lib->getCurrentIp();
+			$strCurrentIP = $this->getCurrentIp();
 			$newlastname= '';
 			$newfirstname= '';
 			$newemail= '';
@@ -1981,14 +1890,14 @@ class toctoc_comments_ajax {
 
 			$apiObj = t3lib_div::makeInstance('toctoc_comments_api');
 			/* @var $apiObj toctoc_comments_api */
-			if(version_compare(TYPO3_version, '4.6', '<')) {
+			if (version_compare(TYPO3_version, '4.6', '<')) {
 				$apiObj->initCaches();
 			}
 
 			$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_toctoc_comments_comments', 'uid=' . $this->commentid, array(
 					'deleted' => 1
 			));
-			if($_SESSION['commentListIndex']['cid' . $_SESSION['commentListRecord']]['startIndex'] > 0) {
+			if ($_SESSION['commentListIndex']['cid' . $_SESSION['commentListRecord']]['startIndex'] > 0) {
 				$_SESSION['commentListIndex']['cid' . $_SESSION['commentListRecord']]['startIndex'] = $_SESSION['commentListIndex']['cid' .
 				$_SESSION['commentListRecord']]['startIndex'] - 1;
 			}

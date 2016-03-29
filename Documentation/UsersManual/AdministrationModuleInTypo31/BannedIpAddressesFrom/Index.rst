@@ -11,8 +11,8 @@
 Banned IP addresses from spamhaus.org
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In the administration menu select “Banned IP adresses”
+In the overview you find a box *IP-Blocking*
 
-On the page shown you can refresh the static table holding banned IPs from www.spamhaus.org.
+Below you can refresh the static table holding banned IPs from www.spamhaus.org. 
 
 Also you see date/time when the list has been imported the last time.

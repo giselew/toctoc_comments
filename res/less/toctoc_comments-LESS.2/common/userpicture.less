@@ -1,0 +1,83 @@
+.tx-tc-uimgsize {
+	width: @userImageSize;
+	height: @userImageSize;
+}
+.tx-tc-ct-box-ctpic {
+	visibility: @commentPicVisibility;
+	width: @commentPicWidth;
+	padding-bottom: 6px;
+	padding-top: 2px;
+	float: left;
+}
+.tx-tc-ct-box-picturecrop32 {
+    height: (@userImageSize - 8);
+	padding: 4px 0 4px 4px;
+}
+.tx-tc-ct-box-ctpic2 when (@useUserImage = false) {
+	display: none;
+}
+.tx-tc-ct-rybox img when (@useUserImage = false) {
+    display: none;
+}
+.tx-tc-ct-box-ctpic2 {
+	padding-left: 4px;
+	width: 40px;
+}
+.tx-tc-ct-box-picturecrop322 {
+	height: 1px;
+}
+
+.tx-tc-ct-rybox .tx-tc-userpic, .tx-tc-ct-rybox .tx-tc-userpicf {
+	margin: (2 + (@boxmodelLineHeight - 16)/2) 7px 0 1px;
+	border-width: 1px;
+}
+
+.tx-tc-userpic, .tx-tc-userpicf, .tx-tc-defuserpic, .tx-tc-ct-uc-pic .tx-tc-userpic, .tx-tc-ct-uc-pic .tx-tc-userpicf, .tx-tc-ct-box-picturecrop322 img {
+	border-width: 1px;
+	border-style: solid;
+}
+.tx-tc-userpic, .tx-tc-userpicf, .tx-tc-ct-box-picturecrop322 img {
+	margin: ((@boxmodelLineHeight - 16)/2) 0 0 0;
+	border-width: 0px;
+}
+.tx-tc-ct-uc-pic .tx-tc-userpic, .tx-tc-ct-uc-pic .tx-tc-userpicf {
+	margin: 0px 0 0 0;
+	border-style: solid;
+	border-width: 1px;
+}
+.tx-tc-ct-box-picturecrop322 img {
+	border-radius: 2px 2px 2px 2px;
+	float: left;
+}
+.tx-tc-userpic, .tx-tc-userpicf, .tx-tc-defuserpic {
+	padding: 0;
+	border-radius: 2px 2px 2px 2px;
+	border-width: 1px;
+	border-style: solid;
+}
+.tx-tc-defuserpic_m {
+	margin: 0 2px 0 0;
+}
+.tx-tc-defuserpic_f {
+	margin: 0;
+}
+.tx-tc-userpic, .tx-tc-userpicf {
+	margin: 0 1px 0 0;
+}
+.tx-tc-defuserpic {
+	width: 18px;
+	height: 18px;
+}
+.tx-tc-uimgsize96 {
+	width: 96px;
+	height: 96px;
+}
+.tx-tc-userpic.tx-tc-online, .tx-tc-userpicf.tx-tc-online, .tx-tc-defuserpic.tx-tc-online, .tx-tc-ct-uc-pic .tx-tc-userpic.tx-tc-online, .tx-tc-ct-uc-pic .tx-tc-userpicf.tx-tc-online, .tx-tc-ct-box-picturecrop322.tx-tc-online img {
+	border-color: @color-important-text;
+}
+.tx-tc-ct-uc-pic .tx-tc-userpic, .tx-tc-ct-uc-pic .tx-tc-userpicf {
+	background-color: @color-website-background;
+}
+.tx-tc-userpic, .tx-tc-userpicf, .tx-tc-defuserpic, .tx-tc-ct-uc-pic .tx-tc-userpic, .tx-tc-ct-uc-pic .tx-tc-userpicf, .tx-tc-ct-box-picturecrop322 img {
+	border-color: @color-border-userpic;
+}

@@ -30,41 +30,41 @@
  *
  *
  *  108: class tx_toctoccomments_pi1 extends tslib_pibase
- *  195:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
- * 2614:     protected function checkJSLoc()
- * 2901:     protected function checkCSSTheme()
- * 3047:     protected function checkCSSLoc()
- * 3723:     protected function makesharingcss($CSSmode = TRUE)
- * 3790:     protected function initprefixToTableMap()
- * 3826:     protected function initexternaluid($withinitprefixToTableMap)
- * 3977:     protected function init()
- * 4572:     protected function mergeConfiguration()
- * 4908:     protected function fetchConfigValue($param)
- * 4936:     protected function ae_detect_ie()
- * 4959:     protected function boxmodel()
- * 6248:     protected function crunchcss($buffer)
- * 6275:     protected function calculate_string( $mathString )
- * 6298:     protected function locationHeaderUrlsubDir()
- * 6317:     protected function currentPageName()
- * 6345:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
- * 6380:     protected function doClearCache ($forceclear=FALSE)
- * 6414:     protected function InitCachingVariables ()
- * 6439:     protected function getPluginCacheControlTstamp ($external_ref_uid)
- * 6450:     protected function getLastUserAdditionTstamp ()
- * 6473:     protected function initLegacyCache ()
- * 6487:     protected function check_scopes()
- * 6645:     protected function initializeprefixtotablemap()
- * 6687:     protected function sharrrejs()
- * 6769:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
- * 6822:     private function resolveBackPath($pathStr)
- * 6857:     private function dirname($path)
- * 6871:     private function revExplode($delimiter, $string, $count = 0)
- * 6887:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 6910:     public function createLinks($text, $conf = NULL)
- * 6933:     protected function getThemeTmageDimension($filename, $returnindex)
- * 6953:     protected function checktoctoccommentsuser()
- * 7071:     protected function getExternalUidShortId()
- * 7117:     protected function fbgoogle_lan($isfacebook)
+ *  196:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
+ * 2716:     protected function checkJSLoc()
+ * 3003:     protected function checkCSSTheme()
+ * 3149:     protected function checkCSSLoc()
+ * 3829:     protected function makesharingcss($CSSmode = TRUE)
+ * 3896:     protected function initprefixToTableMap()
+ * 3932:     protected function initexternaluid($withinitprefixToTableMap)
+ * 4083:     protected function init()
+ * 4678:     protected function mergeConfiguration()
+ * 5013:     protected function fetchConfigValue($param)
+ * 5041:     protected function ae_detect_ie()
+ * 5064:     protected function boxmodel()
+ * 6400:     protected function crunchcss($buffer)
+ * 6427:     protected function calculate_string( $mathString )
+ * 6450:     protected function locationHeaderUrlsubDir()
+ * 6469:     protected function currentPageName()
+ * 6497:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
+ * 6532:     protected function doClearCache ($forceclear=FALSE)
+ * 6566:     protected function InitCachingVariables ()
+ * 6622:     protected function getPluginCacheControlTstamp ($external_ref_uid)
+ * 6633:     protected function getLastUserAdditionTstamp ()
+ * 6656:     protected function initLegacyCache ()
+ * 6670:     protected function check_scopes()
+ * 6828:     protected function initializeprefixtotablemap()
+ * 6870:     protected function sharrrejs()
+ * 6952:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
+ * 7005:     private function resolveBackPath($pathStr)
+ * 7040:     private function dirname($path)
+ * 7054:     private function revExplode($delimiter, $string, $count = 0)
+ * 7070:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 7093:     public function createLinks($text, $conf = NULL)
+ * 7116:     protected function getThemeTmageDimension($filename, $returnindex)
+ * 7136:     protected function checktoctoccommentsuser()
+ * 7254:     protected function getExternalUidShortId()
+ * 7300:     protected function fbgoogle_lan($isfacebook)
  *
  * TOTAL FUNCTIONS: 35
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -111,8 +111,8 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '812';
-	public $extLESSVersion = 'toctoc_comments-LESS.1';
+	public $extVersion = '902';
+	public $extLESSVersion = 'toctoc_comments-LESS.2';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
 	public $externalUid;						// UID of external record
@@ -166,6 +166,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $showCSScomments = 0;
 	public $showDropsfromBoxmodel = 0;
 	public $confid = '';
+	public $conf = array();
 	protected $arrResponsiveSteps = array();
 
 	public $ignorequerystring= FALSE;
@@ -193,23 +194,37 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	 * @return	void
 	 */
 	public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL) {
+		if (!is_array($conf)) {
+			return '<div><span>Basic configuration for extension toctoc_comments is missing. Static template loaded?</span></div>';
+		} elseif (count($conf)<20) {
+			return '<div><span>Basic configuration for extension toctoc_comments too small. Static template loaded?</span></div>';
+		}
+
 		if ($conf['optionalRecordId'] == 'Pagemode') {
 			$conf['optionalRecordId'] =  'pages_' . $GLOBALS['TSFE']->id;
 		}
 
-		//$GLOBALS['TCA']['pages']['columns'] must be set
+		if ($conf['theme.']['refreshCSSFromLESS']==0) {
+			$conf['theme.']['themeVersion']=1;
+		}
 
+		//$GLOBALS['TCA']['pages']['columns'] must be set
 		If (!is_array($GLOBALS['TCA'])) {
 			$GLOBALS['TCA'] = array();
 		}
+
 		If (!is_array($GLOBALS['TCA']['pages'])) {
 			$GLOBALS['TCA']['pages'] = array();
 		}
+
 		If (!is_array($GLOBALS['TCA']['pages']['columns'])) {
 			$GLOBALS['TCA']['pages']['columns'] = array();
 		}
 
 		$this->conf = $conf;
+		if (intval($this->conf['sessionTimeout']) < 2) {
+			$this->conf['sessionTimeout'] = 1440;
+		}
 		$this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['toctoc_comments']);
 
 		if (intval($this->conf['debug.']['useDebug'])==1) {
@@ -227,204 +242,209 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$hookId = 0;
 		}
 
-		$loginreset=FALSE;
-		$sdebugprintli='';
+		$loginreset = FALSE;
+		$sdebugprintli = '';
 		// give a reply to search enignes and avoid indexing of comments
-		$interestingCrawlers = array('googlebot','yahoo','baidu','msnbot','bingbot','spider','bot.htm','yandex','jeevez' );
-		$interestingCrawlersConf = explode(',', $this->conf['advanced.']['blacklistCrawlerAgentStrings']);
+		if (intval($this->conf['pluginmode'])==0) {
+			$interestingCrawlers = array('googlebot','yahoo','baidu','msnbot','bingbot','spider','bot.htm','yandex','jeevez' );
+			$interestingCrawlersConf = explode(',', $this->conf['advanced.']['blacklistCrawlerAgentStrings']);
 
-		$tmparr = array_merge($interestingCrawlers, $interestingCrawlersConf);
-		$interestingCrawlers = array_unique($tmparr);
-		$interestingWhiteCrawlersConf = explode(',', $conf['advanced.']['whitelistCrawlerAgentStrings']);
-		$interestingWhiteCrawlersConf = array_unique($interestingWhiteCrawlersConf);
+			$tmparr = array_merge($interestingCrawlers, $interestingCrawlersConf);
+			$interestingCrawlers = array_unique($tmparr);
+			$interestingWhiteCrawlersConf = explode(',', $conf['advanced.']['whitelistCrawlerAgentStrings']);
+			$interestingWhiteCrawlersConf = array_unique($interestingWhiteCrawlersConf);
 
-		$numcookies = count($_COOKIE);
-		$numMatches = 0;
-		$countinterestingCrawlers =count($interestingCrawlers);
-		$countinterestingWhiteCrawlersConf = count($interestingWhiteCrawlersConf);
-		$identstr='';
+			$numcookies = count($_COOKIE);
+			$numMatches = 0;
+			$countinterestingCrawlers =count($interestingCrawlers);
+			$countinterestingWhiteCrawlersConf = count($interestingWhiteCrawlersConf);
+			$identstr='';
 
-		if ($_SERVER['HTTP_USER_AGENT']){
-			if (trim($_SERVER['HTTP_USER_AGENT']) != ''){
-				$foundwhite = 0;
-				for ($i=0; $i<$countinterestingWhiteCrawlersConf; $i++){
-					if (str_replace(strtolower(trim($interestingWhiteCrawlersConf[$i])), '', strtolower($_SERVER['HTTP_USER_AGENT'])) != strtolower($_SERVER['HTTP_USER_AGENT'])) {
-						$foundwhite = 1;
-						$identstr=trim($interestingWhiteCrawlersConf[$i]);
-					}
-
-				}
-				if ($foundwhite == 0) {
-					for ($i=0; $i<$countinterestingCrawlers; $i++){
-						if (str_replace(strtolower(trim($interestingCrawlers[$i])), '', strtolower($_SERVER['HTTP_USER_AGENT'])) != strtolower($_SERVER['HTTP_USER_AGENT'])) {
-							$numMatches++;
-							$identstr=trim($interestingCrawlers[$i]);
-							break;
+			if ($_SERVER['HTTP_USER_AGENT']){
+				if (trim($_SERVER['HTTP_USER_AGENT']) != ''){
+					$foundwhite = 0;
+					for ($i=0; $i<$countinterestingWhiteCrawlersConf; $i++){
+						if (str_replace(strtolower(trim($interestingWhiteCrawlersConf[$i])), '', strtolower($_SERVER['HTTP_USER_AGENT'])) != strtolower($_SERVER['HTTP_USER_AGENT'])) {
+							$foundwhite = 1;
+							$identstr=trim($interestingWhiteCrawlersConf[$i]);
 						}
 
+					}
+					if ($foundwhite == 0) {
+						for ($i=0; $i<$countinterestingCrawlers; $i++){
+							if (str_replace(strtolower(trim($interestingCrawlers[$i])), '', strtolower($_SERVER['HTTP_USER_AGENT'])) != strtolower($_SERVER['HTTP_USER_AGENT'])) {
+								$numMatches++;
+								$identstr=trim($interestingCrawlers[$i]);
+								break;
+							}
+
+						}
+					}
+
+				} else {
+					if (intval($this->conf['advanced.']['dontTakeEmptyAgentStringAsCrawler']) == 0) {
+						$numMatches++;
 					}
 				}
 
 			} else {
 				if (intval($this->conf['advanced.']['dontTakeEmptyAgentStringAsCrawler']) == 0) {
-					$numMatches++;
+						$numMatches++;
 				}
-			}
-
-		} else {
-			if (intval($this->conf['advanced.']['dontTakeEmptyAgentStringAsCrawler']) == 0) {
-					$numMatches++;
 			}
 		}
 
-		$this->lib = new toctoc_comment_lib;
-		if (($numMatches > 0) || ($foundwhite == 1)) {
-			if ($conf['advanced.']['protocolCrawlerAgents'] == 1) {
-				if (($numMatches > 0)) {
-					$protocol = '';
-					$identstrbing = '';
-					if ($_SERVER['HTTP_USER_AGENT']){
-						if (trim($_SERVER['HTTP_USER_AGENT']) != ''){
-							if ($identstr == 'bingbot') {
-								// test if the bot is from a true ms adress
-								$strCurrentIP = $this->lib->getIpAddr();
-								$strCurrentIPres = gethostbyaddr($strCurrentIP);
-								$arrCurrentIPres = explode('.', $strCurrentIPres);
-								$cntarrCurrentIPres = count($arrCurrentIPres);
-								$IPrevTest = '';
-								for ($i = $cntarrCurrentIPres-1; (($i > 0) && ($i > ($cntarrCurrentIPres -4))); $i--) {
-									$IPrevTest = '.' . $arrCurrentIPres[$i] . $IPrevTest;
+		$this->lib = t3lib_div::makeInstance('toctoc_comment_lib');
+
+		if (intval($this->conf['pluginmode'])==0) {
+			if (($numMatches > 0) || ($foundwhite == 1)) {
+				if ($conf['advanced.']['protocolCrawlerAgents'] == 1) {
+					if (($numMatches > 0)) {
+						$protocol = '';
+						$identstrbing = '';
+						if ($_SERVER['HTTP_USER_AGENT']){
+							if (trim($_SERVER['HTTP_USER_AGENT']) != ''){
+								if ($identstr == 'bingbot') {
+									// test if the bot is from a true ms adress
+									$strCurrentIP = $this->lib->getIpAddr();
+									$strCurrentIPres = gethostbyaddr($strCurrentIP);
+									$arrCurrentIPres = explode('.', $strCurrentIPres);
+									$cntarrCurrentIPres = count($arrCurrentIPres);
+									$IPrevTest = '';
+									for ($i = $cntarrCurrentIPres-1; (($i > 0) && ($i > ($cntarrCurrentIPres -4))); $i--) {
+										$IPrevTest = '.' . $arrCurrentIPres[$i] . $IPrevTest;
+									}
+
+									if (strlen($IPrevTest) > 2) {
+										$IPrevTest = substr($IPrevTest, 1);
+									}
+
+									if ($strCurrentIPres == '') {
+										$IPrevTest = $strCurrentIP;
+									}
+
+									if ($IPrevTest != 'search.msn.com') {
+										$identstrbing == 'wrong bingbot@' . $strCurrentIPres . ' using user-agent ';
+									}
+
 								}
 
-								if (strlen($IPrevTest) > 2) {
-									$IPrevTest = substr($IPrevTest, 1);
-								}
-
-								if ($strCurrentIPres == '') {
-									$IPrevTest = $strCurrentIP;
-								}
-
-								if ($IPrevTest != 'search.msn.com') {
-									$identstrbing == 'wrong bingbot@' . $strCurrentIPres . ' using user-agent ';
-								}
-
+								$protocol = 'BL: ' . strftime('%Y/%m/%d %H:%M:%S', microtime(TRUE)) . ': ' . $identstrbing . $_SERVER['HTTP_USER_AGENT'] . ' idfd "' . $identstr .
+									'"@@' . $GLOBALS['TSFE']->id . '@@' . $GLOBALS['TSFE']->lang;
 							}
 
-							$protocol = 'BL: ' . strftime('%Y/%m/%d %H:%M:%S', microtime(TRUE)) . ': ' . $identstrbing . $_SERVER['HTTP_USER_AGENT'] . ' idfd "' . $identstr .
-								'"@@' . $GLOBALS['TSFE']->id . '@@' . $GLOBALS['TSFE']->lang;
 						}
 
-					}
+						if ($protocol == ''){
+							$protocol = 'BL: ' . strftime('%Y/%m/%d %H:%M:%S', microtime(TRUE)) . ': ' . 'HTTP_USER_AGENT missing' . ' idfd "' . $identstr .
+							'"@@' . $GLOBALS['TSFE']->id . '@@' . $GLOBALS['TSFE']->lang;
+						}
 
-					if ($protocol == ''){
-						$protocol = 'BL: ' . strftime('%Y/%m/%d %H:%M:%S', microtime(TRUE)) . ': ' . 'HTTP_USER_AGENT missing' . ' idfd "' . $identstr .
+					} else {
+						$protocol = 'WL: ' . strftime('%Y/%m/%d %H:%M:%S', microtime(TRUE)) . ': ' . $_SERVER['HTTP_USER_AGENT'] . ' idfd "' . $identstr .
 						'"@@' . $GLOBALS['TSFE']->id . '@@' . $GLOBALS['TSFE']->lang;
 					}
 
-				} else {
-					$protocol = 'WL: ' . strftime('%Y/%m/%d %H:%M:%S', microtime(TRUE)) . ': ' . $_SERVER['HTTP_USER_AGENT'] . ' idfd "' . $identstr .
-					'"@@' . $GLOBALS['TSFE']->id . '@@' . $GLOBALS['TSFE']->lang;
-				}
-
-				if (!(file_exists(realpath(dirname(__FILE__)) . '/crawlerprotocol.txt'))) {
-					if (version_compare(TYPO3_version, '6.0', '<')) {
-						t3lib_div::writeFile(realpath(dirname(__FILE__)) . '/crawlerprotocol.txt', $protocol);
-					} else	{
-						\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile(realpath(dirname(__FILE__)) . '/crawlerprotocol.txt', $protocol);
-					}
-
-				} else {
-					$content = file_get_contents(realpath(dirname(__FILE__)) . '/crawlerprotocol.txt');
-					$contentarr = explode("\r\n", $content);
-					$testelem= 	$contentarr[count($contentarr)-1];
-					$testelemarr = explode('@@', $testelem);
-					$testelemarrhua = explode(' idfd "', $testelemarr[0]);
-					$testelemarrhua2 = explode(': ', $testelemarrhua[0]);
-					$hua = $testelemarrhua2[count($testelemarrhua2)-1];
-					$protocol = str_replace("\r\n", ', ', $protocol);
-					$protocol = str_replace("\n", ', ', $protocol);
-					if (($hua != $_SERVER['HTTP_USER_AGENT']) || ($testelemarr[1] != $GLOBALS['TSFE']->id) || ($testelemarr[2] != $GLOBALS['TSFE']->lang)) {
-						$content = $content . "\r\n" . $protocol;
-						$contentarr = explode("\r\n", $content);
-						if (count($contentarr) > $conf['advanced.']['protocolCrawlerAgentsMaxLines']) {
-							array_shift($contentarr);
-							$content = implode("\r\n", $contentarr);
+					if (!(file_exists(realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'crawlerprotocol.txt'))) {
+						if (version_compare(TYPO3_version, '6.0', '<')) {
+							t3lib_div::writeFile(realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'crawlerprotocol.txt', $protocol);
+						} else	{
+							\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile(realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'crawlerprotocol.txt', $protocol);
 						}
-						// Write the contents back to the file
-						file_put_contents(realpath(dirname(__FILE__)) . '/crawlerprotocol.txt', $content);
-					}
 
-				}
-
-			}
-
-		}
-
-		if ($this->lib->checkTableBLs('', TRUE, $this) == TRUE) {
-			$numMatches++;
-			if ($conf['advanced.']['protocolBlacklistedIPs'] == 1) {
-				if (($numMatches > 0)) {
-					$ip = $this->lib->getIpAddr();
-
-					$protocol = '';
-					$protocol = 'BL: ' . strftime('%Y/%m/%d %H:%M:%S', microtime(TRUE)) . ': ' . $this->hitip . ' ' . trim($this->hitipcomment .
-							' ' . $_SERVER['HTTP_USER_AGENT']) . ' idfd "' . $ip . '"@@' . $GLOBALS['TSFE']->id . '@@' . $GLOBALS['TSFE']->lang;
-				}
-
-				$blprt = realpath(dirname(__FILE__)) . '/blacklistprotocol.txt';
-				if (!(file_exists($blprt))) {
-					if (version_compare(TYPO3_version, '6.0', '<')) {
-						t3lib_div::writeFile($blprt, $protocol);
-					} else	{
-						\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($blprt, $protocol);
-					}
-
-				} else {
-					$content = file_get_contents($blprt);
-					$contentarr = explode("\r\n", $content);
-					$testelem= 	$contentarr[count($contentarr)-1];
-					$testelemarr = explode('@@', $testelem);
-					$testelemarrhua = explode(' idfd "', $testelemarr[0]);
-					$testelemarrhua2 = explode('"', $testelemarrhua[1]);
-
-					$hua = $testelemarrhua2[0];
-					if (($hua != $ip) || ($testelemarr[1] != $GLOBALS['TSFE']->id) || ($testelemarr[2] != $GLOBALS['TSFE']->lang)) {
+					} else {
+						$content = file_get_contents(realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'crawlerprotocol.txt');
+						$contentarr = explode("\r\n", $content);
+						$testelem= 	$contentarr[count($contentarr)-1];
+						$testelemarr = explode('@@', $testelem);
+						$testelemarrhua = explode(' idfd "', $testelemarr[0]);
+						$testelemarrhua2 = explode(': ', $testelemarrhua[0]);
+						$hua = $testelemarrhua2[count($testelemarrhua2)-1];
 						$protocol = str_replace("\r\n", ', ', $protocol);
 						$protocol = str_replace("\n", ', ', $protocol);
-
-						$content = $content . "\r\n" . $protocol;
-						$contentarr = explode("\r\n", $content);
-						if (count($contentarr) > $conf['advanced.']['protocolBlacklistedIPsMaxLines']) {
-							array_shift($contentarr);
-							$content = implode("\r\n", $contentarr);
+						if (($hua != $_SERVER['HTTP_USER_AGENT']) || ($testelemarr[1] != $GLOBALS['TSFE']->id) || ($testelemarr[2] != $GLOBALS['TSFE']->lang)) {
+							$content = $content . "\r\n" . $protocol;
+							$contentarr = explode("\r\n", $content);
+							if (count($contentarr) > $conf['advanced.']['protocolCrawlerAgentsMaxLines']) {
+								array_shift($contentarr);
+								$content = implode("\r\n", $contentarr);
+							}
+							// Write the contents back to the file
+							file_put_contents(realpath(dirname(__FILE__)) . '/crawlerprotocol.txt', $content);
 						}
-						// Write the contents back to the file
-						file_put_contents($blprt, $content);
+
 					}
 
 				}
-			}
-		}
 
-		if($numMatches > 0) {
-			// Found a match
-			if (intval($this->conf['dontSkipSearchEngines']) == 0) {
-				$this->pi_USER_INT_obj = 1;
-				return 'botMessage_' . $this->extKey . '_' . $this->extVersion;
 			}
-			$this->conf['advanced.']['useSessionCache'] = 0;
-		}
-		// end exclude search enignes and avoid indexing of comments
 
-		if ($this->conf['debug.']['useDebugFeUserIds']!='') {
-			$dbuarr=explode(',', $this->conf['debug.']['useDebugFeUserIds']);
-			foreach($dbuarr as $dbusr) {
-				if ($dbusr==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
-					$this->sdebugprintuser=$dbusr;
+			if ($this->lib->checkTableBLs('', TRUE, $this) == TRUE) {
+				$numMatches++;
+				if ($conf['advanced.']['protocolBlacklistedIPs'] == 1) {
+					if (($numMatches > 0)) {
+						$ip = $this->lib->getIpAddr();
+
+						$protocol = '';
+						$protocol = 'BL: ' . strftime('%Y/%m/%d %H:%M:%S', microtime(TRUE)) . ': ' . $this->hitip . ' ' . trim($this->hitipcomment .
+								' ' . $_SERVER['HTTP_USER_AGENT']) . ' idfd "' . $ip . '"@@' . $GLOBALS['TSFE']->id . '@@' . $GLOBALS['TSFE']->lang;
+					}
+
+					$blprt = realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'blacklistprotocol.txt';
+					if (!(file_exists($blprt))) {
+						if (version_compare(TYPO3_version, '6.0', '<')) {
+							t3lib_div::writeFile($blprt, $protocol);
+						} else	{
+							\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile($blprt, $protocol);
+						}
+
+					} else {
+						$content = file_get_contents($blprt);
+						$contentarr = explode("\r\n", $content);
+						$testelem= 	$contentarr[count($contentarr)-1];
+						$testelemarr = explode('@@', $testelem);
+						$testelemarrhua = explode(' idfd "', $testelemarr[0]);
+						$testelemarrhua2 = explode('"', $testelemarrhua[1]);
+
+						$hua = $testelemarrhua2[0];
+						if (($hua != $ip) || ($testelemarr[1] != $GLOBALS['TSFE']->id) || ($testelemarr[2] != $GLOBALS['TSFE']->lang)) {
+							$protocol = str_replace("\r\n", ', ', $protocol);
+							$protocol = str_replace("\n", ', ', $protocol);
+
+							$content = $content . "\r\n" . $protocol;
+							$contentarr = explode("\r\n", $content);
+							if (count($contentarr) > $conf['advanced.']['protocolBlacklistedIPsMaxLines']) {
+								array_shift($contentarr);
+								$content = implode("\r\n", $contentarr);
+							}
+							// Write the contents back to the file
+							file_put_contents($blprt, $content);
+						}
+
+					}
+				}
+			}
+
+			if($numMatches > 0) {
+				// Found a match
+				if (intval($this->conf['dontSkipSearchEngines']) == 0) {
+					$this->pi_USER_INT_obj = 1;
+					return 'botMessage_' . $this->extKey . '_' . $this->extVersion;
+				}
+				$this->conf['advanced.']['useSessionCache'] = 0;
+			}
+			// end exclude search enignes and avoid indexing of comments
+
+			if ($this->conf['debug.']['useDebugFeUserIds']!='') {
+				$dbuarr=explode(',', $this->conf['debug.']['useDebugFeUserIds']);
+				foreach($dbuarr as $dbusr) {
+					if ($dbusr==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+						$this->sdebugprintuser=$dbusr;
+					}
+
 				}
 
 			}
-
 		}
 
 		if (intval($this->conf['debug.']['showStartupDetails'])==1) {
@@ -440,8 +460,22 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		unset($this->conf['debug.']);
 
 		$this->commonObj = t3lib_div::makeInstance('toctoc_comments_common');
-		$sessionTimeout=$this->conf['sessionTimeout'];
-		$this->commonObj->start_toctoccomments_session($sessionTimeout, '', $this->conf);
+		$sessionTimeout = $this->conf['sessionTimeout'];
+		$this->commonObj->start_toctoccomments_session($sessionTimeout, '', $this->conf, TRUE);
+
+		// detect possible COOKIE unfriendly client
+		$countcookies = count($_COOKIE);
+		$hascookie= trim($_COOKIE['sess_' . $this->extKey]);
+
+		if ($hascookie == '') {
+			$countcookies = 0;
+		}
+
+		if ($countcookies == 0) {
+			// could be COOKIE unfriendly client
+			$strCurrentIP = $this->lib->getIpAddr();
+			$this->commonObj->removegarbagesessions($strCurrentIP);
+		}
 
 		if ($this->showsdebugprint==TRUE) {
 			$starttimedebug=microtime(TRUE);
@@ -571,6 +605,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				$_SESSION['activelang'] = $GLOBALS['TSFE']->lang;
 
 				$_SESSION['cachepurgedlogin']=1;
+				$_SESSION['cachepurged']=1;
 				$sdebugprintli .= '<br />'. 'Init Sessionvariables because of logout/in on page id ' .$GLOBALS['TSFE']->id. '<br />';
 
 			} else {
@@ -605,11 +640,11 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				$sdebugprintli .= '<br />'. 'purge_cache on reset password, page-id ' .$GLOBALS['TSFE']->id. '<br />';
 			}
 		}
+		$_SESSION['httpuseragent']=$_SERVER['HTTP_USER_AGENT'];
 
 		if (!isset($_SESSION['mirrorconf'])) {
 			$_SESSION['mirrorconf']=base64_encode(serialize($this->conf));
 		}
-		$_SESSION['httpuseragent']=$_SERVER['HTTP_USER_AGENT'];
 
 		if (intval($this->conf['useUserImage'])==0) {
 			$this->conf['UserImageSize']=1;
@@ -698,7 +733,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		}
 
 		if (intval($this->conf['sessionTimeout']) < 2) {
-			$this->conf['sessionTimeout'] = 540;
+			$this->conf['sessionTimeout'] = 1440;
 		}
 
 		if (intval($this->conf['advanced.']['autoConvertLinksCropLength']) < 2) {
@@ -722,10 +757,28 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$this->conf['userCenter.']['maxItemAgeUCList'] = 1;
 		}
 
+		if (trim($this->conf['sessionCompressionLevel']) == '') {
+			$this->conf['sessionCompressionLevel'] = 0;
+		}
+
+		if (intval($this->conf['sessionCompressionLevel']) < 0) {
+			$this->conf['sessionCompressionLevel'] = 0;
+		}
+
+		if (intval($this->conf['sessionCompressionLevel']) >5) {
+			$this->conf['sessionCompressionLevel'] = 5;
+		}
+
 		$filename = 'toctoc_comments_myrating_star.png';
 		$this->conf['ratings.']['ratingImageWidth'] = $this->getThemeTmageDimension($filename, 0);
 		$filename = 'toctoc_comments_myreview_star.png';
 		$this->conf['ratings.']['reviewImageWidth'] = $this->getThemeTmageDimension($filename, 0);
+		$filename = 'ilikev2.png';
+		$this->conf['ratings.']['likeV2ImageWidth'] = $this->getThemeTmageDimension($filename, 0);
+		$filename = 'commentslist-more.png';
+		$this->conf['ratings.']['CommentImageWidth'] = $this->getThemeTmageDimension($filename, 0);
+				$filename = 'ilike.png';
+		$this->conf['ratings.']['likeImageWidth'] = $this->getThemeTmageDimension($filename, 0);
 
 		if (!is_array(explode(',', $this->conf['theme.']['responsiveSteps']))) {
 			$this->arrResponsiveSteps[0]=350;
@@ -792,6 +845,8 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		if  ($this->extConf['importDataprefixtotable']) {
 			$this->initializeprefixtotablemap();
 		}
+
+		$_SESSION['activelangid'] =$GLOBALS['TSFE']->sys_language_uid;
 
 		if (intval($this->conf['externalPrefix'])>0) {
 			if ($this->conf['externalPrefix']!='') {
@@ -961,88 +1016,6 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$hookTablePrefix = '';
 		}
 
-		$useCacheHashNeeded = intval($GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError']);
-		$no_cacheflag = 0;
-		if (intval($GLOBALS['TYPO3_CONF_VARS']['FE']['disableNoCacheParameter']) ==0) {
-			if ($useCacheHashNeeded == 1) {
-				$no_cacheflag = 1;
-			}
-
-		}
-
-		if ($this->conf['commentsreport.']['active']) {
-			$conftx_commentsreport = $this->conf['commentsreport.'];
-			$this->conf['tx_commentsreport_pi1.']['reportPid']=$conftx_commentsreport['reportPid'];
-			$_SESSION['reportpageid'] = $conftx_commentsreport['reportPid'];
-		}
-
-		if (intval($this->conf['dataProtect.']['disclaimerPageID']) > 0) {
-			$conflink = array(
-					// Link to current page
-					'parameter' => intval($this->conf['dataProtect.']['disclaimerPageID']),
-					// Set additional parameters
-					'additionalParams' => '',
-					'ATagParams' => 'rel="nofollow"',
-			);
-			$policypage = $this->cObj->typoLink($this->lib->pi_getLLWrap($this, 'pi1_template.disclaimerpagetextreplacelinktext', FALSE), $conflink);
-			$_SESSION['policypage'] = $policypage;
-		}
-
-		if(intval($this->conf['advanced.']['acceptTermsCondsOnSubmit']) > 0) {
-
-			$conflink = array(
-					// Link to current page
-					'parameter' => intval($this->conf['advanced.']['acceptTermsCondsOnSubmit']),
-					// Set additional parameters
-					'additionalParams' => '',
-					'ATagParams' => 'rel="nofollow" target="_terms"',
-			);
-			$TermsCondspage = $this->cObj->typoLink($this->lib->pi_getLLWrap($this, 'pi1_template.termscondspagelinktext', FALSE), $conflink);
-			$_SESSION['TermsCondspage'] = $TermsCondspage;
-		}
-
-		if ((intval($conf['userCenter.']['userCenterPageID']) != 0) && (intval($GLOBALS['TSFE']->fe_user->user['uid']) > 0)) {
-			$conflink = array(
-					// Link to current page
-					'parameter' => intval($this->conf['userCenter.']['userCenterPageID']),
-					// Set additional parameters
-					'additionalParams' => '',
-					'ATagParams' => 'rel="nofollow"',
-			);
-			$TermsCondspage = $this->cObj->typoLink($this->lib->pi_getLLWrap($this, 'pi1_template.userCenterpagelinktext', FALSE), $conflink);
-			$_SESSION['userCenterPage'] = $TermsCondspage;
-
-		}
-
-		//conf-ckecks
-		if ($this->conf['advanced.']['userCommentResponseLevels'] > 20) {
-			$this->conf['advanced.']['userCommentResponseLevels'] = 20;
-		}
-
-		if ($this->conf['advanced.']['userCommentResponseLevelExpanded'] > 20) {
-			$this->conf['advanced.']['userCommentResponseLevelExpanded'] = 20;
-		}
-
-		if ($this->conf['advanced.']['userCommentResponseLevelExpanded'] < 1) {
-			$this->conf['advanced.']['userCommentResponseLevelExpanded'] = 1;
-		}
-
-		if ($this->conf['minCommentLength'] >$this->conf['maxCommentLength']) {
-			$this->conf['maxCommentLength']=$this->conf['minCommentLength']+1;
-		}
-
-		if ($this->conf['UserImageSize'] >96) {
-			$this->conf['UserImageSize']=96;
-		}
-
-		if ($this->conf['UserImageSize'] <18) {
-			$this->conf['UserImageSize']=18;
-		}
-
-		if ($this->conf['advanced.']['commentsEditBack'] >50) {
-			$this->conf['advanced.']['commentsEditBack']=50;
-		}
-
 		if ($this->showsdebugprint==TRUE) {
 			$starttimesessions=microtime(TRUE);
 		}
@@ -1147,7 +1120,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		$slcurrentPageName=str_replace('&no_cache=1', '', $slcurrentPageName);
 		$slcurrentPageName=str_replace('?purge_cache=1', '', $slcurrentPageName);
 		$slcurrentPageName=str_replace('&purge_cache=1', '', $slcurrentPageName);
-		$_SESSION['activelangid'] =$GLOBALS['TSFE']->sys_language_uid;
+		$_SESSION['activelangid'] = $GLOBALS['TSFE']->sys_language_uid;
 
 		/*
 		 * independent situations where a emptycache is needed subsequently
@@ -1173,14 +1146,16 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$this->lib->resetSessionVars(0);
 			$this->doClearCache();
 			$this->sdebugprint .= 'Init Sessionvariables because of new page id ' .$GLOBALS['TSFE']->id. '<br />';
+			$_SESSION['curPageName'] = $slcurrentPageName;
 			$_SESSION['numberOfPages']++;
+
 		} elseif ($_SESSION['curPageName'] != $slcurrentPageName) {
-			// language change
 			$this->lib->resetSessionVars(0);
 			$this->doClearCache();
 			$this->sdebugprint .= 'Init Sessionvariables because of new curPageName ' . $slcurrentPageName . '<br />';
 			$_SESSION['curPageName'] = $slcurrentPageName;
 			$_SESSION['numberOfPages']++;
+
 		} elseif ($_SESSION['activelang'] != $GLOBALS['TSFE']->lang) {
 			// language change
 			$this->lib->resetSessionVars(0);
@@ -1220,7 +1195,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		if ($sessionreseted==TRUE) {
 			// common session inits after a reset
 			$_SESSION['commentListIndex'] = array();
-			$_SESSION['curPageName'] = $this->currentPageName();
+			$_SESSION['curPageName'] = $this->currentPageName() . $msgtocurP;
 			$_SESSION['activelang'] =$GLOBALS['TSFE']->lang;
 			$_SESSION['activelangid'] =$GLOBALS['TSFE']->sys_language_uid;
 			$_SESSION['piGllW'][$_SESSION['activelangid']] = array();
@@ -1324,6 +1299,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			// TS template is not included
 			$retstr = '<div class="tx-tc-form-top-message tx-tc-required-error"><p>' . $this->pi_wrapInBaseClass($this->lib->pi_getLLWrap($this, 'error', FALSE) . ': ' .
 					$this->lib->pi_getLLWrap($this, 'error.no.ts.template', FALSE)) . '</p></div>';
+			$this->commonObj->stop_toctoccomments_session();
 			return $retstr;
 		}
 
@@ -1345,6 +1321,106 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		}
 
 		$communitydisplaylist = $this->init();
+
+		if ((intval($this->conf['pluginmode'])==0) || (intval($this->conf['pluginmode'])==5)) {
+			$useCacheHashNeeded = intval($GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError']);
+			$no_cacheflag = 0;
+			if (intval($GLOBALS['TYPO3_CONF_VARS']['FE']['disableNoCacheParameter']) ==0) {
+				if ($useCacheHashNeeded == 1) {
+					$no_cacheflag = 1;
+				}
+
+			}
+
+			if ($this->conf['commentsreport.']['active']) {
+				$conftx_commentsreport = $this->conf['commentsreport.'];
+				$this->conf['tx_commentsreport_pi1.']['reportPid']=$conftx_commentsreport['reportPid'];
+				$_SESSION['reportpageid'] = $conftx_commentsreport['reportPid'];
+			}
+
+			if (intval($this->conf['dataProtect.']['disclaimerPageID']) > 0) {
+				$conflink = array(
+						// Link to current page
+						'parameter' => intval($this->conf['dataProtect.']['disclaimerPageID']),
+						// Set additional parameters
+						'additionalParams' => '',
+						'ATagParams' => 'rel="nofollow"',
+				);
+				$policypage = $this->cObj->typoLink($this->lib->pi_getLLWrap($this, 'pi1_template.disclaimerpagetextreplacelinktext', FALSE), $conflink);
+
+				$_SESSION['policypage'] = $policypage;
+				if (!(is_array($_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid]))) {
+					$_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid]=array();
+				}
+
+				$_SESSION['lantypoLink' . $_SESSION['activelangid']]['policypage'] = $policypage;
+			}
+
+			if(intval($this->conf['advanced.']['acceptTermsCondsOnSubmit']) > 0) {
+
+				$conflink = array(
+						// Link to current page
+						'parameter' => intval($this->conf['advanced.']['acceptTermsCondsOnSubmit']),
+						// Set additional parameters
+						'additionalParams' => '',
+						'ATagParams' => 'rel="nofollow" target="_terms"',
+				);
+				$TermsCondspage = $this->cObj->typoLink($this->lib->pi_getLLWrap($this, 'pi1_template.termscondspagelinktext', FALSE), $conflink);
+
+				if (!(is_array($_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid]))) {
+					$_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid]=array();
+				}
+				$_SESSION['lantypoLink' . $_SESSION['activelangid']]['TermsCondspage'] = $TermsCondspage;
+
+			}
+
+			if ((intval($conf['userCenter.']['userCenterPageID']) != 0) && (intval($GLOBALS['TSFE']->fe_user->user['uid']) > 0)) {
+				$conflink = array(
+						// Link to current page
+						'parameter' => intval($this->conf['userCenter.']['userCenterPageID']),
+						// Set additional parameters
+						'additionalParams' => '',
+						'ATagParams' => 'rel="nofollow"',
+				);
+				$userCenterPage = $this->cObj->typoLink($this->lib->pi_getLLWrap($this, 'pi1_template.userCenterpagelinktext', FALSE), $conflink);
+				unset($_SESSION['userCenterPage']);
+				$_SESSION['userCenterPage'] = $userCenterPage;
+				if (!(is_array($_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid]))) {
+					$_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid]=array();
+				}
+				$_SESSION['lantypoLink' . $_SESSION['activelangid']]['userCenterPage'] = $userCenterPage;
+
+			}
+
+			//conf-ckecks
+			if ($this->conf['advanced.']['userCommentResponseLevels'] > 20) {
+				$this->conf['advanced.']['userCommentResponseLevels'] = 20;
+			}
+
+			if ($this->conf['advanced.']['userCommentResponseLevelExpanded'] > 20) {
+				$this->conf['advanced.']['userCommentResponseLevelExpanded'] = 20;
+			}
+
+			if ($this->conf['advanced.']['userCommentResponseLevelExpanded'] < 1) {
+				$this->conf['advanced.']['userCommentResponseLevelExpanded'] = 1;
+			}
+
+			if ($this->conf['minCommentLength'] >$this->conf['maxCommentLength']) {
+				$this->conf['maxCommentLength']=$this->conf['minCommentLength']+1;
+			}
+
+			if ($this->conf['UserImageSize'] >96) {
+				$this->conf['UserImageSize']=96;
+			}
+
+			if ($this->conf['UserImageSize'] <18) {
+				$this->conf['UserImageSize']=18;
+			}
+
+			if ($this->conf['advanced.']['commentsEditBack'] >50) {
+				$this->conf['advanced.']['commentsEditBack']=50;
+			}
+		}
 
 		// preparing for notifications
 		$gettemp= $_GET;
@@ -1434,6 +1510,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		}
 		if (strlen(trim($communitydisplaylist)) > 3) {
 			// no theme found
+			$this->commonObj->stop_toctoccomments_session();
 			return $communitydisplaylist;
 		} elseif ($communitydisplaylist==FALSE) {
 			return '';
@@ -1442,6 +1519,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		if (!$this->foreignTableName) {
 			$retstr = sprintf('<div class="tx-tc-form-top-message tx-tc-required-error"><p>' .
 						$this->lib->pi_getLLWrap($this, 'error.undefined.foreign.table', FALSE) . '</p></div>', $this->conf['externalPrefix']);
+			$this->commonObj->stop_toctoccomments_session();
 			return $retstr;
 		}
 
@@ -1796,6 +1874,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				$retstr = sprintf('<div class="tx-tc-form-top-message tx-tc-required-error"><p>' . $echodate . '<br />' .
 						$this->lib->pi_getLLWrap($this, 'error.automaticcidfail', FALSE)  .
 						'</p></div>', $this->conf['advanced.']['UseMainColPos'], $this->conf['advanced.']['UseTemplavoilaField']) . $debugnocidfoundtext;
+				$this->commonObj->stop_toctoccomments_session();
 				return $retstr;
 			}
 
@@ -2339,8 +2418,13 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 						if ($_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
 								$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid']['p' .
 								$GLOBALS['TSFE']->id] > $this->getPluginCacheControlTstamp($_SESSION['commentListRecord'])) {
-							$outml = $_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-									$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid']['p' . $GLOBALS['TSFE']->id];
+									if ($this->conf['sessionCompressionLevel'] > 0) {
+										$outml = gzuncompress($_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+												$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid']['p' . $GLOBALS['TSFE']->id]);
+									} else {
+										$outml = $_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+													$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid']['p' . $GLOBALS['TSFE']->id];
+									}
 						} else {
 							if ($this->showsdebugprint) {
 								if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
@@ -2453,8 +2537,16 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 					if ((intval(t3lib_div::_GP('no_cache'))==0) && (!isset($_GET['toctoc_comments_pi1']['anchor']))) {
 						$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
 							$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid']['p' . $GLOBALS['TSFE']->id]=round(microtime(TRUE), 0);
-						$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-							$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid']['p' . $GLOBALS['TSFE']->id]=$outml;
+						if ($this->conf['sessionCompressionLevel'] > 0) {
+								$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+									$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid']['p' .
+								$GLOBALS['TSFE']->id]=gzcompress($outml, $this->conf['sessionCompressionLevel']);
+						} else {
+								$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+										$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid']['p' .
+										$GLOBALS['TSFE']->id]=$outml;
+						}
+
 					} else {
 						$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
 							$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid']['p' . $GLOBALS['TSFE']->id]=0;
@@ -2517,6 +2609,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			}
 
 			$_SESSION['activeBoxmodel'] = $this->conf['theme.']['selectedBoxmodel'];
+			$this->commonObj->stop_toctoccomments_session();
 			return $outmlmemcache;
 
 		} elseif ($this->conf['pluginmode'] == 1) {
@@ -2552,6 +2645,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			}
 
 			$_SESSION['edgeTime'] = microtime(TRUE);
+			$this->commonObj->stop_toctoccomments_session();
 			return $outml . $timereport;
 
 		} elseif ($this->conf['pluginmode'] == 2) {
@@ -2560,12 +2654,14 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$this->pi_USER_INT_obj = 1;
 			$_SESSION['edgeTime'] = microtime(TRUE);
 			$retstr =$this->lib->mainReport($content, $this->conf, $this, $this->piVars);
+			$this->commonObj->stop_toctoccomments_session();
 			return $retstr;
 
 		} elseif (($this->conf['pluginmode'] == 3) || ($this->conf['pluginmode'] == 4)) {
 			$this->pi_USER_INT_obj = 1;
 			$_SESSION['edgeTime'] = microtime(TRUE);
 			$retstr = $this->lib->showtopRatings($this->conf, $this);
+			$this->commonObj->stop_toctoccomments_session();
 			return $retstr;
 
 		} elseif (($this->conf['pluginmode'] == 5)) {
@@ -2577,12 +2673,15 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				$retstr .= $this->tcchangepasswordcard;
 				$_SESSION['doChangePasswordForm']=0;
 			}
+
+			$this->commonObj->stop_toctoccomments_session();
 			return $retstr;
 
 		} elseif (($this->conf['pluginmode'] == 6)) {
 			$this->pi_USER_INT_obj = 1;
 			$_SESSION['edgeTime'] = microtime(TRUE);
 			$retstr = $this->lib->showuserCenter($this->conf, $this);
+			$this->commonObj->stop_toctoccomments_session();
 			return $retstr;
 
 		}  elseif (($this->conf['pluginmode'] == 7)) {
@@ -2591,6 +2690,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$this->pi_USER_INT_obj = 1;
 			$_SESSION['edgeTime'] = microtime(TRUE);
 			$retstr = $this->lib->showCommentsSearch($this->conf, $this, FALSE, '');
+			$this->commonObj->stop_toctoccomments_session();
 			return $retstr;
 
 		} elseif (($this->conf['pluginmode'] == 8)) {
@@ -2599,8 +2699,10 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$this->pi_USER_INT_obj = 1;
 			$_SESSION['edgeTime'] = microtime(TRUE);
 			$retstr = $this->lib->showtopSharings($this->conf, $this);
+			$this->commonObj->stop_toctoccomments_session();
 			return $retstr;
 		} else {
+			$this->commonObj->stop_toctoccomments_session();
 			return '';
 		}
 
@@ -3107,7 +3209,11 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 		}
 		$sortind=0;
 		if (intval($this->conf['theme.']['boxmodelLineHeight']) > 17) {
-			$sortind = intval((intval($this->conf['theme.']['boxmodelLineHeight']) - 16)/2);
+			if ($this->conf['theme.']['themeVersion'] !=2) {
+				$sortind = intval((intval($this->conf['theme.']['boxmodelLineHeight']) - 16)/2);
+			} else {
+				$sortind = 0;
+			}
 		}
 
 		$boxmodelLineHeightorReviewlineHeight = intval($this->conf['theme.']['boxmodelLineHeight']);
@@ -4766,7 +4872,6 @@ sharrre design 2 and 4, calculated specifics
 		if (intval($this->conf['sharing.']['useOnlySharing'])==1) {
 			$this->conf['ratings.']['ratingsOnly'] = 1;
 			$this->conf['ratings.']['enableRatings'] = 0;
-			$this->conf['sharing.']['usenlySharing'] = 1;
 		}
 
 		$this->fetchConfigValue('spamProtect.requireApproval');
@@ -4886,7 +4991,7 @@ sharrre design 2 and 4, calculated specifics
 		}
 
 		// Call hook for custom configuration
-		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['mergeConfiguration'])) {
+		/* if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['mergeConfiguration'])) {
 			foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['mergeConfiguration'] as $userFunc) {
 				$params = array(
 					'pObj' => $this,
@@ -4894,7 +4999,7 @@ sharrre design 2 and 4, calculated specifics
 				t3lib_div::callUserFunction($userFunc, $params, $this);
 			}
 
-		}
+		} */
 
 	}
 
@@ -5003,9 +5108,34 @@ sharrre design 2 and 4, calculated specifics
 			$ratingTextMargin = $this->conf['ratings.']['ratingImageWidth']-$this->conf['theme.']['boxmodelLineHeight'];
 		}
 
+		$applyv2imagewidth = 0;
+		if (($ratinglineheight-$this->conf['ratings.']['likeV2ImageWidth'])>5) {
+			$applyv2imagewidth = 1;
+		}
+
 		$reviewMarginTop = intval((intval($this->conf['theme.']['boxmodelLineHeight'])-intval($this->conf['ratings.']['reviewImageWidth']))/2);
 		$ratingMarginTop = intval((intval($this->conf['theme.']['boxmodelLineHeight'])-intval($this->conf['ratings.']['ratingImageWidth']))/2);
 		$nbrofstars= intval($this->conf['ratings.']['maxValue']) - intval($this->conf['ratings.']['minValue']) + 1;
+
+		$this->LESSVars['comment'][$this->LESS_i] = '// line height in with like v2 image'. "\n";
+		$this->LESSVars['var'][$this->LESS_i] = '@likeV2ImageWidth';
+		$this->LESSVars['val'][$this->LESS_i] = $this->conf['ratings.']['likeV2ImageWidth'] . 'px';
+		$this->LESS_i++;
+
+		$this->LESSVars['comment'][$this->LESS_i] = '// image width for show more comments link in theme version 2 (v2)'. "\n";
+		$this->LESSVars['var'][$this->LESS_i] = '@CommentImageWidth';
+		$this->LESSVars['val'][$this->LESS_i] = $this->conf['ratings.']['CommentImageWidth'] . 'px';
+		$this->LESS_i++;
+
+		$this->LESSVars['comment'][$this->LESS_i] = '// if to apply special top margin for the ilkev2 pics'. "\n";
+		$this->LESSVars['var'][$this->LESS_i] = '@applyv2imagewidth';
+		$this->LESSVars['val'][$this->LESS_i] = $applyv2imagewidth == 1 ? 'true' : 'false';
+		$this->LESS_i++;
+
+		$this->LESSVars['comment'][$this->LESS_i] = '// line height in with like image'. "\n";
+		$this->LESSVars['var'][$this->LESS_i] = '@likeImageWidth';
+		$this->LESSVars['val'][$this->LESS_i] = $this->conf['ratings.']['likeImageWidth'] . 'px';
+		$this->LESS_i++;
 
 		$this->LESSVars['comment'][$this->LESS_i] = '// line height in ratings, calculated'. "\n";
 		$this->LESSVars['var'][$this->LESS_i] = '@ratingLineHeight';
@@ -5055,6 +5185,11 @@ sharrre design 2 and 4, calculated specifics
 		$this->LESSVars['comment'][$this->LESS_i] = '// TS: theme.boxmodelTextareaNbrLines'. "\n";
 		$this->LESSVars['var'][$this->LESS_i] = '@boxmodelTextareaNbrLines';
 		$this->LESSVars['val'][$this->LESS_i] = $this->conf['theme.']['boxmodelTextareaNbrLines'];
+		$this->LESS_i++;
+
+		$this->LESSVars['comment'][$this->LESS_i] = '// TS: theme.themeVersion'. "\n";
+		$this->LESSVars['var'][$this->LESS_i] = '@themeVersion';
+		$this->LESSVars['val'][$this->LESS_i] = $this->conf['theme.']['themeVersion'];
 		$this->LESS_i++;
 
 		if ($this->conf['theme.']['refreshCSSFromLESS'] != 1) {
@@ -5210,6 +5345,21 @@ sharrre design 2 and 4, calculated specifics
 						}
 
 					}
+					if (trim($this->conf['theme.']['themeVersion']) == '2') {
+						$timecheckfile = $txdirnamelessbootstrap . DIRECTORY_SEPARATOR .
+						'_php' . DIRECTORY_SEPARATOR . 'themeVersion2.less';
+						if (file_exists($timecheckfile)) {
+							$filetime = @filemtime($timecheckfile);
+							if ($this->newestLessFileTime < $filetime) {
+								$this->newestLessFileTime = $filetime;
+							}
+
+						} else {
+							print 'boxmodelthemeVersion-file ' . $timecheckfile. ' not found<br>';
+							exit;
+						}
+
+					}
 
 				} else {
 					print 'boxmodel-include-file ' . $lessbootstrapfile. ' not found<br>';
@@ -5271,8 +5421,12 @@ sharrre design 2 and 4, calculated specifics
 					if (file_exists($lessphpbmfile)) {
 						$contentbmless = '';
 						if (trim($this->conf['theme.']['selectedBoxmodel']) != '') {
-							$contentbmless = '@import "../boxmodel/' .
-							str_replace('boxmodel_', '', str_replace('.txt', '', trim($this->conf['theme.']['selectedBoxmodel']))) . '.less";';
+							$contentbmless .= '@import "../boxmodel/' .
+											str_replace('boxmodel_', '', str_replace('.txt', '', trim($this->conf['theme.']['selectedBoxmodel']))) .
+											'.less";' . "\n";
+						}
+						if (trim($this->conf['theme.']['themeVersion']) == '2') {
+							$contentbmless .= '@import "themeVersion2.less";';
 						}
 
 						file_put_contents($lessphpbmfile, $contentbmless);
@@ -5308,6 +5462,7 @@ sharrre design 2 and 4, calculated specifics
 					}
 
 					file_put_contents($filenamecontrolcss, $controlTSless);
+					$runboxmodel = TRUE;
 				}
 
 			}
@@ -6091,9 +6246,6 @@ sharrre design 2 and 4, calculated specifics
 												$selectorarr[$i]['properities'][$countpresentselectors + $j]['propval']=$addedpropertiesarr[$j]['propval'];
 
 											}
-// 											if (str_replace('tx-tc-ct-ry-report-line', '', $currentselector) != $currentselector) {
-// 												print_r($addedpropertiesarr);print '<br><br>';
-// 											}
 
 										}
 
@@ -6422,12 +6574,43 @@ sharrre design 2 and 4, calculated specifics
 		if (isset($_SESSION['unBlockTime'])) {
 			$tempblocktime = $_SESSION['unBlockTime'];
 		}
+
+		$currentSessionModule = $_SESSION['cSModule'];
+		$currentSessionName = $_SESSION['cSName'];
+		$currentSessionPath = $_SESSION['cSPath'];
+		$currentSessiongc_probability = $_SESSION['cSgcPr'];
+		$currentSessiongc_divisor = $_SESSION['cSgcDv'];
+		$currentSessiongc_maxlifetime = $_SESSION['cSgcMl'];
+		$sessionwasset = $_SESSION['cSwasSet'];
+		$sessionid = $_SESSION['cSId'];
+
+		$curPageName = '-';
+
+		if (isset($_SESSION['curPageName'])) {
+			$curPageName = $_SESSION['curPageName'];
+		}
+
+		// total session reset
 		$_SESSION = array();
+
+		// but restore some core vars
 		$_SESSION['StartTime'] = $tempStartTime;
 		$_SESSION['unBlockTime'] = $tempblocktime;
-		$this->doClearCache();
-		$this->activateClearPageCache=$saveactivateClearPageCache;
+		$_SESSION['cSModule'] = $currentSessionModule;
+		$_SESSION['cSName'] = $currentSessionName;
+		$_SESSION['cSPath'] = $currentSessionPath;
+		$_SESSION['cSgcPr'] = $currentSessiongc_probability;
+		$_SESSION['cSgcDv'] = $currentSessiongc_divisor;
+		$_SESSION['cSgcMl'] = $currentSessiongc_maxlifetime;
+		$_SESSION['cSwasSet'] = $sessionwasset;
+		$_SESSION['cSId'] = $sessionid;
 
+		if ($curPageName != '-') {
+			$_SESSION['curPageName'] = $curPageName;
+		}
+
+		$this->doClearCache();
+		$this->activateClearPageCache = $saveactivateClearPageCache;
 	}
 
 	/**
@@ -6437,7 +6620,7 @@ sharrre design 2 and 4, calculated specifics
 	 * @return	int		timestamp or 0
 	 */
 	protected function getPluginCacheControlTstamp ($external_ref_uid) {
-		$tstamp=$this->lib->getPluginCacheControlTstamp($external_ref_uid);
+		$tstamp = $this->lib->getPluginCacheControlTstamp($external_ref_uid);
 		return $tstamp;
 	}
 

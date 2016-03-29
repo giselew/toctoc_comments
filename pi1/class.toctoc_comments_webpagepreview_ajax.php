@@ -63,11 +63,20 @@ private $commonObj;
 public $extKey = 'toctoc_comments';
 
 	public function main() {
+		if (!isset($_SESSION)) {
+			session_start();
+		}
 
 		$this->commonObj = new toctoc_comments_common;
+/* 		$sessionSavePath =  @file_get_contents(realpath(dirname(__FILE__)) . '/sessionpath.tmp');
+		if (!isset($_SESSION)) {
+			$this->commonObj->start_toctoccomments_session(3*1440, $sessionSavePath);
+		} */
+
 		$cmd = $_POST['cmd'];
 		if(trim($cmd) != 'getpreview') {
 			echo 'bad_cmd_value';
+			$commonObj->stop_toctoccomments_session();
 			exit();
 		}
 
@@ -76,6 +85,7 @@ public $extKey = 'toctoc_comments';
 
 		$data_str = $_POST['dataconf'];
 		$data = unserialize(base64_decode($data_str));
+
 		$conf = $this->commonObj->unmirrorConf($data['conf']);
 
 		$data_str = $_POST['data'];
@@ -90,11 +100,11 @@ public $extKey = 'toctoc_comments';
 
 		$data_str = $_POST['dataconfatt'];
 		$dataconfatt = unserialize(base64_decode($data_str));
-		$conf['attachments.']=$dataconfatt['conf'];
+		$conf = $dataconfatt['conf'];
 		$websitepreviewareaimagewidth =  $conf['attachments.']['webpagePreviewHeight'] + 10;
 
-		$awaitgoogle = base64_decode($dataconfatt['awaitgoogle']);	
-		$txtimage = base64_decode($dataconfatt['txtimage']);	
+		$awaitgoogle = base64_decode($dataconfatt['awaitgoogle']);
+		$txtimage = base64_decode($dataconfatt['txtimage']);
 		$txtimages = base64_decode($dataconfatt['txtimages']);
 
 		if ($conf['attachments.']['maxCharsPreviewTitle']!='') {
@@ -124,6 +134,14 @@ public $extKey = 'toctoc_comments';
 		$maxDescChars=$conf['attachments.']['webpagePreviewDescriptionLength'];
 		$outhtml='';
 		$divlogoset=FALSE;
+
+		if (!isset($conf['theme.']['selectedTheme'])) {
+			$conf['theme.']['selectedTheme'] = 'default';
+		}
+
+		if ($conf['theme.']['selectedTheme'] == '') {
+			$conf['theme.']['selectedTheme'] = 'default';
+		}
 		$wrkimg = '<img align="right" id="tx-tc-form-wpp-working' . trim($_POST['ref']) . '" src="'.$data['configBaseURL'].
 					'typo3conf/ext/toctoc_comments/res/css/themes/' . $conf['theme.']['selectedTheme'] . '/img/workingslides.gif" class="tx-tc-working tx-tc-blockdisp" width="16" height="11" />';
 
@@ -242,6 +260,11 @@ public $extKey = 'toctoc_comments';
 			}
 
 			$textdivleft='tx-tc-margin0';
+
+			if (!isset($_SESSION[$cid][$commentid]['images'])) {
+				$_SESSION[$cid][$commentid]['images']=0;
+			}
+
 			if (count($_SESSION[$cid][$commentid]['images']) > 0) {
 				$textdivleft='tx-tc-pvs-formtext';
 				$outhtml .= '<div class="tx-tc-pvs-images"  id="toctoc_comments-pvs-images-' . $cid . '"><div id="toctoc_comments-pvs-image-box-' .
@@ -274,14 +297,19 @@ public $extKey = 'toctoc_comments';
 		if ($_SESSION[$cid][$commentid]['title'] != '') {
 			if (!array_key_exists('embedUrl', $_SESSION[$cid][$commentid])) {
 				$outhtml .= '<div id="toctoc-comments-pvs-formtext-' . $cid . '" class="' . $textdivleft . '">';
-				$opendiv=TRUE;
+				$opendiv = TRUE;
 				$picfoundinfo = '<span class="tx-tc-nodisp" id="toctoc-picfoundinfo-' . $cid .'">';
-				If ($_SESSION[$cid][$commentid]['totalcounter']>0) {
+
+				if (!isset($_SESSION[$cid][$commentid]['totalcounter'])) {
+					$_SESSION[$cid][$commentid]['totalcounter'] = 0;
+				}
+
+				if ($_SESSION[$cid][$commentid]['totalcounter'] > 0) {
 					if ($_SESSION[$cid][$commentid]['totalcounter'] > $conf['attachments.']['webpagePreviewNumberOfImages']){
 						$_SESSION[$cid][$commentid]['totalcounter'] = $conf['attachments.']['webpagePreviewNumberOfImages'];
 					}
 
-					If ($_SESSION[$cid][$commentid]['totalcounter']>1) {
+					If ($_SESSION[$cid][$commentid]['totalcounter'] > 1) {
 						$txtimage =$txtimages;
 					}
 
@@ -419,9 +447,11 @@ public $extKey = 'toctoc_comments';
 
 		if ($_SESSION[$cid][$commentid]['working'] >= 2) {
 			session_write_close();
+			//$this->commonObj->stop_toctoccomments_session();
 		}
 
 		echo $outhtml;
+
 		exit();
 	}
 }

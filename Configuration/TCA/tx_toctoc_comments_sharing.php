@@ -15,7 +15,7 @@ $scriptcontent = array(
 		)
 );
 
-$tx_toctoc_comments_comments = [
+$tx_toctoc_comments_comments = array(
 	'ctrl' => array (
 		'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_sharing',
 		'label' => 'sharer',
@@ -155,7 +155,7 @@ $tx_toctoc_comments_comments = [
 	'types' => array (
 			0 => array ('showitem' => 'hidden;;;;1,external_ref, external_prefix, reference, sys_language_uid;;;;2-2-2,sharer;;;;3-3-3,crdate,shareurl,sharecount'),
 	),
-];
+);
 	
 return $tx_toctoc_comments_comments;
 ?>

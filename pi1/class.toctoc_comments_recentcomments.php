@@ -702,10 +702,10 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 			$tmpexternalUidarr = explode('&', $tmpexternalUid);
 			if (count($tmpexternalUidarr) >1) {
 				array_shift($tmpexternalUidarr);
-				$tmpexternalUid = implode('&', $tmpexternalUidarr); 
+				$tmpexternalUid = implode('&', $tmpexternalUidarr);
 				$addparams .= '&' . $tmpexternalUid;
 				$addparams = str_replace('&&', '&', $addparams);
-			}					
+			}
 		}
         	$addparams = str_replace('7g8', '-', $addparams);
 

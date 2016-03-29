@@ -110,6 +110,11 @@ refreshCSSFromLESS            boolean     Create CSS from LESS (1, default) or u
                                           way (CSS, PHP, Boxmodels and Themes) (0)
                                           ( V8.0.0)
 ----------------------------  ----------  -------------------------------------------------------  --------------------------------------------------------
+themeVersion                  int+        Designversion for themes: Version 1 is initial design    2
+                                          (2012-2015), version 2 is the design evolution 2016 
+                                          (Different Like Buttons)
+                                          ( V9.0.0)
+----------------------------  ----------  -------------------------------------------------------  --------------------------------------------------------
 **Options from setup-only**
 ----------------------------  ----------  -------------------------------------------------------  --------------------------------------------------------
 selectedBoxmodelkoogled       boolean     "Koogled" boxmodels have either the word koogle in the   0

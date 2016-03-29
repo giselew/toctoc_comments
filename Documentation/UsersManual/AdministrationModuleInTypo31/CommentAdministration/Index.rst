@@ -11,29 +11,23 @@
 Comment administration
 ^^^^^^^^^^^^^^^^^^^^^^
 
-.. figure:: /Images/image-15.jpg
+Clicking on the button List Comments shows the comments on the active page of the TYPO3 
+page-tree, on the root-level it shows all comments available.
 
-Comments are shown in a list where you can sort the data, browse data and perform single or bulk
-actions
+.. figure:: /Images/backendComments.jpg
 
-This is the page browser, you find it at the end of the list 
+Comments are shown in a list where you can sort the data, browse data and perform single or bulk actions
 
-.. figure:: /Images/image-10.jpg
+This is the bottom of the table, showing the last row, then the page browser.
+ 
+By clicking on icons in the list you can perform single actions against the comments.
 
-By clicking on icons in the list you can
-perform single actions against the comments data.
+At the very bottom of the list you find the bulk actions.
 
+To perform a bulk action first select the comments you want to work with. 
+(click the select boxes at the end of the rows in the list)
 
-.. figure:: /Images/image-16.jpg
-
-At the bottom of the list, on the right
-side, you find the bulk actions.
-
-To perform a bulk action first select the
-comments you want to work with by clicking on the select boxes at the end of the rows in the
-list.
-
-.. figure:: /Images/image-11.jpg
+.. figure:: /Images/backendCommentsBulkAct.jpg
 
 Remark: deleting comments does not physically remove the data from the database. It sets the flag
-“deleted” on the table to value 0.
+"deleted" on the table to value 0.

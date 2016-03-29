@@ -45,6 +45,7 @@ You will receive a notification about approval or refusal by email</label>
 			<label index="send_password">Send password</label>
 			<label index="change_password">Set new password</label>
 			<label index="reset_password">Reset Password</label>
+			<label index="captcha_cant_read">Click here if you want a new captcha</label>
 			<label index="enter_captcha">Captcha:</label>
 			<label index="enter_captcha_errornotloaded">Systemmessage: Captcha extension is not loaded! Please contact the admin</label>
 			<label index="title_captcha">Please enter the captcha shown below</label>

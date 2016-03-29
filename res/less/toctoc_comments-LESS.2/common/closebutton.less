@@ -1,0 +1,57 @@
+.tx-tc-CloseButton, .tx-tc-DropDownButton {
+	cursor: pointer;
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+}
+label.tx-tc-CloseButton, label.tx-tc-DropDownButton {
+	overflow: hidden;
+}
+.tx-tc-CloseButton input, .tx-tc-DropDownButton input {
+	cursor: pointer;
+	opacity: 0;
+	outline: medium none;
+	padding: 18px;
+}
+.tx-tc-CloseButton, .tx-tc-DropDownButton, .tx-tc-DropUpButton {
+	background-repeat: no-repeat;
+	height: 15px;
+	width: 15px;
+}
+.tx-tc-CloseButton:hover, .tx-tc-DropDownButton:hover, .tx-tc-CloseButton:active, .tx-tc-DropDownButton:active {
+	background-position: left -16px;
+}
+.tx-tc-DropUpButton {
+	background-position: left -48px;
+}
+.tx-tc-DropUpButton:hover, .tx-tc-DropDownButton:focus, .tx-tc-DropUpButton:active {
+	background-position: left -32px;
+}
+.tx-tc-ct-box-ctclose {
+	height: 16px;
+	float: right;
+	z-index: 4;
+	margin: 0;
+	display: block;
+}
+.tx-tc-ct-uc .tx-tc-ct-box-ctclose {
+	margin: 0 0 0 4px;
+}
+.tx-tc-ucclose, .tx-tc-topmsgcls, .tx-tc-vidclose {
+	float: right;
+}
+.tx-tc-CloseButton, .tx-tc-DropDownButton, .tx-tc-DropUpButton {
+	background-repeat: no-repeat;
+	height: 15px;
+	width: 15px;
+	cursor: pointer;
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+}
+.tx-tc-CloseButton {
+	background-image: ~"url('@{theme-path}close.png')";
+}
+.tx-tc-DropDownButton, .tx-tc-DropUpButton {
+	background-image: ~"url('@{theme-path}dropdown.png')";
+}

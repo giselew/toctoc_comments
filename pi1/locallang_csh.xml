@@ -81,8 +81,8 @@
 			<label index="topRatings.details">Show top ratings for likes, votes or both together
 likes=0,votes=1,both by rating=2,both by likes=3</label>
 			<label index="topRatingsAlignResultsWithMaxVotesAndAvgVote.description">Balance out different numbers of votes</label>
-			<label index="topRatingsAlignResultsWithMaxVotesAndAvgVote.details">If set to 1, then the calculation of top ratings change: 
-Top ratings with number of votes lower than the maximum found are given additional votes such all have the same number of votes. 
+			<label index="topRatingsAlignResultsWithMaxVotesAndAvgVote.details">If set to 1, then the calculation of top ratings change:
+Top ratings with number of votes lower than the maximum found are given additional votes such all have the same number of votes.
 The average value added is the average value of all votes found in current configuration (days back and minimum votes required)</label>
 			<label index="otherCharts.description">Other chart to be shown</label>
 			<label index="otherCharts.details">Select either views chart or activities chart</label>

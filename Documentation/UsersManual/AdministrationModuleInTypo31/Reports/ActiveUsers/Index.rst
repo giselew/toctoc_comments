@@ -11,7 +11,7 @@
 Active Users
 """"""""""""
 
-This reports show users who had an interaction with the commenting system such a making likes,
+This report show users who had an interaction with the commenting system such as making likes,
 ratings or comments.
 
 The time between first and last activity is calculated and this allows to identify the users who are
@@ -19,4 +19,4 @@ most active or longest time active with **toctoc_comments** .
 
 You can filter the list by setting up a minimal activity time and and activity interval.
 
-.. figure:: /Images/image-64.jpg
+.. figure:: /Images/backendReportActiveUsers.jpg

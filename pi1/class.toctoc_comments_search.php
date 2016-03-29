@@ -202,7 +202,6 @@ class toctoc_comments_search extends toctoc_comment_lib {
 			$conf['recentcomments.']['linkComments'] = $conf['search.']['linkComments'];
 			$conf['recentcomments.']['maxCharCount'] = $conf['search.']['SearchCommentCropLength'];
 			$conf['recentcomments.']['listCount'] = $conf['search.']['searchMaxComments'];
-			//print 'maxCharCount' . $conf['recentcomments.']['maxCharCount'];
 			$conf['recentcommentslistCount'] = $conf['search.']['searchMaxComments'];
 
 			$retstr .= '<div class="tx-tc-title tx-tc-ucliststitle"><span class="tx-tc-ucliststitletext">'. $commentage_text .'</span></div>';
@@ -317,7 +316,6 @@ class toctoc_comments_search extends toctoc_comment_lib {
 			$conf['recentcomments.']['maxCharCount'] = $saverecentcommentsmaxCharCount;
 
 			$retstrout = $content;
-			//print 'storagePid1'. $conf['storagePid'];
 		} else {
 			$cid = '700' . $GLOBALS['TSFE']->id;
 			$_SESSION['srchstoragePid']=$conf['storagePid'];

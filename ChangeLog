@@ -741,11 +741,52 @@
 2016-01-08  Gisèle Wendl  <gisele.wendl@toctoc.ch>
 	* Release of version 8.1.2
 	* Added Extension Configuration option new_Hours. If there's a new comment or new user newer than the specified time, 
-	  then the backend module icon changes and gets one or two stars. In backend module you find then more detailed information about the news.
+	  then the backend module icon changes and gets one or two stars. In backend module you find then more detailed information about the news
 	* Fixed occasional bug in handling of option advanced.viewMaxAge
 	* Added handling for missing usergroup on fresh installs of the AJAX-Login component
 	* Fixed another bug with userpictures, where under certain conditions the fe_users-picture was not considered correctly
 	  Condition: User never made a like or rating and no view is registered, which can happen after all views of a user become older than advanced.viewMaxAge
 	    
+2016-02-29  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 9.0.0
+	* New responsive backend module, full AJAX (for TYPO3 6 and 7)
+	* New backend module allows table-maintenance (optimization) in database
+	* Extension option use_OldBackendModule enables switching between AJAX (default) and non-AJAX (old) backend module
+	* Even old backend module is responsive now and profits from design update in the backend
+	* Theme Version 2, using new option theme.themeVersion - it brings button-styled top like-, comment- and share-links
+	  Theme version 1 is the theme we know up to today, new version 2 tries adopt to the changes seen as on Facebook regarding the design
+	* Theme version 2 uses the LESS-generated CSS; you cannot use it with the old CSS-Model. You need to set theme.refreshCSSFromLESS = 1 for this
+	* Changed LESS-Version to version 2, basically because of theme.themeVersion = 2
+	* Removed dependencies to other captcha extensions, new default for comments report and user sign up is the internal captcha, sr_freecap is still available
+	* Tested PHP 7.0.3 under TYPO3 7.6.2, all ok -> raised PHP-compatibility to version PHP 7.9.99
+	* Added gender to $TCA for tx_toctoc_comments_comments
+	* New heart-style rating-stars in theme red
+	* Fixed wrong calculation in topSharings
+	* Fixed problems with multi-byte character sets such as Cyrillic (eg when uploading picture attachments using multi-byte characters in file name)
+	* Fixed wrong incompatibility alert in Installtool
+	* Fixed erroneous creation of the toctoc_comments user-group when multiple user groups were specified in tx_toctoccomments_pi2.register.usergroup
+	* Fixed "Accept general conditions-error" in comments report
+	* Fixed (removed) wrong $TCA-entries for tx_toctoc_comments_longuidreference
+	* Fixed wrong gender on comments by fe_users in table tx_toctoc_comments_comments (not visible in frontend)
 	
-	
+2016-03-11  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 9.0.1
+	* Note: No update of the manuals for Bugfix-releases x.x.+1
+	* Fixed problem with AJAX-posted pi-Vars (such as comment title, first name, last name) when using multi-byte character set like Cyrillic
+	* Fixed double entry in static templates list under TYPO3 6.2 and newer
+	* Added missing $TCA for rating scopes under TYPO3 7.6
+	* Fixed an image tag in Output HTML containing an empty src-attribute. This triggers calls to the TYPO3-rootpage
+	  This was not only performance-consuming, but it also changed the current toctoc_comments-PHP-Session, which under certain conditions, even got erased
+	* Note: Empty src-attributes in image-tags can come from various sources. In connection with toctoc_comments they need to be avoided completely   
+	* Added more encapsulation to the PHP-Session by closing it and restoring the session environment before the call of toctoc_comments
+	* Added responsive behavior to the backend modules comments- and users-list
+	* Fixed page navigators CSS in backend module: On large screens it was on the right of the table, now it is always below
+	* Fixed Apache-Error-Log-entry for missing jquery-1.10.2.min.map: Added jquery-1.10.2.min.map to /Resources/Public/JavaScript in order to complete jquery-1.10.2.min.js in the same folder
+	* New TS option sessionCompressionLevel allows to gzcompress certain parts inside the PHP-Session, reducing Session-size up to 60%. Default is 0 (no compression)
+
+2016-03-29  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 9.0.2
+	* Fixed an error with SessionCompression
+	* Compatibility TYPO3 8.0
+	* Added a Garbage-collector deleting old sessions from clients which do not use cookies
+	* Fixed problems with webpage-previews which emerged with version 9.0.0, related to new session management

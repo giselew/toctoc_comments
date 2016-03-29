@@ -6,7 +6,7 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 	(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
 }
 
-$tx_toctoc_comments_comments = [
+$tx_toctoc_comments_comments = array(
 	'ctrl' => array (
 		'title'     => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_spamwords',
 		'label'     => 'spamword',
@@ -70,7 +70,7 @@ $tx_toctoc_comments_comments = [
 	'types' => array (
 			0 => array ('showitem' => 'hidden;;;;1,spamword;;;;2-2-2,spamvalue,sys_language_uid'),
 	),
-];
+);
 	
 return $tx_toctoc_comments_comments;
 ?>

@@ -29,13 +29,18 @@ It can be found in module group “Web”.
 Selecting comments on the root-level of your TYPO3-backend will scan for data in all pages of your
 site.
 
+Since version 9 the backend module changed to a responsive, AJAX-based module, but it's only available with TYPO3 6 or newer.
 
-The module offers 2 options: comment administration and (**toctoc_comments** -) user administration
+The old style backend module therefore has been preserved for TYPO3 4 versions – on newer installations 
+it can be activated otionally in the extensions configuration with option basic.use_OldBackendModule
+
+Apart from the AJAX-part a basic difference between new and old backend module is the overview-part which is available only in the new backend module.
 
 .. toctree::
     :maxdepth: 2
     :titlesonly:
 
+    OverView/Index
     CommentAdministration/Index
     UserAdministration/Index
     BannedIpAddressesFrom/Index

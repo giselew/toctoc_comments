@@ -13,6 +13,12 @@ Administration module in TYPO3 Backend
 
 Adds a backend module **Comments** in TYPO3 Module section **Web**
 
+Backend module available in 2 versions, new version is AJAX-based and responsive
+
+Module informs about new users and comments-extensions
+
+AJAX Backend module allows maintenance of DB-tables and shows a nice overview
+
 Module has 4 sub modules: Comment-Administration, User-Administration, **Banned IPs** and Reports
 
 Comment-Administration: Bulk actions for approving, disapproving, deleting, hiding and showing

@@ -107,7 +107,7 @@
 			<label index="pagetstampmyrating.description">TYPO3 page id of the rating</label>
 			<label index="pagetstampmyrating.details">The TYPO3 page id of the rating is recorded and used later in charts for links</label>
 			<label index="displayfields.description">Fields to display in top ratings list and other charts</label>
-			<label index="displayfields.details">For selecting topRatings data on records like News or Products toctoc_comments needs to know which fields of the record to display. 
+			<label index="displayfields.details">For selecting topRatings data on records like News or Products toctoc_comments needs to know which fields of the record to display.
 In displayfields you can specify title, time of the record, the content (will be cropped) and you can specify if toctoc_comments should use translated records (in the same records table) with sys_languahe_uid, also you can specify the name of the field holding an image for display.
 A displayfield has the following syntax
 Field for title [filed for time] [field for image] [field for sys_language_uid], [field for content]

@@ -15,7 +15,7 @@ $scriptcontent = array(
 		)
 );
 
-$tx_toctoc_comments_comments = [
+$tx_toctoc_comments_comments = array(
 	'ctrl' => array (
 		'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_prefixtotable',
 		'label' => 'pi1_key',
@@ -100,7 +100,7 @@ $tx_toctoc_comments_comments = [
 	'types' => array (
 			0 => array ('showitem' => 'hidden;;;;1,pi1_key;;;;2-2-2,pi1_table;;;;3-3-3,show_uid,displayfields,topratingsdetailpage,topratingsimagesfolder'),
 	),
-];
+);
 	
 return $tx_toctoc_comments_comments;
 ?>

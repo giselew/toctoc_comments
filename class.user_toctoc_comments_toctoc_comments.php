@@ -28,7 +28,7 @@
  *
  *   56: class user_toctoc_comments_toctoc_comments
  *   64:     public function displayDonationMessage()
- *  199:     protected function checkSecret($secret)
+ *  195:     protected function checkSecret($secret)
  *
  * TOTAL FUNCTIONS: 2
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -100,10 +100,6 @@ class user_toctoc_comments_toctoc_comments {
 
 		$datadonation = '';
 		$secret='';
-
-		if (!(t3lib_extMgm::isLoaded('toctoccommetsce'))) {
-			$_SESSION['toctoccommentsfedonationsecret'] = '';
-		}
 
 		if (trim($_SESSION['toctoccommentsfedonationsecret']) != '') {
 			// secret from toctooccommmetts
@@ -200,8 +196,6 @@ class user_toctoc_comments_toctoc_comments {
 		$data ='';
 		$infomessage = '';
 		$donationserver = 'www.toctoc.ch';
-		//$donationserver = 'toctoc4xdrp';
-		//$_SESSION['toctoc_commentsfedonation'] = '';
 		if (trim($_SESSION['toctoc_commentsfedonation']) != '') {
 			if ($_SESSION['toctoc_commentsfedonationdone']==1) {
 				$this->toctoccommentsfedonationdone=1;
@@ -243,7 +237,7 @@ class user_toctoc_comments_toctoc_comments {
 						'lang' => $langreq,
 						'extensionkey' => 'toctoccommentsce',
 						'extension' => 'toctoc_comments',
-						'version' => '812',
+						'version' => '902',
 						'hostname' => $curipres,
 						'typo3version' => TYPO3_version,
 				);

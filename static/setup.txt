@@ -581,8 +581,8 @@ plugin.tx_toctoccomments_pi1 {
     HTMLemailTemplateFile= EXT:toctoc_comments/res/template/toctoccomments_template_reportcomment_email.html
     # Required fields:Comma-separated list of required fields
     requiredFields = from,frommail,text
-    # [None=0,captcha extension=1,sr_freecap extension=2]; Use captcha:Enable captcha usage. Requires appropriate extension to be installed
-    useCaptcha = 2
+    # [None=0,captcha extension=1,sr_freecap extension=2,internal captcha=3]; Use captcha:Enable captcha usage. 1 and 2 require appropriate extension to be installed
+    useCaptcha = 3
     # E-mail to send notifications from
     sourceEmail =
     # E-mail to send notifications to
@@ -617,7 +617,9 @@ plugin.tx_toctoccomments_pi1 {
   theme {
     # color theme (CSS)is used by the extension in frontend
     selectedTheme = {$plugin.tx_toctoccomments_pi1.selectedTheme}
-
+    
+	themeVersion = {$plugin.tx_toctoccomments_pi1.themeVersion}
+	
     # Font Family for theme used for Textareas
     themeFontFamily = {$plugin.tx_toctoccomments_pi1.themeFontFamily}
     # Use themeFontFamily as font-family for the entire plugin.
@@ -763,8 +765,8 @@ plugin.tx_toctoccomments_pi2 {
     enableSignup = 1
     # setup default usergroup(s)-uids setup when registering, separated by commas
     usergroup=1
-    # 1 is extension captcha, 2 is sr_freecap
-    signupUseCaptcha = 2
+    # 1 is extension captcha, 2 is sr_freecap, 3 is toctoc_comments internal captcha
+    signupUseCaptcha = 3
     signupRequireFirstname = 1
     newUserMinLength = 6
     signupConfirmEmail = 0

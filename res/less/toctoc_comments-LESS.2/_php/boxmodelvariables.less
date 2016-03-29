@@ -1,0 +1,100 @@
+// "koogled" boxmodels behave different and there will be some CSS if the boxmodel is koogled
+// when the name of the boxmodel contains "koogle" the boxmodel is forced to be koogled
+// you can setup koogled-mode with setup option theme.selectedBoxmodelkoogled = 1
+@selectedBoxmodelkoogled:		true;
+// padding of the textarea in commenting forms
+// it is 1px, but it is different if advanced.useEmoji != 0
+// then it depends on theme.boxmodelSpacing
+@tapadding:		26px;
+// height of the textarea in commenting forms
+// theme.boxmodelTextareaLineHeight*theme.boxmodelTextareaNbrLines
+@taheight:		44px;
+// TS:  theme.boxmodelLabelInputPreserve
+@boxmodelLabelInputPreserve:		true;
+// TS:  theme.boxmodelLineHeight
+@boxmodelLineHeight:		18px;
+// TS:  theme.boxmodelSpacing
+@boxmodelSpacing:		10px;
+// top-margin of checkbox is different from 0 and grows when theme.boxmodelLineHeight > 16
+@topMarginCheckBox:		1px;
+// line height in reviews containing stars is normally theme.boxmodelLineHeight
+// when ratings.reviewImageWidth > theme.boxmodelLineHeight then ratings.reviewImageWidth
+@boxmodelReviewlineHeight:		25px;
+// TS:  topRatings.topRatingsImageSize
+@topRatingsImageSize:		54px;
+// When Facebook sharing is available then 4px, else 0
+@leftShareFb:		4px;
+// if theme.boxmodelLevelIndent between 1,2,3: then this is true
+@doScaleBecauseOfIndent:		true;
+// TS:  UserImageSize
+@userImageSize:		48px;
+// TS:  theme.boxmodelLevelIndent no px value
+@boxmodelLevelIndent:		1;
+// TS:  theme.boxmodelLabelWidth
+@boxmodelLabelWidth:		134px;
+// TS:  theme.boxmodelTextareaLineHeight
+@boxmodelTextareaLineHeight:		22px;
+// indent of commenting boxes when there is a hierarchy
+@levelIndent:		63px;
+// when useUserImage > 0 then true
+@useUserImage:		true;
+// TS:  attachments.webpagePreviewHeight
+@webpagePreviewHeight:		70px;
+// TS:  attachments.webpagePreviewHeight*(4/3)
+@vidMaxWidth:		93px;
+// TS: theme.usethemeFontFamilyForPlugin
+@usethemeFontFamilyForPlugin:		true;
+// TS: theme.themeFontFamily
+@themeFontFamily:		Roboto,arial,sans-serif;;
+// needed to calculated the margin right of user pic to comment in list
+@marginPicComment:		15px;
+// TS: attachments.picUploadMaxDimWebpage
+@picUploadMaxDimWebpage:		470px;
+// TS: theme.responsiveSteps, 1st step
+@screen-sm:		350px;
+// TS: theme.responsiveSteps, 2nd step
+@screen-md:		450px;
+// responsiveSteps, 3nd step from attachments.picUploadMaxDimX+200
+@screen-lg:		1000px;
+// TS: attachments.picUploadMaxDimYWebpage
+@picUploadMaxDimYWebpage:		300px;
+// TS: attachments.picUploadMaxDimX
+@picUploadMaxDimX:		800px;
+// TS: topRatings.topratingsnumberwidth
+@topRatingsNumberWidth:		20px;
+// Opacity used for koogled: 0.5 else 1
+@themeOpacity:		0.5;
+// top margin of sorticon in menu
+@topMarginSortIndicator:		0px;
+// if ratings.useLikeDislikeStyle = 1 then true
+@useLikeDislikeStyleOne:		false;
+// line height in with like v2 image
+@likeV2ImageWidth:		16px;
+// image width for show more comments link in theme version 2 (v2)
+@CommentImageWidth:		16px;
+// if to apply special top margin for the ilkev2 pics
+@applyv2imagewidth:		false;
+// line height in with like image
+@likeImageWidth:		18px;
+// line height in ratings, calculated
+@ratingLineHeight:		19px;
+// line height in reviews, calculated
+@reviewLineHeight:		25px;
+// top margin in ratings, calculated
+@ratingMarginTop:		0px;
+// top margin in reviews, calculated
+@reviewMarginTop:		-3px;
+// margin in rating texts, calculated
+@ratingTextMargin:		1px;
+// margin in review texts, calculated
+@reviewTextMargin:		3px;
+// Image width of rating image (PHP calculates it)
+@ratingImageWidth:		19px;
+// Number of rating- oder review stars used
+@ratingNbrStars:		5;
+// Image width of review image (PHP calculates it)
+@reviewImageWidth:		25px;
+// TS: theme.boxmodelTextareaNbrLines
+@boxmodelTextareaNbrLines:		2;
+// TS: theme.themeVersion
+@themeVersion:		2;

@@ -1,7 +1,7 @@
 <?php
 if (!defined ('TYPO3_MODE')) die('Access denied.');
 
-$tx_toctoc_comments_comments = [
+$tx_toctoc_comments_comments = array(
 	'ctrl' => array (
 		'hideTable'	=> 1,
 		'readOnly'	=> 1,
@@ -11,7 +11,7 @@ $tx_toctoc_comments_comments = [
 	),
 	'types' => array (
 	),
-];
+);
 	
 return $tx_toctoc_comments_comments;
 ?>

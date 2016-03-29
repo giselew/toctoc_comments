@@ -1,0 +1,2 @@
+The old OpenOffice-manual is still available, but it's no longer distributed with the extension
+Downloadlink: http://www.toctoc.ch/fileadmin/download/swx/900/manual.sxw

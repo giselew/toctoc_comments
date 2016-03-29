@@ -37,15 +37,17 @@
  *
  *
  *
- *   61: class toctoc_comments_common
- *  113:     public function unmirrorConf($confDiff)
- *  149:     public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '', $conf = array())
- *  383:     private function getSessionSavePath()
- *  404:     private function ensureSessionSavePathExists($sessionSavePath, $dohtaccess = TRUE)
- *  467:     public function substGifbuilder ($contentdir, $filename, $imgsize)
- *  587:     private function getGifBuilderSavePath()
+ *   63: class toctoc_comments_common
+ *  114:     public function unmirrorConf($confDiff)
+ *  157:     public function stop_toctoccomments_session()
+ *  203:     public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '', $conf = array(), $frompi1 = FALSE)
+ *  489:     public function removegarbagesessions($sessIp)
+ *  563:     private function getSessionSavePath()
+ *  586:     private function ensureSessionSavePathExists($sessionSavePath, $dohtaccess = TRUE)
+ *  649:     public function substGifbuilder ($contentdir, $filename, $imgsize)
+ *  769:     private function getGifBuilderSavePath()
  *
- * TOTAL FUNCTIONS: 6
+ * TOTAL FUNCTIONS: 8
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -77,12 +79,11 @@ class toctoc_comments_common {
 	private $picsPath = 'TocTocCommentsSessions/%s';
 
 	/**
-	 * the cookie to store the session ID of the install tool
+	 * the cookie to store the session ID
 	 *
 	 * @var string
 	 */
-	private $cookieName = 'TocTocComments';
-	private $extKey = 'toctoc_comments';
+	public $extKey = 'toctoc_comments';
 	/**
 	 * time (minutes) to expire an ununsed session
 	 *
@@ -111,33 +112,40 @@ class toctoc_comments_common {
 	 * @return	array		$confout: rebuilt conf
 	 */
 	public function unmirrorConf($confDiff) {
-		$this->start_toctoccomments_session(3*1440);
-		if (intval($_SESSION['dontUseMirrorConf']) == 0) {
-			if (isset($_SESSION['mirrorconf'])) {
-				$mirrorconf=array();
+		if (!isset($_SESSION['cSModule'])) {
+			$this->start_toctoccomments_session(1440);
+		}
 
-				$mirrorconf=unserialize(base64_decode($_SESSION['mirrorconf']));
-				if (is_array($confDiff)) {
-					if (is_array($mirrorconf)) {
-						$confout = array_replace_recursive($mirrorconf, $confDiff);
+		if (isset($_SESSION['dontUseMirrorConf'])) {
+			if (intval($_SESSION['dontUseMirrorConf']) == 0) {
+				if (isset($_SESSION['mirrorconf'])) {
+					$mirrorconf=array();
+
+					$mirrorconf=unserialize(base64_decode($_SESSION['mirrorconf']));
+					if (is_array($confDiff)) {
+						if (is_array($mirrorconf)) {
+							$confout = array_replace_recursive($mirrorconf, $confDiff);
+						} else {
+							$confout = '';
+						}
+
 					} else {
-						$confout = '';
+						$confout = $mirrorconf;
 					}
 
 				} else {
-					$confout = $mirrorconf;
+					$confout = '';
 				}
 
+				return $confout;
 			} else {
-				$confout = '';
+				return $confDiff;
 			}
-
-			return $confout;
 		} else {
 			return $confDiff;
 		}
-	}
 
+	}
 	/**
 	 * Starts and handles Session used
 	 *
@@ -146,7 +154,53 @@ class toctoc_comments_common {
 	 * @param	[type]		$conf: ...
 	 * @return	[type]		...
 	 */
-	public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '', $conf = array()) {
+	public function stop_toctoccomments_session() {
+
+		$newSessionModule = $_SESSION['cSModule'];
+		$newSessionName = $_SESSION['cSName'];
+		$newSessionPath = $_SESSION['cSPath'];
+		$newSessiongc_probability = $_SESSION['cSgcPr'];
+		$newSessiongc_divisor = $_SESSION['cSgcDv'];
+		$newSessiongc_maxlifetime = $_SESSION['cSgcMl'];
+		$sessionwasset = $_SESSION['cSwasSet'];
+
+		session_write_close();
+
+		if (trim($newSessionName) != 'sess_toctoc_comments') {
+			if (trim($newSessionName) != '') {
+				session_name($newSessionName);
+			}
+
+			session_save_path($newSessionPath);
+
+			if (trim($newSessionModule) != '') {
+				session_module_name($newSessionModule);
+			}
+
+		}
+
+		if (trim($newSessiongc_probability) != '') {
+			ini_set('session.gc_probability', $newSessiongc_probability);
+		}
+
+		if (trim($newSessiongc_divisor) != '') {
+			ini_set('session.gc_divisor', $newSessiongc_divisor);
+		}
+
+		if (trim($newSessiongc_maxlifetime) != '') {
+			ini_set('session.gc_maxlifetime', $newSessiongc_maxlifetime);
+		}
+	}
+	/**
+	 * Starts and handles Session used
+	 *
+	 * @param	[type]		$expireTimeInMinutes: ...
+	 * @param	[type]		$sessionSavePathSaved: ...
+	 * @param	[type]		$conf: ...
+	 * @param	[type]		$frompi1: ...
+	 * @return	[type]		...
+	 */
+	public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '', $conf = array(), $frompi1 = FALSE) {
 		//check if pic is in temp and them move the 2 pics in attachments
 		$repstr= str_replace('/', DIRECTORY_SEPARATOR, '/typo3conf/ext/toctoc_comments/pi1');
 		$PATH_site = str_replace($repstr, '', dirname(__FILE__)) . DIRECTORY_SEPARATOR;
@@ -246,16 +300,16 @@ class toctoc_comments_common {
 						$protocol = 'WL: ' . strftime('%Y/%m/%d %H:%M:%S', microtime(TRUE)) . ': ' . $_SERVER['HTTP_USER_AGENT'] . ' idfd "' . $identstr . '"@@-@@-';
 					}
 
-					if (!(file_exists(realpath(dirname(__FILE__)) . '/crawlerprotocol.txt'))) {
+					if (!(file_exists(realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'crawlerprotocol.txt'))) {
 						if (version_compare(TYPO3_version, '6.0', '<')) {
-							t3lib_div::writeFile(realpath(dirname(__FILE__)) . '/crawlerprotocol.txt', $protocol);
+							t3lib_div::writeFile(realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'crawlerprotocol.txt', $protocol);
 						} else	{
-							\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile(realpath(dirname(__FILE__)) . '/crawlerprotocol.txt', $protocol);
+							\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile(realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'crawlerprotocol.txt', $protocol);
 						}
 
 					} else {
 
-						$content = file_get_contents(realpath(dirname(__FILE__)) . '/crawlerprotocol.txt');
+						$content = file_get_contents(realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'crawlerprotocol.txt');
 						$contentarr = explode("\r\n", $content);
 						$testelem= 	$contentarr[count($contentarr)-1];
 						$testelemarr = explode('@@', $testelem);
@@ -274,7 +328,7 @@ class toctoc_comments_common {
 							}
 
 							// Write the contents back to the file
-							file_put_contents(realpath(dirname(__FILE__)) . '/crawlerprotocol.txt', $content);
+							file_put_contents(realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'crawlerprotocol.txt', $content);
 						}
 
 					}
@@ -295,8 +349,10 @@ class toctoc_comments_common {
 
 		// Start our PHP session early so that hasSession() works
 		if ($sessionSavePathSaved == '') {
+			$sessionSavePath =  @file_get_contents(realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'sessionpath.tmp');
+
 			if(TYPO3_version == 'TYPO3_version') {
-				$sessionSavePath =  @file_get_contents(realpath(dirname(__FILE__)) . '/sessionpath.tmp');
+
 				$sessionSavePathSaved = $sessionSavePath;
 			} else {
 				if (version_compare(TYPO3_version, '6.0', '<')) {
@@ -312,20 +368,13 @@ class toctoc_comments_common {
 			$sessionSavePath = $sessionSavePathSaved;
 		}
 
-		session_name('sess_' . $this->extKey);
-		session_save_path($sessionSavePath);
-
-		ini_set('session.gc_probability', 100);
-		ini_set('session.gc_divisor', 100);
-		ini_set('session.gc_maxlifetime', $this->expireTimeInMinutes*60);
- 		session_start();
  		if ($sessionSavePathSaved == '') {
  			if (TYPO3_version != 'TYPO3_version') {
- 				if (!(file_exists(realpath(dirname(__FILE__)) . '/sessionpath.tmp'))) {
+ 				if (!(file_exists(realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'sessionpath.tmp'))) {
 			 		if (version_compare(TYPO3_version, '6.0', '<')) {
-			 			t3lib_div::writeFile(realpath(dirname(__FILE__)) . '/sessionpath.tmp', $sessionSavePath);
+			 			t3lib_div::writeFile(realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'sessionpath.tmp', $sessionSavePath);
 			 		} else	{
-			 			\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile(realpath(dirname(__FILE__)) . '/sessionpath.tmp', $sessionSavePath);
+			 			\TYPO3\CMS\Core\Utility\GeneralUtility::writeFile(realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'sessionpath.tmp', $sessionSavePath);
 			 		}
 
  				}
@@ -334,47 +383,178 @@ class toctoc_comments_common {
 
  		}
 
-		$_SESSION['PHPCookie'] = $numcookies;
-		if (($numcookies > 0) && ($strPhpCookies !='')) {
- 			$_SESSION['strPHPCookies'] = $strPhpCookies;
-		}
+ 		$sessionwasset='no';
+ 		$hascookie= trim($_COOKIE['sess_' . $this->extKey]);
+ 		$nosession = FALSE;
 
-	 	if (!isset($_SESSION['StartTime'])) {
- 			$_SESSION['StartTime'] =  microtime(TRUE);
- 		}
-
- 		if (!isset($_SESSION['numberOfPages'])) {
- 			$_SESSION['numberOfPages'] =  0;
- 		}
-
- 		if (!isset($_SESSION['CurrentIP'])) {
- 			if (preg_match('/^\d{2,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/', $_SERVER['HTTP_X_FORWARDED_FOR'])) {
- 				$currip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+ 		if ($hascookie != '') {
+ 			$sessionwasset='yes';
+ 		} else {
+ 			if (!$frompi1) {
+ 				$nosession = TRUE;
  			}
-
- 			$currip = $_SERVER['REMOTE_ADDR'];
- 			$_SESSION['CurrentIP'] =  $currip;
  		}
 
- 		if (!isset($_SESSION['curPageName'])) {
- 			if (!isset($_SERVER['REQUEST_URI'])) {
- 				$serverrequri = $_SERVER['PHP_SELF'];
- 			} else {
- 				$serverrequri = $_SERVER['REQUEST_URI'];
- 			}
+ 		if (!$nosession) {
+	 		$currentSessionModule = session_module_name();
+	 		$currentSessionName = session_name();
+	 		$currentSessionPath = session_save_path();
+	 		if (isset($_SESSION)) {
+		 		session_write_close();
+	 		}
+	 		session_name('sess_' . $this->extKey);
+	 		session_save_path($sessionSavePath);
+			$currentSessiongc_probability = ini_get('session.gc_probability');
+			$currentSessiongc_divisor = ini_get('session.gc_divisor');
+			$currentSessiongc_maxlifetime = ini_get('session.gc_maxlifetime');
 
- 			$s = empty($_SERVER['HTTPS']) ? '' : ($_SERVER['HTTPS'] == 'on') ? 's' : '';
- 			$slcurrentPageName=str_replace('?&no_cache=1', '', $serverrequri);
- 			$slcurrentPageName=str_replace('?no_cache=1', '', $slcurrentPageName);
- 			$slcurrentPageName=str_replace('&no_cache=1', '', $slcurrentPageName);
- 			$slcurrentPageName=str_replace('?&purge_cache=1', '', $slcurrentPageName);
- 			$slcurrentPageName=str_replace('?purge_cache=1', '', $slcurrentPageName);
- 			$slcurrentPageName=str_replace('&purge_cache=1', '', $slcurrentPageName);
- 			$_SESSION['curPageName'] =  $slcurrentPageName;
+	 		ini_set('session.gc_probability', 100);
+	 		ini_set('session.gc_divisor', 100);
+	 		ini_set('session.gc_maxlifetime', $this->expireTimeInMinutes*60);
+
+	 		if ($hascookie != '') {
+	 			session_id($hascookie);
+	 		}
+
+	 		session_start();
+	 		if ($currentSessionPath != $sessionSavePath) {
+		 		$_SESSION['cSModule'] = $currentSessionModule;
+		 		$_SESSION['cSName'] = $currentSessionName;
+		 		$_SESSION['cSPath'] = $currentSessionPath;
+		 		$_SESSION['cSgcPr'] = $currentSessiongc_probability;
+		 		$_SESSION['cSgcDv'] = $currentSessiongc_divisor;
+		 		$_SESSION['cSgcMl'] = $currentSessiongc_maxlifetime;
+		 		$_SESSION['cSwasSet'] = $sessionwasset;
+		 		$cSId = session_id();
+	 		} else {
+	 			if (!isset($_SESSION['cSModule'])) {
+	 				$_SESSION['cSwasSet'] = 'no';
+	 			}
+	 		}
+
+	 		if (!isset($_SESSION['cSId'])) {
+	 			$_SESSION['cSId'] = $cSId;
+	 		} else {
+	 			if ($_SESSION['cSId'] != $cSId) {
+	 				$error = '<div>PHP-Session Error: recreated new session id "' . $cSId . '", but new Session is holding value of old session id "' . $_SESSION['cSId'] . '".';
+	 				$error .= '<br><b>You need to enable cookies in your browser or use a browser able to handle cookies in order to use plugin toctoc_comments</b></div>';
+	 				echo $error;
+	 				session_destroy();
+	 				exit;
+	 			}
+	 		}
+
+	 		$_SESSION['PHPCookie'] = $numcookies;
+			if (($numcookies > 0) && ($strPhpCookies !='')) {
+	 			$_SESSION['strPHPCookies'] = $strPhpCookies;
+			}
+
+		 	if (!isset($_SESSION['StartTime'])) {
+	 			$_SESSION['StartTime'] =  microtime(TRUE);
+	 		}
+
+	 		if (!isset($_SESSION['numberOfPages'])) {
+	 			$_SESSION['numberOfPages'] =  0;
+	 		}
+
+	 		if (!isset($_SESSION['CurrentIP'])) {
+	 			if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+		 			if (preg_match('/^\d{2,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/', $_SERVER['HTTP_X_FORWARDED_FOR'])) {
+		 				$currip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		 			}
+	 			}
+
+	 			$currip = $_SERVER['REMOTE_ADDR'];
+	 			$_SESSION['CurrentIP'] =  $currip;
+	 		}
+
+	 		if (!isset($_SESSION['toctoc_user'])) {
+	 			if (isset($GLOBALS['TSFE'])) {
+			 		if (intval($GLOBALS['TSFE']->fe_user->user['uid']) == 0) {
+			 			$_SESSION['toctoc_user'] = '' . $_SERVER['REMOTE_ADDR'] . '.0';
+			 		} else {
+			 			$_SESSION['toctoc_user'] = '0.0.0.0.' . $GLOBALS['TSFE']->fe_user->user['uid'];
+			 		}
+	 			}
+	 		}
  		}
 
 	}
+	/**
+	 * Removes sessions created by client that do not accept cookies
+	 *
+	 * @param	[type]		$sessIp: ...
+	 * @return	[type]		...
+	 */
+	public function removegarbagesessions($sessIp) {
+		$sessionfiles = array();
+		$getSessionSavePath = $this->getSessionSavePath();
+		/// read path to sessiondirectory in .tempfile
+		if (is_dir($getSessionSavePath)) {
+			$d = dir($getSessionSavePath);
+		}
 
+		$sessionid = session_id();
+		if (is_dir($getSessionSavePath)) {
+			if ($d != FALSE){
+				// dir the sessionfiles
+				$i=0;
+				while (FALSE !== ($entry = $d->read())) {
+					$filesess_id = str_replace('sess_', '', $entry);
+					if ($filesess_id != $entry) {
+						if ($filesess_id != $sessionid) {
+							$filetime = 0;
+							$filetime = @filemtime($getSessionSavePath . DIRECTORY_SEPARATOR . $entry);
+							if ($filetime == 0) {
+								$filetime = $i;
+							}
+							$sessionfiles[$filetime] = array();
+							$sessionfiles[$filetime]['SessionName'] = $entry;
+							$i++;
+						}
+					}
+
+				}
+
+				$d->close();
+			}
+		}
+		krsort($sessionfiles);
+
+		$iffiles = 0;
+		$foundsessionfiles = array();
+
+		foreach($sessionfiles as $sessionfile) {
+
+			$filefullpath = $getSessionSavePath . DIRECTORY_SEPARATOR . $sessionfile['SessionName'];
+
+			$Sessioncontent='';
+			if (file_exists($getSessionSavePath . DIRECTORY_SEPARATOR . $sessionfile['SessionName'])) {
+				$Sessioncontent = substr(file_get_contents($getSessionSavePath . DIRECTORY_SEPARATOR . $sessionfile['SessionName']), 0, 1000);
+			}
+
+			if (str_replace('"' .$sessIp  . '"', '', $Sessioncontent) != $Sessioncontent) {
+				//hit 1, Other sessionfile contains same IP
+
+				if (str_replace('PHPCookie|i:0', '', $Sessioncontent) != $Sessioncontent) {
+					//hit 2, Other sessionfile says has no Cookies, regardless of useragent - we kill it
+					$foundsessionfiles[$iffiles] = $getSessionSavePath . DIRECTORY_SEPARATOR . $sessionfile['SessionName'];
+					$iffiles++;
+				}
+
+			}
+		}
+
+		$countfoundfiles = count($foundsessionfiles);
+
+		for ($i=0; $i<$countfoundfiles; $i++){
+				if (file_exists($foundsessionfiles[$i])) {
+					unlink($foundsessionfiles[$i]);
+				}
+
+		}
+
+	}
 	/**
 	 * Returns the path where to store our session files
 	 *
@@ -390,6 +570,8 @@ class toctoc_comments_common {
 		}
 
 		$this->ensureSessionSavePathExists($sessionSavePath);
+		$sessionSavePath = str_replace('/', DIRECTORY_SEPARATOR, $sessionSavePath);
+		$sessionSavePath = str_replace('\\', DIRECTORY_SEPARATOR, $sessionSavePath);
 		return $sessionSavePath;
 	}
 	/**

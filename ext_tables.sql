@@ -27,7 +27,7 @@ CREATE TABLE tx_toctoc_comments_comments (
 	tx_commentsnotify_notify tinyint(1) unsigned default '0' NOT NULL,
 	attachment_id int(11) DEFAULT '0' NOT NULL,
 	attachment_subid  int(11) DEFAULT '0' NOT NULL,
-	parentuid int(11) unsigned DEFAULT '0' NOT NULL, 
+	parentuid int(11) unsigned DEFAULT '0' NOT NULL,
 	tx_commentsresponse_response text NOT NULL,
 	isreview int(1) DEFAULT '0' NOT NULL,
 	PRIMARY KEY (uid),
@@ -52,7 +52,7 @@ CREATE TABLE tx_toctoc_comments_feuser_mm (
 	myrating decimal(19,8) DEFAULT '0.00000000' NOT NULL,
 	seen int(11) DEFAULT '0' NOT NULL,
 	remote_addr varchar(255) DEFAULT '' NOT NULL,
-	toctoc_commentsfeuser_feuser int(11) DEFAULT '0' NOT NULL,	
+	toctoc_commentsfeuser_feuser int(11) DEFAULT '0' NOT NULL,
 	toctoc_comments_user varchar(100) DEFAULT '' NOT NULL,
 	reference varchar(55) DEFAULT '' NOT NULL,
 	reference_scope int(11) DEFAULT '0' NOT NULL,
@@ -174,11 +174,11 @@ CREATE TABLE tx_toctoc_ratings_scope (
 	cruser_id int(11) DEFAULT '0' NOT NULL,
 	sorting int(10) DEFAULT '0' NOT NULL,
 	deleted tinyint(4) DEFAULT '0' NOT NULL,
-	hidden tinyint(4) DEFAULT '0' NOT NULL,	
+	hidden tinyint(4) DEFAULT '0' NOT NULL,
 	scope_title varchar(255) DEFAULT '' NOT NULL,
 	scope_description varchar(255) DEFAULT '' NOT NULL,
 	display_order tinyint(10) DEFAULT '0' NOT NULL,
-	sys_language_uid int(11) DEFAULT '0' NOT NULL,	
+	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l18n_parent int(11) DEFAULT '0' NOT NULL,
 	l18n_diffsource mediumblob NOT NULL,
 	t3ver_oid int(11) DEFAULT '0' NOT NULL,
@@ -189,10 +189,10 @@ CREATE TABLE tx_toctoc_ratings_scope (
 	t3ver_stage tinyint(4) DEFAULT '0' NOT NULL,
 	t3ver_count int(11) DEFAULT '0' NOT NULL,
 	t3ver_tstamp int(11) DEFAULT '0' NOT NULL,
-	t3_origuid int(11) DEFAULT '0' NOT NULL,	
+	t3_origuid int(11) DEFAULT '0' NOT NULL,
 	PRIMARY KEY (uid),
 	KEY scope (sys_language_uid,scope_title),
-	KEY t3ver_oid (t3ver_oid,t3ver_wsid)	
+	KEY t3ver_oid (t3ver_oid,t3ver_wsid)
 );
 
 #
@@ -209,7 +209,7 @@ CREATE TABLE tx_toctoc_comments_spamwords (
 	hidden tinyint(4) DEFAULT '0' NOT NULL,
 	spamword varchar(255) DEFAULT '' NOT NULL,
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
-	spamvalue int(11) DEFAULT '0' NOT NULL,	
+	spamvalue int(11) DEFAULT '0' NOT NULL,
 	PRIMARY KEY (uid),
 	KEY spamword (sys_language_uid,spamword)
 );
@@ -243,8 +243,8 @@ CREATE TABLE tx_toctoc_comments_attachment_mm (
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
 	deleted tinyint(1) unsigned DEFAULT '0' NOT NULL,
-	attachmentid int(11) DEFAULT '0' NOT NULL,	
-   	userurltext tinytext NOT NULL,  
+	attachmentid int(11) DEFAULT '0' NOT NULL,
+   	userurltext tinytext NOT NULL,
 	reference varchar(55) DEFAULT '' NOT NULL,
 	PRIMARY KEY (uid),
 	KEY att_mmref (reference,attachmentid)
@@ -265,7 +265,7 @@ CREATE TABLE tx_toctoc_comments_sharing (
 	external_ref varchar(255) DEFAULT '' NOT NULL,
 	external_prefix varchar(255) DEFAULT '' NOT NULL,
 	sharer varchar(255) DEFAULT '' NOT NULL,
-   	shareurl tinytext NOT NULL, 
+   	shareurl tinytext NOT NULL,
     	sharecount int(11) DEFAULT '0' NOT NULL,
     	sys_language_uid int(11) unsigned DEFAULT '0' NOT NULL,
  	PRIMARY KEY (uid),
@@ -283,11 +283,11 @@ CREATE TABLE tx_toctoc_comments_prefixtotable (
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
 	deleted tinyint(1) unsigned DEFAULT '0' NOT NULL,
-	pi1_key tinytext NOT NULL,  
-	pi1_table tinytext NOT NULL, 
-	show_uid tinytext NOT NULL, 
-	displayfields tinytext NOT NULL, 
-	topratingsimagesfolder tinytext NOT NULL, 
+	pi1_key tinytext NOT NULL,
+	pi1_table tinytext NOT NULL,
+	show_uid tinytext NOT NULL,
+	displayfields tinytext NOT NULL,
+	topratingsimagesfolder tinytext NOT NULL,
 	topratingsdetailpage int(11) unsigned DEFAULT '0' NOT NULL,
 	PRIMARY KEY (uid),
 	KEY pi1_key (pi1_key(64))
@@ -324,7 +324,7 @@ CREATE TABLE tx_toctoc_comments_ipbl_static (
 	comment text,
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY ipaddr (ipaddr)
+	KEY ipnr (ipaddr(50))
 );
 
 #
@@ -347,7 +347,7 @@ CREATE TABLE tx_toctoc_comments_cache (
     PRIMARY KEY (id),
     KEY cache_id (identifier)
 );
- 
+
 #
 # TABLE STRUCTURE FOR TABLE 'tx_toctoc_comments_cache_tags'
 #
@@ -365,7 +365,7 @@ CREATE TABLE tx_toctoc_comments_cache_tags (
 #
 CREATE TABLE tx_toctoc_comments_cache_mailconf (
     id int(11) NOT NULL auto_increment,
-    mailconf text NOT NULL, 
+    mailconf text NOT NULL,
     PRIMARY KEY (id)
 );
 

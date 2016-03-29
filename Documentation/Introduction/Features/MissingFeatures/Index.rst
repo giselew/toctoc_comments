@@ -19,7 +19,6 @@ know about – we do it, if ever possible.
 So far known missing features are these:
 
 - Upload videos as attachments
-- Admin approval for New User Accounts
 
 
 So feel free to contribute new ideas on `https://www.toctoc.ch/en/home/toctoc-comments/toctoc-comments-featuretalk/

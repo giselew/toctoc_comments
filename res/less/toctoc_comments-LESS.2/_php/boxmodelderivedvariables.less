@@ -1,0 +1,47 @@
+// ****
+@boxmodelSpacingHalfRoundedFloor:   @boxmodelSpacingHalfRounded - 1;
+@boxmodelSpacingAndLineHeight:      @boxmodelLineHeight + @boxmodelSpacing;
+@highlightstyleminheight:           @userImageSize + (4 * @boxmodelSpacing);
+@webpagePreviewHeightPlus30:        @webpagePreviewHeight + 30;
+@minheightcommentbox:               @userImageSize + (3*@boxmodelSpacing);
+@ratingBarWidth:                    @ratingNbrStars*@ratingImageWidth;
+@reviewBarWidth:                    @ratingNbrStars*@reviewImageWidth;
+@boxmodelSpacingHalfRounded:        round(@boxmodelSpacing/2);
+@color-flowplayer-background:       @color-commenttitle-text;
+@margin-morecommentsv2image:        max(0, (@boxmodelLineHeight - @CommentImageWidth - 2));
+
+.if(@applyv2imagewidth {
+    .-then(){
+        @margin-top-likev2image:        @ratingLineHeight - @likeV2ImageWidth - 5;
+        @margin-top-dislikev2image:     2 + @ratingLineHeight - @likeV2ImageWidth - 5;
+    }
+    .-else(){
+        @margin-top-likev2image:        0px;
+        @margin-top-dislikev2image:     2px;
+    }
+});
+
+.if(@useUserImage {
+    .-then(){
+        @useUserImageSize:              @userImageSize;
+        @commentPicVisibility:          visible;
+        @commentPicWidth:               auto;
+        @marginLeftCommentingForm:      9px;
+    }
+    .-else(){
+       @useUserImageSize:               0px;
+       @commentPicVisibility:           hidden;
+       @commentPicWidth:                0px;
+       @marginLeftCommentingForm:       0px;
+    }
+});
+
+.if(@selectedBoxmodelkoogled {
+    .-then(){
+            @tmpvar: (2*@boxmodelSpacing);
+            @expandiconMarginLeft: ~"@{tmpvar}px";
+        }
+    .-else(){
+             @expandiconMarginLeft: 4px;
+    }
+});

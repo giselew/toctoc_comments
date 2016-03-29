@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
 *
-*  (c) 2012 - 2016 Gisele Wendl <gisele.wendl@toctoc.ch>
+*  (c) 2012 - 2015 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -42,16 +42,16 @@
  *  352:     protected function timepoint($startpoint, $datainfo, $showtotal = FALSE)
  *  378:     protected function check_pvs_url($value)
  *  398:     protected function file_pvs_get_contents_curl($urltofetch, $ext, $savepathfilename = '')
- *  562:     public function saveAndResize($filename, $new_width, $new_height, $pathAndFilename, $ext)
+ *  563:     public function saveAndResize($filename, $new_width, $new_height, $pathAndFilename, $ext)
  *  918:     public function previewsite ($pObj=NULL, $pObjParent=NULL)
- * 1581:     private function pvs_fetch_images($strextraction, $iscss, $cssfile='')
- * 1760:     protected function pvs_fetch_css($strextraction,&$strouthtml, $iscss, $cssfile='')
- * 1889:     protected function checklogopattern($strtest)
- * 1921:     protected function checkimagepattern($strtest)
- * 1953:     protected function checkvideocontent($html)
- * 2277:     protected function croptitleordesc($description)
- * 2306:     protected function cleanouttitleordesc($title)
- * 2383:     protected function checkandcorrUTF8($strtocheck)
+ * 1596:     private function pvs_fetch_images($strextraction, $iscss, $cssfile='')
+ * 1775:     protected function pvs_fetch_css($strextraction,&$strouthtml, $iscss, $cssfile='')
+ * 1904:     protected function checklogopattern($strtest)
+ * 1936:     protected function checkimagepattern($strtest)
+ * 1968:     protected function checkvideocontent($html)
+ * 2303:     protected function croptitleordesc($description)
+ * 2332:     protected function cleanouttitleordesc($title)
+ * 2409:     protected function checkandcorrUTF8($strtocheck)
  *
  * TOTAL FUNCTIONS: 14
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -534,6 +534,7 @@ class toctoc_comments_webpagepreview {
 					$_SESSION[$this->cid][$this->commentid]['title'] = '';
 					$_SESSION[$this->cid][$this->commentid]['urlfound'] = '';
 					session_write_close();
+					session_start();
 					exit;
 				}
 
@@ -795,11 +796,10 @@ class toctoc_comments_webpagepreview {
 				$_SESSION[$this->cid][$this->commentid]['images'][count($this->picfoundarr)-1]['localpathfilename'] =
 				$this->picfoundarr[count($this->picfoundarr)-1]['localpathfilename'];
 				$_SESSION[$this->cid][$this->commentid]['totalcounter'] = $this->selectedpics+1;
-
 				if (intval(3*(($this->selectedpics+1)/$this->conf['attachments.']['webpagePreviewNumberOfImages'])) != $this->commitcounter){
 					session_write_close();
-
-					if ($this->sessionSavePath == '') {
+					session_start();
+					/* if ($this->sessionSavePath == '') {
 						$this->sessionSavePath =  @file_get_contents(realpath(dirname(__FILE__)) . '/sessionpath.tmp');
 					}
 
@@ -808,7 +808,7 @@ class toctoc_comments_webpagepreview {
 						$commonObj = new toctoc_comments_common;
 					}
 					$commonObj->start_toctoccomments_session(3*1440, $this->sessionSavePath);
-
+*/
 					$this->commitcounter+= 1;
 				}
 
@@ -919,6 +919,14 @@ class toctoc_comments_webpagepreview {
 		$strouthtml='';
 		$starttime=microtime(TRUE);
 		$_SESSION[$this->cid][$this->commentid]['url'] = $this->url;
+// 		$_SESSION[$this->cid][$this->commentid]['working'] = 1;
+// 		$_SESSION[$this->cid][$this->commentid]['logo'] = '';
+
+ 		$_SESSION[$this->cid][$this->commentid]['needgoogle'] = 0;
+// 		$_SESSION[$this->cid][$this->commentid]['urltext'] = '';
+// 		$_SESSION[$this->cid][$this->commentid]['videotype'] = '';
+// 		$_SESSION[$this->cid][$this->commentid]['titleoutfound'] = '';
+
 		$scs = $this->conf['attachments.']['soundcloudClientSecret'];
 		$sci = $this->conf['attachments.']['soundcloudClientID'];
 
@@ -972,16 +980,17 @@ class toctoc_comments_webpagepreview {
 			$_SESSION[$this->cid][$this->commentid]['videosite'] = 'Soundcloud';
 
 			session_write_close();
-			if ($this->sessionSavePath == '') {
-				$this->sessionSavePath =  @file_get_contents(realpath(dirname(__FILE__)) . '/sessionpath.tmp');
-			}
+			session_start();
+					/* if ($this->sessionSavePath == '') {
+						$this->sessionSavePath =  @file_get_contents(realpath(dirname(__FILE__)) . '/sessionpath.tmp');
+					}
 
-			if (!(isset($commonObj))) {
-				require_once ('class.toctoc_comments_common.php');
-				$commonObj = new toctoc_comments_common;
-			}
-
-			$commonObj->start_toctoccomments_session(3*1440, $this->sessionSavePath);
+					if (!(isset($commonObj))) {
+						require_once ('class.toctoc_comments_common.php');
+						$commonObj = new toctoc_comments_common;
+					}
+					$commonObj->start_toctoccomments_session(3*1440, $this->sessionSavePath);
+*/
 
 			if (strlen($description)>= $this->conf['attachments.']['webpagePreviewDescriptionMinimalLength'])  {
 				$descriptionarr = explode(' ', $trackdescription);
@@ -1300,15 +1309,17 @@ class toctoc_comments_webpagepreview {
 			}
 
 			session_write_close();
-			if ($this->sessionSavePath == '') {
-				$this->sessionSavePath =  @file_get_contents(realpath(dirname(__FILE__)) . '/sessionpath.tmp');
-			}
+			session_start();
+					/* if ($this->sessionSavePath == '') {
+						$this->sessionSavePath =  @file_get_contents(realpath(dirname(__FILE__)) . '/sessionpath.tmp');
+					}
 
-			if (!(isset($commonObj))) {
-				require_once ('class.toctoc_comments_common.php');
-				$commonObj = new toctoc_comments_common;
-			}
-			$commonObj->start_toctoccomments_session(3*1440, $this->sessionSavePath);
+					if (!(isset($commonObj))) {
+						require_once ('class.toctoc_comments_common.php');
+						$commonObj = new toctoc_comments_common;
+					}
+					$commonObj->start_toctoccomments_session(3*1440, $this->sessionSavePath);
+*/
 
 			// check for ideo content
 			$checkvideocontent=FALSE;
@@ -1358,21 +1369,24 @@ class toctoc_comments_webpagepreview {
 				}
 
 				$this->timepoint(FALSE, 'no Google: ' . $title);
+				$_SESSION[$this->cid][$this->commentid]['needgoogle'] = 0;
 				if ((strlen($description)< $this->conf['attachments.']['webpagePreviewDescriptionMinimalLength']) || ($title =='')){
 					// if title or description is still missing now, we call googleli
 					$_SESSION[$this->cid][$this->commentid]['needgoogle'] = 1;
 				}
 
 				session_write_close();
-				if ($this->sessionSavePath == '') {
-					$this->sessionSavePath =  @file_get_contents(realpath(dirname(__FILE__)) . '/sessionpath.tmp');
-				}
+				session_start();
+					/* if ($this->sessionSavePath == '') {
+						$this->sessionSavePath =  @file_get_contents(realpath(dirname(__FILE__)) . '/sessionpath.tmp');
+					}
 
-				if (!(isset($commonObj))) {
-					require_once ('class.toctoc_comments_common.php');
-					$commonObj = new toctoc_comments_common;
-				}
-				$commonObj->start_toctoccomments_session(3*1440, $this->sessionSavePath);
+					if (!(isset($commonObj))) {
+						require_once ('class.toctoc_comments_common.php');
+						$commonObj = new toctoc_comments_common;
+					}
+					$commonObj->start_toctoccomments_session(3*1440, $this->sessionSavePath);
+*/
 
 				if ((strlen($description)< $this->conf['attachments.']['webpagePreviewDescriptionMinimalLength']) || ($title =='')){
 					// if title or description is still missing now, call googleli is here
@@ -1438,7 +1452,8 @@ class toctoc_comments_webpagepreview {
 					}
 
 					session_write_close();
-					if ($this->sessionSavePath == '') {
+					session_start();
+					/* if ($this->sessionSavePath == '') {
 						$this->sessionSavePath =  @file_get_contents(realpath(dirname(__FILE__)) . '/sessionpath.tmp');
 					}
 
@@ -1446,8 +1461,8 @@ class toctoc_comments_webpagepreview {
 						require_once ('class.toctoc_comments_common.php');
 						$commonObj = new toctoc_comments_common;
 					}
-
 					$commonObj->start_toctoccomments_session(3*1440, $this->sessionSavePath);
+*/
 
 				}
 
@@ -1558,7 +1573,7 @@ class toctoc_comments_webpagepreview {
 		$_SESSION[$this->cid][$this->commentid]['exectime'] = intval(1000*$difftime);
 
 		session_write_close();
-
+		session_start();
 		if ($this->outputhtml) {
 			print $strouthtml . '<br><br>executiontime: ' . intval(1000*$difftime) .' ms<br>';
 			print_r($_SESSION[$this->cid][$this->commentid]);
@@ -1970,6 +1985,7 @@ class toctoc_comments_webpagepreview {
 		$metasplits['og:type'] ='og:type" content="'; //video">
 		$metasplits['og:image'] ='og:image" content="'; //http://i2.ytimg.com/vi/a6Yqa23LS9c/mqdefault.jpg">
 		$metasplits['og:video'] ='og:video" content="'; //http://www.youtube.com/v/a6Yqa23LS9c?autohide=1&amp;version=3">
+		$metasplits['og:video:url'] ='og:video:url" content="https'; //www.youtube.com/v/a6Yqa23LS9c?autohide=1&amp;version=3">
 		$metasplits['og:video:type'] ='og:video:type" content="'; //application/x-shockwave-flash">
 		$metasplits['og:video:width'] ='og:video:width" content="'; //640">
 		$metasplits['og:video:height'] ='og:video:height" content="'; //480">
@@ -2223,10 +2239,16 @@ class toctoc_comments_webpagepreview {
 							$videoUrl=$metakeys['itemprop.playpageUrl'];
 						}
 
+					} elseif (array_key_exists('og:video:url', $metakeys)) {
+							$videoUrl= 'https' . $metakeys['og:video:url'];
 					}
 
 					if ($_SESSION[$this->cid][$this->commentid]['title'] =='') {
 						$_SESSION[$this->cid][$this->commentid]['title'] = $title;
+					}
+
+					if ($videoUrl=='') {
+						$videoUrl =$_SESSION[$this->cid][$this->commentid]['url'];
 					}
 
 					$_SESSION[$this->cid][$this->commentid]['urlfound'] = $videoUrl;
@@ -2234,6 +2256,10 @@ class toctoc_comments_webpagepreview {
 					$_SESSION[$this->cid][$this->commentid]['urltext'] = $videoUrl;
 
 					$description= $this->croptitleordesc($description);
+
+					if ($description=='') {
+						$description=' ';
+					}
 
 					$_SESSION[$this->cid][$this->commentid]['description'] = $description;
 					$_SESSION[$this->cid][$this->commentid]['totalcounter'] = 0;

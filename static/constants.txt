@@ -572,40 +572,43 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Top ratings//06; type=int+; label=Text cropping:Number of characters after a top ratings text is cropped. 10 - 250
 	TextCropLength = 100	
 		
-	# cat=plugin.tx_toctoccomments_pi1: Theme//01; type=options[Default=default,White on black=black,White on red=red,Custom=custom,Koogle=koogle,TISQUS=tisqus,Windows=windows,TripAdvisor=tripad,Work theme=work]; label=Select a color theme (CSS): Selects the basic color-palette that is used by the extension in frontend. default, red or black 
+	# cat=plugin.tx_toctoccomments_pi1: Theme//010; type=options[Default=default,White on black=black,White on red=red,Custom=custom,Koogle=koogle,TISQUS=tisqus,Windows=windows,TripAdvisor=tripad,Work theme=work]; label=Select a color theme (CSS): Selects the basic color-palette that is used by the extension in frontend. default, red or black 
 	selectedTheme = default	
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//02; type=string; label=Font Family for theme: used for textareas
+	# cat=plugin.tx_toctoccomments_pi1: Theme//011; type=int+; label=Designversion for themes: Version 1 is initial design (2012-2015), version 2 is the design evolution 2016 (Different Like Buttons)
+	themeVersion = 2	
+	
+	# cat=plugin.tx_toctoccomments_pi1: Theme//020; type=string; label=Font Family for theme: used for textareas
 	themeFontFamily = tahoma,verdana,arial,sans-serif
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//02; type=string; label=Boxmodel filename: To apply as Boxmodel on the CSS select an existing boxmdel here, value like myboxmodel.txt or myboxmodel (.txt is no longer needed since v 8.0.0)
+	# cat=plugin.tx_toctoccomments_pi1: Theme//021; type=string; label=Boxmodel filename: To apply as Boxmodel on the CSS select an existing boxmdel here, value like myboxmodel.txt or myboxmodel (.txt is no longer needed since v 8.0.0)
 	selectedBoxmodel = 
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//03; type=int+; label=Textarea lineheight:Lineheight of textareas of forms, 10 - 60.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//030; type=int+; label=Textarea lineheight:Lineheight of textareas of forms, 10 - 60.
 	boxmodelTextareaLineHeight = 30
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//04; type=int+; label=Textarea number of lines: How many lines the textarea contains ? 1 - 6.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//040; type=int+; label=Textarea number of lines: How many lines the textarea contains ? 1 - 6.
 	boxmodelTextareaNbrLines = 1
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//05; type=int+; label=Boxmodel element x-spacing:Horizontal spacing between elements in the boxmodel, 0 - 20.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//050; type=int+; label=Boxmodel element x-spacing:Horizontal spacing between elements in the boxmodel, 0 - 20.
 	boxmodelSpacing = 10
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//06; type=int+; label=CSS-Lineheight:Lineheight in the plugin, 14 - 40.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//060; type=int+; label=CSS-Lineheight:Lineheight in the plugin, 14 - 40.
 	boxmodelLineHeight = 20
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//07; type=boolean; label=Preserve line-height:Preserve original line-height, saves some lines of CSS, but results with ratingstars and ilike thumbs can be out of mesure.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//070; type=boolean; label=Preserve line-height:Preserve original line-height, saves some lines of CSS, but results with ratingstars and ilike thumbs can be out of mesure.
 	boxmodelLineHeightPreserve = 0
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//08; type=boolean; label=FontFamily of theme:Use themeFontFamily as font-family for the entire plugin.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//080; type=boolean; label=FontFamily of theme:Use themeFontFamily as font-family for the entire plugin.
 	usethemeFontFamilyForPlugin = 1
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//09; options[full=1,half=2,third=3,boxmodelSpacing=4]; label=Indent for levels: Indent in fraction of user image size or, if 4, set to boxmodelSpacing
+	# cat=plugin.tx_toctoccomments_pi1: Theme//090; options[full=1,half=2,third=3,boxmodelSpacing=4]; label=Indent for levels: Indent in fraction of user image size or, if 4, set to boxmodelSpacing
 	boxmodelLevelIndent = 2
 		
-	# cat=plugin.tx_toctoccomments_pi1: Theme//10; type=int+; label=Labelwitdh:Width of labels, 50 - 200.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//100; type=int+; label=Labelwitdh:Width of labels, 50 - 200.
 	boxmodelLabelWidth = 134
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//11; type=int+; label=Inputfieldsize: Size of Form Inputfields, 12 - 40.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//110; type=int+; label=Inputfieldsize: Size of Form Inputfields, 12 - 40.
 	boxmodelInputFieldSize = 35
 	
 	# cat=plugin.tx_toctoccomments_pi1: Theme//120; type=boolean; label=Inputfield design: Uses the old default - layouted(0) - or non layouted(1) design for form input field and labels.
@@ -614,19 +617,19 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Theme//121; type=boolean; label=Button design: Uses the old default - layouted(0) - or non layouted(1) design for form buttons.
 	boxmodelButtonPreserve = 0
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//13; type=string; label=responsive Steps in px: This are the window-widths in pixels when toctoc_comments changes the layout to fit in the place on the screen. Defaults are the original values from the CSS-file.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//130; type=string; label=responsive Steps in px: This are the window-widths in pixels when toctoc_comments changes the layout to fit in the place on the screen. Defaults are the original values from the CSS-file.
 	responsiveSteps = 350,450
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//14; type=boolean; label=Minimize CSS:crunch CSS (1) or leave CSS uncompressed (0)
+	# cat=plugin.tx_toctoccomments_pi1: Theme//140; type=boolean; label=Minimize CSS:crunch CSS (1) or leave CSS uncompressed (0)
 	crunchCSS = 1
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//15; type=int+; label=Use less tooltips:when set to 1, then on devices smaller than 768 less tooltips are shown, if set to 2 its regardless from screen width.
+	# cat=plugin.tx_toctoccomments_pi1: Theme//150; type=int+; label=Use less tooltips:when set to 1, then on devices smaller than 768 less tooltips are shown, if set to 2 its regardless from screen width.
 	useLessToolTips = 0
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//16; type=boolean; label=No tooltips on emojis:When set to 1, then smiles and emojis have no tooltips
+	# cat=plugin.tx_toctoccomments_pi1: Theme//160; type=boolean; label=No tooltips on emojis:When set to 1, then smiles and emojis have no tooltips
 	emojiNoToolTips = 0
 	
-	# cat=plugin.tx_toctoccomments_pi1: Theme//17; type=boolean; label=Create CSS from LESS (1, default) or use traditional way (CSS, PHP, Boxmodels and THemes) (0)
+	# cat=plugin.tx_toctoccomments_pi1: Theme//170; type=boolean; label=Create CSS from LESS (1, default) or use traditional way (CSS, PHP, Boxmodels and THemes) (0)
 	refreshCSSFromLESS = 1
 	
 	# cat=plugin.tx_toctoccomments_pi1: Debug//01; type=boolean; label=Use debug: Use of debugging messages such as show run-times, caching and session resets.

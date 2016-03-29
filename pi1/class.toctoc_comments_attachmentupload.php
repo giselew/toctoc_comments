@@ -39,7 +39,7 @@
  *
  *   63: class toctoc_comments_attachmentupload
  *   75:     public function main($files, $post)
- *  438:     protected function create_thumbnail_frompdf($pdffile, $pdffilejpg, $impath, $isgm)
+ *  442:     protected function create_thumbnail_frompdf($pdffile, $pdffilejpg, $impath, $isgm)
  *
  * TOTAL FUNCTIONS: 2
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -86,12 +86,12 @@ class toctoc_comments_attachmentupload {
 		$dataajaxatt['awaitgoogle'] = base64_decode($dataajaxatt['awaitgoogle']);
 		$dataajaxatt['txtimage'] = base64_decode($dataajaxatt['txtimage']);
 		$dataajaxatt['txtimages'] = base64_decode($dataajaxatt['txtimages']);
-		
+
 		$ajaxdataarrcz=array();
-		$ajaxdataarrcz['attachments2.']=array();
-		$ajaxdataarrcz['attachments2.']=$dataajaxatt['conf'];
+		//$ajaxdataarrcz['attachments2.']=array();
+		$ajaxdataarrcz = $dataajaxatt['conf'];
 		$this->conf=$ajaxdataarrcz;
-		if (!array_key_exists('attachments2.', $this->conf)){
+		if (!array_key_exists('attachments.', $this->conf)){
 			$this->conf['attachments.'] = array();
 			$this->conf['attachments.']['picUploadDims'] = 100;
 			$this->conf['attachments.']['picUploadMaxDimX'] = 400;
@@ -99,15 +99,15 @@ class toctoc_comments_attachmentupload {
 			$this->conf['attachments.']['picUploadMaxDimYWebpage'] = 300;
 			$this->conf['attachments.']['picUploadMaxDimWebpage'] = 470;
 		} else {
-			$this->conf['attachments.']['picUploadDims'] = $this->conf['attachments2.']['picUploadDims'];
-			$this->conf['attachments.']['picUploadMaxDimX'] = $this->conf['attachments2.']['picUploadMaxDimX'];
-			$this->conf['attachments.']['picUploadMaxDimY'] = $this->conf['attachments2.']['picUploadMaxDimY'];
-			$this->conf['attachments.']['picUploadMaxDimYWebpage'] = $this->conf['attachments2.']['picUploadMaxDimYWebpage'];
-			$this->conf['attachments.']['picUploadMaxDimWebpage'] = $this->conf['attachments2.']['picUploadMaxDimWebpage'];
+			$this->conf['attachments.']['picUploadDims'] = $this->conf['attachments.']['picUploadDims'];
+			$this->conf['attachments.']['picUploadMaxDimX'] = $this->conf['attachments.']['picUploadMaxDimX'];
+			$this->conf['attachments.']['picUploadMaxDimY'] = $this->conf['attachments.']['picUploadMaxDimY'];
+			$this->conf['attachments.']['picUploadMaxDimYWebpage'] = $this->conf['attachments.']['picUploadMaxDimYWebpage'];
+			$this->conf['attachments.']['picUploadMaxDimWebpage'] = $this->conf['attachments.']['picUploadMaxDimWebpage'];
 		}
 
 		$retstr = '';
-		$sessionFile = realpath(dirname(__FILE__)) . '/sessionpath.tmp';
+		$sessionFile = realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'sessionpath.tmp';
 		$sessionSavePath =  @file_get_contents($sessionFile);
 
 		if (!(isset($commonObj))) {

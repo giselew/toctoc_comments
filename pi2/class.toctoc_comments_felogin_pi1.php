@@ -60,14 +60,14 @@
  * 1266:     protected function changePassword($uid, $piHash)
  * 1390:     protected function showSignon()
  * 1808:     protected function getSignupCaptcha($required, $errcp, $cpval)
- * 1851:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
- * 1878:     protected function processSignupCaptcha($postData)
- * 1918:     protected function loginUser($facebookId)
- * 1946:     protected function storeUser($facebookUserProfile, $socialnetwork)
- * 2093:     private function registerUserGroup()
- * 2155:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
- * 2173:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
- * 2263:     protected function getCurrentIp()
+ * 1901:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ * 1928:     protected function processSignupCaptcha($postData)
+ * 1976:     protected function loginUser($facebookId)
+ * 2004:     protected function storeUser($facebookUserProfile, $socialnetwork)
+ * 2151:     private function registerUserGroup()
+ * 2212:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
+ * 2230:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
+ * 2320:     protected function getCurrentIp()
  *
  * TOTAL FUNCTIONS: 29
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -1839,8 +1839,54 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			$retstr = $this->cObj->substituteMarkerArrayCached($template, $markerArray, $subpartArray, $linkpartArray);
 			return $retstr;
 		} elseif (($captchaType == 2) || ($captchaType == 1))  {
-			
+
 			$retstr = '<span class="tx-tc-required-error">' . $this->pi_getLL('enter_captcha_errornotloaded', '', 1) . '</span>';
+			return $retstr;
+		} elseif ($captchaType == 3) {
+			require_once(t3lib_extMgm::extPath('toctoc_comments') . 'pi1/class.toctoc_comments_captcha.php');
+			$freeCap = t3lib_div::makeInstance('toctoc_comments_captcha');
+			require_once (t3lib_extMgm::extPath('toctoc_comments', 'pi1/toctoc_comment_lib.php'));
+			if (!$this->lib) {
+				$this->lib = new toctoc_comment_lib;
+			}
+			$confpi1 = array();
+			$confpi1 = $this->lib->getDefaultConfig('tx_toctoccomments_pi1');
+
+			$captchaSubType = intval($confpi1['spamProtect.']['useCaptcha']);
+			$template = $this->cObj->getSubpart($this->template, '###SIGNUP_CAPTCHA###');
+			$AJAXDATACONF='';
+
+			if ($captchaSubType == 1) {
+				$AJAXDATACONF='&srcbcc=' . trim(str_replace(' ', '', $confpi1['spamProtect.']['freecapBackgoundcolor'])) .
+											'&srctc=' . trim(str_replace(' ', '', $confpi1['spamProtect.']['freecapTextcolor'])) .
+											'&srcnbc=' . trim(str_replace(' ', '', $confpi1['spamProtect.']['freecapNumberchars'])) .
+											'&srch=' . trim(str_replace(' ', '', $confpi1['spamProtect.']['freecapHeight'])) . '&mtm=' .
+											(10*round(microtime(TRUE), 1));
+				$cantread = ' <img class="tx-tc-cap-image-rf tx-tc-cap-image-rf-mrg" id="toctoc_comments_caprefresh_txtccommentssignup_ctp1__0'.$AJAXDATACONF.
+					'" src="'.$this->locationHeaderUrlsubDir() . t3lib_extMgm::siteRelPath('toctoc_comments').
+					'res/css/themes/' . $confpi1['theme.']['selectedTheme'] . '/img/refresh.png"
+	        		width="25" title="'.htmlspecialchars($this->pi_getLL('captcha_cant_read', '', 1)).'" />';
+			} else {
+				$cantread = '<div class="cap-action">
+				                <img class="tx-tc-cap-image-rf" id="toctoc_comments_caprefresh_txtccommentssignup_ctp2" src="'.$this->locationHeaderUrlsubDir() .
+				                t3lib_extMgm::siteRelPath('toctoc_comments').
+				                'res/css/themes/' . $confpi1['theme.']['selectedTheme'] . '/img'.
+				                '/rcrefresh.jpg" width="16" title="'.htmlspecialchars($this->pi_getLL('captcha_cant_read', '', 1)).'" />
+				            </div>';
+			}
+
+			$markerArray = array(
+					'###SR_FREECAP_IMAGE###' => '<img id="toctoc_comments_cap_txtccommentssignup" src="index.php?eID=toctoc_comments_ajax&cmd=getcap&captchatype='.
+					$captchaSubType.'&cid=txtccommentssignup' . $AJAXDATACONF . '" alt="" />',
+					'###SR_FREECAP_CANT_READ###' => $cantread,
+					'###REQUIRED_CAPTCHA###' => $required,
+					'###ERROR_CAPTCHA###' => $errcp,
+					'###SITE_REL_PATH###' => $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments'),
+					'###TEXT_CAPTCHA###' =>  $this->pi_getLL('enter_captcha', '', 1),
+					'###NEWCAPTCHAV###' => $cpval,
+			);
+			$code = $this->cObj->substituteMarkerArrayCached($template, $markerArray, $subpartArray, $linkpartArray);
+			$retstr = str_replace('<br /><br />', '<br />', $code);
 			return $retstr;
 		}
 
@@ -1884,11 +1930,11 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		$captchaType = intval($this->conf['register.']['signupUseCaptcha']);
 		if ($captchaType == 1 && t3lib_extMgm::isLoaded('captcha')) {
 
-			$sessionFile = str_replace('/pi2', '/pi1', realpath(dirname(__FILE__))) . '/sessionpath.tmp';
+			$sessionFile = str_replace(DIRECTORY_SEPARATOR . 'pi2', DIRECTORY_SEPARATOR . 'pi1', realpath(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'sessionpath.tmp';
 			$sessionSavePath =  @file_get_contents($sessionFile);
 			$sessionTimeout = 3*1440;
 			if (!(isset($commonObj))) {
-				require_once (str_replace('/pi2', '/pi1', realpath(dirname(__FILE__))) . '/class.toctoc_comments_common.php');
+				require_once (str_replace(DIRECTORY_SEPARATOR . 'pi2', DIRECTORY_SEPARATOR . 'pi1', realpath(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'class.toctoc_comments_common.php');
 				$commonObj = new toctoc_comments_common;
 			}
 
@@ -1908,7 +1954,15 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 				$err = $this->pi_getLL('error_wrong_captcha', '', 1);
 			}
 
-		} else {
+		} elseif ($captchaType == 3) {
+
+			require_once(t3lib_extMgm::extPath('toctoc_comments') . 'pi1/class.toctoc_comments_captcha.php');
+			$freeCap = t3lib_div::makeInstance('toctoc_comments_captcha');
+			if (!$freeCap->chkcaptcha('txtccommentssignup', $postData['captcha'], TRUE)) {
+				$err = $this->pi_getLL('error_wrong_captcha', '', 1);
+			}
+
+		}else {
 			$err = 'captcha no longer available for type ' . $captchaType;
 		}
 		return $err;
@@ -2096,10 +2150,16 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 	 */
 	private function registerUserGroup() {
 		// check if $this->conf['register.']['usergroup'] exists, if not handle it
+		$firstugarr= explode(',', $this->conf['register.']['usergroup']);
+		if (count($firstugarr)>1) {
+			$usergroupsql=trim($firstugarr[0]);
+		} else {
+			$usergroupsql=$this->conf['register.']['usergroup'];
+		}
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 				'uid',
 				'fe_groups',
-				'uid=' . $this->conf['register.']['usergroup'] . ' AND pid = ' . $this->conf['storagePid'] . ' ' .
+				'uid=' . $usergroupsql . ' AND pid = ' . $this->conf['storagePid'] . ' ' .
 				$this->cObj->enableFields('fe_groups')
 		);
 		$row=array();
@@ -2107,15 +2167,8 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
 		}
 
-		if (count($row)>0) {
-			// good, user group exists like specified in config
-			if (count($row[0])>0) {
-				$this->conf['register.']['usergroup'] = $row[0]['uid'];
-			} else {
-				$this->conf['register.']['usergroup'] = $row['uid'];
-			}
-		} else {
-			// less good, user group does not exists like specified in config
+		if (count($row) == 0) {
+			// not good, user group does not exists like specified in config
 			// but could have been created under another uid in the right pid, so lets check if usergroup with title "toctoc_comments" exists
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 					'uid',

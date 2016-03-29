@@ -6,7 +6,7 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 	(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
 }
 
-$tx_toctoc_comments_comments = [
+$tx_toctoc_comments_comments = array (
 	'ctrl' => array (
 		'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_attachment',
 		'label' => 'title',
@@ -114,7 +114,7 @@ $tx_toctoc_comments_comments = [
 			0 => array ('showitem' => 'hidden;;;;1,reference;;;;2-2-2,systemurltext,title,description;;;;3-3-3,photo_main,'.
 					'attachmentfilesize,photos_etc,attachmentvariant'),
 	),
-];
+);
 	
 return $tx_toctoc_comments_comments;
 ?>

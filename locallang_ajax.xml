@@ -18,7 +18,7 @@
 			<label index="bad_commentid_value">Error: bad value for commentid</label>
 			<label index="forcomment">for comment</label>
 			<label index="bad_commentspics_value">Error: Cached images missing in the received AJAX Array</label>
-			<label index="session_expired">Your PHP-Session has expired. Please reload the page</label>
+			<label index="session_expired">Your PHP-Session has expired. Please make sure that cookies are enabled and reload the page</label>
 			<label index="made_toomanyratings">You made too many ratings.</label>
 			<label index="next_rating_in">You can make new ratings only after</label>
 			<label index="next_rating_minutes">minutes</label>

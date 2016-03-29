@@ -33,7 +33,7 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 }
 
 require_once(t3lib_extMgm::extPath('toctoc_comments', 'pi1/toctoc_comment_lib.php'));
-require_once(t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments_common.php'));
+//require_once(t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments_common.php'));
 
 /**
  * [CLASS/FUNCTION INDEX of SCRIPT]
@@ -41,27 +41,27 @@ require_once(t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments
  *
  *
  *   74: class toctoc_comments_api
- *  107:     public function __construct()
- *  137:     public function comments_getComments_fe_user($params, $conf)
- *  156:     public function getwebpagepreview($cmd, $cid, $data, $conf)
+ *  108:     public function __construct()
+ *  135:     public function comments_getComments_fe_user($params, $conf)
+ *  155:     public function getwebpagepreview($cmd, $cid, $data, $conf)
  *  172:     public function cleanupfup($previewid, $conf, $originalfilename)
- *  186:     public function handleCommentatorNotifications($ref, $conf = NULL, $notfromeID =FALSE, $pid)
- *  204:     public function handleeID($ref, $conf, $messagetodisplay, $returnurl)
- *  225:     public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $commentspics, $scopeid=0, $isReview = 0)
- *  246:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $commentid)
- *  260:     public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
+ *  187:     public function handleCommentatorNotifications($ref, $conf = NULL, $notfromeID =FALSE, $pid)
+ *  206:     public function handleeID($ref, $conf, $messagetodisplay, $returnurl)
+ *  228:     public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $commentspics, $scopeid=0, $isReview = 0)
+ *  249:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $commentid)
+ *  264:     public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
 			$feuserid = 0, $cmd, $piVars, $cid, $datathis, $AjaxData, $userpic, $commentspics, $check='',
 			$extref='', $tctreestate  = NULL, $commentreplyid=0, $isrefresh=0, $confSess = array())
- *  325:     public function updateComment($conf, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
- *  337:     public function previewcomment($data, $conf)
- *  350:     public function commentsSearch($data, $conf, $cid)
- *  368:     public function isVoted($ref, $scopeid, $feuser, $fromAjax)
- *  378:     public function initCaches()
- *  389:     public function enableFields($table)
- *  401:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
- *  410:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
- *  425:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- *  448:     public function createLinks($text, $conf = NULL)
+ *  330:     public function updateComment($conf, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
+ *  343:     public function previewcomment($data, $conf)
+ *  357:     public function commentsSearch($data, $conf, $cid)
+ *  376:     public function isVoted($ref, $scopeid, $feuser, $fromAjax)
+ *  386:     public function initCaches()
+ *  397:     public function enableFields($table)
+ *  409:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
+ *  418:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ *  433:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ *  458:     public function createLinks($text, $conf = NULL)
  *
  * TOTAL FUNCTIONS: 19
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -100,6 +100,7 @@ class toctoc_comments_api {
 	public $formTopMessage = '';				// This message is displayed in the top of the form
 	public $totalrows = 0;
 	public $startpoint = 0;
+	public $conf;
 
 	/**
 	 * Creates an instance of this class
@@ -115,9 +116,6 @@ class toctoc_comments_api {
 		$this->cObj = t3lib_div::makeInstance('tslib_cObj');
 		$this->cObj->start('', '');
 		$this->lib = new toctoc_comment_lib;
-		$this->commonObj = t3lib_div::makeInstance('toctoc_comments_common');
-		$sessionTimeout=3*1440;
-		$this->commonObj->start_toctoccomments_session($sessionTimeout);
 
 		$_SESSION['started'] = (!isset($_SESSION['started']) ? 0 : 1);
 
@@ -137,6 +135,7 @@ class toctoc_comments_api {
 	 * @return	array
 	 */
 	public function comments_getComments_fe_user($params, $conf) {
+		$this->conf = $conf;
 		$tempMarkers = $this->lib->comments_getComments_fe_user($params, $conf, $this, 0, TRUE, '');
 		if (is_array($tempMarkers)) {
 			return $tempMarkers;
@@ -156,6 +155,7 @@ class toctoc_comments_api {
 	 * @return	string		Generated HTML
 	 */
 	public function getwebpagepreview($cmd, $cid, $data, $conf) {
+		$this->conf = $conf;
 	 	$html = $this->lib->getwebpagepreview($cmd, $this, $cid, $data, $conf);
 	 	return $html;
 	}
@@ -172,6 +172,7 @@ class toctoc_comments_api {
 	 * @return	string		Generated HTML
 	 */
 	public function cleanupfup($previewid, $conf, $originalfilename) {
+		$this->conf = $conf;
 		$html = $this->lib->cleanupfup($previewid, $conf, $originalfilename);
 		return $html;
 	}
@@ -186,6 +187,7 @@ class toctoc_comments_api {
 	 * @return	void		or string Generated HTML, depending on $notfromeID
 	 */
 	public function handleCommentatorNotifications($ref, $conf = NULL, $notfromeID =FALSE, $pid) {
+		$this->conf = $conf;
 	 	$html = $this->lib->handleCommentatorNotifications($ref, $conf, $this, !$notfromeID, $pid);
 	 	if (!$notfromeID) {
 	 		return $html;
@@ -204,6 +206,7 @@ class toctoc_comments_api {
 	 * @return	string		html to display as webpage
 	 */
 	public function handleeID($ref, $conf, $messagetodisplay, $returnurl) {
+		$this->conf = $conf;
 		$html = $this->lib->handleeID($ref, $conf, $this, $messagetodisplay, $returnurl);
 		return $html;
 	}
@@ -225,7 +228,7 @@ class toctoc_comments_api {
 	 * @return	string		Generated HTML
 	 */
 	public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $commentspics, $scopeid=0, $isReview = 0) {
-
+		$this->conf = $conf;
 		$fromcomments= FALSE;
 
 		if ((str_replace('tx_toctoc_comments_', '', $ref) != $ref)) {
@@ -246,6 +249,7 @@ class toctoc_comments_api {
 	 * @return	string		Generated HTML
 	 */
 	public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $commentid) {
+		$this->conf = $conf;
 		$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['templateFile']);
 		$usetemplateFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
 
@@ -262,6 +266,7 @@ class toctoc_comments_api {
 		public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
 			$feuserid = 0, $cmd, $piVars, $cid, $datathis, $AjaxData, $userpic, $commentspics, $check='',
 			$extref='', $tctreestate  = NULL, $commentreplyid=0, $isrefresh=0, $confSess = array()) {
+			$this->conf = $conf;
 			if ($fromAjax) {
 				$this->externalUid = $datathis['externalUid'];
 				$this->externalUidString = $datathis['externalUidString'];
@@ -325,6 +330,7 @@ class toctoc_comments_api {
 	 * @return	boolean		TRUE if item was voted
 	 */
 	public function updateComment($conf, $ctid, $content, $pid, $plugincacheid, $commenttitle = '') {
+		$this->conf = $conf;
 		$retstr = $this->lib->updateComment($conf, $this, $ctid, $content, $pid, $plugincacheid, $commenttitle);
 		return $retstr;
 	}
@@ -337,6 +343,7 @@ class toctoc_comments_api {
 	 * @return	string		preview html
 	 */
 	public function previewcomment($data, $conf) {
+		$this->conf = $conf;
 		$retstr = $this->lib->previewcomment($data, $this, $conf);
 		return $retstr;
 	}
@@ -350,6 +357,7 @@ class toctoc_comments_api {
 	 * @return	string		preview html
 	 */
 	public function commentsSearch($data, $conf, $cid) {
+		$this->conf = $conf;
 		$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['templateFile']);
 		$usetemplateFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
 
@@ -425,7 +433,9 @@ class toctoc_comments_api {
 	 * @return	string		Wrapped text
 	 */
 	public function applyStdWrap($text, $stdWrapName, $conf = NULL) {
+
 		$conf = NULL;
+		$this->conf = $conf;
 		$retstr=$text;
 		if (is_array($this->conf[$stdWrapName . '.'])) {
 			if ($this->conf[$stdWrapName. '.']['wrap']) {
@@ -449,6 +459,7 @@ class toctoc_comments_api {
 	 */
 	public function createLinks($text, $conf = NULL) {
 		$conf = NULL;
+		$this->conf = $conf;
 		if ($this->conf['advanced.']['autoConvertLinks']) {
 			$textout=
 			preg_replace('/((https?:\/\/)?((?(2)([^\s]+)|(www\.[^\s]+))))/', '<a href="http://\3" rel="nofollow" class="tx-tc-external-autolink">\1</a>', $text);

@@ -1,0 +1,219 @@
+
+.tx-tc-responsive .tx-tc-ct-cap-area-image  when (@boxmodelLabelInputPreserve = true) {
+    margin: ~"0 1px @{boxmodelSpacing} @{boxmodelSpacingHalfRounded}";
+}
+.tx-tc-responsive .tx-tc-ct-cap-area-image + input  when (@boxmodelLabelInputPreserve = true) {
+    float: left;
+}
+.tx-tc-responsive img.tx-tc-cap-image-rf  when (@boxmodelLabelInputPreserve = true) {
+    float: none;
+}
+.tx-tc-responsive .tx-tc-ct-label-cap  when (@boxmodelLabelInputPreserve = true) {
+    float: none;
+    width: 100%;
+}
+.tx-tc-responsive .tx-tc-ct-cap-area .tx-tc-ct-cap-area-cantreadit .tx-srfreecap-pi2-cant-read  when (@boxmodelLabelInputPreserve = true) {
+    width: 100%;
+}
+.tx-tc-ct-cap-area-cantread .tx-srfreecap-pi2-cant-read  when (@boxmodelLabelInputPreserve = true) {
+    width: 100%;
+}
+// sr_freecap in login form
+.tx-tc-login-form-field .tx-srfreecap-pi1-image, .tx-tc-login-form-field .tx-srfreecap-pi2-image {
+	display: flex;
+	max-width: 50%;
+}
+// 
+.if(@boxmodelLabelInputPreserve {
+    .-then(){
+		.tx-tc-responsive .tx-tc-ct-cap-area-image {
+			margin: 0 1px 10px 5px;
+		}
+		.tx-tc-responsive .tx-tc-ct-cap-area-image + input {
+			float: left;
+		}
+		.tx-tc-responsive img.tx-tc-cap-image-rf {
+			float: none;
+		}
+		.tx-tc-responsive .tx-tc-ct-label-cap {
+			float: none;
+			width: 100%;
+		}
+		.tx-tc-responsive .tx-tc-ct-cap-area .tx-tc-ct-cap-area-cantreadit .tx-srfreecap-pi2-cant-read {
+			width: 100%;
+		}
+		.tx-tc-ct-cap-area-cantread .tx-srfreecap-pi2-cant-read {
+			width: 100%;
+		}
+    }   
+});
+// static css
+.tx-tc-ct-cap-message {
+	white-space: normal;
+	padding: 0 0 0 2px;
+}
+
+.cap-wrap {
+	margin-top: 4px;
+	padding: 2px;
+	text-align: left;
+}
+.cap-wrap .text-box {
+	width: 140px;
+	padding-bottom: 4px;
+	float: left;
+	margin: 4px 4px 4px 0;
+	text-align: center;
+}
+.cap-wrap .cap-box {
+	-webkit-border-radius: 3px;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 3px;
+	text-align: center;
+ 	width: -moz-min-content;
+}
+.cap-wrap .text-box input {
+	width: 120px;
+	margin-top: 2px;
+}
+.cap-wrap .text-box label {
+	font-size: 110%;
+	width: 150px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+.cap-wrap .cap-action {
+	width: 117px;
+	height: 44px;
+	margin-top: 3px;
+	float: left;
+}
+.cap-wrap .cap-action img {
+	margin-top: 9px;
+	margin-right: 6px;
+	border-width: 1px;
+	border-style: solid;
+	cursor: pointer;
+}
+.cap-wrap .over-text-box {
+	padding-bottom: 2px;
+}
+.tx-tc-cap-refresh {
+    float: left;
+    margin-left: @boxmodelSpacing;
+}    
+.tx-tc-cap-image {
+	border-radius: 2px 2px 2px 2px;
+	border-width: 1px;
+	border-style: solid;
+	float: left;
+	margin: 1px 4px -4px -4px;
+}
+.tx-tc-cap-image-rf-mrg {
+	margin: 0 -4px -7px 4px;
+}
+img.tx-tc-cap-image-rf, .tx-tc-cap-image-rf-recap {
+	cursor: pointer;
+}
+img.tx-tc-cap-image-rf {
+	float: right;
+}
+/**/
+.tx-tc-cap {
+	padding-left: 100px;
+}
+.tx-tc-cap IMG {
+	margin-left: 0px;
+	border-width: 1px;
+	border-style: solid;
+}
+.tx-tc-ct-form-field-cap {
+	margin-bottom: 6px;
+	padding: 4px 0;
+	position: absolute;
+	width: 480px;
+	line-height: (4+@boxmodelTextareaLineHeight);
+	min-height: 20px;
+}
+.tx-tc-ct-cap-area {
+	visibility: inherit;
+}
+.tx-tc-ct-cap-area-image {
+	float: left;
+	margin: 0 1px 0 0;
+	padding: 0;
+}
+.tx-tc-fieldset-for-felogin .tx-tc-ct-cap-area-image {
+	width: 100%;
+}
+.tx-tc-ct-cap-area .tx-tc-ct-cap-area-cantreadit .tx-srfreecap-pi2-cant-read, .tx-tc-ct-cap-area-cantread {
+	float: left;
+	margin-left: 138px;
+	padding: 4px 0;
+}
+.tx-tc-ct-cap-area-accessible {
+	margin: -9px 0 0 6px;
+	padding: 4px 0;
+	position: absolute;
+	width: 150px;
+}
+.tx-tc-ct-cap-area-notice {
+	padding: 4px 0;
+}
+.tx-tc-ct-cap-area .tx-tc-ct-cap-area-cantreadit .tx-srfreecap-pi2-cant-read, .tx-tc-ct-cap-area-cantread .tx-srfreecap-pi2-cant-read {
+	float: left;
+	margin: 0;
+	position: relative;
+	width: 200px;
+}
+span.tx-srfreecap-pi2-accessible {
+	padding: 0 4px;
+}
+
+.tx-tc-ct-form-field-recapcha {
+	padding: 4px 0px 4px 0px;
+	height: 120px;
+}
+.tx-tc-cap-image {
+	border-color: @color-border-image-captcha;
+}
+.cap-wrap .cap-box {
+	background: @color-website-background;
+	border-color: @color-border-generic;
+}
+.cap-wrap .cap-action {
+	background: ~"url('@{theme-path}rclogos.jpg') top right no-repeat";
+}
+#cap-wrap .text-box label  when (@usethemeFontFamilyForPlugin = true) {
+	font-family: @themeFontFamily;
+}
+.cap-wrap .text-box label {
+	color: @color-requiredtext;
+}
+.cap-wrap .cap-action img {
+	border-color: @color-recaptcha-text;
+}
+.cap-wrap .text-box {
+	background: none repeat scroll 0 0 @color-website-background;
+	border-color: @color-recaptcha-text;
+}
+.cap-wrap {
+	background: none repeat scroll 0 0 @color-website-background;
+	border-color: @color-border-recaptcha;
+}
+.tx-tc-ct-cap-area .tx-tc-ct-cap-area-cantreadit .tx-srfreecap-pi2-cant-read, .tx-tc-ct-cap-area-cantread .tx-srfreecap-pi2-cant-read {
+	color: @color-captcha-text;
+}
+.tx-tc-cap-image {
+	border-color: @color-border-image-captcha;
+}
+.tx-tc-ct-cap-message {
+	color: @color-error-text;
+}
+.tx-tc-ct-label-cap {
+	color: @color-label;
+}
+.tx-tc-cap IMG {
+	border-color: @color-border-image-captcha;
+}

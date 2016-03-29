@@ -1,0 +1,14 @@
+body > div.typo3-bigDoc {
+    width: 96%;
+}
+.typo3-bigDoc .tx-tc-showpanel,
+.typo3-bigDoc .tx-tc-refresh,
+.typo3-bigDoc td a img,
+.typo3-bigDoc td span img,
+.typo3-bigDoc .txtc-newicon,
+.typo3-bigDoc .tx-tc-pagerbutton {	
+    padding: 7px;
+}
+.typo3-bigDoc .tx-tc-flipflop {
+    width: 98%;
+}

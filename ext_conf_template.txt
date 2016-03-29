@@ -1,13 +1,16 @@
 # cat=basic//01; type=string; label=Donationkey: If you've made a donation you can enter your donationkey here - you receive a donation key upon first donation for toctoc_comments or toctoccommentsce
 donationSecret =
 
-# cat=basic//02; type=int+; label=Backend-Module, max. records shown: How much comments should be displayed per page
+# cat=basic//02; type=boolean; label=Use old non AJAX-Backend-Module
+use_OldBackendModule = 0
+
+# cat=basic//03; type=int+; label=Backend-Module, max. records shown: How much comments should be displayed per page
 max_records = 10
 
 # cat=basic//03; type=int+; label=Backend-Module, Shows different module icon on new records: How much hours a user or comment is considered as new
 new_Hours = 24
 
-# cat=basic//04; type=int+; label=Backend-Module, comment crop: Set the crop size of the comment field in the backend
+# cat=basic//05; type=int+; label=Backend-Module, comment crop: Set the crop size of the comment field in the backend
 text_crop = 55
 
 # cat=basic//06; type=boolean; label=Backend-Module, show comments in subpages: If activated, lists also comments in subpages of the actual page

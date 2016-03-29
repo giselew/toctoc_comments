@@ -46,6 +46,7 @@ decisions when you start use the extension.
     Jquery/Index
     Community/Index
     MissingFeatures/Index
+    NewInVersions9xx/Index
     NewInVersions8xx/Index
     NewInVersions7xx/Index
     ImportantNotesForUpdating/Index
