@@ -43,24 +43,8 @@ page**  by adding something like this to the page.config-TS:
     }
 
 
-Many Websites already run jQuery. Please be aware of the following compatibility information: 
+Many Websites already run jQuery. toctoc_comments needs jQuery version 1.8. or newer.
 
-jQuery versions 1.7.+ are not compatible
-with lightboxes which use brackets ([]) in their "rel=" attributes. If possible just change the
-brackets to parentheses (). Some light-boxes accept this.
-
-
-Info: TYPO3 6.0+ will fully support only
-jQuery 1.7+. Also, the Share-function needs jQuery 1.7+ to function properly (older versions cannot
-display the number of shares correctly)
-
-3) Setup your TS. See setup.txt in
-directory /static for an example.
-
-Important is to set the constant for the StoragePID – the pid of the folder where comments will be stored.
-    
-TS Setup can be very minimal, see the example above for logged in and anonymous users – this is the recommended minimal setup.
-    
 jQuery must be located in the head of the webpage, best is, when it's loaded as the first
 JavaScript file. Basic rule: jQuery needs to be loaded before all other libraries.
 
@@ -75,6 +59,16 @@ It's
 
     
 (**versionnumber**  is like '530' for **toctoc_comments** version 5.3.0)
+
+4) Setup your TS. See setup.txt in
+directory /static for an example.
+
+Important is to set the constant for the StoragePID – the pid of the folder where comments will be stored.
+    
+TS Setup can be very minimal, see the example above for logged in and anonymous users – this is the recommended minimal setup.
+
+I recommend to setup the extension with TypoScript-Setup and not with the constants.     
+
 
 Important TypoScript options
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

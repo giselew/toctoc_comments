@@ -11,7 +11,7 @@
 Use as TypoScript-Object in a page template
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Since Version 7.4. of **toctoc_comments**  it is possible to add the plugin with TypoScript to a
+It is possible to add the plugin with TypoScript to a
 page in order to collect comments or ratings for the page.
 
 To use this feature you must set optionalRecordId = Pagemode

@@ -192,7 +192,7 @@ class toctoc_comments_commentreport extends toctoc_comment_lib {
 				}
 
 				$usetemplateFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
-				if ($fromAjax) {
+				if ($fromAjax == TRUE) {
 					$templateCode = @file_get_contents(PATH_site . $usetemplateFile);
 				} else {
 					$templateCode = $this->t3fileResource($pObj, $usetemplateFile);

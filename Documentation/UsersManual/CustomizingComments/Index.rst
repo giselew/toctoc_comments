@@ -18,7 +18,7 @@ All available comments options should be configured first site-wide through a
 TypoScript-Template.
  
 Please check the **options (options for
-theme)** before you change CSS-files.
+theme)** before you change LESS-files.
 
 .. toctree::
     :maxdepth: 2

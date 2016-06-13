@@ -63,13 +63,30 @@ class user_toctoc_comments_pi1_wizicon {
 	 */
 	public function proc($wizardItems)	{
 		$LL = $this->includeLocalLang();
-		$wizardItems['plugins_toctoc_comments_pi1'] = array(
-			'icon'=>t3lib_extMgm::extRelPath('toctoc_comments').'pi1/ce_wiz.gif',
-			'title'=>$GLOBALS['LANG']->getLLL('tt_content.list_type_pi1', $LL),
-			'description'=>$GLOBALS['LANG']->getLLL('pi1_plus_wiz_description', $LL),
-			'params'=>'&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=toctoc_comments_pi1'
-		);
-
+		if (version_compare(TYPO3_version, '8.0.0', '<')) {			
+			$wizardItems['plugins_toctoc_comments_pi1'] = array(
+				'icon'=>t3lib_extMgm::extRelPath('toctoc_comments').'pi1/ce_wiz.gif',
+				'title'=>$GLOBALS['LANG']->getLLL('tt_content.list_type_pi1', $LL),
+				'description'=>$GLOBALS['LANG']->getLLL('pi1_plus_wiz_description', $LL),
+				'params'=>'&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=toctoc_comments_pi1'
+			);
+		} else {
+			$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+					\TYPO3\CMS\Core\Imaging\IconRegistry::class
+			);
+			$identifier ='icon-wizard-plugin-toctoccomments';
+			$iconRegistry->registerIcon(
+					$identifier, // Icon-Identifier
+					\TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+					array('source' => 'EXT:toctoc_comments/pi1/ce_wiz.gif')
+			);
+			$wizardItems['plugins_toctoc_comments_pi1'] = array(
+					'iconIdentifier'=> $identifier,
+					'title'=>$GLOBALS['LANG']->getLLL('tt_content.list_type_pi1', $LL),
+					'description'=>$GLOBALS['LANG']->getLLL('pi1_plus_wiz_description', $LL),
+					'params'=>'&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=toctoc_comments_pi1'
+			);
+		}
 		return $wizardItems;
 	}
 

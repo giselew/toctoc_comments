@@ -106,6 +106,18 @@ span.tx-tc-emo-int-img {
 	margin: 0;
 	padding: 0;
 }
+span.tx-tc-emo-int-img span,  img.tx-tc-emo-int-img {
+	transition: transform 320ms ease 0s;
+    -webkit-transition: -webkit-transform 320ms ease 0s;
+    transform: scale(1) translate(0px, 0px);
+	-ms-transform: scale(1) translate(0px, 0px); /* IE 9 */
+    -webkit-transform: scale(1) translate(0px, 0px); /* Safari */
+}
+span.tx-tc-emo-int-img span:hover,  img.tx-tc-emo-int-img:hover {
+    transform: scale(1.2307692307692307692307692307692) translate(0px, 2px);
+	-ms-transform: scale(1.2307692307692307692307692307692) translate(0px, 2px); /* IE 9 */
+    -webkit-transform: scale(1.2307692307692307692307692307692) translate(0px, 2px); /* Safari */
+}
 .tx-tc-emopage-emojis .tx-tc-emo-int-img, .tx-tc-smilie-icon, .tx-tc-emoselpage {
 	cursor: pointer;
 }
@@ -180,6 +192,8 @@ span.tx-tc-emo-top-nav-on, span.tx-tc-emo-top-nav-off {
 	margin-bottom: -100%;
 	position: relative;
 	z-index: 90;
+	transition: transform 320ms ease 0s;
+    -webkit-transition: -webkit-transform 320ms ease 0s;
 }
 .emoticonsPanel .emoteTogglerImg {
 	display: block;

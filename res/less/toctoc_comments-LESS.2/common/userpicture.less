@@ -1,6 +1,18 @@
 .tx-tc-uimgsize {
 	width: @userImageSize;
 	height: @userImageSize;
+    filter: grayscale(@UserImageCSSGrayScale) blur(@UserImageCSSBlur) sepia(@UserImageCSSSepia);
+    -webkit-filter: grayscale(@UserImageCSSGrayScale) blur(@UserImageCSSBlur) sepia(@UserImageCSSSepia);
+    transition: filter 1640ms ease 0s;
+    -webkit-transition: -webkit-filter 1640ms ease 0s;
+}
+.tx-tc-uimgsize:hover, .tx-tc-uimgsizehover {
+    filter: grayscale(@UserImageCSSGrayScaleHover) blur(@UserImageCSSBlurHover) sepia(@UserImageCSSSepiaHover);
+    -webkit-filter: grayscale(@UserImageCSSGrayScaleHover) blur(@UserImageCSSBlurHover) sepia(@UserImageCSSSepiaHover);
+}
+.tx-tc-ct-box-picturecrop322 img {
+	width: @userImageSizeInForm;
+	height: @userImageSizeInForm;
 }
 .tx-tc-ct-box-ctpic {
 	visibility: @commentPicVisibility;

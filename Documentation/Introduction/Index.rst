@@ -16,6 +16,7 @@ Introduction
     :titlesonly:
 
     WhatDoesItDo/Index
+    DomainSocialNetworkComponents/Index
     Features/Index
     Screenshots/Index
     DifferentConfigurationFor/Index

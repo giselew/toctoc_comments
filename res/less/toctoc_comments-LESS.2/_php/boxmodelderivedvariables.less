@@ -9,6 +9,12 @@
 @boxmodelSpacingHalfRounded:        round(@boxmodelSpacing/2);
 @color-flowplayer-background:       @color-commenttitle-text;
 @margin-morecommentsv2image:        max(0, (@boxmodelLineHeight - @CommentImageWidth - 2));
+@emoLikeSetPathSmallPos2:		    round(@emoLikeSetPathPos2/2);
+@emoLikeSetPathSmallPos3:		    round(@emoLikeSetPathPos3/2);
+@emoLikeSetPathSmallPos4:		    round(@emoLikeSetPathPos4/2);
+@emoLikeSetPathSmallPos5:		    round(@emoLikeSetPathPos5/2);
+@emoLikeSetPathSmallPos6:		    round(@emoLikeSetPathPos6/2);
+@ratingMarginTopHalf:		        round(@ratingMarginTop/2);
 
 .if(@applyv2imagewidth {
     .-then(){
@@ -27,12 +33,19 @@
         @commentPicVisibility:          visible;
         @commentPicWidth:               auto;
         @marginLeftCommentingForm:      9px;
+        @marginTopEmoLikeIcoOverview:   @userImageSize - 8;
+        @marginLeftEmoLikeIcoOverview:  -1 * (@boxmodelSpacing + 9);
+        @emoIconBottom:                 round((@boxmodelLineHeight - 18) / 2);
     }
     .-else(){
        @useUserImageSize:               0px;
        @commentPicVisibility:           hidden;
        @commentPicWidth:                0px;
        @marginLeftCommentingForm:       0px;
+       @marginTopEmoLikeIcoOverview:    0px;
+       @marginLeftEmoLikeIcoOverview:   -1 * (@boxmodelSpacing);
+       @emoIconBottom:                  0px;
+ 
     }
 });
 
@@ -43,5 +56,19 @@
         }
     .-else(){
              @expandiconMarginLeft: 4px;
+    }
+});
+
+.if(@isTabletOrHandyexceptFF {
+    .-then(){
+            @isTabletOrHandyMarginTop: @ratingMarginTopHalf;
+            @isTabletOrHandyMarginTopShr2: @ratingMarginTopHalf;
+            @isTabletOrHandyPaddingShr2: 1px;
+        }
+    .-else(){
+            @isTabletOrHandyMarginTop: 0px;
+            @isTabletOrHandyMarginTopShr2: 0px;
+            @isTabletOrHandyPaddingShr2: 5px;
+
     }
 });

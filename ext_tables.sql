@@ -65,6 +65,7 @@ CREATE TABLE tx_toctoc_comments_feuser_mm (
 	pagetstampmyrating int(11) unsigned DEFAULT '0' NOT NULL,
 	pagetstampseen int(11) unsigned DEFAULT '0' NOT NULL,
 	isreview int(1) DEFAULT '0' NOT NULL,
+	emolikeid int(11) DEFAULT '0' NOT NULL,
 	PRIMARY KEY (reference,reference_scope,toctoc_comments_user,pid),
 	KEY uid (uid),
 	KEY idxcntilike (ilike),
@@ -273,6 +274,24 @@ CREATE TABLE tx_toctoc_comments_sharing (
 	KEY shr_url (shareurl(64))
 );
 
+#
+# Table structure for table 'tx_toctoc_comments_emolike'
+#
+CREATE TABLE tx_toctoc_comments_emolike (
+	uid int(11) unsigned NOT NULL auto_increment,
+	pid int(11) unsigned DEFAULT '0' NOT NULL,
+	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
+	crdate int(11) unsigned DEFAULT '0' NOT NULL,
+	deleted tinyint(1) unsigned DEFAULT '0' NOT NULL,
+	emolike_ll tinytext NOT NULL,
+	emolike_setfolder tinytext NOT NULL,
+	emolike_setpos int(11) unsigned DEFAULT '0' NOT NULL,
+	emolike_rating int(11) unsigned DEFAULT '0' NOT NULL,
+	emolike_sort int(11) unsigned DEFAULT '0' NOT NULL,
+	emolike_engagement int(11) unsigned DEFAULT '0' NOT NULL,
+	emolike_colorcode tinytext NOT NULL,
+	PRIMARY KEY (uid)
+);
 
 #
 # Table structure for table 'tx_toctoc_comments_prefixtotable'

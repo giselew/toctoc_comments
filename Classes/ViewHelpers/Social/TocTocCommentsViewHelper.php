@@ -90,4 +90,4 @@ class Tx_News_ViewHelpers_Social_TocTocCommentsViewHelper extends Tx_Fluid_Core_
 		return $code;
 	}
 }
-
+?>

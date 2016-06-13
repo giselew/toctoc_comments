@@ -38,38 +38,39 @@
  *
  *
  *
- *  118: class tx_toctoccomments_pi2 extends tslib_pibase
- *  141:     protected function processRedirect()
- *  155:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  253:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  489:     protected function watermark($conf, $content)
- *  527:     protected function showForgot()
- *  607:     protected function showLogout()
- *  642:     protected function showLogin()
- *  794:     protected function getRSAKeyPair()
- *  831:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
- *  867:     protected function getPreserveGetVars()
- *  920:     protected function generatePassword($len)
- *  940:     protected function getDisplayText($label, $stdWrapArray=array())
- *  952:     protected function getUserFieldMarkers()
- *  994:     protected function validateRedirectUrl($url)
- * 1025:     protected function isInCurrentDomain($url)
- * 1037:     protected function isInLocalDomain($url)
- * 1078:     protected function isRelativeUrl($url)
- * 1094:     protected function generateAndSendHash($user)
- * 1266:     protected function changePassword($uid, $piHash)
- * 1390:     protected function showSignon()
- * 1808:     protected function getSignupCaptcha($required, $errcp, $cpval)
- * 1901:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
- * 1928:     protected function processSignupCaptcha($postData)
- * 1976:     protected function loginUser($facebookId)
- * 2004:     protected function storeUser($facebookUserProfile, $socialnetwork)
- * 2151:     private function registerUserGroup()
- * 2212:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
- * 2230:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
- * 2320:     protected function getCurrentIp()
+ *  117: class tx_toctoccomments_pi2 extends tslib_pibase
+ *  140:     protected function processRedirect()
+ *  154:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  255:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  517:     protected function watermark($conf, $content)
+ *  555:     protected function showForgot()
+ *  635:     protected function showLogout()
+ *  670:     protected function showLogin()
+ *  822:     protected function getRSAKeyPair()
+ *  859:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
+ *  895:     protected function getPreserveGetVars()
+ *  948:     protected function generatePassword($len)
+ *  968:     protected function getDisplayText($label, $stdWrapArray=array())
+ *  980:     protected function getUserFieldMarkers()
+ * 1022:     protected function validateRedirectUrl($url)
+ * 1053:     protected function isInCurrentDomain($url)
+ * 1065:     protected function isInLocalDomain($url)
+ * 1106:     protected function isRelativeUrl($url)
+ * 1122:     protected function generateAndSendHash($user)
+ * 1294:     protected function changePassword($uid, $piHash)
+ * 1418:     protected function showSignon()
+ * 1836:     protected function getSignupCaptcha($required, $errcp, $cpval)
+ * 1929:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ * 1956:     protected function processSignupCaptcha($postData)
+ * 2004:     protected function loginUser($facebookId)
+ * 2033:     protected function storeUser($facebookUserProfile, $socialnetwork)
+ * 2212:     private function registerUserGroup()
+ * 2273:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
+ * 2291:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
+ * 2381:     protected function getCurrentIp()
+ * 2393:     protected function initTSFE()
  *
- * TOTAL FUNCTIONS: 29
+ * TOTAL FUNCTIONS: 30
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -96,6 +97,7 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 	(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
 	(class_exists('t3lib_utility_Math', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\MathUtility', 't3lib_utility_Math');
 	(class_exists('tslib_cObj', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer', 'tslib_cObj');
+	(class_exists('tslib_eidtools', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\Utility\EidUtility', 'tslib_eidtools');
 	if (!t3lib_extMgm::isLoaded('compatibility6'))  {
 		(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
 	}
@@ -107,9 +109,6 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 	}
 
 }
-
-require_once(t3lib_extmgm::extPath('toctoc_comments', 'contrib/facebook/facebook.php'));
-
 
 /**
  * AJAX login/Logout
@@ -126,7 +125,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 	protected $template;	// holds the template for FE rendering
 	protected $uploadDir;	// upload dir, used for flexform template files
 	protected $redirectUrl;	// URL for the redirect
-	protected $noRedirect = FALSE;	// flag for disable the redirect
+	protected $noRedirect = TRUE;	// flag for disable the redirect
 	protected $logintype;	// logintype (given as GPvar), possible: login, logout
 	protected $loginParameter = 'fb_login';
 	protected $nofacebook = FALSE;
@@ -180,8 +179,11 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 		$this->redirectUrl = $this->validateRedirectUrl($this->redirectUrl);
 
-			// Is user logged in?
-		$this->userIsLoggedIn = $GLOBALS['TSFE']->loginUser;
+		// Is user logged in?
+		$this->userIsLoggedIn = 0;
+		if (intval($GLOBALS['TSFE']->fe_user->user['uid']) != 0) {
+			$this->userIsLoggedIn = $GLOBALS['TSFE']->loginUser;
+		}
 
 			// Redirect
 		if ($this->conf['redirectMode'] && !$this->conf['redirectDisable'] && !$this->noRedirect) {
@@ -251,13 +253,13 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 	 * @return	[type]		...
 	 */
 	public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = ''){
-
 		$prefix=$this->prefixId;
 		$this->conf = $conf;
 
 		if (intval($this->conf['register.']['signupAdminConfirmation']) == 1) {
 			$this->conf['register.']['signupConfirmEmail'] = 0;
 		}
+
 		$this->conf['redirectMode'] = '';
 		$this->conf['redirectDisable'] = '';
 		$this->conf['redirectFirstMethod'] = '';
@@ -269,7 +271,6 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		$this->pi_loadLL();
 
 		if (t3lib_div::_GP('getrsahash')) {
-			//
 			$this->getRSAKeyPair();
 		}
 
@@ -277,6 +278,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			$this->cObj = t3lib_div::makeInstance('tslib_cObj');
 			$this->cObj->start('', '');
 		}
+
 		// Get Template
 		$templateFile = $this->conf['templateFile'] ? $this->conf['templateFile'] : 'EXT:toctoc_comments/res/template/toctoccomments_template_felogin_pi1.html';
 		$this->template = $this->cObj->fileResource($templateFile);
@@ -293,45 +295,70 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		if (!isset($conf['facebook.']['secret']) || $conf['facebook.']['secret'] == '') {
 			$this->nofacebook = TRUE;
 		}
+
 		$contentfb='';
 		if ($this->nofacebook == FALSE) {
+
 			if($_POST['tx_toctoccomments_pi2']['fbLogin'] == '1') {
-				$facebook = new Facebooktc(array(
-						'appId' => $conf['facebook.']['appId'],
-						'secret' => $conf['facebook.']['secret']
-				));
+				require_once(t3lib_extmgm::extPath('toctoc_comments', 'contrib/facebookv4/autoload.php'));
 
-				$fbuser = $facebook->getUser();
+				$this->fberror = '';
+				if (($conf['facebook.']['apiVersion'] < '2.0') || ($conf['facebook.']['apiVersion'] > '2.9')) {
+					$conf['facebook.']['apiVersion'] = '2.5';
+				}
+
 				$_SESSION['fbaccessToken'] = NULL;
-				if ($fbuser) {
-					$_SESSION['fbaccessToken'] = $facebook->getAccessToken();
-				}
-			}
-			if(($_POST['tx_toctoccomments_pi2']['fbLogin'] == '1') && $fbuser) {
+
+				$facebook = new Facebook\Facebook(array(
+					'app_id' => $conf['facebook.']['appId'],
+					'app_secret' => $conf['facebook.']['secret'],
+					'default_graph_version' => 'v' . trim($conf['facebook.']['apiVersion']),
+					'cookie' => TRUE,
+					));
+
+				$helper = $facebook->getJavaScriptHelper();
 				try {
-					if ($_SESSION['fbaccessToken'] != NULL) {
-						$facebook->setAccessToken($_SESSION['fbaccessToken']);
+				  $accessToken = $helper->getAccessToken();
+				} catch(Facebook\Exceptions\FacebookResponseException $e) {
+				  // When Graph returns an error
+				  $this->fberror .=  'Facebook problem: Graph returned an error: ' . $e->getMessage();
+
+				} catch(Facebook\Exceptions\FacebookSDKException $e) {
+				  // When validation fails or other local issues
+				  $this->fberror .= 'Facebook problem: Facebook SDK returned an error: ' . $e->getMessage();
+
+				}
+
+				if (!isset($accessToken)) {
+					if ($this->fberror == '') {
+						$this->fberror =  'Facebook Error: Bad request, getAccessToken() failed by some reasons. Check the facebook app';
+					}
+				} else {
+					$_SESSION['fb_access_token'] = (string)$accessToken;
+					try {
+						$response = $facebook->get('/me?fields=id,updated_time,picture,first_name,last_name,locale,link,name,gender,email', $_SESSION['fb_access_token']);
+						$facebookUserProfile = $response->getGraphUser();
+
+						if (trim($facebookUserProfile['email']) == '') {
+							$this->fberror .= $this->pi_getLL('facebookloginerrormail', '', 1);
+						} else {
+							$facebookUserProfile['imageurl'] = $facebookUserProfile['picture']['data']['url'];
+							$this->storeUser($facebookUserProfile, 'facebook');
+							$this->loginUser($facebookUserProfile['id']);
+						}
+					} catch(Facebook\Exceptions\FacebookResponseException $e) {
+						$this->fberror = 'Facebook problem: Graph returned an error: ' . $e->getMessage();
+
+					} catch(Facebook\Exceptions\FacebookSDKException $e) {
+						$this->fberror =  'Facebook problem: Facebook SDK returned an error: ' . $e->getMessage();
 					}
 
-					$facebookUserProfile = $facebook->api('/me');
-					if (trim($facebookUserProfile['email']) == '') {
-						$this->fberror = $this->pi_getLL('facebookloginerrormail', '', 1);
-					} else {
-						$this->storeUser($facebookUserProfile, 'facebook');
-						$this->loginUser($fbuser);
-					}
+				}
 
-				} catch (FacebookApiException $e) {
-					$this->fberror = 'Facebook-api error: ' . $e;
-					$fbuser = NULL;
-				}
-			} else {
-				if (($_POST['tx_toctoccomments_pi2']['fbLogin'] == '1') && !$fbuser)  {
-					$this->fberror = $this->pi_getLL('facebookloginerrorinvalidreply', '', 1);
-				}
 			}
 
 			$fbstatustext = '';
+
 			if (trim($this->fberror) != '') {
 				$fbstatustext = '<div style="float: none; display: inline-block;"><span class="tx-tc-required-error">' . $this->fberror . '</span></div>';
 			}
@@ -1981,6 +2008,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			if ($userToLogin = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result)){
 				$feUser = $GLOBALS['TSFE']->fe_user;
 				unset($feUser->user);
+
 				if($this->conf['facebook.']['makeSessionPermanent']) {
 					$feUser->is_permanent = 1;
 				}
@@ -2017,7 +2045,14 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		if($userFound) {
 			$user = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result);
 			if($user['tx_toctoc_comments_facebook_updated_time'] != '') {
-				if($user['tx_toctoc_comments_facebook_updated_time'] == $facebookUserProfile['updated_time']) {
+
+				if(!($facebookUserProfile['updated_time'] instanceof DateTime)) {
+					$facebookUserProfileupdated_time = $facebookUserProfile['updated_time'];
+				} else {
+					$facebookUserProfileupdated_time = $facebookUserProfile['updated_time']->getTimestamp();
+				}
+
+				if($user['tx_toctoc_comments_facebook_updated_time'] == $facebookUserProfileupdated_time) {
 					if ($user['disable'] != 0) {
 						$this->fberror = 'waitconfirm';
 					}
@@ -2057,7 +2092,11 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		$imagename = '';
 		$imagename = $this->copyImageFromFacebook($facebookUserProfile['id'], $imageurl, $socialnetwork);
 		$fe_usersValues['image'] = $imagename;
-		$fe_usersValues['tx_toctoc_comments_facebook_updated_time'] = $facebookUserProfile['updated_time'];
+		if(!($facebookUserProfile['updated_time'] instanceof DateTime)) {
+		 	$fe_usersValues['tx_toctoc_comments_facebook_updated_time'] = $facebookUserProfile['updated_time'];
+		} else {
+		 	$fe_usersValues['tx_toctoc_comments_facebook_updated_time'] = $facebookUserProfile['updated_time']->getTimestamp();
+		}
 
 		if($userFound) {
 			$userId = $user['uid'];
@@ -2066,7 +2105,8 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			}
 
 			$updateWhere = 'uid=' . $user['uid'];
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery($this->tableName, $updateWhere, $fe_usersValues);
+
+			$GLOBALS['TYPO3_DB']->exec_UPDATEquery($this->tableName, $updateWhere, $fe_usersValues, TRUE);
 		} else {
 			$fe_usersValues['tx_toctoc_comments_facebook_id'] = $facebookUserProfile['id'];
 			$fe_usersValues['usergroup'] = $this->registerUserGroup();
@@ -2125,16 +2165,36 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			$classonline = ' tx-tc-online';
 			$commentuserimageout = $commentuserimagepath . $fe_usersValues['image'];
 
-		 	$img = array();
-			$img['file'] = GIFBUILDER;
-			$img['file.']['XY'] = '' . $userimagesize .',' . $userimagesize . '';
-			$img['file.']['10'] = IMAGE;
-			$img['file.']['10.']['file'] = $commentuserimageout;
-			$img['file.']['10.']['file.']['width'] = $userimagesize .'c';
-			$img['file.']['10.']['file.']['height'] = $userimagesize .'c';
-			$img['params'] = 'class="'.$profileimgclass . $classonline . $userimagestyle . '" title="'. $usernametitle .
-			'"  id="tx-tc-cts-img-"';
-			$tmpimgstr = $this->cObj->IMAGE($img);
+			if (version_compare(TYPO3_version, '7.9', '>')) {
+				if (!(isset($this->commonObj))) {
+					require_once (str_replace(DIRECTORY_SEPARATOR . 'pi2', DIRECTORY_SEPARATOR . 'pi1', realpath(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'class.toctoc_comments_common.php');
+					$this->commonObj = t3lib_div::makeInstance('toctoc_comments_common');
+				}
+
+				$picpath = '';
+				$picname = '';
+				$commentuserimageoutarr = explode('/', $commentuserimageout);
+				$picname = $commentuserimageoutarr[(count($commentuserimageoutarr)-1)];
+				$picpath = str_replace($picname, '', $commentuserimageout);
+				$tmpimglink = $this->commonObj->substGifbuilder($picpath, $picname, $userimagesize);
+				$tmpimgstr = '<img src="' . $tmpimglink . '" class="' . $profileimgclass . $classonline . $userimagestyle .
+				'" title="'. $usernametitle . '"  id="tx-tc-cts-img-" />';
+	 		} else {
+			 	$img = array();
+				$img['file'] = GIFBUILDER;
+				$img['file.']['XY'] = '' . $userimagesize .',' . $userimagesize . '';
+				$img['file.']['10'] = IMAGE;
+				$img['file.']['10.']['file'] = $commentuserimageout;
+				$img['file.']['10.']['file.']['width'] = $userimagesize .'c';
+				$img['file.']['10.']['file.']['height'] = $userimagesize .'c';
+				$img['params'] = 'class="'.$profileimgclass . $classonline . $userimagestyle . '" title="'. $usernametitle .
+				'"  id="tx-tc-cts-img-"';
+				if (version_compare(TYPO3_version, '7.6', '<')) {
+					$tmpimgstr = $this->cObj->IMAGE($img);
+				} else {
+					$tmpimgstr = $this->cObj->cObjGetSingle('IMAGE', $img);
+				}
+	 		}
 
 			$_SESSION['AJAXimages'][$userId] = $tmpimgstr;
 			$_SESSION['AJAXimagesrefresh'] = TRUE;
@@ -2323,6 +2383,78 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		}
 
 		return $_SERVER['REMOTE_ADDR'];
+	}
+	/**
+	 * Initializes TSFE and sets $GLOBALS['TSFE']
+	 *
+	 * @return	void
+	 */
+	protected function initTSFE() {
+		if (version_compare(TYPO3_version, '8.0', '>')) {
+			\TYPO3\CMS\Frontend\Utility\EidUtility::initTCA();
+		}
+
+		if (version_compare(TYPO3_version, '6.1', '>')) {
+			if (!isset($GLOBALS['TCA']['pages']['ctrl'])) {
+				\TYPO3\CMS\Core\Core\Bootstrap::getInstance()->loadCachedTca();
+			} else {
+				if (!isset($GLOBALS['TCA']['pages']['ctrl'])) {
+					\TYPO3\CMS\Core\Core\Bootstrap::getInstance()->loadCachedTca();
+				}
+			}
+
+		}
+		// print_r($GLOBALS['TCA']);exit;
+		if (!isset($GLOBALS['TCA'])) {
+			$GLOBALS['TCA'] = array();
+		}
+
+		if (!isset($GLOBALS['TCA']['pages'])) {
+			$GLOBALS['TCA']['pages'] = array();
+		}
+
+		if (!isset($GLOBALS['TCA']['pages']['columns'])) {
+			$GLOBALS['TCA']['pages']['columns'] = array();
+		}
+
+		try {
+			/** @var $frontend TypoScriptFrontendController */
+			$pgitdone = FALSE;
+
+			if (!isset($GLOBALS['TSFE'])) {
+				if (version_compare(TYPO3_version, '4.8', '>')) {
+					$frontend = t3lib_div::makeInstance(
+							'TYPO3\\CMS\\Frontend\\Controller\\TypoScriptFrontendController',
+							$GLOBALS['TYPO3_CONF_VARS'], $pageId, ''
+					);
+				} else {
+					$frontend = t3lib_div::makeInstance('tslib_fe', $GLOBALS['TYPO3_CONF_VARS'], $pageId, '');
+				}
+				$GLOBALS['TSFE'] = & $frontend;
+				//       // Get linkVars, absRefPrefix, etc
+				if (version_compare(TYPO3_version, '6.0.99', '>')) {
+					\TYPO3\CMS\Frontend\Page\PageGenerator::pagegenInit();
+					$pgitdone = TRUE;
+				}
+
+				$frontend->initFEuser();
+				$frontend->determineId();
+				$frontend->initTemplate();
+				$frontend->getConfigArray();
+			}
+
+			if ($pgitdone == FALSE) {
+				//       // Get linkVars, absRefPrefix, etc
+				if (version_compare(TYPO3_version, '4.8', '>')) {
+					\TYPO3\CMS\Frontend\Page\PageGenerator::pagegenInit();
+				} else {
+					TSpagegen::pagegenInit();
+				}
+			}
+
+		} catch (Exception $e) {
+			print_r($e);
+		}
 	}
 }
 ?>

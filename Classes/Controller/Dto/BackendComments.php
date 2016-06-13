@@ -260,18 +260,21 @@ class toctoc_comments_be_comments {
 		unset($_POST['fields']);
 
 		if (!$_SESSION['backendcontentcommentlist']) {
-		    $fromajax =FALSE;
-		    if (!$_POST['oldbe']) {
+		    $fromAjax =FALSE;
+		   if (!($_POST['oldbe'])) {
 			    if (str_replace('ajax.php', '', $_SERVER['SCRIPT_NAME']) != $_SERVER['SCRIPT_NAME']) {
-			    	$fromajax = TRUE;
-
+			    	$fromAjax = TRUE;
+	
 			    } else {
 				    if (str_replace('typo3/index.php', '', $_SERVER['SCRIPT_NAME']) != $_SERVER['SCRIPT_NAME']) {
-				    	$fromajax = TRUE;
-
+				    	$fromAjax = TRUE;
+				    } else {
+				    	 if (str_replace('typo3/deprecated.php', '', $_SERVER['SCRIPT_NAME']) != $_SERVER['SCRIPT_NAME']) {
+				    		$fromAjax = TRUE;
+				    	}
 				    }
 			    }
-		    }
+		    } 
 
 		    $content .= $infomessage;
 				// Show all comments on root page
@@ -432,7 +435,7 @@ class toctoc_comments_be_comments {
 			  	if (count($backpathCorrectionA) >1) {
 			  		$newlink = $backpathCorrectionA[0] . $backpathCorrectionString . $backpathCorrectionA[1];
 			  	}
-			  	if ($fromajax) {
+			  	if ($fromAjax == TRUE) {
 			  		$content .= '
 				    <td class="img tx-tc-wm30 tx-tc-flop2-col">
 				  		<span class="tx-tc-cmdparams6" id="'.$aparams6. '">
@@ -460,7 +463,7 @@ class toctoc_comments_be_comments {
 			  	if (count($backpathCorrectionA) >1) {
 			  		$newlink = $backpathCorrectionA[0] . $backpathCorrectionString . $backpathCorrectionA[1];
 			  	}
-			  	if ($fromajax) {
+			  	if ($fromAjax == TRUE) {
 			  		$content .= '
 				    <td class="img tx-tc-wm30 tx-tc-flop2-col">
 				  		<span class="tx-tc-cmdparams7" id="'.$aparams7. '">
@@ -487,7 +490,7 @@ class toctoc_comments_be_comments {
 			  	if (count($backpathCorrectionA) >1) {
 			  		$newlink = $backpathCorrectionA[0] . $backpathCorrectionString . $backpathCorrectionA[1];
 			  	}
-			  	if ($fromajax) {
+			  	if ($fromAjax == TRUE) {
 			  		$content .= '
 				    <td class="img tx-tc-wm30 tx-tc-flip2-col">
 				  		<span class="tx-tc-cmdparams4" id="'.$aparams4. '">
@@ -514,7 +517,7 @@ class toctoc_comments_be_comments {
 			  	if (count($backpathCorrectionA) >1) {
 			  		$newlink = $backpathCorrectionA[0] . $backpathCorrectionString . $backpathCorrectionA[1];
 			  	}
-			  	if ($fromajax) {
+			  	if ($fromAjax == TRUE) {
 			  		$content .= '
 				    <td class="img tx-tc-wm30 tx-tc-flip2-col">
 				  		<span class="tx-tc-cmdparams5" id="'.$aparams5 . '">
@@ -552,7 +555,7 @@ class toctoc_comments_be_comments {
 			  	$newlink = $backpathCorrectionA[0] . $backpathCorrectionString . $backpathCorrectionA[1];
 			  }
 
-			  if ($fromajax) {
+			  if ($fromAjax == TRUE) {
 				  $content .= '
 				    <td class="img tx-tc-wm30 tx-tc-flip1-col">
 				  		<span class="tx-tc-cmdparams3" id="'.$aparams3.'6g9' . rawurlencode(''.$GLOBALS['LANG']->getLL('delete_txt').'') . '">
@@ -582,10 +585,10 @@ class toctoc_comments_be_comments {
 			';
 
 			if($num_rows != 0) {
-			  	$content .= $pObj->be_common->printPager($pObj, 'comments', $fromajax);
+			  	$content .= $pObj->be_common->printPager($pObj, 'comments', $fromAjax);
 			}
 
-			if ($fromajax) {
+			if ($fromAjax == TRUE) {
 				$content .= '
 				<div class="tx-tc-100">
 					<div class="tx-tc-subpaneltitle tx-tc-bulkact-title">

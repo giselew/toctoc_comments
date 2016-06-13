@@ -7,7 +7,7 @@
 ###EMOJICSS###
 <script type="text/javascript" src="###SITE_REL_PATH###res/js/temp/tx-tc-###LANCODE###.js"></script>
 <!-- ALL jQuery Tools. No jQuery library -->
-###JSSERVERVARS###
+###JSSERVERVARS######JSJQMOBILE###
 <script type="text/javascript" src="###JSMAIN###"></script>###AJAXLOGINJS###
 <script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.toctoc.sharrre-1.3.5.js"></script>
 <script type="text/javascript" src="###SITE_REL_PATH###res/js/jquery.elastic-1.6.min.js"></script>
@@ -149,7 +149,37 @@
         </div>
     </div>
 </div>
-<!-- ###SINGLE_SUBCOMMENT### end -->    					
+<!-- ###SINGLE_SUBCOMMENT### end --> 
+   					
+<h4>Subtemplate for emolike popup</h4>
+<!-- ###SUBEMOPOPUP### begin -->
+<div id="tx-tc-emolike-popup-###REF###" class="tx-tc-emolike-popup tx-tc-nodisp">
+	<div id="tx-tc-abs0-###REF###" class="tx-tc-abs0">
+		<div class="tx-tc-emolike-popup-uiLayer">
+			<div class="tx-tc-emolike-popup-uiLayer-l2">
+				<div class="tx-tc-emlp-panel">
+					<div class="tx-tc-emlp-toolbar">
+###SUBEMOICONS###
+					</div>
+					<div class="tx-tc-emlp-end">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- ###SUBEMOPOPUP### end -->
+
+<!-- ###SUBEMOPOPUPICON### begin -->
+<span class="tx-tc-emlp-span">
+	<div class="tx-tc-emlp-dvl1###CSSDLIKE###" id="tx-tc-emlp-###REF###__###EMOUID###__###CID###__###CHECK###">
+		<div class="tx-tc-emlp-dvl2###CSSSELEMO###" id="tx-tc-emlp-2-###REF###-###SORT###">
+			<i id="tx-tc-emlp-2-###REF###__###EMOUID###__###CID###__###CHECK###" class="tx-tc-emlp-im-###SORT### tx-tc-emlp-il2"></i>
+			<div id="tx-tc-emlp-2-tipp-###REF###__###EMOUID###__###CID###__###CHECK###" class="tx-tc-emoicontipp"><span>###EMOTITLE###</span></div>							
+		</div>
+	</div>
+</span>
+<!-- ###SUBEMOPOPUPICON### end -->
 
 <h4>Subtemplate for the top area of the plugin</h4>
 <!-- ###SUBTOPAREA### begin -->
@@ -162,6 +192,7 @@
 						###ARTICLELIKE###
 					</div>
 				</div>
+				###EMOPOPUP###
 			</div>
 			###ARTICLECOMMENTLINK###
 			###ARTICLESHARE### 
@@ -475,12 +506,12 @@
 <div class="tx-tc-ct-img tx-tc-blockdisp">
 	<div>
 		<div class="tx-tc-margin-top0">
-			<div id="tx-tc-cts-pic-formtext-###IDPLUS###p###CID###" class="tx-tc-margin0"> 
+			<div id="tx-tc-cts-pic-formtext-###IDPLUS###p###CID###" class="tx-tc-margin0 tx-tc-cts-pic-formtext"> 
 				<div class="tx-tc-img-desc">
 					###DESC###
 				</div>	
 				<div class="tx-tc-img-image">		 
-			  		<a href="###LINK###" rel="nofollow" title= "###LINKTITLE###">###IMAGE###</a>
+			  		<a href="###LINK###" rel="nofollow" title="###LINKTITLE###">###IMAGE###</a>
 					<!-- overlay for the first trigger. id matches the rel- attribute -->
 					<div class="txtc_overlay" id="txtcphoto###CID###">
 					  ###IMAGESRC###
@@ -702,6 +733,47 @@
 </div>
 <!-- ###SHOWUC_SUB### end -->
 
+<h4>Popup with EmolikeUserinfos</h4>
+<!-- ###SHOWEMOUSERSRESULT_SUB### begin -->
+<div class="tx-tc-elikeovinnertop" id="tx-tc-elikeovinner-###CID###">
+<ul class="tx-tc-ct-elikeov-tablist">
+	###EMOUSERS_TOPLINE###
+</ul>
+<div class="tx-tc-elikeov-dsx" id="tx-tc-elikeov-dsx-###CID###" style="">
+</div>
+</div>
+<div class="tx-tc-elikeovinner" id="tx-tc-elikeovinner-tabs-###CID###">
+	###EMOUSERS_TOPLINETABS###
+</div>
+<!-- ###SHOWEMOUSERSRESULT_SUB### end -->
+
+<h4>Popuptoplineelement with EmolikeUserinfos</h4>
+<!-- ###SHOWEMOUSERS_TOPLINE### begin -->
+<li class="tx-tc-ct-elikeov-topelemtab tx-tc-ct-elikeov-topelem###TABCSS###" id="tx-tc-elikeov-topelem-###CID###__###TABSORT###">
+		<span class="tx-tc-ct-elikeov-topelemspn">
+			<i class="tx-tc-elikeov-ico tx-tc-textlink tx-tc-elikeov-###TABSORT###" title="###TABLL###"></i>
+			<span class="tx-tc-textlink tx-tc-ct-elikeov-ttabll###CSSTABLL###">###TEXTTABLL###</span>
+		</span>
+</li>
+<!-- ###SHOWEMOUSERS_TOPLINE### end -->
+
+<h4>Popuptoplinetab with EmolikeUserinfos</h4>
+<!-- ###SHOWEMOUSERS_TOPLINETAB### begin -->
+<div class="tx-tc-ct-elikeov-elem tx-tc-ct-elikeov-el###TABCSS###" id="tx-tc-elikeov-topelemtab-###CID###__###TABNR###">
+		###EMOUSERS_UC###
+</div>
+<!-- ###SHOWEMOUSERS_TOPLINETAB### end -->
+
+<h4>EmolikeUserinfos single Userinfo</h4>
+<!-- ###EMOUSERUC_SUB### begin -->
+<div class="tx-tc-elikeov-user-uc###CSSHIDEINALL### tx-tc-tabledisp tx-tc-elikeov-user-uc-###EMOSORT###">
+	###IMAGE###<div class="tx-tc-elikeov-user-uc-emoi">
+	<i class="tx-tc-elikeov-ico tx-tc-elikeov-###TABCSS###"></i>
+	</div>
+	###EMOUSERS_UC_CONTENT###
+</div>
+<!-- ###EMOUSERUC_SUB### end -->
+
 <h4>Commentlink</h4>
 <!-- ###COMMENTLINKTOP### begin -->
 	<div class="tx-tc-atrts-ctlink###STYLECOMMENT###">
@@ -830,7 +902,7 @@
 <!-- ###USERCENTER_DROP_DOWN### end -->	
 
 <!-- ###USERCENTER_DROPDOWNSHOWMORE### begin -->
-<div class="tx-tc-opendropdown tx-tc-width100" id="tx-tc-dropupdown_rc###DROPDOWNID###-content" style="display: none;">###CONTENT###</div>
+<div class="tx-tc-opendropdown tx-tc-dropdownopen tx-tc-width100" id="tx-tc-dropupdown_rc###DROPDOWNID###-content" style="display: none;">###CONTENT###</div>
 <div class="tx-tc-dropdown tx-tc-width100 tx-tc-textlink" id="tx-tc-dropdown_rc###DROPDOWNID###" title="###DROPDOWNTIPTEXT###">
 	<div class="tx-tc-fleft tx-tc-width88 tx-tc-showmore" id="tx-tc-dropdownshowmore_rc###DROPDOWNID###">###TITLE###</div>
 	<div class="tx-tc-ct-box-ctclose">
@@ -1039,7 +1111,7 @@
 <h1>Component sharrre and addthis. see www.sharrre.com and www.addthis.com</h1>
 <!-- ###SHARRRE### begin -->
 
-<div id="shareme###CID###" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###"></div>
+<div id="shareme###CID###" class="tx-tc-shrshow" data-url="###ARTICLESHAREURL###" data-text="###ARTICLESHAREDATATEXT###" data-title="###ARTICLESHAREDATATITLE###"></div>
 <script type="text/javascript">
     var thetemplate###CID### = String('<div id="sharebox###CID###" class="shrbox"><div class="shrleft">###ARTICLESHARE###</div><div class="shrmiddle shrd1" id="sharrremiddle###CID###">###SHAREHTML_FACEBOOK######SHAREHTML_TWITTER######SHAREHTML_GOOGLE######SHAREHTML_LINKEDIN######SHAREHTML_STUMBLEUPON######SHAREHTML_PINTEREST######SHAREHTML_DIGG######SHAREHTML_DELICIOUS###</div><div id="shareright###CID###" class="shrright ###SHARETOTALVISIBLE###">###SHAREICON###{total}</div></div>'); 
     $('#shareme###CID###').sharrre({
@@ -1055,7 +1127,7 @@
 	    enableTracking: true,
 	    render: function(api, options){
 ###JSSHARRRET######JSSHARRREF######JSSHARRREG######JSSHARRREL######JSSHARRRED######JSSHARRREP######JSSHARRREDI######JSSHARRREDE###
-	        window.setTimeout("tttip('t101', '#sharrremiddle###CID### .tx-tc-textlink[title]')", 200);
+	        window.setTimeout("tttip('t101', '#sharrremiddle###CID### span[title]')", 2000);
 	    }
     });
 </script>   
@@ -1151,7 +1223,7 @@
 	    enableTracking: true,
 	    render: function(api, options){
 ###JSSHARRRET######JSSHARRREF######JSSHARRREG######JSSHARRREL######JSSHARRRED######JSSHARRREP######JSSHARRREDI######JSSHARRREDE###
-	        window.setTimeout("tttip('t101', '#sharrremiddle###CID### .tx-tc-textlink[title]')", 200);
+	        window.setTimeout("tttip('t101', '#sharrremiddle###CID### span[title]')", 2000);
 	    }
     });
     

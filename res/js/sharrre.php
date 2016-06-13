@@ -1,4 +1,9 @@
 <?php
+
+if( invalid_request() ){
+	die();
+}
+
 header('content-type: application/json');
 //Sharrre by Julien Hany
 $json = array('url'=>'','count'=>0);
@@ -23,16 +28,34 @@ if(filter_var($_GET['url'], FILTER_VALIDATE_URL)){
 		}
 
 	} else if($type == 'stumbleupon'){
-		$content = parse("http://www.stumbleupon.com/services/1.01/badge.getinfo?url=$url");
+		$content = parse("https://www.stumbleupon.com/services/1.01/badge.getinfo?url=$url");
 
 		$result = json_decode($content);
 		if (isset($result->result->views)) {
 			$json['count'] = $result->result->views;
 		}
 
-	}
+	} else if($type == 'linkedin'){
+      $content = parse("https://www.linkedin.com/countserv/count/share?format=jsonp&url=$url");
+      
+      if ( strpos( $content, '"count":' ) !== false ) {
+	       preg_match( '/"count":([^,]+),/', $content, $matches );
+	       $json['count'] = $matches[1];
+      }
+
+    }
 
 }
+
+//*
+if( isset( $json['count'] ) ){
+	if( strpos( $json['count'], 'k' ) ){
+		$json['count'] = ( str_replace( 'k', '', $json['count'] ) )*1000;
+	}
+	elseif( strpos( $json['count'], 'M' ) ){
+		$json['count'] = ( str_replace( 'M', '', $json['count'] ) )*1000000;
+	}
+}/**/
 
 echo str_replace('\\/','/',json_encode($json));
 
@@ -56,5 +79,54 @@ function parse($encUrl){
 	$content = curl_exec($ch);
 	curl_close($ch);
 	return $content;
+}
+
+/**
+ * Validates the request by making sure the url and type values are set and are acceptable values
+ *
+ * @return boolean
+ */
+function invalid_request() {
+
+	//die( json_encode( $_GET ) );
+	if( empty( $_GET['url'] ) || empty( $_GET['type'] ) ) {
+		return true;
+	}
+
+	elseif( ! strpos( $_GET['url'], sharrre_get_host() ) ) {
+		return true;
+	}
+
+	elseif( ! in_array( $_GET['type'], array( 'googlePlus', 'stumbleupon', 'linkedin' ) ) ) {
+		return true;
+	}
+
+	return false;
+
+}
+/**
+ * Polls different methods for getting the current domain and returns the value
+ *
+ * @return string
+ */
+function sharrre_get_host() {
+	$host = '';
+	if( ! empty( $_SERVER['HTTP_X_FORWARDED_HOST'] ) ){
+		$host = $_SERVER['HTTP_X_FORWARDED_HOST'];
+		$elements = explode(',', $host);
+		$host = trim(end($elements));
+	}
+	elseif( ! empty( $_SERVER['HTTP_HOST'] ) ){
+		$host = $_SERVER['HTTP_HOST'];
+	}
+	elseif( ! empty( $_SERVER['SERVER_NAME'] ) ){
+		$host = $_SERVER['SERVER_NAME'];
+	}
+	elseif( ! empty( $_SERVER['SERVER_ADDR'] ) ){
+		$host = $_SERVER['SERVER_ADDR'];
+	}
+	// Remove port number from host
+	$host = preg_replace( '/:\d+$/', '', $host );
+	return trim( $host );
 }
 ?>

@@ -11,9 +11,11 @@
 Ratings
 ^^^^^^^
 
-6 designs for 2 types of ratings: star-system (2 to 11 stars) and iLike-system.
+6 designs for 3 types of ratings: star-system (2 to 11 stars) simple iLike-system and emoLikes (like Facebook reactions)
 
-Display of iLikes (and iDislikes) with Facebook-like info about the users who liked.
+emoLikes in different designs, own designs can be added
+
+Display of iLikes (and iDislikes) with Facebook-like info about the users who liked
 
 Short- and long representation of iLikes
 

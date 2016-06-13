@@ -54,6 +54,7 @@
 			<label index="tx_toctoc_comments_feuser_mm.seen">Number of times the user saw the comment or record</label>
 			<label index="tx_toctoc_comments_feuser_mm.tstampseen">Time when the user saw the comment or record</label>
 			<label index="tx_toctoc_comments_feuser_mm.pagetstampseen">Id of the page with the user view</label>
+			<label index="tx_toctoc_comments_feuser_mm.emolikeid">Id in table </label>
 			<label index="tx_toctoc_ratings_data">TocToc Comments Ratings data</label>
 			<label index="tx_toctoc_ratings_data.reference">Rated item:</label>
 			<label index="tx_toctoc_ratings_data.rating">Accumulated rating value:</label>
@@ -147,6 +148,14 @@
 			<label index="tx_toctoc_comments_sharing.reference">Shared page:</label>
 			<label index="tx_toctoc_comments_sharing.external_ref">Sharing for page or record:</label>
 			<label index="tx_toctoc_comments_sharing.external_prefix">External prefix for this sharing:</label>
+			<label index="tx_toctoc_comments_emolike">emoLikes</label>
+			<label index="tx_toctoc_comments_emolike.emolike_ll">LL-key</label>
+			<label index="tx_toctoc_comments_emolike.emolike_setfolder">Set folder</label>
+			<label index="tx_toctoc_comments_emolike.emolike_setpos">Positionnumber of emoLike-icon in picture</label>
+			<label index="tx_toctoc_comments_emolike.emolike_sort">Position of emoLike in Popup</label>
+			<label index="tx_toctoc_comments_emolike.emolike_rating">Ratingvalue 1 to 9 (highest)</label>
+			<label index="tx_toctoc_comments_emolike.emolike_engagement">Engagement-level from 1 to 9</label>
+			<label index="tx_toctoc_comments_emolike.emolike_colorcode">Color-code for button text in frontend</label>
 		</languageKey>
 	</data>
 	<orig_hash type="array">

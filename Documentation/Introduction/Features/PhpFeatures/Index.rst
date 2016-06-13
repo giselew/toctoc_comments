@@ -14,3 +14,5 @@ PHP features
 Isolated PHP-Sessions
 
 Caching with PHP-Sessions
+
+Session monitoring in backend

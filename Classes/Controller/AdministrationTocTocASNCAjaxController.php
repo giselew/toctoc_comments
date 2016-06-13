@@ -38,7 +38,7 @@ class AdministrationTocTocASNCAjaxController extends \TYPO3\CMS\Extbase\Mvc\Cont
 	 */
 	public function indexAction() {
 
-		if ((version_compare(TYPO3_version, '8.0', '<'))) {
+		if ((version_compare(TYPO3_version, '7.6.8', '<'))) {
 
 			$MCONF['name'] = 'web_toctoccommentsbeM1';
 			$MCONF['script'] = '_DISPATCH';
@@ -47,7 +47,7 @@ class AdministrationTocTocASNCAjaxController extends \TYPO3\CMS\Extbase\Mvc\Cont
 		}
 
 		$admincommand = $_POST['admincommand'];
-
+		
 		$ret = GeneralUtility::requireOnce(ExtensionManagementUtility::extPath('toctoc_comments') . 'Classes/Backend/BackendAjaxAdministration.php');
 		echo $ret;
 		exit;

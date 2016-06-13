@@ -415,7 +415,6 @@ class toctoc_comments_be_overview {
 					</div>';
 		}
 
-
 		if ($_SESSION['backendpid']==0) {
 			$folderdisplayscomments = TRUE;
 		}

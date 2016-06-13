@@ -18,7 +18,11 @@
 	margin: 0px 0px 4px 0px;
 	padding: 4px 0;
 	display: table;
-	border-color: @color-border-dialog;
+	border-color: @color-border-dialog;	
+	vertical-align: baseline;
+}
+.toctoc-comments-pi1 > .tx-tc-dropdown {
+    line-height: (@boxmodelLineHeight + @isTabletOrHandyMarginTop);
 }
 .tx-tc-dropdowntitle, .tx-tc-ct-usercenter-text-contact-title {
 	font-weight: 700;
@@ -46,6 +50,18 @@
     box-sizing: border-box;
     width: 100%;
 }
+.tx-tc-opendropdown.tx-tc-dropdownopen, .tx-tc-opendropdown .tx-tc-box-trt-cts .tx-tc-opendropdown {
+    padding: 0;
+}
 .tx-tc-ucliststitle {
 	border-top-color: @color-border-dialog;
+}
+.tx-tc-opendropdown .tx-tc-trt-cts-article {
+    margin: 0;
+    border-radius: 4px 4px 4px 4px;
+	border-style: solid;
+	border-width: 1px;
+	padding: 4px;
+	background: none repeat scroll 0 0 @color-website-background;
+	border-color: @color-border-generic;
 }

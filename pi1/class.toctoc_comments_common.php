@@ -42,10 +42,10 @@
  *  157:     public function stop_toctoccomments_session()
  *  203:     public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '', $conf = array(), $frompi1 = FALSE)
  *  489:     public function removegarbagesessions($sessIp)
- *  563:     private function getSessionSavePath()
- *  586:     private function ensureSessionSavePathExists($sessionSavePath, $dohtaccess = TRUE)
- *  649:     public function substGifbuilder ($contentdir, $filename, $imgsize)
- *  769:     private function getGifBuilderSavePath()
+ *  571:     private function getSessionSavePath()
+ *  594:     private function ensureSessionSavePathExists($sessionSavePath, $dohtaccess = TRUE)
+ *  657:     public function substGifbuilder ($contentdir, $filename, $imgsize)
+ *  777:     private function getGifBuilderSavePath()
  *
  * TOTAL FUNCTIONS: 8
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -488,6 +488,14 @@ class toctoc_comments_common {
 	 */
 	public function removegarbagesessions($sessIp) {
 		$sessionfiles = array();
+		$repstr= str_replace('/', DIRECTORY_SEPARATOR, '/typo3conf/ext/toctoc_comments/pi1');
+		$PATH_site = str_replace($repstr, '', dirname(__FILE__)) . DIRECTORY_SEPARATOR;
+		if (DIRECTORY_SEPARATOR == '\\') {
+			// windows
+			$PATH_site = str_replace(DIRECTORY_SEPARATOR, '/', $PATH_site);
+		}
+		$this->typo3tempPath = $PATH_site . 'typo3conf/ext/toctoc_comments/pi1/sessionTemp/';
+
 		$getSessionSavePath = $this->getSessionSavePath();
 		/// read path to sessiondirectory in .tempfile
 		if (is_dir($getSessionSavePath)) {

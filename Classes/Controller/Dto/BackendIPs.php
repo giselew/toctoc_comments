@@ -35,7 +35,7 @@
  *
  *
  *   53: class toctoc_comments_be_ips
- *   65:     public function beIPs(&$pObj, $pid=0, $fromajax =FALSE)
+ *   65:     public function beIPs(&$pObj, $pid=0, $fromAjax =FALSE)
  *
  * TOTAL FUNCTIONS: 1
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -59,25 +59,27 @@ class toctoc_comments_be_ips {
 	 *
 	 * @param	[type]		$$pObj: ...
 	 * @param	[type]		$pid: ...
-	 * @param	[type]		$fromajax: ...
+	 * @param	[type]		$fromAjax: ...
 	 * @return	[type]		...
 	 */
-	public function beIPs(&$pObj, $pid=0, $fromajax =FALSE) {
+	public function beIPs(&$pObj, $pid=0, $fromAjax =FALSE) {
 		$editTable = 'tx_toctoc_comments_ipbl_static';
 
-		if (!$_POST['oldbe']) {
+		if (!($_POST['oldbe'])) {
 		    if (str_replace('ajax.php', '', $_SERVER['SCRIPT_NAME']) != $_SERVER['SCRIPT_NAME']) {
-		    	$fromajax = TRUE;
+		    	$fromAjax = TRUE;
 
 		    } else {
 			    if (str_replace('typo3/index.php', '', $_SERVER['SCRIPT_NAME']) != $_SERVER['SCRIPT_NAME']) {
-			    	$fromajax = TRUE;
-
+			    	$fromAjax = TRUE;
+			    } else {
+			    	 if (str_replace('typo3/deprecated.php', '', $_SERVER['SCRIPT_NAME']) != $_SERVER['SCRIPT_NAME']) {
+			    		$fromAjax = TRUE;
+			    	}
 			    }
 		    }
-	    }
-
-		if (!$fromajax) {
+	    	} 
+	    		if (!$fromAjax) {
 			$content .= '<br /><br />';
 			$strbrbr = '<br /><br />';
 			$strbrbrstart = '';
@@ -235,7 +237,7 @@ class toctoc_comments_be_ips {
 		}
 
     	if ($infomessage != '') {
-    		if ($fromajax) {
+    		if ($fromAjax == TRUE) {
     			$infomessage = '<div class="tx-tc-messagebody">' . $infomessage . '</div><div class="tx-tc-messageclosebutton" title="'.$GLOBALS['LANG']->getLL('closemessage').'">x</div>';
     		}
 
@@ -300,7 +302,7 @@ class toctoc_comments_be_ips {
     	}
 
 	    $content .= $infomessage;
-	    if ($fromajax) {
+	    if ($fromAjax == TRUE) {
 		   $content .= ''.$strbrbrdivend.'
 		   		</div>';
 		   if (!$_POST['refreships']) {
@@ -334,7 +336,7 @@ class toctoc_comments_be_ips {
 		';
 	    }
 	    unset($_POST['refreships']);
-	    if ($fromajax) {
+	    if ($fromAjax == TRUE) {
 	    	return $content;
 	    } else {
 			$pObj->content.=$pObj->doc->section('', $content, 0, 1);

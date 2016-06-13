@@ -52,14 +52,14 @@ topratingsimagesize                 int+     Size of the image for links from th
 ----------------------------------  -------  -------------------------------------------------------  --------
 topratingsnumberwidth               int+     With of the ranking-field in the list in pixel           20
 ----------------------------------  -------  -------------------------------------------------------  --------
-topRatingsOriginalLangDisplay       boolean  If displaying items in an alternative language, setting
+topRatingsOriginalLangDisplay       boolean  If displaying items in an alternative language, setting  0
                                              this option to 1 will make display of title, image and
                                              dates from the original language version of the item,
                                              not the translated version. The item long text
                                              (description) will still be displayed in the
                                              alternative language, if present.
 ----------------------------------  -------  -------------------------------------------------------  --------
-AlignResultsWithMaxVotesAndAvgVote  boolean  If set to 1, then the calculation of top ratings
+AlignResultsWithMaxVotesAndAvgVote  boolean  If set to 1, then the calculation of top ratings         0
                                              change: Top ratings with number of
                                              votes lower than the maximum found are given additional
                                              votes such all have the same number of votes.
@@ -72,9 +72,15 @@ AlignResultsWithMaxVotesAndAvgVote  boolean  If set to 1, then the calculation o
 showMinimumVotesinTitle             boolean  Show text for minimum of votes required in the title of  0
                                              the plugin
 ----------------------------------  -------  -------------------------------------------------------  --------
-showAlignCommentinTitle             boolean  If AlignResultsWithMaxVotesAndAvgVote is enabled, show
+showAlignCommentinTitle             boolean  If AlignResultsWithMaxVotesAndAvgVote is enabled, show   0
                                              text how the votes are aligned to the same level of
                                              votes.
 ----------------------------------  -------  -------------------------------------------------------  --------
 showCountTopViewsLastView           boolean  Enable last viewed date                                  1
+----------------------------------  -------  -------------------------------------------------------  --------
+RatedItemSeparatedDate              boolean  Show a separator before the date of a rated item         1
+                                             (V 9.1.0)
+----------------------------------  -------  -------------------------------------------------------  --------
+RatedItemShowDate                   boolean  Show date of a rated item                                1
+                                             (V 9.1.0)
 ==================================  =======  =======================================================  ========

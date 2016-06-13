@@ -1,0 +1,35 @@
+**If you use TYPO3 7 or newer**
+*******************************
+
+Copy the ViewHelpers in /toctoc_comments/Classes/ViewHelpers/Social/TYPO3 7 and newer/ 
+to the ViewHelper-Folder of news: /news/Classes/ViewHelpers/Social/
+
+They are used as described in the ViewHelpers, for example in the news template for Details /news/Resources/Private/Templates/News/detail.html or 
+in /news/Resources/Private/Partials/List/Item.html (for the LIST view)
+
+Counter:
+<n:social.toctoccommentscount newsItem="{newsItem}" />
+
+Full Plugin:
+<n:social.toctoccomments newsItem="{newsItem}" />
+
+**If you use TYPO3 6**
+**********************
+
+No need to copy. 
+The ViewHelpers in /toctoc_comments/Classes/ViewHelpers/Social/ are loaded by autoload.php. 
+Thay are used described in the ViewHelpers, for example in the news template for Details /news/Resources/Private/Templates/News/detail.html or 
+in /news/Resources/Private/Partials/List/Item.html (for the LIST view)
+
+Counter:
+<n:social.TocTocCommentsCount newsItem="{newsItem}"></n:social.TocTocCommentsCount>
+
+Full Plugin:
+{namespace nt=Tx_News_ViewHelpers}
+<div class="toctoccomments">
+	<nt:social.TocTocComments newsItem="{newsItem}"></nt:social.TocTocComments>
+</div>
+
+
+
+

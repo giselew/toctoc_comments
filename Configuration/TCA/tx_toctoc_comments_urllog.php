@@ -15,6 +15,12 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 	(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
 }
 
+if (version_compare(TYPO3_version, '7.6', '<')) {
+	$iconfilepath = t3lib_extMgm::extRelPath('toctoc_comments');
+} else {
+	$iconfilepath = 'EXT:toctoc_comments/';
+}
+
 $tx_toctoc_comments_sysconf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['toctoc_comments']);
 $toctoc_ratings_debug_mode_disabled = !intval($tx_toctoc_comments_sysconf['debugMode']);
 
@@ -26,7 +32,7 @@ $tx_toctoc_comments_comments = array(
 			'crdate' => 'crdate',
 			'sortby' => 'external_ref',
 			'delete' => 'deleted',
-			'iconfile' => 'EXT:toctoc_comments/icon_tx_toctoc_comments_urllog.gif',
+			'iconfile' => $iconfilepath . 'icon_tx_toctoc_comments_urllog.gif',
 			'hideTable'	=> $toctoc_ratings_debug_mode_disabled,
 	
 		),

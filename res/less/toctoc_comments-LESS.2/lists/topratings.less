@@ -5,6 +5,71 @@
  .tx-tc-trl-rank {
 	width: @topRatingsNumberWidth;
 }
+.tx-tc-trl-rank {
+	font-size: 110%;
+	font-weight: bold;
+	transform: scale(1, 1) rotate(0deg) translate(0px, 0px);
+	-ms-transform:  scale(1, 1) rotate(0deg) translate(0px, 0px); /* IE 9 */
+    -webkit-transform:  scale(1, 1) rotate(0deg) translate(0px, 0px); /* Safari */
+    transition: transform 800ms ease 0s;
+    -webkit-transition: -webkit-transform 800ms ease 0s;
+}
+.tx-tc-trl-rank:hover {
+	transform: scale(1.0, 1.0) rotate(720deg) translate(0px, -3px);
+	-ms-transform: scale(1.0, 1.0) rotate(720deg) translate(0px, -3px); /* IE 9 */
+    -webkit-transform: scale(1.0, 1.0) rotate(720deg) translate(0px, -3px); /* Safari */
+}
+.tx-tc-trt-listtitle {
+	font-size: 110%;
+	font-weight: 600;
+}
+.tx-tc-trt-rating {
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 3px 3px 3px 3px;
+	float: left;
+	text-align: center;
+	background-position: center center;
+	background-size: 100% auto;
+}
+.tx-tc-trt-cts-article .tx-tc-rts-container {
+	float: left;
+}
+.tx-tc-trt-rating-right {
+	display: inline-block;
+}
+.tx-tc-trt-cts-article .tx-tc-rts {
+	margin: 0;
+	width: (8+(@ratingNbrStars*@ratingImageWidth));
+}
+.tx-tc-trt-cts-article .tx-tc-rws-toparea .tx-tc-rts {
+	margin: 3px 0 0;
+	width: (8+(@ratingNbrStars*@reviewImageWidth));
+}
+.tx-tc-trt-cts-article .tx-tc-rts-dp {
+	width: (1+(@ratingNbrStars*@ratingImageWidth));
+}
+.tx-tc-trt-cts-article .tx-tc-rws-toparea .tx-tc-rts-dp {
+	width: (1+(@ratingNbrStars*@reviewImageWidth));
+}
+.tx-tc-trt-rating-img, .tx-tc-trt-rating-rating {
+	float: left;
+}
+.tx-tc-text .tx-tc-trt-rating-like {
+	margin-right: 5px;
+	bottom: @ratingMarginTop;
+}
+.tx-tc-trt-rating-like {
+ 	position: relative;
+	width: 16px;
+	height: auto;
+	bottom: @ratingMarginTopHalf;
+}
+
+.tx-tc-trt-rating-like-only {
+	float: left;
+	position: relative;
+}
 .tx-tc-trt-rating {
     line-height: (@boxmodelLineHeight+4);
 }
@@ -17,8 +82,8 @@
 .tx-tc-trt-cts-article {
 	margin: @boxmodelSpacing 0 (2*@boxmodelSpacing) 0;
 }
-.tx-tc-trt-rating-rating-wrap .tx-tc-rts-dp {
-	top: @ratingMarginTop;
+.tx-tc-opendropdown .tx-tc-box-recent-cts .tx-tc-rts-li div.tx-tc-rts div.tx-tc-rts-dp {
+	top: 2px;
 }
 .tx-tc-trt-rating-rating-wrap .tx-tc-rws-toparea .tx-tc-rts-dp {
 	top: @reviewMarginTop;

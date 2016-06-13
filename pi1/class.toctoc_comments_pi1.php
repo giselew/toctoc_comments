@@ -29,44 +29,46 @@
  *
  *
  *
- *  108: class tx_toctoccomments_pi1 extends tslib_pibase
- *  196:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
- * 2716:     protected function checkJSLoc()
- * 3003:     protected function checkCSSTheme()
- * 3149:     protected function checkCSSLoc()
- * 3829:     protected function makesharingcss($CSSmode = TRUE)
- * 3896:     protected function initprefixToTableMap()
- * 3932:     protected function initexternaluid($withinitprefixToTableMap)
- * 4083:     protected function init()
- * 4678:     protected function mergeConfiguration()
- * 5013:     protected function fetchConfigValue($param)
- * 5041:     protected function ae_detect_ie()
- * 5064:     protected function boxmodel()
- * 6400:     protected function crunchcss($buffer)
- * 6427:     protected function calculate_string( $mathString )
- * 6450:     protected function locationHeaderUrlsubDir()
- * 6469:     protected function currentPageName()
- * 6497:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
- * 6532:     protected function doClearCache ($forceclear=FALSE)
- * 6566:     protected function InitCachingVariables ()
- * 6622:     protected function getPluginCacheControlTstamp ($external_ref_uid)
- * 6633:     protected function getLastUserAdditionTstamp ()
- * 6656:     protected function initLegacyCache ()
- * 6670:     protected function check_scopes()
- * 6828:     protected function initializeprefixtotablemap()
- * 6870:     protected function sharrrejs()
- * 6952:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
- * 7005:     private function resolveBackPath($pathStr)
- * 7040:     private function dirname($path)
- * 7054:     private function revExplode($delimiter, $string, $count = 0)
- * 7070:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 7093:     public function createLinks($text, $conf = NULL)
- * 7116:     protected function getThemeTmageDimension($filename, $returnindex)
- * 7136:     protected function checktoctoccommentsuser()
- * 7254:     protected function getExternalUidShortId()
- * 7300:     protected function fbgoogle_lan($isfacebook)
+ *  110: class tx_toctoccomments_pi1 extends tslib_pibase
+ *  201:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
+ * 2804:     protected function checkJSLoc()
+ * 3091:     protected function checkCSSTheme()
+ * 3237:     protected function checkCSSLoc()
+ * 4006:     protected function makesharingcss($CSSmode = TRUE)
+ * 4073:     protected function initprefixToTableMap()
+ * 4109:     protected function initexternaluid($withinitprefixToTableMap)
+ * 4260:     protected function init()
+ * 4922:     protected function mergeConfiguration()
+ * 5278:     protected function fetchConfigValue($param)
+ * 5306:     protected function ae_detect_ie()
+ * 5329:     protected function boxmodel()
+ * 6838:     protected function crunchcss($buffer)
+ * 6865:     protected function calculate_string( $mathString )
+ * 6888:     protected function locationHeaderUrlsubDir()
+ * 6907:     protected function currentPageName()
+ * 6935:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
+ * 6970:     protected function doClearCache ($forceclear=FALSE)
+ * 7004:     protected function InitCachingVariables ()
+ * 7062:     protected function getPluginCacheControlTstamp ($external_ref_uid)
+ * 7073:     protected function getLastUserAdditionTstamp ()
+ * 7096:     protected function initLegacyCache ()
+ * 7110:     protected function check_scopes()
+ * 7268:     protected function initializeprefixtotablemap()
+ * 7310:     protected function sharrrejs()
+ * 7407:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
+ * 7460:     private function resolveBackPath($pathStr)
+ * 7495:     private function dirname($path)
+ * 7509:     private function revExplode($delimiter, $string, $count = 0)
+ * 7525:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 7548:     public function createLinks($text, $conf = NULL)
+ * 7571:     protected function getThemeTmageDimension($filename, $returnindex)
+ * 7591:     protected function checktoctoccommentsuser()
+ * 7714:     protected function getExternalUidShortId()
+ * 7759:     protected function checkandload_emolikes()
+ * 7810:     protected function fbgoogle_lan($isfacebook)
+ * 7891:     private function detectmobile($isTabletOrHandyexceptFF = FALSE)
  *
- * TOTAL FUNCTIONS: 35
+ * TOTAL FUNCTIONS: 37
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -111,7 +113,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '902';
+	public $extVersion = '910';
 	public $extLESSVersion = 'toctoc_comments-LESS.2';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
@@ -183,6 +185,9 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 	private $newestLessFileTime = 0;
 	private $newestCSSFileTime = 0;
+
+	public $canZip = FALSE;
+
 	/**
 	 * Main function of the plugin
 	 *
@@ -197,14 +202,24 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		if (!is_array($conf)) {
 			return '<div><span>Basic configuration for extension toctoc_comments is missing. Static template loaded?</span></div>';
 		} elseif (count($conf)<20) {
-			return '<div><span>Basic configuration for extension toctoc_comments too small. Static template loaded?</span></div>';
+			$cntconf = count($conf);
+			return '<div><span>Basic configuration (elements: ' . $cntconf . ') for extension toctoc_comments too small. Static template loaded?</span></div>';
+		}
+
+		if (function_exists('gzdecode')) {
+			$this->canZip = TRUE;
 		}
 
 		if ($conf['optionalRecordId'] == 'Pagemode') {
 			$conf['optionalRecordId'] =  'pages_' . $GLOBALS['TSFE']->id;
 		}
 
-		if ($conf['theme.']['refreshCSSFromLESS']==0) {
+		if ($conf['theme.']['themeVersion'] == 2) {
+			$conf['theme.']['refreshCSSFromLESS'] = 1;
+			$conf['theme.']['freezeLevelCSS'] = 1;
+		}
+
+		if ($conf['theme.']['refreshCSSFromLESS'] == 0) {
 			$conf['theme.']['themeVersion']=1;
 		}
 
@@ -233,8 +248,13 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 		if (intval($this->conf['pluginmode'])>0) {
 			if ($hookTablePrefix != '') {
-				if ($hookcObj) {
+				if ($hookcObj != NULL) {
 					$this->cObj=$hookcObj;
+				} else {
+					if (!isset($this->cObj)) {
+						$this->cObj = t3lib_div::makeInstance('tslib_cObj');
+						$this->cObj->start('', '');
+					}
 				}
 			}
 
@@ -297,6 +317,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		$this->lib = t3lib_div::makeInstance('toctoc_comment_lib');
 
 		if (intval($this->conf['pluginmode'])==0) {
+
 			if (($numMatches > 0) || ($foundwhite == 1)) {
 				if ($conf['advanced.']['protocolCrawlerAgents'] == 1) {
 					if (($numMatches > 0)) {
@@ -424,6 +445,9 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 					}
 				}
 			}
+			if ((trim($hookTablePrefix)) != '' && (intval($hookId) > 0)) {
+				$this->conf['dontSkipSearchEngines'] = 1;
+			}
 
 			if($numMatches > 0) {
 				// Found a match
@@ -509,8 +533,10 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		$this->lib->fixLL($this->conf);
 
 		$this->pi_loadLL();
+
 		// check plugin
-		$this->boxmodelcss ='tx-tc-' . $this->extVersion . '.css';
+		$this->boxmodelcss = 'tx-tc-' . $this->extVersion . '.css';
+
 		$this->pi_initPIflexForm();
 		$isPlugin=0;
 
@@ -557,57 +583,30 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 		}
 
-		if ((intval($GLOBALS['TSFE']->fe_user->user['uid'])>0) && ($this->conf['pluginmode'] == 0 )) {
-			// checking if there was a change of the current users image
-			$fldimage = 'image';
-			if ($this->conf['advanced.']['FeUserDbField']) {
-				$fldimage = $this->conf['advanced.']['FeUserDbField'];
-			}
-
-			$currentuserimage = trim($GLOBALS['TSFE']->fe_user->user[$fldimage]);
-			if (isset($_SESSION['AJAXOrigimages'])) {
-				if (is_array($_SESSION['AJAXOrigimages'])) {
-					if (trim($_SESSION['AJAXOrigimages'][$currentuserimage]) == '') {
-						$_SESSION['AJAXimages'] = array();
-						$_SESSION['AJAXOrigimages']  = array();
-						$saveactivateClearPageCache=$this->activateClearPageCache;
-						$this->activateClearPageCache=TRUE;
-						$this->doClearCache();
-						$this->activateClearPageCache=$saveactivateClearPageCache;
-					}
-				}
-			}
-		}
-
 		if (((intval($_SESSION['AJAXimagesrefresh']) == TRUE) || ($this->conf['advanced.']['useSessionCache'] == 0)) && (intval($_SESSION['cachepurged'])!=1)) {
 		// clean sessions if on a different page the plugin is call with useSessionCache == 0
-		// is equivalent to ?puge_cache=1
-
+		// is equivalent to ?purge_cache=1
 			$this->InitCachingVariables();
 			$_SESSION['cachepurged']=1;
 		}
 
-		if ((intval(t3lib_div::_GP('purge_cache'))==1) && (intval($_SESSION['cachepurged'])!=1 )) {
+		if (((intval($this->conf['pluginmode'])==0) || (intval($this->conf['pluginmode'])==5)) && (intval($_GET['purge_cache'])==1) && (intval($_SESSION['cachepurged'])!=1 )) {
+			unset($_GET['purge_cache']);
 			$this->InitCachingVariables();
 			$_SESSION['cachepurged']=1;
 			$sdebugprintli .= '<br />'. 'purge_cache = 1, page-id ' .$GLOBALS['TSFE']->id. '<br />';
 		} else {
 			if (($loginreset==TRUE) && (intval($_SESSION['cachepurgedlogin'])!=1) && (intval($_SESSION['cachepurged'])!=1)) {
 				$this->InitCachingVariables();
-
 				$loginreset=FALSE;
-
 				$this->lib->resetSessionVars(0);
-
 				$_SESSION['activeBoxmodel']=$this->conf['theme.']['selectedBoxmodel'];
 				$_SESSION['commentsPageId'] = $GLOBALS['TSFE']->id;
 				$_SESSION['curPageName'] = $this->currentPageName();
 				$_SESSION['activelang'] = $GLOBALS['TSFE']->lang;
-
 				$_SESSION['cachepurgedlogin']=1;
 				$_SESSION['cachepurged']=1;
 				$sdebugprintli .= '<br />'. 'Init Sessionvariables because of logout/in on page id ' .$GLOBALS['TSFE']->id. '<br />';
-
 			} else {
 				if (intval(t3lib_div::_GP('purge_cache'))==1) {
 
@@ -615,7 +614,9 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				} else {
 					$_SESSION['cachepurgedlogin']=0;
 				}
+
 			}
+
 		}
 
 		if (t3lib_div::_GET('tx_toctoccomments_pi2')) {
@@ -623,6 +624,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			if (($postDatapi2temp['ajax'] == 'tx_toctoccomments_pi2') && (t3lib_div::_GET('pid')) && (t3lib_div::_GET('refreshcontent')== 'refresh')) {
 				$_GET = array();
 			}
+
 		}
 
 		$_SESSION['activelangid'] = $GLOBALS['TSFE']->sys_language_uid;
@@ -636,6 +638,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 			if (($_SESSION['doChangePasswordForm'] == 2) && (intval($_SESSION['cachepurged'])!=1 )) {
 				$this->InitCachingVariables();
+
 				$_SESSION['cachepurged']=1;
 				$sdebugprintli .= '<br />'. 'purge_cache on reset password, page-id ' .$GLOBALS['TSFE']->id. '<br />';
 			}
@@ -726,6 +729,10 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$this->conf['ratings.']['useShortTopLikes'] = 1;
 		}
 
+		if (intval($this->conf['ratings.']['useShortTopLikes']) == 1) {
+			$this->conf['ratings.']['emoLike'] = 0;
+		}
+
 		if (intval($this->conf['advanced.']['wallExtension']) != 0) {
 			// on cummunity page reviews and login required is not possible
 			$this->conf['advanced.']['loginRequired'] = 0;
@@ -769,6 +776,57 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$this->conf['sessionCompressionLevel'] = 5;
 		}
 
+		if (intval($conf['ratings.']['emoLikeMaxTippEntries']) >10) {
+			$this->conf['ratings.']['emoLikeMaxTippEntries'] = 10;
+		}
+
+		if (intval($conf['ratings.']['emoLikeMaxTippEntries']) <3) {
+			$this->conf['ratings.']['emoLikeMaxTippEntries'] = 3;
+		}
+
+		if (intval($conf['ratings.']['LikeMaxReportLineEntries']) >5) {
+			$this->conf['ratings.']['LikeMaxReportLineEntries'] = 5;
+		}
+
+		if (intval($conf['ratings.']['LikeMaxReportLineEntries']) <2) {
+			$this->conf['ratings.']['LikeMaxReportLineEntries'] = 3;
+		}
+
+		if (intval($conf['ratings.']['LikeMaxReportTippEntries']) >13) {
+			$this->conf['ratings.']['LikeMaxReportTippEntries'] = 13;
+		}
+
+		if (intval($conf['ratings.']['LikeMaxReportTippEntries']) <3) {
+			$this->conf['ratings.']['LikeMaxReportTippEntries'] = 6;
+		}
+
+		if (intval($conf['ratings.']['emoLikeMaxOverviewEntries']) < 3) {
+			$this->conf['ratings.']['emoLikeMaxOverviewEntries'] = 12;
+		}
+		if (intval($conf['ratings.']['emoLikeMaxOverviewEntries']) > 50) {
+			$this->conf['ratings.']['emoLikeMaxOverviewEntries'] = 50;
+		}
+
+		if ($this->conf['UserImageSize'] > 96) {
+			$this->conf['UserImageSize'] = 96;
+		}
+
+		if ($this->conf['UserImageSize'] < 18) {
+			$this->conf['UserImageSize'] = 18;
+		}
+
+		if (intval($this->conf['UserImageSizeInForm']) == 0) {
+			$this->conf['UserImageSizeInForm'] = $this->conf['UserImageSize'];
+		}
+
+		if ($this->conf['UserImageSizeInForm'] > 96) {
+			$this->conf['UserImageSizeInForm'] = 96;
+		}
+
+		if ($this->conf['UserImageSizeInForm'] < 18) {
+			$this->conf['UserImageSizeInForm'] = 18;
+		}
+
 		$filename = 'toctoc_comments_myrating_star.png';
 		$this->conf['ratings.']['ratingImageWidth'] = $this->getThemeTmageDimension($filename, 0);
 		$filename = 'toctoc_comments_myreview_star.png';
@@ -777,30 +835,32 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		$this->conf['ratings.']['likeV2ImageWidth'] = $this->getThemeTmageDimension($filename, 0);
 		$filename = 'commentslist-more.png';
 		$this->conf['ratings.']['CommentImageWidth'] = $this->getThemeTmageDimension($filename, 0);
-				$filename = 'ilike.png';
+		$filename = 'ilike.png';
 		$this->conf['ratings.']['likeImageWidth'] = $this->getThemeTmageDimension($filename, 0);
 
 		if (!is_array(explode(',', $this->conf['theme.']['responsiveSteps']))) {
-			$this->arrResponsiveSteps[0]=350;
-			$this->arrResponsiveSteps[1]=450;
+			$this->arrResponsiveSteps[0] = 350;
+			$this->arrResponsiveSteps[1] = 450;
 		} else {
 			$this->arrResponsiveSteps=explode(',', $this->conf['theme.']['responsiveSteps']);
 			if (intval(trim($this->arrResponsiveSteps[0])) != 0) {
-				$this->arrResponsiveSteps[0]=intval(trim($this->arrResponsiveSteps[0]));
+				$this->arrResponsiveSteps[0] = intval(trim($this->arrResponsiveSteps[0]));
 			} else {
-				$this->arrResponsiveSteps[0]=350;
+				$this->arrResponsiveSteps[0] = 350;
 			}
 
 			if (intval(trim($this->arrResponsiveSteps[1])) != 0) {
-				$this->arrResponsiveSteps[1]=intval(trim($this->arrResponsiveSteps[1]));
+				$this->arrResponsiveSteps[1] = intval(trim($this->arrResponsiveSteps[1]));
 			} else {
-				$this->arrResponsiveSteps[1]=450;
+				$this->arrResponsiveSteps[1] = 450;
 			}
 
 		}
 
 		if ($this->conf['advanced.']['midDot'] != '') {
 			$this->middotchar = $this->conf['advanced.']['midDot'];
+		} else {
+			$this->middotchar = '&nbsp;';
 		}
 
 		if ((($this->conf['advanced.']['gravatarRating'] == 'G') ||
@@ -1322,6 +1382,33 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 		$communitydisplaylist = $this->init();
 
+		if ((intval($GLOBALS['TSFE']->fe_user->user['uid'])>0) && ($this->conf['pluginmode'] == 0 )) {
+			if ($this->conf['sharing.']['useOnlySharing'] != 1) {
+			// checking if there was a change of the current users image
+				$fldimage = 'image';
+				if ($this->conf['advanced.']['FeUserDbField']) {
+					$fldimage = $this->conf['advanced.']['FeUserDbField'];
+				}
+
+				$currentuserimage = trim($this->conf['advanced.']['FeUserImagePath']) . trim($GLOBALS['TSFE']->fe_user->user[$fldimage]);
+				if (isset($_SESSION['AJAXOrigimages'])) {
+					if (is_array($_SESSION['AJAXOrigimages'])) {
+						if (count($_SESSION['AJAXOrigimages'])>1) {
+							if (trim($_SESSION['AJAXOrigimages'][$currentuserimage]) == '') {
+								$_SESSION['AJAXimages'] = array();
+								$_SESSION['AJAXOrigimages']  = array();
+								$saveactivateClearPageCache=$this->activateClearPageCache;
+								$this->activateClearPageCache=TRUE;
+								$this->doClearCache();
+								$this->activateClearPageCache=$saveactivateClearPageCache;
+							}
+						}
+					}
+				}
+
+			}
+		}
+
 		if ((intval($this->conf['pluginmode'])==0) || (intval($this->conf['pluginmode'])==5)) {
 			$useCacheHashNeeded = intval($GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError']);
 			$no_cacheflag = 0;
@@ -1407,14 +1494,6 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 			if ($this->conf['minCommentLength'] >$this->conf['maxCommentLength']) {
 				$this->conf['maxCommentLength']=$this->conf['minCommentLength']+1;
-			}
-
-			if ($this->conf['UserImageSize'] >96) {
-				$this->conf['UserImageSize']=96;
-			}
-
-			if ($this->conf['UserImageSize'] <18) {
-				$this->conf['UserImageSize']=18;
 			}
 
 			if ($this->conf['advanced.']['commentsEditBack'] >50) {
@@ -2174,8 +2253,9 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		}
 		if ($this->conf['advanced.']['commentReview'] == 1) {
 			$this->conf['ratings.']['useTopVotes'] = 1;
+			//$this->conf['ratings.']['emoLike'] = 0;
 		}
-
+		$md5url = 'p' . $GLOBALS['TSFE']->id . md5($_SESSION['curPageName']);
 		if (intval($this->conf['pluginmode'])==0) {
 			if ($this->getLastUserAdditionTstamp() > intval($_SESSION['AJAXimagesTimeStamp'])) {
 				// if exeptionally a new user has been added since the last caching time, then the user pics need an update
@@ -2188,9 +2268,9 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				$_SESSION['recentcommentsclearcachepage']=$GLOBALS['TSFE']->id;
 				if ($_SESSION['findanchor'] != '0') {
 					$this->pi_USER_INT_obj = 1;
-					$_SESSION['reemptycache']['p' . $GLOBALS['TSFE']->id]=2;
-					$_SESSION['reemptycachepage']['p' . $GLOBALS['TSFE']->id]=$GLOBALS['TSFE']->id;
-					$_SESSION['reemptycacheplugin']['p' . $GLOBALS['TSFE']->id]=$_SESSION['commentListRecord'];
+					$_SESSION['reemptycache'][$md5url]=2;
+					$_SESSION['reemptycachepage'][$md5url]=$GLOBALS['TSFE']->id;
+					$_SESSION['reemptycacheplugin'][$md5url]=$_SESSION['commentListRecord'];
 					$this->sdebugprint .= 'Will display recent comment on page ' . $GLOBALS['TSFE']->id . '<br />';
 					$_SESSION['runMemCache'] = FALSE;
 				} else {
@@ -2210,20 +2290,20 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				}
 
 			} else {
-				if ($_SESSION['reemptycache']['p' . $GLOBALS['TSFE']->id]>=2) {
+				if ($_SESSION['reemptycache'][$md5url]>=2) {
 					$_SESSION['runMemCache'] = FALSE;
-					if ($_SESSION['reemptycacheplugin']['p' . $GLOBALS['TSFE']->id]==$_SESSION['commentListRecord']) {
-						$_SESSION['reemptycache']['p' . $GLOBALS['TSFE']->id]=3;
-						$this->ttclearcache($_SESSION['reemptycachepage']['p' . $GLOBALS['TSFE']->id], TRUE, TRUE, 'reemptycachepage');
-						$this->sdebugprint .= 'Reempty cache on page ' . $GLOBALS['TSFE']->id . ' on "reemptycacheplugin" ' . $_SESSION['reemptycacheplugin']['p' .
-												$GLOBALS['TSFE']->id] . '<br />';
+					if ($_SESSION['reemptycacheplugin'][$md5url]==$_SESSION['commentListRecord']) {
+						$_SESSION['reemptycache'][$md5url]=3;
+						$this->ttclearcache($_SESSION['reemptycachepage'][$md5url], TRUE, TRUE, 'reemptycachepage');
+						$this->sdebugprint .= 'Reempty cache on page ' . $GLOBALS['TSFE']->id . ' on "reemptycacheplugin" ' . $_SESSION['reemptycacheplugin'][$md5url]
+						. '<br />';
 						$this->pi_USER_INT_obj = 1;
 					} else {
 
-						if ($_SESSION['reemptycache']['p' . $GLOBALS['TSFE']->id]==3) {
-							$_SESSION['reemptycache']['p' . $GLOBALS['TSFE']->id]=0;
-							$_SESSION['reemptycacheplugin']['p' . $GLOBALS['TSFE']->id]='';
-							$_SESSION['reemptycachepage']['p' . $GLOBALS['TSFE']->id]='';
+						if ($_SESSION['reemptycache'][$md5url]==3) {
+							$_SESSION['reemptycache'][$md5url]=0;
+							$_SESSION['reemptycacheplugin'][$md5url]='';
+							$_SESSION['reemptycachepage'][$md5url]='';
 
 						}
 
@@ -2231,12 +2311,12 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 							$domemcache = TRUE;
 							$_SESSION['runMemCache'] = TRUE;
 							if ((intval($this->conf['advanced.']['wallExtension']) == 0) && (intval(t3lib_div::_GP('no_cache')==0))) {
-								if ($_SESSION['reemptycacheplugin']['p' . $GLOBALS['TSFE']->id]=='') {
+								if ($_SESSION['reemptycacheplugin'][$md5url]=='') {
 									$this->sdebugprint .= 'Try using cache (reseted recent comments mode), on ' . $_SESSION['commentListRecord'] . ', L: ' .
 															$_SESSION['activelang'] . ', Userid: ' . intval($GLOBALS['TSFE']->fe_user->user['uid']) . '<br />';
 								} else {
-									$this->sdebugprint .= 'Try using cache (reseted recent comments mode), waiting for ' . $_SESSION['reemptycacheplugin']['p' .
-															$GLOBALS['TSFE']->id] . ' on ' . $_SESSION['commentListRecord'] . ', L: ' . $_SESSION['activelang'] . ', Userid: ' .
+									$this->sdebugprint .= 'Try using cache (reseted recent comments mode), waiting for ' . $_SESSION['reemptycacheplugin'][$md5url]
+											. ' on ' . $_SESSION['commentListRecord'] . ', L: ' . $_SESSION['activelang'] . ', Userid: ' .
 															intval($GLOBALS['TSFE']->fe_user->user['uid']) . '<br />';
 								}
 
@@ -2249,7 +2329,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 					}
 
 				} else {
-					$_SESSION['reemptycache']['p' . $GLOBALS['TSFE']->id]=0;
+					$_SESSION['reemptycache'][$md5url]=0;
 					if ($_SESSION['runMemCache'] == TRUE) {
 						if ($this->conf['advanced.']['useSessionCache']==1) {
 							$domemcache = TRUE;
@@ -2412,25 +2492,30 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			if ($domemcache == TRUE) {
 
 				if (isset($_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-						$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid']['p' . $GLOBALS['TSFE']->id])) {
+						$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid'][$md5url])) {
 					if ($_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-							$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid']['p' . $GLOBALS['TSFE']->id]>0) {
+							$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid'][$md5url]>0) {
 						if ($_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-								$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid']['p' .
-								$GLOBALS['TSFE']->id] > $this->getPluginCacheControlTstamp($_SESSION['commentListRecord'])) {
+								$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid'][$md5url] > $this->getPluginCacheControlTstamp($_SESSION['commentListRecord'])) {
 									if ($this->conf['sessionCompressionLevel'] > 0) {
-										$outml = gzuncompress($_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-												$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid']['p' . $GLOBALS['TSFE']->id]);
+										if ($this->canZip == TRUE) {
+											$outml = gzdecode($_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+												$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid'][$md5url]);
+
+										} else {
+											$outml = gzuncompress($_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+												$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid'][$md5url]);
+										}
 									} else {
 										$outml = $_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-													$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid']['p' . $GLOBALS['TSFE']->id];
+													$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid'][$md5url];
 									}
 						} else {
 							if ($this->showsdebugprint) {
 								if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
 									$this->sdebugprint .= '<b>' . date('H:i:s') . '</b>: Cache dropped, last cachetime ' .
 															date('H:i:s', $_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] .
-															'U' . $GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid']['p' . $GLOBALS['TSFE']->id]) .
+															'U' . $GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid'][$md5url]) .
 															' older than  ' . date( 'H:i:s', $this->getPluginCacheControlTstamp($_SESSION['commentListRecord'])) .
 														', cid: ' .$_SESSION['commentListRecord'] .'<br />';
 									$whynocache='was dropped';
@@ -2439,9 +2524,9 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 							}
 
 							$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-								$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid']['p' . $GLOBALS['TSFE']->id]=0;
+								$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid'][$md5url]=0;
 							$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-								$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid']['p' . $GLOBALS['TSFE']->id]='';
+								$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid'][$md5url]='';
 
 							$domemcache=FALSE;
 							$this->cachedropped=TRUE;
@@ -2471,8 +2556,8 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				} else {
 
 					if ($_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-							$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid']['p' .
-							$GLOBALS['TSFE']->id] < $this->getPluginCacheControlTstamp($_SESSION['commentListRecord'])) {
+							$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid'][$md5url] <
+							$this->getPluginCacheControlTstamp($_SESSION['commentListRecord'])) {
 						if ($this->showsdebugprint) {
 							if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
 								$this->sdebugprint .= '<b>Cache dropped</b> for ' . $_SESSION['commentListRecord']. ', L: ' . $_SESSION['activelang'] .
@@ -2482,16 +2567,16 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 						}
 
 						if ($this->getLastUserAdditionTstamp() > $_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] .
-								'U' . $GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid']['p' . $GLOBALS['TSFE']->id]) {
+								'U' . $GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid'][$md5url]) {
 							// if exeptionally a new user has been added since the last caching time, then the user pics need an update
 							$_SESSION['AJAXimages'] = array();
 							$_SESSION['AJAXOrigimages'] = array();
 						}
 
 						$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-							$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid']['p' . $GLOBALS['TSFE']->id]=0;
+							$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid'][$md5url]=0;
 						$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-							$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid']['p' . $GLOBALS['TSFE']->id]='';
+							$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid'][$md5url]='';
 
 						$domemcache=FALSE;
 					}
@@ -2536,22 +2621,26 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				if (intval($this->conf['advanced.']['wallExtension']) == 0) {
 					if ((intval(t3lib_div::_GP('no_cache'))==0) && (!isset($_GET['toctoc_comments_pi1']['anchor']))) {
 						$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-							$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid']['p' . $GLOBALS['TSFE']->id]=round(microtime(TRUE), 0);
+							$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid'][$md5url]=round(microtime(TRUE), 0);
 						if ($this->conf['sessionCompressionLevel'] > 0) {
+							if ($this->canZip == TRUE) {
 								$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-									$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid']['p' .
-								$GLOBALS['TSFE']->id]=gzcompress($outml, $this->conf['sessionCompressionLevel']);
+										$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid'][$md5url] = gzencode($outml, $this->conf['sessionCompressionLevel']);
+							} else {
+								$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+									$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid'][$md5url] = gzcompress($outml, $this->conf['sessionCompressionLevel']);
+							}
+
 						} else {
 								$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-										$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid']['p' .
-										$GLOBALS['TSFE']->id]=$outml;
+										$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid'][$md5url]=$outml;
 						}
 
 					} else {
 						$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-							$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid']['p' . $GLOBALS['TSFE']->id]=0;
+							$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid'][$md5url]=0;
 						$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-							$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid']['p' . $GLOBALS['TSFE']->id]='';
+							$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid'][$md5url]='';
 					}
 
 				}
@@ -2917,11 +3006,9 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 		$jscontent .= 'var textAddComment = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.add_comment', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textReplyToComment = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.replytocomment', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textAddComplaint = "' . base64_encode($this->lib->pi_getLLWrap($this, 'commentreport.text_text', FALSE)) . '";' . "\n";
-		$jscontent .= 'var textAddemoji = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.add_emoji', FALSE)) . '";' . "\n";
-		$jscontent .= 'var textCloseemoji = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.close_emoji', FALSE)) . '";' . "\n";
 		$jscontent .= 'var confuseEmoji = ' . intval($this->conf['advanced.']['useEmoji']) . ';' . "\n";
     	$jscontent .= 'var textLoading = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.loadingpreview', FALSE)) . '";' . "\n";
-		$jscontent .= 'var textDeleteConfirm = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.deletecommentconfirm', FALSE)) . '";' . "\n";
+ 		$jscontent .= 'var textDeleteConfirm = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.deletecommentconfirm', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textCookieConfirm = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.cookiecommentconfirm', FALSE)) . '";' . "\n";
 		$jscontent .= 'var texttermscond = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.termscondconfirm', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textdisclaimernohttps = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.disclaimersafetyreporthttp', FALSE)) . '";' . "\n";
@@ -2951,9 +3038,11 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 			} else {
 				$addpath = '" convert';
 			}
+
 			$jscontent .= 'var pathim = "' . base64_encode($GLOBALS['TYPO3_CONF_VARS']['GFX']['im_path'] . 'gm' . $addpath) . '";' . "\n";
 
 		}
+
 		$jscontent .= 'var textmessagecannotdelete = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.textmessagecannotdelete', FALSE)) . '";' . "\n";
 		$jscontent .= 'var textmessagecannotinsert = "' . base64_encode($this->lib->pi_getLLWrap($this, 'pi1_template.textmessagecannotinsert', FALSE)) . '";' . "\n";
 		$jscontent .= 'var configbaseURL = "' . base64_encode($this->locationHeaderUrlsubDir()) . '";' . "\n";
@@ -3371,6 +3460,84 @@ div.tx-tc-ct-form-field input, textarea.tx-tc-ctinput-textarea, textarea.tx-tc-c
 		$this->LESSVars['val'][$this->LESS_i] = intval($this->conf['UserImageSize']) . 'px';
 		$this->LESS_i++;
 
+		$this->LESSVars['comment'][$this->LESS_i] = '// TS:  UserImageSizeInForm'. "\n";
+		$this->LESSVars['var'][$this->LESS_i] = '@userImageSizeInForm';
+		$this->LESSVars['val'][$this->LESS_i] = intval($this->conf['UserImageSizeInForm']) . 'px';
+		$this->LESS_i++;
+
+		$arrUserImageCSS = explode(',', $this->conf['theme.']['UserImageCSSGrayScale']);
+		$strfilter = '50%';
+		if (count($arrUserImageCSS) == 2) {
+			$filterAmount = str_replace('%', '', $arrUserImageCSS[0]);
+			if (($filterAmount != $arrUserImageCSS[0]) && (intval($filterAmount) >= 0) && (intval($filterAmount) <= 100)) {
+				$strfilter = $arrUserImageCSS[0];
+			}
+		}
+		$this->LESSVars['comment'][$this->LESS_i] = '// TS:  UserImageCSSGrayScale'. "\n";
+		$this->LESSVars['var'][$this->LESS_i] = '@UserImageCSSGrayScale';
+		$this->LESSVars['val'][$this->LESS_i] = $strfilter;
+		$this->LESS_i++;
+		$strfilter = '0%';
+		if (count($arrUserImageCSS) == 2) {
+			$filterAmount = str_replace('%', '', $arrUserImageCSS[1]);
+			if (($filterAmount != $arrUserImageCSS[1]) && (intval($filterAmount) >= 0) && (intval($filterAmount) <= 100)) {
+				$strfilter = $arrUserImageCSS[1];
+			}
+		}
+		$this->LESSVars['comment'][$this->LESS_i] = '// TS:  UserImageCSSGrayScaleHover'. "\n";
+		$this->LESSVars['var'][$this->LESS_i] = '@UserImageCSSGrayScaleHover';
+		$this->LESSVars['val'][$this->LESS_i] = $strfilter;
+		$this->LESS_i++;
+
+		$arrUserImageCSS = explode(',', $this->conf['theme.']['UserImageCSSBlur']);
+		$strfilter = '0px';
+		if (count($arrUserImageCSS) == 2) {
+			$filterAmount = str_replace('px', '', $arrUserImageCSS[0]);
+			if (($filterAmount != $arrUserImageCSS[0]) && (intval($filterAmount) >= 0) && (intval($filterAmount) <= 100)) {
+				$strfilter = $arrUserImageCSS[0];
+			}
+		}
+		$this->LESSVars['comment'][$this->LESS_i] = '// TS:  UserImageCSSBlur'. "\n";
+		$this->LESSVars['var'][$this->LESS_i] = '@UserImageCSSBlur';
+		$this->LESSVars['val'][$this->LESS_i] = $strfilter;
+		$this->LESS_i++;
+		$strfilter = '0px';
+		if (count($arrUserImageCSS) == 2) {
+			$filterAmount = str_replace('px', '', $arrUserImageCSS[1]);
+			if (($filterAmount != $arrUserImageCSS[1]) && (intval($filterAmount) >= 0) && (intval($filterAmount) <= 100)) {
+				$strfilter = $arrUserImageCSS[1];
+			}
+		}
+		$this->LESSVars['comment'][$this->LESS_i] = '// TS:  UserImageCSSBlurHover'. "\n";
+		$this->LESSVars['var'][$this->LESS_i] = '@UserImageCSSBlurHover';
+		$this->LESSVars['val'][$this->LESS_i] = $strfilter;
+		$this->LESS_i++;
+
+		$arrUserImageCSS = explode(',', $this->conf['theme.']['UserImageCSSSepia']);
+		$strfilter = '0%';
+		if (count($arrUserImageCSS) == 2) {
+			$filterAmount = str_replace('%', '', $arrUserImageCSS[0]);
+			if (($filterAmount != $arrUserImageCSS[0]) && (intval($filterAmount) >= 0) && (intval($filterAmount) <= 100)) {
+				$strfilter = $arrUserImageCSS[0];
+			}
+		}
+		$this->LESSVars['comment'][$this->LESS_i] = '// TS:  UserImageCSSSepia'. "\n";
+		$this->LESSVars['var'][$this->LESS_i] = '@UserImageCSSSepia';
+		$this->LESSVars['val'][$this->LESS_i] = $strfilter;
+		$this->LESS_i++;
+		$strfilter = '0%';
+		if (count($arrUserImageCSS) == 2) {
+			$filterAmount = str_replace('%', '', $arrUserImageCSS[1]);
+			if (($filterAmount != $arrUserImageCSS[1]) && (intval($filterAmount) >= 0) && (intval($filterAmount) <= 100)) {
+				$strfilter = $arrUserImageCSS[1];
+			}
+		}
+
+		$this->LESSVars['comment'][$this->LESS_i] = '// TS:  UserImageCSSSepiaHover'. "\n";
+		$this->LESSVars['var'][$this->LESS_i] = '@UserImageCSSSepiaHover';
+		$this->LESSVars['val'][$this->LESS_i] = $strfilter;
+		$this->LESS_i++;
+
 		$this->LESSVars['comment'][$this->LESS_i] = '// TS:  theme.boxmodelLevelIndent no px value'. "\n";
 		$this->LESSVars['var'][$this->LESS_i] = '@boxmodelLevelIndent';
 		$this->LESSVars['val'][$this->LESS_i] = intval($this->conf['theme.']['boxmodelLevelIndent']);
@@ -3452,11 +3619,13 @@ div.tx-tc-ct-form-field input, textarea.tx-tc-ctinput-textarea, textarea.tx-tc-c
 
 		if ($this->conf['useUserImage']==1) {
 			$useUserImageSize = $this->conf['UserImageSize'];
+			$useUserImageSizeInForm = $this->conf['UserImageSizeInForm'];
 			$ctpicvisibility = 'visible';
 			$cssctpicform= '';
 			$ctpicwidth = '';
 		} else {
 			$useUserImageSize = 0;
+			$useUserImageSizeInForm = 0;
 			$ctpicvisibility = 'hidden';
 			$ctpicwidth = '
     width: 0px;';
@@ -3477,7 +3646,7 @@ div.tx-tc-ct-form-field input, textarea.tx-tc-ctinput-textarea, textarea.tx-tc-c
 ';
 
 		}
-		$minheightcommentbox = intval($this->conf['UserImageSize']) + (3*(intval($this->conf['theme.']['boxmodelSpacing'])));
+		$minheightcommentbox = intval($this->conf['UserImageSizeInForm']) + (3*(intval($this->conf['theme.']['boxmodelSpacing'])));
 
 		$vidmaxwidth=round(intval($this->conf['attachments.']['webpagePreviewHeight'])*(4/3), 0);
 		$websitepreviewareaimagewidth = intval($this->conf['attachments.']['webpagePreviewHeight']) + 10;
@@ -3594,6 +3763,11 @@ Begin CSS Configured from TS-Variables in function checkCSSLoc
 		$this->LESSVars['val'][$this->LESS_i] = intval($this->conf['attachments.']['picUploadMaxDimX']) . 'px';
 		$this->LESS_i++;
 
+		$this->LESSVars['comment'][$this->LESS_i] = '// TS: attachments.picUploadMaxDimY'. "\n";
+		$this->LESSVars['var'][$this->LESS_i] = '@picUploadMaxDimY';
+		$this->LESSVars['val'][$this->LESS_i] = intval($this->conf['attachments.']['picUploadMaxDimY']) . 'px';
+		$this->LESS_i++;
+
 		$this->LESSVars['comment'][$this->LESS_i] = '// TS: topRatings.topratingsnumberwidth'. "\n";
 		$this->LESSVars['var'][$this->LESS_i] = '@topRatingsNumberWidth';
 		$this->LESSVars['val'][$this->LESS_i] = intval($this->conf['topRatings.']['topratingsnumberwidth']) . 'px';
@@ -3648,7 +3822,7 @@ textarea.tx-tc-ctinput-textarea, textarea.tx-tc-ctinput-textarea-rq, input.tx-tc
     margin: -4px 4px 2px ' . (intval($useUserImageSize)+10) . 'px;
 }
 .tx-tc-ct-rybox {
-    min-height: ' . (intval($this->conf['UserImageSize'])+ 4 + intval($this->conf['theme.']['boxmodelLineHeight']-16)) . 'px;
+    min-height: ' . (intval($this->conf['UserImageSizeInForm'])+ 4 + intval($this->conf['theme.']['boxmodelLineHeight']-16)) . 'px;
 }
 .tx-tc-ct-box-picturecrop32 {
     height: ' . (intval($this->conf['UserImageSize'])-8) .'px;
@@ -3657,7 +3831,7 @@ textarea.tx-tc-ctinput-textarea, textarea.tx-tc-ctinput-textarea-rq, input.tx-tc
     margin: 0 0 0 ' . (intval($useUserImageSize)+10) .'px;
  }
 .tx-tc-ct-form-field-1 {
-   	margin-left: -' . (intval($useUserImageSize)) .'px;
+   	margin-left: -' . (intval($useUserImageSizeInForm)) .'px;
 }
 .tx-tc-trt-rating {
     margin: 0 '.(intval($this->conf['theme.']['boxmodelSpacing'])).'px 0 0;
@@ -3702,6 +3876,10 @@ textarea.tx-tc-ctinput-textarea, textarea.tx-tc-ctinput-textarea-rq, input.tx-tc
 .tx-tc-uimgsize {
 	width: ' . intval($this->conf['UserImageSize']) . 'px;
 	height: ' . intval($this->conf['UserImageSize']) . 'px;
+}
+.tx-tc-ct-box-picturecrop322 img {
+	width: ' . intval($this->conf['UserImageSizeInForm']) . 'px;
+	height: ' . intval($this->conf['UserImageSizeInForm']) . 'px;;
 }
 textarea.tx-tc-ctinput-textarea, textarea.tx-tc-ctinput-textarea-rq {
 	height: ' . $taheight . 'px;
@@ -4099,7 +4277,6 @@ sharrre design 2 and 4, calculated specifics
 			$starttimedebug=microtime(TRUE);
 			$this->sdebuginitprint.='MergeConfiguration: ' . round(1000*($starttimedebug - $endtimedebug), 1) .', ';
 		}
-
 		$_SESSION['commentsPageOrigId']=0;
 		$_SESSION['commentsContentElementOrigId']=0;
 		if ($this->lhookTablePrefix != '') {
@@ -4170,6 +4347,10 @@ sharrre design 2 and 4, calculated specifics
 
 		$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $this->conf['templateFile']);
 		$usetemplateFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
+		if (!isset($this->cObj)) {
+			$this->cObj = t3lib_div::makeInstance('tslib_cObj');
+			$this->cObj->start('', '');
+		}
 		$this->templateCode = $this->cObj->fileResource($usetemplateFile);
 
 		$key = 'EXT:toctoc_comments_' . md5($this->templateCode);
@@ -4196,6 +4377,7 @@ sharrre design 2 and 4, calculated specifics
 				if ($ckeckresult!='') {
 					return $ckeckresult;
 				}
+				$this->checkandload_emolikes();
 				$this->checkCSSLoc();
 				$this->boxmodel();
 				if ($this->showsdebugprint==TRUE) {
@@ -4259,6 +4441,39 @@ sharrre design 2 and 4, calculated specifics
 
 				}
 
+				if ($this->conf['ratings.']['emoLike'] ==1 ) {
+					$filenametheme='theme.less';
+					$dirsep=DIRECTORY_SEPARATOR;
+
+					$repstr= str_replace('/', $dirsep, '/typo3conf/ext/toctoc_comments/pi1');
+					if (trim($this->conf['theme.']['selectedTheme']) == '') {
+						$this->conf['theme.']['selectedTheme'] = 'default';
+					}
+
+					$txdirnametheme= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep . t3lib_extMgm::siteRelPath('toctoc_comments') .
+							'res/css/themes/' . $this->conf['theme.']['selectedTheme'] . '/' );
+					$filenametheme=$txdirnametheme . $filenametheme;
+					$contentlesscolors = file_get_contents($this->themeLESSfile);
+					$colarr =  explode('@linkbox-color-dislike-active: ', $contentlesscolors);
+					$colarr2 = explode(';', $colarr[1]);
+					$colarra =  explode('@linkbox-color-active: ', $contentlesscolors);
+					$colarra2 = explode(';', $colarra[1]);
+					$colourcodesemo = 'colourcodeemo[0] = "'.trim($colarra2[0]).'";
+	colourcodeemo[1] = "'.trim($colarra2[0]).'";
+	colourcodeemo[7] = "'.trim($colarr2[0]).'";';
+
+					$strsql='SELECT uid AS emolikeid, emolike_sort, emolike_colorcode
+								FROM tx_toctoc_comments_emolike
+								WHERE emolike_colorcode != "" AND emolike_setfolder = "'.$this->conf['ratings.']['emoLikeSet'] .'"
+								AND deleted = 0
+								ORDER BY emolike_sort';
+					$resultl= $GLOBALS['TYPO3_DB']->sql_query($strsql);
+					while ($likerows = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultl)) {
+
+						$colourcodesemo .= '
+	colourcodeemo['.$likerows['emolike_sort'] .'] = "'.$likerows['emolike_colorcode'].'";';
+					}
+				}
 				if ($this->showsdebugprint==TRUE) {
 					$starttimedebug21=microtime(TRUE);
 					$this->sdebuginitprint.='Check new comments: ' . round(1000*($starttimedebug21 - $starttimedebug2), 1) .', ';
@@ -4274,7 +4489,7 @@ sharrre design 2 and 4, calculated specifics
 				}
 
 				$this->tcchangepasswordcard = '';
-				$locchangePasswordFormhtml= '	var tcpasswordcard ="";
+				$locchangePasswordFormhtml = '	var tcpasswordcard ="";
 ';
 
 				$rsajsloc = 'resources';
@@ -4289,7 +4504,9 @@ sharrre design 2 and 4, calculated specifics
 					$rsajsenc = '/rsaauth_min.js';
 					$rsascript='<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/' . $rsajsloc . $rsajsenc . '"></script>';
 				}
+
 				$plsUseRSA = 0;
+
 				if (version_compare(TYPO3_version, '7.4', '<')) {
 					$rsajsstr = '<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/' . $rsajsloc . '/jsbn/jsbn.js"></script>
 						<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). 'typo3/sysext/rsaauth/' . $rsajsloc . '/jsbn/prng4.js"></script>
@@ -4408,7 +4625,7 @@ sharrre design 2 and 4, calculated specifics
 
 					$this->tclogincard = str_replace('Youre logged in.', '', $locLoginFormhtml);
 					$locLoginFormhtml = base64_encode($locLoginFormhtml);
-					$locLoginFormhtml = '	var tclogincard ="' . $locLoginFormhtml . '";
+					$locLoginFormhtml = '	var tclogincard =\'' . $locLoginFormhtml . '\';
 ';
 				}
 
@@ -4440,7 +4657,23 @@ sharrre design 2 and 4, calculated specifics
 				$jscontent .= '	var textnameCommentSeparator = "' . base64_encode(trim($this->conf['advanced.']['nameCommentSeparator'])) . '";' . "\n";
 				$jscontent .= '	var confuseNameCommentSeparator = ' . intval($this->conf['advanced.']['useNameCommentSeparator']) . ';' . "\n";
 				$starttimedebug22=microtime(TRUE);
-				$jsservervars = $rsajsstr . '<script type="text/javascript">
+				$jsjqmobile = '0';
+				if ($this->detectmobile() == TRUE) {
+					$jsjqmobile = '1';
+				}
+
+				$emolike = '
+	var emolike = 0;';
+				if ($this->conf['ratings.']['emoLike'] == 1) {
+					$emolike = '
+	var emolike = 1;
+	var colourcodeemo = [];
+	' . $colourcodesemo;
+				}
+				$jsservervars = '' . $rsajsstr . '
+<script type="text/javascript">
+	var tcistouch = ' . $jsjqmobile  .';
+	var screenmd = ' . $this->arrResponsiveSteps[1] . ';
 	var tccommnetidstart = ' . $mincommentid  .';
 	var tccommnetidto = ' . $maxcommentid  .';
 	var pageid = ' . $GLOBALS['TSFE']->id .';
@@ -4449,7 +4682,7 @@ sharrre design 2 and 4, calculated specifics
 	var loginRequiredIdLoginForm = "' . $loginRequiredIdLoginForm .'";
 	var loginRequiredRefreshCIDs = "";
 	var loginRequiredRefreshRecs = "";
-	var global_loggedon = '. $tlogon . ';' . "\n". $locLoginFormhtml . $locchangePasswordFormhtml . "\n". '
+	var global_loggedon = '. $tlogon . ';' . $emolike . "\n". $locLoginFormhtml . $locchangePasswordFormhtml . "\n". '
 </script>'. "\n". '<script type="text/javascript">
 ' . $jscontent . "\n". '</script>';
 
@@ -4539,6 +4772,16 @@ sharrre design 2 and 4, calculated specifics
 				$filenm = $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') .
 				'res/css/' . $this->boxmodelcss;
 				$mod1_file = $this->createVersionNumberedFilename($filenm);
+				//$jsjqmobile = '1';
+				$jquerymobilefile = '';
+				if ($jsjqmobile == '1') {
+					$filenjqmobinit = $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/js/tx-tc-jquerymobileinit-' .$this->extVersion. '.js';
+					$filenjqmob = $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/js/jquery.mobile.min.js';
+					$jquerymobilefile = '
+							<script type="text/javascript" src="' . $this->createVersionNumberedFilename($filenjqmobinit) .'"></script>
+							<script type="text/javascript" src="' . $this->createVersionNumberedFilename($filenjqmob) .'"></script>';
+				}
+
 				$filenm2 = $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/js/tx-tc-' .$this->extVersion. '.js';
 				$jsmain = $this->createVersionNumberedFilename($filenm2);
 				$filenjqt = $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/js/jquery.toctoc.tools.min.js';
@@ -4602,6 +4845,7 @@ sharrre design 2 and 4, calculated specifics
 						'###EMOJIJS###' => $emojijs,
 						'###AJAXLOGINJS###' => $ajaxloginjs . $freecapjs . $googleloginjs,
 						'###JSSERVERVARS###' => $jsservervars,
+						'###JSJQMOBILE###' => $jquerymobilefile,
 						'###JSMAIN###' => $jsmain,
 				), $subParts);
 				$GLOBALS['TSFE']->additionalHeaderData[$key] = $headerParts;
@@ -4872,6 +5116,27 @@ sharrre design 2 and 4, calculated specifics
 		if (intval($this->conf['sharing.']['useOnlySharing'])==1) {
 			$this->conf['ratings.']['ratingsOnly'] = 1;
 			$this->conf['ratings.']['enableRatings'] = 0;
+		}
+
+		if ((($this->conf['sharing.']['useOnlySharing'] == 1) || (($this->conf['sharing.']['useSharing'] == 1) && ($this->conf['ratings.']['ratingsOnly'] == 1) && ($this->conf['ratings.']['enableRatings'] == 0))) == FALSE) {
+			if (($this->conf['sharing.']['useSharing'] == 1) && ((($this->conf['ratings.']['ratingsOnly'] == 0) && ($this->conf['ratings.']['enableRatings'] == 1) && ($this->conf['ratings.']['useLikeDisLike'] == 1)) ||
+					($this->conf['advanced.']['useCommentLink'] == 1))) {
+				if ($this->conf['sharing.']['useSharingDesign'] == 4) {
+					// add this is set to opoup small buttons, because it's to large for the location in the plugin
+					$this->conf['sharing.']['useSharingDesign'] = 0;
+				}
+
+				if ($this->conf['sharing.']['useSharingDesign'] == 3) {
+					// buttons open definetely wont work, this is set to popup buttons, because it's to large for the location in the plugin
+					$this->conf['sharing.']['useSharingDesign'] = 1;
+				}
+
+				if ($this->conf['sharing.']['useSharingDesign'] == 5) {
+					// switch off sharing if user want to place a disabled open plugin into the topline of a comments ( ratings combined plugin
+					$this->conf['sharing.']['useSharing'] = 0;
+				}
+
+			}
 		}
 
 		$this->fetchConfigValue('spamProtect.requireApproval');
@@ -5192,6 +5457,148 @@ sharrre design 2 and 4, calculated specifics
 		$this->LESSVars['val'][$this->LESS_i] = $this->conf['theme.']['themeVersion'];
 		$this->LESS_i++;
 
+		$this->LESSVars['comment'][$this->LESS_i] = '// TS: ratings.emoLikeSet'. "\n";
+		$this->LESSVars['var'][$this->LESS_i] = '@emoLikeSetPath';
+		$this->LESSVars['val'][$this->LESS_i] = '"../../../Resources/Public/Icons/emolike/' . $this->conf['ratings.']['emoLikeSet'] . '/"';
+		$this->LESS_i++;
+
+		$isTabletOrHandyexceptFF = $this->detectmobile(TRUE);
+		$this->LESSVars['comment'][$this->LESS_i] = '// TS: isTabletOrHandyexceptFF'. "\n";
+		$this->LESSVars['var'][$this->LESS_i] = '@isTabletOrHandyexceptFF';
+		$this->LESSVars['val'][$this->LESS_i] = intval($isTabletOrHandyexceptFF) == 1 ? 'true' : 'false';
+		$this->LESS_i++;
+		$ratingsemoLikeSet = $this->conf['ratings.']['emoLikeSet'];
+		if (trim($this->conf['ratings.']['emoLikeSet']) == '') {
+			$ratingsemoLikeSet = 'default';
+		}
+
+		$whereel ='emolike_setfolder = "' . $ratingsemoLikeSet . '" AND deleted = 0 AND emolike_ll <> "Like" AND emolike_ll <> "Dislike"';
+
+		$rowsel = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('uid, emolike_setpos, emolike_ll,emolike_sort, emolike_colorcode',
+				'tx_toctoc_comments_emolike',
+				$whereel,
+				'',
+				'emolike_sort',
+				'5');
+		$emolikeLLarr = array();
+		$ei = 0;
+
+		$indataarr = array();
+		$foundpos1 = FALSE;
+		$foundpos2 = FALSE;
+		$foundpos3 = FALSE;
+		$foundpos4 = FALSE;
+		$foundpos5 = FALSE;
+
+		if (count($rowsel)>0) {
+			$iel = 2;
+			foreach ($rowsel as $rowel) {
+				$this->LESSVars['comment'][$this->LESS_i] = '// TS: ratings.emoLikeSet->Positions(' . trim(intval($rowel['emolike_sort'])) . ')'. "\n";
+				$this->LESSVars['var'][$this->LESS_i] = '@emoLikeSetPathPos'. $iel;
+				if ($rowel['emolike_setpos'] == 5) {
+					// normally angry
+					$emolike_setpos = '-336px';
+					$foundpos5 = TRUE;
+				} elseif ($rowel['emolike_setpos'] == 4) {
+					// normally sad
+					$emolike_setpos = '-240px';
+					$foundpos4 = TRUE;
+				} elseif ($rowel['emolike_setpos'] == 3) {
+					// normally wow
+					$emolike_setpos = '-144px';
+					$foundpos3 = TRUE;
+				} elseif ($rowel['emolike_setpos'] == 2) {
+					// normally haha
+					$emolike_setpos = '-96px';
+					$foundpos2 = TRUE;
+				} elseif ($rowel['emolike_setpos'] == 1) {
+					// normally love
+					$emolike_setpos = '0px';
+					$foundpos1 = TRUE;
+				} else {
+					// normally the grey haha, it's not used
+					$emolike_setpos = '-48px';
+				}
+				$indataarr[$iel] = $iel;
+				$this->LESSVars['val'][$this->LESS_i] = $emolike_setpos;
+				$this->LESS_i++;
+				$iel++;
+			}
+			if ($foundpos5 == FALSE) {
+				// find free sort
+				$freesort = count($indataarr)+2;
+				$this->LESSVars['comment'][$this->LESS_i] = '// TS: ratings.emoLikeSet->Positions('.$freesort.')'. "\n";
+				$this->LESSVars['var'][$this->LESS_i] = '@emoLikeSetPathPos'.$freesort;
+				$this->LESSVars['val'][$this->LESS_i] = '-48px';
+				$this->LESS_i++;
+				$indataarr[count($indataarr)+1] = $freesort;
+			}
+			if ($foundpos4 == FALSE) {
+				// find free sort
+				$freesort = count($indataarr)+2;
+				$this->LESSVars['comment'][$this->LESS_i] = '// TS: ratings.emoLikeSet->Positions('.$freesort.')'. "\n";
+				$this->LESSVars['var'][$this->LESS_i] = '@emoLikeSetPathPos'.$freesort;
+				$this->LESSVars['val'][$this->LESS_i] = '-48px';
+				$this->LESS_i++;
+				$indataarr[count($indataarr)+1] = $freesort;
+			}
+			if ($foundpos3 == FALSE) {
+				// find free sort
+				$freesort = count($indataarr)+2;
+				$this->LESSVars['comment'][$this->LESS_i] = '// TS: ratings.emoLikeSet->Positions('.$freesort.')'. "\n";
+				$this->LESSVars['var'][$this->LESS_i] = '@emoLikeSetPathPos'.$freesort;
+				$this->LESSVars['val'][$this->LESS_i] = '-48px';
+				$this->LESS_i++;
+				$indataarr[count($indataarr)+1] = $freesort;
+			}
+			if ($foundpos2 == FALSE) {
+				// find free sort
+				$freesort = count($indataarr)+2;
+				$this->LESSVars['comment'][$this->LESS_i] = '// TS: ratings.emoLikeSet->Positions('.$freesort.')'. "\n";
+				$this->LESSVars['var'][$this->LESS_i] = '@emoLikeSetPathPos'.$freesort;
+				$this->LESSVars['val'][$this->LESS_i] = '-48px';
+				$this->LESS_i++;
+				$indataarr[count($indataarr)+1] = $freesort;
+			}
+			if ($foundpos1 == FALSE) {
+				// find free sort
+				$freesort = count($indataarr)+2;
+				$this->LESSVars['comment'][$this->LESS_i] = '// TS: ratings.emoLikeSet->Positions('.$freesort.')'. "\n";
+				$this->LESSVars['var'][$this->LESS_i] = '@emoLikeSetPathPos'.$freesort;
+				$this->LESSVars['val'][$this->LESS_i] = '-48px';
+				$this->LESS_i++;
+				$indataarr[count($indataarr)+1] = $freesort;
+			}
+
+			foreach ($rowsel as $rowel) {
+				$this->LESSVars['comment'][$this->LESS_i] = '// TS: ratings.emoLikeSet->Colorcode(' . trim($rowel['emolike_ll']) . ')'. "\n";
+				$this->LESSVars['var'][$this->LESS_i] = '@emoLikeSetColorCode'.trim($rowel['emolike_ll']);
+				$this->LESSVars['val'][$this->LESS_i] = $rowel['emolike_colorcode'];
+				$this->LESS_i++;
+				$emolikeLLarr[$ei] = '"' . trim($rowel['emolike_ll']) . '"';
+				$ei++;
+			}
+		}
+		$emolikeLLs = implode (',', $emolikeLLarr);
+		// step to add the css for other emolikes which are not used, so the LESS-model wiill be staisfied
+		$whereel ='emolike_ll NOT IN (' . $emolikeLLs . ') AND deleted = 0 AND emolike_ll <> "Like" AND emolike_ll <> "Dislike"';
+
+		$rowsel = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('DISTINCT emolike_ll',
+				'tx_toctoc_comments_emolike',
+				$whereel,
+				'',
+				'emolike_ll',
+				'');
+
+		if (count($rowsel)>0) {
+			foreach ($rowsel as $rowel) {
+				$this->LESSVars['comment'][$this->LESS_i] = '// TS: ratings.emoLikeSet->Colorcode(' . trim($rowel['emolike_ll']) . ')'. "\n";
+				$this->LESSVars['var'][$this->LESS_i] = '@emoLikeSetColorCode'.trim($rowel['emolike_ll']);
+				$this->LESSVars['val'][$this->LESS_i] = '#cccccc';
+				$this->LESS_i++;
+			}
+		}
+
 		if ($this->conf['theme.']['refreshCSSFromLESS'] != 1) {
 			// checking boxmodel_system
 			$txdirnameboxmodelsystem= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep .
@@ -5212,6 +5619,7 @@ sharrre design 2 and 4, calculated specifics
 				}
 
 			}
+
 		}
 
 		$httpsid='';
@@ -5220,19 +5628,28 @@ sharrre design 2 and 4, calculated specifics
 		}
 
 		$atMediaWitdhs = '-' . $this->arrResponsiveSteps[0] . $this->arrResponsiveSteps[1] . $this->arrResponsiveSteps[2];
+		$isTabletOrHandyexceptFF = $this->detectmobile(TRUE);
+
+		$ratingsemoLikeSet = trim($this->conf['ratings.']['emoLikeSet']);
+		if (trim($this->conf['ratings.']['emoLikeSet']) == '') {
+			$ratingsemoLikeSet = 'default';
+		}
+
 		if (trim($this->conf['theme.']['selectedBoxmodel']) != '') {
 			$filenamecssoutfile='tx-tc-' . $this->extVersion . '-' . str_replace('.txt', '', $this->conf['theme.']['selectedBoxmodel']) .'-' .
 					$this->conf['theme.']['selectedTheme'] . '-' . $GLOBALS['TSFE']->sys_language_uid  . $httpsid . '-' . $this->conf['ratings.']['useLikeDislikeStyle'] .
-					'-' . $this->conf['theme.']['boxmodelLabelInputPreserve'] . $atMediaWitdhs . '.css';
+					'-' . $this->conf['theme.']['boxmodelLabelInputPreserve'] . $this->conf['theme.']['themeVersion'] .
+			$this->conf['ratings.']['emoLike'] . $ratingsemoLikeSet . intval($isTabletOrHandyexceptFF) . intval($this->conf['useUserImage']) . $atMediaWitdhs . '.css';
 		} else {
 			$filenamecssoutfile='tx-tc-' . $this->extVersion . '-system-' .
 					$this->conf['theme.']['selectedTheme'] . '-' . $GLOBALS['TSFE']->sys_language_uid  . $httpsid . '-' . $this->conf['ratings.']['useLikeDislikeStyle'] .
-					'-' . $this->conf['theme.']['boxmodelLabelInputPreserve'] . $atMediaWitdhs . '.css';
+					'-' . $this->conf['theme.']['boxmodelLabelInputPreserve'] . $this->conf['theme.']['themeVersion'] .
+			$this->conf['ratings.']['emoLike'] . $ratingsemoLikeSet . intval($isTabletOrHandyexceptFF) . intval($this->conf['useUserImage']) . $atMediaWitdhs . '.css';
 		}
 
 		$txdirname= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep . t3lib_extMgm::siteRelPath('toctoc_comments') .
 				'res/css/temp/' );
-		$filenamecss=$txdirname . $filenamecssoutfile;
+		$filenamecss = $txdirname . $filenamecssoutfile;
 
 		if (file_exists($filenamecss)) {
 			$filetime = @filemtime($filenamecss);
@@ -5358,6 +5775,21 @@ sharrre design 2 and 4, calculated specifics
 							print 'boxmodelthemeVersion-file ' . $timecheckfile. ' not found<br>';
 							exit;
 						}
+						if (trim($this->conf['ratings.']['emoLike']) == '1') {
+							$timecheckfile = $txdirnamelessbootstrap . DIRECTORY_SEPARATOR .
+							'ratings' . DIRECTORY_SEPARATOR . 'emolike.less';
+							if (file_exists($timecheckfile)) {
+								$filetime = @filemtime($timecheckfile);
+								if ($this->newestLessFileTime < $filetime) {
+									$this->newestLessFileTime = $filetime;
+								}
+
+							} else {
+								print 'boxmodelthemeVersion-file ' . $timecheckfile. ' not found<br>';
+								exit;
+							}
+
+						}
 
 					}
 
@@ -5425,8 +5857,14 @@ sharrre design 2 and 4, calculated specifics
 											str_replace('boxmodel_', '', str_replace('.txt', '', trim($this->conf['theme.']['selectedBoxmodel']))) .
 											'.less";' . "\n";
 						}
+						$sepl = '';
 						if (trim($this->conf['theme.']['themeVersion']) == '2') {
 							$contentbmless .= '@import "themeVersion2.less";';
+							$sepl = "\n";
+						}
+
+						if (trim($this->conf['ratings.']['emoLike']) == '1') {
+							$contentbmless .= $sepl . '@import "../ratings/emolike.less";';
 						}
 
 						file_put_contents($lessphpbmfile, $contentbmless);
@@ -6515,10 +6953,10 @@ sharrre design 2 and 4, calculated specifics
 		}
 
 		if ($withplugin) {
-			$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' . $GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid']['p' .
-				$GLOBALS['TSFE']->id]=0;
-			$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' . $GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid']['p' .
-				$GLOBALS['TSFE']->id]='';
+			$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+				$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid'][$md5url] = 0;
+			$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+				$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid'][$md5url] = '';
 		}
 
 	}
@@ -6564,53 +7002,55 @@ sharrre design 2 and 4, calculated specifics
 	 * @return	void
 	 */
 	protected function InitCachingVariables () {
-		$saveactivateClearPageCache=$this->activateClearPageCache;
-		$this->activateClearPageCache=TRUE;
-		$tempStartTime = microtime(TRUE);
-		if (isset($_SESSION['StartTime'])) {
-			$tempStartTime = $_SESSION['StartTime'];
-		}
-		$tempblocktime = 0;
-		if (isset($_SESSION['unBlockTime'])) {
-			$tempblocktime = $_SESSION['unBlockTime'];
-		}
 
-		$currentSessionModule = $_SESSION['cSModule'];
-		$currentSessionName = $_SESSION['cSName'];
-		$currentSessionPath = $_SESSION['cSPath'];
-		$currentSessiongc_probability = $_SESSION['cSgcPr'];
-		$currentSessiongc_divisor = $_SESSION['cSgcDv'];
-		$currentSessiongc_maxlifetime = $_SESSION['cSgcMl'];
-		$sessionwasset = $_SESSION['cSwasSet'];
-		$sessionid = $_SESSION['cSId'];
+			$saveactivateClearPageCache=$this->activateClearPageCache;
+			$this->activateClearPageCache=TRUE;
+			$tempStartTime = microtime(TRUE);
+			if (isset($_SESSION['StartTime'])) {
+				$tempStartTime = $_SESSION['StartTime'];
+			}
+			$tempblocktime = 0;
+			if (isset($_SESSION['unBlockTime'])) {
+				$tempblocktime = $_SESSION['unBlockTime'];
+			}
 
-		$curPageName = '-';
+			$currentSessionModule = $_SESSION['cSModule'];
+			$currentSessionName = $_SESSION['cSName'];
+			$currentSessionPath = $_SESSION['cSPath'];
+			$currentSessiongc_probability = $_SESSION['cSgcPr'];
+			$currentSessiongc_divisor = $_SESSION['cSgcDv'];
+			$currentSessiongc_maxlifetime = $_SESSION['cSgcMl'];
+			$sessionwasset = $_SESSION['cSwasSet'];
+			$sessionid = $_SESSION['cSId'];
 
-		if (isset($_SESSION['curPageName'])) {
-			$curPageName = $_SESSION['curPageName'];
-		}
+			$curPageName = '-';
 
-		// total session reset
-		$_SESSION = array();
+			if (isset($_SESSION['curPageName'])) {
+				$curPageName = $_SESSION['curPageName'];
+			}
 
-		// but restore some core vars
-		$_SESSION['StartTime'] = $tempStartTime;
-		$_SESSION['unBlockTime'] = $tempblocktime;
-		$_SESSION['cSModule'] = $currentSessionModule;
-		$_SESSION['cSName'] = $currentSessionName;
-		$_SESSION['cSPath'] = $currentSessionPath;
-		$_SESSION['cSgcPr'] = $currentSessiongc_probability;
-		$_SESSION['cSgcDv'] = $currentSessiongc_divisor;
-		$_SESSION['cSgcMl'] = $currentSessiongc_maxlifetime;
-		$_SESSION['cSwasSet'] = $sessionwasset;
-		$_SESSION['cSId'] = $sessionid;
+			// total session reset
+			$_SESSION = array();
 
-		if ($curPageName != '-') {
-			$_SESSION['curPageName'] = $curPageName;
-		}
+			// but restore some core vars
+			$_SESSION['StartTime'] = $tempStartTime;
+			$_SESSION['unBlockTime'] = $tempblocktime;
+			$_SESSION['cSModule'] = $currentSessionModule;
+			$_SESSION['cSName'] = $currentSessionName;
+			$_SESSION['cSPath'] = $currentSessionPath;
+			$_SESSION['cSgcPr'] = $currentSessiongc_probability;
+			$_SESSION['cSgcDv'] = $currentSessiongc_divisor;
+			$_SESSION['cSgcMl'] = $currentSessiongc_maxlifetime;
+			$_SESSION['cSwasSet'] = $sessionwasset;
+			$_SESSION['cSId'] = $sessionid;
 
-		$this->doClearCache();
-		$this->activateClearPageCache = $saveactivateClearPageCache;
+			if ($curPageName != '-') {
+				$_SESSION['curPageName'] = $curPageName;
+			}
+
+			$this->doClearCache();
+			$this->activateClearPageCache = $saveactivateClearPageCache;
+
 	}
 
 	/**
@@ -6869,7 +7309,7 @@ sharrre design 2 and 4, calculated specifics
 	 */
 	protected function sharrrejs() {
 		$ret='';
-		if ($_SESSION['sharrrejs'][$GLOBALS['TSFE']->id]!='') {
+		if (($GLOBALS['TSFE']->id !='') && (trim($_SESSION['sharrrejs']) != '')) {
 			$httpsid='';
 			if (@$_SERVER['HTTPS'] == 'on') {
 				// on https StumbleUpon and Digg fail
@@ -6877,14 +7317,21 @@ sharrre design 2 and 4, calculated specifics
 					$httpsid='-https';
 				}
 			}
+			$sharingconfimprint =  $this->conf['sharing.']['useSharingDesign'] . $this->conf['sharing.']['dontUseSharingFacebook'] .
+			$this->conf['sharing.']['dontUseSharingGoogle'] . $this->conf['sharing.']['dontUseSharingTwitter'] . $this->conf['sharing.']['dontUseSharingLinkedIn'] .
+			$this->conf['sharing.']['dontUseSharingStumbleupon'] . $this->conf['sharing.']['dontUseSharingPinterest'] . $this->conf['sharing.']['dontUseSharingDigg'] .
+			$this->conf['sharing.']['dontUseSharingDelicious'] . $this->conf['sharing.']['dontUseSharingAddThisMore'];
 
-			$filenamejs='tx-tc-shrrr-' . $this->extVersion . '-' . $GLOBALS['TSFE']->id . '-' . $_SESSION['commentListRecord'] .
+			$md5url = md5($_SESSION['curPageName'] . $sharingconfimprint);
+
+			$filenamejs='tx-tc-shrrr-' . $this->extVersion . '-' . $md5url . '-' . $GLOBALS['TSFE']->id . '-' . $_SESSION['commentListRecord'] .
 			'-' . $GLOBALS['TSFE']->sys_language_uid  . $httpsid . '.js';
 
 			$dirsep=DIRECTORY_SEPARATOR;
 			$repstr= str_replace('/', $dirsep, '/typo3conf/ext/toctoc_comments/pi1');
 
-			$txdirname= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep . t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/js/temp/' );
+			$txdirname= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep .
+					t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/js/temp/' );
 			$filenamejs=$txdirname . $filenamejs;
 
 			$unlinked=FALSE;
@@ -6919,9 +7366,17 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 					$httpsid='-https';
 				}
 			}
-			$filenm = $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') .
-			'res/js/temp/tx-tc-shrrr-' . $this->extVersion . '-' . $GLOBALS['TSFE']->id . '-' . $_SESSION['commentListRecord'] .
+			$sharingconfimprint =  $this->conf['sharing.']['useSharingDesign'] . $this->conf['sharing.']['dontUseSharingFacebook'] .
+			$this->conf['sharing.']['dontUseSharingGoogle'] . $this->conf['sharing.']['dontUseSharingTwitter'] . $this->conf['sharing.']['dontUseSharingLinkedIn'] .
+			$this->conf['sharing.']['dontUseSharingStumbleupon'] . $this->conf['sharing.']['dontUseSharingPinterest'] . $this->conf['sharing.']['dontUseSharingDigg'] .
+			$this->conf['sharing.']['dontUseSharingDelicious'] . $this->conf['sharing.']['dontUseSharingAddThisMore'];
+
+			$md5url = md5($_SESSION['curPageName'] . $sharingconfimprint);
+			$filenamejsshrrr ='tx-tc-shrrr-' . $this->extVersion . '-' . $md5url . '-' . $GLOBALS['TSFE']->id . '-' . $_SESSION['commentListRecord'] .
 			'-' . $GLOBALS['TSFE']->sys_language_uid  . $httpsid . '.js';
+
+			$filenm = $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') .
+			'res/js/temp/' . $filenamejsshrrr;
 			$mod1_file = $this->createVersionNumberedFilename($filenm);
 			$ret='<script type="text/javascript" src="'. $mod1_file . '"></script>';
 
@@ -7238,8 +7693,13 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 				}
 
 				$_SESSION['AJAXUserimagerefresh'] = TRUE;
-				$_SESSION['AJAXUserimagerefreshImage'] = trim($GLOBALS['TSFE']->fe_user->user['image']);
-				$_SESSION['checktoctoccommentsuser']=1;
+				$fldimage = 'image';
+				if ($this->conf['advanced.']['FeUserDbField']) {
+					$fldimage = $this->conf['advanced.']['FeUserDbField'];
+				}
+
+				$_SESSION['AJAXUserimagerefreshImage'] = trim($this->conf['advanced.']['FeUserImagePath']) . trim($GLOBALS['TSFE']->fe_user->user[$fldimage]);
+				$_SESSION['checktoctoccommentsuser'] = 1;
 			}
 
 		}
@@ -7290,6 +7750,56 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 		}
 
 		return $externalUid;
+	}
+	/**
+	 * Checks tx_toctoc_comments_emolike and if empty adds a first set of data
+	 *
+	 * @return	void
+	 */
+	protected function checkandload_emolikes() {
+		list($row) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('uid',
+				'tx_toctoc_comments_emolike', 'uid=1');
+		if (intval($row['uid']) === 0) {
+			// insert first set of tx_toctoc_comments_emolike
+			if (count($rowsrf)==0) {
+				$GLOBALS['TYPO3_DB']->sql_query('INSERT INTO tx_toctoc_comments_emolike VALUES (1,' . $this->conf['storagePid'] . ',1458399799,1458399658,0,"Like","default",1,8,1,7,""),
+(2,' . $this->conf['storagePid'] . ',1458399799,1458399658,0,"Love","default",1,9,2,9,"#dc1f46"),
+(3,' . $this->conf['storagePid'] . ',1458399799,1458399689,0,"Haha","default",2,7,3,6,"#e96d5a"),
+(4,' . $this->conf['storagePid'] . ',1458399704,1458399704,0,"Wow","default",3,6,4,7,"#e12d8d"),
+(5,' . $this->conf['storagePid'] . ',1458399745,1458399745,0,"Sad","default",4,3,5,3,"#57c3eb"),
+(6,' . $this->conf['storagePid'] . ',1458399932,1458399904,0,"Angry","default",5,1,6,1,"#de2723"),
+(7,' . $this->conf['storagePid'] . ',1458399799,1458399658,0,"Dislike","default",2,2,7,4,""),
+(8,' . $this->conf['storagePid'] . ',1458399799,1458399658,0,"Like","facebook",1,8,1,7,""),
+(9,' . $this->conf['storagePid'] . ',1458399799,1458399658,0,"Love","facebook",1,9,2,9,"#e84965"),
+(10,' . $this->conf['storagePid'] . ',1458399799,1458399689,0,"Haha","facebook",2,7,3,6,"#f0ba15"),
+(11,' . $this->conf['storagePid'] . ',1458399704,1458399704,0,"Wow","facebook",3,6,4,7,"#f0ba15"),
+(12,' . $this->conf['storagePid'] . ',1458399745,1458399745,0,"Sad","facebook",4,3,5,3,"#f0ba15"),
+(13,' . $this->conf['storagePid'] . ',1458399932,1458399904,0,"Angry","facebook",5,1,6,1,"#f7714b"),
+(14,' . $this->conf['storagePid'] . ',1458399799,1458399658,0,"Dislike","facebook",2,2,7,4,""),
+(15,' . $this->conf['storagePid'] . ',1458399799,1458399658,0,"Like","food",1,8,1,7,""),
+(16,' . $this->conf['storagePid'] . ',1458399799,1458399658,0,"Yummie","food",1,9,2,9,"#e44134"),
+(17,' . $this->conf['storagePid'] . ',1458399799,1458399689,0,"Hungry","food",2,7,3,6,"#67bd2a"),
+(18,' . $this->conf['storagePid'] . ',1458399704,1458399704,0,"Fat","food inactive",3,6,4,7,"#cccccc"),
+(19,' . $this->conf['storagePid'] . ',1458399745,1458399745,0,"Beurk","food",4,3,5,3,"#d066a6"),
+(20,' . $this->conf['storagePid'] . ',1458399932,1458399904,0,"Yuck","food",5,1,6,1,"#b9a700"),
+(21,' . $this->conf['storagePid'] . ',1458399799,1458399658,0,"Dislike","food",2,2,7,4,""),
+(22,' . $this->conf['storagePid'] . ',1458399799,1458399658,0,"Like","news",1,8,1,7,""),
+(23,' . $this->conf['storagePid'] . ',1458399799,1458399658,0,"Yay","news  inactive",1,9,2,9,"#cc67d3"),
+(24,' . $this->conf['storagePid'] . ',1458399799,1458399689,0,"Ohyes","news",2,7,3,6,"#ce9d00"),
+(25,' . $this->conf['storagePid'] . ',1458399704,1458399704,0,"Kkkk","news",3,6,4,7,"#ec7022"),
+(26,' . $this->conf['storagePid'] . ',1458399745,1458399745,0,"Yawn","news",4,3,5,3,"#8a95a1"),
+(27,' . $this->conf['storagePid'] . ',1458399932,1458399904,0,"Fedup","news",5,1,6,1,"#b5263c"),
+(28,' . $this->conf['storagePid'] . ',1458399799,1458399658,0,"Dislike","news",2,2,7,4,""),
+(29,' . $this->conf['storagePid'] . ',1458399799,1458399658,0,"Like","music",1,8,1,7,""),
+(30,' . $this->conf['storagePid'] . ',1458399799,1458399658,0,"Love","music",1,9,2,9,"#e12d8d"),
+(31,' . $this->conf['storagePid'] . ',1458399799,1458399689,0,"Dance","music",2,7,3,6,"#da2c36"),
+(32,' . $this->conf['storagePid'] . ',1458399704,1458399704,0,"Sing","music",3,6,4,7,"#e185d7"),
+(33,' . $this->conf['storagePid'] . ',1458399745,1458399745,0,"Ninja","music",4,3,5,3,"#608098"),
+(34,' . $this->conf['storagePid'] . ',1458399799,1458399658,0,"Dislike","music",2,2,7,4,"")');
+			}
+
+		}
+
 	}
 	/**
 	 * Translates current TYPO3 languague to Facebook or Google Language Code
@@ -7372,7 +7882,40 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 
 	}
 
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$isTabletOrHandyexceptFF: ...
+	 * @return	[type]		...
+	 */
+	private function detectmobile($isTabletOrHandyexceptFF = FALSE){
+		$agent = $_SERVER['HTTP_USER_AGENT'];
+		$useragents = array (
+				'iPhone',
+				'iPod',
+				'iPad',
+				'Android',
+				'PlayBook',
+				'Kindle',
+				'Opera Mobi',
+				'Windows Phone',
+				'BlackBerry',
+				'webOS'
+		);
+		$result = FALSE;
+		foreach ( $useragents as $useragent ) {
+			if (preg_match('/'.$useragent.'/i', $agent)){
+				$result = TRUE;
+			}
+		}
+		if ($isTabletOrHandyexceptFF == TRUE){
+			if (str_replace('Firefox', '', $agent) != $agent) {
+				$result = FALSE;
+			}
+		}
 
+		return $result;
+	}
 }
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/toctoc_comments/pi1/class.toctoc_comments_pi1.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/toctoc_comments/pi1/class.toctoc_comments_pi1.php']);

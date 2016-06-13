@@ -6,7 +6,6 @@ $extensionClassesPath = t3lib_extMgm::extPath('toctoc_comments') . '';
 $default = array(
 		'tx_news_viewhelpers_social_toctoccommentsviewhelper' => $extensionClassesPath . 'Classes/ViewHelpers/Social/TocTocCommentsViewHelper.php',
 		'tx_news_viewhelpers_social_toctoccommentscountviewhelper' => $extensionClassesPath . 'Classes/ViewHelpers/Social/TocTocCommentsCountViewHelper.php',
-		'tx_news_viewhelpers_social_toctoccommentsimplecountviewhelper' => $extensionClassesPath . 'Classes/ViewHelpers/Social/TocTocCommentsSimpleCountViewHelper.php',
 		'user_toctoc_comments_toctoc_comments' => $extensionClassesPath . 'class.user_toctoc_comments_toctoc_comments.php',		
 );
 return $default;

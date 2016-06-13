@@ -13,10 +13,20 @@
 	opacity: 0.9;
 }
 .sharrre .shrboxopen {
-	clear: both;
+	display: block;
 	float: left;
-	position: relative;
 	white-space: nowrap;
+	position: relative; 
+	margin-bottom: (0 - @isTabletOrHandyMarginTopShr2);
+}
+.shrdes2 .shrrightopen .tx-tc-shareicon {  
+    display: none;
+}
+.shrdes2 .shrleft, .shrdes2 .shrrightopen span.share {
+    margin-top: (@isTabletOrHandyMarginTop + 2);
+    margin-bottom: (0 - 2 - @isTabletOrHandyMarginTop);
+    position: relative;    
+    display: inline-block;
 }
 .sharrre .shrleft, .share {
 	cursor: pointer;
@@ -46,6 +56,8 @@
 }
 .shrleft {
 	margin: 0 4px 0 0;
+	top: @isTabletOrHandyMarginTop;
+    position: relative;
 }
 .sharrre .shrmiddle {
 	border-radius: 3px 3px 3px 3px;
@@ -69,8 +81,17 @@
 	text-align: left;
 	float: right;
 }
+.sharrre .shrrightopen {
+    display: inline-block;
+    float: none;
+}
+div + div.sharrre .shrboxopen .shrleft {
+    display: none;
+}
 .shrright .share, .shrrightopen .share {
  	float: right !important;
+    top: @isTabletOrHandyMarginTop;
+    position: relative;
 }
 .shrbox .share, .shrboxopen .share {
  	margin-left: 4px;
@@ -107,6 +128,9 @@ div.sharrre {
 .sharrre .box {
 	float: left;
 	margin: 0 4px 0 4px;
+    display: inline-block;
+    top: @isTabletOrHandyMarginTop;
+    position: relative;
 }
 .tx-tc-sharrrearea-popup {
 	white-space: normal;
@@ -137,6 +161,7 @@ a.addthis_counter .addthis_pill_style {
 .shrdes2 {
 	margin-top: 0 !important;
 	float: left;
+	
 }
 .shrdes2 .box a:hover {
 	text-decoration:underline;
@@ -163,7 +188,7 @@ a.addthis_counter .addthis_pill_style {
 	width: inherit;
 	min-height: 70px;
 	max-height: auto !important;
-	display: table;
+	display: none;
 }
 .shrdes2 .button {
 	position: relative;
@@ -220,7 +245,7 @@ a.addthis_counter .addthis_pill_style {
 .shrbox .tx-tc-shareicon, .shrboxopen .tx-tc-shareicon {
 	margin: 2px 8px -2px 4px;
 	float: left;
-	margin-top: 2px !important;
+	margin-top: (@boxmodelLineHeight - 16) !important;
 }
 /* sharrre design 4 specifics */
 .shrdes4right {
@@ -386,7 +411,7 @@ a.addthis_counter .addthis_pill_style {
 }
 .tx-tc-shrdes5coverimage {
 	width: 100%;
-	height: 100%;
+	height: 76px;
 }
 .shrdes5cover {
   	height: 100%;
@@ -416,4 +441,8 @@ a.addthis_counter .addthis_pill_style {
 .tx-tc-hidedes5detailtotal {
 	margin-top: 0 !important;
 	margin-left: 0 !important;
+}
+.tx-tc-shrshow {
+    overflow-x: visible !important;
+    padding-bottom: @isTabletOrHandyPaddingShr2 !important;
 }

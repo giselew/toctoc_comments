@@ -56,19 +56,22 @@ class toctoc_comments_be_reports {
 
 	public function beReports(&$pObj, $pid  = 0, $sessidx = 0) {
 
-			$fromajax =FALSE;
-			if (!isset($_POST['oldbe'])) {
-			    if (str_replace('ajax.php', '', $_SERVER['SCRIPT_NAME']) != $_SERVER['SCRIPT_NAME']) {
-			    	$fromajax = TRUE;
+		$fromAjax =FALSE;
+		if (!($_POST['oldbe'])) {
+		    if (str_replace('ajax.php', '', $_SERVER['SCRIPT_NAME']) != $_SERVER['SCRIPT_NAME']) {
+		    	$fromAjax = TRUE;
 
+		    } else {
+			    if (str_replace('typo3/index.php', '', $_SERVER['SCRIPT_NAME']) != $_SERVER['SCRIPT_NAME']) {
+			    	$fromAjax = TRUE;
 			    } else {
-				    if (str_replace('typo3/index.php', '', $_SERVER['SCRIPT_NAME']) != $_SERVER['SCRIPT_NAME']) {
-				    	$fromajax = TRUE;
-
-				    }
+			    	 if (str_replace('typo3/deprecated.php', '', $_SERVER['SCRIPT_NAME']) != $_SERVER['SCRIPT_NAME']) {
+			    		$fromAjax = TRUE;
+			    	}
 			    }
 		    }
-		    if ($fromajax == TRUE) {
+	    } 
+	    if ($fromAjax == TRUE) {
 				if (isset($_POST['optreport'])) {
 					$_SESSION['optreport']=$_POST['optreport'];
 					if (intval($_POST['bulkactreport']) == 1) {
@@ -211,7 +214,7 @@ class toctoc_comments_be_reports {
 		    	}
 	    	}
 
-	    	if ($fromajax) {
+	    	if ($fromAjax == TRUE) {
 	    		$visiblereport = array();
 	    		$visiblereport[0] = '';
 	    		$visiblereport[1] = '';
@@ -532,7 +535,7 @@ class toctoc_comments_be_reports {
 
 			    					$farr = explode('6g9-6g9', $field);
 			    					$delfile = $farr[0];
-			    					if ($fromajax) {
+			    					if ($fromAjax == TRUE) {
 			    						$delfile = base64_decode(rawurldecode($farr[0]));
 			    					}
 
@@ -600,7 +603,7 @@ class toctoc_comments_be_reports {
 
 	}
 
-	if (($_POST['bulkactreps']) && ($fromajax)) {
+	if (($_POST['bulkactreps']) && ($fromAjax)) {
 		unset($_POST['fields']);
 		unset($_POST['bulkactreps']);
 		$pObj->content=$outinfomessage . $numsessionsstring;
@@ -684,7 +687,7 @@ class toctoc_comments_be_reports {
     			$strbl = '';
     			$supclass = '';
 
-    			if ($fromajax) {
+    			if ($fromAjax == TRUE) {
     				$rowUid = $sessionrow['SessionLastuseTs'];
     				$fieldval = rawurlencode(base64_encode($sessionrow['SessionNameFull'])) . '6g9-6g9' .
     						htmlspecialchars($sessionrow['Sessionip']) . '6g9-6g9' . trim($rowUid);
@@ -1805,8 +1808,8 @@ ORDER BY LastSeen DESC';
 			    if($num_rows != 0) {
 
 					if ($_POST['bulkactreport'] == '1') {
-						$contenttable .= $pObj->be_common->printPager($pObj, 'sessions', $fromajax);
-						if ($fromajax) {
+						$contenttable .= $pObj->be_common->printPager($pObj, 'sessions', $fromAjax);
+						if ($fromAjax == TRUE) {
 							$contenttable .= '<div class="tx-tc-100">
 					<div class="tx-tc-subpaneltitle tx-tc-bulkact-title">
 						<span>' . $GLOBALS['LANG']->getLL('bulkactsession') . '</span>
@@ -1848,19 +1851,19 @@ ORDER BY LastSeen DESC';
 										';
 						}
 				} elseif($_POST['bulkactreport'] == '2') {
-					$contenttable .= $pObj->be_common->printPager($pObj, 'activeusers', $fromajax);
+					$contenttable .= $pObj->be_common->printPager($pObj, 'activeusers', $fromAjax);
 					$contenttable .= '
 									</fieldset>
 							<div class="clearit">&nbsp;</div>
 									';
 				} elseif($_POST['bulkactreport'] == '3') {
-					$contenttable .= $pObj->be_common->printPager($pObj, 'crawlerprotocol', $fromajax);
+					$contenttable .= $pObj->be_common->printPager($pObj, 'crawlerprotocol', $fromAjax);
 					$contenttable .= '
 									</fieldset>
 							<div class="clearit">&nbsp;</div>
 									';
 				} elseif($_POST['bulkactreport'] == '4') {
-					$contenttable .= $pObj->be_common->printPager($pObj, 'blacklistprotocol', $fromajax);
+					$contenttable .= $pObj->be_common->printPager($pObj, 'blacklistprotocol', $fromAjax);
 					$contenttable .= '
 									</fieldset>
 							<div class="clearit">&nbsp;</div>
@@ -1899,7 +1902,7 @@ ORDER BY LastSeen DESC';
 
 			}
 
-			if ($fromajax) {
+			if ($fromAjax == TRUE) {
 				$content .= $infomessage . $contenttable . '</div>';
 			} else {
 				$content .= $infomessage . $contenttable;

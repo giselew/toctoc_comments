@@ -18,7 +18,7 @@ jQuery
 
 
 Often jQuery is already used in a site, then you just need to
-make sure that the version of the jQuery in use is newer than 1.7.
+make sure that the version of the jQuery in use is newer than 1.8.
 
 jQuery must be loaded before all other JavaScript files, thus in the beginning of the <head> of the
 webpage.

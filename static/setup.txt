@@ -22,6 +22,8 @@ plugin.tx_toctoccomments_pi1 {
   templateFile = {$plugin.tx_toctoccomments_pi1.templateFile}
 
   UserImageSize = {$plugin.tx_toctoccomments_pi1.UserImageSize}
+  UserImageSizeInForm = {$plugin.tx_toctoccomments_pi1.UserImageSizeInForm}
+  
   useUserImage =  {$plugin.tx_toctoccomments_pi1.useUserImage}
   # Additional pages where the cache should be dropped when adding or deleting toctoc_comment-data
   # global scope
@@ -54,6 +56,7 @@ plugin.tx_toctoccomments_pi1 {
   HTMLEmailFontFamily = {$plugin.tx_toctoccomments_pi1.HTMLEmailFontFamily}
 
   sessionTimeout = {$plugin.tx_toctoccomments_pi1.sessionTimeout}
+  sessionCompressionLevel = {$plugin.tx_toctoccomments_pi1.sessionCompressionLevel}
   
   # comments are hidden from search engines, if you want search engines to index all your comments set this option to 1
   dontSkipSearchEngines = 0
@@ -145,7 +148,6 @@ plugin.tx_toctoccomments_pi1 {
     kiki = ^_^
     penguin = :+p:
     gisele = :g:
-    jacque = :j:
     rasta = :r:
     serious = :-|
     uncertain = :-s
@@ -162,7 +164,7 @@ plugin.tx_toctoccomments_pi1 {
 
   advanced {
 
-  	commentReview = {$plugin.tx_toctoccomments_pi1.commentReview}
+    commentReview = {$plugin.tx_toctoccomments_pi1.commentReview}
     # Number of comments per page
     commentsPerPage = {$plugin.tx_toctoccomments_pi1.commentsPerPage}
 
@@ -210,7 +212,8 @@ plugin.tx_toctoccomments_pi1 {
 
     # If enabled, the commentators are identified as per their IP address if they are not logged in. If disabled commentators who are not logged in can't disable E-Mail notification on new comments.
     commentatorNotifybyIP = {$plugin.tx_toctoccomments_pi1.commentatorNotifybyIP}
-
+    moderationMessageWithComment = {$plugin.tx_toctoccomments_pi1.moderationMessageWithComment}
+    
     # Information e-mail when a new comment is posted for commentator of former comments is sent from this address
     notificationForCommentatorEmail = {$plugin.tx_toctoccomments_pi1.notificationForCommentatorEmail}
     notificationForCommentatorEmailName = {$plugin.tx_toctoccomments_pi1.notificationForCommentatorEmailName}
@@ -238,8 +241,8 @@ plugin.tx_toctoccomments_pi1 {
     FeUserImagePath = {$plugin.tx_toctoccomments_pi1.FeUserImagePath}
 
     FeUserDbField = {$plugin.tx_toctoccomments_pi1.FeUserDbField}
-	useAdditionalFe_usersFields = {$plugin.tx_toctoccomments_pi1.useAdditionalFe_usersFields}
-	
+    useAdditionalFe_usersFields = {$plugin.tx_toctoccomments_pi1.useAdditionalFe_usersFields}
+    
     # (commentsPerPage*scroll-multiplication) gives the number of comments that are scrolled back when show older comments is clicked
     CommentsShowOldPerCID = {$plugin.tx_toctoccomments_pi1.CommentsShowOldPerCID}
 
@@ -256,7 +259,7 @@ plugin.tx_toctoccomments_pi1 {
     commentsShowCountText = {$plugin.tx_toctoccomments_pi1.commentsShowCountText}
     commentsShowCountLevel = {$plugin.tx_toctoccomments_pi1.commentsShowCountLevel}
 
-    # If set, reverses sortng to show last comments first
+    # If set, reverses sorting to show last comments first
     reverseSorting = {$plugin.tx_toctoccomments_pi1.reverseSorting}
     sortMostPopular = {$plugin.tx_toctoccomments_pi1.sortMostPopular}
     useMostPopular = {$plugin.tx_toctoccomments_pi1.useMostPopular}
@@ -318,17 +321,17 @@ plugin.tx_toctoccomments_pi1 {
     midDot = {$plugin.tx_toctoccomments_pi1.midDot}
 
     gravatarEnable = {$plugin.tx_toctoccomments_pi1.gravatarEnable}
-	gravatarRating = {$plugin.tx_toctoccomments_pi1.gravatarRating}
-	gravatarLocalHost ={$plugin.tx_toctoccomments_pi1.gravatarLocalHost}
+    gravatarRating = {$plugin.tx_toctoccomments_pi1.gravatarRating}
+    gravatarLocalHost ={$plugin.tx_toctoccomments_pi1.gravatarLocalHost}
 
-	acceptTermsCondsOnSubmit ={$plugin.tx_toctoccomments_pi1.acceptTermsCondsOnSubmit}
+    acceptTermsCondsOnSubmit ={$plugin.tx_toctoccomments_pi1.acceptTermsCondsOnSubmit}
 
-	# if you dont want to use GIFBUILDER for userpics then set this to 1
+    # if you dont want to use GIFBUILDER for userpics then set this to 1
     dontuseGIFBUILDER = 0
     # set this to 1 only for debugging when you need to display entire conf in Frontend
     dontUseMirrorConf = 0
     
-	# Additional crawlers to be excluded from the commenting system and session creation, use comma-separated list 
+    # Additional crawlers to be excluded from the commenting system and session creation, use comma-separated list 
  
     # defaut blacklist CrawlerAgents: 'googlebot','yahoo','baidu','msnbot','bingbot','spider','bot.htm','yandex','jeevez'
     blacklistCrawlerAgentStrings = package,curl,AU-MIC,Python,Test,Wotbox,Lipperhey,Traveler,FDiag,bot,lucid,Mining,crawl,protect,Walker,Checker,DuckDuck,LinkFinder,Ezooms,filterdb,findlinks,monitor,blast,gonzo,htdig,archiver,jobs,ips-agent,larbin,linkdex,MajesticSEO,Survey,OpenLinkProfiler,eeker,picmole,Qualidator,ReverseGet,schrein,Scooter,search,SEOkicks,sistrix,thunderstone,TinEye,Unister,Webinator,Webmaster,xovi,Yeti
@@ -345,7 +348,7 @@ plugin.tx_toctoccomments_pi1 {
    
   }
   sharing {
- 	// sharing option valid since version 6
+     // sharing option valid since version 6
     useSharing = {$plugin.tx_toctoccomments_pi1.useSharing}
     useOnlySharing = {$plugin.tx_toctoccomments_pi1.useOnlySharing}
 
@@ -367,9 +370,9 @@ plugin.tx_toctoccomments_pi1 {
     shareUsersTotalText = {$plugin.tx_toctoccomments_pi1.shareUsersTotalText}
     shareDataText = {$plugin.tx_toctoccomments_pi1.shareDataText}
     sharePageURL = {$plugin.tx_toctoccomments_pi1.sharePageURL}
-	# when a sharePageURL is given then staticMode is activated automatically and the sharing component displays in static mode
-	staticMode = 0
-	staticModeNoDetails = 1	
+    # when a sharePageURL is given then staticMode is activated automatically and the sharing component displays in static mode
+    staticMode = 0
+    staticModeNoDetails = 1    
     useShareIcon = {$plugin.tx_toctoccomments_pi1.useShareIcon}
     noShareCount = {$plugin.tx_toctoccomments_pi1.noShareCount}
   }
@@ -411,7 +414,7 @@ plugin.tx_toctoccomments_pi1 {
     
     emailTemplateSignupConfirmHTML = {$plugin.tx_toctoccomments_pi1.emailTemplateSignupConfirmHTML}
     emailTemplateSignupConfirm = {$plugin.tx_toctoccomments_pi1.emailTemplateSignupConfirm}
-        
+      
     checkSMTPService = {$plugin.tx_toctoccomments_pi1.checkSMTPService}
     commentWaitTime = {$plugin.tx_toctoccomments_pi1.commentWaitTime}
   }
@@ -450,14 +453,26 @@ plugin.tx_toctoccomments_pi1 {
     useTopLikeDislike = {$plugin.tx_toctoccomments_pi1.useTopLikeDislike}
 
     useLikeDislikeStyle = {$plugin.tx_toctoccomments_pi1.useLikeDislikeStyle}
-    dlikeCtsNotifLvl= {$plugin.tx_toctoccomments_pi1.dlikeCtsNotifLvl}
-    dlikeCtsNotifIdlTime= {$plugin.tx_toctoccomments_pi1.dlikeCtsNotifIdlTime}
-    useShortTopLikes= {$plugin.tx_toctoccomments_pi1.useShortTopLikes}
- 	allowedNumberOfRatings= {$plugin.tx_toctoccomments_pi1.allowedNumberOfRatings}
-	timeForAllowedNumberOfRatings= {$plugin.tx_toctoccomments_pi1.timeForAllowedNumberOfRatings}
-	allowedNumberOfRatingsExceededBlocktime= {$plugin.tx_toctoccomments_pi1.allowedNumberOfRatingsExceededBlocktime}
-	
-	useIPsInLikeDislike= {$plugin.tx_toctoccomments_pi1.useIPsInLikeDislike}
+    dlikeCtsNotifLvl = {$plugin.tx_toctoccomments_pi1.dlikeCtsNotifLvl}
+    dlikeCtsNotifIdlTime = {$plugin.tx_toctoccomments_pi1.dlikeCtsNotifIdlTime}
+    useShortTopLikes = {$plugin.tx_toctoccomments_pi1.useShortTopLikes}
+    allowedNumberOfRatings = {$plugin.tx_toctoccomments_pi1.allowedNumberOfRatings}
+    timeForAllowedNumberOfRatings = {$plugin.tx_toctoccomments_pi1.timeForAllowedNumberOfRatings}
+    allowedNumberOfRatingsExceededBlocktime = {$plugin.tx_toctoccomments_pi1.allowedNumberOfRatingsExceededBlocktime}
+    
+    useIPsInLikeDislike = {$plugin.tx_toctoccomments_pi1.useIPsInLikeDislike}
+    
+    emoLike = {$plugin.tx_toctoccomments_pi1.emoLike}
+    emoLikeSet = {$plugin.tx_toctoccomments_pi1.emoLikeSet}
+    likeTextWithUn = {$plugin.tx_toctoccomments_pi1.likeTextWithUn}
+    // 3 to 10
+    emoLikeMaxTippEntries = 4
+    // 2 to 5
+    LikeMaxReportLineEntries = 3
+    // 3 to 13
+    LikeMaxReportTippEntries = 6
+    // 3 to 50
+    emoLikeMaxOverviewEntries = 12
   }
 
   attachments {
@@ -606,6 +621,8 @@ plugin.tx_toctoccomments_pi1 {
     countViewsAddComments = {$plugin.tx_toctoccomments_pi1.countViewsAddComments}
     # enable last viewed date
     showCountTopViewsLastView = 1
+    RatedItemSeparatedDate = 1
+    RatedItemShowDate = 1
   }
   
   topSharings {
@@ -618,8 +635,8 @@ plugin.tx_toctoccomments_pi1 {
     # color theme (CSS)is used by the extension in frontend
     selectedTheme = {$plugin.tx_toctoccomments_pi1.selectedTheme}
     
-	themeVersion = {$plugin.tx_toctoccomments_pi1.themeVersion}
-	
+    themeVersion = {$plugin.tx_toctoccomments_pi1.themeVersion}
+    
     # Font Family for theme used for Textareas
     themeFontFamily = {$plugin.tx_toctoccomments_pi1.themeFontFamily}
     # Use themeFontFamily as font-family for the entire plugin.
@@ -668,6 +685,13 @@ plugin.tx_toctoccomments_pi1 {
     freezeLevelCSS = 1
     
     refreshCSSFromLESS= {$plugin.tx_toctoccomments_pi1.refreshCSSFromLESS}
+    
+    # Filter-Styles for the userImage in the commentslist and the emoLike-OverViews
+    # use 2 values separated by comma - fist is normal state, 2nd is hover state
+    UserImageCSSGrayScale = 50%,0%
+    UserImageCSSBlur = 0px,0px
+   	UserImageCSSSepia = 0%,0%
+    
   }
 
   debug {
@@ -681,24 +705,24 @@ plugin.tx_toctoccomments_pi1 {
   }
 
   dataProtect {
-  	setCookie = {$plugin.tx_toctoccomments_pi1.setCookie}
-  	cookieLifetime = {$plugin.tx_toctoccomments_pi1.cookieLifetime}
-  	useDisclaimer = {$plugin.tx_toctoccomments_pi1.useDisclaimer}
-  	useDisclaimerInRatingsOnly = {$plugin.tx_toctoccomments_pi1.useDisclaimerInRatingsOnly}
-	disclaimerPageID = {$plugin.tx_toctoccomments_pi1.disclaimerPageID}
-	disclaimerSystemCheck = {$plugin.tx_toctoccomments_pi1.disclaimerSystemCheck}
-	disclaimerFromTocToc= {$plugin.tx_toctoccomments_pi1.disclaimerFromTocToc}
+    setCookie = {$plugin.tx_toctoccomments_pi1.setCookie}
+    cookieLifetime = {$plugin.tx_toctoccomments_pi1.cookieLifetime}
+    useDisclaimer = {$plugin.tx_toctoccomments_pi1.useDisclaimer}
+    useDisclaimerInRatingsOnly = {$plugin.tx_toctoccomments_pi1.useDisclaimerInRatingsOnly}
+    disclaimerPageID = {$plugin.tx_toctoccomments_pi1.disclaimerPageID}
+    disclaimerSystemCheck = {$plugin.tx_toctoccomments_pi1.disclaimerSystemCheck}
+    disclaimerFromTocToc= {$plugin.tx_toctoccomments_pi1.disclaimerFromTocToc}
   }
   
   search {
-  	showCommentsPerPage = {$plugin.tx_toctoccomments_pi1.showCommentsPerPage}
-  	# initialCommentage, options: 1=1 day, 2=7 days, 3 =1 month, 4=last 6 months, 5=1 year, 6=ever
-  	initialCommentage = {$plugin.tx_toctoccomments_pi1.initialCommentage}
-  	minSearchTermLength = {$plugin.tx_toctoccomments_pi1.minSearchTermLength}
-  	SearchCommentCropLength = {$plugin.tx_toctoccomments_pi1.SearchCommentCropLength}
-  	SearchDisplayTitle = {$plugin.tx_toctoccomments_pi1.SearchDisplayTitle}
-  	linkComments = 0
-  	searchMaxComments = 1000
+    showCommentsPerPage = {$plugin.tx_toctoccomments_pi1.showCommentsPerPage}
+    # initialCommentage, options: 1=1 day, 2=7 days, 3 =1 month, 4=last 6 months, 5=1 year, 6=ever
+    initialCommentage = {$plugin.tx_toctoccomments_pi1.initialCommentage}
+    minSearchTermLength = {$plugin.tx_toctoccomments_pi1.minSearchTermLength}
+    SearchCommentCropLength = {$plugin.tx_toctoccomments_pi1.SearchCommentCropLength}
+    SearchDisplayTitle = {$plugin.tx_toctoccomments_pi1.SearchDisplayTitle}
+    linkComments = 0
+    searchMaxComments = 1000
   }
 }
 
@@ -745,8 +769,8 @@ plugin.tx_toctoccomments_pi2 {
   # stdWrap for fe_users fields used in Messages
   userfields {
     username {
-      htmlSpecialChars = 1
-      wrap = <strong>|</strong>
+    htmlSpecialChars = 1
+    wrap = <strong>|</strong>
     }
   }
   
@@ -775,9 +799,10 @@ plugin.tx_toctoccomments_pi2 {
   facebook {
     appId = 
     secret = 
-	# next 2 options are valid for google as well
-	makeSessionPermanent = 0
+    # next 2 options are valid for google as well
+    makeSessionPermanent = 0
     imageDir = uploads/pics/
+    apiVersion = 2.5
   }
   
   google {
@@ -913,28 +938,28 @@ plugin.tx_toctoccomments_pi2._LOCAL_LANG {
 plugin.tt_news {
   toctoc_comments {
     LIST {
-      # text= 0, number=1
-      commentsShowCountText = 0
+    # text= 0, number=1
+    commentsShowCountText = 0
     }
     LIST2 {
-      commentsShowCountText = 1
+    commentsShowCountText = 1
     }
     LIST3 {
-      commentsShowCountText = 1
+    commentsShowCountText = 1
     }
     LATEST {
-      commentsShowCountText = 0
+    commentsShowCountText = 0
     }
     SEARCH {
-      commentsShowCountText = 0
+    commentsShowCountText = 0
     }
     SINGLE {
-      commentsShowCountText = 0
+    commentsShowCountText = 0
     }
   }
 }
 
-# setup options for toctoc_comments used as Coumments counter ViewHelper in tx_news
+# setup options for toctoc_comments used as comments counter or full plugin-ViewHelper in tx_news
 plugin.tx_news {
   toctoc_comments {
     # text= 0, number=1

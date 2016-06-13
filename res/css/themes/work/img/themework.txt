@@ -1,0 +1,1 @@
+copy images from folder default for a start.

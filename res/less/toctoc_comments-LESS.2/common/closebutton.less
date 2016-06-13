@@ -33,9 +33,15 @@ label.tx-tc-CloseButton, label.tx-tc-DropDownButton {
 	z-index: 4;
 	margin: 0;
 	display: block;
+	position: absolute;
+    right: @boxmodelSpacing;
+}
+.tx-tc-ftm-text .tx-tc-ct-box-ctclose, .tx-tc-form-top-message .tx-tc-ct-box-ctclose{
+    position: relative;
+    right: inherit;
 }
 .tx-tc-ct-uc .tx-tc-ct-box-ctclose {
-	margin: 0 0 0 4px;
+	margin: 0 0 0 @boxmodelSpacing;
 }
 .tx-tc-ucclose, .tx-tc-topmsgcls, .tx-tc-vidclose {
 	float: right;

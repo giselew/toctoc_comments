@@ -19,4 +19,5 @@ process, the zone where markers can be moved is mostly limited by the **CSS-sele
 inside the sub-template
 
 **Recommendation:** You can change the templates for email or the eID-pages – but **please don't
-touch the templates for ratings and comments** . There is always a solution with TypoScript or CSS
+touch the templates for ratings and comments** . 
+There is always a solution with TypoScript or LESS

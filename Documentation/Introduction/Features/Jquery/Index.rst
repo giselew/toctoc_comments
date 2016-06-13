@@ -11,7 +11,7 @@
 jQuery
 ^^^^^^
 
-Uses jQuery 1.7 or newer
+Uses jQuery 1.8 or newer
 
 jQuery plugins used
 """""""""""""""""""

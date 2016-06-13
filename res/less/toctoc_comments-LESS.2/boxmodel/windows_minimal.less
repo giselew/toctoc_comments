@@ -43,7 +43,7 @@
 }
 
 // tooltip font
-.tx-tc-tooltip, .tx-tc-tooltip2, .tx-tc-tooltipemoji {
+.tx-tc-tooltip, .tx-tc-tooltip2, .tx-tc-tooltipemoji, .tx-tc-emoicontipp span {
 	font-weight: bold;
     font-size:110%;
 }
@@ -169,8 +169,8 @@ div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-img, div.tx-tc-ct-box div.t
 
 // disilke img position
 .tx-tc-myrts-disilke img {
-    margin: 0 0 0 2px;
-    padding: 3px 0 0;
+    margin: 0 0 0 0px;
+    padding: 4px 0 0;
 }
 
 // Padding for tag p.tx-tc-text
@@ -249,11 +249,6 @@ div.tx-tc-cts-ct-dp div.tx-tc-ct-box div.tx-tc-ct-box-cttxt p.tx-tc-text {
 	margin-right: 8px;
 }
 
-// top ilikes on the right
-.tx-tc-rts-li, .tx-tc-rts-li-text {
-    margin-bottom: -4px;
-}
-
 // no border under comment
 div.tx-tc-rt, .tx-tc-ct-box-cttxt-reply, .tx-tc-userpic, 
 .tx-tc-userpicf, .tx-tc-defuserpic, .tx-tc-ct-uc-pic .tx-tc-userpic, 
@@ -290,5 +285,9 @@ div.tx-tc-rt, .tx-tc-ct-box-cttxt-reply, .tx-tc-userpic,
 
 // Margin of ilikes depends on ratingMarginTop
 .tx-tc-myrts-disilke img, .tx-tc-myrts-disilke .tx_toctoc_comments_static_ilike img {
-	margin: (1 + @ratingMarginTop) 0 0 0;
+	margin: (@ratingMarginTop - 3) 0 0 0;
+}
+// Margin of ilikes depends on ratingMarginTop
+.tx-tc-overrating .tx-tc-myrts-disilke img, .tx-tc-overrating .tx-tc-myrts-disilke .tx_toctoc_comments_static_ilike img {
+	margin: 0 0 0 0;
 }

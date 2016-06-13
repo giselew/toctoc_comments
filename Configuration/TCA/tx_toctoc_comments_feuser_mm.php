@@ -15,6 +15,12 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 	(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
 }
 
+if (version_compare(TYPO3_version, '7.6', '<')) {
+	$iconfilepath = t3lib_extMgm::extRelPath('toctoc_comments');
+} else {
+	$iconfilepath = 'EXT:toctoc_comments/';
+}
+
 $tx_toctoc_comments_sysconf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['toctoc_comments']);
 $toctoc_ratings_debug_mode_disabled = !intval($tx_toctoc_comments_sysconf['debugMode']);
 
@@ -26,12 +32,12 @@ $tx_toctoc_comments_comments = array(
 		'crdate' => 'crdate',
 		'sortby' => 'crdate',
 		'delete' => 'deleted',
-		'iconfile' => 'EXT:toctoc_comments/icon_tx_toctoc_comments_feuser_mm.gif',
+		'iconfile' => $iconfilepath . 'icon_tx_toctoc_comments_feuser_mm.gif',
 		'hideTable'	=> $toctoc_ratings_debug_mode_disabled,
 	),
 	'interface' => array (
 		'showRecordFieldList' => 'reference,reference_scope,toctoc_comments_user,ilike,idislike,myrating,remote_addr,tstampilike,pagetstampilike,tstampidislike,'.
-			'pagetstampidislike,tstampmyrating,pagetstampmyrating,seen,tstampseen,pagetstampseen',
+			'pagetstampidislike,tstampmyrating,pagetstampmyrating,seen,tstampseen,pagetstampseen,isreview,emolikeid',
 		'maxDBListItems' => 50,
 		'readOnly' => 1,
 	),
@@ -95,12 +101,20 @@ $tx_toctoc_comments_comments = array(
 		'isreview' => array (
 				'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.isreview',
 				'config' => array (
-						'type' => 'check',
-						'items' => array (
-								array ('LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.isreview.I.0', '')
-						),
+						'type' => 'input',
+						'eval'     => 'int',
 						'default' => 0,
+						'readOnly' => 1,
 				),
+		),
+		'emolikeid' => array (
+					'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_feuser_mm.emolikeid',
+					'config' => array (
+							'type' => 'input',
+							'eval'     => 'int',
+							'default' => 0,
+							'readOnly' => 1,
+					),
 		),
 		'toctoc_comments_user' => array (
 			'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.toctoc_comments_user',
@@ -221,7 +235,7 @@ $tx_toctoc_comments_comments = array(
 		),
 	),
 	'types' => array (
-		0 => array ('showitem' => 'hidden;;;;1,reference,reference_scope;;;;2-2-2,toctoc_comments_user,toctoc_commentsfeuser_feuser;;;;3-3-3,ilike,idislike,myrating,'.
+		0 => array ('showitem' => 'hidden;;;;1,reference,reference_scope;;;;2-2-2,toctoc_comments_user,toctoc_commentsfeuser_feuser;;;;3-3-3,ilike,idislike,myrating,isreview,emolikeid,'.
 				'seen,remote_addr,tstampilike,pagetstampilike,tstampidislike,pagetstampidislike,tstampmyrating,pagetstampmyrating,tstampseen,pagetstampseen'),
 	),
 );

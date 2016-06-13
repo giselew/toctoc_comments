@@ -41,7 +41,7 @@
  *   68:     public function mainRecentComments($pObj, $conf, $feuserid)
  *  151:     public function comments_getRecentComments($rows, $conf, $pObj, $fromusercenterid = 0, $usercenterlistid = 0,
 			$fromAjax = FALSE, $searchincomments = '')
- *  654:     protected function createRCLinks($text, $refID, $commentID, $prefix, $externalprefix, $singlePid, $conf, $show_uid, $okrowsi)
+ *  662:     protected function createRCLinks($text, $refID, $commentID, $prefix, $externalprefix, $singlePid, $conf, $show_uid, $okrowsi)
  *
  * TOTAL FUNCTIONS: 3
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -405,7 +405,11 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 
 					$commentID = $row['uid'];
 					if ($prefix == 'pages_') {
-						$exticon= '/typo3/sysext/cms/ext_icon.gif">';
+						if (version_compare(TYPO3_version, '7.0', '<')) {
+							$exticon= '/typo3/sysext/cms/ext_icon.gif">';
+						} else {
+							$exticon= t3lib_extMgm::siteRelPath('toctoc_comments') . '/Resources/Public/Icons/x-content-text.png">';
+						}
 					} elseif ($prefix == 'tt_news_') {
 						$exticon= t3lib_extMgm::siteRelPath('tt_news') . 'ext_icon.gif">';
 					} elseif ($prefix == 'tt_products_') {
@@ -416,7 +420,11 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 						$exticon= $this->locationHeaderUrlsubDir() . t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/css/themes/' .
 						$conf['theme.']['selectedTheme'] . '/img/usericon.gif">';
 					} else {
-						$exticon= $this->locationHeaderUrlsubDir() . t3lib_extMgm::siteRelPath('toctoc_comments') . 'ext_icon.gif">';
+						if ($conf['theme.']['themeVersion'] == 2) {
+							$exticon= $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') .'res/css/themes/' . $conf['theme.']['selectedTheme'] . '/img/commentv2.png">';
+						} else {
+							$exticon= $this->locationHeaderUrlsubDir() . t3lib_extMgm::siteRelPath('toctoc_comments') . 'ext_icon.gif">';
+						}
 					}
 
 					if ($searchincomments != '') {
@@ -553,7 +561,7 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 								$conf['ratings.']['mode'] = 'static';
 								$conf['ratings.']['modeusercenter'] = 1;
 								$articleratingarr = $this->getRatingDisplay($savexternal_ref_uid, $conf, $fromAjax, $_SESSION['commentsPageId'], TRUE,
-										$feuserid, 'votearticle', $pObj, $_SESSION['commentListCount'], 0, $compics, $scopeid, 1);
+										$feuserid, 'votearticle', $pObj, $_SESSION['commentListCount'], 0, $scopeid, 1);
 								unset($conf['ratings.']['modeusercenter']);
 								$voteHTML = $articleratingarr['voteing'];
 								$conf['ratings.']['useMyVote'] = $savuseMyVote;

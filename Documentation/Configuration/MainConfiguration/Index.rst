@@ -72,11 +72,14 @@ commentCropLength               int+            Comment cropping: After this len
 ------------------------------  --------------  ------------------------------------------------------------  --------------------------------------------------------------------------------------------
 reviewCropLength                int+            Review-comment cropping: After this length a comment          512
                                                 used as a review is cropped at initial display (W)
-                                                
-(V 6.0.0)
+                                                (V 6.0.0)
 ------------------------------  --------------  ------------------------------------------------------------  --------------------------------------------------------------------------------------------
 UserImageSize                   int+            Size of user image in pixels. Image will be cropped           32
                                                 from the center of the original image (square) (W)
+                                                (V 9.1.0.)
+------------------------------  --------------  ------------------------------------------------------------  --------------------------------------------------------------------------------------------
+UserImageSizeInForm             int+            Size of user image in forms, in pixels or empty, if empty it  
+                                                takes same value like UserImageSize, 18 to 96 is allowed.
 ------------------------------  --------------  ------------------------------------------------------------  --------------------------------------------------------------------------------------------
 useUserImage                    boolean         Use or not use the user-image                                 1
 ------------------------------  --------------  ------------------------------------------------------------  --------------------------------------------------------------------------------------------
@@ -98,8 +101,7 @@ UCUserStatsByEmail              boolean         Make statistics using email: The
                                                 are based on toctoc_userid by default (0), enabling
                                                 stats by email links together toctoc_userids with same
                                                 initial or current email
-
-                                                V 5.3.0
+                                                (V 5.3.0)
 ------------------------------  --------------  ------------------------------------------------------------  --------------------------------------------------------------------------------------------
 userIPUC                        boolean         This option enables display IP information about the          0
                                                 user in usercards
@@ -114,11 +116,10 @@ HTMLEmailFontFamily             string          Font Family for HTML E-Mail     
 sessionTimeout                  int+            Timeout for User-Sessions in minutes. After this time         540
                                                 sessions older than the timeout are deleted by the PHP
                                                 Garbage collector. Session files were in
-                                                toctoc_comments Sessionfolder in typo3temp
-
-                                                \(S)(V 5.1.0.), since V 5.2.2 the sessions are stored in
-                                                the extension-directory in
+                                                toctoc_comments Sessionfolder in typo3temp, since V 5.2.2 
+                                                the sessions are stored in the extension-directory in
                                                 pi1/sessionTemp/TocTocCommentsSessions
+                                                \(S), (V 5.1.0)
 ------------------------------  --------------  ------------------------------------------------------------  --------------------------------------------------------------------------------------------
 **Options from setup.txt**
 ------------------------------  --------------  ------------------------------------------------------------  --------------------------------------------------------------------------------------------
@@ -126,23 +127,25 @@ dontSkipSearchEngines           boolean         Comments are hidden from search 
                                                 search-engines to index all your comments set this
                                                 option to 1 (useful for single website
                                                 previews)
-                                                \(W), V 5.2.2
+                                                \(W), (V 5.2.2)
 ------------------------------  --------------  ------------------------------------------------------------  --------------------------------------------------------------------------------------------
 pluginmode                      int             Empty, 0: Comments and Form, Sharing and Ratings              Empty
 
-                                                1 – Recent comments mode
+                                                1 – Recent comments
 
-                                                2 – Report bad comment mode
+                                                2 – Report bad comment
 
-                                                3 – Top ratings mode
+                                                3 – Top ratings
 
                                                 4 – Other charts
 
-                                                5 – AJAX Login Mode
+                                                5 – AJAX Login
 
                                                 6 – User Center (V6.0.0)
 
                                                 7 – Comments Search (V7.0.0)
+                                                
+                                                8 – Top sharings (V8.0.0)
 
                                                 (P – General – Mode )
 ------------------------------  --------------  ------------------------------------------------------------  --------------------------------------------------------------------------------------------

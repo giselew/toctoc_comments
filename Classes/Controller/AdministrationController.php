@@ -58,7 +58,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
 		} else {
 			require_once (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('toctoc_comments', 'Classes/Backend/BackendAdministration.php'));
 		}
-		if (!(version_compare(TYPO3_version, '8.0', '<'))) {
+		if (!(version_compare(TYPO3_version, '7.6.8', '<'))) {
 			exit;
 		}
 

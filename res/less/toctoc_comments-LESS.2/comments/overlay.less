@@ -13,16 +13,7 @@
 .txtc-coimsg {
 	color: @color-important-text;
 }
-// boxmodel overlayed element
-@media (max-width: @screen-lg) {
-    .txtc_details {
-    	width: 100% !important;
-		display:table;
-	}
-	.txtc_details p, .txtc_details .txtc_h2 {
-   		margin-right: 2*@boxmodelSpacing;
-	}
-}
+
 .txtc_overlay {
 	display: none;
 	z-index: 10000;
@@ -30,15 +21,12 @@
 	border-width: 1px;
 	border-style: solid;
 	max-width: (@picUploadMaxDimX+200);
-	width: 100%;
+	width: auto;
 	width: -moz-max-content;
 	height: auto;
 	min-height: 200px;
-	-moz-box-shadow: 0 0 90px 5px #fff;
-	-webkit-box-shadow: 0 0 90px #fff;
-	box-shadow: 0 0 90px #fff;
+
 	left: 5% !important;
-	right: 5%;
 }
 #exposeMask {
 	width: 100% !important;
@@ -58,9 +46,10 @@
 @media (max-width: @screen-lg) {
 	.txtc_overlay {
 		margin: 0 5% 0 1%;
-		width: 94%;
+		max-width: 94%;
 		left: 0 !important;
-		right: 0;
+		width: auto;
+	    width: -moz-max-content;
 	}
 }
 .txtc_overlay .close:hover {
@@ -81,12 +70,23 @@
 	font-weight: bold;
 }
 .txtc_overlay img.tx-tc-images-img-browse {
-	max-width: @picUploadMaxDimX;
 	float: left;
-	height: auto;
-	width: 100%;
-}
+    height: auto;
+    max-height: @picUploadMaxDimY;
+    max-width: @picUploadMaxDimX;
+    width: 100%;
+}   
 .tx-tc-images-img-browse-frame {
 	display: table;
 	float: left;
+}
+// boxmodel overlayed element
+@media (max-width: @screen-lg) {
+    .txtc_details {
+    	width: auto;
+		display: table;
+	}
+	.txtc_details p, .txtc_details .txtc_h2 {
+   		margin-right: 2*@boxmodelSpacing;
+	}
 }

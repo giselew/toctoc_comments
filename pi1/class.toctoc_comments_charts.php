@@ -39,10 +39,10 @@
  *
  *   60: class toctoc_comments_charts extends toctoc_comment_lib
  *   69:     public function topratings ($conf, $pObj, $fromusercenterid = 0)
- * 1426:     public function topsharings ($conf, $pObj)
- * 1855:     private function human_sharesize($bytes, $decimals = 1)
- * 1875:     private function enrichrows($conf, $rowsmerged, $pObj, $show_uid, $input_sys_language_uid = FALSE)
- * 2655:     private function initconf($pidcond, $conf, $restrictor)
+ * 1519:     public function topsharings ($conf, $pObj)
+ * 1948:     private function human_sharesize($bytes, $decimals = 1)
+ * 1968:     private function enrichrows($conf, $rowsmerged, $pObj, $show_uid, $input_sys_language_uid = FALSE)
+ * 2788:     private function initconf($pidcond, $conf, $restrictor)
  *
  * TOTAL FUNCTIONS: 5
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -114,10 +114,11 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 						(CASE WHEN tstampmyrating = 0 THEN tstamp ELSE tstampmyrating END) AS ratedate';
 				$restrictor .= 'isreview<>1 AND ';
 			} else {
-				$feusergroupby = ', (CASE WHEN tstampidislike = 0 THEN CASE WHEN tstampilike = 0 THEN tstamp ELSE tstampilike END ELSE tstampidislike END), toctoc_commentsfeuser_feuser';
+				$feusergroupby = ', (CASE WHEN tstampidislike = 0 THEN CASE WHEN tstampilike = 0 THEN tstamp ELSE tstampilike END ELSE tstampidislike END),
+						toctoc_commentsfeuser_feuser, emolikeid';
 
 				$feusersort = '(CASE WHEN tstampidislike = 0 THEN CASE WHEN tstampilike = 0 THEN tstamp ELSE tstampilike END ELSE tstampidislike END) DESC, ';
-				$feusersql = ', toctoc_commentsfeuser_feuser AS toctoc_commentsfeuser_feuser,
+				$feusersql = ', emolikeid AS emolikeid, toctoc_commentsfeuser_feuser AS toctoc_commentsfeuser_feuser,
 						(CASE WHEN tstampidislike = 0 THEN CASE WHEN tstampilike = 0 THEN tstamp ELSE tstampilike END ELSE tstampidislike END) AS ratedate';
 			}
 
@@ -189,6 +190,52 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 		$sumvotingfound=0;
 		$sumlikecountfound=0;
 		if ($conf['topRatings.']['topRatingsMode']==0){
+			$emolikepicarr= array();
+			$emobase= '<i class="tx-tc-elikeov-ico tx-tc-elikeov-chart" style="6g9" title="8g9"></i>';
+			$rowsemo = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('uid, emolike_ll,emolike_sort,emolike_setpos,emolike_setfolder as emolike_set',
+					'tx_toctoc_comments_emolike',
+					'deleted=0',
+					'',
+					'uid',
+					'');
+
+			if (count($rowsemo)>0) {
+				if ($conf['theme.']['selectedTheme']=='') {
+					$conf['theme.']['selectedTheme'] = 'default';
+				}
+				foreach($rowsemo as $rowemo) {
+					$strpathlikeoremolike = $this->locationHeaderUrlsubDir() . t3lib_extMgm::siteRelPath('toctoc_comments') . 'Resources/Public/Icons/emolike/' . $rowemo['emolike_set'] . '/';
+					$strpicpartlikeoremolike = 'ld';
+					$strpicemolikeposition = '';
+					$strtitle = $this->pi_getLLWrap($pObj, 'api_ilike_topline_oneunlike'.$rowemo['emolike_ll'], FALSE);
+					if (($rowemo['emolike_ll'] == 'Like') || ($rowemo['emolike_ll'] == 'Dislike')) {
+
+						$strpathlikeoremolike= $this->locationHeaderUrlsubDir() . t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/css/themes/' . $conf['theme.']['selectedTheme'] . '/img/';
+						if ($rowemo['emolike_setpos'] == 1) {
+							$strpicemolikeposition = '0';
+						} else {
+							$strpicemolikeposition = '-36';
+						}
+					} else {
+						$strpicpartlikeoremolike='';
+						if ($rowemo['emolike_setpos'] == 1) {
+							$strpicemolikeposition = '0';
+						} elseif ($rowemo['emolike_setpos'] == 2) {
+							$strpicemolikeposition = '-36';
+						} elseif ($rowemo['emolike_setpos'] == 3) {
+							$strpicemolikeposition = '-54';
+						} elseif ($rowemo['emolike_setpos'] == 4) {
+							$strpicemolikeposition = '-90';
+						} elseif ($rowemo['emolike_setpos'] == 5) {
+							$strpicemolikeposition = '-108';
+						}
+					}
+
+					$strstyle = 'background-image: url(\''.$strpathlikeoremolike.'elke'.$strpicpartlikeoremolike.'18.png\'); background-position: 0 '.
+									$strpicemolikeposition.'px;';
+					$emolikepicarr[$rowemo['uid']] = str_replace('8g9', $strtitle, str_replace('6g9', $strstyle, $emobase));
+				}
+			}
 
 			$querymerged='SELECT DISTINCT MAX(CASE WHEN pagetstampilike = 0 THEN pagetstampidislike ELSE pagetstampilike END) as pageid,
 					reference As ref, ' .
@@ -212,6 +259,9 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 				$rowsmerged[$i]['pageid'] = $rowsmerged1['pageid'];
 				$rowsmerged[$i]['sumilikedislike'] = $rowsmerged1['sumilike'];
 				$rowsmerged[$i]['sumilikedislikevote'] = $rowsmerged1['sumilikedislikevote'];
+				if (isset($rowsmerged1['emolikeid'])) {
+					$rowsmerged[$i]['emolikeid'] = $rowsmerged1['emolikeid'];
+				}
 				if ($fromusercenterid != 0) {
 					$rowsmerged[$i]['ratedate'] = $rowsmerged1['ratedate'];
 				}
@@ -868,6 +918,9 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 
 						$rowsmerged[$i]['ref'] = $rowsmergedout[$i]['ref'];
 						$rowsmerged[$i]['pageid'] = $rowsmergedout[$i]['pageid'];
+						if (isset($rowsmergedout[$i]['emolikeid'])) {
+							$rowsmerged[$i]['emolikeid']=$rowsmergedout[$i]['emolikeid'];
+						}
 
 					}
 				}
@@ -1066,7 +1119,12 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 				if ($skiprow==FALSE) {
 				 	$commentID = $row['refID'];
 					if ($prefix == 'tt_content_') {
-						$exticon= '/typo3/sysext/cms/ext_icon.gif">';
+
+						if (version_compare(TYPO3_version, '7.0', '<')) {
+							$exticon= '/typo3/sysext/cms/ext_icon.gif">';
+						} else {
+							$exticon= t3lib_extMgm::siteRelPath('toctoc_comments') . '/Resources/Public/Icons/x-content-text.png">';
+						}
 					} elseif ($prefix == 'tt_news_') {
 						$exticon= t3lib_extMgm::siteRelPath('tt_news') . 'ext_icon.gif">';
 					} elseif ($prefix == 'tt_products_') {
@@ -1078,7 +1136,11 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 						$conf['theme.']['selectedTheme'] . '/img/usericon.gif">';
 						$row['topratingsimagesfolder']=$conf['advanced.']['FeUserImagePath'];
 					} else {
-						$exticon= $this->locationHeaderUrlsubDir() . t3lib_extMgm::siteRelPath('toctoc_comments') . 'ext_icon.gif">';
+						if ($conf['theme.']['themeVersion'] == 2) {
+							$exticon= $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') .'res/css/themes/' . $conf['theme.']['selectedTheme'] . '/img/commentv2.png">';
+						} else {
+							$exticon= $this->locationHeaderUrlsubDir() . t3lib_extMgm::siteRelPath('toctoc_comments') . 'ext_icon.gif">';
+						}
 					}
 
 					$itemtitle = ucfirst($this->pi_getLLWrap($pObj, 'comments_recent.' . $this->mmtable .'', FALSE));
@@ -1135,7 +1197,13 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							$img['file.']['10.']['file.']['width'] = $userimgsize .'c';
 							$img['file.']['10.']['file.']['height'] = $userimgsize .'c';
 							$img['params'] = 'class="' . $profileimgclass . '" title="'.$row['linktext']. '"';
-							$tmpimgstr = '<div class="tx-tc-trt-rating-img">'.str_replace($row['linktext'], $pObj->cObj->IMAGE($img), $row['link']) .'</div>';
+							if (version_compare(TYPO3_version, '7.6', '<')) {
+								$tmpimgimgstr = $pObj->cObj->IMAGE($img);
+							} else {
+								$tmpimgimgstr = $pObj->cObj->cObjGetSingle('IMAGE', $img);
+							}
+
+							$tmpimgstr = '<div class="tx-tc-trt-rating-img">'.str_replace($row['linktext'], $tmpimgimgstr, $row['link']) .'</div>';
 							$styleheight=' tx-tc-trt-userisz';
 							$stylemargincontent = $userimgsize+2*intval($conf['theme.']['boxmodelSpacing']);
 							if ($conf['theme.']['selectedBoxmodelkoogled'] == 1) {
@@ -1257,14 +1325,23 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 						);
 						$voteingstr= '</div>' . $this->t3substituteMarkerArray($subTemplate, $markers) . '<div class="tx-tc-trt-rating-right">';
 						$strdislike='';
-						if ($row['likecount']>0) {
-							$mylikepic='ilike.png';
-
+						$strv2='';
+						if ($conf['theme.']['themeVersion'] == 2) {
+							$strv2='v2';
+						}
+						if ($row['emolikeid']>0) {
+							//print $row['emolikeid'] . ' - ' ;
+							$mylikepic= $emolikepicarr[$row['emolikeid']];
 						} else {
-							$mylikepic='idislike.png';
-							$row['likecount']=$row['likecount']*(-1);
-							$strdislike='dis';
+							if ($row['likecount']>0) {
+								$mylikepic='ilike'.$strv2.'.png';
 
+							} else {
+								$mylikepic='idislike'.$strv2.'.png';
+								$row['likecount']=$row['likecount']*(-1);
+								$strdislike='dis';
+
+							}
 						}
 
 						$mylikepictitle=$this->pi_getLLWrap($pObj, 'pi1_template.text_topratings_'.$strdislike.'likes', FALSE);
@@ -1279,9 +1356,14 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 						}
 
 						$addbr='';
-						$mylike= '<img class="tx-tc-trt-rating-like" alt="' . $mylikepictitle . '" title=" ' . $mylikepictitle
-						. '" src="' . $this->locationHeaderUrlsubDir() . t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/css/themes/' .
-						$conf['theme.']['selectedTheme'] . '/img/' . $mylikepic . '" />';
+						if ($row['emolikeid']==0) {
+							$mylike = '<img class="tx-tc-trt-rating-like" alt="' . $mylikepictitle . '" title=" ' . $mylikepictitle
+										. '" src="' . $this->locationHeaderUrlsubDir() . t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/css/themes/' .
+										$conf['theme.']['selectedTheme'] . '/img/' . $mylikepic . '" />';
+						} else {
+							$mylike = $mylikepic;
+						}
+
 						$titlelink = $row['link'];
 						if ($conf['topRatings.']['topRatingsMode']==0){
 							$topratings_ilike_vote= '&nbsp;' . str_replace('tx-tc-trt-rating-like', 'tx-tc-trt-rating-like-only', $mylike) . '<b>'.
@@ -1297,7 +1379,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							$topratings_ilike_vote= $this->pi_getLLWrap($pObj, 'pi1_template.text_topratings_rating', FALSE) . ':&nbsp;' .
 							$voteingstr . $row['voting'] . '  ' . $this->middotchar . ' ' . $mylike . ' ' . $row['likecount'] . ' ';
 						} elseif ($conf['topRatings.']['topRatingsMode']==3){
-							$topratings_ilike_vote='&nbsp;' . $mylike . '<b> ' . round($row['likecount'], 1) . '</b> ' . $this->middotchar . ' ' .
+							$topratings_ilike_vote='' . $mylike . '<b> ' . round($row['likecount'], 1) . '</b> ' . $this->middotchar . ' ' .
 							$this->pi_getLLWrap($pObj, 'pi1_template.text_topratings_rating', FALSE) . ':&nbsp;' . $voteingstr . $row['voting'] . ' ';
 						} elseif ($conf['topRatings.']['topRatingsMode']==4){
 							$topratings_ilike_vote='' . $mylike . '&nbsp;<b> ' . round($row['likecount'], 1) . '</b>' . $row['datefirstview'];
@@ -1339,9 +1421,20 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							//bronze
 							$rankstyle=' tx-tc-rank3';
 						}
+						$titledate = '';
+						if ($row['date'] != '') {
+							if ($conf['topRatings.']['RatedItemSeparatedDate'] == 1) {
+								$titledate = ' &#124; ' . $row['date'];
+							} else {
+								$titledate = ' ' . $row['date'];
+							}
+							if ($conf['topRatings.']['RatedItemShowDate'] != 1) {
+								$titledate = '';
+							}
 
-						$titletxt='<div class="tx-tc-trt-entry' . $margincontent . '">' . $titleimage . $titlelink . ' &#124; ' .
-						$row['date'] . '</div>';
+						}
+
+						$titletxt='<div class="tx-tc-trt-entry' . $margincontent . '">' . $titleimage . $titlelink . $titledate . '</div>';
 
 						$markerArray = array(
 								'###TOPRATINGS_RANK###' => '<div class="tx-tc-trt-rating'.$rankstyle .'"><div class="tx-tc-trl-rank">' . $rank . '</div></div>',
@@ -2163,7 +2256,7 @@ AND pages.deleted = 0 and pages.hidden= 0';
 				}
 				// Select data from Table
 				if ($this->mmtable == 'tt_content') {
-					$displayfieldsforselect .= ', uid';
+					$displayfieldsforselect .= ', uid, pid';
 				}
 				if (intval($refID) != 0) {
 					if (($this->mmtable == 'pages') || ($this->mmtable == 'pages_language_overlay')) {
@@ -2191,6 +2284,7 @@ AND pages.deleted = 0 and pages.hidden= 0';
 				if (count($rowsdisplay)>0) {
 					if ($this->mmtable=='tt_content') {
 						$tt_contentUid = $rowsdisplay[0]['uid'];
+						$tt_contentPid = $rowsdisplay[0]['pid'];
 						$syslanid = $rowsdisplay[0]['sys_language_uid'];
 					}
 					$k=0;
@@ -2198,7 +2292,11 @@ AND pages.deleted = 0 and pages.hidden= 0';
 					foreach($rowsdisplay[0] as $key=>$val) {
 						$tmpdisplayfieldswork=$tmpdisplayfields;
 						if (($key== 'crdate') || ($key== 'tstamp') || ($key== 'datetime') || ($key== 'start_date')) {
-							$rowsdisplaycompressed[4] = $this->formatDate($val, $pObj, FALSE, $conf);
+							if (intval($val) != 0) {
+								$rowsdisplaycompressed[4] = $this->formatDate($val, $pObj, FALSE, $conf);
+							} else {
+								$rowsdisplaycompressed[4] = '';
+							}
 						} elseif ((substr($key, 0, 5)== 'image') || (substr($key, 0, 5)== 'photo') || ($key== 'picture')) {
 							if (intval($val) == 0) {
 								$rowsdisplaycompressed[3] = $val;
@@ -2228,6 +2326,8 @@ AND pages.deleted = 0 and pages.hidden= 0';
 							$rowsdisplaycompressed[2] = $val;
 						} elseif ($key== 'uid') {
 							$rowsdisplaycompressed[5] = $val;
+						} elseif ($key== 'pid') {
+							$rowsdisplaycompressed[6]= $val;
 						} else {
 							$rowsdisplaycompressed[$k] = $rowsdisplaycompressed[$k] . ' ' . $val;  //ex.: first_name last_name - this gets concat here
 						}
@@ -2258,7 +2358,11 @@ AND pages.deleted = 0 and pages.hidden= 0';
 						foreach($rowsdisplay[1] as $key=>$val) {
 							$tmpdisplayfieldswork=$tmpdisplayfields;
 							if (($key== 'crdate') || ($key== 'tstamp') || ($key== 'datetime') || ($key== 'start_date')) {
-								$rowsdisplaycompressed[4] = $this->formatDate($val, $pObj, FALSE, $conf);
+								if (intval($val) == 0) {
+									$rowsdisplaycompressed[4] = '';
+								} else {
+									$rowsdisplaycompressed[4] = $this->formatDate($val, $pObj, FALSE, $conf);
+								}
 							} elseif ((substr($key, 0, 5)== 'image') || (substr($key, 0, 5)== 'photo') || ($key== 'picture')) {
 								if (intval($val) == 0) {
 									$rowsdisplaycompressed[3] = $val;
@@ -2286,9 +2390,11 @@ AND pages.deleted = 0 and pages.hidden= 0';
 								}
 							} elseif ($key== 'sys_language_uid') {
 								$rowsdisplaycompressed[2] = $val;
-							} elseif ($key== 'uid') {
-								$rowsdisplaycompressed[6] = $val;
-							} else {
+							}	elseif ($key== 'uid') {
+								$rowsdisplaycompressed[5] = $val;
+							} elseif ($key== 'pid') {
+								$rowsdisplaycompressed[6]= $val;
+							}  else {
 								if ($key!= $longtextdisplayfield) {
 									If (($rowsdisplaycompressed[$k]=='') || ($conf['topRatings.']['topRatingsOriginalLangDisplay']==1)) {
 										$rowsdisplaycompressed[$k] = $rowsdisplaycompressed[$k] . ' ' . $val;
@@ -2315,17 +2421,39 @@ AND pages.deleted = 0 and pages.hidden= 0';
 				}
 
 				if (count($rowsdisplay)>0) {
-					if ($rowsdisplaycompressed[0]!=''){
+					if ($rowsdisplaycompressed[0] != ''){
 						//title
-						$text=$rowsdisplaycompressed[0];
-						$rowsdisplaycompressed[0]=$text;
+						$text = $rowsdisplaycompressed[0];
+						$rowsdisplaycompressed[0] = $text;
 					} else {
-						$rowsdisplaycompressed[0]='no title';
+						if (trim($rowsdisplaycompressed[6]) != ''){
+							// let's get the title of the page
+							$pagestable = 'pages';
+							$where = '(uid=' . $rowsdisplaycompressed[6]. ') '  . $this->enableFields($pagestable, $pObj);
+							$rowspages = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+									'title',
+									$pagestable,
+									$where,
+									'',
+									'',
+									''
+							);
+							if (count($rowspages) == 1) {
+								$rowsdisplaycompressed[0] = $rowspages[0]['title'];
+							} else {
+								$rowsdisplaycompressed[0] = 'no title found at all';
+							}
+
+						} else {
+							$rowsdisplaycompressed[0] = 'no title found';
+						}
 					}
 
 					if ($rowsdisplaycompressed[1]!=''){
 						//long text
 						$textdirty=$rowsdisplaycompressed[1];
+						$textdirty=str_replace('<br>', '67g89', $textdirty);
+						$textdirty=str_replace('<br />', '67g89', $textdirty);
 
 						$search = array('@<script[^>]*?>.*?</script>@si', // Strip out javascript
 								'@<[\/\!]*?[^<>]*?>@si',           // Strip out HTML tags
@@ -2333,32 +2461,37 @@ AND pages.deleted = 0 and pages.hidden= 0';
 								'@<![\s\S]*?--[ \t\n\r]*>@',        // Strip multi-line comments including CDATA
 						);
 						$text = preg_replace($search, '', $textdirty);
+						$text = str_replace('67g89', '<br>', $text);
 
-						if (strlen($text)>$conf['topRatings.']['TextCropLength']) {
-							$bbterminatorarr=array();
+						if (strlen($text) > $conf['topRatings.']['TextCropLength']) {
+							$bbterminatorarr = array();
 
 							$textcroppedleft = substr($text, 0, $conf['topRatings.']['TextCropLength']);
 							$textcroppedright = substr($text, $conf['topRatings.']['TextCropLength']);
 							$textcroppedrightarr = explode(' ', $textcroppedright);
-							if (count($textcroppedrightarr)>1) {
+							if (count($textcroppedrightarr) > 1) {
 
-								$testbblen=strlen($textcroppedleft .$textcroppedrightarr[0]);
+								$testbblen = strlen($textcroppedleft . $textcroppedrightarr[0]);
 
-								$bbterminatorarr= $this->checkbbcrop($text, $testbblen, $conf, $pObj);
+								$bbterminatorarr = $this->checkbbcrop($text, $testbblen, $conf, $pObj);
 
-								$textcroppedleft .=$textcroppedrightarr[0] . $bbterminatorarr[0] . '...';
-								$text =$textcroppedleft;
+								$textcroppedleft .= $textcroppedrightarr[0] . $bbterminatorarr[0] . '...';
+								$text = $textcroppedleft;
+								$text = str_replace('<br>...', '', $text);
+								$text = str_replace('<br...', '', $text);
+								$text = str_replace('<b...', '', $text);
+								$text = str_replace('<...', '', $text);
 							}
 
 						}
 
 						$text = nl2br($this->createLinks($text, $conf));
 						$text = $this->replaceSmilies($text, $conf);
-						$text =$this->replaceBBs($text, $pObj, $conf, FALSE);
-						$text =$this->addleadingspace($text);
+						$text = $this->replaceBBs($text, $pObj, $conf, FALSE);
+						$text = $this->addleadingspace($text);
 						$text = $this->makeemoji($text, $conf, 'topratings');
 						$text = str_replace('"> <a', '">&nbsp;<a', $text);
-						$rowsdisplaycompressed[1]=$text;
+						$rowsdisplaycompressed[1] = $text;
 					}
 
 					$text = $rowsdisplaycompressed[0];

@@ -24,7 +24,7 @@
 require_once (t3lib_extMgm::extPath('toctoc_comments', 'Classes/Utility/BackendStartup.php'));
 require_once (t3lib_extMgm::extPath('toctoc_comments', 'Classes/Controller/Dto/BackendOverview.php'));
 
-if (version_compare(TYPO3_version, '8.0', '<')) {
+if (version_compare(TYPO3_version, '7.6.8', '<')) {
 	if (!is_array($MCONF)) {
 		$modulePath=t3lib_extMgm::extPath('toctoc_comments', 'mod1/');
 
@@ -198,7 +198,7 @@ class toctoc_comments_module2 extends t3lib_SCbase {
 				$this->content .= $this->doc->section('', $this->doc->makeShortcutIcon('id', implode(',', array_keys($this->MOD_MENU)),
 						$this->MCONF['name']));
 			}
-			if (version_compare(TYPO3_version, '8.0', '<')) {
+			if (version_compare(TYPO3_version, '7.6.8', '<')) {
 				$this->content.=$this->doc->spacer(10);
 			}
 		} else {
@@ -208,7 +208,7 @@ class toctoc_comments_module2 extends t3lib_SCbase {
 
 			$this->content.=$this->doc->startPage($GLOBALS['LANG']->getLL('title'));
 			$this->content.=$this->doc->header($GLOBALS['LANG']->getLL('title'));
-			if (version_compare(TYPO3_version, '8.0', '<')) {
+			if (version_compare(TYPO3_version, '7.6.8', '<')) {
 				$this->content.=$this->doc->spacer(5);
 				$this->content.=$this->doc->spacer(10);
 			}

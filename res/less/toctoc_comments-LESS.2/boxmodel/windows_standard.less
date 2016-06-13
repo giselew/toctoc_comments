@@ -30,7 +30,7 @@
 }
 
 // tooltip font
-.tx-tc-tooltip, .tx-tc-tooltip2, .tx-tc-tooltipemoji {
+.tx-tc-tooltip, .tx-tc-tooltip2, .tx-tc-tooltipemoji, .tx-tc-emoicontipp span {
 	font-weight: bold;
     font-size:110%;
 }
@@ -214,11 +214,6 @@ div.tx-tc-cts-ct-dp div.tx-tc-ct-box div.tx-tc-ct-box-cttxt p.tx-tc-text {
     margin-right: 8px;	
 }
 
-// top ilikes on the right
-.tx-tc-rts-li, .tx-tc-rts-li-text {
-    margin-bottom: -4px;	
-}
-
 // reviews on the left
 .tx-tc-rws-area .tx-tc-rts-li {
     float: left;	
@@ -251,4 +246,10 @@ img.tx-tc-trt-rating-like-only {
 // Margin of ilikes depends on ratingMarginTop
 .tx-tc-myrts-disilke img, .tx-tc-myrts-disilke .tx_toctoc_comments_static_ilike img {
 	margin: (3 + @ratingMarginTop) 6px 0px 0;
+}
+.tx-tc-atrts-dp .tx-tc-rts-text {
+	margin: (@ratingMarginTop + @isTabletOrHandyMarginTop) 4px 0;
+}
+.tx-tc-atrts-dp .tx-tc-myrts-myrt {
+	margin: (@ratingMarginTop + @isTabletOrHandyMarginTop) 4px 0;
 }

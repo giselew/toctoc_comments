@@ -56,25 +56,8 @@ $tx_toctoc_comments_comments = array (
 			'external_ref' => array (
 					'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.external_ref',
 					'config' => array (
-							'type' => 'group',
-							'internal_type' => 'db',
-							'prepand_tname' => TRUE,
-							'allowed' => '*',
-							'minsize' => 1,
-							'maxsize' => 1,
-							'size' => 1,
-							'wizards' => array (
-									'_PADDING' => 1,
-									'_VERTICAL' => 1,
-									'edit' => array (
-											'type' => 'popup',
-											'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.external_ref.wizard',
-											$scriptelem => $scriptcontent,
-											'popup_onlyOpenIfSelected' => 1,
-											'icon' => 'edit2.gif',
-											'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
-									),
-							),
+						'type' => 'input',
+						'eval' => 'trim,required',
 					),
 			),
 			'external_prefix' => array (

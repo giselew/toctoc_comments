@@ -123,11 +123,11 @@
 <!-- ###ILIKE_STATIC_SUB### end -->
 
 <!-- ###ILIKE_LINK_SUB### begin -->
-<a href="javascript:void(0)" rel="nofollow" id="tx-tc-rts-star-l-###VALUE###__###REF###__###CID###__###CHECK###__like" ###TITLE### class="tx-tc-rts-star-like tx-tc-rts-star-l tx-tc-rts-star-###VALUE###">###CONTENT###</a>
+<a href="javascript:void(0)" rel="nofollow" id="tx-tc-rts-star-l-###VALUE###__###REF###__###CID###__###CHECK###__like###IDEMO###" ###TITLE### class="tx-tc-rts-star-like tx-tc-rts-star-l tx-tc-rts-star-###VALUE######CSSEMO###"><i class="tx-tc-emo-button-i###CSSEMO###"></i><span>###CONTENT###</span></a>
 <!-- ###ILIKE_LINK_SUB### end -->
 
 <!-- ###IDISLIKE_LINK_SUB### begin -->
-<a href="javascript:void(0)" rel="nofollow" id="tx-tc-rts-star-l-###VALUE###__###REF###__###CID###__###CHECK###__unlike" ###TITLE### class="tx-tc-rts-star-unlike tx-tc-rts-star-l tx-tc-rts-star-###VALUE###">###CONTENT###</a>
+<a href="javascript:void(0)" rel="nofollow" id="tx-tc-rts-star-l-###VALUE###__###REF###__###CID###__###CHECK###__unlike###IDEMO###" ###TITLE### class="tx-tc-rts-star-unlike tx-tc-rts-star-l tx-tc-rts-star-###VALUE###"><i class="tx-tc-emo-button-i"></i><span>###CONTENT###</span></a>
 <!-- ###IDISLIKE_LINK_SUB### end -->
 
 <!-- ###ILIKE_LINKTOP_SUB### begin -->
@@ -142,12 +142,92 @@
 <div class="tx-tc-ctdate" id="tx-tc-ctdatedisp-###COMMENTID###">###COMMENT_DATE###</div>###COMMENTVIEWS###<div id="tx-tc-ctdatetime-###COMMENTID###" class="tx-tc-nodisp">###COMMENT_TIMESTAMP###</div>
 <!-- ###COMMENT_DATE_SUB### end -->
 
+at the end a couple of redundant subtemplates (performance question))
+
 <!-- ###TEMPLATE_MYARTICLERATING_TOP### start -->
 <div id="tx-tc-myrtstop-dp-###REF###" class="tx-tc-rts-li-text###HIDECSS###">
 	<div class="tx-tc-atrtstop-ilike-dp">###MYILIKETEXT######MYIDISLIKETEXT###</div>
-</div>
+</div>###EMOPOPUP###
 <!-- ###TEMPLATE_MYARTICLERATING_TOP### end -->
-at the end a couple of redundant subtemplates (performance question))
+
+<h4>Subtemplate for emolike popup</h4>
+<!-- ###SUBEMOPOPUP### begin -->
+<div id="tx-tc-emolike-popup-###REF###" class="tx-tc-emolike-popup tx-tc-nodisp">
+	<div id="tx-tc-abs0-###REF###" class="tx-tc-abs0">
+		<div class="tx-tc-emolike-popup-uiLayer">
+			<div class="tx-tc-emolike-popup-uiLayer-l2">
+				<div data-reactroot="" class="tx-tc-emlp-panel">
+					<div class="tx-tc-emlp-toolbar">
+###SUBEMOICONS###
+					</div>
+					<div class="tx-tc-emlp-end">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- ###SUBEMOPOPUP### end -->
+<!-- ###SUBEMOPOPUPICON### begin -->
+<span class="tx-tc-emlp-span">
+	<div class="tx-tc-emlp-dvl1###CSSDLIKE###" id="tx-tc-emlp-###REF###__###EMOUID###__###CID###__###CHECK###">
+		<div class="tx-tc-emlp-dvl2###CSSSELEMO###" id="tx-tc-emlp-2-###REF###-###SORT###">
+			<i id="tx-tc-emlp-2-###REF###__###EMOUID###__###CID###__###CHECK###" class="tx-tc-emlp-im-###SORT### tx-tc-emlp-il2"></i>
+			<div id="tx-tc-emlp-2-tipp-###REF###__###EMOUID###__###CID###__###CHECK###" class="tx-tc-emoicontipp"><span>###EMOTITLE###</span></div>							
+		</div>
+	</div>
+</span>
+<!-- ###SUBEMOPOPUPICON### end -->
+
+<!-- ###SUBEMORESLTICON### begin -->
+<span title="###TIPPTEXTNBRUSERSEMO###" class="tx-tc-emorep-27jf tx-tc-emorep-3emk" id="tx-tc-emlr-2-###REF###-###SORT###">
+	<i class="tx-tc-emlp-im-1 tx-tc-emorep-im-###SORT### tx-tc-emorep-2p78 tx-tc-emorep-2p7a tx-tc-emorep-4-op"></i>
+	<span class="tx-tc-emorep-3chu">###NBRUSERSEMO###</span>
+</span>
+<!-- ###SUBEMORESLTICON### end -->
+
+<!-- ###SUBEMORESLT### begin -->
+<div id="tx-tc-atrts-dp-###REF###" class="tx-tc-atrts-dp">
+	<div id="tx-tc-rts-###REF###" class="tx-tc-rts-area">
+		<div id="tx-tc-myrts-###REF###" class="tx-tc-rts-area">
+			<div id="tx-tc-myrts-dp-###REF###" class="tx-tc-rts-li">
+				<div class="tx-tc-myrts-dp">
+					<div id="tx-tc-emorep-UFIRow-###REF###" class="tx-tc-emorep-UFIRow tx-tc-emorep-UFILikeSentence tx-tc-emorep-UFI4204 tx-tc-emorep-UFI4dr">
+						<div class="clearfix">
+							<div class="tx-tc-emorep-UFI-l1-d1 tx-tc-emorep-rfloat">
+							</div>
+							<div class="">
+								<div class="tx-tc-emorep-ipp">
+									<div class="tx-tc-emorep-3t53 tx-tc-emorep-4arr tx-tc-emorep-ipn">
+										<span class="tx-tc-emorep-3t54">
+										###SUBEMORESLTICONS###
+										</span>
+										<span class="tx-tc-emorep-2x4v">
+											<span title="###TIPPTEXTWHOREACTED###" class="tx-tc-emorep-1g5v tx-tc-textlink">
+												<span id="tx-tc-totalreactsnbr-###REF###__###CID###">###TOTALNBRUSERS###</span>
+											</span>
+											<span class="tx-tc-emorep-4arz">
+												<span id="tx-tc-totalreactstxt-###REF###">###TOTALUSERSTEXT###</span>
+											</span>
+										</span>
+									</div>
+									###EMOOVERVIEW###
+								</div>
+							</div>
+						</div>
+					</div>		
+				</div>		
+			</div>
+		</div>
+	</div>		
+</div>
+<!-- ###SUBEMORESLT### end -->
+
+<h4>Subtemplate for emolike overview</h4>
+<!-- ###SUBEMOOVRVW### begin -->
+<div class="tx-tc-emolike-overview">
+</div>
+<!-- ###SUBEMOOVRVW### end -->
 
 This is redundant to the comments ratings
 
@@ -160,6 +240,16 @@ This is redundant to the comments ratings
 	<div class="tx-tc-ucinner" id="tx-tc-cts-uc-inner-###COMMENT_ID###"></div>
 </div>
 <!-- ###SHOWUC_SUB### end -->
+
+<!-- ###SHOWEMOUSERS_SUB### begin -->
+<div class="tx-tc-ct-emolikeoverview" id="tx-tc-cts-emolikeoverview-###CID###">
+	<div class="tx-tc-ct-box-ctclose" id="tx-tc-cts-emolikeclose-###CID###">
+		<span id="tx-tc-cts-emolikeoverview-cls-###CID###" class="tx-tc-emolikeoverviewclose tx-tc-CloseButton" title="###TXTCLOSE###"></span>
+	</div>
+	<div class="tx-tc-emolikeoverviewinner" id="tx-tc-cts-emolikeoverview-inner-###CID###">
+	</div>
+</div>
+<!-- ###SHOWEMOUSERS_SUB### end -->
 </body>
 </html>
 

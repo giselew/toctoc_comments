@@ -27,10 +27,11 @@ $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['toctoc_com
 $use_OldBackendModule = intval($extConf['use_OldBackendModule']);
 
 if ($use_OldBackendModule == 0) {
-	if (version_compare(TYPO3_branch, '6.0', '<')) {
+	if (version_compare(TYPO3_version, '6.0', '<')) {
 		$use_OldBackendModule = 1;
 	}
 }
+
 if ($use_OldBackendModule == 1) {
 	require_once (t3lib_extMgm::extPath('toctoc_comments', 'Classes/Backend/OldBackendAdministration.php'));
 } else {

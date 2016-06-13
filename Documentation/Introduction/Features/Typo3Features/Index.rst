@@ -27,6 +27,6 @@ CSH (Context Sensitive Help) in both Backend tables and plugin
 
 Import data from legacy extensions comments and rating
 
-Compatible TYPO3 4.3 up to TYPO3 7.x
+Compatible TYPO3 4.3 up to TYPO3 8.x
 
 Documentation available as reST, pdf and OpenOffice

@@ -37,29 +37,31 @@
  *
  *
  *
- *   97: class toctoc_comments_ajax
- *  149:     public function __construct()
- *  687:     protected function initTSFE()
- *  745:     public function main()
- *  792:     private function checksharre()
- *  873:     public function handleCommentatorNotifications()
- *  884:     protected function updateCommentDisplay()
- *  902:     protected function updateComment()
- *  917:     protected function webpagepreview()
- *  929:     protected function previewcomment()
- *  940:     protected function commentsSearch()
- *  952:     protected function cleanupfup()
- *  966:     public function getCaptcha($captchatype, $cid)
- *  983:     public function chkcaptcha($cid, $code)
- *  996:     protected function getUserCard()
- * 1008:     protected function getCurrentIp()
- * 1021:     protected function updateCommentsView()
- * 1311:     protected function updateRating()
- * 1876:     protected function processDeleteSubmission()
- * 1957:     protected function processDenotifycommentSubmission()
- * 2008:     protected function recentCommentsClearCache()
+ *   99: class toctoc_comments_ajax
+ *  156:     public function __construct()
+ *  311:     protected function launchCmd($data)
+ *  803:     protected function initTSFE()
+ *  876:     public function main()
+ *  931:     private function checksharre()
+ * 1012:     public function handleCommentatorNotifications()
+ * 1023:     protected function updateCommentDisplay()
+ * 1041:     protected function updateComment()
+ * 1056:     protected function webpagepreview()
+ * 1068:     protected function previewcomment()
+ * 1079:     protected function commentsSearch()
+ * 1091:     protected function cleanupfup()
+ * 1105:     public function getCaptcha($captchatype, $cid)
+ * 1122:     public function chkcaptcha($cid, $code)
+ * 1135:     protected function getUserCard()
+ * 1147:     protected function getEmoCard()
+ * 1159:     protected function getCurrentIp()
+ * 1172:     protected function updateCommentsView()
+ * 1463:     protected function updateRating()
+ * 2153:     protected function processDeleteSubmission()
+ * 2234:     protected function processDenotifycommentSubmission()
+ * 2285:     protected function recentCommentsClearCache()
  *
- * TOTAL FUNCTIONS: 20
+ * TOTAL FUNCTIONS: 22
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -80,6 +82,12 @@ if (version_compare(TYPO3_version, '6.0', '<')) {
 }
 if (version_compare(TYPO3_version, '6.3', '>')) {
 	(class_exists('t3lib_extMgm', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Utility\ExtensionManagementUtility', 't3lib_extMgm');
+	(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
+	(class_exists('language', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Lang\LanguageService', 'language');
+	(class_exists('t3lib_utility_Math', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\MathUtility', 't3lib_utility_Math');
+	(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
+	(class_exists('tslib_eidtools', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\Utility\EidUtility', 'tslib_eidtools');
+	(class_exists('t3lib_refindex', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Database\ReferenceIndex', 't3lib_refindex');
 }
 
 require_once(t3lib_extMgm::extPath('toctoc_comments', 'class.toctoc_comments_api.php'));
@@ -127,6 +135,7 @@ class toctoc_comments_ajax {
 	private $isrefresh = 0;
 
 	public $extKey = 'toctoc_comments';
+	public $nosessclose = FALSE;
 
 	// constants for captcha generation of freecap-clone
 	private $capchafreecapbackgoundcolor = '255, 255, 255';
@@ -140,6 +149,10 @@ class toctoc_comments_ajax {
 
 	private $softcheck = 0;
 	private $commonObj;
+	private $runMain = TRUE;
+	private $dispatchmessage = '';
+
+
 
 	/**
 	 * Initializes the class
@@ -147,27 +160,49 @@ class toctoc_comments_ajax {
 	 * @return	void
 	 */
 	public function __construct() {
-		if (version_compare(TYPO3_version, '6.3', '>')) {
-			(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
-			(class_exists('language', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Lang\LanguageService', 'language');
-			(class_exists('t3lib_utility_Math', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\MathUtility', 't3lib_utility_Math');
-			(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
-			(class_exists('tslib_eidtools', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\Utility\EidUtility', 'tslib_eidtools');
-		}
 
 		$data_str = t3lib_div::_GP('data');
 		$data = unserialize(base64_decode($data_str));
 
-		$nosessclose = FALSE;
+		$this->nosessclose = FALSE;
 		if (str_replace('preview', '', t3lib_div::_GP('cmd')) != t3lib_div::_GP('cmd')){
 			if (t3lib_div::_GP('cmd') != 'previewcomment'){
-				$nosessclose = TRUE;
+				$this->nosessclose = TRUE;
 			}
+		}
+		$this->pageid = 0;
+		if (trim(t3lib_div::_GP('pageid')) != '') {
+			$this->pageid = intval(t3lib_div::_GP('pageid'));
+		}
+
+		if (version_compare(TYPO3_version, '4.5', '<')) {
+		// Initialize FE user object:
+			$feUserObj = tslib_eidtools::initFeUser();
+		}
+
+		if (version_compare(TYPO3_version, '6.1', '<')) {
+			tslib_eidtools::connectDB();
+		}
+
+		// is there any possible valid cmd what the script shall do?
+		$this->cmd = t3lib_div::_GP('cmd');
+
+		if ($this->cmd == 'searchcomment') {
+			$this->initTSFE();
+		} elseif (!isset($GLOBALS['TCA']['pages']['ctrl'])) {
+			// make sure $GLOBALS['TCA'] is present
+			$this->initTSFE();
+		} elseif (!isset($GLOBALS['TSFE'])) {
+			// make sure $GLOBALS['TSFE'] is present
+			$this->initTSFE();
+		} elseif (!isset($GLOBALS['TSFE']->page['content_from_pid'])) {
+			// make sure $GLOBALS['TSFE']->page['content_from_pid'] is present
+			$this->initTSFE();
 		}
 
 		if (version_compare(TYPO3_version, '4.3.99', '>') && (!isset($data['lang']))) {
 			$this->commonObj = t3lib_div::makeInstance('toctoc_comments_common');
-			if ($nosessclose == FALSE) {
+			if ($this->nosessclose == FALSE) {
 
 				if (!isset($_SESSION['activelang'])) {
 					$sessionTimeout=1440;
@@ -188,7 +223,7 @@ class toctoc_comments_ajax {
 			$GLOBALS['LANG']->includeLLFile('EXT:toctoc_comments/pi1/locallang.xml', TRUE, TRUE);
 
 			$this->commonObj = t3lib_div::makeInstance('toctoc_comments_common');
-			if ($nosessclose == FALSE) {
+			if ($this->nosessclose == FALSE) {
 				if (!isset($_SESSION['activelang'])) {
 					$sessionTimeout=1440;
 					$this->commonObj->start_toctoccomments_session($sessionTimeout);
@@ -204,25 +239,73 @@ class toctoc_comments_ajax {
 			$_SESSION['activelangid'] = intval($data['langid']);
 		}
 
-		if (version_compare(TYPO3_version, '4.5', '<')) {
-		// Initialize FE user object:
-			$feUserObj = tslib_eidtools::initFeUser();
-		}
-		if (version_compare(TYPO3_version, '6.1', '<')) {
-			tslib_eidtools::connectDB();
+		if ($this->cmd == 'dispatchAjax') {
+			$dispatchData_str = t3lib_div::_GP('dispatchData');
+			$dispatchData = unserialize(base64_decode($dispatchData_str));
+			$this->nosessclose = TRUE;
+			$locnosessclose = FALSE;
+
+			if (is_array($dispatchData)) {
+				foreach($dispatchData as $dispatch) {
+					$_POST = array();
+					$dispatched = base64_decode($dispatch);
+					$dispatchPOST = explode('&', $dispatched);
+
+					foreach($dispatchPOST as $patchPOST) {
+						$patchvalPOST = array();
+						$patchvalPOST = explode('=', $patchPOST);
+						if ($patchvalPOST[0]=='cmd') {
+							$this->cmd=$patchvalPOST[1];
+							if (strstr($this->cmd, 'preview')) {
+								$locnosessclose = TRUE;
+							}
+
+						}
+						if ($patchvalPOST[0]=='data') {
+							$data_str = $patchvalPOST[1];
+							$data = unserialize(base64_decode($data_str));
+						}
+
+						$_POST[$patchvalPOST[0]] = $patchvalPOST[1];
+					}
+					$this->launchCmd($data);
+					$this->main();
+				}
+
+			} else {
+				$this->dispatchmessage .= 'Error in PHP (unserialize), received invalid dispatch-array, length of string retrieved in AJAX: ' .
+							strlen($dispatchData_str) .
+							', number of elements in PHP-unserialized array: ' . count($dispatchData);
+			}
+
+			if ($locnosessclose == FALSE) {
+				$this->commonObj->stop_toctoccomments_session();
+			}
+
+			$this->runMain = FALSE;
+
+		} else {
+			$this->nosessclose = FALSE;
+			if (str_replace('preview', '', t3lib_div::_GP('cmd')) != t3lib_div::_GP('cmd')){
+				if (t3lib_div::_GP('cmd') != 'previewcomment'){
+					$this->nosessclose = TRUE;
+				}
+
+			}
+
+			$this->launchCmd($data);
 		}
 
-		// is there any possible valid cmd what the script shall do?
-		$this->cmd = t3lib_div::_GP('cmd');
+	}
+	/**
+	 * Initializes TSFE and sets $GLOBALS['TSFE']
+	 *
+	 * @param	[type]		$data: ...
+	 * @return	void
+	 */
+	protected function launchCmd($data) {
 
-		if ($this->cmd == 'searchcomment') {
-			$this->initTSFE();
-		} elseif (!isset($GLOBALS['TCA']['pages']['ctrl'])) {
-			// make sure $GLOBALS['TCA'] is present
-			$this->initTSFE();
-		}
-
-		if($this->cmd == 'showcomments') {
+		if ($this->cmd == 'showcomments') {
 			$confLogin=array();
 			$confLoginSess=array();
 			$data_strtmp = t3lib_div::_GP('dataLogin');
@@ -231,39 +314,40 @@ class toctoc_comments_ajax {
 			$confLoginSess = unserialize(base64_decode($data_strtmp));
 		}
 
-		if(trim($this->cmd) == '') {
+		if (trim($this->cmd) == '') {
 			echo $GLOBALS['LANG']->getLL('bad_cmd_value') . '""';
 			exit();
 		}
 
-		if($this->cmd == 'previewcomment') {
+		if ($this->cmd == 'previewcomment') {
 			$dataconf_str = t3lib_div::_GP('dataconf');
 			$dataconf = unserialize(base64_decode($dataconf_str));
-			if(!is_array($dataconf['conf'])) {
+			if (!is_array($dataconf['conf'])) {
 				echo $GLOBALS['LANG']->getLL('bad_conf_value') . ', diffconf in ' .$this->cmd;
 				exit();
 			}
+
 			$this->conf = $this->commonObj->unmirrorConf($dataconf['conf']);
 
-			if($this->conf == '') {
+			if ($this->conf == '') {
 				echo $GLOBALS['LANG']->getLL('session_expired');
 				exit();
 			}
 
 			$this->pluginid = $data['ref'];
 			$this->previewconf = $data;
-		} elseif(($this->cmd == 'searchcomment') || ($this->cmd == 'searchbrowse')) {
+		} elseif (($this->cmd == 'searchcomment') || ($this->cmd == 'searchbrowse')) {
 			$dataconf_str = t3lib_div::_GP('data');
 			$dataconf = unserialize(base64_decode($dataconf_str));
 			$confdiffarray = unserialize(base64_decode($dataconf['conf']));
 
-			if(!is_array($confdiffarray)) {
+			if (!is_array($confdiffarray)) {
 				echo $GLOBALS['LANG']->getLL('bad_conf_value') . ', diffconf in ' .$this->cmd;
 				exit();
 			}
 			$this->conf = $this->commonObj->unmirrorConf($confdiffarray);
 
-			if($this->conf == '') {
+			if ($this->conf == '') {
 				echo $GLOBALS['LANG']->getLL('session_expired');
 				exit();
 			}
@@ -276,12 +360,12 @@ class toctoc_comments_ajax {
 			$this->pluginid = t3lib_div::_GP('ref');
 			$this->feuser = intval(t3lib_div::_GP('usr'));
 			$this->pageid = intval(t3lib_div::_GP('pageid'));
-			if(!is_array($data['conf'])) {
+			if (!is_array($data['conf'])) {
 				echo $GLOBALS['LANG']->getLL('bad_conf_value') . ', diffconf in ' .$this->cmd . ', conf: ' . $data['conf'];
 				exit();
 			}
 			$this->conf = $this->commonObj->unmirrorConf($data['conf']);
-			if($this->conf == '') {
+			if ($this->conf == '') {
 				echo $GLOBALS['LANG']->getLL('session_expired');
 				exit();
 			}
@@ -300,7 +384,7 @@ class toctoc_comments_ajax {
 			$this->capchafreecapnumberchars= t3lib_div::_GP('srcnbc');
 			$this->capchafreecapheight = t3lib_div::_GP('srch');
 
-		} elseif($this->cmd == 'checkcap') {
+		} elseif ($this->cmd == 'checkcap') {
 			// For captcha check we also go straight in the code inside the
 			// class
 			$this->captchacode = t3lib_div::_GP('code');
@@ -312,12 +396,12 @@ class toctoc_comments_ajax {
 			$this->previewconf=$data;
 			$data_strconf = t3lib_div::_GP('dataconf');
 			$dataconf = unserialize(base64_decode($data_strconf));
-			if(!is_array($dataconf['conf'])) {
+			if (!is_array($dataconf['conf'])) {
 				echo $GLOBALS['LANG']->getLL('bad_conf_value') . ', diffconf in ' .$this->cmd;
 				exit();
 			}
 			$this->conf=$this->commonObj->unmirrorConf($dataconf['conf']);
-			if($this->conf == '') {
+			if ($this->conf == '') {
 				echo $GLOBALS['LANG']->getLL('session_expired');
 				exit();
 			}
@@ -327,7 +411,7 @@ class toctoc_comments_ajax {
 			$this->conf = $dataconfatt['conf'];
 
 			$this->previewid = t3lib_div::_GP('previewid');
-			if(!is_array($this->conf)) {
+			if (!is_array($this->conf)) {
 				echo $GLOBALS['LANG']->getLL('bad_conf_value');
 				exit();
 			}
@@ -337,48 +421,75 @@ class toctoc_comments_ajax {
 				$this->originalfilename = base64_decode($ofn);
 			}
 
-		} elseif($this->cmd == 'getuc') {
+		} elseif ($this->cmd == 'getuc') {
 			// get the UserCard
 
 			$this->basedimgstr = t3lib_div::_GP('imagetag');
 			$this->basedtoctocuid = t3lib_div::_GP('toctocuserid');
 			$this->commentid=t3lib_div::_GP('commentid');
-			if(version_compare(TYPO3_version, '4.6', '<')) {
+			if (version_compare(TYPO3_version, '4.6', '<')) {
 				$tmpint = t3lib_div::testInt($this->commentid);
 			} else {
 				$tmpint = t3lib_utility_Math::canBeInterpretedAsInteger($this->commentid);
 			}
 
-			if(!$tmpint) {
+			if (!$tmpint) {
 				echo $GLOBALS['LANG']->getLL('bad_commentid_value') . ': ' . $this->commentid;
 				exit();
 			}
 
 			$this->conf = $this->commonObj->unmirrorConf($data['conf']);
-			if($this->conf == '') {
+			if ($this->conf == '') {
 				echo $GLOBALS['LANG']->getLL('session_expired');
 				exit();
 			}
 
 			$this->pluginid = $data['ref'];
-		} elseif($this->cmd == 'handlecn') {
+		} elseif ($this->cmd == 'getemorslt') {
+			// get the emolikeoverviewCard
+			if (!$this->feUserObj){
+				$this->feUserObj = tslib_eidtools::initFeUser();
+			}
+			$this->feuser = intval($this->feUserObj->user['uid']);
+
+			$this->basedimgstr = t3lib_div::_GP('imagedata');
+			$this->cid = t3lib_div::_GP('cid');
+			if (version_compare(TYPO3_version, '4.6', '<')) {
+				$tmpint = t3lib_div::testInt($this->cid);
+			} else {
+				$tmpint = t3lib_utility_Math::canBeInterpretedAsInteger($this->cid);
+			}
+
+			if (!$tmpint) {
+				echo $GLOBALS['LANG']->getLL('bad_cid_value') . ': ' . $this->commentid;
+				exit();
+			}
+			$this->ref = trim(t3lib_div::_GP('ref'));
 			$this->conf = $this->commonObj->unmirrorConf($data['conf']);
-			if($this->conf == '') {
+			if ($this->conf == '') {
+				echo $GLOBALS['LANG']->getLL('session_expired');
+				exit();
+			}
+
+			$this->pluginid = $data['ref'];
+		} elseif ($this->cmd == 'handlecn') {
+			$this->conf = $this->commonObj->unmirrorConf($data['conf']);
+			if ($this->conf == '') {
 				echo $GLOBALS['LANG']->getLL('session_expired');
 				exit();
 			}
 
 			$this->pluginid = $data['ref'];
 			$this->pid = $data['pid'];
-			$this->ref = t3lib_div::_GP('ref');
-			if(trim($this->ref) == '') {
+			$this->ref = trim(t3lib_div::_GP('ref'));
+			if (trim($this->ref) == '') {
 				echo $GLOBALS['LANG']->getLL('bad_ref_value');
 				exit();
 			}
 
 		} elseif ($this->cmd == 'updatect') {
 			$this->conf = $this->commonObj->unmirrorConf($data['conf']);
-			if($this->conf == '') {
+			if ($this->conf == '') {
 				echo $GLOBALS['LANG']->getLL('session_expired');
 				exit();
 			}
@@ -403,19 +514,19 @@ class toctoc_comments_ajax {
 				// no piVars check when deleting and then rescanning comments
 				$this->softcheck = intval(t3lib_div::_GP('softcheck'));
 			}
-			if(!is_array($data['conf'])) {
+			if (!is_array($data['conf'])) {
 				echo $GLOBALS['LANG']->getLL('bad_conf_value') . ', diffconf in ' .$this->cmd;
 				exit();
 			}
 
 			$this->conf = $this->commonObj->unmirrorConf($data['conf']);
-			if($this->conf == '') {
+			if ($this->conf == '') {
 				echo $GLOBALS['LANG']->getLL('session_expired');
 				exit();
 			}
 
 			// Is the configuration array really an array
-			if(!is_array($this->conf)) {
+			if (!is_array($this->conf)) {
 				echo $GLOBALS['LANG']->getLL('bad_conf_value');
 				exit();
 			}
@@ -423,7 +534,7 @@ class toctoc_comments_ajax {
 			// we 'preload the Page ID of the request
 			$this->pid = $data['pid'];
 			$this->pluginid = $data['ref'];
-			if((strpos($this->cmd, 'ote') === FALSE) && (strpos($this->cmd, 'like') === FALSE) && ($this->cmd !== 'deletecomment') &&
+			if ((strpos($this->cmd, 'ote') === FALSE) && (strpos($this->cmd, 'like') === FALSE) && ($this->cmd !== 'deletecomment') &&
 					($this->cmd !== 'denotifycomment') && (strpos($this->cmd, 'browse') === FALSE)) {
 				// apart from the cases we don't need the piVars we check now if
 				// they are accordingly formatted
@@ -433,7 +544,7 @@ class toctoc_comments_ajax {
 				$this->piVars = $datacomment;
 				if (!$this->softcheck) {
 					// no piVars check when deleting and then rescanning comments
-					if(!is_array($this->piVars)) {
+					if (!is_array($this->piVars)) {
 						if (intval(t3lib_div::_GP('isrefresh')) == 0) {
 							echo $GLOBALS['LANG']->getLL('bad_piVars_value') . ': ' . $datacomment;
 							exit();
@@ -459,37 +570,37 @@ class toctoc_comments_ajax {
 				$chkrating=$ratingarr[0];
 			}
 
-			if(version_compare(TYPO3_version, '4.6', '<')) {
+			if (version_compare(TYPO3_version, '4.6', '<')) {
 				$tmpint = is_numeric($this->rating);
 			} else {
 				$tmpint = is_numeric($this->rating);
 			}
 
-			if(!$tmpint) {
+			if (!$tmpint) {
 				echo $GLOBALS['LANG']->getLL('bad_rating_value') . ': ' . $this->rating;
 				exit();
 			}
 
 			// reference is always sent along the request, is needed
-			$this->ref = t3lib_div::_GP('ref');
-			if(trim($this->ref) == '') {
+			$this->ref = trim(t3lib_div::_GP('ref'));
+			if (trim($this->ref) == '') {
 				echo $GLOBALS['LANG']->getLL('bad_ref_value');
 				exit();
 			}
 
-			if($this->cmd === 'addcomment'){
+			if ($this->cmd === 'addcomment'){
 				$this->extref = t3lib_div::_GP('extref');
 				$this->commentreplyid = t3lib_div::_GP('commentreplyid');
-				if(trim($this->extref) == '') {
+				if (trim($this->extref) == '') {
 					echo $GLOBALS['LANG']->getLL('bad_ref_value') . ' (external)';
 					exit();
 				}
 
 			} else {
-				if($this->cmd === 'showcomments'){
+				if ($this->cmd === 'showcomments'){
 
 					$this->extref = t3lib_div::_GP('extref');
-					if(trim($this->extref) == '') {
+					if (trim($this->extref) == '') {
 						echo $GLOBALS['LANG']->getLL('bad_ref_value') . ' (external, showcomments)';
 						exit();
 					}
@@ -502,7 +613,7 @@ class toctoc_comments_ajax {
 			if (intval(t3lib_div::_GP('isrefresh')) == 0) {
 				$this->feuser = $data['feuser'];
 			} else {
-				if($this->cmd === 'showcomments'){
+				if ($this->cmd === 'showcomments'){
 					if (intval(t3lib_div::_GP('islogout')) == 1) {
 						$this->feuser =0;
 					} else {
@@ -536,10 +647,10 @@ class toctoc_comments_ajax {
 
 			}
 
-			if($this->feuser === 0) {
+			if ($this->feuser === 0) {
 				$tmpint = 1;
 			} else {
-				if(version_compare(TYPO3_version, '4.6', '<')) {
+				if (version_compare(TYPO3_version, '4.6', '<')) {
 					$tmpint = t3lib_div::testInt($this->feuser);
 				} else {
 					$tmpint = t3lib_utility_Math::canBeInterpretedAsInteger($this->feuser);
@@ -547,7 +658,7 @@ class toctoc_comments_ajax {
 
 			}
 
-			if(!$tmpint) {
+			if (!$tmpint) {
 				echo $GLOBALS['LANG']->getLL('bad_feuser_value') . ': ' . $this->feuser;
 				exit();
 			}
@@ -556,16 +667,16 @@ class toctoc_comments_ajax {
 			$this->overallvote = intval(t3lib_div::_GP('overall'));
 			$this->pageid = intval(t3lib_div::_GP('pageid'));
 			$this->check = t3lib_div::_GP('check');
-			if(($this->cmd !== 'deletecomment') && ($this->cmd !== 'denotifycomment') && (strpos($this->cmd, 'rowse') === FALSE)) {
-			 	if(md5($this->ref . $chkrating . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']) != $this->check) {
-			 		if (!$this->softcheck) {
-			 			if (intval(t3lib_div::_GP('isrefresh')) == 0) {
+			if (($this->cmd !== 'deletecomment') && ($this->cmd !== 'denotifycomment') && (strpos($this->cmd, 'rowse') === FALSE)) {
+				if (md5($this->ref . $chkrating . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']) != $this->check) {
+					if (!$this->softcheck) {
+						if (intval(t3lib_div::_GP('isrefresh')) == 0) {
 							echo $this->cmd . ': ' . $GLOBALS['LANG']->getLL('wrong_check_value') . ' ' . $GLOBALS['LANG']->getLL('forcomment') . ' ' .
-								$this->ref . ', check is: ' . $this->check;
+									$this->ref . ', check is: ' . $this->check;
 							exit();
-			 			}
+						}
 
-			 		}
+					}
 
 				}
 
@@ -573,18 +684,18 @@ class toctoc_comments_ajax {
 				if (($this->cmd === 'deletecomment') || ($this->cmd === 'denotifycomment')){
 					$this->commentid = t3lib_div::_GP('cuid');
 					// holds the commentid
-					if(version_compare(TYPO3_version, '4.6', '<')) {
+					if (version_compare(TYPO3_version, '4.6', '<')) {
 						$tmpint = t3lib_div::testInt($this->commentid);
 					} else {
 						$tmpint = t3lib_utility_Math::canBeInterpretedAsInteger($this->commentid);
 					}
 
-					if(!$tmpint) {
+					if (!$tmpint) {
 						echo $GLOBALS['LANG']->getLL('bad_commentid_value') . ': ' . $this->commentid;
 						exit();
 					}
 
-					if(md5($this->commentid . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']) != $this->check) {
+					if (md5($this->commentid . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']) != $this->check) {
 						echo 'deletecomment: ' . $GLOBALS['LANG']->getLL('wrong_check_value') . ' for comment ' . $this->commentid;
 						exit();
 					}
@@ -597,13 +708,13 @@ class toctoc_comments_ajax {
 			$this->AjaxData = $data_str;
 
 			// checking the pid
-			if(version_compare(TYPO3_version, '4.6', '<')) {
+			if (version_compare(TYPO3_version, '4.6', '<')) {
 				$tmpint = t3lib_div::testInt($this->pid);
 			} else {
 				$tmpint = t3lib_utility_Math::canBeInterpretedAsInteger($this->pid);
 			}
 
-			if(!$tmpint) {
+			if (!$tmpint) {
 				echo $GLOBALS['LANG']->getLL('bad_pid_value');
 				exit();
 			}
@@ -611,24 +722,24 @@ class toctoc_comments_ajax {
 			// checking the cid
 			$this->cid = $data['cid'];
 
-			if(version_compare(TYPO3_version, '4.6', '<')) {
+			if (version_compare(TYPO3_version, '4.6', '<')) {
 				$tmpint = t3lib_div::testInt($this->cid);
 			} else {
 				$tmpint = t3lib_utility_Math::canBeInterpretedAsInteger($this->cid);
 			}
 
-			if(!$tmpint) {
+			if (!$tmpint) {
 				echo $GLOBALS['LANG']->getLL('bad_cid_value');
 				exit();
 			}
 
-			if((strpos($this->cmd, 'ote') === FALSE) && (strpos($this->cmd, 'like') === FALSE) && ($this->cmd !== 'deletecomment') &&
+			if ((strpos($this->cmd, 'ote') === FALSE) && (strpos($this->cmd, 'like') === FALSE) && ($this->cmd !== 'deletecomment') &&
 					($this->cmd !== 'denotifycomment')) {
 				// getting the information from the pi-Form
 				$datathiscommentstr = t3lib_div::_GP('datathis');
 				$datathiscomment = unserialize(base64_decode($datathiscommentstr));
 				$this->datathis = $datathiscomment;
-				if(!is_array($this->datathis)) {
+				if (!is_array($this->datathis)) {
 					echo $GLOBALS['LANG']->getLL('bad_Ajax_value');
 					exit();
 				}
@@ -637,10 +748,10 @@ class toctoc_comments_ajax {
 				// to I hope
 				$this->datathis['sessionCaptchaData'] = t3lib_div::_GP('capsess');
 
-				if(strpos($this->cmd, 'rowse') !== FALSE) {
+				if (strpos($this->cmd, 'rowse') !== FALSE) {
 					$this->datathis['totalrows'] = t3lib_div::_GP('totalrows');
 					$this->datathis['startpoint'] = t3lib_div::_GP('startpoint');
-					$this->ref = t3lib_div::_GP('ref');
+					$this->ref = trim(t3lib_div::_GP('ref'));
 				}
 
 				// from a logged in user the pic - we need it after the insert
@@ -650,7 +761,7 @@ class toctoc_comments_ajax {
 					$this->userpic .= '>';
 				}
 
-				if(($this->cmd === 'showcomments') || (strpos($this->cmd, 'rowse') !== FALSE)) {
+				if (($this->cmd === 'showcomments') || (strpos($this->cmd, 'rowse') !== FALSE)) {
 					// for comments and browser we need the commentimgs, this is
 					// in the 3rd Ajaxarray
 					$data_str = t3lib_div::_GP('commentsimgs');
@@ -665,7 +776,7 @@ class toctoc_comments_ajax {
 					$this->commentspics = Array();
 				}
 
-				if(!is_array($this->commentspics)) {
+				if (!is_array($this->commentspics)) {
 					echo $GLOBALS['LANG']->getLL('bad_commentspics_value') . ': ' . $this->commentspics;
 					exit();
 				}
@@ -685,11 +796,15 @@ class toctoc_comments_ajax {
 	 * @return	void
 	 */
 	protected function initTSFE() {
+		if (version_compare(TYPO3_version, '8.0', '>')) {
+			\TYPO3\CMS\Frontend\Utility\EidUtility::initTCA();
+		}
+
 		if (version_compare(TYPO3_version, '6.1', '>')) {
-			if (!is_array($GLOBALS['TCA'])) {
+			if (!isset($GLOBALS['TCA']['pages']['ctrl'])) {
 				\TYPO3\CMS\Core\Core\Bootstrap::getInstance()->loadCachedTca();
 			} else {
-				if (!isset($GLOBALS['TCA']['pages'])) {
+				if (!isset($GLOBALS['TCA']['pages']['ctrl'])) {
 					\TYPO3\CMS\Core\Core\Bootstrap::getInstance()->loadCachedTca();
 				}
 			}
@@ -710,26 +825,38 @@ class toctoc_comments_ajax {
 
 		try {
 			/** @var $frontend TypoScriptFrontendController */
+			$pgitdone = FALSE;
 
-			if (version_compare(TYPO3_version, '4.8', '>')) {
-				$frontend = t3lib_div::makeInstance(
-						'TYPO3\\CMS\\Frontend\\Controller\\TypoScriptFrontendController',
-						$GLOBALS['TYPO3_CONF_VARS'], $pageId, ''
-				);
-			} else {
-				$frontend = t3lib_div::makeInstance('tslib_fe', $GLOBALS['TYPO3_CONF_VARS'], $pageId, '');
+			if (!isset($GLOBALS['TSFE'])) {
+				if (version_compare(TYPO3_version, '4.8', '>')) {	
+					$frontend = t3lib_div::makeInstance(
+							'TYPO3\\CMS\\Frontend\\Controller\\TypoScriptFrontendController',
+							$GLOBALS['TYPO3_CONF_VARS'], $this->pageid, ''
+					);
+				} else {
+					$frontend = t3lib_div::makeInstance('tslib_fe', $GLOBALS['TYPO3_CONF_VARS'], $this->pageid, '');
+				}
+				
+				$GLOBALS['TSFE'] = & $frontend;
+				
+				if (((version_compare(TYPO3_version, '6.0.99', '>')) && (version_compare(TYPO3_version, '6.1.99', '<'))) || (version_compare(TYPO3_version, '8.0.99', '>'))) {
+						\TYPO3\CMS\Frontend\Page\PageGenerator::pagegenInit();
+						$pgitdone = TRUE;
+				}	
+				
+				$frontend->initFEuser();
+				$frontend->determineId();
+				$frontend->initTemplate();
+	 			$frontend->getConfigArray();
 			}
-			$GLOBALS['TSFE'] = & $frontend;
 
-			$frontend->initFEuser();
-			$frontend->determineId();
-			$frontend->initTemplate();
- 			$frontend->getConfigArray();
-			//       // Get linkVars, absRefPrefix, etc
-			if (version_compare(TYPO3_version, '4.8', '>')) {
-				\TYPO3\CMS\Frontend\Page\PageGenerator::pagegenInit();
-			} else {
-				TSpagegen::pagegenInit();
+			if ($pgitdone == FALSE) {
+				//       // Get linkVars, absRefPrefix, etc
+				if (version_compare(TYPO3_version, '4.8', '>')) {
+					\TYPO3\CMS\Frontend\Page\PageGenerator::pagegenInit();
+				} else {
+					TSpagegen::pagegenInit();
+				}
 			}
 
 		} catch (Exception $e) {
@@ -743,44 +870,52 @@ class toctoc_comments_ajax {
 	 * @return	void
 	 */
 	public function main() {
-		$nosessclose = FALSE;
-		if((strpos($this->cmd, 'ote') !== FALSE) || (strpos($this->cmd, 'like') !== FALSE)) {
-			$this->updateRating();
-		} elseif ($this->cmd == 'commentsview') {
-			$this->updateCommentsView();
-		} elseif($this->cmd == 'getuc') {
-			$this->getUserCard();
-		} elseif($this->cmd == 'handlecn') {
-			$this->handleCommentatorNotifications();
-		} elseif(($this->cmd == 'getcap')) {
-			$this->getCaptcha($this->captchatype, $this->cid);
-		} elseif(($this->cmd == 'checkcap')) {
-			$this->chkcaptcha($this->cid, $this->captchacode);
-		} elseif(($this->cmd == 'deletecomment')) {
-			$this->processDeleteSubmission();
-		} elseif(($this->cmd == 'denotifycomment')) {
-			$this->processDenotifycommentSubmission();
-		} elseif(($this->cmd == 'updatect')) {
-			$this->updateComment();
-		} elseif(($this->cmd == 'searchcomment') || ($this->cmd == 'searchbrowse')) {
-			$this->commentsSearch();
-		} elseif ($this->cmd == 'previewcomment'){
-			$this->previewcomment();
-		} elseif (strstr($this->cmd, 'preview')){
-			$nosessclose = TRUE;
-			$this->webpagepreview();
-		} elseif ($this->cmd == 'cleanupfup'){
-			$this->cleanupfup();
-		} elseif ($this->cmd == 'rcclearcache'){
-			$this->recentCommentsClearCache();
-		} elseif ($this->cmd == 'checksharre') {
-			$this->checksharre();
-		} else {
-			$this->updateCommentDisplay();
-		}
 
-		if ($nosessclose == FALSE) {
-			$this->commonObj->stop_toctoccomments_session();
+			if ($this->runMain == TRUE) {
+
+			if ((strpos($this->cmd, 'ote') !== FALSE) || (strpos($this->cmd, 'like') !== FALSE)) {
+				$this->updateRating();
+			} elseif ($this->cmd == 'commentsview') {
+				$this->updateCommentsView();
+			} elseif ($this->cmd == 'getuc') {
+				$this->getUserCard();
+			} elseif ($this->cmd == 'getemorslt') {
+				$this->getEmoCard();
+			} elseif ($this->cmd == 'handlecn') {
+				$this->handleCommentatorNotifications();
+			} elseif (($this->cmd == 'getcap')) {
+				$this->getCaptcha($this->captchatype, $this->cid);
+			} elseif (($this->cmd == 'checkcap')) {
+				$this->chkcaptcha($this->cid, $this->captchacode);
+			} elseif (($this->cmd == 'deletecomment')) {
+				$this->processDeleteSubmission();
+			} elseif (($this->cmd == 'denotifycomment')) {
+				$this->processDenotifycommentSubmission();
+			} elseif (($this->cmd == 'updatect')) {
+				$this->updateComment();
+			} elseif (($this->cmd == 'searchcomment') || ($this->cmd == 'searchbrowse')) {
+				$this->commentsSearch();
+			} elseif ($this->cmd == 'previewcomment'){
+				$this->previewcomment();
+			} elseif (strstr($this->cmd, 'preview')){
+				$this->nosessclose = TRUE;
+				$this->webpagepreview();
+			} elseif ($this->cmd == 'cleanupfup'){
+				$this->cleanupfup();
+			} elseif ($this->cmd == 'rcclearcache'){
+				$this->recentCommentsClearCache();
+			} elseif ($this->cmd == 'checksharre') {
+				$this->checksharre();
+			} else {
+				$this->updateCommentDisplay();
+			}
+
+			if ($this->nosessclose == FALSE) {
+				$this->commonObj->stop_toctoccomments_session();
+			}
+
+		} else {
+			echo $this->dispatchmessage;
 		}
 
 	}
@@ -884,7 +1019,7 @@ class toctoc_comments_ajax {
 	protected function updateCommentDisplay() {
 		$apiObj = t3lib_div::makeInstance('toctoc_comments_api');
 		/* @var $apiObj toctoc_comments_api */
-		if(version_compare(TYPO3_version, '4.6', '<')) {
+		if (version_compare(TYPO3_version, '4.6', '<')) {
 			$apiObj->initCaches();
 		}
 
@@ -902,7 +1037,7 @@ class toctoc_comments_ajax {
 	protected function updateComment() {
 		$apiObj = t3lib_div::makeInstance('toctoc_comments_api');
 		/* @var $apiObj toctoc_comments_api */
-		if(version_compare(TYPO3_version, '4.6', '<')) {
+		if (version_compare(TYPO3_version, '4.6', '<')) {
 			$apiObj->initCaches();
 		}
 
@@ -1005,6 +1140,18 @@ class toctoc_comments_ajax {
 	 *
 	 * @return	string		Current IP address
 	 */
+	protected function getEmoCard() {
+		$apiObj = t3lib_div::makeInstance('toctoc_comments_api');
+		/* @var $apiObj toctoc_comments_api */
+
+		$content = $apiObj->getEmoCard($this->conf, $this->cid, $this->ref, intval($this->feuser));
+		print($content);
+	}
+	/**
+	 * Retrieves current IP address
+	 *
+	 * @return	string		Current IP address
+	 */
 	protected function getCurrentIp() {
 		if (preg_match('/^\d{2,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/', $_SERVER['HTTP_X_FORWARDED_FOR'])) {
 			return $_SERVER['HTTP_X_FORWARDED_FOR'];
@@ -1026,7 +1173,7 @@ class toctoc_comments_ajax {
 		$GLOBALS['TYPO3_DB']->sql_query('START TRANSACTION');
 		$pluginid= $this->pluginid;
 		$action='try';
-		if(intval($this->feuser) === 0) {
+		if (intval($this->feuser) === 0) {
 
 			$fetoctocusertoquery = '"' . $strCurrentIP . '.0"';
 			$fetoctocusertoinsert = '' . $strCurrentIP . '.0';
@@ -1158,10 +1305,11 @@ class toctoc_comments_ajax {
 										$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET tstamp = ' . $row['tstampseen'] .
 												', crdate = ' . $row['tstampseen'] .
 												', tstampseen = ' . $row['tstampseen'] .
-												', seen=' . (intval($rows127seen) + intval($row['seen']))  .
+												', seen = ' . (intval($rows127seen) + intval($row['seen']))  .
 												' WHERE ' . $dataWhereup);
 									} else {
-										$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET seen=' . (intval($rows127seen) + intval($row['seen']))  . ' WHERE ' . $dataWhereup);
+										$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET seen=' .
+												(intval($rows127seen) + intval($row['seen']))  . ' WHERE ' . $dataWhereup);
 									}
 
 								}
@@ -1204,12 +1352,13 @@ class toctoc_comments_ajax {
 		}
 
 		// seen compress to viewMaxAge end
-
+$GLOBALS['TYPO3_DB']->sql_query('COMMIT');
 		$dataWhere = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND reference="' . $pluginid . '" AND toctoc_comments_user=' .
 						$fetoctocusertoquery .'';
 		list($row) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('seen AS seenrows, uid AS insertedrows', 'tx_toctoc_comments_feuser_mm', $dataWhere);
-		if(intval($row['insertedrows'] > 0)) {
-			if($row['seenrows'] == 0) {
+
+		if (intval($row['insertedrows'] > 0)) {
+			if (intval($row['seenrows']) == 0) {
 				//update to 1
 				$action='update';
 				$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET seen=1,
@@ -1245,7 +1394,6 @@ class toctoc_comments_ajax {
 			}
 		}
 
-		$GLOBALS['TYPO3_DB']->sql_query('COMMIT');
 		if ($action != 'try') {
 			if (!isset($_SESSION['commentViewsUpdateTime'])) {
 				$_SESSION['commentViewsUpdateTime']=0;
@@ -1267,7 +1415,7 @@ class toctoc_comments_ajax {
 				$_SESSION['commentViewsUpdateTime']=microtime(TRUE);
 				$apiObj = t3lib_div::makeInstance('toctoc_comments_api');
 				/* @var $apiObj toctoc_comments_api */
-				if(version_compare(TYPO3_version, '4.6', '<')) {
+				if (version_compare(TYPO3_version, '4.6', '<')) {
 					$apiObj->initCaches();
 				}
 
@@ -1300,7 +1448,6 @@ class toctoc_comments_ajax {
 
 		}
 
-		echo '';
 	}
 
 	/**
@@ -1311,19 +1458,25 @@ class toctoc_comments_ajax {
 	protected function updateRating() {
 		$apiObj = t3lib_div::makeInstance('toctoc_comments_api');
 		/* @var $apiObj toctoc_comments_api */
-		if(version_compare(TYPO3_version, '4.6', '<')) {
+		if (version_compare(TYPO3_version, '4.6', '<')) {
 			$apiObj->initCaches();
 		}
 		$saveratingsdisableIpCheck = $this->conf['ratings.']['disableIpCheck'];
 		$pageid= $this->pageid;
-		$ratingarr=explode('-', $this->ref);
-		$scopeid =0;
+		$ratingarr=explode('-', trim($this->ref));
+		$scopeid = 0;
 		$countratingarr = count($ratingarr);
 		if ($countratingarr==2) {
-			//if ((trim($ratingarr[$countratingarr-1]) == '0') || (intval($ratingarr[$countratingarr-1]) > 0)) {
-				$this->ref=$ratingarr[0];
-				$scopeid =intval($ratingarr[1]);
-			//}
+			$this->ref=$ratingarr[0];
+			$scopeid =intval($ratingarr[1]);
+
+		}
+		if (!$this->feUserObj){
+			$this->feUserObj = tslib_eidtools::initFeUser();
+		}
+
+		if (intval($this->feuser)==0){
+			$this->feuser = intval($this->feUserObj->user['uid']);
 		}
 
 		$ratingsmode='';
@@ -1340,7 +1493,7 @@ class toctoc_comments_ajax {
 		}
 		$alreadyvoted = $apiObj->isVoted($this->ref, $scopeid, $this->feuser, TRUE);
 
-		if($this->conf['ratings.']['disableIpCheck'] || ($alreadyvoted == FALSE) || ($ratingsmode=='autostatic') ||
+		if ($this->conf['ratings.']['disableIpCheck'] || ($alreadyvoted == FALSE) || ($ratingsmode=='autostatic') ||
 				!(($this->cmd == 'vote') || ($this->cmd == 'votearticle'))) {
 			$feusertoinsert = 0;
 			$fetoctocusertoinsert = '';
@@ -1352,7 +1505,7 @@ class toctoc_comments_ajax {
 			$newemail= '';
 			$newwww= '';
 			$newloc= '';
-			if(intval($this->feuser) === 0) {
+			if (intval($this->feuser) === 0) {
 				$fetoctocusertoquery = '"' . $strCurrentIP . '.0"';
 				$fetoctocusertoinsert = '' . $strCurrentIP . '.0';
 			} else {
@@ -1394,7 +1547,7 @@ class toctoc_comments_ajax {
 				$_SESSION['ratingtimes'] = array();
 			}
 
-			if(($this->cmd == 'vote') || ($this->cmd == 'votearticle') || (strpos($this->cmd, 'ike') !== FALSE)) {
+			if (($this->cmd == 'vote') || ($this->cmd == 'votearticle') || (strpos($this->cmd, 'ike') !== FALSE)) {
 
 				$dataWhere = 'pid=' . intval($this->conf['storagePid']) . ' AND reference="' . $this->ref . '" AND reference_scope=' . $scopeid;
 				list($row) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS t', 'tx_toctoc_ratings_data', $dataWhere);
@@ -1402,7 +1555,7 @@ class toctoc_comments_ajax {
 				// vote of the user
 				$dataWheremm = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user = ' . $fetoctocusertoquery . '' .
 								' AND reference="' . $this->ref . '" AND reference_scope=' . $scopeid;
-				list($rowmm) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS tmm, SUM(ilike) AS ilike, SUM(idislike) AS idislike, AVG(myrating) as avgmyrating',
+				list($rowmm) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS tmm, SUM(ilike) AS ilike, SUM(idislike) AS idislike, MIN(emolikeid) AS emolikeid, AVG(myrating) as avgmyrating',
 						'tx_toctoc_comments_feuser_mm', $dataWheremm);
 				if (($scopeid==0) && ($this->overallvote==1) || ($scopeid!=0)) {
 					// for scopred ratings we need some more data, we need the values of the scoped entries for calulation of the average in ratings_data
@@ -1413,7 +1566,7 @@ class toctoc_comments_ajax {
 							'tx_toctoc_comments_feuser_mm', $dataWheremmscp);
 					if ($scopeid!=0) {
 						// storing initial number of voted scopes and their avarage rating in SESSION
-						if($rowmmscp['tmm'] > 0) {
+						if ($rowmmscp['tmm'] > 0) {
 							$_SESSION['vctrlinitialvotedscopes' . intval($this->conf['storagePid']) . $this->ref] =
 							round(($rowmmscp['summyrating']/$rowmmscp['avgmyrating']), 0);
 							$_SESSION['vctrlinitialrating' . intval($this->conf['storagePid']) . $this->ref] = $rowmmscp['avgmyrating'];
@@ -1434,7 +1587,7 @@ class toctoc_comments_ajax {
 
 			}
 
-			if(($this->cmd == 'vote') || ($this->cmd == 'votearticle')) {
+			if (($this->cmd == 'vote') || ($this->cmd == 'votearticle')) {
 				if (intval($_SESSION['unBlockTime']) > 1000*(microtime(TRUE))) {
 					$waittime = intval(((intval($_SESSION['unBlockTime'])-1000*(microtime(TRUE)))/60000));
 					$toomanyratings = $GLOBALS['LANG']->getLL('made_toomanyratings');
@@ -1478,13 +1631,13 @@ class toctoc_comments_ajax {
 				}
 			}
 			if ($allowedNumberOfRatingsExceededBlocktimeMessage == '') {
-				if($row['t'] > 0) {
-					if(($this->cmd == 'vote') || ($this->cmd == 'votearticle')) {
+				if ($row['t'] > 0) {
+					if (($this->cmd == 'vote') || ($this->cmd == 'votearticle')) {
 						if ($this->conf['ratings.']['disableIpCheck']) {
 							if ($alreadyvoted)  {
 								$thevotes = 0;
 								$therating = 0;
-								if($rowmm['tmm'] > 0) {
+								if ($rowmm['tmm'] > 0) {
 									if (($scopeid==0) && ($this->overallvote==1)) {
 										// here we need to decide what to add to the ratings table
 										// for this we use the SESSION variables we've loaded just before when the vote on the scope passed thru this pghp-file
@@ -1531,7 +1684,7 @@ class toctoc_comments_ajax {
 					}
 
 				} else {
-					if(($this->cmd == 'vote') || ($this->cmd == 'votearticle')) {
+					if (($this->cmd == 'vote') || ($this->cmd == 'votearticle')) {
 						$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_ratings_data', array(
 							'pid' => $this->conf['storagePid'],
 							'crdate' => time(),
@@ -1556,8 +1709,8 @@ class toctoc_comments_ajax {
 				$locrating=$this->rating/$this->votes;
 			}
 
-			if($rowmm['tmm'] > 0) {
-				if(($this->cmd == 'vote') || ($this->cmd == 'votearticle')) {
+			if ($rowmm['tmm'] > 0) {
+				if (($this->cmd == 'vote') || ($this->cmd == 'votearticle')) {
 					//select all scopes avgs if overallscope
 					if ($allowedNumberOfRatingsExceededBlocktimeMessage == '') {
 						$voteround=9;
@@ -1576,9 +1729,9 @@ class toctoc_comments_ajax {
 						$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET isreview='. $isReview . ', myrating=' . round($locrating, $voteround) . ', pagetstampmyrating=' .
 								$pageid . ', tstampmyrating=' . time() . ', tstamp=' . time() . ', remote_addr="' . $strCurrentIP . '" WHERE ' . $dataWheremm);
 					}
-				} elseif($this->cmd === 'unlike') {
-					if($rowmm['idislike'] > 0) {
-						$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET ' . 'idislike=0, pagetstampidislike=' . $pageid .
+				} elseif ($this->cmd === 'unlike') {
+					if ($rowmm['idislike'] > 0) {
+						$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET idislike=0, pagetstampidislike=' . $pageid .
 								', tstampidislike=' . time() . ', tstamp=' . time() . ', remote_addr="' . $strCurrentIP . '" WHERE ' . $dataWheremm);
 					} else {
 						$_SESSION['dislikeditem'] = array();
@@ -1587,16 +1740,64 @@ class toctoc_comments_ajax {
 						$_SESSION['dislikeditem']['time'] = time();
 						$_SESSION['dislikeditem']['ref'] = $this->ref;
 						$_SESSION['dislikeditem']['toctoc_user'] = $fetoctocusertoinsert;
-						$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET ' . 'ilike=0, idislike=1, pagetstampidislike=' . $pageid .
+						$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET ilike=0, idislike=1, pagetstampidislike=' . $pageid .
 								', tstampidislike=' . time() . ', tstamp=' . time() . ', remote_addr="' . $strCurrentIP . '" WHERE ' . $dataWheremm);
 					}
 
-				} elseif(($this->cmd === 'like')) {
-					if($rowmm['ilike'] > 0) {
-						$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET ' . 'ilike=0, pagetstampilike=' . $pageid . ', tstampilike=' .
+				} elseif (($this->cmd === 'like')) {
+					if ($rowmm['ilike'] > 0) {
+						$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET ilike=0, pagetstampilike=' . $pageid . ', tstampilike=' .
 								time() . ', tstamp=' . time() . ', remote_addr="' . $strCurrentIP . '" WHERE ' . $dataWheremm);
 					} else {
-						$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET ' . 'ilike=1, idislike=0, pagetstampilike=' . $pageid .
+						$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET ilike=1, idislike=0, pagetstampilike=' . $pageid .
+								', tstampilike=' . time() . ', tstamp=' . time() . ', remote_addr="' . $strCurrentIP . '"  WHERE ' . $dataWheremm);
+					}
+
+				} elseif ($this->cmd === 'unlikeemo') {
+					if ($rowmm['idislike'] > 0) {
+						$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET idislike=0, pagetstampidislike=' . $pageid .
+								', tstampidislike=' . time() . ', tstamp=' . time() . ', remote_addr="' . $strCurrentIP . '" WHERE ' . $dataWheremm);
+					} else {
+						$_SESSION['dislikeditem'] = array();
+						$_SESSION['dislikeditem']['pageid'] = $pageid;
+						$_SESSION['dislikeditem']['IP'] = $strCurrentIP;
+						$_SESSION['dislikeditem']['time'] = time();
+						$_SESSION['dislikeditem']['ref'] = $this->ref;
+						$_SESSION['dislikeditem']['toctoc_user'] = $fetoctocusertoinsert;
+						$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET ilike=0, idislike=1, pagetstampidislike=' . $pageid .
+								', tstampidislike=' . time() . ', tstamp=' . time() . ', remote_addr="' . $strCurrentIP . '" WHERE ' . $dataWheremm);
+					}
+
+				} elseif (($this->cmd === 'likeemo')) {
+					if ($rowmm['ilike'] > 0) {
+						if ($rowmm['emolikeid'] <> $this->rating) {
+							$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET pagetstampilike=' . $pageid . ', tstampilike=' .
+									time() . ', tstamp=' . time() . ', remote_addr="' . $strCurrentIP . '" WHERE ' . $dataWheremm);
+						} else {
+							$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET ilike=0, pagetstampilike=' . $pageid . ', tstampilike=' .
+									time() . ', tstamp=' . time() . ', remote_addr="' . $strCurrentIP . '" WHERE ' . $dataWheremm);
+						}
+
+					} else {
+						if ($rowmm['emolikeid'] <> $this->rating) {
+
+							$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET ilike=1, idislike=0, pagetstampilike=' . $pageid .
+								', tstampilike=' . time() . ', tstamp=' . time() . ', remote_addr="' . $strCurrentIP . '"  WHERE ' . $dataWheremm);
+						} else {
+							$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET ilike=0, idislike=0, pagetstampilike=' . $pageid .
+									', tstampilike=' . time() . ', tstamp=' . time() . ', remote_addr="' . $strCurrentIP . '"  WHERE ' . $dataWheremm);
+						}
+
+					}
+
+				}
+
+				if (($this->cmd === 'unlikeemo') || ($this->cmd === 'likeemo')) {
+ 					if ($rowmm['emolikeid'] == $this->rating) {
+ 						$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET emolikeid="", pagetstampilike=' . $pageid . ', tstampilike=' .
+ 								time() . ', tstamp=' . time() . ', remote_addr="' . $strCurrentIP . '" WHERE ' . $dataWheremm);
+ 					} else {
+						$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET emolikeid='.$this->rating.', pagetstampilike=' . $pageid .
 								', tstampilike=' . time() . ', tstamp=' . time() . ', remote_addr="' . $strCurrentIP . '"  WHERE ' . $dataWheremm);
 					}
 
@@ -1607,16 +1808,17 @@ class toctoc_comments_ajax {
 										'deleted=1 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user = ' . $fetoctocusertoquery . '' .
 										' AND reference="' . $this->ref . '"');
 
-				if(($this->cmd == 'vote') || ($this->cmd == 'votearticle')) {
+				if (($this->cmd == 'vote') || ($this->cmd == 'votearticle')) {
 					if ($allowedNumberOfRatingsExceededBlocktimeMessage == '') {
 
-						if(($feusertoinsert > 0) || ($fetoctocusertoinsert !== '0.0.0.0.' . $feusertoinsert)) {
+						if (($feusertoinsert > 0) || ($fetoctocusertoinsert !== '0.0.0.0.' . $feusertoinsert)) {
 							$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_feuser_mm', array(
 									'crdate' => time(),
 									'tstampmyrating' => time(),
 									'pagetstampmyrating' => $pageid,
 									'tstampseen' => time(),
 									'pagetstampseen' => $pageid,
+									'seen' => 1,
 									'tstamp' => time(),
 									'ilike' => 0,
 									'pid' => $this->conf['storagePid'],
@@ -1639,8 +1841,8 @@ class toctoc_comments_ajax {
 						}
 					}
 
-				} elseif($this->cmd == 'unlike') {
-					if(($feusertoinsert > 0) || ($fetoctocusertoinsert !== '0.0.0.0.' . $feusertoinsert)) {
+				} elseif ($this->cmd == 'unlike') {
+					if (($feusertoinsert > 0) || ($fetoctocusertoinsert !== '0.0.0.0.' . $feusertoinsert)) {
 						$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_feuser_mm', array(
 								'crdate' => time(),
 								'tstamp' => time(),
@@ -1648,6 +1850,7 @@ class toctoc_comments_ajax {
 								'pagetstampidislike' => $pageid,
 								'tstampseen' => time(),
 								'pagetstampseen' => $pageid,
+								'seen' => 1,
 								'ilike' => 0,
 								'pid' => $this->conf['storagePid'],
 								'idislike' => 1,
@@ -1673,14 +1876,15 @@ class toctoc_comments_ajax {
 						$_SESSION['dislikeditem']['toctoc_user'] = $fetoctocusertoinsert;
 					}
 
-				} elseif($this->cmd == 'like') {
-					if(($feusertoinsert > 0) || ($fetoctocusertoinsert !== '0.0.0.0.' . $feusertoinsert)) {
+				} elseif ($this->cmd == 'like') {
+					if (($feusertoinsert > 0) || ($fetoctocusertoinsert !== '0.0.0.0.' . $feusertoinsert)) {
 						$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_feuser_mm', array(
 								'crdate' => time(),
 								'tstampilike' => time(),
 								'pagetstampilike' =>$pageid,
 								'tstampseen' => time(),
 								'pagetstampseen' => $pageid,
+								'seen' => 1,
 								'tstamp' => time(),
 								'ilike' => 1,
 								'pid' => $this->conf['storagePid'],
@@ -1701,11 +1905,78 @@ class toctoc_comments_ajax {
 							}
 					}
 
+				} elseif ($this->cmd == 'unlikeemo') {
+					if (($feusertoinsert > 0) || ($fetoctocusertoinsert !== '0.0.0.0.' . $feusertoinsert)) {
+						$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_feuser_mm', array(
+								'crdate' => time(),
+								'tstamp' => time(),
+								'tstampidislike' => time(),
+								'pagetstampidislike' => $pageid,
+								'tstampseen' => time(),
+								'pagetstampseen' => $pageid,
+								'seen' => 1,
+								'ilike' => 0,
+								'pid' => $this->conf['storagePid'],
+								'idislike' => 1,
+								'myrating' => 0,
+								'toctoc_commentsfeuser_feuser' => $feusertoinsert,
+								'toctoc_comments_user' => $fetoctocusertoinsert,
+								'reference' => $this->ref,
+								'reference_scope' => $scopeid,
+								'remote_addr' => $strCurrentIP,
+								'emolikeid' => $this->rating
+						));
+						$newUid = $GLOBALS['TYPO3_DB']->sql_insert_id();
+						// Update reference index. This will show in theList view that someone refers to external record.
+						$refindex = t3lib_div::makeInstance('t3lib_refindex');
+						/* @var $refindex t3lib_refindex */
+						if (isset($GLOBALS['TCA']['tx_toctoc_comments_feuser_mm']['columns'])) {
+							$refindex->updateRefIndexTable('tx_toctoc_comments_feuser_mm', $newUid);
+						}
+						$_SESSION['dislikeditem'] = array();
+						$_SESSION['dislikeditem']['pageid'] = $pageid;
+						$_SESSION['dislikeditem']['IP'] = $strCurrentIP;
+						$_SESSION['dislikeditem']['time'] = time();
+						$_SESSION['dislikeditem']['ref'] = $this->ref;
+						$_SESSION['dislikeditem']['toctoc_user'] = $fetoctocusertoinsert;
+					}
+
+				} elseif ($this->cmd == 'likeemo') {
+					if (($feusertoinsert > 0) || ($fetoctocusertoinsert !== '0.0.0.0.' . $feusertoinsert)) {
+						$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_feuser_mm', array(
+								'crdate' => time(),
+								'tstampilike' => time(),
+								'pagetstampilike' =>$pageid,
+								'tstampseen' => time(),
+								'pagetstampseen' => $pageid,
+								'tstamp' => time(),
+								'ilike' => 1,
+								'seen' => 1,
+								'pid' => $this->conf['storagePid'],
+								'idislike' => 0,
+								'myrating' => 0,
+								'toctoc_commentsfeuser_feuser' => $feusertoinsert,
+								'toctoc_comments_user' => $fetoctocusertoinsert,
+								'reference' => $this->ref,
+								'reference_scope' => $scopeid,
+								'remote_addr' => $strCurrentIP,
+								'emolikeid' => $this->rating
+						));
+						$newUid = $GLOBALS['TYPO3_DB']->sql_insert_id();
+						// Update reference index. This will show in theList view that someone refers to external record.
+						$refindex = t3lib_div::makeInstance('t3lib_refindex');
+						/* @var $refindex t3lib_refindex */
+						if (isset($GLOBALS['TCA']['tx_toctoc_comments_feuser_mm']['columns'])) {
+							$refindex->updateRefIndexTable('tx_toctoc_comments_feuser_mm', $newUid);
+						}
+
+					}
+
 				}
 
 			}
 
-			if(intval($rowusr['tusr']) === 0) {
+			if (intval($rowusr['tusr']) === 0) {
 				$strCurrentIPres = gethostbyaddr($strCurrentIP);
 				$GLOBALS['TYPO3_DB']->exec_DELETEquery('tx_toctoc_comments_user',
 						'deleted=1 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user = ' . $fetoctocusertoquery);
@@ -1724,6 +1995,7 @@ class toctoc_comments_ajax {
 						'initial_location' => $newloc,
 				));
 			}
+
 			if ($allowedNumberOfRatingsExceededBlocktimeMessage == '') {
 				$dataWhereStats = 'reference_scope = 0 AND deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND toctoc_comments_user="' .
 				$fetoctocusertoinsert . '"';
@@ -1735,7 +2007,7 @@ class toctoc_comments_ajax {
 				$resultcount = $GLOBALS['TYPO3_DB']->sql_query($sqlstr);
 				$rowStats = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultcount);
 
-				if(intval($rowStats['nbrmyrating']) === 0) {
+				if (intval($rowStats['nbrmyrating']) === 0) {
 					// which should not be, but if results in a difff/0 just
 					// after, so we avoid this at least...
 					$rowStats['nbrmyrating'] = 1;
@@ -1747,7 +2019,7 @@ class toctoc_comments_ajax {
 						$upddataWhereStats);
 
 				// Call hook if ratings is updated
-				if(is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['updateRatings'])) {
+				if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['updateRatings'])) {
 					foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['updateRatings'] as $userFunc) {
 						$params = array(
 								'pObj' => $this,
@@ -1806,7 +2078,7 @@ class toctoc_comments_ajax {
 					$GLOBALS['TCA']['tt_content'] = array();
 				}
 				foreach($pidList as $pid) {
-					if($pid != 0) {
+					if ($pid != 0) {
 						$tce->clear_cacheCmd($pid);
 					}
 
@@ -1833,7 +2105,7 @@ class toctoc_comments_ajax {
 			}
 
 			$content = $apiObj->getAjaxRatingDisplay($this->ref, $this->conf, TRUE, $this->pid, FALSE, $this->feuser, $this->cmd, $this->cid,
-					$this->commentspics, $scopeid, $isReview);
+					$scopeid, $isReview);
 
 			if ($isReview != 0) {
 				$this->conf['ratings.']['useMyVote'] = $savuseMyVote;
@@ -1936,7 +2208,7 @@ class toctoc_comments_ajax {
 			}
 			/* @var $tce t3lib_TCEmain */
 			foreach($pidListarr as $pid) {
-				if($pid != 0) {
+				if ($pid != 0) {
 					$tce->clear_cacheCmd($pid);
 				}
 
@@ -1957,7 +2229,7 @@ class toctoc_comments_ajax {
 	protected function processDenotifycommentSubmission() {
 		$apiObj = t3lib_div::makeInstance('toctoc_comments_api');
 		/* @var $apiObj toctoc_comments_api */
-		if(version_compare(TYPO3_version, '4.6', '<')) {
+		if (version_compare(TYPO3_version, '4.6', '<')) {
 			$apiObj->initCaches();
 		}
 
@@ -1989,7 +2261,7 @@ class toctoc_comments_ajax {
 		}
 		/* @var $tce t3lib_TCEmain */
 		foreach($pidListarr as $pid) {
-			if($pid != 0) {
+			if ($pid != 0) {
 				$tce->clear_cacheCmd($pid);
 			}
 
@@ -2008,7 +2280,7 @@ class toctoc_comments_ajax {
 	protected function recentCommentsClearCache() {
 		/* @var $apiObj toctoc_comments_api */
 		$apiObj = t3lib_div::makeInstance('toctoc_comments_api');
-		if(version_compare(TYPO3_version, '4.6', '<')) {
+		if (version_compare(TYPO3_version, '4.6', '<')) {
 
 			$apiObj->initCaches();
 		}
@@ -2033,7 +2305,7 @@ class toctoc_comments_ajax {
 	}
 }
 
-if(defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/toctoc_comments/class.toctoc_comments_ajax.php']) {
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/toctoc_comments/class.toctoc_comments_ajax.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/toctoc_comments/class.toctoc_comments_ajax.php']);
 }
 

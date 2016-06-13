@@ -148,9 +148,9 @@ timeForAllowedNumberOfRatings	                         int+            Time in m
                                                                          (V 6.0.0)
 -------------------------------------------------------  --------------  -------------------------------------------------------  ------------------------------------------------------------
 allowedNumberOfRatingsExceededBlocktime                  int+	         Time in minutes that a user is blocked if he made to     13
-                                                                         many ratings - the wait penalty: After the last rating 
+                                                                         many ratings - the wait penalty: After the last rating
                                                                          made the user has to wait for this time until he will 
-                                                                         be able to make more ratings or change ghis ratings
+                                                                         be able to make more ratings or change his ratings
                                                                          (V 6.0.0)
 -------------------------------------------------------  --------------  -------------------------------------------------------  ------------------------------------------------------------
 useIPsInLikeDislike                                      boolean	 Show resolved IP-addresses in tiptexts for Likes and     1
@@ -159,7 +159,50 @@ useIPsInLikeDislike                                      boolean	 Show resolved 
                                                                          0 IPs will be counted in “Others” and 
                                                                          won’t be shown in tip-texts
                                                                          (V 7.0.1)
+-------------------------------------------------------  --------------  -------------------------------------------------------  ------------------------------------------------------------
+emoLike                                                  boolean         Use emoLikes (reactions): The Likes change to emoLikes,  1
+                                                                         offering options such as "Love", "Wow", "Angry"
+                                                                         (V 9.1.0)
+-------------------------------------------------------  --------------  -------------------------------------------------------  ------------------------------------------------------------
+emoLikeSet                                               options         Themed set to use as emoLikes                            default
+                                                                         Use emolikes from folder in 
+                                                                         Resources\Public\Icons\emolike
+                                                                         [Social (Default)=default,Social (Facebook)=facebook,
+                                                                         News=news,Foods and restaurants=food,Music=music]
+                                                                         (V 9.1.0)
+-------------------------------------------------------  --------------  -------------------------------------------------------  ------------------------------------------------------------
+likeTextWithUn                                           boolean         Use explicit Like and Unlike-Labels                      0
+                                                                         If enabled labels on likes will show an Unlike, 
+                                                                         if not it remains on Like
+                                                                         (V 9.1.0)
 =======================================================  ==============  =======================================================  ============================================================
+
+=================================  =========  =======================================================  ===================================================================
+Options from setup.txt
+=================================  =========  =======================================================  ===================================================================
+emoLikeMaxTippEntries              int+       Maximal number of users shown in tipptexts of the small  4
+                                              emoLike-iconbar below the Like button
+                                              when ratings.emoLike = 1
+                                              Limits from 3 to 10 
+                                              (V 9.1.0)
+---------------------------------  ---------  -------------------------------------------------------  -------------------------------------------------------------------
+LikeMaxReportLineEntries           int+       Maximal number of users shown in Likereports             3
+                                              aside the small like button on top 
+                                              when ratings.emoLike = 0
+                                              Limits from 2 to 5 
+                                              (V 9.1.0)
+---------------------------------  ---------  -------------------------------------------------------  -------------------------------------------------------------------
+LikeMaxReportTippEntries           int+       Maximal number of users shown in tipptexts of the        6
+                                              Likereports aside the small like button on top 
+                                              when ratings.emoLike = 0
+                                              Limits from 3 to 13
+                                              (V 9.1.0)
+---------------------------------  ---------  -------------------------------------------------------  -------------------------------------------------------------------
+emoLikeMaxOverviewEntries          int+       Maximal number of users shown in emoLike-overview        12
+                                              Popups when ratings.emoLike = 1
+                                              Limits from 3 to 50 
+                                              (V 9.1.0)
+=================================  =========  =======================================================  ===================================================================
 
 
                                                                          

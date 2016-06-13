@@ -75,9 +75,12 @@ class toctoc_comments_be_db {
     		$schema = '';
     		if (version_compare(TYPO3_version, '6.0', '<')) {
     			$schema = TYPO3_db_name;
-    		} else {
+    		} elseif (version_compare(TYPO3_version, '8.1', '<')) {
     			$cm = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Configuration\\ConfigurationManager');
     			$schema = $cm->getLocalConfigurationValueByPath('DB/database');
+       		} else {
+    			$cm = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Configuration\\ConfigurationManager');
+    			$schema = $cm->getLocalConfigurationValueByPath('DB/Connections/Default/dbname');
     		}
 
    $querymerged='SELECT TABLE_NAME AS tablenamen FROM INFORMATION_SCHEMA.TABLES

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<description>Additional CSH labels</description>
+		<type>CSH</type>
+		<csh_table>tx_toctoc_comments_sharing</csh_table>
+		<fileId>EXT:toctoc_comments/locallang_sharing_csh.xml</fileId>
+		<labelContext type="array">
+		</labelContext>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="external_ref.description">Sharing for page or record</label>
+			<label index="external_ref.details">Referenced record maybe a commented page or, if sharing records like news, the shared record.</label>
+			<label index="external_prefix.description">External prefix for this sharing</label>
+			<label index="external_prefix.details">The external prefix identifies the TYPO3 table for which the sharing was made. 'pages' in fact means tt_content without associated records from another table. Any other prefix indicated that the comment is associated to this table and, as always, to the content element holding the comment.</label>
+			<label index="sys_language_uid.description">Language</label>
+			<label index="sys_language_uid.details">Language for which this record is defined.</label>
+			<label index="reference.description">Shared page</label>
+			<label index="reference.details">Shared page refers to field reference in the table. It holds the shared pages uid</label>
+			<label index="sharecount.description">Share count</label>
+			<label index="sharecount.details">Share count is updated automatically when a user calls the page with a sharing component (not with Add This)</label>
+			<label index="sharer.description">Sharer</label>
+			<label index="sharer.details">The sharer is the social network where the page has been shared: Twitter, Facbook, GooglePlus and more</label>
+			<label index="shareurl.description">Shared URL</label>
+			<label index="shareurl.details">The shared URL is what has been sent to the sharer. Note you losse sharing if you change the URL of your page. Note that such "lost" sharings can always be shown using appropriate URL-info in the plugin</label>
+		</languageKey>
+	</data>
+	<orig_hash type="array">
+	</orig_hash>
+	<orig_text type="array">
+	</orig_text>
+</T3locallang>

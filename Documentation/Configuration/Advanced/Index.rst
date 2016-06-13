@@ -128,6 +128,11 @@ commentatorNotifybyIP                                                           
                                                                                             commentators who are not logged in can't disable E-Mail
                                                                                             notification on new comments.
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
+moderationMessageWithComment                                                    boolean     Moderation message after posting a comment will contain  1
+                                                                                            the posted comment as a confirmation. 
+                                                                                            0 disables the feature, 1 enables it
+                                                                                            (V 9.1.0.)
+------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
 notificationForCommentatorEmail                                                 string      E-mail address to use when sending mails to users who
                                                                                             want to be notified on new comments
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
@@ -320,8 +325,8 @@ useEmoji                                                                        
                                                                                             by image emojis in comments and while entering comments
                                                                                             :text emojis: are converted to unicode-emojis. (W)
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
-useInternalSmiliesInEmojiSelector                                               boolean     Specify if the internal smilies are displayed in the     1
-                                                                                            emoji selection panel
+useInternalSmiliesInEmojiSelector                                               boolean     Specify if the internal smilies are displayed in the     0
+                                                                                            emoji selection panel                                    (V 9.1.0)
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
 emojiConfigCacheLevel                                                           options     Caching of Emoji configurations:Starting up the Emojis   0
                                                                                             uncached costs much time. So we cache them. Here you

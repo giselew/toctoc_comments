@@ -8,7 +8,12 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 }
 
 t3lib_extMgm::addPlugin(Array('LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.list_type_pi1', $_EXTKEY.'_pi1'), 'list_type');
-t3lib_extMgm::addLLrefForTCAdescr('tt_content.pi_flexform.toctoc_comments_pi1.list', 'EXT:toctoc_comments/pi1/locallang_csh.xml');
+if (version_compare(TYPO3_version, '7.6', '<')) {
+	t3lib_extMgm::addLLrefForTCAdescr('tt_content.pi_flexform.toctoc_comments_pi1.list', 'EXT:toctoc_comments/pi1/locallang_csh.xml');
+} else {	
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr(
+			'tt_content.pi_flexform.toctoc_comments_pi1.list', 'EXT:toctoc_comments/pi1/locallang_csh.xml');	
+}
 
 $act = '';
 if (TYPO3_MODE == 'BE') {
@@ -16,17 +21,17 @@ if (TYPO3_MODE == 'BE') {
 		include_once(t3lib_extMgm::extPath($_EXTKEY).'class.user_toctoc_comments_toctoc_comments.php');
 	}
 	
+	// Page module hook
 	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['user_toctoc_comments_pi1_wizicon'] = t3lib_extMgm::extPath($_EXTKEY).'pi1/class.user_toctoc_comments_pi1_wizicon.php';
 	
 	if (version_compare(TYPO3_version, '7.0', '<')) {
 		t3lib_extMgm::addModulePath('web_toctoccommentsbeM1', t3lib_extMgm::extPath($_EXTKEY) . 'mod1/');
 	} 
 	
-	if (version_compare(TYPO3_branch, '7.0', '<')) {
+	if (version_compare(TYPO3_version, '7.0', '<')) {
 		t3lib_extMgm::addModule('web', 'toctoccommentsbeM1', '', t3lib_extMgm::extPath($_EXTKEY) . 'mod1/');
 		// configuration array then comes from mod1/conf.php
-	} else {
-		
+	} else {		
 		$extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['toctoc_comments']);
 		$newsince = intval($extConf['new_Hours']);
 		if ($newsince== 0) {
@@ -80,55 +85,52 @@ if (TYPO3_MODE == 'BE') {
 				);
 			} else {
 				\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-               				'GiseleWendl.toctoc_comments',
-                			'web',
+			                'GiseleWendl.toctoc_comments',
+			                'web',
 			                'toctoccommentsbeM1',
 			                'bottom',
-			                ['Administration' => 'index'],
-			                [
+			                array('Administration' => 'index'),
+			                array(
 			                    'access' => 'user,group',
 			                    'icon' => 'EXT:toctoc_comments/mod1/' . $modimg,
 			                    'labels' => 'LLL:EXT:toctoc_comments/mod1/locallang_mod.xml',
-			                ]
-			        );
+			                )
+		            	);
 			}
+			
 		}
-
 
 	}
 	
 	if (version_compare(TYPO3_version, '6.0', '>')) {
 	
-	$boot = function($packageKey, $act) {
-		
-
-		if (TYPO3_MODE === 'BE') {
+		$boot = function($packageKey, $act) {
 			
-			/* ===========================================================================
-				Register BE-AJAX-Module for Administration
-			=========================================================================== */
-			if (version_compare(TYPO3_version, '6.9', '>')) {
-				\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerAjaxHandler(
-						'AdministrationTocTocASNCAjaxController::indexAction',
-						t3lib_extMgm::extPath($packageKey). 'mod1/class.tx_toctoc_comments_ajax_be.php:GiseleWendl\\ToctocComments\\Controller\\AdministrationTocTocASNCAjaxController->indexAction',
-						FALSE
-				);
+	
+			if (TYPO3_MODE === 'BE') {
 				
-			} elseif (version_compare(TYPO3_version, '6.0', '>')) {
-				$GLOBALS['TYPO3_CONF_VARS']['BE']['AJAX']['AdministrationTocTocASNCAjaxController::indexAction'] = t3lib_extMgm::extPath($packageKey). 'mod1/class.tx_toctoc_comments_ajax_be.php:GiseleWendl\\ToctocComments\\Controller\\AdministrationTocTocASNCAjaxController->indexAction';
-			} 
-	
-		}
-	
-	};
-	
-	$boot($_EXTKEY, $act);
-	unset($boot);
+				/* ===========================================================================
+					Register BE-AJAX-Module for Administration
+				=========================================================================== */
+				if (version_compare(TYPO3_version, '6.9', '>')) {
+					\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerAjaxHandler(
+							'AdministrationTocTocASNCAjaxController::indexAction',
+							t3lib_extMgm::extPath($packageKey). 'mod1/class.tx_toctoc_comments_ajax_be.php:GiseleWendl\\ToctocComments\\Controller\\AdministrationTocTocASNCAjaxController->indexAction',
+							FALSE
+					);
+					
+				} elseif (version_compare(TYPO3_version, '6.0', '>')) {
+					$GLOBALS['TYPO3_CONF_VARS']['BE']['AJAX']['AdministrationTocTocASNCAjaxController::indexAction'] = t3lib_extMgm::extPath($packageKey). 'mod1/class.tx_toctoc_comments_ajax_be.php:GiseleWendl\\ToctocComments\\Controller\\AdministrationTocTocASNCAjaxController->indexAction';
+				} 
+		
+			}
+		
+		};
+		
+		$boot($_EXTKEY, $act);
+		unset($boot);
+	}
 }
-	
-	
-}
-
 
 if (version_compare(TYPO3_version, '7.5', '<')) {
 	if (version_compare(TYPO3_version, '4.2', '<')) {
@@ -294,7 +296,7 @@ if (version_compare(TYPO3_version, '7.5', '<')) {
 		
 				)
 		);
-		// Sharimngs table
+		// Sharings table
 		$TCA['tx_toctoc_comments_sharing'] = array(
 				'ctrl' => array (
 						'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_sharing',
@@ -308,6 +310,21 @@ if (version_compare(TYPO3_version, '7.5', '<')) {
 						'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_toctoc_comments_sharing.gif',
 				)
 		);
+		// emolike table
+		$TCA['tx_toctoc_comments_emolike'] = array(
+				'ctrl' => array (
+						'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_emolike',
+						'label' => 'emolike_ll',
+						'tstamp' => 'tstamp',
+						'crdate' => 'crdate',
+						'sortby' => 'emolike_setfolder',
+						'default_sortby' => ' ORDER BY emolike_setfolder',
+						'delete' => 'deleted',
+						'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+						'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_toctoc_comments_emolike.gif',
+				),
+		);
+		
 		// prefixtotable table
 		$TCA['tx_toctoc_comments_prefixtotable'] = array(
 				'ctrl' => array (
@@ -465,38 +482,55 @@ if (version_compare(TYPO3_version, '7.5', '<')) {
 		} else {
 			t3lib_extMgm::addToAllTCATypes('fe_users', '--div--;toctoc comments,tx_toctoc_comments_facebook_id;;;;1-1-1,tx_toctoc_comments_facebook_link,tx_toctoc_comments_facebook_email,tx_toctoc_comments_facebook_gender,tx_toctoc_comments_facebook_locale,tx_toctoc_comments_facebook_updated_time');
 		}
+		
 	}
 	
 }
 
 t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_comments_comments');
 t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_comments_comments', 'EXT:toctoc_comments/locallang_csh.xml');
+
 t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_comments_feuser_mm');
-t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_comments_feuser_mm', 'EXT:toctoc_comments/locallang_csh.xml');// Comments table
+t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_comments_feuser_mm', 'EXT:toctoc_comments/locallang_csh.xml');
+
 t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_comments_user');
 t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_comments_user', 'EXT:toctoc_comments/locallang_csh.xml');
+
 t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_comments_urllog');
 t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_comments_urllog', 'EXT:toctoc_comments/locallang_csh.xml');
+
 t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_ratings_scope');
 t3lib_extMgm::addToInsertRecords('tx_toctoc_ratings_scope');
+t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_ratings_scope', 'EXT:toctoc_comments/locallang_csh.xml');
+
 t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_ratings_data');
 t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_ratings_data', 'EXT:toctoc_comments/locallang_csh.xml');
+
 t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_ratings_iplog');
 t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_ratings_iplog', 'EXT:toctoc_comments/locallang_csh.xml');
+
 t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_comments_spamwords');
 t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_comments_spamwords', 'EXT:toctoc_comments/locallang_csh.xml');
+
 t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_comments_attachment');
 t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_comments_attachment', 'EXT:toctoc_comments/locallang_csh.xml');
+
 t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_comments_sharing');
-t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_comments_sharing', 'EXT:toctoc_comments/locallang_csh.xml');
+t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_comments_sharing', 'EXT:toctoc_comments/locallang_sharing_csh.xml');
+
 t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_comments_prefixtotable');
 t3lib_extMgm::addToInsertRecords('tx_toctoc_comments_prefixtotable');
 t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_comments_prefixtotable', 'EXT:toctoc_comments/locallang_csh.xml');
+
 t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_comments_ipbl_local');
 t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_comments_ipbl_local', 'EXT:toctoc_comments/locallang_csh.xml');
+
 t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_comments_ipbl_static');
 t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_comments_ipbl_static', 'EXT:toctoc_comments/locallang_csh.xml');
 
+t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_comments_emolike');
+t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_comments_emolike', 'EXT:toctoc_comments/locallang_csh.xml');
 
+t3lib_extMgm::addLLrefForTCAdescr('fe_users', 'EXT:toctoc_comments/locallang_csh.xml');
 
 ?>

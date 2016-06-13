@@ -29,6 +29,7 @@ Users manual
     UserStatistics/Index
     DataProtection/Index
     TopRatings/Index
+    Ratings2/Index
     TopViewsAndTopActivities/Index
     CustomLanguageLabels/Index
     LoginRequiredMode/Index

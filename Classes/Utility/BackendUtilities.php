@@ -51,7 +51,7 @@
  *  563:     public function checkStaticBL($ipaddr)
  *  596:     public function idbot($hua, $huas, $isbl= FALSE)
  *  648:     public function activetime($activetimestamdiff)
- *  702:     public function printPager($pObj, $showWhat, $fromajax)
+ *  702:     public function printPager($pObj, $showWhat, $fromAjax)
  *  758:     public function getOverviewData($pObj)
  *  775:     public function getOverviewCommentData ($pObj)
  *  868:     public function getOverviewRatingsData ($pObj)
@@ -696,13 +696,13 @@ class toctoc_comments_be_common {
 	 *
 	 * @param	obj		$pObj
 	 * @param	[type]		$showWhat: ...
-	 * @param	[type]		$fromajax: ...
+	 * @param	[type]		$fromAjax: ...
 	 * @return	$contenttable		string Pager HTML
 	 */
-	public function printPager($pObj, $showWhat, $fromajax) {
+	public function printPager($pObj, $showWhat, $fromAjax) {
 		$pagedisplayboxstart = '';
 		$pagedisplayboxend = '';
-		if ($fromajax) {
+		if ($fromAjax == TRUE) {
 			$pagedisplayboxstart = '<span class="pagerbox">
 						';
 			$pagedisplayboxend = '</span>
@@ -1319,11 +1319,14 @@ class toctoc_comments_be_common {
 
 		$schema = '';
 		if (version_compare(TYPO3_version, '6.0', '<')) {
-			$schema = TYPO3_db_name;
-		} else {
-			$cm = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Configuration\\ConfigurationManager');
-			$schema = $cm->getLocalConfigurationValueByPath('DB/database');
-		}
+    			$schema = TYPO3_db_name;
+    		} elseif (version_compare(TYPO3_version, '8.1', '<')) {
+    			$cm = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Configuration\\ConfigurationManager');
+    			$schema = $cm->getLocalConfigurationValueByPath('DB/database');
+       		} else {
+    			$cm = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Configuration\\ConfigurationManager');
+    			$schema = $cm->getLocalConfigurationValueByPath('DB/Connections/Default/dbname');
+    		}
 
 		$recs = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('SUM(TABLE_ROWS) AS numberofrows, SUM(DATA_LENGTH) AS datalength, UNIX_TIMESTAMP(MAX(CHECK_TIME)) as lastcheck', 'INFORMATION_SCHEMA.TABLES',
 				'TABLE_SCHEMA = "'.$schema.'" AND TABLE_NAME LIKE "%tx_toc%"', '', '');

@@ -40,25 +40,8 @@ if (version_compare(TYPO3_version, '7.5', '<')) {
 			'external_ref' => array (
 				'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.external_ref',
 				'config' => array (
-					'type' => 'group',
-					'internal_type' => 'db',
-					'prepand_tname' => TRUE,
-					'allowed' => '*',
-					'minsize' => 1,
-					'maxsize' => 1,
-					'size' => 1,
-					'wizards' => array (
-						'_PADDING' => 1,
-						'_VERTICAL' => 1,
-						'edit' => array (
-							'type' => 'popup',
-							'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.external_ref.wizard',
-							$scriptelem => $scriptcontent,
-							'popup_onlyOpenIfSelected' => 1,
-							'icon' => 'edit2.gif',
-							'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
-						),
-					),
+					'type' => 'input',
+					'eval' => 'trim,required',
 				),
 			),
 			'external_prefix' => array (
@@ -228,13 +211,11 @@ if (version_compare(TYPO3_version, '7.5', '<')) {
 		'ctrl' => $TCA['tx_toctoc_comments_feuser_mm']['ctrl'],
 		'interface' => array (
 			'showRecordFieldList' => 'reference,reference_scope,toctoc_comments_user,ilike,idislike,myrating,remote_addr,tstampilike,pagetstampilike,tstampidislike,'.
-				'pagetstampidislike,tstampmyrating,pagetstampmyrating,seen,tstampseen,pagetstampseen',
+				'pagetstampidislike,tstampmyrating,pagetstampmyrating,seen,tstampseen,pagetstampseen,isreview,emolikeid',
 			'maxDBListItems' => 50,
 			'readOnly' => 1,
 		),
 		'columns' => array (
-	
-	
 			'ilike' => array (
 				'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_feuser_mm.ilike',
 				'config' => array (
@@ -294,12 +275,20 @@ if (version_compare(TYPO3_version, '7.5', '<')) {
 			'isreview' => array (
 					'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.isreview',
 					'config' => array (
-							'type' => 'check',
-							'items' => array (
-									array ('LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.isreview.I.0', '')
-							),
+							'type' => 'input',
+							'eval'     => 'int',
 							'default' => 0,
+							'readOnly' => 1,
 					),
+			),
+			'emolikeid' => array (
+						'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_feuser_mm.emolikeid',
+						'config' => array (
+								'type' => 'input',
+								'eval'     => 'int',
+								'default' => 0,
+								'readOnly' => 1,
+						),
 			),
 			'toctoc_comments_user' => array (
 				'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.toctoc_comments_user',
@@ -420,7 +409,7 @@ if (version_compare(TYPO3_version, '7.5', '<')) {
 			),
 		),
 		'types' => array (
-			0 => array ('showitem' => 'hidden;;;;1,reference,reference_scope;;;;2-2-2,toctoc_comments_user,toctoc_commentsfeuser_feuser;;;;3-3-3,ilike,idislike,myrating,'.
+			0 => array ('showitem' => 'hidden;;;;1,reference,reference_scope;;;;2-2-2,toctoc_comments_user,toctoc_commentsfeuser_feuser;;;;3-3-3,ilike,idislike,myrating,isreview,emolikeid,'.
 					'seen,remote_addr,tstampilike,pagetstampilike,tstampidislike,pagetstampidislike,tstampmyrating,pagetstampmyrating,tstampseen,pagetstampseen'),
 		),
 	);
@@ -1202,6 +1191,108 @@ if (version_compare(TYPO3_version, '7.5', '<')) {
 			),
 	);
 	
+	$TCA['tx_toctoc_comments_emolike'] = array (
+			'ctrl' => $TCA['tx_toctoc_comments_emolike']['ctrl'],
+			'interface' => array (
+					'showRecordFieldList' => 'emolike_setfolder,emolike_setpos,emolike_sort,emolike_ll,emolike_colorcode,emolike_rating,emolike_engagement',
+					'maxDBListItems' => 50,
+			),
+			'columns' => array (					
+					'emolike_setfolder' => array (
+							'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_emolike.emolike_setfolder',
+							'config' => array (
+									'type' => 'input',
+									'eval' => 'trim,required',
+									'default' => 'default'
+							),
+					),
+					'emolike_setpos' => array (
+							'exclude' => 1,
+							'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_emolike.emolike_setpos',
+							'config' => array (
+									'type'     => 'input',
+									'size'     => '4',
+									'max'      => '4',
+									'eval'     => 'int,required',
+									'checkbox' => '0',
+									'range'    => array (
+										'upper' => '5',
+										'lower' => '1'
+									),
+									'default' => 1
+							),
+					),'emolike_sort' => array (
+							'exclude' => 1,
+							'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_emolike.emolike_sort',
+							'config' => array (
+									'type'     => 'input',
+									'size'     => '4',
+									'max'      => '4',
+									'eval'     => 'int,required',
+									'checkbox' => '0',
+									'range'    => array (
+										'upper' => '5',
+										'lower' => '1'
+									),
+									'default' => 1
+							),
+					),
+					
+					'emolike_ll' => array (
+							'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_emolike.emolike_ll',
+							'config' => array (
+									'type' => 'input',
+									'eval' => 'trim,required',
+							)
+					),
+					
+					'emolike_colorcode' => array (
+							'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_emolike.emolike_colorcode',
+							'config' => array (
+									'type' => 'input',
+									'eval' => 'trim',
+							)
+					),
+						
+					'emolike_rating' => array (
+							'exclude' => 1,
+							'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_emolike.emolike_rating',
+							'config' => array (
+									'type'     => 'input',
+									'size'     => '4',
+									'max'      => '4',
+									'eval'     => 'int,required',
+									'checkbox' => '0',
+									'range'    => array (
+										'upper' => '9',
+										'lower' => '1'
+									),
+									'default' => 5
+							),
+					),
+					'emolike_engagement' => array (
+							'exclude' => 1,
+							'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_emolike.emolike_engagement',
+							'config' => array (
+									'type'     => 'input',
+									'size'     => '4',
+									'max'      => '4',
+									'eval'     => 'int,required',
+									'checkbox' => '0',
+									'range'    => array (
+										'upper' => '9',
+										'lower' => '1'
+									),
+									'default' => 5
+							),
+					),
+			),
+			'types' => array (
+					0 => array ('showitem' => 'emolike_setfolder,emolike_setpos;;;;1-1-1,emolike_sort;;;;2-2-2,emolike_ll,emolike_colorcode,emolike_rating,emolike_engagement'),
+			),
+	);
+	
+	
 	$TCA['tx_toctoc_comments_prefixtotable'] = array (
 			'ctrl' => $TCA['tx_toctoc_comments_prefixtotable']['ctrl'],
 			'interface' => array (
@@ -1240,28 +1331,28 @@ if (version_compare(TYPO3_version, '7.5', '<')) {
 							),
 					),
 					'topratingsdetailpage' => array (
-						'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_prefixtotable.topratingsdetailpage',
-						'config' => array (
-							'type' => 'group',
-							'internal_type' => 'db',
-							'prepand_tname' => TRUE,
-							'allowed' => 'pages',
-							'minsize' => 1,
-							'maxsize' => 1,
-							'size' => 1,
-							'wizards' => array (
-								'_PADDING' => 1,
-								'_VERTICAL' => 1,
-								'edit' => array (
-									'type' => 'popup',
-									'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.external_ref.wizard',
-									$scriptelem => $scriptcontent,
-									'popup_onlyOpenIfSelected' => 1,
-									'icon' => 'edit2.gif',
-									'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
-								),
+							'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_prefixtotable.topratingsdetailpage',
+							'config' => array (
+									'type' => 'group',
+									'internal_type' => 'db',
+									'prepand_tname' => TRUE,
+									'allowed' => 'pages',
+									'minsize' => 1,
+									'maxsize' => 1,
+									'size' => 1,
+									'wizards' => array (
+											'_PADDING' => 1,
+											'_VERTICAL' => 1,
+											'edit' => array (
+													'type' => 'popup',
+													'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.external_ref.wizard',
+													$scriptelem => $scriptcontent,
+													'popup_onlyOpenIfSelected' => 1,
+													'icon' => 'edit2.gif',
+													'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
+											),
+									),
 							),
-						),
 					),
 					'topratingsimagesfolder' => array (
 							'exclude' => 1,

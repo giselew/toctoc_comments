@@ -135,4 +135,22 @@ freezeLevelCSS                options     set this to 0 if you want to force CSS
                                           for normal mode (changes in boxmodel or conf trigger
                                           refreshs) or 2 for frozen CSS (files must exist!) (S)
                                           (V 5.0.0.)
+----------------------------  ----------  -------------------------------------------------------  --------------------------------------------------------
+UserImageCSSGrayScale         string      Adds a CSS GrayScale filter over the userimages in       50%,0%
+                                          comments list 
+                                          2 values, comma-sparated, first value is normal state, 
+                                          2nd value is hover-state
+                                          (V 9.1.0.)
+----------------------------  ----------  -------------------------------------------------------  --------------------------------------------------------
+UserImageCSSBlur              string      Adds a CSS GrayScale filter over the userimages in       0px,0px
+                                          comments list 
+                                          2 values, comma-sparated, first value is normal state, 
+                                          2nd value is hover-state
+                                          (V 9.1.0.)
+----------------------------  ----------  -------------------------------------------------------  --------------------------------------------------------
+UserImageCSSSepia             string      Adds a CSS GrayScale filter over the userimages in       0%,0%
+                                          comments list 
+                                          2 values, comma-sparated, first value is normal state, 
+                                          2nd value is hover-state
+                                          (V 9.1.0.)
 ============================  ==========  =======================================================  ========================================================

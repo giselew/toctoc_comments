@@ -3,7 +3,7 @@
     margin: -4px 4px 2px (@useUserImageSize + 10);
 }
 .tx-tc-ct-rybox {
-    min-height: (@userImageSize + 4 + @boxmodelLineHeight - 16);
+    min-height: (@userImageSizeInForm + 4 + @boxmodelLineHeight - 16);
 }
 
 .toctoc-comments-pi1 .tx-tc-cts .tx-tc-ct-box-cttxt {
@@ -253,10 +253,10 @@ div.tx-tc-cts-ct-dp div.tx-tc-ct-box div.tx-tc-ct-box-cttxt p.tx-tc-text when (@
 	font-size: 90%;
 	font-weight: normal;
 	line-height: @boxmodelLineHeight;
-	margin-right: 4px;
+	margin-right: @boxmodelSpacingHalfRoundedFloor;
 	margin-top: 0px;
 	margin-bottom: 0px;
-	padding: 0px;
+	padding: 0 0 0 @boxmodelSpacing;
 }
 .tx-tc-ct-cnt {
 	float: right;

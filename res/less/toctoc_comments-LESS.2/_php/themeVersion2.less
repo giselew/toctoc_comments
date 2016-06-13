@@ -2,14 +2,16 @@
     background-color: @plugin-background-color;
 	border-left: 1px solid transparent;
 	border-right: 1px solid transparent;
+	border-bottom: 1px solid transparent;
     border-radius: 0px;    
     border-color: @plugin-border-color;
 }
 .toctoc-comments-pi1.tx-tc-sharingonly {
     border-left: 0px solid transparent;
 	border-right: 0px solid transparent;
-}
-    
+	border-bottom: 0px solid transparent;
+	background-color: @color-website-background;
+}   
 .tx-tc-cts-dp .tx-tc-ct-box .tx-tc-text-top .tx-tc-rts-area .tx-tc-rts-li-text,
 .tx-tc-ct-box div.tx-tc-text-top div.tx-tc-atrts-ctlink,
 .tx-tc-ct-box div.tx-tc-text-top .tx-tc-sharrrearea-popup,
@@ -23,6 +25,9 @@
 .tx-tc-text-top {
     width: 100%;
 }
+.tx-tc-nodisp.tx-tc-follows-one-less + .tx-tc-rts-area.tx-tc-nodisp + .tx-tc-atrts-ctlink.tx-tc-nodisp + .tx-tc-sharrrearea-popup {
+    width: 100%;
+ }
 .tx-tc-ct-box div.tx-tc-text-top div.tx-tc-atrts-ctlink {
     padding: 5px 5px 5px 34px;
     background: ~"url('@{theme-path}commentv2.png')" no-repeat scroll 9px center;
@@ -42,7 +47,7 @@
 .tx-tc-follows-one-less + div.sharrre,
 .tx-tc-follows-two-less + div.sharrre,
 .tx-tc-follows-one-less + .tx-tc-rts-area + div.sharrre {
-    padding: 5px 5px 5px @boxmodelSpacing;    
+    padding: 5px 5px 0 @boxmodelSpacing;    
 }
 .tx-tc-cts-dp .tx-tc-ct-box .tx-tc-text-top .tx-tc-rts-area .tx-tc-rts-li-text {
     width: 37%;
@@ -71,8 +76,10 @@
 .tx-tc-follows-one-less + div.tx-tc-atrts-ctlink,
 .tx-tc-follows-one-less + div.tx-tc-atrts-ctlink + div.tx-tc-sharrrearea-popup,
 .tx-tc-follows-one-less + div.tx-tc-atrts-ctlink + .sharrre,
+.tx-tc-follows-one-less + .tx-tc-rts-area + div.tx-tc-atrts-ctlink.tx-tc-nodisp + div.tx-tc-sharrrearea-popup,
+.tx-tc-follows-one-less + .tx-tc-rts-area + div.tx-tc-atrts-ctlink.tx-tc-nodisp + .sharrre,
 .tx-tc-follows-one-less + .tx-tc-rts-area + div.tx-tc-sharrrearea-popup,
-.tx-tc-follows-one-less + .tx-tc-rts-area + .sharrre, {
+.tx-tc-follows-one-less + .tx-tc-rts-area + .sharrre {
     min-width: 50%;
     width: 50%;
 }
@@ -87,14 +94,22 @@
     width: 100%;
 }
 .tx-tc-ct-box div.tx-tc-text-top .tx-tc-sharrrearea-popup,
-.tx-tc-ct-box div.tx-tc-text-top .sharrre {
-    min-width: 35%;
+.tx-tc-ct-box div.tx-tc-text-top div + .sharrre {
+    width: 35%;
+    word-break: normal;
+    word-wrap: normal;
+}
+.shrdes5 .sharrre {
+    width: auto !important;
+}
+.tx-tc-ct-box div.tx-tc-text-top span + .sharrre {
+    width: auto;
     word-break: normal;
     word-wrap: normal;
 }
 @media (max-width: @screen-md) {
     .tx-tc-ct-box div.tx-tc-text-top .tx-tc-sharrrearea-popup,
-    .tx-tc-ct-box div.tx-tc-text-top .sharrre,
+    .tx-tc-ct-box div.tx-tc-text-top div + .sharrre,
     .tx-tc-ct-box div.tx-tc-text-top div.tx-tc-atrts-ctlink,
     .tx-tc-cts-dp .tx-tc-ct-box .tx-tc-text-top .tx-tc-rts-area .tx-tc-rts-li-text {
         width: 100%;
@@ -119,7 +134,7 @@
         width: 100%;
     }
     .tx-tc-ct-box div.tx-tc-text-top .tx-tc-sharrrearea-popup,
-    .tx-tc-ct-box div.tx-tc-text-top .sharrre {
+    .tx-tc-ct-box div.tx-tc-text-top div + .sharrre {
         margin: -1px 0 0 0;
     }
     .tx-tc-cts-dp .tx-tc-ct-box .tx-tc-text-top .tx-tc-rts-area .tx-tc-rts-li-text {
@@ -173,7 +188,7 @@ div.tx-tc-pi1, .tx-tc-box-search-cts,
 }
 
 .tx-tc-cts-ct-box {
-    margin-bottom: @boxmodelSpacing;
+    margin-top: @boxmodelSpacing;
 }
 .tx-tc-cts-ctsbrowse-submit, .tx-tc-cts-ctsbrowse-submit-hide {
     opacity: 1;
@@ -226,8 +241,12 @@ div.tx-tc-pi1, .tx-tc-box-search-cts,
 .tx-tc-follows-one-less + .tx-tc-rts-area + div.tx-tc-sharrrearea-popup .sharrre .shrbox {
     font-weight: bold;
 }
+.tx-tc-cts-dp .tx-tc-ct-box .tx-tc-text-top .tx-tc-rts-area .tx-tc-rts-li-text a {
+    color: @linkbox-color; 
+    white-space: nowrap;
+    overflow-x: hidden;
+}
 
-.tx-tc-cts-dp .tx-tc-ct-box .tx-tc-text-top .tx-tc-rts-area .tx-tc-rts-li-text a,
 .tx-tc-ct-box div.tx-tc-text-top div.tx-tc-atrts-ctlink span,
 .tx-tc-atrts-ctlink + .tx-tc-sharrrearea-popup a,
 .tx-tc-rts-li-text + .tx-tc-sharrrearea-popup a,
@@ -244,7 +263,7 @@ div.tx-tc-pi1, .tx-tc-box-search-cts,
     overflow-x: hidden;
 }
 .tx-tc-cts-dp .tx-tc-ct-box .tx-tc-text-top .tx-tc-rts-area .tx-tc-rts-li-text a.tx-tc-rts-star-l.tx-tc-rts-star-0 {
-    color: @linkbox-color-active !important;
+    color: @linkbox-color-active;
 	background: ~"url('@{theme-path}ilikev2.png')" no-repeat scroll 0px center;
 }
 .tx-tc-cts-dp .tx-tc-ct-box .tx-tc-text-top .tx-tc-rts-area .tx-tc-rts-li-text a {
@@ -255,7 +274,7 @@ div.tx-tc-pi1, .tx-tc-box-search-cts,
 	background: ~"url('@{theme-path}idislikemaybev2.png')" no-repeat scroll 0px center;
 }
 .tx-tc-cts-dp .tx-tc-ct-box .tx-tc-text-top .tx-tc-rts-area .tx-tc-rts-li-text a.tx-tc-rts-star-unlike.tx-tc-rts-star-l.tx-tc-rts-star-0 {
-    color: @linkbox-color-dislike-active !important;
+    color: @linkbox-color-dislike-active;
     background: ~"url('@{theme-path}idislikev2.png')" no-repeat scroll 0px center;
 }
 .tx-tc-cts-dp .tx-tc-ct-box .tx-tc-text-top .tx-tc-rts-area .tx-tc-rts-li-text,
@@ -337,8 +356,37 @@ div.tx-tc-pi1, .tx-tc-box-search-cts,
     margin: 0 -1px 0 0;
     padding: 4px 8px 0;
 }
+.tx-tc-sortlistmenutitle > span, .tx-tc-dsclmrlistmenutitle > span, .tx-tc-usermenumenutitle > a {
+	margin-bottom: (0- @isTabletOrHandyMarginTop);
+    display: inline-block;
+    top: @isTabletOrHandyMarginTop;
+    position: relative;
+}
 .tx-tc-tv2spacer {
     display: table; 
     width: 100%; 
     height: @boxmodelSpacing;
+}
+.tx-tc-ct-innerctbox .tx-tc-rts-li div.tx-tc-myrts-dp div img {
+    margin-right: @boxmodelSpacingHalfRounded;
+}
+
+.tx-tc-myrts-ilke img, .tx-tc-myrts-ilke .tx_toctoc_comments_static_ilike img {
+	margin: (@ratingMarginTop - 1) @boxmodelSpacingHalfRounded 0 0;
+}
+img.tx-tc-trt-rating-like-only {
+	margin: 0;
+}
+.tx-tc-myrts-disilke img, .tx-tc-myrts-disilke .tx_toctoc_comments_static_ilike img {
+	margin: (1 + @ratingMarginTop) @boxmodelSpacingHalfRounded 0 0;
+}
+
+.tx-tc-ct-box-cttxt .tx-tc-myrts-ilke img, .tx-tc-ct-box-cttxt .tx-tc-myrts-ilke .tx_toctoc_comments_static_ilike img, .tx-tc-ct-box-cttxt img.tx-tc-trt-rating-like-only {
+	margin: (@ratingMarginTop - 1 - @isTabletOrHandyMarginTop) @boxmodelSpacingHalfRounded 0 0;
+}
+.tx-tc-ct-box-cttxt .tx-tc-myrts-disilke img, .tx-tc-ct-box-cttxt .tx-tc-myrts-disilke .tx_toctoc_comments_static_ilike img {
+	margin: (@ratingMarginTop + 1 - @isTabletOrHandyMarginTop) @boxmodelSpacingHalfRounded 0 0;
+}
+.tx-tc-ct-wpp {
+    padding: @boxmodelSpacing @boxmodelSpacing 0;
 }

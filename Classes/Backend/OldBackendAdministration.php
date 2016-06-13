@@ -23,7 +23,7 @@
 ***************************************************************/
 require_once (t3lib_extMgm::extPath('toctoc_comments', 'Classes/Utility/BackendStartup.php'));
 
-if ((version_compare(TYPO3_version, '8.0', '<'))) {
+if ((version_compare(TYPO3_version, '7.6.8', '<'))) {
 	$GLOBALS['BE_USER']->modAccess($MCONF, 1);	// This checks permissions and exits if the users has no permission for entry.
 }
 

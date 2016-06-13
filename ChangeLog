@@ -787,6 +787,39 @@
 2016-03-29  Gisèle Wendl  <gisele.wendl@toctoc.ch>
 	* Release of version 9.0.2
 	* Fixed an error with SessionCompression
-	* Compatibility TYPO3 8.0
+	* Compatibility TYPO3 8
 	* Added a Garbage-collector deleting old sessions from clients which do not use cookies
 	* Fixed problems with webpage-previews which emerged with version 9.0.0, related to new session management
+	
+2016-06-12  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 9.1.0
+	* Added new emoLikes, similar to Facebook reactions (new default, ratings.emoLike = 1)
+	* 5 emoLike-sets with different icons available: Default, Facebook, Food, News and Music
+	* emoLike-icons can be moved, left out, even own emoLike-sets can be created and used
+	* Added jquery.mobile for tablets and handies because the emoLikes need taphold- and tap-events to work on tablets. That’s why the minimal requirement for jQuery itself is at version 1.8. now.
+	* Added options for the number of users shown in Tipp texts regarding Likes and emoLikes
+	* Improved display of uploaded pictures, alerts and usercard-popups
+	* Added a local AJAX-Dispatcher, reducing load charge of the page
+	* Added new ViewHelpers for Ext:news for use with TYPO3 7 and 8
+	* Added compatibility with Facebook API Version newer 2.4 for the facebook-login component
+	* Improved handling of Session-Userpics
+	* New chapters in the manual regarding the emoLikes and Ext:news integration
+	* Added option advanced.moderationMessageWithComment, when a new comment was posted and needs to be approved first, 
+	  the message about the approval-process to the user contains the freshly posted comment. (new default)
+	* The content-previews in top-ratings now preserve the linebreaks
+	* Option topRatings.RatedItemShowDate allows hide or show the create-date of the rated item
+	* Option topRatings.RatedItemSeparatedDate allows to hide or show a |-separator before the display of the create-date of the rated item
+	* Fixed an error under TYPO3 8 in Facebook and Google-Login during user-image creation.
+	* Text on active Like can be "Like" or "Unlike" now with option ratings.likeTextWithUn
+	* Fixed sharing-component sharrre for LinkedIn-totals
+	* Fixed sharing-component sharrre with small buttons (open or popup, both broke working with V 8.0.0)
+	* Added table context sensitive help (csh) for emoLikes and catched up with other fields not yet present in the csh
+	* Fixed missing icon in the add new content wizard in page module
+	* Added option UserImageSizeInForm, it's the size for user images in forms, if empty it takes same value like UserImageSize
+	* Added 3 theme-TypoScript-setup-options for CSS-based change of display of the user images. 
+	  User images in the comments-list and emoLike-Overviews can be grayscaled, a sepia effect is possible as well as a blur effect.	
+	  Effects affect normal state and hoverstate: theme.UserImageCSSGrayScale = 50%,0%, theme.UserImageCSSBlur = 0px,0px and theme.UserImageCSSSepia = 0%,0%	
+	
+
+	
+	 

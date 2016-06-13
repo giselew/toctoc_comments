@@ -6,6 +6,12 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 	(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
 }
 
+if (version_compare(TYPO3_version, '7.6', '<')) {
+	$iconfilepath = t3lib_extMgm::extRelPath('toctoc_comments');
+} else {
+	$iconfilepath = 'EXT:toctoc_comments/';
+}
+
 $tx_toctoc_comments_comments = array(
 	'ctrl' => array (
 		'title'     => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_ipbl_local',
@@ -14,7 +20,7 @@ $tx_toctoc_comments_comments = array(
 		'crdate'    => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'default_sortby' => 'ORDER BY ipaddr',
-		'iconfile'          => 'EXT:toctoc_comments/icon_tx_toctoc_comments_ipbl_local.gif',
+		'iconfile'          => $iconfilepath . 'icon_tx_toctoc_comments_ipbl_local.gif',
 		'rootLevel' => -1,
 	),
 'interface' => array (

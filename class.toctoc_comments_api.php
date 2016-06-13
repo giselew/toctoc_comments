@@ -40,30 +40,31 @@ require_once(t3lib_extMgm::extPath('toctoc_comments', 'pi1/toctoc_comment_lib.ph
  *
  *
  *
- *   74: class toctoc_comments_api
- *  108:     public function __construct()
- *  135:     public function comments_getComments_fe_user($params, $conf)
- *  155:     public function getwebpagepreview($cmd, $cid, $data, $conf)
- *  172:     public function cleanupfup($previewid, $conf, $originalfilename)
- *  187:     public function handleCommentatorNotifications($ref, $conf = NULL, $notfromeID =FALSE, $pid)
- *  206:     public function handleeID($ref, $conf, $messagetodisplay, $returnurl)
- *  228:     public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $commentspics, $scopeid=0, $isReview = 0)
- *  249:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $commentid)
- *  264:     public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
+ *   75: class toctoc_comments_api
+ *  109:     public function __construct()
+ *  136:     public function comments_getComments_fe_user($params, $conf)
+ *  156:     public function getwebpagepreview($cmd, $cid, $data, $conf)
+ *  173:     public function cleanupfup($previewid, $conf, $originalfilename)
+ *  188:     public function handleCommentatorNotifications($ref, $conf = NULL, $notfromeID =FALSE, $pid)
+ *  207:     public function handleeID($ref, $conf, $messagetodisplay, $returnurl)
+ *  229:     public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $scopeid=0, $isReview = 0)
+ *  250:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $commentid)
+ *  270:     public function getEmoCard($conf, $cid, $ref, $feuser)
+ *  284:     public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
 			$feuserid = 0, $cmd, $piVars, $cid, $datathis, $AjaxData, $userpic, $commentspics, $check='',
 			$extref='', $tctreestate  = NULL, $commentreplyid=0, $isrefresh=0, $confSess = array())
- *  330:     public function updateComment($conf, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
- *  343:     public function previewcomment($data, $conf)
- *  357:     public function commentsSearch($data, $conf, $cid)
- *  376:     public function isVoted($ref, $scopeid, $feuser, $fromAjax)
- *  386:     public function initCaches()
- *  397:     public function enableFields($table)
- *  409:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
- *  418:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
- *  433:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- *  458:     public function createLinks($text, $conf = NULL)
+ *  350:     public function updateComment($conf, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
+ *  363:     public function previewcomment($data, $conf)
+ *  377:     public function commentsSearch($data, $conf, $cid)
+ *  396:     public function isVoted($ref, $scopeid, $feuser, $fromAjax)
+ *  406:     public function initCaches()
+ *  417:     public function enableFields($table)
+ *  429:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
+ *  438:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ *  453:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ *  478:     public function createLinks($text, $conf = NULL)
  *
- * TOTAL FUNCTIONS: 19
+ * TOTAL FUNCTIONS: 20
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -227,7 +228,7 @@ class toctoc_comments_api {
 	 * @param	[type]		$isReview: ...
 	 * @return	string		Generated HTML
 	 */
-	public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $commentspics, $scopeid=0, $isReview = 0) {
+	public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $scopeid=0, $isReview = 0) {
 		$this->conf = $conf;
 		$fromcomments= FALSE;
 
@@ -235,7 +236,7 @@ class toctoc_comments_api {
 			$fromcomments= TRUE;
 		}
 
-		$html = $this->lib->getRatingDisplay($ref, $conf, $fromAjax, $pid, $returnasarray, $feuserid, $cmd, $this, $cid, $fromcomments, $commentspics, $scopeid, $isReview);
+		$html = $this->lib->getRatingDisplay($ref, $conf, $fromAjax, $pid, $returnasarray, $feuserid, $cmd, $this, $cid, $fromcomments, $scopeid, $isReview);
 		return $html;
 	}
 
@@ -259,6 +260,25 @@ class toctoc_comments_api {
 	}
 
 	/**
+	 * returns a Emo card
+	 *
+	 * @param	array		$conf: Configuration of the plugin
+	 * @param	int		$cid: comment $cid
+	 * @param	[type]		$ref: ...
+	 * @param	[type]		$basedimgstr: ...
+	 * @param	[type]		$feuser: ...
+	 * @return	string		Generated HTML
+	 */
+	public function getEmoCard($conf, $cid, $ref, $feuser) {
+		$this->conf = $conf;
+		$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['templateFile']);
+		$usetemplateFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
+
+		$this->templateCode = @file_get_contents(PATH_site . $usetemplateFile);
+		$html = $this->lib->getEmoCard($conf, $this, $cid, $ref, $feuser, TRUE);
+		return $html;
+	}
+	/**
 	 * displays comments
 	 *
 	 * @return	[type]		...
@@ -267,7 +287,7 @@ class toctoc_comments_api {
 			$feuserid = 0, $cmd, $piVars, $cid, $datathis, $AjaxData, $userpic, $commentspics, $check='',
 			$extref='', $tctreestate  = NULL, $commentreplyid=0, $isrefresh=0, $confSess = array()) {
 			$this->conf = $conf;
-			if ($fromAjax) {
+			if ($fromAjax == TRUE) {
 				$this->externalUid = $datathis['externalUid'];
 				$this->externalUidString = $datathis['externalUidString'];
 				$this->showUidParam = $datathis['showUidParam'];

@@ -54,18 +54,21 @@ class toctoc_comments_be_users {
 
 	public function beUsers(&$pObj, $pid = 0) {
 
-		$fromajax =FALSE;
-		if (!$_POST['oldbe']) {
+		$fromAjax = FALSE;
+		if (!($_POST['oldbe'])) {
 		    if (str_replace('ajax.php', '', $_SERVER['SCRIPT_NAME']) != $_SERVER['SCRIPT_NAME']) {
-		    	$fromajax = TRUE;
+		    	$fromAjax = TRUE;
 
 		    } else {
 			    if (str_replace('typo3/index.php', '', $_SERVER['SCRIPT_NAME']) != $_SERVER['SCRIPT_NAME']) {
-			    	$fromajax = TRUE;
-
+			    	$fromAjax = TRUE;
+			    } else {
+			    	 if (str_replace('typo3/deprecated.php', '', $_SERVER['SCRIPT_NAME']) != $_SERVER['SCRIPT_NAME']) {
+			    		$fromAjax = TRUE;
+			    	}
 			    }
 		    }
-	    }
+		} 
 
 		$editTable = 'tx_toctoc_comments_user';
 		$infomessage = '';
@@ -1220,10 +1223,10 @@ class toctoc_comments_be_users {
 				';
 
 			if($num_rows != 0) {
-				$content .= $pObj->be_common->printPager($pObj, 'users', $fromajax);
+				$content .= $pObj->be_common->printPager($pObj, 'users', $fromAjax);
 			}
 
-			if ($fromajax) {
+			if ($fromAjax == TRUE) {
 					$content .= '
 			<div class="tx-tc-100">
 					<div class="tx-tc-subpaneltitle tx-tc-bulkact-title">

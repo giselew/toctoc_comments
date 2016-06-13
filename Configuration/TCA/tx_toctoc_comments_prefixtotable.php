@@ -14,6 +14,11 @@ $scriptcontent = array(
 				'act' => 'edit'
 		)
 );
+if (version_compare(TYPO3_version, '7.6', '<')) {
+	$iconfilepath = t3lib_extMgm::extRelPath('toctoc_comments');
+} else {
+	$iconfilepath = 'EXT:toctoc_comments/';
+}
 
 $tx_toctoc_comments_comments = array(
 	'ctrl' => array (
@@ -27,7 +32,7 @@ $tx_toctoc_comments_comments = array(
 		'enablecolumns' => array (
 				'disabled' => 'hidden',
 		),
-		'iconfile' => 'EXT:toctoc_comments/icon_tx_toctoc_comments_prefixtotable.gif',
+		'iconfile' => $iconfilepath . 'icon_tx_toctoc_comments_prefixtotable.gif',
 	),
 	'interface' => array (
 			'showRecordFieldList' => 'pi1_key,pi1_table,show_uid,displayfields,topratingsdetailpage,topratingsimagesfolder',

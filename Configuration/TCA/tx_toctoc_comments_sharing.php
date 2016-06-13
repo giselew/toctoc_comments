@@ -15,6 +15,12 @@ $scriptcontent = array(
 		)
 );
 
+if (version_compare(TYPO3_version, '7.6', '<')) {
+	$iconfilepath = t3lib_extMgm::extRelPath('toctoc_comments');
+} else {
+	$iconfilepath = 'EXT:toctoc_comments/';
+}
+
 $tx_toctoc_comments_comments = array(
 	'ctrl' => array (
 		'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_sharing',
@@ -24,7 +30,7 @@ $tx_toctoc_comments_comments = array(
 		'sortby' => 'crdate',
 		'default_sortby' => ' ORDER BY crdate DESC',
 		'delete' => 'deleted',
-		'iconfile' => 'EXT:toctoc_comments/icon_tx_toctoc_comments_sharing.gif',
+		'iconfile' => $iconfilepath . 'icon_tx_toctoc_comments_sharing.gif',
 	),
 	'interface' => array (
 		'showRecordFieldList' => 'external_ref, external_prefix, reference, sys_language_uid, sharer, shareurl, sharecount',

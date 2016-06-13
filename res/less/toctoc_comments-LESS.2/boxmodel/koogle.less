@@ -174,23 +174,23 @@ div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-wpp {
 }
 
 // Margin of ilikes depends on ratingMarginTop, but needs adaption here by (25-18/2) -> 4+1 =5
-.tx-tc-myrts-ilke img, .tx-tc-myrts-ilke .tx_toctoc_comments_static_ilike img, img.tx-tc-trt-rating-like-only {
-	margin: (3+@ratingMarginTop) 6px 0 0;
+.toctoc-comments-pi1 .tx-tc-myrts-ilke img, .toctoc-comments-pi1 .tx-tc-myrts-ilke .tx_toctoc_comments_static_ilike img, .toctoc-comments-pi1 img.tx-tc-trt-rating-like-only {
+	margin: (3+@ratingMarginTop) 6px 0 0 !important;
 }
 
 // Margin of disilikes depends on ratingMarginTop, but needs adaption here
-.tx-tc-myrts-disilke img, .tx-tc-myrts-disilke .tx_toctoc_comments_static_ilike img {
+.toctoc-comments-pi1 .tx-tc-myrts-disilke img, .toctoc-comments-pi1 .tx-tc-myrts-disilke .tx_toctoc_comments_static_ilike img {
 	margin: (3+@ratingMarginTop) 6px 0 0;
 
 }
 
 // Margin of disilikes depends on ratingMarginTop, in commentlists
-.tx-tc-ct-box-cttxt .tx-tc-myrts-disilke img, .tx-tc-ct-box-cttxt .tx-tc-myrts-disilke .tx_toctoc_comments_static_ilike img {
+.toctoc-comments-pi1 .tx-tc-ct-box-cttxt .tx-tc-myrts-disilke img, .toctoc-comments-pi1 .tx-tc-ct-box-cttxt .tx-tc-myrts-disilke .tx_toctoc_comments_static_ilike img {
 	margin: (1+@ratingMarginTop) 6px 0 0;
 }
 
 // Margin of ilikes depends on ratingMarginTop, in commentlists
-.tx-tc-ct-box-cttxt .tx-tc-myrts-ilke img, .tx-tc-ct-box-cttxt .tx-tc-myrts-ilke .tx_toctoc_comments_static_ilike img, img.tx-tc-trt-rating-like-only {
+.toctoc-comments-pi1 .tx-tc-ct-box-cttxt .tx-tc-myrts-ilke img, .toctoc-comments-pi1 .tx-tc-ct-box-cttxt .tx-tc-myrts-ilke .tx_toctoc_comments_static_ilike img, img.tx-tc-trt-rating-like-only {
 	margin: (1+@ratingMarginTop) 6px 0 0;
 
 }
@@ -237,7 +237,7 @@ div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-img {
 
 // tooltip font
 
-.tx-tc-tooltip, .tx-tc-tooltip2, .tx-tc-tooltipemoji {
+.tx-tc-tooltip, .tx-tc-tooltip2, .tx-tc-tooltipemoji, .tx-tc-emoicontipp span {
 	font-weight: bold;
 	font-size:100%;
 }
@@ -468,14 +468,15 @@ div.tx-tc-pi1 {
 	padding: 10px;
 	border-width: 1px;
 	border-radius: 50% 50% 50% 50%;
-	margin: -35px 0 0 !important;
+	box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
+	margin: 0 !important;
 }
 
 // UC panel fullname position
 .tx-tc-ct-uc-fullname-div {
 	float: none;
 	font-size: 204%;
-	text-align: center;
+	text-align: center !important;
 	width: 340px;
 	margin-left: -110px;
 }
@@ -484,11 +485,19 @@ div.tx-tc-pi1 {
 .tx-tc-ct-box-ctclose {
 	margin: 50px 0 -50px;
 }
+.tx-tc-cts-emolikeoverview .tx-tc-ct-box-ctclose {
+	margin: 0;
+}
+
+.tx-tc-ct-uc .tx-tc-ct-uc-pic2 + .tx-tc-ct-box-ctclose {
+    margin: 68px 0 -68px 4px;
+}
 
 // UCenter panel close button
 
 .tx-tc-dropuppanel .tx-tc-ct-box-ctclose, .tx-tc-dropup .tx-tc-ct-box-ctclose, .tx-tc-dropdown .tx-tc-ct-box-ctclose {
 	margin: 0px 4px 0 0;
+	position: relative;
 }
 
 // Formtop message close button
