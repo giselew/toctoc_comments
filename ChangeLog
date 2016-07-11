@@ -820,6 +820,13 @@
 	  User images in the comments-list and emoLike-Overviews can be grayscaled, a sepia effect is possible as well as a blur effect.	
 	  Effects affect normal state and hoverstate: theme.UserImageCSSGrayScale = 50%,0%, theme.UserImageCSSBlur = 0px,0px and theme.UserImageCSSSepia = 0%,0%	
 	
-
+2016-07-07  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 9.1.1
+	* Fixed errors with AJAX-Login when compatibility6 is loaded
+	* Fixed issues with Chrome/Safari on PC when saving emoLikes
+	* Fixed JS-error in IE 11 for emoLike-Popup (did not show up)
+	* Fixed CSS-gap for shortlikes with sharing 
+	* Fixed CSS-gap for sharing design 2 for the boxmodels koogle, tisques and windows
+	
 	
 	 

@@ -133,20 +133,20 @@ textarea.tx-tc-ctinput-textarea, textarea.tx-tc-ctinput-textarea-rq {
 	font-size: 88%;
 }
 
-// 3 Disqus customize for smaller function lines, add font-size
-div.sharrre {
-	font-size: 78%;
-}
-
 // 3 sharrre margin
-
 .tx-tc-sharrrearea-popup {
 	margin: 0;
 }
-
-
 // 3 Tisqus customize ctlink
-
+.shrbox .tx-tc-shareicon {
+	margin: 2px 8px -4px 4px;
+}
+.tx-tc-rts-li-text + .sharrre, .tx-tc-atrts-ctlink + .sharrre, .tx-tc-follows-one-less + div.sharrre, .tx-tc-follows-two-less + div.sharrre, .tx-tc-follows-one-less + .tx-tc-rts-area + div.sharrre {
+    padding-top: 5px !important;
+    padding-right: 5px !important;
+    padding-bottom: (5 + @isTabletOrHandyPaddingShr2Tisqus) !important;
+    padding-left: @boxmodelSpacing !important;
+}
 .tx-tc-atrts-ctlink {
 	font-size: 78%;
 	margin: 0;	

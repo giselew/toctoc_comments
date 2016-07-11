@@ -334,7 +334,7 @@ plugin.tx_toctoccomments_pi1 {
     # Additional crawlers to be excluded from the commenting system and session creation, use comma-separated list 
  
     # defaut blacklist CrawlerAgents: 'googlebot','yahoo','baidu','msnbot','bingbot','spider','bot.htm','yandex','jeevez'
-    blacklistCrawlerAgentStrings = package,curl,AU-MIC,Python,Test,Wotbox,Lipperhey,Traveler,FDiag,bot,lucid,Mining,crawl,protect,Walker,Checker,DuckDuck,LinkFinder,Ezooms,filterdb,findlinks,monitor,blast,gonzo,htdig,archiver,jobs,ips-agent,larbin,linkdex,MajesticSEO,Survey,OpenLinkProfiler,eeker,picmole,Qualidator,ReverseGet,schrein,Scooter,search,SEOkicks,sistrix,thunderstone,TinEye,Unister,Webinator,Webmaster,xovi,Yeti
+    blacklistCrawlerAgentStrings = Perl,PycURL,package,curl,AU-MIC,Python,Test,Wotbox,Lipperhey,Traveler,FDiag,bot,lucid,Mining,crawl,protect,Walker,Checker,DuckDuck,LinkFinder,Ezooms,filterdb,findlinks,monitor,blast,gonzo,htdig,archiver,jobs,ips-agent,larbin,linkdex,MajesticSEO,Survey,OpenLinkProfiler,eeker,picmole,Qualidator,ReverseGet,schrein,Scooter,search,SEOkicks,sistrix,thunderstone,TinEye,Unister,Webinator,Webmaster,xovi,Yeti
     whitelistCrawlerAgentStrings = 
     
     # if enabled file pi1/crawlerprotocol.txt will be filled with a log

@@ -115,6 +115,19 @@ input.tx-tc-ct-input {
 .sharrre .shrmiddle, .tx-tcresponse-text, div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-wpp, div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-img, .tx-tc-cts .tx-tc-ct-wpp, .tx-tc-ct-rybox, .tx-tc-ct-ry-frameover, .tx-tc-ct-ry-frame, .tx-tc-pvs-prevnext {
     border-radius: 0;	
 }
+.shrbox .tx-tc-shareicon {
+	margin: 2px 8px -4px 4px;
+}
+.tx-tc-rts-li-text + .sharrre, .tx-tc-atrts-ctlink + .sharrre, .tx-tc-follows-one-less + div.sharrre, .tx-tc-follows-two-less + div.sharrre, .tx-tc-follows-one-less + .tx-tc-rts-area + div.sharrre {
+    padding-top: (@isTabletOrHandyPaddingShr2 - 1 + (1 * @isTabletOrHandyPaddingShr2Windows)) !important;
+    padding-right: 5px !important;
+    padding-bottom: (@isTabletOrHandyPaddingShr2 - 2 - (1 * @isTabletOrHandyPaddingShr2Windows)) !important;
+    padding-left: @boxmodelSpacing !important;
+}
+
+.tx-tc-shrshow {
+    padding-bottom: inherit;
+}
 
 // Float of attachment images
 div.tx-tc-ct-box div.tx-tc-ct-box-cttxt div.tx-tc-ct-img, 

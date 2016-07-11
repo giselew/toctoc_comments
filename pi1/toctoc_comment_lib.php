@@ -320,10 +320,10 @@ class toctoc_comment_lib extends tslib_pibase {
 	public function __construct() {
 		if (version_compare(TYPO3_version, '6.3', '>')) {
 			(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
-			(class_exists('language', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Lang\LanguageService', 'language');
 			(class_exists('tslib_cObj', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer', 'tslib_cObj');
 			(class_exists('t3lib_refindex', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Database\ReferenceIndex', 't3lib_refindex');
 			if (!t3lib_extMgm::isLoaded('compatibility6')) {
+				(class_exists('language', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Lang\LanguageService', 'language');
 				(class_exists('t3lib_mail_Message', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Mail\MailMessage', 't3lib_mail_Message');
 				(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
 			}

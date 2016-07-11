@@ -11,9 +11,6 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Basic//04; type=string; label=Template file: Template file for commenting system
 	templateFile = EXT:toctoc_comments/res/template/toctoccomments_template.html
 
-	# cat=plugin.tx_toctoccomments_pi1: Basic//05; type=int+; label=Comments per plugin: Number of comments shown in the plugin in COMMENTS
-	commentsPerPage = 3
-
 	# cat=plugin.tx_toctoccomments_pi1: Basic//06; type=int+; label=RequiredComment length: Required length for a comment
 	minCommentLength = 10
 
@@ -97,6 +94,9 @@ plugin.tx_toctoccomments_pi1 {
 
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//042; type=boolean; label=Closes Commenting:Closes commenting totally
 	commentingClosed = 0
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//045; type=int+; label=Comments per plugin: Number of comments shown in the plugin in COMMENTS
+	commentsPerPage = 3	
 
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//050; type=boolean; label=Create links in comments:If enabled, will search comment text for links (using "http://" or "www." as trigger) and create HTML links automatically
 	autoConvertLinks = 1

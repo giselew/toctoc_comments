@@ -97,8 +97,8 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 	(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
 	(class_exists('t3lib_utility_Math', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\MathUtility', 't3lib_utility_Math');
 	(class_exists('tslib_cObj', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer', 'tslib_cObj');
-	(class_exists('tslib_eidtools', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\Utility\EidUtility', 'tslib_eidtools');
 	if (!t3lib_extMgm::isLoaded('compatibility6'))  {
+		(class_exists('tslib_eidtools', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\Utility\EidUtility', 'tslib_eidtools');
 		(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
 	}
 	(class_exists('t3lib_utility_Array', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Utility\ArrayUtility', 't3lib_utility_Array');
