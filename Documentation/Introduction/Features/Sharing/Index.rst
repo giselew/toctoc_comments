@@ -23,5 +23,3 @@ Customizable text to display in sharer of social networks (Plugin option)
 Customizable text for total shares (Plugin option)
 
 Static mode (Sharing disabled)
-
-"Top sharings" chart for all shares of the website

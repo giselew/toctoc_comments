@@ -214,24 +214,30 @@ class toctoc_comments_usercenter extends toctoc_comment_lib {
 		if ($countrows > 0) {
 
 			$librecentcomments = new toctoc_comments_recentcomments;
-			$subParts = array(
-					'###SINGLE_USERCENTERCOMMENT###' => $librecentcomments->comments_getRecentComments($rows, $conf, $pObj, 1, 1),
-			);
-			$markers = array();
-			$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTERCOMMENT_LIST###');
-			$content = $this->substituteMarkersAndSubparts($template, $markers, $subParts, $pObj);
-			$carr = explode('"tx-tc-recent-cts-article"', $content);
-			$countrows = count($carr) -1;
-			$retstr .= $this->t3substituteMarkerArray($this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTER_DROP_DOWN###'),
-					array(
-							'###DROPDOWNID###' => 2,
-							'###DROPDOWNTIPTEXT###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercentercomments_showorhideuserinformation', FALSE),
-							'###DROPUPORDOWN###' => 'Up',
-							'###TITLE###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercentercomments_title', FALSE). ' ('.$countrows.')',
-							'###CONTENT###' => $content,
+			$RecentComments = $librecentcomments->comments_getRecentComments($rows, $conf, $pObj, 1, 1);
+			if ($RecentComments != '') {
+				$subParts = array(
+						'###SINGLE_USERCENTERCOMMENT###' => $RecentComments,
+				);
 
-					)
-			);
+				$markers = array();
+				$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTERCOMMENT_LIST###');
+				$content = $this->substituteMarkersAndSubparts($template, $markers, $subParts, $pObj);
+				$carr = explode('"tx-tc-recent-cts-article"', $content);
+				$countrows = count($carr) -1;
+				$retstr .= $this->t3substituteMarkerArray($this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTER_DROP_DOWN###'),
+						array(
+								'###DROPDOWNID###' => 2,
+								'###DROPDOWNTIPTEXT###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercentercomments_showorhideuserinformation', FALSE),
+								'###DROPUPORDOWN###' => 'Up',
+								'###TITLE###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercentercomments_title', FALSE). ' ('.$countrows.')',
+								'###CONTENT###' => $content,
+
+						)
+				);
+
+			}
+
 		}
 
 		if ($listCommentsoncomments == TRUE) {
@@ -256,25 +262,32 @@ class toctoc_comments_usercenter extends toctoc_comment_lib {
 				if (!isset($librecentcomments)) {
 					$librecentcomments = new toctoc_comments_recentcomments;
 				}
-				$subParts = array(
-						'###SINGLE_USERCENTERCOMMENT###' => $librecentcomments->comments_getRecentComments($rows, $conf, $pObj, 1, 5),
-				);
-				$markers = array();
-				$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTERCOMMENT_LIST###');
-				$content = $this->substituteMarkersAndSubparts($template, $markers, $subParts, $pObj);
-				$carr = explode('"tx-tc-recent-cts-article"', $content);
-				$countrows = count($carr) -1;
-				$retstr .= $this->t3substituteMarkerArray($this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTER_DROP_DOWN###'),
-						array(
-								'###DROPDOWNID###' => 5,
-								'###DROPDOWNTIPTEXT###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercentersubcomments_showorhideuserinformation', FALSE),
-								'###DROPUPORDOWN###' => 'Up',
-								'###TITLE###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercentersubcomments_title', FALSE). ' ('.$countrows.')',
-								'###CONTENT###' => $content,
+				$RecentComments = $librecentcomments->comments_getRecentComments($rows, $conf, $pObj, 1, 5);
+				if ($RecentComments != '') {
+					$subParts = array(
+							'###SINGLE_USERCENTERCOMMENT###' => $RecentComments,
+					);
 
-						)
-				);
+					$markers = array();
+					$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTERCOMMENT_LIST###');
+					$content = $this->substituteMarkersAndSubparts($template, $markers, $subParts, $pObj);
+					$carr = explode('"tx-tc-recent-cts-article"', $content);
+					$countrows = count($carr) -1;
+					$retstr .= $this->t3substituteMarkerArray($this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTER_DROP_DOWN###'),
+							array(
+									'###DROPDOWNID###' => 5,
+									'###DROPDOWNTIPTEXT###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercentersubcomments_showorhideuserinformation', FALSE),
+									'###DROPUPORDOWN###' => 'Up',
+									'###TITLE###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercentersubcomments_title', FALSE). ' ('.$countrows.')',
+									'###CONTENT###' => $content,
+
+							)
+					);
+
+				}
+
 			}
+
 		}
 
 		if ($listPlugintotablemap == TRUE) {
@@ -314,54 +327,62 @@ class toctoc_comments_usercenter extends toctoc_comment_lib {
 					if ($countrows > 0) {
 						if (!isset($librecentcomments)) {
 							$librecentcomments = new toctoc_comments_recentcomments;
-						}	$subParts = array(
-								'###SINGLE_USERCENTERCOMMENT###' => $librecentcomments->comments_getRecentComments($rows, $conf, $pObj, 1, '2i'.$rowstablemap[$i]['external_prefix']),
-						);
-
-						$markers = array();
-						$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTERCOMMENT_LIST###');
-						$extpreffortext = 'pages';
-
-						if ((trim($rowstablemap[$i]['external_prefix'])=='tt_products') || (trim($rowstablemap[$i]['external_prefix']) == 'tx_commerce_pi1')) {
-							$extpreffortext = 'tt_products';
-						} elseif  (trim($rowstablemap[$i]['external_prefix'])=='tx_wecstaffdirectory_pi1') {
-							$extpreffortext = 'tx_wecstaffdirectory_pi1';
-						} elseif  (trim($rowstablemap[$i]['external_prefix'])=='tx_album3x_pi1') {
-							$extpreffortext = 'tx_album3x_pi1';
-						} elseif   ((trim($rowstablemap[$i]['external_prefix'])=='tx_mininews_pi1') || (trim($rowstablemap[$i]['external_prefix'])=='tx_ttnews') ||
-								(trim($rowstablemap[$i]['external_prefix'])=='tx_news_pi1')) {
-							$extpreffortext = 'tx_ttnews';
-						} else {
-							$extpreffortext = trim($rowstablemap[$i]['external_prefix']);
 						}
 
-						$exttext = $this->pi_getLLWrap($pObj, 'api_top' . $extpreffortext . 'item', $fromAjax);
-						if ($exttext == '') {
-							$exttext = 'Extension ' . trim($rowstablemap[$i]['external_prefix']);
+						$RecentComments = $librecentcomments->comments_getRecentComments($rows, $conf, $pObj, 1, '2i'.$rowstablemap[$i]['external_prefix']);
+						if ($RecentComments != '') {
+							$subParts = array(
+									'###SINGLE_USERCENTERCOMMENT###' => $RecentComments,
+							);
+
+							$markers = array();
+							$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTERCOMMENT_LIST###');
+							$extpreffortext = 'pages';
+
+							if ((trim($rowstablemap[$i]['external_prefix'])=='tt_products') || (trim($rowstablemap[$i]['external_prefix']) == 'tx_commerce_pi1')) {
+								$extpreffortext = 'tt_products';
+							} elseif  (trim($rowstablemap[$i]['external_prefix'])=='tx_wecstaffdirectory_pi1') {
+								$extpreffortext = 'tx_wecstaffdirectory_pi1';
+							} elseif  (trim($rowstablemap[$i]['external_prefix'])=='tx_album3x_pi1') {
+								$extpreffortext = 'tx_album3x_pi1';
+							} elseif   ((trim($rowstablemap[$i]['external_prefix'])=='tx_mininews_pi1') || (trim($rowstablemap[$i]['external_prefix'])=='tx_ttnews') ||
+									(trim($rowstablemap[$i]['external_prefix'])=='tx_news_pi1')) {
+								$extpreffortext = 'tx_ttnews';
+							} else {
+								$extpreffortext = trim($rowstablemap[$i]['external_prefix']);
+							}
+
+							$exttext = $this->pi_getLLWrap($pObj, 'api_top' . $extpreffortext . 'item', $fromAjax);
+							if ($exttext == '') {
+								$exttext = 'Extension ' . trim($rowstablemap[$i]['external_prefix']);
+							}
+
+							$pttmtext = trim($this->pi_getLLWrap($pObj, 'pi1_template.text_on', FALSE) . ' ' . $exttext);
+
+							if  ((trim($rowstablemap[$i]['external_prefix'])=='tx_community') || (trim($rowstablemap[$i]['external_prefix'])=='tx_cwtcommunity_pi1')) {
+								$pttmtext =$this->pi_getLLWrap($pObj, 'pi1_template.text_usercenter_incommunity', FALSE);
+							}
+
+							$content = $this->substituteMarkersAndSubparts($template, $markers, $subParts, $pObj);
+							$carr = explode('"tx-tc-recent-cts-article"', $content);
+							$countrows = count($carr) -1;
+							$boxtitle = $this->pi_getLLWrap($pObj, 'pi1_template.text_usercentercomments_title', FALSE) . ' ' . $pttmtext. ' ('.$countrows.')';
+							$retstr .= $this->t3substituteMarkerArray($this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTER_DROP_DOWN###'),
+									array(
+											'###DROPDOWNID###' => '2'.$rowstablemap[$i]['external_prefix'],
+											'###DROPDOWNTIPTEXT###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercentercomments_showorhideuserinformation', FALSE),
+											'###DROPUPORDOWN###' => 'Up',
+											'###TITLE###' => $boxtitle,
+											'###CONTENT###' => $content,
+
+									)
+							);
 						}
 
-						$pttmtext = trim($this->pi_getLLWrap($pObj, 'pi1_template.text_on', FALSE) . ' ' . $exttext);
-
-						if  ((trim($rowstablemap[$i]['external_prefix'])=='tx_community') || (trim($rowstablemap[$i]['external_prefix'])=='tx_cwtcommunity_pi1')) {
-							$pttmtext =$this->pi_getLLWrap($pObj, 'pi1_template.text_usercenter_incommunity', FALSE);
-						}
-
-						$content = $this->substituteMarkersAndSubparts($template, $markers, $subParts, $pObj);
-						$carr = explode('"tx-tc-recent-cts-article"', $content);
-						$countrows = count($carr) -1;
-						$boxtitle = $this->pi_getLLWrap($pObj, 'pi1_template.text_usercentercomments_title', FALSE) . ' ' . $pttmtext. ' ('.$countrows.')';
-						$retstr .= $this->t3substituteMarkerArray($this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTER_DROP_DOWN###'),
-								array(
-										'###DROPDOWNID###' => '2'.$rowstablemap[$i]['external_prefix'],
-										'###DROPDOWNTIPTEXT###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercentercomments_showorhideuserinformation', FALSE),
-										'###DROPUPORDOWN###' => 'Up',
-										'###TITLE###' => $boxtitle,
-										'###CONTENT###' => $content,
-
-								)
-						);
 					}
+
 				}
+
 			}
 
 		}
@@ -389,23 +410,27 @@ class toctoc_comments_usercenter extends toctoc_comment_lib {
 				if (!isset($librecentcomments)) {
 					$librecentcomments = new toctoc_comments_recentcomments;
 				}
-				$subParts = array(
-						'###SINGLE_USERCENTERCOMMENT###' => $librecentcomments->comments_getRecentComments($rows, $conf, $pObj, 1, 9),
-				);
-				$markers = array();
-				$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTERCOMMENT_LIST###');
-				$content = $this->substituteMarkersAndSubparts($template, $markers, $subParts, $pObj);
-				$boxtitle = $this->pi_getLLWrap($pObj, 'pi1_template.text_usercenterreviews_title', FALSE) . ' ('.$countrows.')';
-				$retstr .= $this->t3substituteMarkerArray($this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTER_DROP_DOWN###'),
-				array(
-						'###DROPDOWNID###' => '9',
-						'###DROPDOWNTIPTEXT###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercenterreviews_showorhideuserinformation', FALSE),
-						'###DROPUPORDOWN###' => 'Up',
-						'###TITLE###' => $boxtitle,
-						'###CONTENT###' => $content,
 
-				)
-				);
+				$RecentComments = $librecentcomments->comments_getRecentComments($rows, $conf, $pObj, 1, 9);
+				if ($RecentComments != '') {
+					$subParts = array(
+							'###SINGLE_USERCENTERCOMMENT###' => $RecentComments,
+					);
+					$markers = array();
+					$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTERCOMMENT_LIST###');
+					$content = $this->substituteMarkersAndSubparts($template, $markers, $subParts, $pObj);
+					$boxtitle = $this->pi_getLLWrap($pObj, 'pi1_template.text_usercenterreviews_title', FALSE) . ' ('.$countrows.')';
+					$retstr .= $this->t3substituteMarkerArray($this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTER_DROP_DOWN###'),
+						array(
+								'###DROPDOWNID###' => '9',
+								'###DROPDOWNTIPTEXT###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercenterreviews_showorhideuserinformation', FALSE),
+								'###DROPUPORDOWN###' => 'Up',
+								'###TITLE###' => $boxtitle,
+								'###CONTENT###' => $content,
+
+						)
+					);
+				}
 			}
 		}
 		$conf['recentcomments.']['listCount'] = $saverecentcommentslistCount;

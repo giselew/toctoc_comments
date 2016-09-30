@@ -228,9 +228,11 @@ class toctoc_comments_search extends toctoc_comment_lib {
 			}
 
 			if ($countrows > 0) {
+
 				If ($browsecommand == 'show') {
 					$librecentcomments = new toctoc_comments_recentcomments;
 					$RecentComments = $librecentcomments->comments_getRecentComments($rows, $conf, $pObj, 0, 0, TRUE, $searchincomments);
+
 					$_SESSION['srchrlt']=array();
 					$_SESSION['srchrlt']=$RecentComments;
 					$_SESSION['srchterm']=$searchincomments;
@@ -320,11 +322,26 @@ class toctoc_comments_search extends toctoc_comment_lib {
 			$cid = '700' . $GLOBALS['TSFE']->id;
 			$_SESSION['srchstoragePid']=$conf['storagePid'];
 
-			$confDiff=$this->mirrorconf($conf, $cid);
-			$dataarr = array();
-			$dataarr['conf']=$confDiff;
-			$data = serialize($dataarr);
-			$hiddenconfDiff=base64_encode($data);
+			$data = base64_encode(serialize($conf));
+
+			// AJAXCache Table
+			$AJAXCache = 'Data';
+			$md5Data = md5($data);
+			// Check AJAXCache Table
+			$Auid = $this->checkAJAXDBCache($AJAXCache, $md5Data);
+
+			if ($Auid == 0) {
+				// Set AJAXCache Table
+
+				if ($this->canZip == TRUE) {
+					$AJAXDBdata=gzencode($data, $this->sessionCompressionLevel);
+				} else {
+					$AJAXDBdata=gzcompress($data, $this->sessionCompressionLevel);
+				}
+				$Auid = $this->setAJAXDBCache($AJAXCache, $md5Data, $AJAXDBdata);
+			}
+
+			$hiddenconfDiff=$Auid;
 
 			$labelstyle = '';
 			$phdr = '';

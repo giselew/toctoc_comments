@@ -40,5 +40,4 @@ The TS you need looks like this
 .. figure:: /Images/image-24.png
 
 In normal TemplaVolia mode it is possible to use references on a **toctoc_comments**  plugin and, of
-course use it as normal Plugin in TemplaVoila's main content area (see also UseTemplavoilaField =
-field_content)
+course use it as normal Plugin in TemplaVoila's main content area

@@ -39,10 +39,10 @@
  *
  *   60: class toctoc_comments_charts extends toctoc_comment_lib
  *   69:     public function topratings ($conf, $pObj, $fromusercenterid = 0)
- * 1519:     public function topsharings ($conf, $pObj)
- * 1948:     private function human_sharesize($bytes, $decimals = 1)
- * 1968:     private function enrichrows($conf, $rowsmerged, $pObj, $show_uid, $input_sys_language_uid = FALSE)
- * 2788:     private function initconf($pidcond, $conf, $restrictor)
+ * 1521:     public function topsharings ($conf, $pObj)
+ * 1953:     private function human_sharesize($bytes, $decimals = 1)
+ * 1973:     private function enrichrows($conf, $rowsmerged, $pObj, $show_uid, $input_sys_language_uid = FALSE)
+ * 2793:     private function initconf($pidcond, $conf, $restrictor)
  *
  * TOTAL FUNCTIONS: 5
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -1110,6 +1110,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 				$arr_groupmembers=array_flip($arr_groupmembers);
 				if (!array_key_exists($refID, $arr_groupmembers))  {
 					$ownershipok=0;
+					$pObj->reprtUserByID = TRUE;
 				}
 
 			}
@@ -1132,6 +1133,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					} elseif ($prefix == 'tx_wecstaffdirectory_info_') {
 						$exticon= t3lib_extMgm::siteRelPath('wec_staffdirectory') .	'ext_icon.gif">';
 					} elseif ($prefix == 'fe_users_') {
+						$pObj->reprtUserByID = TRUE;
 						$exticon= $this->locationHeaderUrlsubDir() . t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/css/themes/' .
 						$conf['theme.']['selectedTheme'] . '/img/usericon.gif">';
 						$row['topratingsimagesfolder']=$conf['advanced.']['FeUserImagePath'];
@@ -1619,15 +1621,18 @@ AND pages.deleted = 0 and pages.hidden= 0';
 
 			$linkpurearr = explode('"', $text);
 			$linkpure = $linkpurearr[1];
-			if (strlen($textorig) < strlen($text)) {
-				// linkable
-				$pageslinkable[$pl] = array();
-				$pageslinkable[$pl]['uid'] = $rowspages['uid'];
-				$pageslinkable[$pl]['link'] = $text;
-				$pageslinkable[$pl]['linkpure'] = $linkpure;
-				$pl++;
-				$in .= $comma . $rowspages['uid'];
-				$comma = ',';
+			if (strpos($text, 'href=') != 0) {
+				if (strlen($textorig) < strlen($text)) {
+					// linkable
+					$pageslinkable[$pl] = array();
+					$pageslinkable[$pl]['uid'] = $rowspages['uid'];
+					$pageslinkable[$pl]['link'] = $text;
+					$pageslinkable[$pl]['linkpure'] = $linkpure;
+					$pl++;
+					$in .= $comma . $rowspages['uid'];
+					$comma = ',';
+				}
+
 			}
 
 		}

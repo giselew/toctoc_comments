@@ -456,6 +456,7 @@ class toctoc_comments_eID {
 				}
 
 				$this->apiObj->setPluginCacheControlTstamp($this->conf['plugin']);
+				$this->apiObj->deleteDBcachereport('comments', $this->conf['plugin']);
 			}
 		} else {
 
@@ -519,6 +520,8 @@ class toctoc_comments_eID {
 				}
 
 			}
+			$this->apiObj->setPluginCacheControlTstamp($this->conf['plugin']);
+			$this->apiObj->deleteDBcachereport('comments', $this->conf['plugin']);
 
 			$content = $this->cObj->substituteMarkerArray($message, $messageMarkers);
 		} else {

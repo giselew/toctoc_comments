@@ -8,7 +8,7 @@
 
 .. _configuration-topsharings:
 
-topSharings
+topSharings (deprecated - will be removed in version 9.3)
 -----------
 
 All topSharings options are valid per webpage

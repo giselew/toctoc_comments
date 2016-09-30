@@ -23,9 +23,9 @@ class Services_Soundcloud_Version
      *
      * @access public
      */
-    public function __toString() {
-    	$ret = implode('.', array(self::MAJOR, self::MINOR, self::PATCH));
-        return $ret;
+    function __toString()
+    {
+        return implode('.', array(self::MAJOR, self::MINOR, self::PATCH));
     }
 
 }

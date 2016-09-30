@@ -12,7 +12,7 @@ if (version_compare(TYPO3_version, '7.6', '<')) {
 	$iconfilepath = 'EXT:toctoc_comments/';
 }
 
-$tx_toctoc_comments_comments = array (
+$tx_toctoc_comments_attachment = array (
 	'ctrl' => array (
 		'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_attachment',
 		'label' => 'title',
@@ -25,7 +25,8 @@ $tx_toctoc_comments_comments = array (
 				'disabled' => 'hidden',
 		),
 		'iconfile' => $iconfilepath . 'icon_tx_toctoc_comments_attachment.gif',
-		'MM' => 'tx_toctoc_comments_attachment_mm',	
+		'MM' => 'tx_toctoc_comments_attachment_mm',
+		'searchFields' => 'title,description',
 	),
 	'interface' => array (
 			'showRecordFieldList' => 'attachmentvariant,systemurltext,photo_main,photos_etc,title,description',
@@ -121,6 +122,6 @@ $tx_toctoc_comments_comments = array (
 					'attachmentfilesize,photos_etc,attachmentvariant'),
 	),
 );
-	
-return $tx_toctoc_comments_comments;
+
+return $tx_toctoc_comments_attachment;
 ?>

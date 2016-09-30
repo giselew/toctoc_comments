@@ -113,13 +113,17 @@ HTMLEmail                       boolean         e-mail are sent in HTML-Format (
 ------------------------------  --------------  ------------------------------------------------------------  --------------------------------------------------------------------------------------------
 HTMLEmailFontFamily             string          Font Family for HTML E-Mail                                   tahoma,verdana,arial,sans-serif
 ------------------------------  --------------  ------------------------------------------------------------  --------------------------------------------------------------------------------------------
-sessionTimeout                  int+            Timeout for User-Sessions in minutes. After this time         540
+sessionTimeout                  int+            Timeout for User-Sessions in minutes. After this time         1440
                                                 sessions older than the timeout are deleted by the PHP
                                                 Garbage collector. Session files were in
                                                 toctoc_comments Sessionfolder in typo3temp, since V 5.2.2 
                                                 the sessions are stored in the extension-directory in
                                                 pi1/sessionTemp/TocTocCommentsSessions
                                                 \(S), (V 5.1.0)
+------------------------------  --------------  ------------------------------------------------------------  --------------------------------------------------------------------------------------------
+dbCacheTimeout                  int+            Timeout for db-cache in minutes (7 days), must be             10080
+                                                longer than sessionTimeout
+                                                \(S), (V 9.2.0)
 ------------------------------  --------------  ------------------------------------------------------------  --------------------------------------------------------------------------------------------
 **Options from setup.txt**
 ------------------------------  --------------  ------------------------------------------------------------  --------------------------------------------------------------------------------------------
@@ -145,7 +149,7 @@ pluginmode                      int             Empty, 0: Comments and Form, Sha
 
                                                 7 – Comments Search (V7.0.0)
                                                 
-                                                8 – Top sharings (V8.0.0)
+                                                8 – Deprecated, removal in version 9.3: Top sharings (V8.0.0)
 
                                                 (P – General – Mode )
 ------------------------------  --------------  ------------------------------------------------------------  --------------------------------------------------------------------------------------------

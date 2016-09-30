@@ -126,6 +126,16 @@
 			<label index="show_activeusers">Show active users</label>
 			<label index="show_sessions">Show sessions</label>
 			<label index="nosessionsfound">No sessions found</label>
+			<label index="nocachefound">No cache found</label>
+			<label index="dbcachedeleted">database cache deleted</label>
+			<label index="purgecache">Purge all cache</label>
+			<label index="cachedentities">Cache entries</label>
+			<label index="cachedentitiessessions">Cached in sessions</label>
+			<label index="cachedentitiesdb">cache in database</label>
+			<label index="dbcachesize">size of db-cache</label>
+			<label index="sessionssize">size of sessions</label>
+			<label index="sessionsdeleted">sessions and</label>
+			<label index="JSFilesdeleted">temporary JavaScript-files deleted</label>
 			<label index="year">year</label>
 			<label index="years">years</label>
 			<label index="month">month</label>

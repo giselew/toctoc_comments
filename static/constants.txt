@@ -62,14 +62,14 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Basic//21; type=string; label=Font Family for HTML E-Mail: Fonts to be used in HTML-E-mails
 	HTMLEmailFontFamily = tahoma,verdana,arial,sans-serif
 
-	# cat=plugin.tx_toctoccomments_pi1: Basic//22; type=int+; label=Timeout for User-Sessions in minutes
-	sessionTimeout = 540
+	# cat=plugin.tx_toctoccomments_pi1: Basic//22; type=int+; label=Timeout for PHP-Sessions in minutes: PHP-Sessions are also part of the caching system, timeout default is 1 day
+	sessionTimeout = 1440
 	
-	# cat=plugin.tx_toctoccomments_pi1: Basic//24; type=int+; label=Compression Level for User-Sessions, 0 disable compression, 5 maximum
+	# cat=plugin.tx_toctoccomments_pi1: Basic//22; type=int+; label=Timeout for cache on db in minutes: dbCacheTimeout must be higher than sessionTimeout, default is 7 days
+	dbCacheTimeout = 10080
+	
+	# cat=plugin.tx_toctoccomments_pi1: Basic//24; type=int+; label=Compression Level for PHP-Sessions, 0 disable compression, 5 maximum available
 	sessionCompressionLevel = 0
-
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//00; type=int; label=colPos for the plugin:Columnposition (colPos) where the plugins are inserted. Important if no templavoila used. Can be left on 0, most of the times.
-	UseMainColPos = 0
 
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//01; type=string; label=Path to feuser-images:Path where the feuser-images are stored. Normally uploads/pics/.
 	FeUserImagePath = uploads/pics/
@@ -134,6 +134,9 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//122; type=boolean; label=Moderation message after posting a comment will contain the posted comment as a confirmation. 0 disables the feature, 1 enables it
 	moderationMessageWithComment = 1
 
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//129; type=int+; label=Days an e-mail from toctoc_comments is valid:Links from e-mails to approval-, confirmation- or notification pages are valid this number of days, minimum: 7 days, max: 365 days
+	emailValidDays = 120
+
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//130; type=string; label=Information e-mail for commentator of former comments:Information e-mail when a new comment is posted for commentator of former comments is sent from this address
 	notificationForCommentatorEmail =
 
@@ -169,9 +172,6 @@ plugin.tx_toctoccomments_pi1 {
 
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//18; type=int+; label=Comments allowed for editig:When a user can edit his comments, this number indicates how many comments back the user is allowed to edit. set 0 for none. allowed 0 to 50.
 	commentsEditBack = 1
-
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//19; type=string; label=TemplaVoila-field with comments:Name of the field defined in templavoila (if used) where the comments-plugins goes. Check your templavoila page-template.
-	UseTemplavoilaField = field_content
 
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//21; type=string; label=Pages with a record to display :When a plugin is linked to a content element on a page, but the page displays records you should indicate the page-ids here as a comma separated list. Used by recent comments and report bad comments forms. 
 	recentcommentsPluginpages =
@@ -230,13 +230,7 @@ plugin.tx_toctoccomments_pi1 {
  	# cat=plugin.tx_toctoccomments_pi1: Advanced//47;  type=boolean; label=Make Plugins multilingual: If set to 0 TYPO3 translations of the plugin will always contain the content of the default language content element 
 	useMultilingual = 0
  
- 	# cat=plugin.tx_toctoccomments_pi1: Advanced//48;  type=boolean; label=Do not use TYPO3 caching: If set to 1 pages with plugins will not be cached (behavior as up to Version 3.5.0).
- 	activateClearPageCache = 0
- 
- 	# cat=plugin.tx_toctoccomments_pi1: Advanced//49;  type=boolean; label=Use session based caching: If set to 1 and activateClearPageCache=0, plugins are cached in PHP-session and recalculated only after changes in the data of a plugin of the page
-	useSessionCache = 1
-
- 	# cat=plugin.tx_toctoccomments_pi1: Advanced//50;  type=boolean; label=Show plugins with changed data: If useSessionCache isset to 1 you can use cacheBackTrack and show the user the plugins where data has changed since their first visit using their current session 
+  	# cat=plugin.tx_toctoccomments_pi1: Advanced//50;  type=boolean; label=Show plugins with changed data: Show the user the plugins where data has changed since their first visit using their current session (left plugin border gets a highlight)
 	cacheBackTrack = 1
  
  	# cat=plugin.tx_toctoccomments_pi1: Advanced//51;  type=boolean; label=Enables counting of Plugin views: For each Plugin a counter will be maintained and will be displayed on top of comments list, if enabled 
@@ -265,6 +259,9 @@ plugin.tx_toctoccomments_pi1 {
 
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//581;  type=int+; label=Maximal age for a view, in days: After this delay a subsequent viewcounts as new view
 	viewMaxAge = 28
+	
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//583;  type=int+; label=Delay for cached view-counters in minutes: After this delay cached viewcounts get refreshed in frontend when loading a page
+	viewsCacheDelay = 3
  
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//59;  type=int+; label=Activity-calculation, multiplicand for number of ratings: For the value of an activity ratings might be considered more than views, with this ratings are given more value than simple views in the calculation of the activity-value 
 	activityMultiplicatorRating = 2
@@ -290,7 +287,7 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//66;  type=string; label=String and sequence of available bb-codes: The available bb-codes are defined here, the initial setup hold all possible bb-codes. bold(b), italic(i), code(code), q(inlinbe quote), bq(blockquote) and ct(citation)
 	BBCodebbs = b, i, code, q, ct, bq
    
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//67;  type=string; label=iLike seperator:String for the separator between links iLike and iDislike (and more)
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//67;  type=string; label=iLike seperator:String for the separator between links iLike and iDislike (and more), only theme version 1
 	midDot = &middot;
 
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//70;  type=boolean; label=Show Gravatar for fe_users: If no gravatar is found, the local userpicture is shown (if your site is accessble from the internet)
@@ -375,7 +372,7 @@ plugin.tx_toctoccomments_pi1 {
 	checkSMTPService = 0
 
 	# cat=plugin.tx_toctoccomments_pi1: Spam protection//24; type=int+; label=Wait time between comments: Number of minutes an user has to wait before they may post another comment (includes all pages)
-	commentWaitTime = 1
+	commentWaitTime = 0
 
 	# cat=plugin.tx_toctoccomments_pi1: Spam protection//26; type=string; label=HTML-E-mail template notification on signup admin confirm:HTML-Template to use for notification email for signup admin confirmation messages to administrator
 	emailTemplateSignupConfirmHTML = EXT:toctoc_comments/res/template/toctoccomments_template_emailsignupadminconfirm.html
@@ -456,13 +453,13 @@ plugin.tx_toctoccomments_pi1 {
 	useShortTopLikes = 0
 
 	# cat=plugin.tx_toctoccomments_pi1: Ratings//30; type=int+; label=Maximum number of ratings allowed in a certain time: After this number of ratings the system checks if they have been made in the time allowed for this. If it was faster than this time, the user is prevented from making ratings for some time
-	allowedNumberOfRatings = 10
+	allowedNumberOfRatings = 40
 
 	# cat=plugin.tx_toctoccomments_pi1: Ratings//31; type=int+; label=Time in minutes that is allowed for the allowed number of ratings: If more ratings than allowed have been made in this time, the user will be prevented from placing new ratings for a certain time
 	timeForAllowedNumberOfRatings = 2
 
 	# cat=plugin.tx_toctoccomments_pi1: Ratings//32; type=int+; label=Time in minutes that a user is blocked if he made to many ratings - the wait penalty: After the last rating made the user has to wait for this time until he will be able to make more ratings or change his ratings
-	allowedNumberOfRatingsExceededBlocktime = 13
+	allowedNumberOfRatingsExceededBlocktime = 5
 
 	# cat=plugin.tx_toctoccomments_pi1: Ratings//34; type=boolean; label=Show resolved IP-addresses in tiptexts for Likes and iLikes (if a user name is not present): 1 IPs will be shown, 0 IPs will be counted in "Others" and won't be shown in tip-texts
 	useIPsInLikeDislike = 1
@@ -647,9 +644,6 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Theme//160; type=boolean; label=No tooltips on emojis:When set to 1, then smiles and emojis have no tooltips
 	emojiNoToolTips = 0
 
-	# cat=plugin.tx_toctoccomments_pi1: Theme//170; type=boolean; label=Create CSS from LESS (1, default) or use traditional way (CSS, PHP, Boxmodels and THemes) (0)
-	refreshCSSFromLESS = 1
-
 	# cat=plugin.tx_toctoccomments_pi1: Debug//01; type=boolean; label=Use debug: Use of debugging messages such as show run-times, caching and session resets.
 	useDebug = 0
 
@@ -693,7 +687,7 @@ plugin.tx_toctoccomments_pi1 {
 	dontUseSharingGoogle = 0
 
 	# cat=plugin.tx_toctoccomments_pi1: Sharing//07; type=boolean; label=Don't Use Twitter sharing :Use of Share-Link for Twitter is suppressed. Enabling Twitter disables display of the Shares total (because Twitter does not allow anymore anonymous requests for sharetotals)
-	dontUseSharingTwitter = 1
+	dontUseSharingTwitter = 0
 
 	# cat=plugin.tx_toctoccomments_pi1: Sharing//08; type=boolean; label=Don't Use LinkedIn sharing :Use of Share-Link for LinkedIn is suppressed
 	dontUseSharingLinkedIn = 0

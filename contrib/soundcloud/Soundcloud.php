@@ -12,7 +12,8 @@ require_once 'Soundcloud/Version.php';
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://github.com/mptre/php-soundcloud
  */
-class Services_Soundcloud {
+class Services_Soundcloud
+{
 
     /**
      * Custom cURL option
@@ -86,8 +87,8 @@ class Services_Soundcloud {
      * @static
      */
      private static $_curlDefaultOptions = array(
-         CURLOPT_HEADER => TRUE,
-         CURLOPT_RETURNTRANSFER => TRUE,
+         CURLOPT_HEADER => true,
+         CURLOPT_RETURNTRANSFER => true,
          CURLOPT_USERAGENT => ''
      );
 
@@ -217,7 +218,8 @@ class Services_Soundcloud {
      *
      * @access public
      */
-    public function __construct($clientId, $clientSecret, $redirectUri = NULL, $development = FALSE) {
+    function __construct($clientId, $clientSecret, $redirectUri = null, $development = false)
+    {
         if (empty($clientId)) {
             throw new Services_Soundcloud_Missing_Client_Id_Exception();
         }
@@ -241,15 +243,16 @@ class Services_Soundcloud {
      * @access public
      * @see Soundcloud::_buildUrl()
      */
-    public function getAuthorizeUrl($params = array()) {
+    function getAuthorizeUrl($params = array())
+    {
         $defaultParams = array(
             'client_id' => $this->_clientId,
             'redirect_uri' => $this->_redirectUri,
             'response_type' => 'code'
         );
         $params = array_merge($defaultParams, $params);
-		$ret = $this->_buildUrl(self::$_paths['authorize'], $params, FALSE);
-        return $ret;
+
+        return $this->_buildUrl(self::$_paths['authorize'], $params, false);
     }
 
     /**
@@ -262,9 +265,9 @@ class Services_Soundcloud {
      * @access public
      * @see Soundcloud::_buildUrl()
      */
-    public function getAccessTokenUrl($params = array()) {
-        $ret = $this->_buildUrl(self::$_paths['access_token'], $params, FALSE);
-        return $ret;
+    function getAccessTokenUrl($params = array())
+    {
+        return $this->_buildUrl(self::$_paths['access_token'], $params, false);
     }
 
     /**
@@ -277,7 +280,8 @@ class Services_Soundcloud {
      *
      * @access public
      */
-    public function credentialsFlow($username, $password) {
+    function credentialsFlow($username, $password)
+    {
         $postData = array(
             'client_id' => $this->_clientId,
             'client_secret' => $this->_clientSecret,
@@ -286,10 +290,10 @@ class Services_Soundcloud {
             'grant_type' => 'password'
         );
 
-        $options = array(CURLOPT_POST => TRUE, CURLOPT_POSTFIELDS => $postData);
+        $options = array(CURLOPT_POST => true, CURLOPT_POSTFIELDS => $postData);
         $response = json_decode(
             $this->_request($this->getAccessTokenUrl(), $options),
-            TRUE
+            true
         );
 
         if (array_key_exists('access_token', $response)) {
@@ -297,7 +301,7 @@ class Services_Soundcloud {
 
             return $response;
         } else {
-            return FALSE;
+            return false;
         }
     }
 
@@ -313,7 +317,8 @@ class Services_Soundcloud {
      * @access public
      * @see Soundcloud::_getAccessToken()
      */
-    public function accessToken($code = NULL, $postData = array(), $curlOptions = array()) {
+    function accessToken($code = null, $postData = array(), $curlOptions = array())
+    {
         $defaultPostData = array(
             'code' => $code,
             'client_id' => $this->_clientId,
@@ -323,9 +328,7 @@ class Services_Soundcloud {
         );
         $postData = array_filter(array_merge($defaultPostData, $postData));
 
-        $ret = $this->_getAccessToken($postData, $curlOptions);
-        return $ret;
-        
+        return $this->_getAccessToken($postData, $curlOptions);
     }
 
     /**
@@ -340,7 +343,8 @@ class Services_Soundcloud {
      *
      * @access public
      */
-    public function accessTokenRefresh($refreshToken, $postData = array(), $curlOptions = array()) {
+    function accessTokenRefresh($refreshToken, $postData = array(), $curlOptions = array())
+    {
         $defaultPostData = array(
             'refresh_token' => $refreshToken,
             'client_id' => $this->_clientId,
@@ -349,8 +353,8 @@ class Services_Soundcloud {
             'grant_type' => 'refresh_token'
         );
         $postData = array_merge($defaultPostData, $postData);
-        $ret = $this->_getAccessToken($postData, $curlOptions);
-        return $ret;
+
+        return $this->_getAccessToken($postData, $curlOptions);
     }
 
     /**
@@ -360,9 +364,9 @@ class Services_Soundcloud {
      *
      * @access public
      */
-    public function getAccessToken() {
-        $ret = $this->_accessToken;
-        return $ret;
+    function getAccessToken()
+    {
+        return $this->_accessToken;
     }
 
     /**
@@ -372,7 +376,8 @@ class Services_Soundcloud {
      *
      * @access public
      */
-    public function getApiVersion() {
+    function getApiVersion()
+    {
         return self::$_apiVersion;
     }
 
@@ -386,7 +391,8 @@ class Services_Soundcloud {
      *
      * @access public
      */
-    public function getAudioMimeType($extension) {
+    function getAudioMimeType($extension)
+    {
         if (array_key_exists($extension, self::$_audioMimeTypes)) {
             return self::$_audioMimeTypes[$extension];
         } else {
@@ -403,12 +409,12 @@ class Services_Soundcloud {
      *
      * @access public
      */
-    public function getCurlOptions($key = NULL) {
+    function getCurlOptions($key = null)
+    {
         if ($key) {
-            $ret = (array_key_exists($key, $this->_curlOptions))
+            return (array_key_exists($key, $this->_curlOptions))
                 ? $this->_curlOptions[$key]
-                : FALSE;
-            return $ret;
+                : false;
         } else {
             return $this->_curlOptions;
         }
@@ -421,7 +427,8 @@ class Services_Soundcloud {
      *
      * @access public
      */
-    public function getDevelopment() {
+    function getDevelopment()
+    {
         return $this->_development;
     }
 
@@ -434,13 +441,14 @@ class Services_Soundcloud {
      *
      * @access public
      */
-    public function getHttpHeader($header) {
+    function getHttpHeader($header)
+    {
         if (is_array($this->_lastHttpResponseHeaders)
             && array_key_exists($header, $this->_lastHttpResponseHeaders)
         ) {
             return $this->_lastHttpResponseHeaders[$header];
         } else {
-            return FALSE;
+            return false;
         }
     }
 
@@ -451,7 +459,8 @@ class Services_Soundcloud {
      *
      * @access public
      */
-    public function getRedirectUri() {
+    function getRedirectUri()
+    {
         return $this->_redirectUri;
     }
 
@@ -462,7 +471,8 @@ class Services_Soundcloud {
      *
      * @access public
      */
-    public function getResponseFormat() {
+    function getResponseFormat()
+    {
         return $this->_responseFormat;
     }
 
@@ -475,7 +485,8 @@ class Services_Soundcloud {
      *
      * @access public
      */
-    public function setAccessToken($accessToken) {
+    function setAccessToken($accessToken)
+    {
         $this->_accessToken = $accessToken;
 
         return $this;
@@ -503,7 +514,8 @@ class Services_Soundcloud {
      *
      * @access public
      */
-    public function setCurlOptions() {
+    function setCurlOptions()
+    {
         $args = func_get_args();
         $options = (is_array($args[0]))
             ? $args[0]
@@ -525,8 +537,10 @@ class Services_Soundcloud {
      *
      * @access public
      */
-    public function setRedirectUri($redirectUri) {
+    function setRedirectUri($redirectUri)
+    {
         $this->_redirectUri = $redirectUri;
+
         return $this;
     }
 
@@ -540,7 +554,8 @@ class Services_Soundcloud {
      *
      * @access public
      */
-    public function setResponseFormat($format) {
+    function setResponseFormat($format)
+    {
         if (array_key_exists($format, self::$_responseFormats)) {
             $this->_responseFormat = self::$_responseFormats[$format];
         } else {
@@ -559,8 +574,10 @@ class Services_Soundcloud {
      *
      * @access public
      */
-    public function setDevelopment($development) {
+    function setDevelopment($development)
+    {
         $this->_development = $development;
+
         return $this;
     }
 
@@ -576,12 +593,11 @@ class Services_Soundcloud {
      * @access public
      * @see Soundcloud::_request()
      */
-    public function get($path, $params = array(), $curlOptions = array()) {
+    function get($path, $params = array(), $curlOptions = array())
+    {
         $url = $this->_buildUrl($path, $params);
 
-        $ret = $this->_request($url, $curlOptions);
-        return $ret;
-        
+        return $this->_request($url, $curlOptions);
     }
 
     /**
@@ -596,12 +612,13 @@ class Services_Soundcloud {
      * @access public
      * @see Soundcloud::_request()
      */
-    public function post($path, $postData = array(), $curlOptions = array()) {
+    function post($path, $postData = array(), $curlOptions = array())
+    {
         $url = $this->_buildUrl($path);
-        $options = array(CURLOPT_POST => TRUE, CURLOPT_POSTFIELDS => $postData);
+        $options = array(CURLOPT_POST => true, CURLOPT_POSTFIELDS => $postData);
         $options += $curlOptions;
-        $ret =  $this->_request($url, $options);
-        return $ret;
+
+        return $this->_request($url, $options);
     }
 
     /**
@@ -616,16 +633,16 @@ class Services_Soundcloud {
      * @access public
      * @see Soundcloud::_request()
      */
-    public function put($path, $postData, $curlOptions = array()) {
+    function put($path, $postData, $curlOptions = array())
+    {
         $url = $this->_buildUrl($path);
         $options = array(
             CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_POSTFIELDS => $postData
         );
         $options += $curlOptions;
-        $ret =  $this->_request($url, $options);
-        return $ret;
-        
+
+        return $this->_request($url, $options);
     }
 
     /**
@@ -640,13 +657,13 @@ class Services_Soundcloud {
      * @access public
      * @see Soundcloud::_request()
      */
-    public function delete($path, $params = array(), $curlOptions = array()) {
+    function delete($path, $params = array(), $curlOptions = array())
+    {
         $url = $this->_buildUrl($path, $params);
         $options = array(CURLOPT_CUSTOMREQUEST => 'DELETE');
         $options += $curlOptions;
 
-        $ret =  $this->_request($url, $options);
-        return $ret;
+        return $this->_request($url, $options);
     }
 
     /**
@@ -661,12 +678,13 @@ class Services_Soundcloud {
      * @access public
      * @see Soundcloud::_request()
      */
-    public function download($trackId, $params = array(), $curlOptions = array()) {
+    function download($trackId, $params = array(), $curlOptions = array())
+    {
         $lastResponseFormat = array_pop(explode('/', $this->getResponseFormat()));
         $defaultParams = array('oauth_token' => $this->getAccessToken());
         $defaultCurlOptions = array(
-            CURLOPT_FOLLOWLOCATION => TRUE,
-            self::CURLOPT_OAUTH_TOKEN => FALSE
+            CURLOPT_FOLLOWLOCATION => true,
+            self::CURLOPT_OAUTH_TOKEN => false
         );
         $url = $this->_buildUrl(
             'tracks/' . $trackId . '/download',
@@ -696,7 +714,8 @@ class Services_Soundcloud {
      * @access public
      * @see Soundcloud::_request()
      */
-    public function updatePlaylist($playlistId, $trackIds, $optionalPostData = NULL) {
+    public function updatePlaylist($playlistId, $trackIds, $optionalPostData = null)
+    {
         $url = $this->_buildUrl('playlists/' . $playlistId);
         $postData = array();
 
@@ -716,9 +735,8 @@ class Services_Soundcloud {
             CURLOPT_HTTPHEADER => array('Content-Length' => strlen($postData)),
             CURLOPT_POSTFIELDS => $postData
         );
-        $ret =  $this->_request($url, $curlOptions);
-        return $ret;
 
+        return $this->_request($url, $curlOptions);
     }
 
     /**
@@ -730,7 +748,8 @@ class Services_Soundcloud {
      *
      * @access protected
      */
-    protected function _buildDefaultHeaders($includeAccessToken = TRUE) {
+    protected function _buildDefaultHeaders($includeAccessToken = true)
+    {
         $headers = array();
 
         if ($this->_responseFormat) {
@@ -755,7 +774,8 @@ class Services_Soundcloud {
      *
      * @access protected
      */
-    protected function _buildUrl($path, $params = array(), $includeVersion = TRUE) {
+    protected function _buildUrl($path, $params = array(), $includeVersion = true)
+    {
         if (!$this->_accessToken) {
             $params['consumer_key'] = $this->_clientId;
         }
@@ -788,12 +808,13 @@ class Services_Soundcloud {
      *
      * @access protected
      */
-    protected function _getAccessToken($postData, $curlOptions = array()) {
-        $options = array(CURLOPT_POST => TRUE, CURLOPT_POSTFIELDS => $postData);
+    protected function _getAccessToken($postData, $curlOptions = array())
+    {
+        $options = array(CURLOPT_POST => true, CURLOPT_POSTFIELDS => $postData);
         $options += $curlOptions;
         $response = json_decode(
             $this->_request($this->getAccessTokenUrl(), $options),
-            TRUE
+            true
         );
 
         if (array_key_exists('access_token', $response)) {
@@ -801,7 +822,7 @@ class Services_Soundcloud {
 
             return $response;
         } else {
-            return FALSE;
+            return false;
         }
     }
 
@@ -812,10 +833,9 @@ class Services_Soundcloud {
      *
      * @access protected
      */
-    protected function _getUserAgent() {
-    	$newServ = new Services_Soundcloud_Version;
-    	$ret = self::$_userAgent . '/' . $newServ;
-    	return $ret;
+    protected function _getUserAgent()
+    {
+        return self::$_userAgent . '/' . new Services_Soundcloud_Version;
     }
 
     /**
@@ -827,7 +847,8 @@ class Services_Soundcloud {
      *
      * @access protected
      */
-    protected function _parseHttpHeaders($headers) {
+    protected function _parseHttpHeaders($headers)
+    {
         $headers = explode("\n", trim($headers));
         $parsedHeaders = array();
 
@@ -855,9 +876,9 @@ class Services_Soundcloud {
      *
      * @access protected
      */
-    protected function _validResponseCode($code) {
-    	$ret = (bool)preg_match('/^20[0-9]{1}$/', $code);
-    	return $ret;
+    protected function _validResponseCode($code)
+    {
+        return (bool)preg_match('/^20[0-9]{1}$/', $code);
     }
 
     /**
@@ -871,7 +892,8 @@ class Services_Soundcloud {
      *
      * @access protected
      */
-    protected function _request($url, $curlOptions = array()) {
+    protected function _request($url, $curlOptions = array())
+    {
         $ch = curl_init($url);
         $options = $this->_curlOptions;
         $options += $curlOptions;
@@ -880,7 +902,7 @@ class Services_Soundcloud {
             $includeAccessToken = $options[self::CURLOPT_OAUTH_TOKEN];
             unset($options[self::CURLOPT_OAUTH_TOKEN]);
         } else {
-            $includeAccessToken = TRUE;
+            $includeAccessToken = true;
         }
 
         if (array_key_exists(CURLOPT_HTTPHEADER, $options)) {
@@ -893,19 +915,9 @@ class Services_Soundcloud {
                 $includeAccessToken
             );
         }
-        
+
         curl_setopt_array($ch, $options);
-        curl_setopt($ch, CURLOPT_USERAGENT, '');
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_FAILONERROR, 0);
-        curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
-        curl_setopt($ch, CURLOPT_FILETIME, 1);
-        curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($ch, CURLOPT_TRANSFERTEXT, 1);
-        curl_setopt($ch, CURLOPT_NOSIGNAL, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, intval(($this->conf['attachments.']['webpagePreviewCurlTimeout'])/1000));
+
         $data = curl_exec($ch);
         $info = curl_getinfo($ch);
 
@@ -927,13 +939,12 @@ class Services_Soundcloud {
             return $this->_lastHttpResponseBody;
         } else {
             throw new Services_Soundcloud_Invalid_Http_Response_Code_Exception(
-                NULL,
+                null,
                 0,
                 $this->_lastHttpResponseBody,
                 $this->_lastHttpResponseCode
             );
         }
-        
     }
 
 }

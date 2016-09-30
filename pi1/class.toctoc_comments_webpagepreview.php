@@ -39,19 +39,19 @@
  *
  *   82: class toctoc_comments_webpagepreview
  *  122:     public function main ($inputurl, $inputcommentid, $inputcid, $lang, $inconf = array(), $pObj = NULL, $pObjParent=NULL)
- *  352:     protected function timepoint($startpoint, $datainfo, $showtotal = FALSE)
- *  378:     protected function check_pvs_url($value)
- *  398:     protected function file_pvs_get_contents_curl($urltofetch, $ext, $savepathfilename = '')
- *  563:     public function saveAndResize($filename, $new_width, $new_height, $pathAndFilename, $ext)
- *  918:     public function previewsite ($pObj=NULL, $pObjParent=NULL)
- * 1596:     private function pvs_fetch_images($strextraction, $iscss, $cssfile='')
- * 1775:     protected function pvs_fetch_css($strextraction,&$strouthtml, $iscss, $cssfile='')
- * 1904:     protected function checklogopattern($strtest)
- * 1936:     protected function checkimagepattern($strtest)
- * 1968:     protected function checkvideocontent($html)
- * 2303:     protected function croptitleordesc($description)
- * 2332:     protected function cleanouttitleordesc($title)
- * 2409:     protected function checkandcorrUTF8($strtocheck)
+ *  354:     protected function timepoint($startpoint, $datainfo, $showtotal = FALSE)
+ *  380:     protected function check_pvs_url($value)
+ *  400:     protected function file_pvs_get_contents_curl($urltofetch, $ext, $savepathfilename = '')
+ *  565:     public function saveAndResize($filename, $new_width, $new_height, $pathAndFilename, $ext)
+ *  920:     public function previewsite ($pObj=NULL, $pObjParent=NULL)
+ * 1599:     private function pvs_fetch_images($strextraction, $iscss, $cssfile='')
+ * 1778:     protected function pvs_fetch_css($strextraction,&$strouthtml, $iscss, $cssfile='')
+ * 1907:     protected function checklogopattern($strtest)
+ * 1939:     protected function checkimagepattern($strtest)
+ * 1971:     protected function checkvideocontent($html)
+ * 2306:     protected function croptitleordesc($description)
+ * 2335:     protected function cleanouttitleordesc($title)
+ * 2412:     protected function checkandcorrUTF8($strtocheck)
  *
  * TOTAL FUNCTIONS: 14
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -124,6 +124,8 @@ class toctoc_comments_webpagepreview {
 		$this->cid = 'p' . trim($inputcid);
 		$this->lang = $lang;
 		$this->conf = $inconf;
+		$this->picfoundarr = array();
+		$this->logofoundarr = array();
 
 		if ($this->doprint) {
 			if (!array_key_exists('attachments.', $inconf)){
@@ -937,18 +939,19 @@ class toctoc_comments_webpagepreview {
 			require_once($fullpath . '/soundcloud/Soundcloud.php');
 
 			// create a client object with your app credentials
-			$client = new Services_Soundcloud($sci);
+			$client = new Services_Soundcloud($sci, $scs);
 
 			// a permalink to a track
 			$track_url = $this->url;
 			// resolve track URL into track resource
+			$client->setCurlOptions(array(CURLOPT_FOLLOWLOCATION => 1));
 			$track = json_decode($client->get('resolve', array('url' => $track_url)));
 			$trackid = $track->id;
 			$trackartwork_url = $track->artwork_url;
 			$tracktitle = $track->user->username . ': ' . $track->title;
 			$trackdescription = $track->description;
-			$client = new Services_Soundcloud($sci, $scs);
-			$client->setCurlOptions(array(CURLOPT_FOLLOWLOCATION => 1));
+			//$client = new Services_Soundcloud($sci, $scs);
+
 			// get a tracks oembed data
 			$track_url = $this->url;
 			$embed_info = json_decode($client->get('oembed', array('url' => $track_url)));

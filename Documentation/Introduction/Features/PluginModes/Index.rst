@@ -26,6 +26,5 @@ Plugin modes
 6. **Login-Logout Signup AJAX functionality** 
 7. **User Center** 
 8. **Search Comments** 
-9. **Top Sharings** 
 
 Components for sharing, rating and commenting can be all enabled/disabled (mode 1)

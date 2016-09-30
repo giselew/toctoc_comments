@@ -71,7 +71,7 @@ class Services_Soundcloud_Invalid_Http_Response_Code_Exception extends Exception
      *
      * @return void
      */
-    public function __construct($message = NULL, $code = 0, $httpBody = NULL, $httpCode = 0) {
+    function __construct($message = null, $code = 0, $httpBody = null, $httpCode = 0) {
         $this->httpBody = $httpBody;
         $this->httpCode = $httpCode;
         $message = sprintf($this->message, $httpCode);
@@ -84,7 +84,7 @@ class Services_Soundcloud_Invalid_Http_Response_Code_Exception extends Exception
      *
      * @return mixed
      */
-    public function getHttpBody() {
+    function getHttpBody() {
         return $this->httpBody;
     }
 
@@ -93,7 +93,7 @@ class Services_Soundcloud_Invalid_Http_Response_Code_Exception extends Exception
      *
      * @return mixed
      */
-    public function getHttpCode() {
+    function getHttpCode() {
         return $this->httpCode;
     }
 

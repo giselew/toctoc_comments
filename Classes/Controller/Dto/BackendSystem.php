@@ -68,7 +68,7 @@ class toctoc_comments_be_db {
      	$infomessage = '';
     	$alertmsg = 0;
 
-    	// Bulk action
+    	// Bulk actions
     	$newdataarray = '';
     	if (isset($_POST['refreshdb'])) {
     		$newdataarray = array();
@@ -98,16 +98,36 @@ WHERE TABLE_SCHEMA = "'.$schema.'" AND TABLE_NAME LIKE "%tx_toc%"';
     		}
 
     		$infomessage = $i . ' ' . $GLOBALS['LANG']->getLL('tablesoptimized');
+    		$infomessage = '<div class="tx-tc-messagebody">' . $infomessage . '</div>
+    				<div class="tx-tc-messageclosebutton" title="'.$GLOBALS['LANG']->getLL('closemessage').'">x</div>';
+    		$infomessage = '<div class="tx-tc-information">' . $infomessage . '</div>';
+    		$newdataarray = $pObj->be_common->getOverviewSystemData();
+    		$content .= $infomessage;
+    		$content .= '';
+    	} elseif (isset($_POST['purgecache'])) {
+    		$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport');
+    		$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cacheajax');
+    		// delete sessions
+    		$deletedsessions = $pObj->be_common->purgeSessionCache();
+    		// delete temp-JS-Files
+    		$deletedJSFiles = $pObj->be_common->purgeTempJSFiles();
+    		$infomessage = $deletedsessions . ' ' . $GLOBALS['LANG']->getLL('sessionsdeleted') . ' ' .
+    		$deletedJSFiles . ' ' . $GLOBALS['LANG']->getLL('JSFilesdeleted') . ', '
+    				. $GLOBALS['LANG']->getLL('dbcachedeleted');
+
     		$infomessage = '<div class="tx-tc-messagebody">' . $infomessage . '</div><div class="tx-tc-messageclosebutton" title="'.$GLOBALS['LANG']->getLL('closemessage').'">x</div>';
     		$infomessage = '<div class="tx-tc-information">' . $infomessage . '</div>';
-    		$newdataarray = $pObj->be_common->getOverviewSystemData ($pObj);
+    		$newdataarray = $pObj->be_common->getOverviewCacheData();
+    		$content .= $infomessage;
+    		$content .= '';
     	}
 
-		$content .= $infomessage;
-		$content .= $strbrbrdivend . '</div>';
-		if (!$_POST['refreshdb']) {
-		   	$content .= $strbrbrstart . '
-				<span>
+    	$content .= '</div>';
+    	$content .= $strbrbrstart;
+
+		if ((isset($_POST['refreshdb']) == FALSE) && (isset($_POST['purgecache']) == FALSE)) {
+		   	$content .= '
+				<span class="tx-tc-be-showdb">
 		    		<span id="admincommand56g906g9'.
 		  rawurlencode(''.$GLOBALS['LANG']->getLL('mul_txt').'').'" class="tx-tc-datarequester tx-tc-be-link tx-tc-be-bulkdatabase">
 
@@ -119,13 +139,46 @@ WHERE TABLE_SCHEMA = "'.$schema.'" AND TABLE_NAME LIKE "%tx_toc%"';
 			    	'</span>
 				</span>
 			';
+		} else {
+			if (isset($_POST['refreshdb']) == TRUE) {
+			    if (is_array($newdataarray)) {
+			    	$content .= '6g9newdat6g9' . $pObj->be_common->human_filesize($newdataarray['datalength']) .
+			    				'6g9newdat6g9' . $newdataarray['lastcheck'];
+			    }
+
+			}
+
 		}
 
-	    unset($_POST['refreshdb']);
-	    if (is_array($newdataarray)) {
-	    	$content .= '6g9newdat6g9' . $pObj->be_common->human_filesize($newdataarray['datalength']) .
-	    				'6g9newdat6g9' . $newdataarray['lastcheck'];
-	    }
+		if ((isset($_POST['refreshdb']) == FALSE) && (isset($_POST['purgecache']) == FALSE)) {
+			$content .= '
+				<span id="adminshowcache" class="tx-tc-be-showcache">
+		    		<span id="admincommand56g916g9'.
+				    		rawurlencode(''.$GLOBALS['LANG']->getLL('mul_txt').'').'" class="tx-tc-datarequester tx-tc-be-link tx-tc-be-bulkcache">
+
+		  			<img id="padmincommand56g916g9'.
+				  			rawurlencode(''.$GLOBALS['LANG']->getLL('mul_txt').'').'" class="tx-tc-datarequester tx-tc-be-link tx-tc-be-p-bulkcache" align="left" '.
+				  			'src="'.
+				  			$GLOBALS['BACK_PATH'] . $pObj->picpathsysext . $pObj->iconPurgeCache . '" ' . $pObj->iconWidthHeight . 'title="'.
+				  			$GLOBALS['LANG']->getLL('purgecache').'" alt="" />' . $GLOBALS['LANG']->getLL('purgecache') .
+				  	'</span>
+				</span>
+			';
+		} else {
+			if (isset($_POST['purgecache']) == TRUE) {
+				if (is_array($newdataarray)) {
+					$content .= '6g9newcachedat6g9' . $pObj->be_common->human_filesize($newdataarray['datalengthDBCache']) .
+					'6g9newcachedat6g9' . $pObj->be_common->human_filesize($newdataarray['datalengthAJAX']) .
+					'6g9newcachedat6g9' . $pObj->be_common->human_filesize($newdataarray['datalengthSessions']);
+				}
+
+			}
+
+		}
+
+		$content .= '</div>';
+		unset($_POST['refreshdb']);
+		unset($_POST['purgecache']);
 		return $content;
 
 	}

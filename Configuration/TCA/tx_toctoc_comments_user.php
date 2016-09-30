@@ -30,6 +30,8 @@ $tx_toctoc_comments_comments = array(
 			'sortby' => 'crdate',
 			'delete' => 'deleted',
 			'iconfile' => $iconfilepath . 'icon_tx_toctoc_comments_user.gif',
+			'searchFields' => 'toctoc_comments_user,initial_firstname,initial_lastname,initial_email,initial_homepage,initial_location,' .
+				'current_firstname,current_lastname,current_email,current_homepage,current_location',
 		),
 		'interface' => array (
 			'showRecordFieldList' => 'toctoc_comments_user,initial_firstname,initial_lastname,initial_email,initial_homepage,initial_location,' .

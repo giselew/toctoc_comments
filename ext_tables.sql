@@ -343,7 +343,7 @@ CREATE TABLE tx_toctoc_comments_ipbl_static (
 	comment text,
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY ipnr (ipaddr(50))
+	KEY ipnr (ipaddr(32))
 );
 
 #
@@ -357,6 +357,38 @@ CREATE TABLE tx_toctoc_comments_plugincachecontrol (
 	UNIQUE KEY external_ref_uid (external_ref_uid)
 );
 
+#
+# Table structure for table 'tx_toctoc_comments_cacheajax'
+#
+CREATE TABLE tx_toctoc_comments_cacheajax (
+	uid int(11) NOT NULL auto_increment,
+	crdate int(11) DEFAULT '0' NOT NULL,
+	AJAXCache char(20) DEFAULT '' NOT NULL,
+	md5Data char(32) DEFAULT '' NOT NULL,
+	AJAXdata blob NOT NULL,
+	PRIMARY KEY (AJAXCache,md5Data),
+	KEY xuid (uid)
+);
+
+#
+# Table structure for table 'tx_toctoc_comments_cachereport'
+#
+CREATE TABLE tx_toctoc_comments_cachereport (
+	uid int(11) NOT NULL auto_increment,
+	crdate int(11) DEFAULT '0' NOT NULL,
+	md5PluginId char(32) DEFAULT '' NOT NULL,
+	ReportPluginMode int(11) DEFAULT '0' NOT NULL,
+	ReportUser char(11) DEFAULT '0' NOT NULL,
+	ReportData blob NOT NULL,
+	external_ref_uid char(100) DEFAULT '' NOT NULL,
+	PRIMARY KEY (md5PluginId,ReportUser),
+	KEY cruid (uid),
+	KEY xexternal_ref_uid (external_ref_uid)
+);
+
+#
+# Table structure for table 'tx_toctoc_comments_cache'
+#
 CREATE TABLE tx_toctoc_comments_cache (
     id int(11) NOT NULL auto_increment,
     identifier varchar(250) DEFAULT '' NOT NULL,
@@ -384,6 +416,7 @@ CREATE TABLE tx_toctoc_comments_cache_tags (
 #
 CREATE TABLE tx_toctoc_comments_cache_mailconf (
     id int(11) NOT NULL auto_increment,
+    crdate int(11) DEFAULT '1471672855' NOT NULL,
     mailconf text NOT NULL,
     PRIMARY KEY (id)
 );

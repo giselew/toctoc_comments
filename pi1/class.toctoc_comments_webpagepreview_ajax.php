@@ -37,8 +37,8 @@
  *
  *
  *
- *   60: class toctoc_comments_getpagepreview
- *   65:     public function main()
+ *   55: class toctoc_comments_getpagepreview
+ *   59:     public function main($POSTcmd, $POSTref, $POSTdataconf, $POSTdataconfatt, $POSTdata, $pObj)
  *
  * TOTAL FUNCTIONS: 1
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -52,43 +52,28 @@
  * @package TYPO3
  * @subpackage toctoc_comments
  */
-
-require_once('class.toctoc_comments_common.php');
-$ml = new toctoc_comments_getpagepreview;
-$ml->main();
-
 class toctoc_comments_getpagepreview {
 private $lang = 0;
-private $commonObj;
 public $extKey = 'toctoc_comments';
 
-	public function main() {
-		if (!isset($_SESSION)) {
-			session_start();
-		}
+	public function main($POSTcmd, $POSTref, $POSTdataconf, $POSTdataconfatt, $POSTdata, $pObj) {
 
-		$this->commonObj = new toctoc_comments_common;
-/* 		$sessionSavePath =  @file_get_contents(realpath(dirname(__FILE__)) . '/sessionpath.tmp');
-		if (!isset($_SESSION)) {
-			$this->commonObj->start_toctoccomments_session(3*1440, $sessionSavePath);
-		} */
-
-		$cmd = $_POST['cmd'];
-		if(trim($cmd) != 'getpreview') {
-			echo 'bad_cmd_value';
-			$commonObj->stop_toctoccomments_session();
-			exit();
-		}
+		$cmd = $POSTcmd;
 
 		$maxChars=50;
-		$cid = 'p'. trim($_POST['ref']);
+		$cid = 'p'. trim($POSTref);
 
-		$data_str = $_POST['dataconf'];
+		$data_str = $POSTdataconf;
+		$data_uid = $POSTdataconf;
+		if (intval($data_uid) != 0) {
+			$data_str = $pObj->getAJAXDBCache($data_uid);
+		}
+
 		$data = unserialize(base64_decode($data_str));
 
-		$conf = $this->commonObj->unmirrorConf($data['conf']);
+		$conf = $data['conf'];
 
-		$data_str = $_POST['data'];
+		$data_str = $POSTdata;
 		$data = unserialize(base64_decode($data_str));
 
 		$this->lang = $data['lang'];
@@ -98,8 +83,14 @@ public $extKey = 'toctoc_comments';
 			$commentid='p0';
 		}
 
-		$data_str = $_POST['dataconfatt'];
+		$data_str = $POSTdataconfatt;
+		$data_uid = $POSTdataconfatt;
+		if (intval($data_uid) != 0) {
+			$data_str = $pObj->getAJAXDBCache($data_uid);
+		}
+
 		$dataconfatt = unserialize(base64_decode($data_str));
+
 		$conf = $dataconfatt['conf'];
 		$websitepreviewareaimagewidth =  $conf['attachments.']['webpagePreviewHeight'] + 10;
 
@@ -142,7 +133,7 @@ public $extKey = 'toctoc_comments';
 		if ($conf['theme.']['selectedTheme'] == '') {
 			$conf['theme.']['selectedTheme'] = 'default';
 		}
-		$wrkimg = '<img align="right" id="tx-tc-form-wpp-working' . trim($_POST['ref']) . '" src="'.$data['configBaseURL'].
+		$wrkimg = '<img align="right" id="tx-tc-form-wpp-working' . trim($POSTref) . '" src="'.$data['configBaseURL'].
 					'typo3conf/ext/toctoc_comments/res/css/themes/' . $conf['theme.']['selectedTheme'] . '/img/workingslides.gif" class="tx-tc-working tx-tc-blockdisp" width="16" height="11" />';
 
 		$workingstate=$_SESSION[$cid][$commentid]['working'];
@@ -267,7 +258,7 @@ public $extKey = 'toctoc_comments';
 
 			if (count($_SESSION[$cid][$commentid]['images']) > 0) {
 				$textdivleft='tx-tc-pvs-formtext';
-				$outhtml .= '<div class="tx-tc-pvs-images"  id="toctoc_comments-pvs-images-' . $cid . '"><div id="toctoc_comments-pvs-image-box-' .
+				$outhtml .= '<div class="tx-tc-pvs-images" id="toctoc_comments-pvs-images-' . $cid . '"><div id="toctoc_comments-pvs-image-box-' .
 								$cid . '"  class="tx-tc-opa1">';
 				$outhtmlpic ='';
 				$cntimg=count($_SESSION[$cid][$commentid]['images']);
@@ -446,13 +437,14 @@ public $extKey = 'toctoc_comments';
 		}
 
 		if ($_SESSION[$cid][$commentid]['working'] >= 2) {
-			session_write_close();
-			//$this->commonObj->stop_toctoccomments_session();
+			//session_write_close();
+			$pObj->commonObj->stop_toctoccomments_session();
 		}
 
 		echo $outhtml;
 
 		exit();
 	}
+
 }
 ?>

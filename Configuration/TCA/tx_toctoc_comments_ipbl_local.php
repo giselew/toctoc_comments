@@ -22,6 +22,7 @@ $tx_toctoc_comments_comments = array(
 		'default_sortby' => 'ORDER BY ipaddr',
 		'iconfile'          => $iconfilepath . 'icon_tx_toctoc_comments_ipbl_local.gif',
 		'rootLevel' => -1,
+		'searchFields' => 'comment',				
 	),
 'interface' => array (
 		'showRecordFieldList' => 'ipaddr,blockfe,comment'

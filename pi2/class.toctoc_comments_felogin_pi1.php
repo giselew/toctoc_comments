@@ -41,7 +41,7 @@
  *  117: class tx_toctoccomments_pi2 extends tslib_pibase
  *  140:     protected function processRedirect()
  *  154:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  255:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  246:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
  *  517:     protected function watermark($conf, $content)
  *  555:     protected function showForgot()
  *  635:     protected function showLogout()
@@ -64,13 +64,15 @@
  * 1956:     protected function processSignupCaptcha($postData)
  * 2004:     protected function loginUser($facebookId)
  * 2033:     protected function storeUser($facebookUserProfile, $socialnetwork)
- * 2212:     private function registerUserGroup()
- * 2273:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
- * 2291:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
- * 2381:     protected function getCurrentIp()
- * 2393:     protected function initTSFE()
+ * 2317:     private function registerUserGroup()
+ * 2378:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
+ * 2397:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
+ * 2487:     protected function getCurrentIp()
+ * 2499:     protected function initTSFE()
+ * 2571:     protected function addSysFile($FileName, $FileNameIdentifier, $currentstorage, $advancedFeUserImagePath,
+			$useruid, $feuserstoragefolder, $imagefield)
  *
- * TOTAL FUNCTIONS: 30
+ * TOTAL FUNCTIONS: 31
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -84,7 +86,6 @@ if (version_compare(TYPO3_version, '6.0', '<')) {
 	}
 } else {
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('lang') . 'Classes/LanguageService.php';
-	//require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('backend') . 'Classes/Utility/BackendUtility.php';
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('frontend') . 'Classes/Plugin/AbstractPlugin.php';
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/Utility/MathUtility.php';
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/Utility/GeneralUtility.php';
@@ -97,13 +98,13 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 	(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
 	(class_exists('t3lib_utility_Math', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\MathUtility', 't3lib_utility_Math');
 	(class_exists('tslib_cObj', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer', 'tslib_cObj');
-	if (!t3lib_extMgm::isLoaded('compatibility6'))  {
+	if ((!t3lib_extMgm::isLoaded('compatibility6')) && (!t3lib_extMgm::isLoaded('compatibility7')))  {
 		(class_exists('tslib_eidtools', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\Utility\EidUtility', 'tslib_eidtools');
 		(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
 	}
 	(class_exists('t3lib_utility_Array', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Utility\ArrayUtility', 't3lib_utility_Array');
 	if ((t3lib_extMgm::isLoaded('saltedpasswords')) && ($GLOBALS['TYPO3_CONF_VARS']['FE']['loginSecurityLevel']))  {
-		if (!t3lib_extMgm::isLoaded('compatibility6'))  {
+		if ((!t3lib_extMgm::isLoaded('compatibility6')) && (!t3lib_extMgm::isLoaded('compatibility7')))  {
 			(class_exists('tx_saltedpasswords_div', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Saltedpasswords\Utility\SaltedPasswordsUtility', 'tx_saltedpasswords_div');
 		}
 	}
@@ -153,16 +154,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 	 */
     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '') {
 
-		if ($this->conf['storagePid']) {
-			if (intval($this->conf['recursive'])) {
-				$this->spid = $this->pi_getPidList($this->conf['storagePid'], intval($this->conf['recursive']));
-			} else {
-				$this->spid = $this->conf['storagePid'];
-			}
-		} else {
-			$pids = $GLOBALS['TSFE']->getStorageSiterootPids();
-			$this->spid = $pids['_STORAGE_PID'];
-		}
+		$this->spid = $this->conf['storagePid'];
 
 			// GPvars:
 		$this->logintype = t3lib_div::_GP('logintype');
@@ -300,67 +292,77 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		if ($this->nofacebook == FALSE) {
 
 			if($_POST['tx_toctoccomments_pi2']['fbLogin'] == '1') {
-				require_once(t3lib_extmgm::extPath('toctoc_comments', 'contrib/facebookv4/autoload.php'));
+				if (!isset($_SESSION['fb_access_ok'])) {
+					require_once(t3lib_extmgm::extPath('toctoc_comments', 'contrib/facebookv4/autoload.php'));
 
-				$this->fberror = '';
-				if (($conf['facebook.']['apiVersion'] < '2.0') || ($conf['facebook.']['apiVersion'] > '2.9')) {
-					$conf['facebook.']['apiVersion'] = '2.5';
-				}
-
-				$_SESSION['fbaccessToken'] = NULL;
-
-				$facebook = new Facebook\Facebook(array(
-					'app_id' => $conf['facebook.']['appId'],
-					'app_secret' => $conf['facebook.']['secret'],
-					'default_graph_version' => 'v' . trim($conf['facebook.']['apiVersion']),
-					'cookie' => TRUE,
-					));
-
-				$helper = $facebook->getJavaScriptHelper();
-				try {
-				  $accessToken = $helper->getAccessToken();
-				} catch(Facebook\Exceptions\FacebookResponseException $e) {
-				  // When Graph returns an error
-				  $this->fberror .=  'Facebook problem: Graph returned an error: ' . $e->getMessage();
-
-				} catch(Facebook\Exceptions\FacebookSDKException $e) {
-				  // When validation fails or other local issues
-				  $this->fberror .= 'Facebook problem: Facebook SDK returned an error: ' . $e->getMessage();
-
-				}
-
-				if (!isset($accessToken)) {
-					if ($this->fberror == '') {
-						$this->fberror =  'Facebook Error: Bad request, getAccessToken() failed by some reasons. Check the facebook app';
+					$this->fberror = '';
+					if (($conf['facebook.']['apiVersion'] < '2.0') || ($conf['facebook.']['apiVersion'] > '2.9')) {
+						$conf['facebook.']['apiVersion'] = '2.5';
 					}
-				} else {
-					$_SESSION['fb_access_token'] = (string)$accessToken;
+
+					$_SESSION['fbaccessToken'] = NULL;
+
+					$facebook = new Facebook\Facebook(array(
+						'app_id' => $conf['facebook.']['appId'],
+						'app_secret' => $conf['facebook.']['secret'],
+						'default_graph_version' => 'v' . trim($conf['facebook.']['apiVersion']),
+						'cookie' => TRUE,
+						));
+
+					$helper = $facebook->getJavaScriptHelper();
 					try {
-						$response = $facebook->get('/me?fields=id,updated_time,picture,first_name,last_name,locale,link,name,gender,email', $_SESSION['fb_access_token']);
-						$facebookUserProfile = $response->getGraphUser();
-
-						if (trim($facebookUserProfile['email']) == '') {
-							$this->fberror .= $this->pi_getLL('facebookloginerrormail', '', 1);
-						} else {
-							$facebookUserProfile['imageurl'] = $facebookUserProfile['picture']['data']['url'];
-							$this->storeUser($facebookUserProfile, 'facebook');
-							$this->loginUser($facebookUserProfile['id']);
-						}
+					  $accessToken = $helper->getAccessToken();
 					} catch(Facebook\Exceptions\FacebookResponseException $e) {
-						$this->fberror = 'Facebook problem: Graph returned an error: ' . $e->getMessage();
-
+					  // When Graph returns an error
+					  	$this->fberror .=  'Facebook error: Graph returned an error: ' . $e->getMessage();
 					} catch(Facebook\Exceptions\FacebookSDKException $e) {
-						$this->fberror =  'Facebook problem: Facebook SDK returned an error: ' . $e->getMessage();
+					  // When validation fails or other local issues
+					  $this->fberror .= 'Facebook error: Facebook SDK returned an error: ' . $e->getMessage();
+
 					}
 
+					if (!isset($accessToken)) {
+						if ($this->fberror == '') {
+							$this->fberror =  'Facebook Error: Bad request, getAccessToken() failed by some reasons. Check the facebook app';
+						}
+					} else {
+						$_SESSION['fb_access_token'] = (string)$accessToken;
+						try {
+							$response = $facebook->get('/me?fields=id,updated_time,picture,first_name,last_name,locale,link,name,gender,email', $_SESSION['fb_access_token']);
+							$facebookUserProfile = $response->getGraphUser();
+
+							if (trim($facebookUserProfile['email']) == '') {
+								$this->fberror .= $this->pi_getLL('facebookloginerrormail', '', 1);
+							} else {
+								$facebookUserProfile['imageurl'] = $facebookUserProfile['picture']['data']['url'];
+								$this->storeUser($facebookUserProfile, 'facebook');
+								$_SESSION['fb_access_ok']=$facebookUserProfile['id'];
+								$this->loginUser($facebookUserProfile['id']);
+								$_SESSION['fb_access_ok']=$facebookUserProfile['id'];
+							}
+						} catch(Facebook\Exceptions\FacebookResponseException $e) {
+							$this->fberror = 'Facebook problem: Graph returned an error: ' . $e->getMessage();
+
+						} catch(Facebook\Exceptions\FacebookSDKException $e) {
+							$this->fberror =  'Facebook problem: Facebook SDK returned an error: ' . $e->getMessage();
+						}
+
+					}
+
+					$fbstatustext = '';
+
+					if (trim($this->fberror) != '') {
+						$fbstatustext = '<div style="float: none; display: inline-block;"><span class="tx-tc-required-error">' . $this->fberror . '</span></div>';
+					}
+
+				} else {
+					// User has made successful login, we won't bother Facebook twice as
+					// in anyway the same accesstoken cannot be reused anymore (09/2016)
+					$fb_access_ok = $_SESSION['fb_access_ok'];
+					$this->loginUser($fb_access_ok);
+					$_SESSION['fb_access_ok'] = $fb_access_ok;
+
 				}
-
-			}
-
-			$fbstatustext = '';
-
-			if (trim($this->fberror) != '') {
-				$fbstatustext = '<div style="float: none; display: inline-block;"><span class="tx-tc-required-error">' . $this->fberror . '</span></div>';
 			}
 
 			$subpart = trim($this->cObj->getSubpart($this->template, '###TEMPLATE_FACEBOOK###'));
@@ -2041,6 +2043,21 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		$result = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $this->tableName, $where, '', '', 1);
 
 		$userFound = ($GLOBALS['TYPO3_DB']->sql_num_rows($result) > 0)?TRUE:FALSE;
+		require_once (t3lib_extMgm::extPath('toctoc_comments', 'pi1/toctoc_comment_lib.php'));
+		if (!$this->lib) {
+			$this->lib = new toctoc_comment_lib;
+		}
+		$confpi1 = array();
+		$confpi1 = $this->lib->getDefaultConfig('tx_toctoccomments_pi1');
+
+		$fldimage = 'image';
+		if ($confpi1['advanced.']['FeUserDbField']) {
+			$fldimage = $confpi1['advanced.']['FeUserDbField'];
+		}
+
+		if (version_compare(TYPO3_version, '8.2', '>')) {
+			$this->conf['facebook.']['imageDir'] = 'fileadmin/user_upload/';
+		}
 
 		if($userFound) {
 			$user = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result);
@@ -2060,6 +2077,69 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 					return;
 				}
 			}
+
+			if (version_compare(TYPO3_version, '8.2', '>')) {
+				$currentuserimage = '';
+				if (intval($user[$fldimage]) != 0) {
+					$querysys_file_reference = 'SELECT uid_local FROM sys_file_reference WHERE tablenames = "fe_users" AND deleted=0 and hidden=0 and uid_foreign=' . $user['uid'] . ' AND sorting_foreign=1 AND fieldname="' . $fldimage .'"';
+					$resultsys_file_reference= $GLOBALS['TYPO3_DB']->sql_query($querysys_file_reference);
+					$uid_local = 0;
+					while ($rowssys_file_reference = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_file_reference)) {
+						$uid_local = $rowssys_file_reference['uid_local'];
+						break;
+					}
+					$storage = 0;
+					if ($uid_local != 0) {
+						$querysys_file = 'SELECT name, identifier, storage FROM sys_file where uid=' . $uid_local;
+						$resultsys_file= $GLOBALS['TYPO3_DB']->sql_query($querysys_file);
+						$uid_local = 0;
+						while ($rowssys_file = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_file)) {
+							$currentuserimage = $rowssys_file['identifier'];
+							$storage = $rowssys_file['storage'];
+							break;
+						}
+					}
+					$currentstorage = '';
+					if ($storage != 0) {
+						$querysys_storage = 'SELECT configuration FROM sys_file_storage where uid=' . $storage;
+						$resultsys_storage= $GLOBALS['TYPO3_DB']->sql_query($querysys_storage);
+						$uid_local = 0;
+						while ($rowssys_storage = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_storage)) {
+							$currentstoragexml = $rowssys_storage['configuration'];
+											/*
+											 * <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+				<T3FlexForms>
+				    <data>
+				        <sheet index="sDEF">
+				            <language index="lDEF">
+				                <field index="basePath">
+				                    <value index="vDEF">fileadmin/</value>
+				                </field>
+				                <field index="pathType">
+											*/
+							$currentstoragexmlarr = explode('"basePath"', $currentstoragexml);
+							$currentstoragexmlarrs1 = $currentstoragexmlarr[1];
+							$currentstoragexmlarr2 = explode('index="vDEF">', $currentstoragexmlarrs1);
+							$currentstoragexmlarrs2 = $currentstoragexmlarr2[1];
+							$currentstoragexmlarr3 = explode('/</value>', $currentstoragexmlarrs2);
+							$currentstorage= $currentstoragexmlarr3[0];
+							break;
+						}
+					}
+
+					if ($currentuserimage != '') {
+						$FileNameIdentifier = $currentuserimage;
+						$arrimg = explode('/', $currentuserimage);
+						$currentuserimagename = array_pop($arrimg);
+						$FeUserImagePath = implode('/', $arrimg);
+						$FeUserImagePath = $currentstorage . $FeUserImagePath . '/';
+						//$user[$fldimage] = $currentstorage . $currentuserimage;
+						$confpi1['advanced.']['FeUserImagePath'] = $FeUserImagePath;
+
+					}
+				}
+			}
+
 
 		}
 		$imageurl='';
@@ -2091,7 +2171,23 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		$fe_usersValues['pid'] = $this->conf['storagePid'];
 		$imagename = '';
 		$imagename = $this->copyImageFromFacebook($facebookUserProfile['id'], $imageurl, $socialnetwork);
-		$fe_usersValues['image'] = $imagename;
+		if ($user[$fldimage] == $imagename) {
+			$sameimage = TRUE;
+			if (version_compare(TYPO3_version, '8.2', '>')) {
+				$fe_usersValues[$fldimage] = $user[$fldimage];
+			}
+		} else {
+			$sameimage = FALSE;
+			if (version_compare(TYPO3_version, '8.2', '>')) {
+				$fe_usersValues[$fldimage] = $user[$fldimage] + 1;
+			}
+
+		}
+
+		$addSysFileMsg = '';
+		if (version_compare(TYPO3_version, '8.3', '<')) {
+			$fe_usersValues[$fldimage] = $imagename;
+		}
 		if(!($facebookUserProfile['updated_time'] instanceof DateTime)) {
 		 	$fe_usersValues['tx_toctoc_comments_facebook_updated_time'] = $facebookUserProfile['updated_time'];
 		} else {
@@ -2105,7 +2201,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			}
 
 			$updateWhere = 'uid=' . $user['uid'];
-
+			$userId = $user['uid'];
 			$GLOBALS['TYPO3_DB']->exec_UPDATEquery($this->tableName, $updateWhere, $fe_usersValues, TRUE);
 		} else {
 			$fe_usersValues['tx_toctoc_comments_facebook_id'] = $facebookUserProfile['id'];
@@ -2129,12 +2225,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 				}
 
 				if ($row) {
-					require_once (t3lib_extMgm::extPath('toctoc_comments', 'pi1/toctoc_comment_lib.php'));
-					if (!$this->lib) {
-						$this->lib = new toctoc_comment_lib;
-					}
-					$confpi1 = array();
-					$confpi1 = $this->lib->getDefaultConfig('tx_toctoccomments_pi1');
+
 					$requrl = t3lib_div::getIndpEnv('TYPO3_REQUEST_URL');
 					$langajax = $GLOBALS['TSFE']->lang;
 					$this->lib->sendNotificationEmail($row['uid'], 0, 0, 'adminconfirmsignup', $confpi1, $this, TRUE, $row, $GLOBALS['TSFE']->id,
@@ -2144,11 +2235,26 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			}
 
 		}
+		if (version_compare(TYPO3_version, '8.2', '>')) {
+			if ($currentuserimage == '') {
+				$FileNameIdentifier = 'user_upload/' . $imagename;
+				$currentstorage = 'fileadmin';
+			}
+
+			$confpi1['advanced.']['FeUserImagePath'] = $this->conf['facebook.']['imageDir'];
+			$addSysFileMsg = $this->addSysFile($imagename, $FileNameIdentifier, $currentstorage . '/', $confpi1['advanced.']['FeUserImagePath'],
+					$userId, $this->conf['storagePid'], $confpi1['advanced.']['FeUserDbField']);
+/*
+ * 			if (str_replace('image ok <br>', '', $addSysFileMsg) == $addSysFileMsg) {
+ * 				echo $addSysFileMsg;exit;
+ * 			}
+ */
+		}
 
  		if ($imagename != '') {
  			// and add $fe_usersValues['image'] to the $_SESSION['AJAXimages']
-			$conf=$GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_toctoccomments_pi1.'];
-			$commentuserimagepath = $conf['advanced.']['FeUserImagePath'];
+
+			$commentuserimagepath = $confpi1['advanced.']['FeUserImagePath'];
 			$userimagesize = 96;
 			$userimagestyle = ' tx-tc-uimgsize';
 			$profileimgclass ='tx-tc-userpic';
@@ -2163,9 +2269,8 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			}
 
 			$classonline = ' tx-tc-online';
-			$commentuserimageout = $commentuserimagepath . $fe_usersValues['image'];
-
-			if (version_compare(TYPO3_version, '7.9', '>')) {
+			$commentuserimageout = $commentuserimagepath . $fe_usersValues[$fldimage];
+			if ($confpi1['advanced.']['dontuseGIFBUILDER'] == 1) {
 				if (!(isset($this->commonObj))) {
 					require_once (str_replace(DIRECTORY_SEPARATOR . 'pi2', DIRECTORY_SEPARATOR . 'pi1', realpath(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'class.toctoc_comments_common.php');
 					$this->commonObj = t3lib_div::makeInstance('toctoc_comments_common');
@@ -2198,8 +2303,10 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 			$_SESSION['AJAXimages'][$userId] = $tmpimgstr;
 			$_SESSION['AJAXimagesrefresh'] = TRUE;
-			$_SESSION['AJAXimagesrefreshImage'] = $fe_usersValues['image'];
+			$_SESSION['AJAXimagesrefreshImage'] = $fe_usersValues[$fldimage];
 			$_SESSION['AJAXimagesTimeStamp'] = microtime(TRUE);
+			$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport WHERE ReportPluginMode = 11');
+			$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_plugincachecontrol SET tstamp =' . time() . ' WHERE external_ref_uid != "tx_toctoc_comments_feuser_mm_0"');
  		}
 
 	}
@@ -2274,7 +2381,8 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		if ($url !='') {
 			$imageUrl =$url;
 		}
-		$fileName = $socialnetwork . $facebookUserId . '.jpg';
+		$fileName = $socialnetwork . $facebookUserId . time() . '.jpg';
+
 		$savepathfilename = $this->file_get_contents_curl($imageUrl, 'jpg', PATH_site . $this->conf['facebook.']['imageDir'] . $fileName);
 		$ret = str_replace(PATH_site . $this->conf['facebook.']['imageDir'], '', $savepathfilename);
 		return $ret;
@@ -2455,6 +2563,65 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		} catch (Exception $e) {
 			print_r($e);
 		}
+	}
+	/**
+	 * Initializes TSFE and sets $GLOBALS['TSFE']
+	 *
+	 * @return	void
+	 */
+	protected function addSysFile($FileName, $FileNameIdentifier, $currentstorage, $advancedFeUserImagePath,
+			$useruid, $feuserstoragefolder, $imagefield) {
+		//echo '1 $FileName -' . $FileName . '2 $FileNameIdentifier -' . $FileNameIdentifier . '3 $currentstorage -' . $currentstorage . '4 $advancedFeUserImagePath -' . $advancedFeUserImagePath . '<br>\n' .
+			//'5 $useruid -' . $useruid . '6 $feuserstoragefolder -' . $feuserstoragefolder . '7 $imagefield -' . $imagefield;die();
+
+		$content = '';
+		// get id of currentstorage
+		$querysys_storage = 'SELECT uid FROM sys_file_storage where configuration LIKE "%>' . $currentstorage . '<%"';
+		$resultsys_storage= $GLOBALS['TYPO3_DB']->sql_query($querysys_storage);
+		$currentstorageuid = 0;
+		while ($rowssys_storage = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_storage)) {
+			$currentstorageuid = $rowssys_storage['uid'];
+			break;
+		}
+
+		//Index the file
+
+		$filePath = $advancedFeUserImagePath . $FileName; // path relative to TYPO3 root
+		$fileObject = TYPO3\CMS\Core\Resource\ResourceFactory::getInstance()->retrieveFileOrFolderObject($filePath);
+
+		if ($fileObject) {
+
+			$someFileIdentifier = $currentstorageuid . ':/' . $FileNameIdentifier;
+			$fac = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Resource\\ResourceFactory'); // create instance to storage repository
+			$file = $fac->getFileObjectFromCombinedIdentifier($someFileIdentifier);
+
+			if ($file) {
+				$data = array(
+						'uid_local'   => $file->getUid(),
+						'sorting_foreign' => 1,
+						'tablenames'  => 'fe_users',
+						'tstamp' => time(),
+						'crdate' => time(),
+						'cruser_id' => 1,
+						'sorting' => 128,
+						'pid'    => $feuserstoragefolder,
+						'uid_foreign' => $useruid, // uid of your fe_user record
+						'fieldname'   => $imagefield,
+						'table_local' => 'sys_file',
+						'sorting_foreign' => 1,
+				);
+				$GLOBALS['TYPO3_DB']->exec_INSERTquery('sys_file_reference', $data);
+				$content .= 'image ok <br>';
+
+			} else {
+				$content .= '$file not ok '. $currentstorageuid . ':/' . $FileNameIdentifier;
+			}
+		} else {
+			$content .= '$fileObject not ok '. $filePath;
+		}
+
+		return $content;
+
 	}
 }
 ?>

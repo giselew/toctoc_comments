@@ -5,7 +5,7 @@
  * @param	string		$filePath	Path to merged file
  * @return	boolean		<code>true</code> if file has to be written
  */
-function toctoc_comments_mustUpdateTempFlexFile($filePath) {
+public function toctoc_comments_mustUpdateTempFlexFile($filePath) {
 	if (!@file_exists($filePath)) {
 		return TRUE;
 	}
@@ -26,7 +26,7 @@ function toctoc_comments_mustUpdateTempFlexFile($filePath) {
  *
  * @return	string		Merged flexform file path
  */
-function toctoc_comments_makeTempFlexFormDS() {
+public function toctoc_comments_makeTempFlexFormDS() {
 	$ffFileName = PATH_site . 'typo3temp/toctoc_comments_flexform_ds.xml';
 	if (toctoc_comments_mustUpdateTempFlexFile($ffFileName)) {
 		$ffContent = t3lib_div::getURL(t3lib_extMgm::extPath('toctoc_comments', 'pi1/flexform_ds.xml'));

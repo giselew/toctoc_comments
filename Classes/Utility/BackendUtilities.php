@@ -37,35 +37,39 @@
  *
  *
  *
- *   81: class toctoc_comments_be_common
- *   88:     public function setIconsFileMeta(&$pObj)
- *  164:     public function initExtConfAndAccessCheck(&$pObj)
- *  188:     public function defaultTYPO3EXTCONF()
- *  216:     public function getSessionArray($optionactivetime)
- *  415:     public function getSessionSavePath()
- *  446:     public function human_filesize($bytes, $decimals = 2)
- *  458:     public function getBlacklistForIP($ip)
- *  473:     public function checkTableBLs($ipaddr)
- *  486:     private function checkLocalBL($ipaddr)
- *  530:     public function addLocalBL($ipaddr, $blockfe)
- *  563:     public function checkStaticBL($ipaddr)
- *  596:     public function idbot($hua, $huas, $isbl= FALSE)
- *  648:     public function activetime($activetimestamdiff)
- *  702:     public function printPager($pObj, $showWhat, $fromAjax)
- *  758:     public function getOverviewData($pObj)
- *  775:     public function getOverviewCommentData ($pObj)
- *  868:     public function getOverviewRatingsData ($pObj)
- *  987:     public function getOverviewUsersData ($pObj)
- * 1080:     public function getOverviewSessionsData ()
- * 1113:     public function getOverviewActiveUsersData ()
- * 1165:     public function getOverviewCrawlersData ()
- * 1197:     public function getOverviewBlacklistsData ()
- * 1227:     public function getOverviewReportsData ()
- * 1244:     public function getNameofPid($pid)
- * 1261:     public function getOverviewLocalBlacklistData()
- * 1314:     public function getOverviewSystemData()
+ *   85: class toctoc_comments_be_common
+ *   92:     public function setIconsFileMeta(&$pObj)
+ *  170:     public function initExtConfAndAccessCheck(&$pObj)
+ *  194:     public function defaultTYPO3EXTCONF()
+ *  222:     public function getSessionArray($optionactivetime)
+ *  421:     public function getSessionSavePath()
+ *  452:     public function human_filesize($bytes, $decimals = 2)
+ *  464:     public function getBlacklistForIP($ip)
+ *  479:     public function checkTableBLs($ipaddr)
+ *  492:     private function checkLocalBL($ipaddr)
+ *  536:     public function addLocalBL($ipaddr, $blockfe)
+ *  569:     public function checkStaticBL($ipaddr)
+ *  602:     public function idbot($hua, $huas, $isbl= FALSE)
+ *  654:     public function activetime($activetimestamdiff)
+ *  708:     public function printPager($pObj, $showWhat, $fromAjax)
+ *  764:     public function getOverviewData($pObj)
+ *  782:     public function getOverviewCommentData ($pObj)
+ *  875:     public function getOverviewRatingsData ($pObj)
+ *  994:     public function getOverviewUsersData ($pObj)
+ * 1087:     public function getOverviewSessionsData ()
+ * 1120:     public function getOverviewActiveUsersData ()
+ * 1172:     public function getOverviewCrawlersData ()
+ * 1204:     public function getOverviewBlacklistsData ()
+ * 1234:     public function getOverviewReportsData ()
+ * 1251:     public function getNameofPid($pid)
+ * 1268:     public function getOverviewLocalBlacklistData()
+ * 1321:     public function getOverviewSystemData()
+ * 1367:     protected function getSessionSizeArray()
+ * 1405:     public function purgeSessionCache()
+ * 1448:     public function purgeTempJSFiles()
+ * 1501:     public function getOverviewCacheData()
  *
- * TOTAL FUNCTIONS: 26
+ * TOTAL FUNCTIONS: 30
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -105,6 +109,7 @@ class toctoc_comments_be_common {
 			$pObj->picpathtoctoc = '';
 
 			$pObj->iconRefresh = '';
+			$pObj->iconPurgeCache = '';
 			// Pager
 			$pObj->iconPagerStyle = '';
 			$pObj->iconPagerFirst = 'pager/first.png';
@@ -120,6 +125,7 @@ class toctoc_comments_be_common {
 
 			// Refresh icon
 			$pObj->iconRefresh = 'actions-refresh.' . $picext;
+			$pObj->iconPurgeCache = 'actions-edit-delete.' . $picext;
 
 			$pObj->iconEdit = 'actions-open.' . $picext;
 			//delete
@@ -149,7 +155,7 @@ class toctoc_comments_be_common {
 			$pObj->iconPagerWidthHeight = ' width="30" ';
 
 			$pObj->iconWidthHeight = ' width="30" ';
-			$pObj->picext=$picext;
+			$pObj->picext = $picext;
 			return '';
 		}
 
@@ -432,7 +438,7 @@ class toctoc_comments_be_common {
 		}
 		if (DIRECTORY_SEPARATOR == '\\') {
 			$sessionSavePath=str_replace('/', DIRECTORY_SEPARATOR, $sessionSavePath);
-			$sessionSavePath=str_replace(':\\', ':\\\\', $sessionSavePath);
+			//$sessionSavePath=str_replace(':\\', ':\\\\', $sessionSavePath);
 		}
 		return $sessionSavePath;
 	}
@@ -763,6 +769,7 @@ class toctoc_comments_be_common {
 		$overview['Reports'] = $this->getOverviewReportsData();
 		$overview['BlacklistData'] = $this->getOverviewLocalBlacklistData();
 		$overview['System'] = $this->getOverviewSystemData();
+		$overview['Cache'] = $this->getOverviewCacheData();
 		return $overview;
 
 	}
@@ -1352,5 +1359,207 @@ class toctoc_comments_be_common {
 		return $OverviewSystemData;
 
 	}
+	/**
+	 * read Session directory and return array with number of and size of sessions
+	 *
+	 * @return	Array		...
+	 */
+	protected function getSessionSizeArray() {
+		$i=0;
+		$totalsize = 0;
+		$retarr = array();
+		$sessionfiles = array();
+		$getSessionSavePath = $this->getSessionSavePath();
+		/// read path to sessiondirectory in .tempfile
+		if (is_dir($getSessionSavePath)) {
+			$d = dir($getSessionSavePath);
+		}
+
+		if (is_dir($getSessionSavePath)) {
+			if ($d != FALSE){
+				// dir the sessionfiles
+				while (FALSE !== ($entry = $d->read())) {
+					if (str_replace('sess_', '', $entry) != $entry) {
+						$totalsize += @filesize($getSessionSavePath . DIRECTORY_SEPARATOR . $entry);
+
+						$i++;
+					}
+
+				}
+
+				$d->close();
+			}
+		}
+
+		$retarr = array();
+		$retarr['nbrsession'] = $i;
+		$retarr['sessionsize'] = $totalsize;
+		return $retarr;
+	}
+
+	/**
+	 * purge Session Cache
+	 *
+	 * @return	int		number of sessions deleted
+	 */
+	public function purgeSessionCache() {
+		$delsessarr = array();
+		$i=0;
+		$getSessionSavePath = $this->getSessionSavePath();
+		/// read path to sessiondirectory in .tempfile
+		if (is_dir($getSessionSavePath)) {
+			$d = dir($getSessionSavePath);
+		}
+
+		if (is_dir($getSessionSavePath)) {
+			if ($d != FALSE){
+				// dir the sessionfiles
+				while (FALSE !== ($entry = $d->read())) {
+					if (str_replace('sess_', '', $entry) != $entry) {
+						$delsessarr[$i] = $getSessionSavePath . DIRECTORY_SEPARATOR . $entry;
+						$i++;
+					}
+
+				}
+
+				$d->close();
+			}
+		}
+
+		$cdelsess = count($delsessarr);
+		$idel = 0;
+		for ($j = 0; $j < $cdelsess; $j++) {
+
+			if (file_exists($delsessarr[$j])) {
+				unlink($delsessarr[$j]);
+				$idel++;
+			}
+
+		}
+
+		return $idel;
+	}
+
+	/**
+	 * purge Session Cache
+	 *
+	 * @return	int		number of sessions deleted
+	 */
+	public function purgeTempJSFiles() {
+		$delTempJSFilearr = array();
+		$i=0;
+		//$TempJSFilePath = $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/js/temp';
+		$repstr= str_replace('/', DIRECTORY_SEPARATOR, '/typo3conf/ext/toctoc_comments/Classes/Utility');
+
+		$TempJSFilePath= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . DIRECTORY_SEPARATOR .
+				t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/js/temp' );
+		//echo $TempJSFilePath;exit;
+		/// read path to TempJSFileiondirectory in .tempfile
+		if (is_dir($TempJSFilePath)) {
+			$d = dir($TempJSFilePath);
+		}
+
+		if (is_dir($TempJSFilePath)) {
+			if ($d != FALSE){
+				// dir the TempJSFileionfiles
+				while (FALSE !== ($entry = $d->read())) {
+					if (str_replace('dummy', '', $entry) == $entry) {
+						if (str_replace('tx-tc-', '', $entry) != $entry) {
+							$delTempJSFilearr[$i] = $TempJSFilePath . DIRECTORY_SEPARATOR . $entry;
+							$i++;
+						}
+
+					}
+
+				}
+
+				$d->close();
+			}
+		}
+
+		$cdelTempJSFile = count($delTempJSFilearr);
+		$idel = 0;
+		for ($j = 0; $j < $cdelTempJSFile; $j++) {
+
+			if (file_exists($delTempJSFilearr[$j])) {
+				unlink($delTempJSFilearr[$j]);
+				$idel++;
+			}
+
+		}
+
+		return $idel;
+	}
+
+
+	/**
+	 * Returns an array with all data used in the overviews CacheData
+	 *
+	 * @param	[type]		$pObj: ...
+	 * @return	$OverviewCacheData		array holding arrays of the Overview CacheData
+	 */
+	public function getOverviewCacheData() {
+		$OverviewCacheData = array();
+		$OverviewCacheData['numberofrowsAJAX'] = 0;
+		$OverviewCacheData['datalengthAJAX'] = 0;
+		$OverviewCacheData['numberofrowsDBCache'] = 0;
+		$OverviewCacheData['datalengthDBCache'] = 0;
+		$ret = $this->getSessionSizeArray();
+		$OverviewCacheData['numberofSessions'] = $ret['nbrsession'];
+		$OverviewCacheData['datalengthSessions'] = $ret['sessionsize'];
+
+		$schema = '';
+		if (version_compare(TYPO3_version, '6.0', '<')) {
+			$schema = TYPO3_db_name;
+		} elseif (version_compare(TYPO3_version, '8.1', '<')) {
+			$cm = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Configuration\\ConfigurationManager');
+			$schema = $cm->getLocalConfigurationValueByPath('DB/database');
+		} else {
+			$cm = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Configuration\\ConfigurationManager');
+			$schema = $cm->getLocalConfigurationValueByPath('DB/Connections/Default/dbname');
+		}
+		$worktable ='tx_toctoc_comments_cacheajax';
+		$GLOBALS['TYPO3_DB']->sql_query('OPTIMIZE TABLE '.$schema.'.' . $worktable . ';');
+		$GLOBALS['TYPO3_DB']->sql_query('REPAIR TABLE '.$schema.'.' . $worktable . ';');
+		$GLOBALS['TYPO3_DB']->sql_query('CHECK TABLE '.$schema.'.' .  $worktable . ';');
+		$GLOBALS['TYPO3_DB']->sql_query('ANALYZE TABLE '.$schema.'.' . $worktable . ';');
+		$worktable ='tx_toctoc_comments_cachereport';
+		$GLOBALS['TYPO3_DB']->sql_query('OPTIMIZE TABLE '.$schema.'.' . $worktable . ';');
+		$GLOBALS['TYPO3_DB']->sql_query('REPAIR TABLE '.$schema.'.' . $worktable . ';');
+		$GLOBALS['TYPO3_DB']->sql_query('CHECK TABLE '.$schema.'.' .  $worktable . ';');
+		$GLOBALS['TYPO3_DB']->sql_query('ANALYZE TABLE '.$schema.'.' . $worktable . ';');
+
+			$recs = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(uid) AS numberofrows', 'tx_toctoc_comments_cachereport',
+				'', '', '');
+		foreach ($recs as $rec) {
+			$OverviewCacheData['numberofrowsDBCache'] = $rec['numberofrows'];
+		}
+		$recs = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(uid) AS numberofrows', 'tx_toctoc_comments_cacheajax',
+				'', '', '');
+		foreach ($recs as $rec) {
+			$OverviewCacheData['numberofrowsAJAX'] = $rec['numberofrows'];
+		}
+
+		$recs = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('TABLE_ROWS AS numberofrows, TABLE_NAME AS tablename, DATA_LENGTH AS datalength, UNIX_TIMESTAMP(MAX(CHECK_TIME)) as lastcheck', 'INFORMATION_SCHEMA.TABLES',
+				'TABLE_SCHEMA = "'.$schema.'" AND TABLE_NAME IN ("tx_toctoc_comments_cacheajax", "tx_toctoc_comments_cachereport")', '', '');
+
+		foreach ($recs as $rec) {
+			if ($rec['tablename'] == 'tx_toctoc_comments_cacheajax') {
+
+				if ($rec['numberofrows'] > 0) {
+					$OverviewCacheData['datalengthAJAX'] = $rec['datalength'];
+				}
+			} elseif ($rec['tablename'] == 'tx_toctoc_comments_cachereport') {
+
+				if ($rec['numberofrows'] > 0) {
+					$OverviewCacheData['datalengthDBCache'] = $rec['datalength'];
+				}
+			}
+		}
+
+		return $OverviewCacheData;
+
+	}
+
 }
 ?>

@@ -42,17 +42,17 @@
  *              SECTION: Rating functions
  *   89:     public function getRatingDisplay($ref, $conf = NULL, $fromAjax = 0, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd = 'vote',
 			$pObj = NULL, $cid, $fromcomments, $scopeid=0, $isReview = 0, $commentusername = '')
- *  149:     public function getBarWidth($rating, $conf, $isReview = 0)
- *  167:     protected function synchLikesWithEmoLikes($pObj, $ref, $conf, $fromAjax)
- *  270:     protected function getSubEmoLikeResultText($conf, $pObj, $template, $ref, $cid, $myemolikeval, $feuserid, $fromAjax)
- *  656:     protected function getSubEmoLikeResultIcons($conf, $pObj, $template, $ref, $rows, $myemolikeval, $fromAjax)
- *  753:     protected function getEmoTextColorLL($myemoval)
- *  789:     protected function getRatingInfo($ref, $pObj, $feuserid=-1, $conf, $scopeid=0, $fromAjax, $isReview = 0, $fromcomments = 0, $reviewfeuserid = 0)
- * 1033:     protected function generateRatingContent($ref, $template, $conf, $fromAjax, $pid, $returnasarray, $feuserid, $pObj, $cmd, $cid, $fromcomments,
+ *  156:     public function getBarWidth($rating, $conf, $isReview = 0)
+ *  174:     protected function synchLikesWithEmoLikes($pObj, $ref, $conf, $fromAjax)
+ *  277:     protected function getSubEmoLikeResultText($conf, $pObj, $template, $ref, $cid, $myemolikeval, $feuserid, $fromAjax)
+ *  663:     protected function getSubEmoLikeResultIcons($conf, $pObj, $template, $ref, $rows, $myemolikeval, $fromAjax)
+ *  760:     protected function getEmoTextColorLL($myemoval)
+ *  796:     protected function getRatingInfo($ref, $pObj, $feuserid=-1, $conf, $scopeid=0, $fromAjax, $isReview = 0, $fromcomments = 0, $reviewfeuserid = 0)
+ * 1040:     protected function generateRatingContent($ref, $template, $conf, $fromAjax, $pid, $returnasarray, $feuserid, $pObj, $cmd, $cid, $fromcomments,
 	$scopeid = 0, $isReview = 0, $commentusername = '')
- * 2204:     public function emopopup($pObj, $template, $hidecss,$cid,$refforvote, $conf, $fromAjax, $selected = '-1')
- * 2317:     public function setemopopupiLikeDislikeSession($conf)
- * 2372:     private function makeiLikeText($conf, $pObj, $cmd, $ref, $fromAjax, $myrating = array(), $mylikeval, $mydis='', $template, $cid,
+ * 2211:     public function emopopup($pObj, $template, $hidecss,$cid,$refforvote, $conf, $fromAjax, $selected = '-1')
+ * 2324:     public function setemopopupiLikeDislikeSession($conf)
+ * 2379:     private function makeiLikeText($conf, $pObj, $cmd, $ref, $fromAjax, $myrating = array(), $mylikeval, $mydis='', $template, $cid,
 			$extpreffortext, $myemoval = 0, $myemoll = '')
  *
  * TOTAL FUNCTIONS: 11
@@ -99,7 +99,14 @@ class toctoc_comments_ratings extends toctoc_comment_lib {
 
 		if ($conf['advanced.']['midDot'] != '') {
 			$this->middotchar = $conf['advanced.']['midDot'];
+		} else {
+			$this->middotchar = '&nbsp;';
 		}
+
+		if (intval($conf['theme.']['themeVersion']) == 2) {
+			$this->middotchar = '';
+		}
+
 		$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['ratings.']['ratingsTemplateFile']);
 		$usetemplateFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
 
@@ -1191,11 +1198,11 @@ class toctoc_comments_ratings extends toctoc_comment_lib {
 				if ($fromcomments) {
 					$ajaxData = $this->AjaxData;
 				} else {
-					$ajaxData = $this->getAjaxData($feuserid, $pid, $languagecode, $conf, $cid, $ref);
+					$ajaxData = $this->getAjaxData($feuserid, $pid, $conf, $cid, $ref);
 				}
 
 			} else {
-				$ajaxData = $this->getAjaxData($feuserid, $pid, $languagecode, $conf, $cid, $ref);
+				$ajaxData = $this->getAjaxData($feuserid, $pid, $conf, $cid, $ref);
 			}
 
 			// Create links
@@ -1333,11 +1340,11 @@ class toctoc_comments_ratings extends toctoc_comment_lib {
 				if ($fromcomments) {
 					$ajaxData = $this->AjaxData;
 				} else {
-					$ajaxData = $this->getAjaxData($feuserid, $pid, $languagecode, $conf, $cid, $refforvote);
+					$ajaxData = $this->getAjaxData($feuserid, $pid, $conf, $cid, $refforvote);
 				}
 
 			} else {
-				$ajaxData = $this->getAjaxData($feuserid, $pid, $languagecode, $conf, $cid, $refforvote);
+				$ajaxData = $this->getAjaxData($feuserid, $pid, $conf, $cid, $refforvote);
 			}
 
 			if (($conf['ratings.']['mode'] == 'static') && ($conf['ratings.']['modeplus'] != 'autostatic')) {

@@ -144,7 +144,7 @@
 			<label index="error">Error</label>
 			<label index="error.undefined.foreign.table">Foreign table with externalPrefix %s is not defined</label>
 			<label index="error.prefix.table">toctoc_comments did not find an external prefix for this record: %s</label>
-			<label index="error.automaticcidfail">The content element ID containing the plugin could not be found automatically. The reason for this might be the settings of TS Options UseMainColPos (%s) or UseTemplavoilaField (%s). Please read the FAQ and related information in the manual.</label>
+			<label index="error.automaticcidfail">The content element ID containing the plugin could not be found automatically. Please use optionalRecordId to specify the content element.</label>
 			<label index="error.no.css.defaulttheme">Missing default CSS-theme</label>
 			<label index="error.no.css.themetxt">Missing theme definition file</label>
 			<label index="error.no.css.theme">Missing CSS-theme</label>

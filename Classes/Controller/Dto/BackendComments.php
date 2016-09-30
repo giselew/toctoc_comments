@@ -193,7 +193,10 @@ class toctoc_comments_be_comments {
 								$external_ref_uidList .= ', ' . $external_ref_uid;
 							}
 
+							// cachereport
+							$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport WHERE external_ref_uid = "' . $external_ref_uid .'"');							
 						}
+						
 						$external_ref_uidList = substr($external_ref_uidList, 1);
 						$extArr = explode(',', $external_ref_uidList);
 						$extArr = array_unique($extArr);

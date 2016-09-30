@@ -828,5 +828,33 @@
 	* Fixed CSS-gap for shortlikes with sharing 
 	* Fixed CSS-gap for sharing design 2 for the boxmodels koogle, tisques and windows
 	
-	
-	 
+2016-09-30  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 9.2.0 - see www.toctoc.ch for demos, news, support and donations
+	* Removed old CSS files, now all frontend CSS is generated from LESS
+	* Added Cache for rendered plugins in database. This cache expires on changes of the data or after the value specified in option dbCacheTimeout (7 days by default)
+	* Reduced size of plugin by 20-30% using new cache for AJAX-data in database. Cache-expiry is after twice dbCacheTimeout (14 days by default) as well
+	* dropped TypoScript-options advanced.activateClearPageCache and advanced.useSessionCache
+	* Tuned up the startup times of the plugin
+	* 2 TypoScript-Options have beed dropped: theme.refreshCSSFromLESS and theme.freezeLevelCSS
+	* Caching of data because of new views has a delay from 3 minutes: advanced.viewsCacheDelay = 3
+	* Caching of mail configurations for eID scripts has a validity period now, by default 120 days: advanced.emailValidDays
+	* Sharing: Display of sharing totals has been removed
+	  Reasons: Facebook dropped the old API as Twitter did already last year, no according replacement for the old API-calls has been setup in the new APIs
+	* Sharing: Twitter is set active by default: sharing.dontUseSharingTwitter = 0
+	* Top sharings: They are deprecated and will be removed in the next release
+	* Backendmodule: The overview-panel has a new button for clearing all caches and shows information about cache-sizes in section "System"
+	* Fixed: Added rawurlencode to the parameters transferred from the comments list to the comments report page - some links failed because this was missing
+	* Fixed: Sharing with Delicious works again, they changed the name of their site from delicious.com to del.icio.us in July 2016
+	* Fixed: The JavaScript for AJAX-Login occasionally showed bugs, because jQuery was referenced with $(...) instead of jQuery(...) in situations, where jQuery(...) was required
+	* Compatibility Warning: Do not use toctoc_comments under TYPO3 8.1.2. - after userlogin TYPO3 8.1.2. crashes on AJAX-requests. Everthing works fine with TYPO3 8.2, 8.3 and TYPO3 8.0
+	* Change in PHP-compatibility: 5.5 or newer is required (needed because of TYPO3 8) 
+	* Change in TYPO3-compatibility: support for 4.3 and 4.4 has been dropped
+	* Component Update: Flowplayer html5 v6.0.5
+	* Component Update: Soundcloud API v2.3.2 https://github.com/mptre/php-soundcloud
+	* Component Update: LESS.PHP 1.7.0.10
+	* Changed handling of user pictures respecting the changes in TYPO3 8.3 regarding migration to FAL
+	* Changed defaults: 
+	  spamProtect.commentWaitTime = 0 (before 1)
+	  ratings.allowedNumberOfRatings = 40 (before 10)
+	  ratings.allowedNumberOfRatingsExceededBlocktime = 5 (before 13)
+	* Made the extension 99% compliant with the new W3C-HTML-validator (https://validator.w3.org/nu/)

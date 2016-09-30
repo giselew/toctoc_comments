@@ -26,205 +26,212 @@
  *
  *
  *
- *  243: class toctoc_comment_lib extends tslib_pibase
- *  313:     public function __construct()
- *  335:     public function maincomments($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $feuserid = 0, $cmd = '', &$pObj, $piVars = array(),
-		$cid = 0, $sessioncapdata = '', $userpic='', $commentspics = array(), $check='', $AjaxData = '', $ajaxextref= '',
+ *  250: class toctoc_comment_lib extends tslib_pibase
+ *  321:     public function __construct()
+ *  343:     public function maincomments($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $feuserid = 0, $cmd = '', &$pObj, $piVars = array(),
+		$cid = 0, $sessioncapdata = '', $userpic='', $commentspics = array(), $check='', $ajaxextref= '',
 		$tctreestate = NULL, $commentreplyid=0, $confSess=array())
- *  643:     protected function checkExternalUid($conf, $pObj, $fromAjax)
+ *  667:     protected function checkExternalUid($conf, $pObj, $fromAjax)
  *
  *              SECTION: Commenting functions
- *  684:     public function comments($conf,&$pObj, $fromAjax, $feuserid=0, $pid)
- * 3193:     protected function getCommentsMenu($pObj, $conf, $externalref, $fromAjax, $cntrowsorig)
- * 3659:     protected function getBaseCommentsArray($uid, $uidlist = '', $selectparentuid = FALSE)
- * 3717:     protected function getBaseFeUsersArray($pObj, $fromAjax, $uid, $uidlist = '', $conf)
- * 3775:     protected function makeemoji($text, $conf, $debug)
- * 3924:     public function comments_getComments(&$rows, $conf, $pObj, $feuserid, $fromAjax, $pid, $levelhlt=0)
- * 4984:     public function comments_getComments_getRatings(&$row, $conf, $pObj, $feuserid, $fromAjax, $isReview = 0, $externalref = '', $commentusername = '')
- * 5212:     protected function comments_getComments_getEmail($email)
- * 5228:     protected function isCommentingClosed($conf, $pObj)
- * 5283:     protected function commentingClosed($pObj, $fromAjax, $conf)
- * 5306:     protected function comments_getCommentsBrowser($rpp, $startpoint, $totalrows, $pObj, $fromAjax, $conf)
- * 5458:     public function comments_getComments_fe_user($params, $conf, $pObj, $commentid, $fromAjax, $commentusername)
- * 5571:     protected function addleadingspace($text)
- * 5600:     protected function check_comment_ownership ($rowexternal_ref, $feuserid)
- * 5624:     public function previewcomment($data, $pObj, $conf, $decode = TRUE)
+ *  708:     public function comments($conf,&$pObj, $fromAjax, $feuserid=0, $pid)
+ * 3314:     protected function getCommentsMenu($pObj, $conf, $externalref, $fromAjax, $cntrowsorig)
+ * 3780:     protected function getBaseCommentsArray($uid, $uidlist = '', $selectparentuid = FALSE)
+ * 3838:     protected function getBaseFeUsersArray($pObj, $fromAjax, $uid, $uidlist = '', $conf)
+ * 3896:     protected function makeemoji($text, $conf, $debug)
+ * 4038:     public function comments_getComments(&$rows, $conf, $pObj, $feuserid, $fromAjax, $pid, $levelhlt=0)
+ * 5099:     public function comments_getComments_getRatings(&$row, $conf, $pObj, $feuserid, $fromAjax, $isReview = 0, $externalref = '', $commentusername = '')
+ * 5327:     protected function comments_getComments_getEmail($email)
+ * 5347:     protected function isCommentingClosed($conf, $pObj)
+ * 5402:     protected function commentingClosed($pObj, $fromAjax, $conf)
+ * 5425:     protected function comments_getCommentsBrowser($rpp, $startpoint, $totalrows, $pObj, $fromAjax, $conf)
+ * 5577:     public function comments_getComments_fe_user($params, $conf, $pObj, $commentid, $fromAjax, $commentusername)
+ * 5690:     protected function addleadingspace($text)
+ * 5719:     protected function check_comment_ownership ($rowexternal_ref, $feuserid)
+ * 5743:     public function previewcomment($data, $pObj, $conf, $decode = TRUE)
  *
  *              SECTION: functions for images cache (AJAX)
- * 5657:     protected function setAJAXimage($image, $feuserid)
- * 5670:     public function getAJAXimage($feuserid, $commentid, $conf, $email = '')
- * 5743:     protected function setAJAXimageCache($image, $imageoriginal)
- * 5755:     protected function getAJAXimageCache($commentuserimageout)
- * 5770:     protected function checkAjaxUserPic ($cid=0)
- * 5802:     protected function build_AJAXImages($conf, $pObj, $usergenderexistsstr = '', $fromAjax = FALSE)
- * 6042:     protected function fixFeUserPic ($pic)
- * 6066:     protected function makeImageSprite($conf)
+ * 5776:     protected function setAJAXimage($image, $feuserid)
+ * 5789:     public function getAJAXimage($feuserid, $commentid, $conf, $email = '')
+ * 5862:     protected function setAJAXimageCache($image, $imageoriginal)
+ * 5874:     protected function getAJAXimageCache($commentuserimageout)
+ * 5889:     protected function checkAjaxUserPic ($cid=0)
+ * 5921:     protected function build_AJAXImages($conf, $pObj, $usergenderexistsstr = '')
+ * 6302:     protected function fixFeUserPic ($pic)
+ * 6326:     protected function makeImageSprite($conf)
  *
  *              SECTION: Form functions
- * 6290:     private function form($conf, &$pObj, $piVars, $fromAjax, $pid, $ifeuserid=0, $userpic, $commentid=0, $replylevel=0,	$fromcomments = FALSE)
- * 7557:     protected function form_updatePostVarsWithFeUserData($pObj, $fromAjax, $conf, $piVars, $feuserid, $userpic, $cid, $output_cid)
- * 7891:     protected function getUserName($fe_user_user_uid, $pObj, $fromAjax, $conf)
- * 7958:     protected function form_getCaptcha($pObj, $conf, $fromAjax)
- * 8015:     protected function form_wrapError($field, $pObj, $conf)
+ * 6550:     private function form($conf, &$pObj, $piVars, $fromAjax, $pid, $ifeuserid=0, $userpic, $commentid=0, $replylevel=0,	$fromcomments = FALSE)
+ * 7818:     protected function form_updatePostVarsWithFeUserData($pObj, $fromAjax, $conf, $piVars, $feuserid, $userpic, $cid, $output_cid)
+ * 8271:     protected function getUserName($fe_user_user_uid, $pObj, $fromAjax, $conf)
+ * 8338:     protected function form_getCaptcha($pObj, $conf, $fromAjax)
+ * 8395:     protected function form_wrapError($field, $pObj, $conf)
  *
  *              SECTION: Comments page-browser functions
- * 8052:     protected function processBrowserSubmission($conf, $pObj, $cmd, $ref)
+ * 8432:     protected function processBrowserSubmission($conf, $pObj, $cmd, $ref)
  *
  *              SECTION: Inserting and Updating Comments functions
- * 8117:     public function processSubmission($conf, $pObj, $piVars, $fromAjax, $feuserid, $pid, $lang)
- * 8689:     public function updateComment($conf, $pObj, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
+ * 8497:     public function processSubmission($conf, $pObj, $piVars, $fromAjax, $feuserid, $pid, $lang)
+ * 9084:     public function updateComment($conf, $pObj, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
  *
  *              SECTION: IP-blocking functions, Spam checking
- * 8793:     protected function IPBlockSpamCheck(&$pObj)
- * 8811:     protected function sendNotificationIPBlock($params)
- * 8826:     protected function checkSMTPService($hostname, $port, $confcheckSMTPService = 0)
- * 8848:     public function getIpAddr()
- * 8866:     public function checkTableBLs($ipaddr = '', $checksiteblock = FALSE, $pObj)
- * 8884:     private function checkLocalBL($ipaddr, $checksiteblock = FALSE, $pObj)
- * 8926:     private function checkStaticBL($ipaddr, $checksiteblock = FALSE, $pObj)
- * 8969:     private function checkNetworkBLs($ipaddr)
- * 8993:     protected function processSubmission_checkTypicalSpam($pObj, $conf, $piVars, $lang, $fromAjax)
- * 9066:     protected function processSubmission_validate($piVars, $conf, $pObj, $fromAjax)
+ * 9197:     protected function IPBlockSpamCheck(&$pObj)
+ * 9215:     protected function sendNotificationIPBlock($params)
+ * 9230:     protected function checkSMTPService($hostname, $port, $confcheckSMTPService = 0)
+ * 9252:     public function getIpAddr()
+ * 9270:     public function checkTableBLs($ipaddr = '', $checksiteblock = FALSE, $pObj)
+ * 9288:     private function checkLocalBL($ipaddr, $checksiteblock = FALSE, $pObj)
+ * 9330:     private function checkStaticBL($ipaddr, $checksiteblock = FALSE, $pObj)
+ * 9373:     private function checkNetworkBLs($ipaddr)
+ * 9397:     protected function processSubmission_checkTypicalSpam($pObj, $conf, $piVars, $lang, $fromAjax)
+ * 9470:     protected function processSubmission_validate($piVars, $conf, $pObj, $fromAjax)
  *
  *              SECTION: E-mail notification
- * 9147:     public function sendNotificationEmail($uid, $plugincacheid, $points, $action, $conf, $pObj, $fromAjax, $piVars, $pid, $fetoctocusertoinsert,
+ * 9551:     public function sendNotificationEmail($uid, $plugincacheid, $points, $action, $conf, $pObj, $fromAjax, $piVars, $pid, $fetoctocusertoinsert,
 			$attachment_id=0, $attachment_subid=0, $optinemail='', $ratingpageid=0, $langajax = '')
- * 9923:     protected function emailOptIn($conf, $optinemail, $optin_ip)
- * 10000:     protected function checkCOI($conf, $email, $checkip=TRUE)
+ * 10335:     protected function emailOptIn($conf, $optinemail, $optin_ip)
+ * 10416:     protected function checkCOI($conf, $email, $checkip=TRUE)
  *
  *              SECTION: language handling functions
- * 10036:     public function fixLL(&$conf)
- * 10061:     protected function fixLL_internal($LL, &$ll, $prefix = '')
+ * 10452:     public function fixLL(&$conf)
+ * 10477:     protected function fixLL_internal($LL, &$ll, $prefix = '')
  *
  *              SECTION: mostly formatting functions
- * 10086:     protected function createLinks($text, $conf)
- * 10141:     protected function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 10164:     protected function checkCustomFunctionCodes($code, $pObj)
- * 10189:     protected function isNoCacheUrl($url)
- * 10211:     protected function substituteMarkersAndSubparts($template, array $markers, array $subparts, $pObj)
+ * 10502:     protected function createLinks($text, $conf)
+ * 10557:     protected function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 10580:     protected function checkCustomFunctionCodes($code, $pObj)
+ * 10605:     protected function isNoCacheUrl($url)
+ * 10627:     protected function substituteMarkersAndSubparts($template, array $markers, array $subparts, $pObj)
  *
  *              SECTION: session and cache functions
- * 10238:     public function resetSessionVars($resetcontext, $alsoajaxvar = TRUE)
- * 10290:     public function getClearCacheIds($conf, $pid = 0, $repectsession = TRUE)
- * 10357:     protected function getClearCacheExternal_ref_uids($external_ref_uid = '')
- * 10386:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
- * 10463:     public function getPluginCacheControlTstamp ($external_ref_uid)
- * 10486:     public function initCaches()
- * 10542:     protected function clearPagesCaches($conf, $pid, $plugincacheid)
+ * 10654:     public function resetSessionVars($resetcontext, $alsoajaxvar = TRUE)
+ * 10700:     public function getClearCacheIds($conf, $pid = 0, $repectsession = TRUE)
+ * 10764:     public function deleteDBcachereport ($cachedEntities, $external_ref_uid = '')
+ * 10827:     protected function getClearCacheExternal_ref_uids($external_ref_uid = '')
+ * 10857:     public function setPluginCacheControlTstamp ($external_ref_uid_list, $tstime = -1)
+ * 10944:     public function getPluginCacheControlTstamp ($external_ref_uid)
+ * 10967:     public function initCaches()
+ * 11023:     protected function clearPagesCaches($conf, $pid, $plugincacheid)
  *
  *              SECTION: Smilie functions
- * 10583:     public function parseSmilieArray($data)
- * 10600:     public function replaceSmilies($content, $conf)
- * 10622:     protected function checkbbcrop($content, $commentCropLength, $conf, $pObj)
- * 10658:     protected function replaceBBs($content, $pObj, $conf, $purge=FALSE)
+ * 11064:     public function parseSmilieArray($data)
+ * 11081:     public function replaceSmilies($content, $conf)
+ * 11103:     protected function checkbbcrop($content, $commentCropLength, $conf, $pObj)
+ * 11139:     protected function replaceBBs($content, $pObj, $conf, $purge=FALSE)
  *
  *              SECTION: functions for the AJAx interface with jQuery/JavaScript
- * 10710:     protected function getAjaxJSData($feuserid, $pid, $languagecode, $conf, $pObj, $cid, $fromAjax, $dataonly=FALSE, $externalref)
- * 10782:     protected function arraydiffassocrecursive($array1, $array2)
- * 10811:     protected function getAjaxData($feuserid, $pid, $languagecode, $conf, $cid, $ref)
- * 10835:     protected function mirrorconf($conf)
- * 10898:     protected function updateAjaxData($feuserid, $conf)
- * 10918:     protected function getAjaxLoggedInData($forjsvariable, $outputloginstate)
- * 10982:     protected function getAjaxDataAttachments($conf, $fromAjax, $pObj)
- * 11008:     protected function getAjaxJSDataCommentImgs($cid, $fromAjax)
- * 11045:     protected function getAjaxJSDataComments($cid, $pObj, $fromAjax)
- * 11083:     protected function getAjaxDataComments($pObj)
- * 11101:     protected function getAjaxDataImgs()
+ * 11191:     protected function getAjaxJSData($feuserid, $pid, $conf, $pObj, $cid, $externalref)
+ * 11249:     protected function arraydiffassocrecursive($array1, $array2)
+ * 11278:     protected function getAjaxData($feuserid, $pid, $conf, $cid, $ref)
+ * 11321:     protected function setAJAXDBCache($AJAXCache, $md5Data, $AJAXdata)
+ * 11357:     protected function checkAJAXDBCache($AJAXCache, $md5Data)
+ * 11373:     protected function updateAjaxData($cid)
+ * 11385:     protected function getAjaxLoggedInData($forjsvariable, $outputloginstate)
+ * 11486:     protected function getAjaxDataAttachments($conf, $pObj)
+ * 11531:     protected function getAjaxJSDataCommentImgs($cid)
+ * 11568:     protected function getAjaxJSDataComments($cid, $pObj)
+ * 11611:     protected function getAjaxDataComments($pObj)
+ * 11629:     protected function getAjaxDataImgs()
  *
  *              SECTION: URL- and IP-related functions
- * 11118:     public function getCurrentIp()
- * 11134:     public function hasValidItemUrl($piVars)
- * 11157:     public function getDefaultConfig($pluginkey='')
- * 11176:     public function isCommented($ref, $pObj, $feuserid=0, $fromAjax)
+ * 11646:     public function getCurrentIp()
+ * 11662:     public function hasValidItemUrl($piVars)
+ * 11685:     public function getDefaultConfig($pluginkey='')
+ * 11704:     public function isCommented($ref, $pObj, $feuserid=0, $fromAjax)
  *
  *              SECTION: Rating functions
- * 11219:     public function getRatingDisplay($ref, $conf = NULL, $fromAjax = 0, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd = 'vote',
+ * 11747:     public function getRatingDisplay($ref, $conf = NULL, $fromAjax = 0, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd = 'vote',
 			$pObj = NULL, $cid, $fromcomments, $scopeid=0, $isReview = 0, $commentusername = '')
- * 11253:     public function isVoted($ref, $pObj, $scopeid=0, $feuserid=0, $fromAjax)
- * 11296:     public function getBarWidth($rating, $conf, $isReview = 0)
+ * 11785:     public function isVoted($ref, $pObj, $scopeid=0, $feuserid=0, $fromAjax)
+ * 11828:     public function getBarWidth($rating, $conf, $isReview = 0)
  *
  *              SECTION: TYPO3 workarounds
- * 11318:     public function enableFields($tableName, $pObj, $getFromSession = FALSE)
- * 11340:     public function pi_getLLWrap($pObj, $llkey, $fromAjax)
- * 11406:     protected function t3getSubpart ($pObj, $templateCode, $templateMarker)
- * 11447:     public function t3substituteMarkerArray ($content, $markContentArray)
- * 11468:     protected function t3substituteMarker ($template, $marker, $markContent)
- * 11482:     protected function t3fileResource ($pObj, $usetemplateFile)
- * 11499:     protected function getcheck ($ref, $i, $ratingscheck)
- * 11523:     protected function formatDate($date, $pObj, $fromAjax, $conf)
- * 11659:     protected function getPageURL($fromAjax = FALSE, $pid = 0)
- * 11681:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
- * 11706:     protected function getCleanHTML ($html)
- * 11732:     public function getLoginForm()
- * 11763:     public function getChangePasswordForm($uid = 0, $piHash = '')
- * 11794:     public function getBBCard($conf, $pObj, $buildthisbb = FALSE, $returnbbarray = FALSE)
+ * 11850:     public function enableFields($tableName, $pObj, $getFromSession = FALSE)
+ * 11872:     public function pi_getLLWrap($pObj, $llkey, $fromAjax)
+ * 11938:     protected function t3getSubpart ($pObj, $templateCode, $templateMarker)
+ * 11979:     public function t3substituteMarkerArray ($content, $markContentArray)
+ * 11999:     protected function t3substituteMarker ($template, $marker, $markContent)
+ * 12013:     protected function t3fileResource ($pObj, $usetemplateFile)
+ * 12030:     protected function getcheck ($ref, $i, $ratingscheck)
+ * 12054:     protected function formatDate($date, $pObj, $fromAjax, $conf)
+ * 12190:     protected function getPageURL($fromAjax = FALSE, $pid = 0)
+ * 12212:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ * 12237:     protected function getCleanHTML ($html)
+ * 12263:     public function getLoginForm()
+ * 12282:     public function getChangePasswordForm($uid = 0, $piHash = '')
+ * 12303:     public function getBBCard($conf, $pObj, $buildthisbb = FALSE, $returnbbarray = FALSE)
  *
  *              SECTION: Usercards
- * 11897:     public function getSmiliesCard($conf)
- * 12164:     public function getEmoCard($conf, $pObj, $cid, $ref, $feuserid, $fromAjax = TRUE)
- * 12507:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $pObj, $commentid, $fromAjax = TRUE, $fromusercenter = FALSE)
+ * 12406:     public function getSmiliesCard($conf)
+ * 12673:     public function getEmoCard($conf, $pObj, $cid, $ref, $feuserid, $fromAjax = TRUE)
+ * 13016:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $pObj, $commentid, $fromAjax = TRUE, $fromusercenter = FALSE)
  *
  *              SECTION: Mail functions
- * 12978:     protected function getMailTo($mailAddress, $linktxt = '', $initP = '?')
- * 13025:     protected function encryptEmail($string, $back=0)
- * 13067:     protected function encryptCharcode($n, $start, $end, $offset)
- * 13092:     public function send_mail ($toEMail, $subject, $message, $html, $fromEMail, $fromName, $confcheckSMTPService = 0, $attachment='')
- * 13264:     protected function slashName ($name, $apostrophe='"')
+ * 13491:     protected function getMailTo($mailAddress, $linktxt = '', $initP = '?')
+ * 13538:     protected function encryptEmail($string, $back=0)
+ * 13580:     protected function encryptCharcode($n, $start, $end, $offset)
+ * 13605:     public function send_mail ($toEMail, $subject, $message, $html, $fromEMail, $fromName, $confcheckSMTPService = 0, $attachment='')
+ * 13777:     protected function slashName ($name, $apostrophe='"')
  *
  *              SECTION: Notification functions
- * 13288:     public function handleCommentatorNotifications($uid, $conf, $pObj, $fromeID = FALSE, $pid=0, $fromAjax=1)
- * 13633:     public function handleNewUserNotification($uid, $conf, $pObj, $fromeID = FALSE, $pid=0, $fromAjax=1)
+ * 13801:     public function handleCommentatorNotifications($uid, $conf, $pObj, $fromeID = FALSE, $pid=0, $fromAjax=1)
+ * 14148:     public function handleNewUserNotification($uid, $conf, $pObj, $fromeID = FALSE, $pid=0, $fromAjax=1)
  *
  *              SECTION: Website preview functions
- * 13777:     public function cleanupfup($uploadedfile, $conf, $originalfilename)
- * 13796:     public function getwebpagepreview($cmd, $pObj, $cid, $data, $conf)
- * 13840:     protected function getpreviewinit($cid, $data, $conf)
- * 13885:     protected function savewebpagepreviewtodb($pcid, $pObj, $pcommentid, $conf)
- * 14126:     protected function cleanupdbandfiles($conf, $uploadedfile='', $originalfilename='')
- * 14281:     protected function getwebpagecache($pcid, $pObj, $pcommentid, $conf, $url='', $isbeforefetch = FALSE)
- * 14448:     protected function read_dir($dir, $array = array())
- * 14477:     protected function commentShowWebpagepreview ($rowattachmentid, $rowattachment_subid, $conf, $pObj, $cid, $topwebsitepreview, $fromAjax,
+ * 14292:     public function cleanupfup($uploadedfile, $conf, $originalfilename)
+ * 14311:     public function getwebpagepreview($cmd, $pObj, $cid, $data, $conf)
+ * 14356:     protected function getpreviewinit($cid, $data, $conf)
+ * 14401:     protected function savewebpagepreviewtodb($pcid, $pObj, $pcommentid, $conf)
+ * 14642:     protected function cleanupdbandfiles($conf, $uploadedfile='', $originalfilename='')
+ * 14797:     protected function getwebpagecache($pcid, $pObj, $pcommentid, $conf, $url='', $isbeforefetch = FALSE)
+ * 14964:     protected function read_dir($dir, $array = array())
+ * 14993:     protected function commentShowWebpagepreview ($rowattachmentid, $rowattachment_subid, $conf, $pObj, $cid, $topwebsitepreview, $fromAjax,
 			$row = array(), $isforemailnotification = FALSE)
- * 14979:     protected function makeAttachementPicture($picturefilename, $conf, $descriptionbyuser, $originalfilename, $firstname,
+ * 15495:     protected function makeAttachementPicture($picturefilename, $conf, $descriptionbyuser, $originalfilename, $firstname,
 			$lastname, $fetoctocusertoinsert)
  *
  *              SECTION: eID-Interface functions
- * 15159:     public function handleeID($uid, $conf, $pObj, $messagetodisplay, $refreshurl)
+ * 15675:     public function handleeID($uid, $conf, $pObj, $messagetodisplay, $refreshurl)
  *
  *              SECTION: Reply on comments functions
- * 15270:     protected function getCommentBoxDisplay($commentid, $conf, $level, $fromAjax, $triggeredlevel=0, $levelexpandoverride=0)
- * 15346:     protected function getCommentBoxChildrenDisplayIsCollapsed($commentschildrenids, $conf, $level, $fromAjax, $triggeredlevel=0, $levelexpandoverride=0)
+ * 15786:     protected function getCommentBoxDisplay($commentid, $conf, $level, $fromAjax, $triggeredlevel=0, $levelexpandoverride=0)
+ * 15862:     protected function getCommentBoxChildrenDisplayIsCollapsed($commentschildrenids, $conf, $level, $fromAjax, $triggeredlevel=0, $levelexpandoverride=0)
  *
  *              SECTION: Fe-usergroup functions
- * 15418:     public function usersGroupmembers($pObj, $fromAjax, $conf, $communitybuddies = FALSE)
- * 15499:     protected function isUserOnline($feuser_uid)
+ * 15934:     public function usersGroupmembers($pObj, $fromAjax, $conf, $communitybuddies = FALSE)
+ * 16015:     protected function isUserOnline($feuser_uid)
  *
  *              SECTION: Recent comments functions
- * 15538:     public function getRecentComments($pObj, $conf, $feuserid)
- * 15555:     protected function trimContent($text, $conf, $maxChars=0, $dospecialChars=TRUE, $precrop = FALSE)
+ * 16054:     public function getRecentComments($pObj, $conf, $feuserid)
+ * 16071:     protected function trimContent($text, $conf, $maxChars=0, $dospecialChars=TRUE, $precrop = FALSE)
  *
  *              SECTION: Report comments functions
- * 15612:     protected function getCommentsReportLink($params, &$pObj, $fromAjax, $pid)
- * 15660:     public function mainReport($content, $conf, $pObj, $piVars)
+ * 16128:     protected function getCommentsReportLink($params, &$pObj, $fromAjax, $pid)
+ * 16183:     public function mainReport($content, $conf, $pObj, $piVars)
  *
  *              SECTION: Debug function
- * 15684:     protected function trackdebug ($trackingfunction)
+ * 16207:     protected function trackdebug ($trackingfunction)
  *
  *              SECTION: Top ratings functions
- * 15711:     public function showtopRatings($conf, $pObj)
- * 15726:     public function showtopSharings($conf, $pObj)
+ * 16234:     public function showtopRatings($conf, $pObj)
+ * 16249:     public function showtopSharings($conf, $pObj)
  *
  *              SECTION: show userCenter functions
- * 15749:     public function showuserCenter($conf, $pObj)
- * 15766:     public function showCommentsSearch($conf, $pObj, $fromAjax = FALSE, $data = '', $cid = 0)
- * 15783:     private function gravatarize($conf, $outstr, $email, $watchanonymgravatar = FALSE)
- * 15845:     private function gifbuild($conf, $pObj, $gravatarEnable, $userimgFile, $imagesize, $profileimgclass, $classonline,
+ * 16272:     public function showuserCenter($conf, $pObj)
+ * 16289:     public function showCommentsSearch($conf, $pObj, $fromAjax = FALSE, $data = '', $cid = 0)
+ * 16306:     private function gravatarize($conf, $outstr, $email, $watchanonymgravatar = FALSE)
+ * 16368:     private function gifbuild($conf, $pObj, $gravatarEnable, $userimgFile, $imagesize, $profileimgclass, $classonline,
 			$userimagestyle, $usernametitle, $email, $cssid, $nogen = FALSE, $imgalign = '', $watchanonymgravatar = FALSE)
- * 15919:     private function checkThemeVersion($content, $conf)
- * 16133:     public function oneDimArr_encode($oneDimArr = array(), $oneDimDelimiter = '6g97g86g97g8')
- * 16144:     public function oneDimArr_decode($oneDimString = '', $oneDimDelimiter = '6g97g86g97g8')
+ * 16442:     private function checkThemeVersion($content, $conf)
+ * 16656:     public function oneDimArr_encode($oneDimArr = array(), $oneDimDelimiter = '6g97g86g97g8')
+ * 16674:     public function oneDimArr_decode($oneDimString = '', $oneDimDelimiter = '6g97g86g97g8')
+ * 16696:     public function setReportDBCache($conf, $ReportPluginMode, $ReportUser, $ReportData, $md5PluginId, $external_ref_uid = '')
+ * 16731:     public function getReportDBCache($md5PluginId, $ReportUser)
+ * 16758:     public function getReportDBCacheMinTimestamp ($ReportPluginMode)
+ * 16772:     public function isVirginUser($external_ref_uid = '')
+ * 16841:     protected function purgeMailConf($conf)
  *
- * TOTAL FUNCTIONS: 135
+ * TOTAL FUNCTIONS: 142
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -257,7 +264,6 @@ class toctoc_comment_lib extends tslib_pibase {
 	public $smiliesPath = '';
 	//	Path to smilie folder, will be set to config value later
 	public $check = '';
-	public $AjaxData = '';
 	public $AJAXimage = '';
 	public $newcommentid = -1;
 	public $limitofrows =  500;
@@ -268,6 +274,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	public $tctreelastlevel =0;
 	public $tctreelastdisplay =0;
 	public $newcommentneedscoi = 0;
+	public $newcommenthaserror = 0;
 	public $table = 'tx_toctoc_comments_comments';
 	public $webpagepreviewsavefolder = 'uploads/tx_toctoccomments/webpagepreview/';
 	public $webpagepreviewtempfolder = 'uploads/tx_toctoccomments/temp/';
@@ -295,7 +302,6 @@ class toctoc_comment_lib extends tslib_pibase {
 	public $taareaCSSheightinit=32;  //                                     *** will be later = 4 + (intval($conf['theme.']['boxmodelTextareaLineHeight'])*
 																				// intval($conf['theme.']['boxmodelTextareaNbrLines']))  +
 																				// (2 * intval($conf['theme.']['boxmodelSpacing']));
-
 	//cache
 	public $cacheInstance;
 	public $ajaxDataloginSess;
@@ -311,7 +317,9 @@ class toctoc_comment_lib extends tslib_pibase {
 	public $sqnumber= 0;
 	public $addv2 = '';
 	public $canZip = FALSE;
-
+	public $sessionCompressionLevel = 5;
+	public $sessionTimeout = 1440;
+	public $dbCacheTimeout = 10080;
 	/**
 	 * Class init.
 	 *
@@ -322,7 +330,7 @@ class toctoc_comment_lib extends tslib_pibase {
 			(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
 			(class_exists('tslib_cObj', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer', 'tslib_cObj');
 			(class_exists('t3lib_refindex', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Database\ReferenceIndex', 't3lib_refindex');
-			if (!t3lib_extMgm::isLoaded('compatibility6')) {
+			if ((!t3lib_extMgm::isLoaded('compatibility6')) && (!t3lib_extMgm::isLoaded('compatibility7'))) {
 				(class_exists('language', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Lang\LanguageService', 'language');
 				(class_exists('t3lib_mail_Message', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Mail\MailMessage', 't3lib_mail_Message');
 				(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
@@ -340,12 +348,25 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * @return	string		HTML-Output
 	 */
 	public function maincomments($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $feuserid = 0, $cmd = '', &$pObj, $piVars = array(),
-		$cid = 0, $sessioncapdata = '', $userpic='', $commentspics = array(), $check='', $AjaxData = '', $ajaxextref= '',
+		$cid = 0, $sessioncapdata = '', $userpic='', $commentspics = array(), $check='', $ajaxextref= '',
 		$tctreestate = NULL, $commentreplyid=0, $confSess=array()) {
+
 		$content = '';
 
 		if ($conf['advanced.']['dontuseGIFBUILDER'] != '') {
 			$this->dontuseGIFBUILDER = intval($conf['advanced.']['dontuseGIFBUILDER']);
+		}
+
+		if (intval($conf['sessionCompressionLevel']) > 0) {
+			$this->sessionCompressionLevel = intval($conf['sessionCompressionLevel']);
+		}
+
+		if (intval($conf['sessionTimeout']) > 0) {
+			$this->sessionTimeout = intval($conf['sessionTimeout']);
+		}
+
+		if (intval($conf['dbCacheTimeout']) > 0) {
+			$this->dbCacheTimeout = intval($conf['dbCacheTimeout']);
 		}
 
 		if (count($confSess)>0) {
@@ -400,13 +421,16 @@ class toctoc_comment_lib extends tslib_pibase {
 			$this->sessionCaptchaData=1;
 		}
 
-		$this->cObj = t3lib_div::makeInstance('tslib_cObj');
-		$this->cObj->start('', '');
+		if (!isset($this->cObj)) {
+			$this->cObj = t3lib_div::makeInstance('tslib_cObj');
+			$this->cObj->start('', '');
+		}
+
 		$this->smiliesPath = str_replace('EXT:toctoc_comments/', t3lib_div::locationHeaderUrl('') .
 				t3lib_extMgm::siteRelPath('toctoc_comments'), $conf['smiliePath']);
 		$this->smilies = $this->parseSmilieArray($conf['smilies.']);
 		$this->check = $check;
-		$this->AjaxData = $AjaxData;
+
 		if (trim($userpic) != '') {
 			if ($_SESSION['userAJAXimage'] != $userpic) {
 				$_SESSION['userAJAXimage'] = $userpic;
@@ -436,19 +460,19 @@ class toctoc_comment_lib extends tslib_pibase {
 
 		$this->allowHTMLTagsInComments = $conf['advanced.']['allowHTMLTagsInComments'];
 
-		if ($AjaxData != '') {
-			$_SESSION['ajaxData'] = $AjaxData;
-		}
-
 		if ($_SESSION['debugprintlib']!='') {
 			$this->debugprintlib['debugtext'] .= ', maincomments init: ' . round(1000*(microtime(TRUE)-$this->debugprintlib['starttime']), 1);
 			$this->debugprintlib['starttime'] = microtime(TRUE);
 		}
 
-		if ($conf['advanced.']['midDot'] != '') {
+		if (trim($conf['advanced.']['midDot']) != '') {
 			$this->middotchar = $conf['advanced.']['midDot'];
 		} else {
 			$this->middotchar = '&nbsp;';
+		}
+
+		if (intval($conf['theme.']['themeVersion']) == 2) {
+			$this->middotchar = '';
 		}
 
 		// check if we need to go at all
@@ -493,7 +517,7 @@ class toctoc_comment_lib extends tslib_pibase {
 				}
 
 				if ($cmd === 'updateAJAXdata') {
-					$content .= $this->updateAjaxData($feuserid, $conf);
+					$content .= $this->updateAjaxData($cid);
 				}
 
 				if (($cmd === 'browse') || ($cmd === 'browsehide')) {
@@ -596,7 +620,7 @@ class toctoc_comment_lib extends tslib_pibase {
 		}
 
 		if ($_SESSION['debugprintlib']!='') {
-			$this->debugprintlib['debugtext'] .= ', maincomments rest: ' . round(1000*(microtime(TRUE)-$this->debugprintlib['starttime']), 1);
+			$this->debugprintlib['debugtext'] .= ', maincomments rest: ' . intval(1000*(microtime(TRUE))-1000*$this->debugprintlib['starttime']) . '';
 			$this->debugprintlib['starttime']=microtime(TRUE);
 			$trackingfunctionarr=$this->debugprintlib['trackingfunction'];
 			$trackingfunctiontotalarr=array();
@@ -1032,19 +1056,19 @@ class toctoc_comment_lib extends tslib_pibase {
 			}
 
 			$confmaxstepsbackbyolder = $conf['advanced.']['CommentsShowOldPerCID'];
-			$stepbackbyolder = $confmaxstepsbackbyolder *$rpp;
+			$stepbackbyolder = $confmaxstepsbackbyolder*$rpp;
 			// now $startpoint shoud be 0 or if no we make add checks
 			if ($startpoint>0) {
 				if ($conf['advanced.']['reverseSorting']==0) {
-					$moddiff= ($stepbackbyolder+($commentscounter - $startpoint -  $rpp)) % $stepbackbyolder;
+					$moddiff= ($stepbackbyolder+($commentscounter - $startpoint - $rpp)) % $stepbackbyolder;
 				} else {
-					$moddiff= ($startpoint -  $rpp + $stepbackbyolder) % $stepbackbyolder;
+					$moddiff= ($startpoint - $rpp + $stepbackbyolder) % $stepbackbyolder;
 				}
 
 				if ($moddiff != 0) {
 					//try adjust get next higher startpoint
 					if ($conf['advanced.']['reverseSorting']==0) {
-						$trystartpoint=$startpoint +  $moddiff -$stepbackbyolder;
+						$trystartpoint=$startpoint + $moddiff - $stepbackbyolder;
 						if ($maxstartpoint<= $trystartpoint) {
 							$startpoint=$maxstartpoint;
 						}
@@ -1133,27 +1157,91 @@ class toctoc_comment_lib extends tslib_pibase {
 									$feuserid]['Plugincachecid']['p' . $pid];
 
 							$this->trackdebug('gzuncompress_commentsallrows');
-							if (($conf['sessionCompressionLevel'] > 0)) {
-								if ($this->canZip == TRUE) {
-									$gzrows = gzdecode($_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-											$feuserid]['Plugincachecid']['gzrows' . $pid]);
+							$nodbcache = 1;
+							if (($this->isVirginUser($_SESSION['commentListRecord']) == TRUE) || (intval($conf['sharing.']['useOnlySharing']) == 1)) {
+								// getting db-cache
+								$ReportUser = 0;
+								$md5PluginId = md5(serialize($conf) . 'rows' . $_SESSION['activelang'] . $_SESSION['commentListRecord']);
+								$dbCache = $this->getReportDBCache($md5PluginId, $ReportUser);
+
+								if ($dbCache != '') {
+									$gzrowsarr = explode('6g98g7gzrow6g98g7', $dbCache);
+									$allrowsser = $gzrowsarr[0];
+									$rowsorigser = $gzrowsarr[1];
+
+									$allrowsarr=$this->oneDimArr_decode($allrowsser);
+									$rowsorigarr=$this->oneDimArr_decode($rowsorigser);
+
+									$ic=0;
+									if (is_array($allrowsarr)) {
+							 			foreach ($allrowsarr as $rowsess) {
+											$allrows[$ic]['content'] = $rowsess;
+											$ic++;
+										}
+									}
+
+									$nodbcache = 0;
+
+								}
+
+							} else {
+								if ($feuserid != 0) {
+									$ReportUser = $feuserid;
+									$md5PluginId = md5(serialize($conf) . 'rows' . $_SESSION['activelang'] . $_SESSION['commentListRecord']);
+									$dbCache = $this->getReportDBCache($md5PluginId, $ReportUser);
+
+									if ($dbCache != '') {
+										$gzrowsarr = explode('6g98g7gzrow6g98g7', $dbCache);
+										$allrowsser = $gzrowsarr[0];
+										$rowsorigser = $gzrowsarr[1];
+
+										$allrowsarr=$this->oneDimArr_decode($allrowsser);
+										$rowsorigarr=$this->oneDimArr_decode($rowsorigser);
+
+										$ic=0;
+										if (is_array($allrowsarr)) {
+											foreach ($allrowsarr as $rowsess) {
+												$allrows[$ic]['content'] = $rowsess;
+												$ic++;
+											}
+
+										}
+
+										$nodbcache = 0;
+									}
+
 								} else {
-									$gzrows = gzuncompress($_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-											$feuserid]['Plugincachecid']['gzrows' . $pid]);
-								}
-								$gzrowsarr = explode('6g98g7gzrow6g98g7', $gzrows);
-								$allrowsser = $gzrowsarr[0];
-								$rowsorigser = $gzrowsarr[1];
-
-								$allrowsarr=$this->oneDimArr_decode($allrowsser);
-								$rowsorigarr=$this->oneDimArr_decode($rowsorigser);
-
-								$ic=0;
-					 			foreach ($allrowsarr as $rowsess) {
-									$allrows[$ic]['content'] = $rowsess;
-									$ic++;
+									$nodbcache = 0;
 								}
 
+							}
+
+							if ($nodbcache == 0) {
+								if ($conf['sessionCompressionLevel'] > 0) {
+									if ($this->canZip == TRUE) {
+										$gzrows = gzdecode($_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+												$feuserid]['Plugincachecid']['gzrows' . $pid]);
+									} else {
+										$gzrows = gzuncompress($_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+												$feuserid]['Plugincachecid']['gzrows' . $pid]);
+									}
+									$gzrowsarr = explode('6g98g7gzrow6g98g7', $gzrows);
+									$allrowsser = $gzrowsarr[0];
+									$rowsorigser = $gzrowsarr[1];
+
+									$allrowsarr=$this->oneDimArr_decode($allrowsser);
+									$rowsorigarr=$this->oneDimArr_decode($rowsorigser);
+
+									$ic=0;
+									if (is_array($allrowsarr)) {
+							 			foreach ($allrowsarr as $rowsess) {
+											$allrows[$ic]['content'] = $rowsess;
+											$ic++;
+							 			}
+
+									}
+
+								}
 							}
 
 							$this->trackdebug('gzuncompress_commentsallrows');
@@ -1166,9 +1254,11 @@ class toctoc_comment_lib extends tslib_pibase {
 							if (($conf['sessionCompressionLevel'] > 0)) {
 
 								$ic=0;
-								foreach ($rowsorigarr as $rowosess) {
-									$rowsorig[$ic]['content'] = $rowosess;
-									$ic++;
+								if (is_array($rowsorigarr)) {
+									foreach ($rowsorigarr as $rowosess) {
+										$rowsorig[$ic]['content'] = $rowosess;
+										$ic++;
+									}
 								}
 
 							}
@@ -1623,22 +1713,51 @@ class toctoc_comment_lib extends tslib_pibase {
 
 						$_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
 								$feuserid]['Plugincachecid']['rowsorig_p' . $pid]=array();
+						$gzrows = '';
+						if ($this->isVirginUser($_SESSION['commentListRecord']) == TRUE) {
+						// setting db-cache
+							$ReportUser = 0;
+							$md5PluginId = md5(serialize($conf) . 'rows' . $_SESSION['activelang'] . $_SESSION['commentListRecord']);
+							$dbCache = $this->getReportDBCache($md5PluginId, $ReportUser);
 
-						if (($conf['sessionCompressionLevel'] > 0)) {
-							$iccount = count($rowsorig);
-							$_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-								$feuserid]['Plugincachecid']['rowsorig_p' . $pid] = $rowsorig;
-							for ($ic=0;$ic<$iccount;$ic++) {
-								$tmpcntnt = $rowsorig[$ic]['content'];
-								unset($_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-								$feuserid]['Plugincachecid']['rowsorig_p' . $pid][$ic]['content']);
+							if ($dbCache == '') {
+								$iccount = count($rowsorig);
 								$_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-								$feuserid]['Plugincachecid']['rowsorig_p' . $pid][$ic]['content'] = '';
-								$gzrowsorigarr[$ic] = $tmpcntnt;
+									$feuserid]['Plugincachecid']['rowsorig_p' . $pid] = $rowsorig;
+								for ($ic=0;$ic<$iccount;$ic++) {
+									$tmpcntnt = $rowsorig[$ic]['content'];
+									unset($_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+									$feuserid]['Plugincachecid']['rowsorig_p' . $pid][$ic]['content']);
+									$_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+									$feuserid]['Plugincachecid']['rowsorig_p' . $pid][$ic]['content'] = '';
+									$gzrowsorigarr[$ic] = $tmpcntnt;
+								}
+
+								$gzrowsorig = $this->oneDimArr_encode($gzrowsorigarr);
+								$gzrows = $gzallrows . '6g98g7gzrow6g98g7' . $gzrowsorig;
+
+								$this->setReportDBCache($conf, 0, $ReportUser, $gzrows, $md5PluginId, $_SESSION['commentListRecord']);
 							}
 
-							$gzrowsorig = $this->oneDimArr_encode($gzrowsorigarr);
-							$gzrows = $gzallrows . '6g98g7gzrow6g98g7' . $gzrowsorig;
+						}
+
+						if (($conf['sessionCompressionLevel'] > 0)) {
+							if ($gzrows == '') {
+								$iccount = count($rowsorig);
+								$_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+									$feuserid]['Plugincachecid']['rowsorig_p' . $pid] = $rowsorig;
+								for ($ic=0;$ic<$iccount;$ic++) {
+									$tmpcntnt = $rowsorig[$ic]['content'];
+									unset($_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+									$feuserid]['Plugincachecid']['rowsorig_p' . $pid][$ic]['content']);
+									$_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+									$feuserid]['Plugincachecid']['rowsorig_p' . $pid][$ic]['content'] = '';
+									$gzrowsorigarr[$ic] = $tmpcntnt;
+								}
+
+								$gzrowsorig = $this->oneDimArr_encode($gzrowsorigarr);
+								$gzrows = $gzallrows . '6g98g7gzrow6g98g7' . $gzrowsorig;
+							}
 							if ($this->canZip == TRUE) {
 								$_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
 										$feuserid]['Plugincachecid']['gzrows' . $pid] = gzencode($gzrows, $conf['sessionCompressionLevel']);
@@ -1705,6 +1824,7 @@ class toctoc_comment_lib extends tslib_pibase {
 			$levelhlt=0;
 			$levelhlttopparentid=0;
 			// HIGHLIGHT HANDLING
+			$_SESSION['findanchorok'] = '0';
 			if (($_GET['toctoc_comments_pi1']['anchor']) || (intval($_SESSION['newcommentid']) > 0)) {
 				if (($_SESSION['findanchor'] == '1') || (intval($_SESSION['newcommentid']) > 0)) {
 					$this->trackdebug('comments anchor');
@@ -2055,8 +2175,8 @@ class toctoc_comment_lib extends tslib_pibase {
 			$conf['ratings.']['useVotes'] = 1;
 		}
 
-		if ($conf['theme.']['themeVersion']==2) {
-			$conf['advanced.']['midDot']  = '&nbsp;';
+		if (intval($conf['theme.']['themeVersion']) == 2) {
+			$this->middotchar = '&nbsp;';
 		}
 
 		$externalrefscope = $externalref;
@@ -2765,6 +2885,7 @@ class toctoc_comment_lib extends tslib_pibase {
 						'###TITLEWITHOUTTOTAL###' => $titlewithouttotal,
 
 				);
+
 				if ($templatesharrre && ($hasValidSharingItems>0)) {
 					$shareHTML=$this->t3substituteMarkerArray($templatesharrre, $markerssharre);
 					// isolation of javascript, but only for sharrre!
@@ -2967,7 +3088,7 @@ class toctoc_comment_lib extends tslib_pibase {
 
 		$replyoncommentHTML='';
 		if (intval($conf['advanced.']['userCommentResponseLevels']) >0) {
-			$replyoncommentHTML.= '<a id="comment-ry-' . $_SESSION['commentListCount'] . '" name="comment-ry-' . $_SESSION['commentListCount'] .
+			$replyoncommentHTML.= '<a id="comment-ry-' . $_SESSION['commentListCount'] .
 				'"></a><div class="tx-tc-ct-ry-frameover" id="tx-tc-ct-ry-frame-' . $_SESSION['commentListCount'] . '" >';
 
 			$replyoncommentHTML.= '<div id="tx-tc-cts-cocfuncs-' . $_SESSION['commentListCount'] . '"  class="tx-tc-cocfuncs tx-tc-nodisp">';
@@ -3114,15 +3235,25 @@ class toctoc_comment_lib extends tslib_pibase {
 
 		if (!$fromAjax) {
 			if ($this->ajaxHeader=='') {
+				if (!isset($_SESSION['bb' . $GLOBALS['TSFE']->id . 'l' . $_SESSION['activelang']])) {
+					$_SESSION['bb' . $GLOBALS['TSFE']->id . 'l' . $_SESSION['activelang']] = $_SESSION['commentListCount'];
+				}
+				
+				$bbdivHTML = '';
+				if ($_SESSION['bb' . $GLOBALS['TSFE']->id . 'l' . $_SESSION['activelang']] == $_SESSION['commentListCount']) {
+					$bbdivHTML = '<div id="txtcbbmenu"></div>';
+				}
+				
 				$templateajaxHeader = $this->t3getSubpart($pObj, $pObj->templateCode, '###AJAXHEADER###');
 				$markersajaxHeader = array(
 						'###CID###' => $_SESSION['commentListCount'],
 						'###UID###' => $pObj->externalUid,
-						'###AJAX_DATA###' => $this->getAjaxJSData($feuserid, $GLOBALS['TSFE']->id, $GLOBALS['TSFE']->lang,
-								$conf, $pObj, $tmpcid, $fromAjax, FALSE, $externalref),
-						'###AJAX_COMMENTSDATA###' => $this->getAjaxJSDataComments($tmpcid, $pObj, $fromAjax),
-						'###AJAX_COMMENTSIMGS###' => $this->getAjaxJSDataCommentImgs($tmpcid, $fromAjax),
+						'###AJAX_DATA###' => $this->getAjaxJSData($feuserid, $GLOBALS['TSFE']->id,
+								$conf, $pObj, $tmpcid, $externalref),
+						'###AJAX_COMMENTSDATA###' => $this->getAjaxJSDataComments($tmpcid, $pObj),
+						'###AJAX_COMMENTSIMGS###' => $this->getAjaxJSDataCommentImgs($tmpcid),
 						'###IMAGESPRITE###' => $this->makeImageSprite($conf),
+						'###BBMENU###' => $bbdivHTML,
 				);
 				$this->ajaxHeader=$this->t3substituteMarkerArray($templateajaxHeader, $markersajaxHeader);
 			}
@@ -4915,7 +5046,8 @@ class toctoc_comment_lib extends tslib_pibase {
 							'row' => $row,
 					);
 					$this->trackdebug('comments_getReportLink');
-					if (is_array($tempMarkers = $this->getCommentsReportLink($params, $pObj, $fromAjax, $pid))) {
+					$tempMarkers = $this->getCommentsReportLink($params, $pObj, $fromAjax, $pid);
+					if (is_array($tempMarkers)) {
 						$markerArray = $tempMarkers;
 					}
 
@@ -5210,6 +5342,10 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * @return	string		Generated e-mail code
 	 */
 	protected function comments_getComments_getEmail($email) {
+		if (!isset($this->cObj)) {
+			$this->cObj = t3lib_div::makeInstance('tslib_cObj');
+			$this->cObj->start('', '');
+		}
 		$retstr = ($email ? $this->cObj->typoLink_URL(array(
 				'parameter' => $email,
 		))
@@ -5469,7 +5605,7 @@ class toctoc_comment_lib extends tslib_pibase {
 
 		}
 		if (!$fromAjax) {
-			$this->build_AJAXImages($conf, $pObj, $usergenderexistsstr, $fromAjax);
+			$this->build_AJAXImages($conf, $pObj, $usergenderexistsstr);
 		}
 		$pictureuser = intval($params['row']['toctoc_commentsfeuser_feuser']);
 		if (($pictureuser == 0 ) && ($params['row']['gender'] == 1)) {
@@ -5799,7 +5935,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * @param	[type]		$fromAjax: ...
 	 * @return	[type]		...
 	 */
-	protected function build_AJAXImages($conf, $pObj, $usergenderexistsstr = '', $fromAjax = FALSE) {
+	protected function build_AJAXImages($conf, $pObj, $usergenderexistsstr = '') {
 
 		if (isset($this->AJAXimages) == FALSE) {
 			$this->AJAXimages = array();
@@ -5827,121 +5963,230 @@ class toctoc_comment_lib extends tslib_pibase {
 				$this->gravatarimages = $_SESSION['gravatarimages'];
 				$this->AJAXimagesCache = $_SESSION['AJAXOrigimages'];
 			} else {
+				$ReportUser = 0;
+				$md5PluginId = md5($this->userimagesize . 'images');
+				$dbCache = unserialize($this->getReportDBCache($md5PluginId, $ReportUser));
+				if (is_array($dbCache)) {
+					$this->AJAXimages = $dbCache;
+					$md5PluginId = md5($this->userimagesize . 'imagesCache');
+					$dbCache = unserialize($this->getReportDBCache($md5PluginId, $ReportUser));
+					$this->AJAXimagesCache = $dbCache;
+					$md5PluginId = md5($this->userimagesize . 'gravatarimages');
+					$dbCache = unserialize($this->getReportDBCache($md5PluginId, $ReportUser));
+					$this->gravatarimages = $dbCache;
+				} else {
+					//build $this->AJAXimages
+					$start_time_for_conversion = microtime();
+					$imagefield='';
+					if ($conf['advanced.']['FeUserDbField'] != 'image') {
+						$imagefield='fe_users.' . $conf['advanced.']['FeUserDbField'] . ', ';
+					}
+					$this->trackdebug('0 SELECTgetRows build_AJAXImages' . $cnt1 . '-' . $cnt2);
 
-				//build $this->AJAXimages
-				$start_time_for_conversion = microtime();
-				$imagefield='';
-				if ($conf['advanced.']['FeUserDbField'] != 'image') {
-					$imagefield='fe_users.' . $conf['advanced.']['FeUserDbField'] . ', ';
-				}
-				$this->trackdebug('0 SELECTgetRows build_AJAXImages' . $cnt1 . '-' . $cnt2);
-
-	 			$rowsfeuserimages = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('fe_users.uid AS uid, '. $usergenderexistsstr .' fe_users.image AS image, ' .
-						$imagefield .'fe_users.lastlogin AS lastlogin, fe_users.is_online AS is_online, fe_users.last_name AS lastname, fe_users.email AS email,
-				 			fe_users.username AS username, fe_users.first_name AS firstname, fe_users.name AS feusername',
-						'fe_users,tx_toctoc_comments_user',
-						'CONCAT("0.0.0.0.", fe_users.uid)=tx_toctoc_comments_user.toctoc_comments_user AND
-				 			fe_users.deleted=0 AND tx_toctoc_comments_user.deleted=0',
-						'fe_users.uid, fe_users.image, fe_users.lastlogin, fe_users.is_online',
-						'fe_users.lastlogin DESC');
-				$this->trackdebug('0 SELECTgetRows build_AJAXImages' . $cnt1 . '-' . $cnt2);
-				$userimagestylesize=$conf['UserImageSize'];
-				$userimagestyle= ' tx-tc-uimgsize';
-				$commentuserimagepath = $conf['advanced.']['FeUserImagePath'];
-				foreach($rowsfeuserimages as $keyimage) {
-					$usernametitle=trim($keyimage['firstname'] . ' ' . $keyimage['lastname']);
-					if ($usernametitle =='') {
-						$usernametitle=trim($keyimage['feusername']);
+		 			$rowsfeuserimages = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('fe_users.uid AS uid, '. $usergenderexistsstr .' fe_users.image AS image, ' .
+							$imagefield .'fe_users.lastlogin AS lastlogin, fe_users.is_online AS is_online, fe_users.last_name AS lastname, fe_users.email AS email,
+					 			fe_users.username AS username, fe_users.first_name AS firstname, fe_users.name AS feusername',
+							'fe_users,tx_toctoc_comments_user',
+							'CONCAT("0.0.0.0.", fe_users.uid)=tx_toctoc_comments_user.toctoc_comments_user AND
+					 			fe_users.deleted=0 AND tx_toctoc_comments_user.deleted=0',
+							'fe_users.uid, fe_users.image, fe_users.lastlogin, fe_users.is_online',
+							'fe_users.lastlogin DESC');
+					$this->trackdebug('0 SELECTgetRows build_AJAXImages' . $cnt1 . '-' . $cnt2);
+					$userimagestylesize=$conf['UserImageSize'];
+					$userimagestyle= ' tx-tc-uimgsize';
+					$commentuserimagepath = $conf['advanced.']['FeUserImagePath'];
+					$fldimage = 'image';
+					if ($conf['advanced.']['FeUserDbField']) {
+						$fldimage = $conf['advanced.']['FeUserDbField'];
 					}
 
-					if ($usernametitle =='') {
-						$usernametitle=trim($keyimage['username']);
-					}
-
-					$youstr ='';
-					if (intval($GLOBALS['TSFE']->fe_user->user['uid']) != 0) {
-						if (intval($keyimage['uid'])==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
-							$youstr = ' (' . $this->pi_getLLWrap($pObj, 'pi1_template.fe_users.you', $fromAjax);
+					foreach($rowsfeuserimages as $keyimage) {
+						$usernametitle=trim($keyimage['firstname'] . ' ' . $keyimage['lastname']);
+						if ($usernametitle =='') {
+							$usernametitle=trim($keyimage['feusername']);
 						}
 
-					}
-
-					$fuenfMin = 5*60+1; // 5 Min, 1 sek.
-					$vorFuenfMin = time()-$fuenfMin;
-					$is_online=0;
-
-					if ($this->isUserOnline(intval($keyimage['uid']))==TRUE) {
-						$is_online=1;
-					}
-
-					if (($is_online==1) && (intval($keyimage['uid'])!=intval($GLOBALS['TSFE']->fe_user->user['uid']))) {
-						if ($youstr=='') {
-							$youstr = ' (' . $this->pi_getLLWrap($pObj, 'pi1_template.fe_users.isonline', $fromAjax) . ')';
-						} else {
-							$youstr .= ', ' . $this->pi_getLLWrap($pObj, 'pi1_template.fe_users.isonline', $fromAjax) . ')';
+						if ($usernametitle =='') {
+							$usernametitle=trim($keyimage['username']);
 						}
 
-					} else {
-						if ($youstr != '') {
-							$youstr .= ')';
+						$youstr ='';
+
+						$fuenfMin = 5*60+1; // 5 Min, 1 sek.
+						$vorFuenfMin = time()-$fuenfMin;
+						$is_online=0;
+
+						if ($this->isUserOnline(intval($keyimage['uid']))==TRUE) {
+							$is_online=1;
 						}
 
-					}
-
-					$usernametitle .= $youstr;
-					$classonline = '';
-					if ($is_online == 1) {
-						$classonline = ' tx-tc-online';
-					}
-
-					$keyFeUserDbField = $this->fixFeUserPic(trim($keyimage[$conf['advanced.']['FeUserDbField']]));
-					$femp = '';
-					if ($usergenderexistsstr != '') {
-						if (intval($keyimage['gender']) == 1) {
-							$femp = 'f';
+						$usernametitle .= $youstr;
+						$classonline = '';
+						if ($is_online == 1) {
+							$classonline = ' tx-tc-online';
 						}
 
-					}
-
-					$userconfimgFile = 'EXT:toctoc_comments/res/css/themes/' . $conf['theme.']['selectedTheme'] . '/img/profile' . $femp . '.png';
-					$userimgFile = $GLOBALS['TSFE']->absRefPrefix.$userconfimgFile;
-					$userimgFile = $GLOBALS['TSFE']->getFileAbsFileName.$userimgFile;
-					$userimgFile = str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $userimgFile);
-					$userimgFile = str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $userimgFile);
-					$dosessanonympic = FALSE;
-					if (strval(trim($keyFeUserDbField)) != '') {
-						$userimagesarr = explode(',', $keyFeUserDbField);
-						if (count($userimagesarr)>0) {
-							$commentuserimageout = $commentuserimagepath . $userimagesarr[0];
-						} else {
-							$commentuserimageout = $commentuserimagepath . $keyFeUserDbField;
-						}
-
-					} else {
-						$commentuserimageout = $userimgFile;
-						$dosessanonympic = TRUE;
-					}
-
-					$tmpimgstr ='';
-					$tmpimgfeuser = $keyimage['uid'];
-					$tmpimgstr = $this->getAJAXimageCache($commentuserimageout);
-					if ($dosessanonympic) {
-						if ($tmpimgstr != '') {
-							if ($femp != 'f') {
-								$_SESSION['userpicm'] = $tmpimgstr;
-							} else {
-								$_SESSION['userpicf'] = $tmpimgstr;
+						$keyFeUserDbField = $this->fixFeUserPic(trim($keyimage[$conf['advanced.']['FeUserDbField']]));
+						$femp = '';
+						if ($usergenderexistsstr != '') {
+							if (intval($keyimage['gender']) == 1) {
+								$femp = 'f';
 							}
+
 						}
-					}
 
-					$profileimgclass='tx-tc-userpic' . $femp;
+						$userconfimgFile = 'EXT:toctoc_comments/res/css/themes/' . $conf['theme.']['selectedTheme'] . '/img/profile' . $femp . '.png';
+						$userimgFile = $GLOBALS['TSFE']->absRefPrefix.$userconfimgFile;
+						$userimgFile = $GLOBALS['TSFE']->getFileAbsFileName.$userimgFile;
+						$userimgFile = str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $userimgFile);
+						$userimgFile = str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $userimgFile);
+						$dosessanonympic = FALSE;
+						if (strval(trim($keyFeUserDbField)) != '') {
+							$userimagesarr = explode(',', $keyFeUserDbField);
+							$currentuserimage = '';
+							if (count($userimagesarr)>0) {
 
-					if ($tmpimgstr == '') {
-						$tmpimgstr = $this->gifbuild($conf, $pObj, $conf['advanced.']['gravatarEnable'], $commentuserimageout,
-								$this->userimagesize,
-								$profileimgclass, $classonline, $userimagestyle, $usernametitle, $keyimage['email'], 'tx-tc-cts-img-', FALSE, '', $dosessanonympic);
+								if (intval($userimagesarr[0]) != 0) {
+									$querysys_file_reference = 'SELECT uid_local FROM sys_file_reference WHERE tablenames = "fe_users" AND deleted=0 and hidden=0 and uid_foreign=' . $keyimage['uid'] . ' AND sorting_foreign=1 AND fieldname="' . $conf['advanced.']['FeUserDbField'] .'"';
+									$resultsys_file_reference= $GLOBALS['TYPO3_DB']->sql_query($querysys_file_reference);
+									$uid_local = 0;
+									while ($rowssys_file_reference = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_file_reference)) {
+										$uid_local = $rowssys_file_reference['uid_local'];
+										break;
+									}
+									$storage = 0;
+									if ($uid_local != 0) {
+										$querysys_file = 'SELECT name, identifier, storage FROM sys_file where uid=' . $uid_local;
+										$resultsys_file= $GLOBALS['TYPO3_DB']->sql_query($querysys_file);
+										$uid_local = 0;
+										while ($rowssys_file = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_file)) {
+											$currentuserimage = $rowssys_file['identifier'];
+											$storage = $rowssys_file['storage'];
+											break;
+										}
+									}
+									$currentstorage = 'fileadmin';
+									if ($storage != 0) {
+										$querysys_storage =  'SELECT configuration FROM sys_file_storage where uid=' . $storage;
+										$resultsys_storage= $GLOBALS['TYPO3_DB']->sql_query($querysys_storage);
+										$uid_local = 0;
+										while ($rowssys_storage = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_storage)) {
+											$currentstoragexml = $rowssys_storage['configuration'];
+											/*
+											 * <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+												<T3FlexForms>
+												    <data>
+												        <sheet index="sDEF">
+												            <language index="lDEF">
+												                <field index="basePath">
+												                    <value index="vDEF">fileadmin/</value>
+												                </field>
+												                <field index="pathType">
+												                ....
+											*/
+											$currentstoragexmlarr = explode('"basePath"', $currentstoragexml);
+											$currentstoragexmlarrs1 = $currentstoragexmlarr[1];
+											$currentstoragexmlarr2 = explode('index="vDEF">', $currentstoragexmlarrs1);
+											$currentstoragexmlarrs2 = $currentstoragexmlarr2[1];
+											$currentstoragexmlarr3 = explode('/</value>', $currentstoragexmlarrs2);
+											$currentstorage= $currentstoragexmlarr3[0];
+											break;
+										}
+									}
+									if ($currentuserimage != '') {
+										$arrimg = explode('/', $currentuserimage);
+										$keyFeUserDbField = array_pop($arrimg);
+										$commentuserimagepath = implode('/', $arrimg);
+										$commentuserimagepath = $currentstorage . $commentuserimagepath . '/';
+										$this->conf['advanced.']['FeUserImagePath'] = $commentuserimagepath;
+										$commentuserimageout = $commentuserimagepath . $keyFeUserDbField;
+										$keyimage[$fldimage] = $keyFeUserDbField;
+									}
 
+								} else {
+									$commentuserimageout = $commentuserimagepath . $userimagesarr[0];
+								}
+							} else {
+								if (intval($keyFeUserDbField) != 0) {
+									$querysys_file_reference = 'SELECT uid_local FROM sys_file_reference WHERE tablenames = "fe_users" AND deleted=0 and hidden=0 and uid_foreign=' . $keyimage['uid'] . ' AND sorting_foreign=1 AND fieldname="' . $conf['advanced.']['FeUserDbField'] .'"';
+									$resultsys_file_reference= $GLOBALS['TYPO3_DB']->sql_query($querysys_file_reference);
+									$uid_local = 0;
+									while ($rowssys_file_reference = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_file_reference)) {
+										$uid_local = $rowssys_file_reference['uid_local'];
+										break;
+									}
+
+									if ($uid_local != 0) {
+										$querysys_file = 'SELECT name, identifier FROM sys_file where uid=' . $uid_local;
+										$resultsys_file= $GLOBALS['TYPO3_DB']->sql_query($querysys_file);
+										$uid_local = 0;
+										while ($rowssys_file = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_file)) {
+											$currentuserimage = $rowssys_file['identifier'];
+											break;
+										}
+									}
+									$storage = 0;
+									if ($uid_local != 0) {
+										$querysys_file = 'SELECT name, identifier, storage FROM sys_file where uid=' . $uid_local;
+										$resultsys_file= $GLOBALS['TYPO3_DB']->sql_query($querysys_file);
+										$uid_local = 0;
+										while ($rowssys_file = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_file)) {
+											$currentuserimage = $rowssys_file['identifier'];
+											$storage = $rowssys_file['storage'];
+											break;
+										}
+									}
+									$currentstorage = 'fileadmin';
+									if ($storage != 0) {
+										$querysys_storage =  'SELECT configuration FROM sys_file_storage where uid=' . $storage;
+										$resultsys_storage= $GLOBALS['TYPO3_DB']->sql_query($querysys_storage);
+										$uid_local = 0;
+										while ($rowssys_storage = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_storage)) {
+											$currentstoragexml = $rowssys_storage['configuration'];
+											/*
+											 * <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+											<T3FlexForms>
+											<data>
+											<sheet index="sDEF">
+											<language index="lDEF">
+											<field index="basePath">
+											<value index="vDEF">fileadmin/</value>
+											</field>
+											<field index="pathType">
+											....
+											*/
+											$currentstoragexmlarr = explode('"basePath"', $currentstoragexml);
+											$currentstoragexmlarrs1 = $currentstoragexmlarr[1];
+											$currentstoragexmlarr2 = explode('index="vDEF">', $currentstoragexmlarrs1);
+											$currentstoragexmlarrs2 = $currentstoragexmlarr2[1];
+											$currentstoragexmlarr3 = explode('/</value>', $currentstoragexmlarrs2);
+											$currentstorage= $currentstoragexmlarr3[0];
+											break;
+										}
+									}
+									if ($currentuserimage != '') {
+										$arrimg = explode('/', $currentuserimage);
+										$keyFeUserDbField = array_pop($arrimg);
+										$commentuserimagepath = implode('/', $arrimg);
+										$commentuserimagepath = $currentstorage . $commentuserimagepath . '/';
+										$this->conf['advanced.']['FeUserImagePath'] = $commentuserimagepath;
+										$commentuserimageout = $commentuserimagepath . $keyFeUserDbField;
+										$keyimage[$fldimage] = $keyFeUserDbField;
+									}
+
+								} else {
+									$commentuserimageout = $commentuserimagepath . $keyFeUserDbField;
+								}
+							}
+
+						} else {
+							$commentuserimageout = $userimgFile;
+							$dosessanonympic = TRUE;
+						}
+
+						$tmpimgstr ='';
+						$tmpimgfeuser = $keyimage['uid'];
+						$tmpimgstr = $this->getAJAXimageCache($commentuserimageout);
 						if ($dosessanonympic) {
 							if ($tmpimgstr != '') {
 								if ($femp != 'f') {
@@ -5952,62 +6197,94 @@ class toctoc_comment_lib extends tslib_pibase {
 							}
 						}
 
-						$this->setAJAXimage($tmpimgstr, $keyimage['uid']);
-						$this->setAJAXimageCache($tmpimgstr, $commentuserimageout);
-					} else {
-						$this->setAJAXimage($tmpimgstr, $keyimage['uid']);
-					}
+						$profileimgclass='tx-tc-userpic' . $femp;
 
-					if ($keyimage['uid'] == intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
-							if (!isset($_SESSION['userAJAXimage'])) {
-								$_SESSION['AJAXUserimagerefresh'] = TRUE;
-								$_SESSION['userAJAXimage']='';
+						if ($tmpimgstr == '') {
+
+							$tmpimgstr = $this->gifbuild($conf, $pObj, $conf['advanced.']['gravatarEnable'], $commentuserimageout,
+									$this->userimagesize,
+									$profileimgclass, $classonline, $userimagestyle, $usernametitle, $keyimage['email'], 'tx-tc-cts-img-', FALSE, '', $dosessanonympic);
+//print 'cc ' . $commentuserimageout . ', ' . $tmpimgstr; exit;
+							if ($dosessanonympic) {
+								if ($tmpimgstr != '') {
+									if ($femp != 'f') {
+										$_SESSION['userpicm'] = $tmpimgstr;
+									} else {
+										$_SESSION['userpicf'] = $tmpimgstr;
+									}
+								}
 							}
 
-							if ($_SESSION['userAJAXimage'] == '') {
-								$_SESSION['AJAXUserimagerefresh'] = TRUE;
-							}
-							if ($_SESSION['AJAXUserimagerefresh'] == TRUE) {
-								$fldimage = 'image';
-								if ($conf['advanced.']['FeUserDbField']) {
-									$fldimage = $conf['advanced.']['FeUserDbField'];
+							$this->setAJAXimage($tmpimgstr, $keyimage['uid']);
+							$this->setAJAXimageCache($tmpimgstr, $commentuserimageout);
+						} else {
+							$this->setAJAXimage($tmpimgstr, $keyimage['uid']);
+						}
+
+						if ($keyimage['uid'] == intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+								if (!isset($_SESSION['userAJAXimage'])) {
+									$_SESSION['AJAXUserimagerefresh'] = TRUE;
+									$_SESSION['userAJAXimage']='';
 								}
 
-								$currentuserimage = trim($conf['advanced.']['FeUserImagePath']) . $keyimage[$fldimage];
-								$_SESSION['AJAXUserimagerefreshImage'] = $currentuserimage;
-								$keyimageuid = $keyimage['uid'];
-							}
+								if ($_SESSION['userAJAXimage'] == '') {
+									$_SESSION['AJAXUserimagerefresh'] = TRUE;
+								}
+								if ($_SESSION['AJAXUserimagerefresh'] == TRUE) {
+									$fldimage = 'image';
+									if ($conf['advanced.']['FeUserDbField']) {
+										$fldimage = $conf['advanced.']['FeUserDbField'];
+									}
+
+									$currentuserimage = trim($conf['advanced.']['FeUserImagePath']) . $keyimage[$fldimage];
+									$_SESSION['AJAXUserimagerefreshImage'] = $currentuserimage;
+									$keyimageuid = $keyimage['uid'];
+								}
+						}
+
+					}
+					$youstr ='';
+					for ($n=0; $n<2; $n++) {
+						if ($n==0) {
+							$femp='';
+							$userindex=0;
+
+						} else {
+							$femp='f';
+							$userindex=99999;
+						}
+
+						$userconfimgFile='EXT:toctoc_comments/res/css/themes/' . $conf['theme.']['selectedTheme'] . '/img/profile' . $femp . '.png';
+						$userimgFile = $GLOBALS['TSFE']->absRefPrefix.$userconfimgFile;
+						$userimgFile = $GLOBALS['TSFE']->getFileAbsFileName.$userimgFile;
+						$userimgFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $userimgFile);
+						$userimgFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $userimgFile);
+
+						$tmpimgstr ='';
+						$tmpimgstr = $this->getAJAXimageCache($userimgFile);
+
+						$profileimgclass='tx-tc-userpic' . $femp;
+						if ($tmpimgstr==='') {
+							$tmpimgstr = $this->gifbuild($conf, $pObj, 0, $userimgFile,
+									$this->userimagesize, $profileimgclass, $classonline, $userimagestyle, '', '', 'tx-tc-cts-img-', TRUE);
+							$this->setAJAXimageCache($tmpimgstr, $userimgFile);
+						}
+
+						$this->setAJAXimage($tmpimgstr, $userindex);
 					}
 
-				}
-				$youstr ='';
-				for ($n=0; $n<2; $n++) {
-					if ($n==0) {
-						$femp='';
-						$userindex=0;
+					$md5PluginId = md5($this->userimagesize . 'images');
+					$dbCache = serialize($this->AJAXimages);
+					$this->setReportDBCache($conf, 11, 0, $dbCache, $md5PluginId);
 
-					} else {
-						$femp='f';
-						$userindex=99999;
-					}
+					$md5PluginId = md5($this->userimagesize . 'imagesCache');
+					$dbCache = serialize($this->AJAXimagesCache);
+					$this->setReportDBCache($conf, 11, 0, $dbCache, $md5PluginId);
 
-					$userconfimgFile='EXT:toctoc_comments/res/css/themes/' . $conf['theme.']['selectedTheme'] . '/img/profile' . $femp . '.png';
-					$userimgFile = $GLOBALS['TSFE']->absRefPrefix.$userconfimgFile;
-					$userimgFile = $GLOBALS['TSFE']->getFileAbsFileName.$userimgFile;
-					$userimgFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $userimgFile);
-					$userimgFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $userimgFile);
+					$md5PluginId = md5($this->userimagesize . 'gravatarimages');
+					$dbCache = serialize($this->gravatarimages);
+					$this->setReportDBCache($conf, 11, 0, $dbCache, $md5PluginId);
 
-					$tmpimgstr ='';
-					$tmpimgstr = $this->getAJAXimageCache($userimgFile);
-
-					$profileimgclass='tx-tc-userpic' . $femp;
-					if ($tmpimgstr==='') {
-						$tmpimgstr = $this->gifbuild($conf, $pObj, 0, $userimgFile,
-								$this->userimagesize, $profileimgclass, $classonline, $userimagestyle, '', '', 'tx-tc-cts-img-', TRUE);
-						$this->setAJAXimageCache($tmpimgstr, $userimgFile);
-					}
-
-					$this->setAJAXimage($tmpimgstr, $userindex);
 				}
 
 				$_SESSION['AJAXimages'] = $this->AJAXimages;
@@ -6068,7 +6345,7 @@ class toctoc_comment_lib extends tslib_pibase {
 		//we read directories only once per session and fill session.directory.images, subsequent scans target the session array.
 		$imageSprite='';
 		$emojispan='';
-		$imageSpriteTemplate= '<img src="###IMAGE###" width=0 height=0 />';
+		$imageSpriteTemplate= '<img src="###IMAGE###" width=0 height=0 alt="preload ###IMAGEIDX###" />';
 		$imageSpriteArr=array();
 		// emojis if useEmoji and then the emoji style. used only if not rating_only mode
 		if (!isset($_SESSION[$conf['theme.']['selectedTheme']][$conf['advanced.']['useEmoji']])) {
@@ -6121,7 +6398,8 @@ class toctoc_comment_lib extends tslib_pibase {
 						$_SESSION[$conf['theme.']['selectedTheme']][$conf['advanced.']['useEmoji']]['emoji'][$i];
 						$p++;
 						$imageSprite .= str_replace('###IMAGE###',
-								$_SESSION[$conf['theme.']['selectedTheme']][$conf['advanced.']['useEmoji']]['emoji'][$i], $imageSpriteTemplate);
+								$_SESSION[$conf['theme.']['selectedTheme']][$conf['advanced.']['useEmoji']]['emoji'][$i], str_replace('###IMAGEIDX###',
+								$i, $imageSpriteTemplate));
 					}
 
 				}
@@ -6146,7 +6424,8 @@ class toctoc_comment_lib extends tslib_pibase {
 						if ((in_array($image, $_SESSION[$_SESSION['commentsPageId']]['preloadimages'])) == FALSE) {
 							$_SESSION[$_SESSION['commentsPageId']['preloadimages']][$p] = $image;
 							$p++;
-							$smilesprite=str_replace('###IMAGE###', $image, $imageSpriteTemplate);
+							$smilesprite=str_replace('###IMAGE###', $image, str_replace('###IMAGEIDX###',
+								'image ' . $p, $imageSpriteTemplate));
 							if ($smilesprite!=$lastsmilesprite) {
 								$lastsmilesprite=$smilesprite;
 
@@ -6253,7 +6532,8 @@ class toctoc_comment_lib extends tslib_pibase {
 			if ((in_array($_SESSION[$conf['theme.']['selectedTheme']]['pics'][$i], $_SESSION[$_SESSION['commentsPageId']]['preloadimages']))==FALSE) {
 				$_SESSION[$_SESSION['commentsPageId']['preloadimages']][$p] = $_SESSION[$conf['theme.']['selectedTheme']]['pics'][$i];
 				$p++;
-				$imageSprite .= str_replace('###IMAGE###', $_SESSION[$conf['theme.']['selectedTheme']]['pics'][$i], $imageSpriteTemplate);
+				$imageSprite .= str_replace('###IMAGE###', $_SESSION[$conf['theme.']['selectedTheme']]['pics'][$i], str_replace('###IMAGEIDX###',
+								'Themeimage ' . $i, $imageSpriteTemplate));
 			}
 
 		}
@@ -6407,6 +6687,7 @@ class toctoc_comment_lib extends tslib_pibase {
 							$userpic=$this->getAJAXimage(99999, $output_cid, $conf, $_SESSION['submitCommentVars'][$cid]['email']);
 
 						}
+
 						$this->setAJAXimage($userpic, $feuserid);
 						$this->setAJAXimageCache($userpic, $commentuserimageout);
 					}
@@ -6490,7 +6771,7 @@ class toctoc_comment_lib extends tslib_pibase {
 			if (((count($_SESSION['formValidationErrors']) == 0 ) && ($_SESSION['formTopMessage'] !='')) ||
 					($_SESSION['formValidationErrors']['email'] == $this->pi_getLLWrap($pObj, 'error.invalid.useremail', $fromAjax))) {
 				if (($_SESSION['formValidationErrors']['email'] == $this->pi_getLLWrap($pObj, 'error.invalid.useremail', $fromAjax))) {
-					$_SESSION['formTopMessage']= '<div class="tx-tc-form-top-message"><p class="tx-tc-text">' . $_SESSION['formValidationErrors']['email'] .
+					$_SESSION['formTopMessage'] = '<div class="tx-tc-form-top-message"><p class="tx-tc-text">' . $_SESSION['formValidationErrors']['email'] .
 					'</p></div>';
 				}
 
@@ -6513,10 +6794,10 @@ class toctoc_comment_lib extends tslib_pibase {
 				}
 
 				if (($errfound > 0) && ($feuserid > 0)) {
-					$_SESSION['formTopMessage']= '<div class="tx-tc-form-top-message"><p class="tx-tc-text">' .
+					$_SESSION['formTopMessage'] = '<div class="tx-tc-form-top-message"><p class="tx-tc-text">' .
 					$this->pi_getLLWrap($pObj, 'error.required.fieldsadminshouldadd', $fromAjax) . ': ' . $errfields .
 					'</p></div>';
-					$tformTopMessage =$_SESSION['formTopMessage'];
+					$tformTopMessage = $_SESSION['formTopMessage'];
 
 				} else {
 					$tformTopMessage = '';
@@ -6592,7 +6873,6 @@ class toctoc_comment_lib extends tslib_pibase {
 		$submithtml='';
 		$ref='tt_content_' . $output_cid;
 		$submitSub = $this->t3getSubpart($pObj, $pObj->templateCode, '###ADD_COMMENT_LINK_SUB###');
-		$ajaxData = $_SESSION['ajaxData'];
 
 		$loggedon= 'false';
 		if ($feuserid!= 0) {
@@ -6772,6 +7052,11 @@ class toctoc_comment_lib extends tslib_pibase {
 				$originalfilename = $_SESSION['submitCommentVars'][$cid]['originalfilename'];
 
 			}
+			
+			if ($fromAjax == FALSE) {
+				$tippimageupload = $this->pi_getLLWrap($pObj, 'pi1_template.tippimageupload', $fromAjax);
+				$tippcancelupload = $this->pi_getLLWrap($pObj, 'pi1_template.closeimageupload', $fromAjax);
+			}
 
 			if ($dodisplaycss == FALSE) {
 				$displaycss = ' tx-tc-nodisp';
@@ -6922,17 +7207,17 @@ class toctoc_comment_lib extends tslib_pibase {
 			$jswmarr['commenttitle'] =  '<span class="tx-tc-wtrmrk-formf tx-tc-nodisp" id="tx-tc-wtrmrk-formf-'.$output_cid.'__0commenttitle__0' .
 			base64_encode($labelsarr['commenttitle']).'"></span>';
 		} else {
-			$labelarr['firstname'] = '<label class="tx-tc-ct-label tx-tc-ct-label-firstname'.$labelwidth.'" for="toctoc_comments_pi1_firstname">' .
+			$labelarr['firstname'] = '<label class="tx-tc-ct-label tx-tc-ct-label-firstname'.$labelwidth.'">' .
 			$labelsarr['firstname'].$trequiredarr['firstname'].'</label>';
-			$labelarr['lastname'] = '<label class="tx-tc-ct-label tx-tc-ct-label-lastname'.$labelwidth.'" for="toctoc_comments_pi1_lastname">' .
+			$labelarr['lastname'] = '<label class="tx-tc-ct-label tx-tc-ct-label-lastname'.$labelwidth.'">' .
 			$labelsarr['lastname'].$trequiredarr['lastname'].'</label>';
-			$labelarr['email'] = '<label class="tx-tc-ct-label tx-tc-ct-label-email'.$labelwidth.'" for="toctoc_comments_pi1_email">' .
+			$labelarr['email'] = '<label class="tx-tc-ct-label tx-tc-ct-label-email'.$labelwidth.'">' .
 			$labelsarr['email'].$trequiredarr['email'].'</label>';
-			$labelarr['homepage'] = '<label class="tx-tc-ct-label tx-tc-ct-label-homepage'.$labelwidth.'" for="toctoc_comments_pi1_homepage">' .
+			$labelarr['homepage'] = '<label class="tx-tc-ct-label tx-tc-ct-label-homepage'.$labelwidth.'">' .
 			$labelsarr['homepage'].$trequiredarr['homepage'].'</label>';
-			$labelarr['location'] = '<label class="tx-tc-ct-label tx-tc-ct-label-location'.$labelwidth.'" for="toctoc_comments_pi1_location">' .
+			$labelarr['location'] = '<label class="tx-tc-ct-label tx-tc-ct-label-location'.$labelwidth.'">' .
 			$labelsarr['location'].$trequiredarr['location'].'</label>';
-			$labelarr['commenttitle'] = '<label class="tx-tc-ct-label tx-tc-ct-label-commenttitle'.$labelwidth.'" for="toctoc_comments_pi1_commenttitle">' .
+			$labelarr['commenttitle'] = '<label class="tx-tc-ct-label tx-tc-ct-label-commenttitle'.$labelwidth.'">' .
 			$labelsarr['commenttitle'].$trequiredarr['commenttitle'].'</label>';
 			$pcehldrarr['firstname'] = '';
 			$pcehldrarr['lastname'] = '';
@@ -7098,7 +7383,7 @@ class toctoc_comment_lib extends tslib_pibase {
 				$checked = 'checked ';
 			}
 
-			$htmlagbaccepted = '<div class="tx-tc-termscondtext"><label class="tx-tc-ct-label-ntf" for="toctoc_comments_pi1[acceptterms]">'.
+			$htmlagbaccepted = '<div class="tx-tc-termscondtext"><label class="tx-tc-ct-label-ntf">'.
 									sprintf($this->pi_getLLWrap($pObj, 'pi1_template.termscondstext', $fromAjax), $_SESSION['lantypoLink' .
 											$_SESSION['activelangid']]['TermsCondspage']).'</label>';
 			$htmlagbaccepted .= '<input type="checkbox" name="toctoc_comments_pi1[acceptterms]" title="' .
@@ -7122,7 +7407,7 @@ class toctoc_comment_lib extends tslib_pibase {
 				$checked = 'checked ';
 			}
 			$htmlcookieaccept = '<div class="tx-tc-ct-form-text' . $fieldstyleresp .
-					'"><label class="tx-tc-ct-label-ntf tx-tc-label-cookie" for="toctoc_comments_pi1[acceptcookie]">'.
+					'"><label class="tx-tc-ct-label-ntf tx-tc-label-cookie">'.
 									$this->pi_getLLWrap($pObj, 'pi1_template.acceptcookietext', $fromAjax).'</label>';
 			$htmlcookieaccept .= '<input type="checkbox" name="toctoc_comments_pi1[acceptcookie]" title="' .
 									$this->pi_getLLWrap($pObj, 'pi1_template.acceptcookietip', $fromAjax).
@@ -7233,12 +7518,13 @@ class toctoc_comment_lib extends tslib_pibase {
 		} else {
 			$subformloginhtml='';
 		}
+
 		if ($_SESSION['AJAXimagesrefresh'] == TRUE) {
-			//$_SESSION['AJAXimagesrefresh'] = FALSE;
+			$_SESSION['AJAXimagesrefresh'] = FALSE;
 			$_SESSION['userAJAXimage'] = $_SESSION['AJAXimages'][$feuserid];
 			$this->AJAXimages[$feuserid] = $_SESSION['AJAXimages'][$feuserid];
 			$this->setAJAXimageCache($_SESSION['userAJAXimage'], $_SESSION['AJAXimagesrefreshImage']);
-			//$_SESSION['AJAXimagesrefreshImage']='';
+			$_SESSION['AJAXimagesrefreshImage']='';
 		}
 
 		$imagetag = trim($_SESSION['userAJAXimage']);
@@ -7481,7 +7767,7 @@ class toctoc_comment_lib extends tslib_pibase {
 		if ($fromAjax == TRUE) {
 
 			if ($this->newcommentid != -1) {
-				if ((intval($conf['spamProtect.']['requireApproval']) == 0) && ($this->newcommentneedscoi == 0)) {
+				if ((intval($conf['spamProtect.']['requireApproval']) == 0) && ($this->newcommentneedscoi == 0) && ($this->newcommenthaserror == 0)) {
 					// the comment is in the base and can be shown
 					$retstr = '<div id=101' . $this->newcommentid . '></div>';
 				} else {
@@ -7734,16 +8020,135 @@ class toctoc_comment_lib extends tslib_pibase {
 							$commentuserimagepath = $conf['advanced.']['FeUserImagePath'];
 							if (($keyFeUserDbField !='') || ($keyFeUserDbField)) {
 								$userimagesarr=explode(',', $keyFeUserDbField);
+
+								$currentuserimage = '';
 								if (count($userimagesarr)>0) {
-									$commentuserimageextr=  $userimagesarr[0];
+
+									if (intval($userimagesarr[0]) != 0) {
+										$querysys_file_reference = 'SELECT uid_local FROM sys_file_reference WHERE tablenames = "fe_users" AND deleted=0 and hidden=0 and uid_foreign=' . $fe_user_user_uid . ' AND sorting_foreign=1 AND fieldname="' . $conf['advanced.']['FeUserDbField'] .'"';
+										$resultsys_file_reference= $GLOBALS['TYPO3_DB']->sql_query($querysys_file_reference);
+										$uid_local = 0;
+										while ($rowssys_file_reference = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_file_reference)) {
+											$uid_local = $rowssys_file_reference['uid_local'];
+											break;
+										}
+										$storage = 0;
+										if ($uid_local != 0) {
+											$querysys_file = 'SELECT name, identifier, storage FROM sys_file where uid=' . $uid_local;
+											$resultsys_file= $GLOBALS['TYPO3_DB']->sql_query($querysys_file);
+											$uid_local = 0;
+											while ($rowssys_file = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_file)) {
+												$currentuserimage = $rowssys_file['identifier'];
+												$storage = $rowssys_file['storage'];
+												break;
+											}
+										}
+										$currentstorage = 'fileadmin';
+										if ($storage != 0) {
+											$querysys_storage =  'SELECT configuration FROM sys_file_storage where uid=' . $storage;
+											$resultsys_storage= $GLOBALS['TYPO3_DB']->sql_query($querysys_storage);
+											$uid_local = 0;
+											while ($rowssys_storage = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_storage)) {
+												$currentstoragexml = $rowssys_storage['configuration'];
+												/*
+												 * <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+												<T3FlexForms>
+												<data>
+												<sheet index="sDEF">
+												<language index="lDEF">
+												<field index="basePath">
+												<value index="vDEF">fileadmin/</value>
+												</field>
+												<field index="pathType">
+												....
+												*/
+												$currentstoragexmlarr = explode('"basePath"', $currentstoragexml);
+												$currentstoragexmlarrs1 = $currentstoragexmlarr[1];
+												$currentstoragexmlarr2 = explode('index="vDEF">', $currentstoragexmlarrs1);
+												$currentstoragexmlarrs2 = $currentstoragexmlarr2[1];
+												$currentstoragexmlarr3 = explode('/</value>', $currentstoragexmlarrs2);
+												$currentstorage= $currentstoragexmlarr3[0];
+												break;
+											}
+										}
+										if ($currentuserimage != '') {
+											$arrimg = explode('/', $currentuserimage);
+											$keyFeUserDbField = array_pop($arrimg);
+											$commentuserimagepath = implode('/', $arrimg);
+											$commentuserimagepath = $currentstorage . $commentuserimagepath . '/';
+											$conf['advanced.']['FeUserImagePath'] = $commentuserimagepath;
+											$commentuserimageout = $commentuserimagepath . $keyFeUserDbField;
+											$commentuserimageextr = $keyFeUserDbField;
+										}
+
+									} else {
+										$commentuserimageextr=  $userimagesarr[0];
+									}
 								} else {
-									$commentuserimageextr=  $keyFeUserDbField;
+									if (intval($keyFeUserDbField) != 0) {
+										$querysys_file_reference = 'SELECT uid_local FROM sys_file_reference WHERE tablenames = "fe_users" AND deleted=0 and hidden=0 and uid_foreign=' . $fe_user_user_uid . ' AND sorting_foreign=1 AND fieldname="' . $conf['advanced.']['FeUserDbField'] .'"';
+										$resultsys_file_reference= $GLOBALS['TYPO3_DB']->sql_query($querysys_file_reference);
+										$uid_local = 0;
+										while ($rowssys_file_reference = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_file_reference)) {
+											$uid_local = $rowssys_file_reference['uid_local'];
+											break;
+										}
+										$storage = 0;
+										if ($uid_local != 0) {
+											$querysys_file = 'SELECT name, identifier, storage FROM sys_file where uid=' . $uid_local;
+											$resultsys_file= $GLOBALS['TYPO3_DB']->sql_query($querysys_file);
+											$uid_local = 0;
+											while ($rowssys_file = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_file)) {
+												$currentuserimage = $rowssys_file['identifier'];
+												$storage = $rowssys_file['storage'];
+												break;
+											}
+										}
+										$currentstorage = 'fileadmin';
+										if ($storage != 0) {
+											$querysys_storage =  'SELECT configuration FROM sys_file_storage where uid=' . $storage;
+											$resultsys_storage= $GLOBALS['TYPO3_DB']->sql_query($querysys_storage);
+											$uid_local = 0;
+											while ($rowssys_storage = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_storage)) {
+												$currentstoragexml = $rowssys_storage['configuration'];
+												/*
+												 * <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+												<T3FlexForms>
+												<data>
+												<sheet index="sDEF">
+												<language index="lDEF">
+												<field index="basePath">
+												<value index="vDEF">fileadmin/</value>
+												</field>
+												<field index="pathType">
+												....
+												*/
+												$currentstoragexmlarr = explode('"basePath"', $currentstoragexml);
+												$currentstoragexmlarrs1 = $currentstoragexmlarr[1];
+												$currentstoragexmlarr2 = explode('index="vDEF">', $currentstoragexmlarrs1);
+												$currentstoragexmlarrs2 = $currentstoragexmlarr2[1];
+												$currentstoragexmlarr3 = explode('/</value>', $currentstoragexmlarrs2);
+												$currentstorage= $currentstoragexmlarr3[0];
+												break;
+											}
+										}
+										if ($currentuserimage != '') {
+											$arrimg = explode('/', $currentuserimage);
+											$keyFeUserDbField = array_pop($arrimg);
+											$commentuserimagepath = implode('/', $arrimg);
+											$commentuserimagepath = $currentstorage . $commentuserimagepath . '/';
+											$conf['advanced.']['FeUserImagePath'] = $commentuserimagepath;
+											$commentuserimageextr = $keyFeUserDbField;
+										}
+
+									} else {
+										$commentuserimageextr=  $keyFeUserDbField;
+									}
 								}
 
 								$piVars['imagetag'] = $commentuserimageextr;
 								$commentuserimageout= $commentuserimagepath . $commentuserimageextr;
-							} else
-							{
+							} else {
 								$piVars['imagetag'] = $keyFeUserDbField;
 								$userimgFile = $GLOBALS['TSFE']->absRefPrefix.$userconfimgFile;
 								$userimgFile = $GLOBALS['TSFE']->getFileAbsFileName.$userimgFile;
@@ -8182,6 +8587,7 @@ class toctoc_comment_lib extends tslib_pibase {
 				* the userpic in the backend from the table
 				*/
 				$this->newcommentneedscoi=0;
+				$this->newcommenthaserror=0;
 				if (($conf['spamProtect.']['confirmedOptIn'] ==1) || ($conf['spamProtect.']['confirmedOptInEmailOnly'] == 1)) {
 					if ($conf['spamProtect.']['confirmedOptInEmailOnly'] == 0) {
 						$this->newcommentneedscoi=$this->checkCOI($conf, trim($piVars['email']), TRUE);
@@ -8287,7 +8693,12 @@ class toctoc_comment_lib extends tslib_pibase {
 				$record['toctoc_comments_user'] = $fetoctocusertoinsert;
 				$record['isreview']=0;
 				// Check for double post
-				$double_post_check = md5(implode(',', $record));
+
+				$double_post_check = md5(intval($conf['storagePid']) . $external_ref . trim($conf['externalPrefix']) .
+						trim($piVars['content']). $testedexternal_ref_uid . $record['toctoc_commentsfeuser_feuser'] .
+						trim($piVars['firstname']) . trim($piVars['commenttitle']) .
+						trim($piVars['lastname']). trim($piVars['email']));
+
 				if ($conf['preventDuplicatePosts']) {
 					list($info) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS t', 'tx_toctoc_comments_comments',
 							$pObj->where_dpck . ' AND crdate>=' . (time() - 60*60) . ' AND double_post_check=' .
@@ -8300,8 +8711,8 @@ class toctoc_comment_lib extends tslib_pibase {
 				if (($conf['advanced.']['commentReview']==1) && (intval($record['parentuid'] ==0))) {
 					$record['isreview']=1;
 					list($inforeview) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS t', 'tx_toctoc_comments_comments',
-							$pObj->where_dpck . ' AND parentuid = 0 AND toctoc_commentsfeuser_feuser=' . $feuserid . ' AND external_ref_uid="' .
-							$record['external_ref_uid'] . '"');
+							$pObj->where_dpck . ' AND parentuid = 0 AND toctoc_commentsfeuser_feuser=' . $feuserid .
+							' AND external_ref_uid="' .	$record['external_ref_uid'] . '"');
 				} else {
 					$inforeview = array('t' => 0);
 				}
@@ -8310,14 +8721,19 @@ class toctoc_comment_lib extends tslib_pibase {
 					unset($_SESSION['requestCapcha'][$cid]);
 				}
 				$timegap = 0;
-				if ($_SESSION['lasttimecomment']) {
+				$pObj->formTopMessage = '';
+				if (isset($_SESSION['lasttimecomment']) == TRUE) {
 					if ($_SESSION['lasttimecomment'] > 0) {
-						$limittimegap = 60 * intval($conf['spamProtect.']['commentWaitTime']);
-						$lastallowedcommentingtime = microtime(TRUE) - $limittimegap;
-						if ($_SESSION['lasttimecomment'] > $lastallowedcommentingtime) {
-							$timegap = intval(($_SESSION['lasttimecomment']-$lastallowedcommentingtime)/60);
-							if ($timegap == 0) {
-								$timegap = 1;
+						if (intval($conf['spamProtect.']['commentWaitTime']) > 0) {
+							$limittimegap = 60 * intval($conf['spamProtect.']['commentWaitTime']);
+							$lastallowedcommentingtime = microtime(TRUE) - $limittimegap;
+							if ($_SESSION['lasttimecomment'] > $lastallowedcommentingtime) {
+								$timegap = intval(($_SESSION['lasttimecomment']-$lastallowedcommentingtime)/60);
+								if ($timegap == 0) {
+									$timegap = 1;
+								}
+							} else {
+								$_SESSION['lasttimecomment'] = 0;
 							}
 						} else {
 							$_SESSION['lasttimecomment'] = 0;
@@ -8326,28 +8742,31 @@ class toctoc_comment_lib extends tslib_pibase {
 				} else {
 					$_SESSION['lasttimecomment'] = 0;
 				}
+
 				if ($info['t'] > 0) {
 					// Double post!
 
 					$pObj->formTopMessage = $this->pi_getLLWrap($pObj, 'error.double.post', $fromAjax);
 					unset($_SESSION['requestCapcha'][$cid]);
+					$this->newcommenthaserror=1;
 				} elseif ($inforeview['t'] > 0) {
-					//show and request captcha
+
 					$pObj->formTopMessage = $this->pi_getLLWrap($pObj, 'pi1_template.alreadymadeareview', $fromAjax);
+					$this->newcommenthaserror=1;
 				} elseif ($timegap > 0) {
-					//show and request captcha
 					if ($timegap == 1) {
 						$pObj->formTopMessage = $this->pi_getLLWrap($pObj, 'pi1_template.needwaitforoneminute', $fromAjax) . ' '
 								. $this->pi_getLLWrap($pObj, 'pi1_template.needwait_untilyoucanrepost', $fromAjax);
+						$this->newcommenthaserror=1;
 					} else {
 						$pObj->formTopMessage = $this->pi_getLLWrap($pObj, 'pi1_template.needwaitfor', $fromAjax) . ' ' . $timegap . ' '
 								. $this->pi_getLLWrap($pObj, 'pi1_template.timeconv.minutes', $fromAjax) . ' '
 								. $this->pi_getLLWrap($pObj, 'pi1_template.needwait_untilyoucanrepost', $fromAjax);
+						$this->newcommenthaserror=1;
 
 					}
 				} elseif ($_SESSION['requestCapcha'][$cid]>=1) {
 					//show and request captcha
-
 					$pObj->formTopMessage = $this->pi_getLLWrap($pObj, 'pi1_template.captchaInputNeeded', $fromAjax);
 				} else {
 					$pObj->conf=$conf;
@@ -8397,9 +8816,9 @@ class toctoc_comment_lib extends tslib_pibase {
 							}
 
 							$this->initCaches();
-
 							$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_comments', $record);
 							$newUid = $GLOBALS['TYPO3_DB']->sql_insert_id();
+							$this->deleteDBcachereport ('comments', $testedexternal_ref_uid);
 							// increase startpoint if set
 
 							$_SESSION['submitCommentVars'][$cid]['uploadpicid']='';
@@ -8654,6 +9073,7 @@ class toctoc_comment_lib extends tslib_pibase {
 
 			}
 
+			$_SESSION['formTopMessage'] = '';
 			if ($pObj->formTopMessage) {
 
 				if ($pObj->formTopMessage!='') {
@@ -8727,11 +9147,20 @@ class toctoc_comment_lib extends tslib_pibase {
 		if ($isSpam < $cutOffPoint) {
 			$record['tstamp'] = time();
 			$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_toctoc_comments_comments', 'uid=' . $ctid, $record);
+
+			list($rowct) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('external_ref_uid',
+					'tx_toctoc_comments_comments', 'uid=' . $ctid);
+			$current_external_ref_uid  = '';
+			if ($rowct['external_ref_uid'] != '') {
+				$current_external_ref_uid = $rowct['external_ref_uid'];
+			}
+
+			$this->deleteDBcachereport('comments', $current_external_ref_uid);
 			// Clear cache after update with plugin
 			$this->initCaches();
 			$this->clearPagesCaches($conf, $pid, $plugincacheid);
 
-			$pObj->formTopMessage='';
+			$pObj->formTopMessage = '';
 			$_SESSION['formTopMessage'] = $pObj->formTopMessage;
 
 		} else {
@@ -8742,7 +9171,7 @@ class toctoc_comment_lib extends tslib_pibase {
 
 		}
 
-		$outputstr='';
+		$outputstr = '';
 		if ($pObj->formTopMessage) {
 
 			if ($pObj->formTopMessage!='') {
@@ -9264,11 +9693,13 @@ class toctoc_comment_lib extends tslib_pibase {
 
 				$confenccoi = rawurlencode(base64_encode(serialize($confencarrcoi)));
 				$record = array(
+						'crdate' => time(),
 						'mailconf' => $confenccoi,
 				);
 
 				$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_cache_mailconf', $record);
 				$confenccoi = $GLOBALS['TYPO3_DB']->sql_insert_id();
+				$this->purgeMailConf($conf);
 
 			}
 
@@ -9359,11 +9790,14 @@ class toctoc_comment_lib extends tslib_pibase {
 		}
 
 		$record = array(
+				'crdate' => time(),
 				'mailconf' => $confenc,
 		);
 
 		$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_cache_mailconf', $record);
 		$confenc = $GLOBALS['TYPO3_DB']->sql_insert_id();
+
+		$this->purgeMailConf($conf);
 
 		$approvelinkcoi = '';
 		$seperatorchar = ' - ';
@@ -9597,7 +10031,10 @@ class toctoc_comment_lib extends tslib_pibase {
 					}
 
 				}
-
+				if (!isset($this->cObj)) {
+					$this->cObj = t3lib_div::makeInstance('tslib_cObj');
+					$this->cObj->start('', '');
+				}
 				$myhomepagetypoLink_URL = str_replace('https:', 'http:', $this->cObj->typoLink_URL(array('parameter' => t3lib_div::locationHeaderUrl(''),
 						'ATagParams' => 'rel="nofollow"',)));
 
@@ -9981,6 +10418,10 @@ class toctoc_comment_lib extends tslib_pibase {
 				$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_comments SET ' .
 						'hidden=0' .
 						' WHERE ' . $dataWhereComments );
+
+				$current_external_ref_uid = $linkto_comment_id['external_ref_uid'];
+				$this->deleteDBcachereport('comments', $current_external_ref_uid);
+
 				return $linkto_comment_id;
 			}
 
@@ -10243,11 +10684,9 @@ class toctoc_comment_lib extends tslib_pibase {
 			$_SESSION['findanchor'] = '0';
 
 			$_SESSION['commentListRecord']= 0;
-			$_SESSION['indexOfSortedCommentsCidList'] = 0;
 			$_SESSION['commentsPageId'] = $GLOBALS['TSFE']->id;
 			$_SESSION['submittedCid'] = 0;
 			if ($alsoajaxvar) {
-				$_SESSION['AJAXCid'] = 0;
 				$_SESSION['AJAXCidC'] = 0;
 				$_SESSION['AJAXCidImg'] = 0;
 			}
@@ -10256,8 +10695,6 @@ class toctoc_comment_lib extends tslib_pibase {
 			$_SESSION['formTopMessage'] = '';
 			$_SESSION['formValidationErrors'] = array();
 			$_SESSION['submitCommentVars'] = array();
-			$_SESSION['renderedplugins']=0;
-			$_SESSION['renderingdone']=FALSE;
 
 			$_SESSION['processedclearCacheIds']='';
 			$_SESSION['runMemCache'] = TRUE;
@@ -10268,8 +10705,6 @@ class toctoc_comment_lib extends tslib_pibase {
 			// reset all a part from submitted stuff
 			$_SESSION['commentListCount'] = 0;
 			$_SESSION['commentListRecord']= 0;
-
-			$_SESSION['indexOfSortedCommentsCidList'] = 0;
 			if ($GLOBALS['TSFE']->id) {
 				$_SESSION['commentsPageId'] =$GLOBALS['TSFE']->id;
 			}
@@ -10300,17 +10735,15 @@ class toctoc_comment_lib extends tslib_pibase {
 		}
 
 		$additionalClearCachePages = trim($conf['additionalClearCachePages']);
-		//if ($pid == 0) {
-			if (!empty($additionalClearCachePages)) {
-				if ($clearCacheIds !=0) {
-					$clearCacheIds .= ',' . $additionalClearCachePages;
-				} else {
-					$clearCacheIds = $additionalClearCachePages;
-				}
 
+		if (!empty($additionalClearCachePages)) {
+			if ($clearCacheIds !=0) {
+				$clearCacheIds .= ',' . $additionalClearCachePages;
+			} else {
+				$clearCacheIds = $additionalClearCachePages;
 			}
 
-		//}
+		}
 
 		if ($_SESSION['commentsPageOrigId']!=0) {
 			if ($clearCacheIds !=0) {
@@ -10347,6 +10780,68 @@ class toctoc_comment_lib extends tslib_pibase {
 	}
 
 	/**
+	 * delete cache in table tx_toctoc_comments_cachereport
+	 *
+	 * @param	string		$cachedEntities: 'comments', ratings', 'all' means all
+	 * @param	[type]		$external_ref_uid: ...
+	 * @return	void
+	 */
+	public function deleteDBcachereport ($cachedEntities, $external_ref_uid = '') {
+		$cachedEntitiesInput = $cachedEntities;
+		$sqlexternal_ref_uid = '';
+		if ($external_ref_uid != '') {
+			if (str_replace('tx_toctoc_comments_comments', '', $external_ref_uid) != $external_ref_uid) {
+
+				$rowsrf = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+						'external_ref_uid',
+						'tx_toctoc_comments_comments',
+						'uid = ' . str_replace('tx_toctoc_comments_comments_', '', $external_ref_uid) . '',
+						'',
+						'',
+						''
+				);
+
+				if (count($rowsrf) > 0) {
+					$external_ref_uid=$rowsrf[0]['external_ref_uid'];
+				}
+			}
+			$sqlexternal_ref_uid = ' OR (ReportPluginMode = 0 AND external_ref_uid = "' . $external_ref_uid. '")';
+		}
+		// 1: recent comments, 3: topratings, 4: other reports, 6: user center, 8: topsharings
+		if ($cachedEntitiesInput == 'comments') {
+			$cachedEntities = '1,41,6';
+		} elseif ($cachedEntitiesInput == 'ratings') {
+			$cachedEntities = '3,41,6';
+		} elseif ($cachedEntitiesInput == 'sharings') {
+			$cachedEntities = '8';
+		} elseif ($cachedEntitiesInput == 'views') {
+			$cachedEntities = '41,4';
+			if ($sqlexternal_ref_uid != '') {
+				// delete if cache older than sessionTimeout
+				if (intval($this->conf['advanced.']['viewsCacheDelay']) == 0) {
+					$viewsCacheDelay = 3*60;
+				} else {
+					$viewsCacheDelay = intval($this->conf['advanced.']['viewsCacheDelay'])*60;
+				}
+				$droptime = time() - $viewsCacheDelay;
+				$sqlexternal_ref_uid = ' OR (ReportPluginMode = 0 AND external_ref_uid = "' . $external_ref_uid. '" AND crdate < "' . $droptime. '")';
+			}
+		} else {
+			//'all'
+			$cachedEntities = 'all';
+		}
+
+		If (strlen($cachedEntities) == 1) {
+			$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport WHERE ReportPluginMode = ' . $cachedEntities . $sqlexternal_ref_uid);
+		} elseIf ($cachedEntities == 'all') {
+			$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport');
+		} else {
+			$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport WHERE ReportPluginMode IN (' . $cachedEntities . ')' . $sqlexternal_ref_uid);
+		}
+
+		return '';
+	}
+	/**
 	 * Returns a list with external_ref_uids on which session memory cache should be cleared.
 	 *
 	 * @param	[type]		$conf: ...
@@ -10372,7 +10867,7 @@ class toctoc_comment_lib extends tslib_pibase {
 
 		if ($clearCachePlugins!='') {
 			$this->setPluginCacheControlTstamp($clearCachePlugins);
-    		}
+    	}
 
 		return $clearCachePlugins . '';
 	}
@@ -10381,9 +10876,10 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * Set the timestamp of plugins of $external_ref_uid_list in table tx_toctoc_comments_plugincachecontrol to current value.
 	 *
 	 * @param	string		$external_ref_uid_list: list of plugins where timestamp must be reset
+	 * @param	int		$tstime: optional time to set as tstamp
 	 * @return	void
 	 */
-	public function setPluginCacheControlTstamp ($external_ref_uid_list) {
+	public function setPluginCacheControlTstamp ($external_ref_uid_list, $tstime = -1) {
 
 		$external_ref_uid_arr = explode(',', $external_ref_uid_list);
 		$external_ref_uid_arrquoted = array();
@@ -10395,13 +10891,23 @@ class toctoc_comment_lib extends tslib_pibase {
 		$external_ref_uid_listquoted = implode(',', $external_ref_uid_arrquoted);
 
 		$rowsrf = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
-				'external_ref_uid',
+				'external_ref_uid, tstamp',
 				'tx_toctoc_comments_plugincachecontrol',
 				'external_ref_uid IN (' . $external_ref_uid_listquoted . ')',
 				'',
 				'',
 				''
 		);
+
+		if ($tstime != -1) {
+			if (count($rowsrf) !=0) {
+				if ($rowsrf[0]['tstamp'] > $tstime) {
+					$tstime = $rowsrf[0]['tstamp'];
+				}
+			}
+		} else {
+			$tstime = time();
+		}
 
 		$external_ref_uid_arr = explode(',', $external_ref_uid_list);
 		if (count($rowsrf) < count($external_ref_uid_arr)) {
@@ -10417,7 +10923,7 @@ class toctoc_comment_lib extends tslib_pibase {
 				for ($i=0; $i<$countrowrfexternal_ref_uid_arrinsert; $i++) {
 					$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_plugincachecontrol',
 							array(
-									'tstamp' => time(),
+									'tstamp' => $tstime,
 									'external_ref_uid' => $rowrfexternal_ref_uid_arrinsert[$i],
 							)
 					);
@@ -10426,7 +10932,7 @@ class toctoc_comment_lib extends tslib_pibase {
 				$countrowrfexternal_ref_uid_arr=count($rowrfexternal_ref_uid_arr);
 				for ($i=0; $i<$countrowrfexternal_ref_uid_arr; $i++) {
 					$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_plugincachecontrol SET ' .
-							'tstamp=' . time() .
+							'tstamp=' . $tstime .
 							' WHERE external_ref_uid_="' . $rowrfexternal_ref_uid_arr[$i] . '"');
 				}
 
@@ -10435,7 +10941,7 @@ class toctoc_comment_lib extends tslib_pibase {
 				for ($i=0; $i<$countexternal_ref_uid_arr; $i++) {
 					$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_plugincachecontrol',
 							array(
-									'tstamp' => time(),
+									'tstamp' => $tstime,
 									'external_ref_uid' => $external_ref_uid_arr[$i],
 							)
 					);
@@ -10447,7 +10953,7 @@ class toctoc_comment_lib extends tslib_pibase {
 			$countexternal_ref_uid_arr=count($external_ref_uid_arr);
 			for ($i=0; $i<$countexternal_ref_uid_arr; $i++) {
 				$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_plugincachecontrol SET ' .
-						'tstamp=' . time() .
+						'tstamp=' . $tstime .
 						' WHERE external_ref_uid ="' . $external_ref_uid_arr[$i] . '"');
 			}
 
@@ -10707,22 +11213,19 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * @param	[type]		$externalref: ...
 	 * @return	string		HTML
 	 */
-	protected function getAjaxJSData($feuserid, $pid, $languagecode, $conf, $pObj, $cid, $fromAjax, $dataonly=FALSE, $externalref) {
-
-		if (($_SESSION['AJAXCid'] != $cid) || ($fromAjax)) {
-
-			if (!$fromAjax) {
-				$ajaxData = $this->getAjaxData($feuserid, $pid, $languagecode, $conf, $cid, $externalref);
-				$ajaxDataAttachments = $this->getAjaxDataAttachments($conf, $fromAjax, $pObj);
-
-			} else {
-
-				$ajaxData =$_SESSION['ajaxData'];
-				$ajaxDataAttachments =$_SESSION['ajaxDataAttachments'];
-			}
-
+	protected function getAjaxJSData($feuserid, $pid, $conf, $pObj, $cid, $externalref) {
+			$ajaxData = $this->getAjaxData($feuserid, $pid, $conf, $cid, $externalref);
+			$ajaxDataAttachments = $this->getAjaxDataAttachments($conf, $pObj);
             $ajaxDatalogin =  $this->getAjaxLoggedInData('conf', 0);
             $ajaxDatalogout =  $this->getAjaxLoggedInData('conf', 1);
+            if (!$fromAjax) {
+            	if (!is_array($_SESSION['ajaxData'])) {
+            		$_SESSION['ajaxData'] = array();
+            	}
+
+            	$_SESSION['ajaxData'][$cid] = $ajaxData;
+            }
+
             if ($ajaxDatalogin !='') {
             	$ajaxDataloginstr = '<span id="tx-tc-cADLi-' . $cid . '">';
             	$ajaxDataloginstr .= rawurlencode($ajaxDatalogin);
@@ -10749,27 +11252,16 @@ class toctoc_comment_lib extends tslib_pibase {
             	$ajaxDataloginSessstr='';
             }
 
-            $jsAjaxData = '<span id="tx-tc-cAD-' . $cid . '">';
-            $jsAjaxData .= rawurlencode($ajaxData);
+	        $jsAjaxData = '<span id="tx-tc-cAD-' . $cid . '">';
+            $jsAjaxData .= $ajaxData;
             $jsAjaxData .= '</span>';
+
             $jsAjaxData .= '<span id="tx-tc-cADAtt-' . $cid . '">';
-            $jsAjaxData .= rawurlencode($ajaxDataAttachments);
+            $jsAjaxData .= $ajaxDataAttachments;
             $jsAjaxData .= '</span>';
 			$jsAjaxData .= $ajaxDataloginstr . $ajaxDatalogoutstr . $ajaxDataloginSessstr;
-			if ($dataonly) {
-				$jsAjaxData =rawurlencode($ajaxData);
-			}
-
-			$_SESSION['AJAXCid'] = $cid;
-			if (!$fromAjax) {
-				$_SESSION['ajaxData'] = $ajaxData;
-				$_SESSION['ajaxDataAttachments'] = $ajaxDataAttachments;
-			}
 
 			return $jsAjaxData;
-		} else {
-			return '';
-		}
 
 	}
 	/**
@@ -10808,85 +11300,119 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * @param	[type]		$ref: ...
 	 * @return	string		base64-encoded
 	 */
-	protected function getAjaxData($feuserid, $pid, $languagecode, $conf, $cid, $ref) {
-		$confDiff=$this->mirrorconf($conf);
+	protected function getAjaxData($feuserid, $pid, $conf, $cid, $ref) {
+
 		if (!$feuserid) {
 			$feuserid=0;
 		}
-
-		$data = serialize(array(
-				'feuser' => $feuserid,
+		$data = base64_encode(serialize(array(
+				'feuser' => 0,
 				'pid' => $pid,
 				'cid' => $cid,
-				'conf' => $confDiff,
-				'lang' => $languagecode,
-				'langid' => $_SESSION['activelangid'],
+				'conf' => $conf,
+				'lang' => 'xx',
+				'langid' => 0,
 				'ref' => $ref,
-		));
-		$retstr = base64_encode($data);
-		return $retstr;
+		)));
+
+		// AJAXCache Table
+		$AJAXCache = 'Data';
+	    $md5Data = md5($data);
+	    // Check AJAXCache Table
+		$Auid = $this->checkAJAXDBCache($AJAXCache, $md5Data);
+
+		if ($Auid == 0) {
+			// Set AJAXCache Table
+
+			if ($this->canZip == TRUE) {
+				$AJAXDBdata=gzencode($data, $this->sessionCompressionLevel);
+			} else {
+				$AJAXDBdata=gzcompress($data, $this->sessionCompressionLevel);
+			}
+			$Auid = $this->setAJAXDBCache($AJAXCache, $md5Data, $AJAXDBdata);
+		}
+
+		return $Auid;
 	}
+
 	/**
-	 * Mirrors current conf with shadow conf in session, resulting in a difference-array of these confs and therefore resulting in much smaller AJAXData
+	 * Inserts AJAXDBCache for Cache-Type, md5Data, and zipped Data
 	 *
-	 * @param	array		$conf:  Array with the plugin configuration
-	 * @return	array		$confdiff
+	 * @param	string		$AJAXCache:  Cache-Type ('Data', 'ThisData' ...)
+	 * @param	string		$md5Data: md5-Version of the Data
+	 * @param	[type]		$AJAXdata: ...
+	 * @return	int		$ret: uid of record in tx_toctoc_comments_cacheajax
 	 */
-	protected function mirrorconf($conf) {
-		unset($confCopy);
-		$confCopy = $conf;
-
-		$mirrorconf=unserialize(base64_decode($_SESSION['mirrorconf']));
-		// this would generate a too long string for unserialize
-		if (isset($mirrorconf['attachments.']['picUploadMaxDimX'])) {
-			unset($mirrorconf['attachments.']);
-			//unset($mirrorconf['recentcomments.']);
-			$mirrorconf['attachments.'] = array();
-			// we take useWebpagePreview and webpagePreviewHeight, they are needed on and for submits
-			$mirrorconf['attachments.']['webpagePreviewHeight'] = $conf['attachments.']['webpagePreviewHeight'];
-			$mirrorconf['attachments.']['useWebpagePreview'] = $conf['attachments.']['useWebpagePreview'];
-			// we take zhis also for the top preview
-			$mirrorconf['attachments.']['useTopWebpagePreview'] = $conf['attachments.']['useTopWebpagePreview'];
-			$mirrorconf['attachments.']['topWebpagePreviewPicture'] = $conf['attachments.']['topWebpagePreviewPicture'];
-			// we take zhis for displaying uploadfeatures
-			$mirrorconf['attachments.']['usePicUpload'] = $conf['attachments.']['usePicUpload'];
-			$mirrorconf['attachments.']['usePdfUpload'] = $conf['attachments.']['usePdfUpload'];
-			// need this for coi
-			//$mirrorconf['recentcomments.'] = array();
-			//$mirrorconf['recentcomments.']['anchorPre'] = $conf['recentcomments.']['anchorPre'];
-			unset($mirrorconf['userFunc']);
-
-			$_SESSION['mirrorconf']=base64_encode(serialize($mirrorconf));
-		}
-
-		// this would generate a too long string for unserialize
-		unset($confCopy['attachments.']);
-		//unset($confCopy['recentcomments.']);
-		$confCopy['attachments.'] = array();
-		// we take useWebpagePreview and webpagePreviewHeight, they are needed on and for submits
-		$confCopy['attachments.']['webpagePreviewHeight'] = $conf['attachments.']['webpagePreviewHeight'];
-		$confCopy['attachments.']['useWebpagePreview'] = $conf['attachments.']['useWebpagePreview'];
-		// we take this also for the top preview
-		$confCopy['attachments.']['useTopWebpagePreview'] = $conf['attachments.']['useTopWebpagePreview'];
-		$confCopy['attachments.']['topWebpagePreviewPicture'] = $conf['attachments.']['topWebpagePreviewPicture'];
-		// we take this for displaying uploadfeatures
-		$confCopy['attachments.']['usePicUpload'] = $conf['attachments.']['usePicUpload'];
-		$confCopy['attachments.']['usePdfUpload'] = $conf['attachments.']['usePdfUpload'];
-		// need this for coi
-		//$confCopy['recentcomments.'] = array();
-		//$confCopy['recentcomments.']['anchorPre'] = $conf['recentcomments.']['anchorPre'];
-		unset($confCopy['userFunc']);
-
-		if (!isset($_SESSION['dontUseMirrorConf'])) {
-			$_SESSION['dontUseMirrorConf']=intval($conf['advanced.']['dontUseMirrorConf']);
-		}
-		if (intval($_SESSION['dontUseMirrorConf']) == 0) {
-			$confDiff = $this->arraydiffassocrecursive($confCopy, $mirrorconf);
+	protected function setAJAXDBCache($AJAXCache, $md5Data, $AJAXdata) {
+		//checking old data
+		if (intval($this->dbCacheTimeout) == 0) {
+			$dbCacheTimeout = 10080*60;
 		} else {
-			$confDiff=$confCopy;
+			$dbCacheTimeout = $this->dbCacheTimeout*60;
 		}
-		return $confDiff;
+		 
+		$droptimeajax = time()-$dbCacheTimeout;
+		$recs['ACD'] = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('MAX(uid) AS ACDuid',
+				'tx_toctoc_comments_cacheajax',
+				'AJAXCache = "' . $AJAXCache . '" AND md5Data = "' . $md5Data . '" AND crdate > ' . $droptimeajax);
+		$ret = intval($recs['ACD'][0]['ACDuid']);
+		
+		if ($ret != 0) {
+			//deleting old data
+			$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cacheajax WHERE AJAXCache = "' . $AJAXCache . 
+					'" AND md5Data = "' . $md5Data . '" AND crdate < ' . $droptimeajax);
+		}
+		
+		$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_cacheajax',
+				array(
+						'crdate' => time(),
+						'AJAXCache' => $AJAXCache,
+						'md5Data' => $md5Data,
+						'AJAXdata' => $AJAXdata,
+				)
+		);
+
+		$ret = $GLOBALS['TYPO3_DB']->sql_insert_id();
+		if (intval($_SESSION['ccacheajax']) == 0) {
+			if (intval($this->dbCacheTimeout) == 0) {
+				$dbCacheTimeout = 10080*60;
+			} else {
+				$dbCacheTimeout = $this->dbCacheTimeout*60;
+			}
+
+			$droptimeajax = time()-(2*$dbCacheTimeout);
+			$droptime = time()-$dbCacheTimeout;
+			$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cacheajax WHERE crdate < ' . $droptimeajax);
+			$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport WHERE crdate < ' . $droptime . ' AND ReportPluginMode = 0');
+			$_SESSION['ccacheajax'] = 1;
+		}
+
+		return $ret;
 	}
+
+	/**
+	 * Check AJAXDBCache for existing uid for given Cache-Type and md5Data
+	 * check is negative if data is older than dbCacheTimeout
+	 *
+	 * @param	string		$AJAXCache:  Cache-Type ('Data', 'ThisData' ...)
+	 * @param	string		$md5Data: md5-Version of the Data
+	 * @return	int		$ret
+	 */
+	 protected function checkAJAXDBCache($AJAXCache, $md5Data) {
+	 	if (intval($this->dbCacheTimeout) == 0) {
+	 		$dbCacheTimeout = 10080*60;
+	 	} else {
+	 		$dbCacheTimeout = $this->dbCacheTimeout*60;
+	 	}
+	 	
+	 	$droptimeajax = time()-$dbCacheTimeout;
+		$recs['ACD'] = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('MAX(uid) AS ACDuid',
+				'tx_toctoc_comments_cacheajax',
+				'AJAXCache = "' . $AJAXCache . '" AND md5Data = "' . $md5Data . '" AND crdate >= ' . $droptimeajax);
+		$ret = intval($recs['ACD'][0]['ACDuid']);
+		return $ret;
+	}
+
 
 	/**
 	 * updates feuserid in $_SESSIONs AJAXData
@@ -10895,19 +11421,11 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * @param	[type]		$conf: ...
 	 * @return	string		rawurlencode($_SESSION['ajaxData'])
 	 */
-	protected function updateAjaxData($feuserid, $conf) {
+	protected function updateAjaxData($cid) {
 
-		$dataserialized=base64_decode($_SESSION['ajaxData']);
-		$dataarr=unserialize($dataserialized);
-		$dataarr['feuser']=$feuserid;
-		$confDiff=$this->mirrorconf($conf);
-		$dataarr['conf']=$confDiff;
-		$data = serialize($dataarr);
-		$_SESSION['ajaxData']=base64_encode($data);
-		$retstr = rawurlencode($_SESSION['ajaxData']);
+		$retstr = $_SESSION['ajaxData'][$cid];
 		return $retstr;
 	}
-
 	/**
 	 * Returns AJAXData, specified in confAJAXlogin
 	 *
@@ -10920,8 +11438,10 @@ class toctoc_comment_lib extends tslib_pibase {
 		if ($forjsvariable=='conf') {
 			if ($outputloginstate == 0) {
 				$sessionstore='confAJAXlogin';
+				$AJAXCache = 'DataLogin';
 			} else {
 				$sessionstore='confAJAXlogout';
+				$AJAXCache = 'DataLogout';
 			}
 
 			if (is_array($_SESSION[$sessionstore])) {
@@ -10930,8 +11450,25 @@ class toctoc_comment_lib extends tslib_pibase {
 
 			// this would generate a too long string for unserialize
 
-				$data = serialize($confCopyo);
-				$retstr = base64_encode($data);
+				$data = base64_encode(serialize($confCopyo));
+				// DataAtt
+				// AJAXCache Table
+				$md5Data = md5($data);
+				// Check AJAXCache Table
+				$Auid = $this->checkAJAXDBCache($AJAXCache, $md5Data);
+
+				if ($Auid == 0) {
+					// Set AJAXCache Table
+
+					if ($this->canZip == TRUE) {
+						$AJAXDBdata=gzencode($data, $this->sessionCompressionLevel);
+					} else {
+						$AJAXDBdata=gzcompress($data, $this->sessionCompressionLevel);
+					}
+					$Auid = $this->setAJAXDBCache($AJAXCache, $md5Data, $AJAXDBdata);
+				}
+
+				$retstr = $Auid;
 				return $retstr;
 
 			} else {
@@ -10948,22 +11485,40 @@ class toctoc_comment_lib extends tslib_pibase {
 				$confCopyo['ratingsscopesinternalm1table'] = array_replace_recursive($confCopyo, $_SESSION['ratingsscopesinternalm1table']);
 			}
 
-			$confCopyo['commentsPageId']=$_SESSION['commentsPageId'];
-			$confCopyo['commentListCount']= $_SESSION['commentListCount'];
-			$confCopyo['activelangid']= $_SESSION['activelangid'];
-			$confCopyo['commentListRecord']= $_SESSION['commentListRecord'];
-			$confCopyo['findanchorok']= $_SESSION['findanchorok'];
-			$confCopyo['newcommentid']=  $_SESSION['newcommentid'];
+			$confCopyo['commentsPageId'] =$_SESSION['commentsPageId'];
+			$confCopyo['commentListCount'] = $_SESSION['commentListCount'];
+			//$confCopyo['activelangid']= $_SESSION['activelangid'];
+			$confCopyo['activelangid'] = 0;
+			$confCopyo['commentListRecord'] = $_SESSION['commentListRecord'];
+			$confCopyo['findanchorok'] = $_SESSION['findanchorok'];
+			$confCopyo['newcommentid'] =  $_SESSION['newcommentid'];
 			if (isset($_SESSION['lastStartpoint'])) {
 				if (isset($_SESSION['lastStartpoint'][$_SESSION['commentListCount']])) {
-					$confCopyo['lastTotalrows'][$_SESSION['commentListCount']]= $_SESSION['lastTotalrows'][$_SESSION['commentListCount']];
-					$confCopyo['lastStartpoint'][$_SESSION['commentListCount']]= $_SESSION['lastStartpoint'][$_SESSION['commentListCount']];
+					$confCopyo['lastTotalrows'][$_SESSION['commentListCount']] = $_SESSION['lastTotalrows'][$_SESSION['commentListCount']];
+					$confCopyo['lastStartpoint'][$_SESSION['commentListCount']] = $_SESSION['lastStartpoint'][$_SESSION['commentListCount']];
 				}
 
 			}
 
-			$data = serialize($confCopyo);
-			$retstr = base64_encode($data);
+			$data = base64_encode(serialize($confCopyo));
+			$AJAXCache = 'LoginSess';
+			$md5Data = md5($data);
+			// Check AJAXCache Table
+			$Auid = $this->checkAJAXDBCache($AJAXCache, $md5Data);
+
+			if ($Auid == 0) {
+				// Set AJAXCache Table
+
+				if ($this->canZip == TRUE) {
+					$AJAXDBdata=gzencode($data, $this->sessionCompressionLevel);
+				} else {
+					$AJAXDBdata=gzcompress($data, $this->sessionCompressionLevel);
+				}
+				$Auid = $this->setAJAXDBCache($AJAXCache, $md5Data, $AJAXDBdata);
+			}
+
+			$retstr = $Auid;
+
 			return $retstr;
 		}
 
@@ -10979,22 +11534,41 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * @param	int		$cid: ID of the content element
 	 * @return	string		base64-encoded
 	 */
-	protected function getAjaxDataAttachments($conf, $fromAjax, $pObj) {
+	protected function getAjaxDataAttachments($conf, $pObj) {
 		unset($confCopy);
+		$confCopy = array();
 		$confCopy['attachments.'] = array();
 		$confCopy['attachments.'] = $conf['attachments.'];
 		$confCopy['theme.'] = array();
 		$confCopy['theme.']['selectedTheme'] = $conf['theme.']['selectedTheme'];
 
 		unset($confCopy['userFunc']);
-		$data = serialize(array(
+		$data = base64_encode(serialize(array(
 				'conf' => $confCopy,
-				'awaitgoogle' => base64_encode($this->pi_getLLWrap($pObj, 'pi1_template.awaitgoogle', $fromAjax)),
-				'txtimage' => base64_encode($this->pi_getLLWrap($pObj, 'pi1_template.txtimage', $fromAjax)),
-				'txtimages' => base64_encode($this->pi_getLLWrap($pObj, 'pi1_template.txtimages', $fromAjax)),
-		));
-		$retstr = base64_encode($data);
-		return $retstr;
+				'awaitgoogle' => base64_encode($this->pi_getLLWrap($pObj, 'pi1_template.awaitgoogle', FALSE)),
+				'txtimage' => base64_encode($this->pi_getLLWrap($pObj, 'pi1_template.txtimage', FALSE)),
+				'txtimages' => base64_encode($this->pi_getLLWrap($pObj, 'pi1_template.txtimages', FALSE)),
+		)));
+
+		// DataAtt
+		// AJAXCache Table
+		$AJAXCache = 'DataAtt';
+		$md5Data = md5($data);
+		// Check AJAXCache Table
+		$Auid = $this->checkAJAXDBCache($AJAXCache, $md5Data);
+
+		if ($Auid == 0) {
+			// Set AJAXCache Table
+			if ($this->canZip == TRUE) {
+				$AJAXDBdata=gzencode($data, $this->sessionCompressionLevel);
+			} else {
+				$AJAXDBdata=gzcompress($data, $this->sessionCompressionLevel);
+			}
+
+			$Auid = $this->setAJAXDBCache($AJAXCache, $md5Data, $AJAXDBdata);
+		}
+
+		return $Auid;
 	}
 
 	/**
@@ -11003,32 +11577,32 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * @param	int		$cid: Content element ID
 	 * @param	object		$pObj: parent object
 	 * @param	boolean		$fromAjax: if the request comes from Ajax or pi1
-	 * @return	string		HTML
+	 * @return	string		$jsAjaxData: HTML
 	 */
-	protected function getAjaxJSDataCommentImgs($cid, $fromAjax) {
-		if (($_SESSION['AJAXCidImg'] !== $cid) || ($fromAjax)) {
+	protected function getAjaxJSDataCommentImgs($cid) {
+		$ajaxData = $this->getAjaxDataImgs();
+		$rudata = $ajaxData;
+		//DataImg
+		// AJAXCache Table
+		$AJAXCache = 'DataImg';
+		$md5Data = md5($rudata);
+		// Check AJAXCache Table
+		$Auid = $this->checkAJAXDBCache($AJAXCache, $md5Data);
 
-			if (!$fromAjax) {
-				$ajaxData = $this->getAjaxDataImgs();
+		if ($Auid == 0) {
+			// Set AJAXCache Table
+			if ($this->canZip == TRUE) {
+				$AJAXDBdata=gzencode($rudata, $this->sessionCompressionLevel);
 			} else {
-				$ajaxData =$_SESSION['ajaxDataImg'];
+				$AJAXDBdata=gzcompress($rudata, $this->sessionCompressionLevel);
 			}
-
-			$rudata=rawurlencode($ajaxData);
-
-			$jsAjaxData = '	<span id="tx-tc-cADImg-' . $cid . '">';
-			$jsAjaxData .= $rudata;
-			$jsAjaxData .= '</span>';
-
-			if (!$fromAjax) {
-				$_SESSION['AJAXCidImg'] = $cid;
-				$_SESSION['ajaxDataImg'] = $ajaxData;
-			}
-
-			return $jsAjaxData;
-		} else {
-			return '';
+			$Auid = $this->setAJAXDBCache($AJAXCache, $md5Data, $AJAXDBdata);
 		}
+
+		$jsAjaxData = '<span id="tx-tc-cADImg-' . $cid . '">';
+		$jsAjaxData .= $Auid;
+		$jsAjaxData .= '</span>';
+		return $jsAjaxData;
 
 	}
 
@@ -11042,34 +11616,39 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * @param	object		$pObj: parent object
 	 * @return	string		HTML
 	 */
-	protected function getAjaxJSDataComments($cid, $pObj, $fromAjax) {
+	protected function getAjaxJSDataComments($cid, $pObj) {
 
-		if (($_SESSION['AJAXCidC'] !== $cid) || ($fromAjax)) {
+		$ajaxData = $this->getAjaxDataComments($pObj);
 
-			if (!$fromAjax) {
-				$ajaxData = $this->getAjaxDataComments($pObj);
+		$rudata=$ajaxData;
+		// DataC is always empty
+		$jsAjaxData = '	<span id="tx-tc-cADC-' . $cid . '">';
+		$jsAjaxData .= '';
+		$jsAjaxData .= '</span>';
+
+		// ThisData
+		// AJAXCache Table
+		$AJAXCache = 'ThisData';
+		$md5Data = md5($rudata);
+		// Check AJAXCache Table
+		$Auid = $this->checkAJAXDBCache($AJAXCache, $md5Data);
+
+		if ($Auid == 0) {
+			// Set AJAXCache Table
+			if ($this->canZip == TRUE) {
+				$AJAXDBdata=gzencode($rudata, $this->sessionCompressionLevel);
 			} else {
-				$ajaxData =$_SESSION['ajaxDataC'];
+				$AJAXDBdata=gzcompress($rudata, $this->sessionCompressionLevel);
 			}
 
-			$rudata=rawurlencode($ajaxData);
-
-			$jsAjaxData = '	<span id="tx-tc-cADC-' . $cid . '">';
-			$jsAjaxData .= '';
-			$jsAjaxData .= '</span>';
-			$jsAjaxData .= '<span id="tx-tc-cThisData-' . $cid . '">';
-			$jsAjaxData .= $rudata;
-			$jsAjaxData .= '</span>';
-
-			$_SESSION['AJAXCidC'] = $cid;
-			if (!$fromAjax) {
-				$_SESSION['ajaxDataC'] = $ajaxData;
-			}
-
-			return $jsAjaxData;
-		} else {
-			return '';
+			$Auid = $this->setAJAXDBCache($AJAXCache, $md5Data, $AJAXDBdata);
 		}
+
+		$jsAjaxData .= '<span id="tx-tc-cThisData-' . $cid . '">';
+		$jsAjaxData .= $Auid;
+		$jsAjaxData .= '</span>';
+
+		return $jsAjaxData;
 
 	}
 
@@ -11226,6 +11805,10 @@ class toctoc_comment_lib extends tslib_pibase {
 			$this->middotchar = $conf['advanced.']['midDot'];
 		} else {
 			$this->middotchar = '&nbsp;';
+		}
+
+		if (intval($conf['theme.']['themeVersion']) == 2) {
+			$this->middotchar = '';
 		}
 
 		if ($fromAjax == FALSE) {
@@ -11445,7 +12028,6 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * @return	string		$content
 	 */
 	public function t3substituteMarkerArray ($content, $markContentArray) {
-
 		if (is_array($markContentArray)) {
 			foreach ($markContentArray as $marker => $markContent) {
 				$marker = '' . $marker;
@@ -12518,6 +13100,10 @@ class toctoc_comment_lib extends tslib_pibase {
 			$imgstr ='';
 			$closestr ='';
 			$nbsp ='&nbsp;';
+			if (!isset($this->cObj)) {
+				$this->cObj = t3lib_div::makeInstance('tslib_cObj');
+				$this->cObj->start('', '');
+			}
 			$mailurl = $this->cObj->typoLink_URL(array('parameter' => t3lib_div::locationHeaderUrl(''),));
 		}
 
@@ -13502,11 +14088,13 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 
 					$confenc = rawurlencode(base64_encode(serialize($confencarr)));
 					$record = array(
+							'crdate' => time(),
 							'mailconf' => $confenc,
 					);
 
 					$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_cache_mailconf', $record);
 					$confenc = $GLOBALS['TYPO3_DB']->sql_insert_id();
+					$this->purgeMailConf($conf);
 
 					if ($conf['HTMLEmail']) {
 						$denotify = '<a href="' . t3lib_div::locationHeaderUrl('index.php?eID=toctoc_comments&uid=' . $uid . '&chk=' . $check . '&lng=' .
@@ -13775,7 +14363,8 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 		$outhtml='';
 		if ($cmd=='startpreview') {
 			if ($this->getwebpagecache('p'. $cid, $pObj, 'p'. $data['commentid'], $conf, $data['url'], TRUE)==0) {
-				$_SESSION['p'. $cid]['p'. $data['commentid']]['url'] =$data['url'];
+				$this->getpreviewinit($cid, $data, $conf);
+				$_SESSION['p'. $cid]['p'. $data['commentid']]['url'] = $data['url'];
  				require_once (t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments_webpagepreview.php'));
  				$this->pvslib = t3lib_div::makeInstance('toctoc_comments_webpagepreview');
 
@@ -13793,7 +14382,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 			$this->lastpreviewid=0;
 			//clean up db and files
 			$this->cleanupdbandfiles($conf);
-			$this->getpreviewinit($cid, $data, $conf);
+			$outhtml = $this->getpreviewinit($cid, $data, $conf);
 
 		} elseif ($cmd=='savepreview') {
 			$outhtml = $this->savewebpagepreviewtodb('p'. $cid, $pObj, 'p'. $data['commentid'], $conf);
@@ -15592,25 +16181,31 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 		$markers = $params['markers'];
 		$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###REPORT_LINK###');
 		$theURLe = $_SESSION['commentsPageIdsClean'][$pid];
-		$queryParams='&toctoc_comments_pi1[info]=' . base64_encode(serialize(array(
+		$serializearr = array(
 				'url' => $theURLe,
 				'uid' => $params['row']['uid'],
-		)));
-
+		);
+		$serializedstring = serialize($serializearr);
+		$queryParams='&toctoc_comments_pi1[info]=' . rawurlencode(base64_encode($serializedstring));
 		if ($_SESSION['reportpageid'] == '') {
 			$markers['###TX_COMMENTSREPORT###'] ='';
 		} else {
 			$theURLr = $_SESSION['reportpage'];
 			$useCacheHashNeeded = intval($GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError']);
 			$no_cacheflag = 0;
-			if (intval($GLOBALS['TYPO3_CONF_VARS']['FE']['disableNoCacheParameter']) ==0) {
+			if (intval($GLOBALS['TYPO3_CONF_VARS']['FE']['disableNoCacheParameter']) == 0) {
 				if ($useCacheHashNeeded == 1) {
 					$no_cacheflag = 1;
 				}
 
 			}
 
-			$theLink = $this->cObj->typoLink_URL(array(
+			if (!isset($pObj->cObj)) {
+				$pObj->cObj = t3lib_div::makeInstance('tslib_cObj');
+				$pObj->cObj->start('', '');
+			}
+
+			$theLink = $pObj->cObj->typoLink_URL(array(
 					'useCacheHash'     => $useCacheHashNeeded,
 					'no_cache'         => $no_cacheflag,
 					'parameter' => $_SESSION['reportpageid'],
@@ -15618,6 +16213,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 					'ATagParams' => 'rel="nofollow"',
 					'forceAbsoluteUrl' => 1,
 			));
+
 			$markers['###TX_COMMENTSREPORT###'] = $this->t3substituteMarkerArray($template, array(
 					'###LINK###' => $theLink,
 					'###TITLE###' => $this->pi_getLLWrap($pObj, 'comments_report.report_link_title', $fromAjax),
@@ -16109,7 +16705,14 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	 * @return	string		$ret: array as string for zip and storage
 	 */
 	public function oneDimArr_encode($oneDimArr = array(), $oneDimDelimiter = '6g97g86g97g8') {
-		$ret = implode($oneDimDelimiter, $oneDimArr);
+		$ret='';
+		if (is_array($oneDimArr)) {
+			if (count($oneDimArr) > 0) {
+				$ret = implode($oneDimDelimiter, $oneDimArr);
+			}
+
+		}
+
 		return $ret;
 	}
 	/**
@@ -16120,9 +16723,181 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	 * @return	array		$ret: array for use in dataprocessing
 	 */
 	public function oneDimArr_decode($oneDimString = '', $oneDimDelimiter = '6g97g86g97g8') {
-		$retArr = explode($oneDimDelimiter, $oneDimString);
+		$retArr = array();
+		if (trim($oneDimString) != '') {
+			$retArr = explode($oneDimDelimiter, $oneDimString);
+		}
+
 		return $retArr;
 	}
+	/**
+	 * Inserts ReportDBCache for Cache-Type ReportPluginMode, ReportUser, and zipped Data
+	 *
+	 * 							$ReportPluginMode (only for user center there a per fe_user granularity,
+	 * 							else it's 1: Logged in, 0 not logged-In)
+	 *
+	 * @param	int		$ReportPluginMode:  Cache-Type (2, 3 ,4 ...)
+	 * @param	string		$ReportUser: User identification as context of
+	 * @param	[type]		$ReportUser: ...
+	 * @param	[type]		$ReportData: ...
+	 * @param	[type]		$md5PluginId: ...
+	 * @param	[type]		$external_ref_uid: ...
+	 * @return	int		$ret: uid of new record in tx_toctoc_comments_cachereport
+	 */
+	public function setReportDBCache($conf, $ReportPluginMode, $ReportUser, $ReportData, $md5PluginId, $external_ref_uid = '') {
+
+		if (function_exists('gzdecode')) {
+			$ReportDataZip = gzencode($ReportData, $conf['sessionCompressionLevel']);
+		} else {
+			$ReportDataZip = gzcompress($ReportData, $conf['sessionCompressionLevel']);
+		}
+
+		$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_cachereport',
+				array(
+						'crdate' => time(),
+						'md5PluginId' => $md5PluginId,
+						'ReportPluginMode' => $ReportPluginMode,
+						'ReportUser' => $ReportUser,
+						'ReportData' => $ReportDataZip,
+						'external_ref_uid' => $external_ref_uid,
+				)
+		);
+
+		$ret = $GLOBALS['TYPO3_DB']->sql_insert_id();
+
+		return $ret;
+	}
+
+
+	/**
+	 * Gets data of ReportDBCache for given $ReportPluginMode, $ReportUser
+	 *
+	 * 						$ReportPluginMode (only for user center there a per fe_user granularity,
+	 * 						else it's 1: Logged in, 0 not logged-In)
+	 *
+	 * @param	int		$ReportPluginMode:  Cache-Type (2, 3 ,4 ...)
+	 * @param	string		$ReportUser: User identification as contect of
+	 * @return	string		$ReportDBdata
+	 */
+	public function getReportDBCache($md5PluginId, $ReportUser) {
+		$recs['ReportCD'] = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('Reportdata',
+				'tx_toctoc_comments_cachereport',
+				'md5PluginId = "' . $md5PluginId . '" AND ReportUser = "' . $ReportUser . '"');
+		$ret = $recs['ReportCD'][0]['Reportdata'];
+		$ReportDBdata = '';
+		if (trim($ret) != '') {
+			if (function_exists('gzdecode')) {
+				$ReportDBdata=gzdecode($ret);
+			} else {
+				$ReportDBdata=gzuncompress($ret);
+			}
+		}
+
+		return $ReportDBdata;
+	}
+
+	/**
+	 * Gets data of ReportDBCache for given $ReportPluginMode, $ReportUser
+	 *
+	 * 						$ReportPluginMode (only for user center there a per fe_user granularity,
+	 * 						else it's 1: Logged in, 0 not logged-In)
+	 *
+	 * @param	int		$ReportPluginMode:  Cache-Type (2, 3 ,4 ...)
+	 * @param	string		$ReportUser: User identification as contect of
+	 * @return	string		$ReportDBdata
+	 */
+	public function getReportDBCacheMinTimestamp ($ReportPluginMode) {
+		$recs['ReportCD'] = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('MIN(crdate) as mints',
+				'tx_toctoc_comments_cachereport',
+				'ReportPluginMode = ' . $ReportPluginMode);
+		$ret = $recs['ReportCD'][0]['mints'];
+
+		return $ret;
+	}
+	/**
+	 * returns ReportUser according loggin-state and plugin-mode
+	 *
+	 * @param	int		$ReportPluginMode:  Cache-Type (2, 3 ,4 ...)
+	 * @return	string		$ret (holding $ReportUser)
+	 */
+	public function isVirginUser($external_ref_uid = '') {
+		$ret = TRUE;
+
+		if (intval($GLOBALS['TSFE']->fe_user->user['uid']) == 0) {
+			// check tx_toctoc_comments_user-table
+			$strCurrentIP = $this->getCurrentIp();
+			$usertoquery = '' . $strCurrentIP . '.0';
+			$rowsrf = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+					'MAX(crdate) AS tsmp',
+					'tx_toctoc_comments_user',
+					'toctoc_comments_user = "'. $usertoquery .'" AND deleted = 0 AND (comment_count + vote_count + like_count + dislike_count) > 0',
+					'',
+					'',
+					''
+			);
+
+			if (count($rowsrf)>0) {
+				if (intval($rowsrf[0]['tsmp']) != 0) {
+					$rowscommentsextui = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+							'uid AS uid',
+							'tx_toctoc_comments_comments',
+							'external_ref_uid = "'. $external_ref_uid .'" AND deleted = 0 AND hidden = 0 AND approved = 1',
+							'',
+							'',
+							''
+					);
+					$strin = '"'. $external_ref_uid .'"';
+					if (count($rowscommentsextui)>0) {
+						foreach($rowscommentsextui as $rowcommentsextui) {
+							$strin .= ', "tx_toctoc_comments_comments_'. $rowcommentsextui['uid'].'"';
+						}
+					}
+
+					if ($strin == '"'. $external_ref_uid .'"') {
+						$strin = '= ' . $strin;
+					} else {
+						$strin = 'IN (' . $strin . ')';
+					}
+
+					$rowsextui = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+							'MAX(crdate) AS tsmp',
+							'tx_toctoc_comments_feuser_mm',
+							'toctoc_comments_user = "'. $usertoquery .'" AND deleted = 0 AND reference ' . $strin,
+							'',
+							'',
+							''
+					);
+
+					if (count($rowsextui)>0) {
+						if (intval($rowsextui[0]['tsmp']) != 0) {
+							$ret = FALSE;
+						}
+					}
+				}
+			}
+
+		} else {
+			$ret = FALSE;
+		}
+
+		return $ret;
+	}
+
+	/**
+	 * cleans up tx_toctoc_comments_cache_mailconf
+	 *
+	 * @param	$conf		Conf
+	 * @return	void
+	 */
+	protected function purgeMailConf($conf) {
+		$conf_cachetime = intval($conf['advanced.']['emailValidDays'])*24*60*60;
+		$conf_cacheage =(time() - conf_cachetime);
+		// deleting mail metadata older than the days an email is vaild
+		$GLOBALS['TYPO3_DB']->exec_DELETEquery('tx_toctoc_comments_cache_mailconf',
+		'tx_toctoc_comments_cache_mailconf.crdate < ' . $conf_cacheage
+		);
+	}
+
 }
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/toctoc_comments/pi1/toctoc_comment_lib.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/toctoc_comments/pi1/toctoc_comment_lib.php']);

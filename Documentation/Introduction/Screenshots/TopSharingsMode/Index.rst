@@ -11,6 +11,11 @@
 Topsharings
 ^^^^^^^^^^^
 
+*Deprecated and will be removed in version 9.3
+As social platforms like Twitter and Facebook stopped to supply the API-interface to collect sharing totals for users (websites) 
+without running an according app we need to stop supply top Sharing reports as well. 
+The Top Sharings are based on these totals provided by the social networks, this is no longer given*
+
 Pluginmode 8 shows charts on shared pages or on sharers (social platforms)
 
 How does it work? **toctoc_comments** collects share-totals from the frontend in a table in the backend.

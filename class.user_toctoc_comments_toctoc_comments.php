@@ -57,7 +57,7 @@ class user_toctoc_comments_toctoc_comments {
 
 public $donExtkey = 'toctoccommentsce';
 public $donExtension = 'toctoc_comments';
-public $donExtversion = '911';
+public $donExtversion = '920';
 
 	/**
 	 * This method returns the message's content
@@ -237,6 +237,11 @@ public $donExtversion = '911';
 					$langreq = $GLOBALS['BE_USER']->uc['lang'];
 				}
 
+				$dataWhereuser = 'deleted=0';
+				list($rowusr) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS tusr',
+						'tx_toctoc_comments_user', $dataWhereuser);
+				$nbrusers = intval($rowusr['tusr']);
+
 				$dataarr = array(
 						'secret' => $secret,
 						'remoteadr' => $curip,
@@ -246,6 +251,7 @@ public $donExtversion = '911';
 						'version' => $this->donExtversion,
 						'hostname' => $curipres,
 						'typo3version' => TYPO3_version,
+						'nbrusers' => $nbrusers,
 				);
 
 				$dataout = rawurlencode(base64_encode(serialize($dataarr)));

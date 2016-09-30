@@ -161,7 +161,7 @@ class toctoc_comments_commentreport extends toctoc_comment_lib {
 			}
 
 			// Decode info
-			$info = @unserialize(base64_decode($piVars['info']));
+			$info = @unserialize(base64_decode(rawurlencode($piVars['info'])));
 			if (!is_array($info)) {
 				$errors['text'] = $this->pi_getLLWrap($pObj, 'commentreport.error_cannot_get_info', FALSE);
 			} else {
@@ -319,7 +319,7 @@ class toctoc_comments_commentreport extends toctoc_comment_lib {
 
 		$required = $this->t3substituteMarker($req_template, '###TEXT_REQUIRED###', $this->pi_getLLWrap($pObj, 'commentreport.text_required', FALSE));
 		// Decode info
-		$info = @unserialize(base64_decode($piVars['info']));
+		$info = @unserialize(base64_decode(rawurldecode($piVars['info'])));
 		if (!is_array($info)) {
 			$complainedcomment= $this->pi_getLLWrap($pObj, 'commentreport.error_cannot_get_info', FALSE);
 		} else {

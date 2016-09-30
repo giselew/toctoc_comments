@@ -39,9 +39,9 @@
  *
  *   58: class toctoc_comments_recentcomments extends toctoc_comment_lib
  *   68:     public function mainRecentComments($pObj, $conf, $feuserid)
- *  151:     public function comments_getRecentComments($rows, $conf, $pObj, $fromusercenterid = 0, $usercenterlistid = 0,
+ *  154:     public function comments_getRecentComments($rows, $conf, $pObj, $fromusercenterid = 0, $usercenterlistid = 0,
 			$fromAjax = FALSE, $searchincomments = '')
- *  662:     protected function createRCLinks($text, $refID, $commentID, $prefix, $externalprefix, $singlePid, $conf, $show_uid, $okrowsi)
+ *  676:     protected function createRCLinks($text, $refID, $commentID, $prefix, $externalprefix, $singlePid, $conf, $show_uid, $okrowsi)
  *
  * TOTAL FUNCTIONS: 3
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -98,6 +98,9 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 				$condfeusergroup .= ' AND toctoc_commentsfeuser_feuser=0';
 			}
 
+		}
+		if ($conf['advanced.']['showFeUsercommentsOnlyInSameUserGroup']==1) {
+			$pObj->reprtUserByID = TRUE;
 		}
 
 		if ($conf['advanced.']['showFeUsercomments']==0) {
@@ -169,9 +172,9 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 			$showrecentcomment = intval($conf['userCenter.']['commentsPerUCList']);
 		}
 		$entries = array();
+
 		if ($fromusercenterid == 0) {
 			$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###SINGLE_RECENTCOMMENT###');
-
 		} else {
 			$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###SINGLE_USERCENTERCOMMENT###');
 		}
@@ -270,6 +273,7 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 					);
 					if (trim($rowstitle[0]['refTitle']) == '') {
 						$ownershipok=0;
+						$pObj->reprtUserByID = TRUE;
 					} else {
 						$row['refTitle']=$rowstitle[0]['refTitle'];
 					}
@@ -417,6 +421,7 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 					} elseif ($prefix == 'tx_wecstaffdirectory_info_') {
 						$exticon= t3lib_extMgm::siteRelPath('wec_staffdirectory') .	'ext_icon.gif">';
 					} elseif ($prefix == 'fe_users_') {
+						$pObj->reprtUserByID = TRUE;
 						$exticon= $this->locationHeaderUrlsubDir() . t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/css/themes/' .
 						$conf['theme.']['selectedTheme'] . '/img/usericon.gif">';
 					} else {
@@ -493,117 +498,126 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 							$pageid, $conf, $show_uid, $okrowsi);
 					$conf['recentcomments.']['linkComments'] = $saverecentcommentslinkComments;
 
-					if ($titlelink !=$commenttext) {
-						$link = $this->createRCLinks($commenttext, $refID, $commentID, $prefix, $externalprefix,
-								$pageid, $conf, $show_uid, $okrowsi);
-						$autortext = '';
-						$ratinghtml = '';
-						$reviewhtml = '';
-						$commentcontent =  $this->applyStdWrap($commentimage. $link, 'content_stdWrap', $conf);
-						if ($usercenterlistid == 0) {
-							$autortext = $this->applyStdWrap($authorimage. $row['firstname'].'&nbsp;'.$row['lastname'], 'author_stdWrap', $conf);
-							if ($searchincomments != '') {
-								$searchincommentsarrupper = explode(strtoupper($searchincomments), strtoupper($autortext));
-								$cntupper= count($searchincommentsarrupper);
-								$searchincommentsarr=array();
-								$searchincommentstermarr=array();
-								$searchincommentstermarr[0] ='';
-								$curpos =0;
-								for ($i=0;$i<$cntupper;$i++) {
-									$searchincommentsarr[$i] = substr($autortext, $curpos, strlen($searchincommentsarrupper[$i]));
-									if ($i>0) {
-										$searchincommentstermarr[$i] = substr($autortext, $curpos-strlen($searchincomments), strlen($searchincomments));
+					if (((intval(strpos($titlelink, 'href=')) != 0) && ($searchincomments == '')) || ($searchincomments != '')) {
+						if ($titlelink != $commenttext) {
+							$link = $this->createRCLinks($commenttext, $refID, $commentID, $prefix, $externalprefix,
+									$pageid, $conf, $show_uid, $okrowsi);
+
+							$autortext = '';
+							$ratinghtml = '';
+							$reviewhtml = '';
+							$commentcontent =  $this->applyStdWrap($commentimage. $link, 'content_stdWrap', $conf);
+							if ($usercenterlistid == 0) {
+								$autortext = $this->applyStdWrap($authorimage. $row['firstname'].'&nbsp;'.$row['lastname'], 'author_stdWrap', $conf);
+								if ($searchincomments != '') {
+									$searchincommentsarrupper = explode(strtoupper($searchincomments), strtoupper($autortext));
+									$cntupper= count($searchincommentsarrupper);
+									$searchincommentsarr=array();
+									$searchincommentstermarr=array();
+									$searchincommentstermarr[0] ='';
+									$curpos =0;
+									for ($i=0;$i<$cntupper;$i++) {
+										$searchincommentsarr[$i] = substr($autortext, $curpos, strlen($searchincommentsarrupper[$i]));
+										if ($i>0) {
+											$searchincommentstermarr[$i] = substr($autortext, $curpos-strlen($searchincomments), strlen($searchincomments));
+										}
+
+										$curpos= $curpos + strlen($searchincommentsarr[$i])+strlen($searchincomments);
 									}
-									$curpos= $curpos + strlen($searchincommentsarr[$i])+strlen($searchincomments);
-								}
-								$autortext = $searchincommentsarr[0];
-								for ($i=1;$i<$cntupper;$i++) {
-									if ($i>0) {
-										$autortext .= '<span class="tx-tc-foundserchterm">' . $searchincommentstermarr[$i] . '</span>' .$searchincommentsarr[$i];
+
+									$autortext = $searchincommentsarr[0];
+									for ($i=1;$i<$cntupper;$i++) {
+										if ($i>0) {
+											$autortext .= '<span class="tx-tc-foundserchterm">' . $searchincommentstermarr[$i] . '</span>' .$searchincommentsarr[$i];
+										}
+
 									}
+
 								}
-							}
 
-						} else {
-							$feuserid = $GLOBALS['TSFE']->fe_user->user['uid'];
-							$savratingsuseLikeDislikeStyle = $conf['ratings.']['useLikeDislikeStyle'];
-							$conf['ratings.']['useLikeDislikeStyle'] = 0;
-							$savratingsmode =$conf['ratings.']['mode'];
-							$conf['ratings.']['mode'] = 'static';
-							$savshowCountCommentViews =$conf['advanced.']['showCountCommentViews'];
-							$conf['advanced.']['showCountCommentViews'] = 0;
-							$conf['ratings.']['dontUseCommentdate'] = 1;
-							$allratingmarkers = $this->comments_getComments_getRatings($row, $conf, $pObj, $feuserid, $fromAjax);
-							if ($usercenterlistid == 9) {
-								$savexternal_ref_uid = $row['external_ref_uid'];
-								$allreviewmarkers='';
-								$arrextref = explode('_', $row['external_ref']);
-								$_SESSION['commentsPageId'] = $arrextref[count($arrextref)-1];
-								$_SESSION['commentListCount']= str_replace('tt_content_', '', $row['external_ref_uid']);
-
-								$savcommentReview =$conf['advanced.']['commentReview'];
-								$savuseMyVote = $conf['ratings.']['useMyVote'];
-								$savuseVotes = $conf['ratings.']['useVotes'];
-								$savuseNumberOfVotes = $conf['ratings.']['useNumberOfVotes'];
-								$savuseNumberOfStars = $conf['ratings.']['useNumberOfStars'];
-								$savuseAvgOfVotes = $conf['ratings.']['useAvgOfVotes'];
-								$savuseLikeDislike = $conf['ratings.']['useLikeDislike'];
-								$savuseDislike = $conf['ratings.']['useDislike'];
-
-								$conf['advanced.']['commentReview'] = 1;
-								$conf['ratings.']['useMyVote'] = 1;
-								$conf['ratings.']['useVotes'] = 1;
-								$conf['ratings.']['useNumberOfVotes'] = 0;
-								$conf['ratings.']['useNumberOfStars'] = 0;
-								$conf['ratings.']['useAvgOfVotes'] = 0;
-								$conf['ratings.']['useLikeDislike'] = 0;
-								$conf['ratings.']['useDislike'] = 0;
+							} else {
+								$feuserid = $GLOBALS['TSFE']->fe_user->user['uid'];
+								$savratingsuseLikeDislikeStyle = $conf['ratings.']['useLikeDislikeStyle'];
+								$conf['ratings.']['useLikeDislikeStyle'] = 0;
+								$savratingsmode =$conf['ratings.']['mode'];
 								$conf['ratings.']['mode'] = 'static';
-								$conf['ratings.']['modeusercenter'] = 1;
-								$articleratingarr = $this->getRatingDisplay($savexternal_ref_uid, $conf, $fromAjax, $_SESSION['commentsPageId'], TRUE,
-										$feuserid, 'votearticle', $pObj, $_SESSION['commentListCount'], 0, $scopeid, 1);
-								unset($conf['ratings.']['modeusercenter']);
-								$voteHTML = $articleratingarr['voteing'];
-								$conf['ratings.']['useMyVote'] = $savuseMyVote;
-								$conf['ratings.']['useVotes'] = $savuseVotes;
-								$conf['ratings.']['useNumberOfVotes'] = $savuseNumberOfVotes;
-								$conf['ratings.']['useNumberOfStars'] = $savuseNumberOfStars;
-								$conf['ratings.']['useAvgOfVotes'] = $savuseAvgOfVotes;
-								$conf['ratings.']['useLikeDislike'] = $savuseLikeDislike;
-								$conf['ratings.']['useDislike'] = $savuseDislike;
-								$conf['advanced.']['commentReview'] = $savcommentReview;
-								$voteHTML = str_replace('id="tx-tc-rts', 'id="tx-tc-rws' . $row['uid'], $voteHTML);
-								$voteHTML = str_replace('id="tx-tc-myrts', 'id="tx-tc-myrws' . $row['uid'], $voteHTML);
-								$voteHTML = str_replace('id="tx-tc-scope-', 'id="tx-tc-scope-' . $row['uid'], $voteHTML);
-								if (trim($voteHTML) != '') {
-									$allreviewmarkers = '<div class="tx-tc-rws-area">' . $voteHTML . '</div>';
-								}
-								$reviewhtml =  '<div class="tx-tc-width100 tx-tc-tabledisp">' . $allreviewmarkers .'</div>';
-							}
-							$conf['ratings.']['useLikeDislikeStyle'] = $savratingsuseLikeDislikeStyle;
-							$conf['ratings.']['mode'] = $savratingsmode;
-							$conf['advanced.']['showCountCommentViews'] = $savshowCountCommentViews;
-							unset($conf['ratings.']['dontUseCommentdate']);
-							$ratinghtml = '<div class="tx-tc-width100 tx-tc-tabledisp">' . $allratingmarkers .'</div>';
-							$commentcontent = '<div class="tx-tc-width100 tx-tc-tabledisp">' . $commentcontent .'</div>';
-						}
-						$markerArray = array(
-								'###AUTHOR###' => $autortext,
-								'###COMMENT_DATE###' => '<span id="tx-tc-rctdatedisp-' .$row['uid'] .'">' .
-								$this->applyStdWrap($this->formatDate($row['crdate'], $pObj, $fromAjax, $conf), 'crdate_stdWrap', $conf) .
-								'</span><span id="tx-tc-rctdatetime-' .$row['uid'] .'" class="tx-tc-nodisp">'.$row['crdate'].'</span>',
-								'###TITLE###' => $this->applyStdWrap($titleimage . $titlelink, 'recentComment_stdWrap', $conf),
-								'###COMMENT_CONTENT###' => $commentcontent,
-								'###RCID###' => $okrowsi,
-								'###RATING###' => $ratinghtml,
-								'###REVIEW###' => $reviewhtml,
-						);
+								$savshowCountCommentViews =$conf['advanced.']['showCountCommentViews'];
+								$conf['advanced.']['showCountCommentViews'] = 0;
+								$conf['ratings.']['dontUseCommentdate'] = 1;
+								$allratingmarkers = $this->comments_getComments_getRatings($row, $conf, $pObj, $feuserid, $fromAjax);
+								if ($usercenterlistid == 9) {
+									$savexternal_ref_uid = $row['external_ref_uid'];
+									$allreviewmarkers='';
+									$arrextref = explode('_', $row['external_ref']);
+									$_SESSION['commentsPageId'] = $arrextref[count($arrextref)-1];
+									$_SESSION['commentListCount']= str_replace('tt_content_', '', $row['external_ref_uid']);
 
-						$entries[] = $this->t3substituteMarkerArray($template, $markerArray);
-						$okrowsi++;
-					}
+									$savcommentReview =$conf['advanced.']['commentReview'];
+									$savuseMyVote = $conf['ratings.']['useMyVote'];
+									$savuseVotes = $conf['ratings.']['useVotes'];
+									$savuseNumberOfVotes = $conf['ratings.']['useNumberOfVotes'];
+									$savuseNumberOfStars = $conf['ratings.']['useNumberOfStars'];
+									$savuseAvgOfVotes = $conf['ratings.']['useAvgOfVotes'];
+									$savuseLikeDislike = $conf['ratings.']['useLikeDislike'];
+									$savuseDislike = $conf['ratings.']['useDislike'];
+
+									$conf['advanced.']['commentReview'] = 1;
+									$conf['ratings.']['useMyVote'] = 1;
+									$conf['ratings.']['useVotes'] = 1;
+									$conf['ratings.']['useNumberOfVotes'] = 0;
+									$conf['ratings.']['useNumberOfStars'] = 0;
+									$conf['ratings.']['useAvgOfVotes'] = 0;
+									$conf['ratings.']['useLikeDislike'] = 0;
+									$conf['ratings.']['useDislike'] = 0;
+									$conf['ratings.']['mode'] = 'static';
+									$conf['ratings.']['modeusercenter'] = 1;
+									$articleratingarr = $this->getRatingDisplay($savexternal_ref_uid, $conf, $fromAjax, $_SESSION['commentsPageId'], TRUE,
+											$feuserid, 'votearticle', $pObj, $_SESSION['commentListCount'], 0, $scopeid, 1);
+									unset($conf['ratings.']['modeusercenter']);
+									$voteHTML = $articleratingarr['voteing'];
+									$conf['ratings.']['useMyVote'] = $savuseMyVote;
+									$conf['ratings.']['useVotes'] = $savuseVotes;
+									$conf['ratings.']['useNumberOfVotes'] = $savuseNumberOfVotes;
+									$conf['ratings.']['useNumberOfStars'] = $savuseNumberOfStars;
+									$conf['ratings.']['useAvgOfVotes'] = $savuseAvgOfVotes;
+									$conf['ratings.']['useLikeDislike'] = $savuseLikeDislike;
+									$conf['ratings.']['useDislike'] = $savuseDislike;
+									$conf['advanced.']['commentReview'] = $savcommentReview;
+									$voteHTML = str_replace('id="tx-tc-rts', 'id="tx-tc-rws' . $row['uid'], $voteHTML);
+									$voteHTML = str_replace('id="tx-tc-myrts', 'id="tx-tc-myrws' . $row['uid'], $voteHTML);
+									$voteHTML = str_replace('id="tx-tc-scope-', 'id="tx-tc-scope-' . $row['uid'], $voteHTML);
+									if (trim($voteHTML) != '') {
+										$allreviewmarkers = '<div class="tx-tc-rws-area">' . $voteHTML . '</div>';
+									}
+									$reviewhtml =  '<div class="tx-tc-width100 tx-tc-tabledisp">' . $allreviewmarkers .'</div>';
+								}
+								$conf['ratings.']['useLikeDislikeStyle'] = $savratingsuseLikeDislikeStyle;
+								$conf['ratings.']['mode'] = $savratingsmode;
+								$conf['advanced.']['showCountCommentViews'] = $savshowCountCommentViews;
+								unset($conf['ratings.']['dontUseCommentdate']);
+								$ratinghtml = '<div class="tx-tc-width100 tx-tc-tabledisp">' . $allratingmarkers .'</div>';
+								$commentcontent = '<div class="tx-tc-width100 tx-tc-tabledisp">' . $commentcontent .'</div>';
+							}
+
+							$markerArray = array(
+									'###AUTHOR###' => $autortext,
+									'###COMMENT_DATE###' => '<span id="tx-tc-rctdatedisp-' .$row['uid'] .'">' .
+									$this->applyStdWrap($this->formatDate($row['crdate'], $pObj, $fromAjax, $conf), 'crdate_stdWrap', $conf) .
+									'</span><span id="tx-tc-rctdatetime-' .$row['uid'] .'" class="tx-tc-nodisp">'.$row['crdate'].'</span>',
+									'###TITLE###' => $this->applyStdWrap($titleimage . $titlelink, 'recentComment_stdWrap', $conf),
+									'###COMMENT_CONTENT###' => $commentcontent,
+									'###RCID###' => $okrowsi,
+									'###RATING###' => $ratinghtml,
+									'###REVIEW###' => $reviewhtml,
+							);
+							//print_r($markerArray);exit;
+							$entries[] = $this->t3substituteMarkerArray($template, $markerArray);
+							$okrowsi++;
+						}
 
 					// if not: link did not resolve -> not accessible to user - we skip
+					}
+
 				}
 
 				// if not: link did not resolve -> not accessible to user - we skip
@@ -702,19 +716,22 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
         		}
 
         	}
+
         	$addparams = t3lib_div::implodeArrayForUrl('', $params, '', 1);
         	$tmpexternalUidarr = explode('%40page', $addparams);
-		if (count($tmpexternalUidarr) >1) {
-			$addparams = array_shift($tmpexternalUidarr);
-			$tmpexternalUid = implode ('', $tmpexternalUidarr);
-			$tmpexternalUidarr = explode('&', $tmpexternalUid);
 			if (count($tmpexternalUidarr) >1) {
-				array_shift($tmpexternalUidarr);
-				$tmpexternalUid = implode('&', $tmpexternalUidarr);
-				$addparams .= '&' . $tmpexternalUid;
-				$addparams = str_replace('&&', '&', $addparams);
+				$addparams = array_shift($tmpexternalUidarr);
+				$tmpexternalUid = implode ('', $tmpexternalUidarr);
+				$tmpexternalUidarr = explode('&', $tmpexternalUid);
+				if (count($tmpexternalUidarr) >1) {
+					array_shift($tmpexternalUidarr);
+					$tmpexternalUid = implode('&', $tmpexternalUidarr);
+					$addparams .= '&' . $tmpexternalUid;
+					$addparams = str_replace('&&', '&', $addparams);
+				}
+
 			}
-		}
+
         	$addparams = str_replace('7g8', '-', $addparams);
 
  			$conflink = array(
@@ -734,6 +751,7 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
  			if (!isset($GLOBALS['TCA']['sys_domain'])) {
  				$GLOBALS['TCA']['sys_domain'] = array();
  			}
+
  			if (!isset($GLOBALS['TCA']['sys_domain']['ctrl'])) {
  				$GLOBALS['TCA']['sys_domain']['ctrl'] = array();
  			}
@@ -741,9 +759,11 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
  			if (!isset($GLOBALS['TCA']['tt_content'])) {
  				$GLOBALS['TCA']['tt_content'] = array();
  			}
+
  			if (!isset($GLOBALS['TCA']['tt_content']['ctrl'])) {
  				$GLOBALS['TCA']['tt_content']['ctrl'] = array();
  			}
+
  			//
         	$text = $this->cObj->typoLink($text, $conflink);
         	$text = str_replace('href="', 'href="javascript:recentct(0, ' . $okrowsi . ', ' . $singlePid . ', \'', $text);

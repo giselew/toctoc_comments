@@ -11,6 +11,8 @@
 TypoScript and themes
 ^^^^^^^^^^^^^^^^^^^^^
 
+To use a specific theme the according TypoScript-option theme.selectedTheme is set to the name of the sub-folder holding the theme files
+
 Themes are setup up in TS at the base of a web page, so you can have different themes on different
 pages. 
 

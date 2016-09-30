@@ -56,6 +56,7 @@ plugin.tx_toctoccomments_pi1 {
   HTMLEmailFontFamily = {$plugin.tx_toctoccomments_pi1.HTMLEmailFontFamily}
 
   sessionTimeout = {$plugin.tx_toctoccomments_pi1.sessionTimeout}
+  dbCacheTimeout = {$plugin.tx_toctoccomments_pi1.dbCacheTimeout}
   sessionCompressionLevel = {$plugin.tx_toctoccomments_pi1.sessionCompressionLevel}
   
   # comments are hidden from search engines, if you want search engines to index all your comments set this option to 1
@@ -213,7 +214,8 @@ plugin.tx_toctoccomments_pi1 {
     # If enabled, the commentators are identified as per their IP address if they are not logged in. If disabled commentators who are not logged in can't disable E-Mail notification on new comments.
     commentatorNotifybyIP = {$plugin.tx_toctoccomments_pi1.commentatorNotifybyIP}
     moderationMessageWithComment = {$plugin.tx_toctoccomments_pi1.moderationMessageWithComment}
-    
+	
+	emailValidDays   = {$plugin.tx_toctoccomments_pi1.emailValidDays}  
     # Information e-mail when a new comment is posted for commentator of former comments is sent from this address
     notificationForCommentatorEmail = {$plugin.tx_toctoccomments_pi1.notificationForCommentatorEmail}
     notificationForCommentatorEmailName = {$plugin.tx_toctoccomments_pi1.notificationForCommentatorEmailName}
@@ -246,12 +248,6 @@ plugin.tx_toctoccomments_pi1 {
     # (commentsPerPage*scroll-multiplication) gives the number of comments that are scrolled back when show older comments is clicked
     CommentsShowOldPerCID = {$plugin.tx_toctoccomments_pi1.CommentsShowOldPerCID}
 
-    # TemplaVoila-field with comments:Name of the field defined in templavoila (if used) where the comments-plugins goes. Check your templavoila page-template
-    UseTemplavoilaField = {$plugin.tx_toctoccomments_pi1.UseTemplavoilaField}
-
-    # Column-position (colPos) where the comments-plugins go. Important if no templavoila used. Can be left on 0, most of the times
-    UseMainColPos = {$plugin.tx_toctoccomments_pi1.UseMainColPos}
-
     recentcommentsPluginpages = {$plugin.tx_toctoccomments_pi1.recentcommentsPluginpages}
     recentcommentsPluginRecords = {$plugin.tx_toctoccomments_pi1.recentcommentsPluginRecords}
 
@@ -279,8 +275,6 @@ plugin.tx_toctoccomments_pi1 {
 
     useMultilingual= {$plugin.tx_toctoccomments_pi1.useMultilingual}
 
-    activateClearPageCache = {$plugin.tx_toctoccomments_pi1.activateClearPageCache}
-    useSessionCache = {$plugin.tx_toctoccomments_pi1.useSessionCache}
     cacheBackTrack = {$plugin.tx_toctoccomments_pi1.cacheBackTrack}
 
     countViews = {$plugin.tx_toctoccomments_pi1.countViews}
@@ -293,6 +287,7 @@ plugin.tx_toctoccomments_pi1 {
     countCommentViews = {$plugin.tx_toctoccomments_pi1.countCommentViews}
     showCountViewsLongFormat = {$plugin.tx_toctoccomments_pi1.showCountViewsLongFormat}
     viewMaxAge = {$plugin.tx_toctoccomments_pi1.viewMaxAge}
+    viewsCacheDelay = {$plugin.tx_toctoccomments_pi1.viewsCacheDelay}
 
     # For calculation of activity, multiplicator for number of ratings
     activityMultiplicatorRating = {$plugin.tx_toctoccomments_pi1.activityMultiplicatorRating}
@@ -328,8 +323,6 @@ plugin.tx_toctoccomments_pi1 {
 
     # if you dont want to use GIFBUILDER for userpics then set this to 1
     dontuseGIFBUILDER = 0
-    # set this to 1 only for debugging when you need to display entire conf in Frontend
-    dontUseMirrorConf = 0
     
     # Additional crawlers to be excluded from the commenting system and session creation, use comma-separated list 
  
@@ -680,11 +673,9 @@ plugin.tx_toctoccomments_pi1 {
     # koogled boxmodels have either the word koogle in the name or set this to 1.
     selectedBoxmodelkoogled = 0
 
-    # set this to 0 if you want to force CSS-generation, 1 for normal mode (changes in boxmodel or conf trigger refreshs)
-    # or 2 for frozen CSS (files must exist!)
+    // since toctoc_comments 9.2 the following 2 options have been removed in code and are obselete
     freezeLevelCSS = 1
-    
-    refreshCSSFromLESS= {$plugin.tx_toctoccomments_pi1.refreshCSSFromLESS}
+    refreshCSSFromLESS= 1
     
     # Filter-Styles for the userImage in the commentslist and the emoLike-OverViews
     # use 2 values separated by comma - fist is normal state, 2nd is hover state
@@ -745,7 +736,7 @@ plugin.tx_toctoccomments_pi2 {
   policyPid =
   
   # sends back the user to the originating page after login logout using window.history.back()
-  sendBack = 1
+  sendBack = 0
   
   #**** Since version 7.3.0. all options formerly token from tx_felogin_pi1 must be setup, tx_felogin_pi1 has been detached from toctoc_comments_pi2
   
@@ -967,4 +958,3 @@ plugin.tx_news {
   }
 }
 
-config.htmlTag_setParams := appendString( xmlns:fb="http://www.facebook.com/2008/fbml")

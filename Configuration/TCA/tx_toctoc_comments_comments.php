@@ -38,7 +38,7 @@ $tx_toctoc_comments_comments = array (
 			'0' => $iconfilepath . 'icon_tx_toctoc_comments_not_approved.gif',
 			'1' => $iconfilepath . 'icon_tx_toctoc_comments.gif',
 		),
-		'searchFields' => 'uid,content',
+		'searchFields' => 'uid,content,commenttitle,firstname,lastname,email,location,homepage,tx_commentsresponse_response,toctoc_comments_user',
 	),
 	'interface' => array (
 			'showRecordFieldList' => 'content,commenttitle,firstname,lastname,gender,email,location,homepage,remote_addr,toctoc_comments_user,external_ref,external_ref_uid,tx_commentsresponse_response',

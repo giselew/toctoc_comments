@@ -39,7 +39,7 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 if (version_compare(TYPO3_version, '6.3', '>')) {
 	(class_exists('bigDoc', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Backend\Template\DocumentTemplate', 'bigDoc');
 	(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
-	if (!t3lib_extMgm::isLoaded('compatibility6'))  {
+	if ((!t3lib_extMgm::isLoaded('compatibility6')) && (!t3lib_extMgm::isLoaded('compatibility7')))  {
 		(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
 	}
 }

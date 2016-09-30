@@ -40,31 +40,32 @@ require_once(t3lib_extMgm::extPath('toctoc_comments', 'pi1/toctoc_comment_lib.ph
  *
  *
  *
- *   75: class toctoc_comments_api
- *  109:     public function __construct()
- *  136:     public function comments_getComments_fe_user($params, $conf)
- *  156:     public function getwebpagepreview($cmd, $cid, $data, $conf)
- *  173:     public function cleanupfup($previewid, $conf, $originalfilename)
- *  188:     public function handleCommentatorNotifications($ref, $conf = NULL, $notfromeID =FALSE, $pid)
- *  207:     public function handleeID($ref, $conf, $messagetodisplay, $returnurl)
- *  229:     public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $scopeid=0, $isReview = 0)
- *  250:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $commentid)
- *  270:     public function getEmoCard($conf, $cid, $ref, $feuser)
- *  284:     public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
-			$feuserid = 0, $cmd, $piVars, $cid, $datathis, $AjaxData, $userpic, $commentspics, $check='',
+ *   76: class toctoc_comments_api
+ *  110:     public function __construct()
+ *  137:     public function comments_getComments_fe_user($params, $conf)
+ *  157:     public function getwebpagepreview($cmd, $cid, $data, $conf)
+ *  174:     public function cleanupfup($previewid, $conf, $originalfilename)
+ *  189:     public function handleCommentatorNotifications($ref, $conf = NULL, $notfromeID =FALSE, $pid)
+ *  206:     public function deleteDBcachereport($cachedEntities, $ref)
+ *  219:     public function handleeID($ref, $conf, $messagetodisplay, $returnurl)
+ *  240:     public function getAjaxRatingDisplay($ref, $conf = NULL, $fromAjax = FALSE, $pid=0, $returnasarray = FALSE, $feuserid = 0, $cmd, $cid, $scopeid=0, $isReview = 0)
+ *  261:     public function getUserCard($basedimgstr, $basedtoctocuid, $conf, $commentid)
+ *  281:     public function getEmoCard($conf, $cid, $ref, $feuser)
+ *  295:     public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
+			$feuserid = 0, $cmd, $piVars, $cid, $datathis, $userpic, $commentspics, $check='',
 			$extref='', $tctreestate  = NULL, $commentreplyid=0, $isrefresh=0, $confSess = array())
- *  350:     public function updateComment($conf, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
- *  363:     public function previewcomment($data, $conf)
- *  377:     public function commentsSearch($data, $conf, $cid)
- *  396:     public function isVoted($ref, $scopeid, $feuser, $fromAjax)
- *  406:     public function initCaches()
- *  417:     public function enableFields($table)
- *  429:     public function setPluginCacheControlTstamp ($external_ref_uid_list)
- *  438:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
- *  453:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- *  478:     public function createLinks($text, $conf = NULL)
+ *  361:     public function updateComment($conf, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
+ *  374:     public function previewcomment($data, $conf)
+ *  388:     public function commentsSearch($data, $conf, $cid)
+ *  407:     public function isVoted($ref, $scopeid, $feuser, $fromAjax)
+ *  417:     public function initCaches()
+ *  428:     public function enableFields($table)
+ *  441:     public function setPluginCacheControlTstamp ($external_ref_uid_list, $tstime = -1)
+ *  450:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ *  465:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ *  490:     public function createLinks($text, $conf = NULL)
  *
- * TOTAL FUNCTIONS: 20
+ * TOTAL FUNCTIONS: 21
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -198,6 +199,17 @@ class toctoc_comments_api {
 	}
 
 	/**
+	 * triggering cachereport maintenance
+	 *
+	 * @param	[type]		$cachedEntities: ...
+	 * @param	[type]		$ref: ...
+	 * @return	void
+	 */
+	public function deleteDBcachereport($cachedEntities, $ref) {
+		$ret = $this->lib->deleteDBcachereport($cachedEntities, $ref);
+		return $ret;
+	}
+	/**
 	 * handles request from eID
 	 *
 	 * @param	string		$ref: record reference (co)
@@ -211,7 +223,6 @@ class toctoc_comments_api {
 		$html = $this->lib->handleeID($ref, $conf, $this, $messagetodisplay, $returnurl);
 		return $html;
 	}
-
 	/**
 	 * gets ratings display
 	 *
@@ -283,60 +294,61 @@ class toctoc_comments_api {
 	 *
 	 * @return	[type]		...
 	 */
-		public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
-			$feuserid = 0, $cmd, $piVars, $cid, $datathis, $AjaxData, $userpic, $commentspics, $check='',
-			$extref='', $tctreestate  = NULL, $commentreplyid=0, $isrefresh=0, $confSess = array()) {
-			$this->conf = $conf;
-			if ($fromAjax == TRUE) {
-				$this->externalUid = $datathis['externalUid'];
-				$this->externalUidString = $datathis['externalUidString'];
-				$this->showUidParam = $datathis['showUidParam'];
-				$this->where = $datathis['where'];
-				$this->where_dpck  = $datathis['where_dpck'];
+	public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
+			$feuserid = 0, $cmd, $piVars, $cid, $datathis, $userpic, $commentspics, $check='',
+		    $extref='', $tctreestate  = NULL, $commentreplyid=0, $isrefresh=0, $confSess = array()) {
+		
+		$this->conf = $conf;
+		if ($fromAjax == TRUE) {
+			$this->externalUid = $datathis['externalUid'];
+			$this->externalUidString = $datathis['externalUidString'];
+			$this->showUidParam = $datathis['showUidParam'];
+			$this->where = $datathis['where'];
+			$this->where_dpck  = $datathis['where_dpck'];
 
-				$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['templateFile']);
-				$usetemplateFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
+			$usetemplateFile= str_replace('/EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $conf['templateFile']);
+			$usetemplateFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
 
-				$this->templateCode = @file_get_contents(PATH_site . $usetemplateFile);
+			$this->templateCode = @file_get_contents(PATH_site . $usetemplateFile);
 
-				$this->foreignTableName = $datathis['foreignTableName'];
-				if (isset($datathis['totalrows'])) {
-					// browse case
-					$this->totalrows  = $datathis['totalrows'];
-					$this->startpoint  = $datathis['startpoint'];
-					$_SESSION['lastTotalrows'][$cid] = $this->totalrows;
-					$_SESSION['lastStartpoint'][$cid] = $this->startpoint;
-				} else {
-					if (isset($_SESSION['lastTotalrows'][$cid])) {
-						$this->totalrows = $_SESSION['lastTotalrows'][$cid];
-						$this->startpoint = $_SESSION['lastStartpoint'][$cid];
-					}
+			$this->foreignTableName = $datathis['foreignTableName'];
+			if (isset($datathis['totalrows'])) {
+				// browse case
+				$this->totalrows  = $datathis['totalrows'];
+				$this->startpoint  = $datathis['startpoint'];
+				$_SESSION['lastTotalrows'][$cid] = $this->totalrows;
+				$_SESSION['lastStartpoint'][$cid] = $this->startpoint;
+			} else {
+				if (isset($_SESSION['lastTotalrows'][$cid])) {
+					$this->totalrows = $_SESSION['lastTotalrows'][$cid];
+					$this->startpoint = $_SESSION['lastStartpoint'][$cid];
 				}
-
-				if ($conf['externalPrefix'] != 'pages') {
-					$_SESSION['commentListRecord']=$this->foreignTableName . '_' . $this->externalUid;
-				} else {
-					$_SESSION['commentListRecord']='tt_content_' . $cid;
-				}
-
-			 }
-
-			 if ($isrefresh==1) {
-			 	$_SESSION['userAJAXimage']='';
-			 }
-
-			$html = $this->lib->maincomments($ref, $conf, $fromAjax, $pid, $feuserid, $cmd, $this, $piVars, $cid, $datathis['sessionCaptchaData'], $userpic,
-					$commentspics, $check, $AjaxData, $extref, $tctreestate, $commentreplyid, $confSess);
-			if ($isrefresh==1) {
-				$html .= '<div id="dummy"></div>' . $this->lib->maincomments($ref, $conf, $fromAjax, $pid, $feuserid, 'showform', $this, $piVars, $cid,
-						$datathis['sessionCaptchaData'], $userpic, $commentspics, $check, $AjaxData, $extref, $tctreestate, $commentreplyid);
-				$html .= '<div id="dummy"></div><div>' . $this->lib->maincomments($ref, $conf, $fromAjax, $pid, $feuserid, 'updateAJAXdata', $this,
-						$piVars, $cid, $datathis['sessionCaptchaData'], $userpic, $commentspics, $check, $AjaxData, $extref, $tctreestate, $commentreplyid) .
-						'</div>';
 			}
 
-			return $html;
+			if ($conf['externalPrefix'] != 'pages') {
+				$_SESSION['commentListRecord']=$this->foreignTableName . '_' . $this->externalUid;
+			} else {
+				$_SESSION['commentListRecord']='tt_content_' . $cid;
+			}
+
+		 }
+
+		 if ($isrefresh==1) {
+		 	$_SESSION['userAJAXimage']='';
+		 }
+
+		$html = $this->lib->maincomments($ref, $conf, $fromAjax, $pid, $feuserid, $cmd, $this, $piVars, $cid, $datathis['sessionCaptchaData'], $userpic,
+				$commentspics, $check, $extref, $tctreestate, $commentreplyid, $confSess);
+		if ($isrefresh==1) {
+			$html .= '<div id="dummy"></div>' . $this->lib->maincomments($ref, $conf, $fromAjax, $pid, $feuserid, 'showform', $this, $piVars, $cid,
+					$datathis['sessionCaptchaData'], $userpic, $commentspics, $check, $extref, $tctreestate, $commentreplyid);
+			$html .= '<div id="dummy"></div><div>' . $this->lib->maincomments($ref, $conf, $fromAjax, $pid, $feuserid, 'updateAJAXdata', $this,
+					$piVars, $cid, $datathis['sessionCaptchaData'], $userpic, $commentspics, $check, $extref, $tctreestate, $commentreplyid) .
+					'</div>';
 		}
+
+		return $html;
+	}
 
 	/**
 	 * updates a comment
@@ -382,7 +394,7 @@ class toctoc_comments_api {
 		$usetemplateFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
 
 		$this->templateCode = @file_get_contents(PATH_site . $usetemplateFile);
-
+		
 		$retstr = $this->lib->showCommentsSearch($conf, $this, TRUE, $data, $cid);
 		return $retstr;
 	}
@@ -426,10 +438,11 @@ class toctoc_comments_api {
 	 * Set the timestamp of plugins of $external_ref_uid_list in table tx_toctoc_comments_plugincachecontrol to current value.
 	 *
 	 * @param	string		$external_ref_uid_list: ...
+	 * @param	int		$tstime: optional time to set as tstamp
 	 * @return	void
 	 */
-	public function setPluginCacheControlTstamp ($external_ref_uid_list) {
-		$this->lib->setPluginCacheControlTstamp($external_ref_uid_list);
+	public function setPluginCacheControlTstamp ($external_ref_uid_list, $tstime = -1) {
+		$this->lib->setPluginCacheControlTstamp($external_ref_uid_list, $tstime);
 	}
 	/**
 	 * needed by class.tx_commentsresponse_hooks.php

@@ -13,11 +13,8 @@ After change of template, changes are not visible in frontend, what to do?
 
 You need to clear the internal session cache of **toctoc_comments**  as well. 
 
-This is done by calling the page using GET-Paramenter **?purge_cache=1** .
+In the backend module delete all cache and sessions in Overview -> System
 
-Alternatively, while doing configuration changes, it is recommended to switch off
-**toctoc_comments**  session cache. This is done by setting
+Using GET-Paramenter ** ?purge_cache=1 ** is a possibility as well, but the other users sessions remain intact.
 
-::
 
-    advanced.useSessionCache = 0

@@ -37,17 +37,16 @@
  *
  *
  *
- *   63: class toctoc_comments_common
- *  114:     public function unmirrorConf($confDiff)
- *  157:     public function stop_toctoccomments_session()
- *  203:     public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '', $conf = array(), $frompi1 = FALSE)
- *  489:     public function removegarbagesessions($sessIp)
- *  571:     private function getSessionSavePath()
- *  594:     private function ensureSessionSavePathExists($sessionSavePath, $dohtaccess = TRUE)
- *  657:     public function substGifbuilder ($contentdir, $filename, $imgsize)
- *  777:     private function getGifBuilderSavePath()
+ *   62: class toctoc_comments_common
+ *  115:     public function stop_toctoccomments_session()
+ *  161:     public function start_toctoccomments_session($expireTimeInMinutes, $sessionSavePathSaved = '', $conf = array(), $frompi1 = FALSE)
+ *  447:     public function removegarbagesessions($sessIp)
+ *  529:     private function getSessionSavePath()
+ *  552:     private function ensureSessionSavePathExists($sessionSavePath, $dohtaccess = TRUE)
+ *  615:     public function substGifbuilder ($contentdir, $filename, $imgsize)
+ *  735:     private function getGifBuilderSavePath()
  *
- * TOTAL FUNCTIONS: 8
+ * TOTAL FUNCTIONS: 7
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -104,48 +103,7 @@ class toctoc_comments_common {
 	 * @var string
 	 */
 	private $backendFile = 'index.php';
-	/**
-	 * adds the conf-difference again to the mirror of the conf
-	 * and reconstuct the full conf
-	 *
-	 * @param	array		$confDiff: difference to the mirrorconf
-	 * @return	array		$confout: rebuilt conf
-	 */
-	public function unmirrorConf($confDiff) {
-		if (!isset($_SESSION['cSModule'])) {
-			$this->start_toctoccomments_session(1440);
-		}
 
-		if (isset($_SESSION['dontUseMirrorConf'])) {
-			if (intval($_SESSION['dontUseMirrorConf']) == 0) {
-				if (isset($_SESSION['mirrorconf'])) {
-					$mirrorconf=array();
-
-					$mirrorconf=unserialize(base64_decode($_SESSION['mirrorconf']));
-					if (is_array($confDiff)) {
-						if (is_array($mirrorconf)) {
-							$confout = array_replace_recursive($mirrorconf, $confDiff);
-						} else {
-							$confout = '';
-						}
-
-					} else {
-						$confout = $mirrorconf;
-					}
-
-				} else {
-					$confout = '';
-				}
-
-				return $confout;
-			} else {
-				return $confDiff;
-			}
-		} else {
-			return $confDiff;
-		}
-
-	}
 	/**
 	 * Starts and handles Session used
 	 *

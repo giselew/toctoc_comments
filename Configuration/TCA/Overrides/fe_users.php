@@ -85,11 +85,13 @@ $tempColumns = array (
 				'config' => array (
 						'type' => 'radio',
 						'items' => array (
-								array('LLL:EXT:toctoc_comments/locallang_db.xml:fe_users.gender.I.0', '0'),
-								array('LLL:EXT:toctoc_comments/locallang_db.xml:fe_users.gender.I.1', '1')
-						),
+								array('LLL:EXT:toctoc_comments/locallang_db.xml:fe_users.gender.I.0',
+										0),
+								array('LLL:EXT:toctoc_comments/locallang_db.xml:fe_users.gender.I.1',
+										1)
+						)
 				)
-		),
+		)
 );
 
 if($GLOBALS['TCA']['fe_users']['columns']['gender']) {

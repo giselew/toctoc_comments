@@ -11,12 +11,10 @@
 Where are the files?
 ^^^^^^^^^^^^^^^^^^^^
 
-CSS-outputs are all in res/css/temp/. 
+.. index::
+	single: Design; File locations
 
-CSS-files used for processing the output are 
-
-- res/css/tx-tc-**versionnumber** .css (Input for boxmodeller)
-- res/css/themes/default/css/tx-tc-**versionnumber** -theme.css (Input for colormodeller)
+CSS-outputs are all in res/css/temp/.
 
 CSS-file used for emojis is in res/css/emoji/, there are 4 variants, named emoji[**size of emojis in
 pixel** ].css. Emojis' CSS is from TS-setup:

@@ -11,6 +11,6 @@
 Developing your theme
 ^^^^^^^^^^^^^^^^^^^^^
 
-Use theme “**work** ” for a start. It's a copy of theme default. 
+Use theme “**work** ” for a start. See res/css/themes/work/img/themework.txt
 
-Once you're done, copy your files in the custom theme folders.
+Once you're done, copy your files in a custom theme folder in res/css/themes/

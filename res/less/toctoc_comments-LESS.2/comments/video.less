@@ -45,8 +45,6 @@
 }
 .tx-tc-vid-embed {
  	float: left;
-/* 	height: auto; */
-/* 	padding: 4px; */
 	max-width: 91%;
 	min-width: 91%;
 }
@@ -58,7 +56,8 @@
 	overflow: hidden;
 }
 .tx-tc-cts-vid-formtext .tx-tc-ct-box-ctclose {
-	margin: 4px 4px 0 0;
+	margin: 4px 0 0 0;
+	position: relative;
 }
 .tx-tc-form-top-message .tx-tc-ct-box-ctclose {
 	margin: 4px 7px -4px 0;
@@ -66,6 +65,10 @@
 .flowplayer {
 	width: 80%;
 	background: @color-flowplayer-background;
+	position: initial !important;
+}
+.flowplayer.is-playing {
+    background-color: transparent !important;
 }
 .tx-tc-vidimgh5 {
 	margin: 0 -4px 0 -8px;

@@ -29,44 +29,44 @@
  *
  *
  *
- *  110: class tx_toctoccomments_pi1 extends tslib_pibase
+ *  109: class tx_toctoccomments_pi1 extends tslib_pibase
  *  201:     public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL)
- * 2804:     protected function checkJSLoc()
- * 3091:     protected function checkCSSTheme()
- * 3237:     protected function checkCSSLoc()
- * 4006:     protected function makesharingcss($CSSmode = TRUE)
- * 4073:     protected function initprefixToTableMap()
- * 4109:     protected function initexternaluid($withinitprefixToTableMap)
- * 4260:     protected function init()
- * 4922:     protected function mergeConfiguration()
- * 5278:     protected function fetchConfigValue($param)
- * 5306:     protected function ae_detect_ie()
- * 5329:     protected function boxmodel()
- * 6838:     protected function crunchcss($buffer)
- * 6865:     protected function calculate_string( $mathString )
- * 6888:     protected function locationHeaderUrlsubDir()
- * 6907:     protected function currentPageName()
- * 6935:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
- * 6970:     protected function doClearCache ($forceclear=FALSE)
- * 7004:     protected function InitCachingVariables ()
- * 7062:     protected function getPluginCacheControlTstamp ($external_ref_uid)
- * 7073:     protected function getLastUserAdditionTstamp ()
- * 7096:     protected function initLegacyCache ()
- * 7110:     protected function check_scopes()
- * 7268:     protected function initializeprefixtotablemap()
- * 7310:     protected function sharrrejs()
- * 7407:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
- * 7460:     private function resolveBackPath($pathStr)
- * 7495:     private function dirname($path)
- * 7509:     private function revExplode($delimiter, $string, $count = 0)
- * 7525:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- * 7548:     public function createLinks($text, $conf = NULL)
- * 7571:     protected function getThemeTmageDimension($filename, $returnindex)
- * 7591:     protected function checktoctoccommentsuser()
- * 7714:     protected function getExternalUidShortId()
- * 7759:     protected function checkandload_emolikes()
- * 7810:     protected function fbgoogle_lan($isfacebook)
- * 7891:     private function detectmobile($isTabletOrHandyexceptFF = FALSE)
+ * 2886:     protected function checkJSLoc()
+ * 3173:     protected function checkCSSTheme()
+ * 3219:     protected function checkCSSLoc()
+ * 3555:     protected function makesharingcss($CSSmode = TRUE)
+ * 3579:     protected function initprefixToTableMap()
+ * 3615:     protected function initexternaluid($withinitprefixToTableMap)
+ * 3766:     protected function init()
+ * 4443:     protected function mergeConfiguration()
+ * 4792:     protected function fetchConfigValue($param)
+ * 4820:     protected function ae_detect_ie()
+ * 4843:     protected function boxmodel()
+ * 5847:     protected function crunchcss($buffer)
+ * 5870:     protected function locationHeaderUrlsubDir()
+ * 5889:     protected function currentPageName()
+ * 5919:     protected function ttclearcache ($pid, $withplugin=TRUE, $withcache = FALSE, $debugstr = '')
+ * 5954:     protected function doClearCache($forceclear=FALSE)
+ * 5988:     protected function InitCachingVariables ()
+ * 6047:     protected function getPluginCacheControlTstamp ($external_ref_uid)
+ * 6058:     protected function getLastUserAdditionTstamp ()
+ * 6081:     protected function initLegacyCache ()
+ * 6095:     protected function check_scopes()
+ * 6253:     protected function initializeprefixtotablemap()
+ * 6296:     protected function sharrrejs()
+ * 6404:     protected function createVersionNumberedFilename($file, $forceQueryString = FALSE)
+ * 6457:     private function resolveBackPath($pathStr)
+ * 6492:     private function dirname($path)
+ * 6506:     private function revExplode($delimiter, $string, $count = 0)
+ * 6522:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ * 6545:     public function createLinks($text, $conf = NULL)
+ * 6568:     protected function getThemeTmageDimension($filename, $returnindex)
+ * 6588:     protected function checktoctoccommentsuser()
+ * 6711:     protected function getExternalUidShortId()
+ * 6756:     protected function checkandload_emolikes()
+ * 6807:     protected function fbgoogle_lan($isfacebook)
+ * 6889:     private function detectmobile($isTabletOrHandyexceptFF = FALSE)
+ * 6929:     protected function getReportUser($ReportPluginMode)
  *
  * TOTAL FUNCTIONS: 37
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -80,7 +80,6 @@ if (version_compare(TYPO3_version, '6.0', '<')) {
 		require_once(PATH_t3lib . 'utility/class.t3lib_utility_math.php');
 	}
 } else {
-	//require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('backend') . 'Classes/Utility/BackendUtility.php';
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('frontend') . 'Classes/Plugin/AbstractPlugin.php';
 	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/Utility/MathUtility.php';
 }
@@ -91,7 +90,7 @@ if (version_compare(TYPO3_version, '6.3', '>')) {
 	(class_exists('t3lib_div', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\GeneralUtility', 't3lib_div');
 	(class_exists('t3lib_utility_Math', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\Utility\MathUtility', 't3lib_utility_Math');
 	(class_exists('tslib_cObj', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer', 'tslib_cObj');
-	if (!t3lib_extMgm::isLoaded('compatibility6')) {
+	if ((!t3lib_extMgm::isLoaded('compatibility6')) && (!t3lib_extMgm::isLoaded('compatibility7'))) {
 		(class_exists('t3lib_TCEmain', FALSE)) ? TRUE : class_alias('TYPO3\CMS\Core\DataHandling\DataHandler', 't3lib_TCEmain');
 	}
 
@@ -113,7 +112,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '911';
+	public $extVersion = '920';
 	public $extLESSVersion = 'toctoc_comments-LESS.2';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
@@ -128,7 +127,6 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $formTopMessage = '';// This message is displayed in the top of the form
 	public $feuserid=0;
 
-	public $templavoila_field = 'field_content';  // If the option is not set, this is the default name of the TemplaVoila Field which holds the MainContent
 	public $maxtimeafterinsert = 1400;			   // time in milliseconds the system waits until considering a submit as new total transaction
 											   //    insert, header and then show the plugins of the page
 	public $totalrows  = 0;
@@ -187,6 +185,8 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	private $newestCSSFileTime = 0;
 
 	public $canZip = FALSE;
+	public $reprtUserByID = FALSE;
+	public $clientissearchengine = FALSE;
 
 	/**
 	 * Main function of the plugin
@@ -201,7 +201,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public function main($content, $conf, $hookTablePrefix = '', $hookId = 0, $hookcObj = NULL) {
 		if (!is_array($conf)) {
 			return '<div><span>Basic configuration for extension toctoc_comments is missing. Static template loaded?</span></div>';
-		} elseif (count($conf)<20) {
+		} elseif (count($conf) < 20) {
 			$cntconf = count($conf);
 			return '<div><span>Basic configuration (elements: ' . $cntconf . ') for extension toctoc_comments too small. Static template loaded?</span></div>';
 		}
@@ -214,14 +214,8 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$conf['optionalRecordId'] =  'pages_' . $GLOBALS['TSFE']->id;
 		}
 
-		if ($conf['theme.']['themeVersion'] == 2) {
-			$conf['theme.']['refreshCSSFromLESS'] = 1;
-			$conf['theme.']['freezeLevelCSS'] = 1;
-		}
-
-		if ($conf['theme.']['refreshCSSFromLESS'] == 0) {
-			$conf['theme.']['themeVersion']=1;
-		}
+		unset($conf['theme.']['refreshCSSFromLESS']);
+		unset($conf['theme.']['freezeLevelCSS']);
 
 		//$GLOBALS['TCA']['pages']['columns'] must be set
 		If (!is_array($GLOBALS['TCA'])) {
@@ -240,13 +234,20 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		if (intval($this->conf['sessionTimeout']) < 2) {
 			$this->conf['sessionTimeout'] = 1440;
 		}
+
+		if (intval($this->conf['dbCacheTimeout']) < intval($this->conf['sessionTimeout'])) {
+			$this->conf['dbCacheTimeout'] = intval($this->conf['sessionTimeout']);
+		}
+		
+		$this->conf['advanced.']['useSessionCache'] = 1;
+
 		$this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['toctoc_comments']);
 
-		if (intval($this->conf['debug.']['useDebug'])==1) {
+		if (intval($this->conf['debug.']['useDebug']) == 1) {
 			$this->showsdebugprint = TRUE;
 		}
 
-		if (intval($this->conf['pluginmode'])>0) {
+		if (intval($this->conf['pluginmode']) > 0) {
 			if ($hookTablePrefix != '') {
 				if ($hookcObj != NULL) {
 					$this->cObj=$hookcObj;
@@ -255,7 +256,9 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 						$this->cObj = t3lib_div::makeInstance('tslib_cObj');
 						$this->cObj->start('', '');
 					}
+
 				}
+
 			}
 
 			$hookTablePrefix = '';
@@ -276,9 +279,9 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 			$numcookies = count($_COOKIE);
 			$numMatches = 0;
-			$countinterestingCrawlers =count($interestingCrawlers);
+			$countinterestingCrawlers = count($interestingCrawlers);
 			$countinterestingWhiteCrawlersConf = count($interestingWhiteCrawlersConf);
-			$identstr='';
+			$identstr = '';
 
 			if ($_SERVER['HTTP_USER_AGENT']){
 				if (trim($_SERVER['HTTP_USER_AGENT']) != ''){
@@ -299,6 +302,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 							}
 
 						}
+
 					}
 
 				} else {
@@ -311,13 +315,16 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				if (intval($this->conf['advanced.']['dontTakeEmptyAgentStringAsCrawler']) == 0) {
 						$numMatches++;
 				}
+
 			}
+
 		}
 
 		$this->lib = t3lib_div::makeInstance('toctoc_comment_lib');
 
-		if (intval($this->conf['pluginmode'])==0) {
+		$this->clientissearchengine = FALSE;
 
+		if (intval($this->conf['pluginmode'])==0) {
 			if (($numMatches > 0) || ($foundwhite == 1)) {
 				if ($conf['advanced.']['protocolCrawlerAgents'] == 1) {
 					if (($numMatches > 0)) {
@@ -332,7 +339,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 									$arrCurrentIPres = explode('.', $strCurrentIPres);
 									$cntarrCurrentIPres = count($arrCurrentIPres);
 									$IPrevTest = '';
-									for ($i = $cntarrCurrentIPres-1; (($i > 0) && ($i > ($cntarrCurrentIPres -4))); $i--) {
+									for ($i = $cntarrCurrentIPres-1; (($i > 0) && ($i > ($cntarrCurrentIPres-4))); $i--) {
 										$IPrevTest = '.' . $arrCurrentIPres[$i] . $IPrevTest;
 									}
 
@@ -376,7 +383,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 					} else {
 						$content = file_get_contents(realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'crawlerprotocol.txt');
 						$contentarr = explode("\r\n", $content);
-						$testelem= 	$contentarr[count($contentarr)-1];
+						$testelem = $contentarr[count($contentarr)-1];
 						$testelemarr = explode('@@', $testelem);
 						$testelemarrhua = explode(' idfd "', $testelemarr[0]);
 						$testelemarrhua2 = explode(': ', $testelemarrhua[0]);
@@ -405,7 +412,6 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				if ($conf['advanced.']['protocolBlacklistedIPs'] == 1) {
 					if (($numMatches > 0)) {
 						$ip = $this->lib->getIpAddr();
-
 						$protocol = '';
 						$protocol = 'BL: ' . strftime('%Y/%m/%d %H:%M:%S', microtime(TRUE)) . ': ' . $this->hitip . ' ' . trim($this->hitipcomment .
 								' ' . $_SERVER['HTTP_USER_AGENT']) . ' idfd "' . $ip . '"@@' . $GLOBALS['TSFE']->id . '@@' . $GLOBALS['TSFE']->lang;
@@ -445,6 +451,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 					}
 				}
 			}
+
 			if ((trim($hookTablePrefix)) != '' && (intval($hookId) > 0)) {
 				$this->conf['dontSkipSearchEngines'] = 1;
 			}
@@ -455,41 +462,67 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 					$this->pi_USER_INT_obj = 1;
 					return 'botMessage_' . $this->extKey . '_' . $this->extVersion;
 				}
-				$this->conf['advanced.']['useSessionCache'] = 0;
-			}
-			// end exclude search enignes and avoid indexing of comments
 
-			if ($this->conf['debug.']['useDebugFeUserIds']!='') {
+				$this->conf['advanced.']['useSessionCache'] = 0;
+				$this->clientissearchengine = TRUE;
+			}
+
+			// end exclude search enignes and avoid indexing of comments
+			$zeroUserId = FALSE;
+			if ($this->conf['debug.']['useDebugFeUserIds'] != '') {
 				$dbuarr=explode(',', $this->conf['debug.']['useDebugFeUserIds']);
 				foreach($dbuarr as $dbusr) {
-					if ($dbusr==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+					if ($dbusr == intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+						$this->sdebugprintuser=$dbusr;
+					}
+
+					if ($dbusr == intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+						$zeroUserId = TRUE;
+					}
+
+				}
+
+			}
+
+			if ($zeroUserId == TRUE) {
+				if (version_compare(TYPO3_version, '4.9', '>')) {
+					if (!\TYPO3\CMS\Core\Utility\GeneralUtility::cmpIP(
+							\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('REMOTE_ADDR'),
+							$GLOBALS['TYPO3_CONF_VARS']['SYS']['devIPmask'])
+					) {
+						$this->sdebugprintuser=$dbusr;
+					}
+
+				} else {
+					if(!t3lib_div::cmpIP(t3lib_div::getIndpEnv('REMOTE_ADDR'), $GLOBALS['TYPO3_CONF_VARS']['SYS']['devIPmask'])) {
 						$this->sdebugprintuser=$dbusr;
 					}
 
 				}
 
 			}
+
 		}
 
-		if (intval($this->conf['debug.']['showStartupDetails'])==1) {
+		if (intval($this->conf['debug.']['showStartupDetails']) == 1) {
 			$this->showsdebugprintstartuptimes = TRUE;
 		}
 
-		if (intval($this->conf['debug.']['showLibDetails'])==1) {
+		if (intval($this->conf['debug.']['showLibDetails']) == 1) {
 			$showsdebugprintlibtimes = TRUE;
 		}
+
 		$this->showCSScomments = $this->conf['debug.']['showCSScomments'];
 		$this->showDropsfromBoxmodel = $this->conf['debug.']['showDropsfromBoxmodel'];
 
 		unset($this->conf['debug.']);
 
 		$this->commonObj = t3lib_div::makeInstance('toctoc_comments_common');
-		$sessionTimeout = $this->conf['sessionTimeout'];
-		$this->commonObj->start_toctoccomments_session($sessionTimeout, '', $this->conf, TRUE);
+		$this->commonObj->start_toctoccomments_session($this->conf['sessionTimeout'], '', $this->conf, TRUE);
 
 		// detect possible COOKIE unfriendly client
 		$countcookies = count($_COOKIE);
-		$hascookie= trim($_COOKIE['sess_' . $this->extKey]);
+		$hascookie = trim($_COOKIE['sess_' . $this->extKey]);
 
 		if ($hascookie == '') {
 			$countcookies = 0;
@@ -501,33 +534,27 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$this->commonObj->removegarbagesessions($strCurrentIP);
 		}
 
-		if ($this->showsdebugprint==TRUE) {
-			$starttimedebug=microtime(TRUE);
-			$timereportlast='';
-			if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+		if ($this->showsdebugprint == TRUE) {
+			$starttimedebug = microtime(TRUE);
+			$timereportlast = '';
+			if ($this->sdebugprintuser == intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
 				$tdifftolastrun = 1000*(microtime(TRUE) - $_SESSION['edgeTime']);
-				if ($tdifftolastrun<=intval($this->maxtimeafterinsert)) {
-					$timereportlast='<div class="tx-tc-debug">Time since last rendering: ' . round($tdifftolastrun, 1) . ' ms</div>';
+				if ($tdifftolastrun <= intval($this->maxtimeafterinsert)) {
+					$timereportlast = '<div class="tx-tc-debug">Time since last rendering: ' . intval($tdifftolastrun) . ' ms</div>';
 				}
 
 			}
 
 		}
 
-		/* 		We choose to use PHP-Sessions instead of TYPO3-sessions
-		 * 		The TYPO3-sessions work well from page call to page call, but inside page generation these sessions are
-		 * 		not suitable, because they commit only after the page has been generated,
-		 * 		which is definetely to slow to pass session-information in contentelement rendering
-		 */
-
-		if (intval($showsdebugprintlibtimes)==1) {
-			$strdebugprintlib='';
-			$starttimedebuglib=microtime(TRUE);
+		if (intval($showsdebugprintlibtimes) == 1) {
+			$strdebugprintlib = '';
+			$starttimedebuglib = microtime(TRUE);
 		}
 
-		if (intval($showsdebugprintlibtimes)==1) {
-			$difftimedebuglib= 1000*(microtime(TRUE)-$starttimedebuglib);
-			$strdebugprintlib='<div class="tx-tc-debug"><b>Lib, details</b> (times in ms): <br />Load Lib ' . round($difftimedebuglib, 1) . '';
+		if (intval($showsdebugprintlibtimes) == 1) {
+			$difftimedebuglib = 1000*(microtime(TRUE)-$starttimedebuglib);
+			$strdebugprintlib = '<div class="tx-tc-debug"><b>Lib, details</b> (times in ms):<br />Load Lib ' . intval($difftimedebuglib) . '';
 		}
 
 		$this->lib->fixLL($this->conf);
@@ -540,30 +567,35 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		$this->pi_initPIflexForm();
 		$isPlugin=0;
 
-		if (intval($this->conf['dataProtect.']['cookieLifetime'])<7) {
-			$this->conf['dataProtect.']['cookieLifetime']=7;
+		if (intval($this->conf['dataProtect.']['cookieLifetime']) < 7) {
+			$this->conf['dataProtect.']['cookieLifetime'] = 7;
 		}
 
 		if (intval($this->conf['advanced.']['sortMostPopular']) == 1) {
 			$this->conf['advanced.']['reverseSorting'] = 1;
 		}
 
-		if (intval($this->conf['ratings.']['maxValue'])>11) {
-			$this->conf['ratings.']['maxValue']=11;
+		if (intval($this->conf['ratings.']['maxValue']) > 11) {
+			$this->conf['ratings.']['maxValue'] = 11;
 		}
 
-		if (intval($this->conf['ratings.']['maxValue'])<1) {
-			$this->conf['ratings.']['maxValue']=1;
+		if (intval($this->conf['ratings.']['maxValue']) < 1) {
+			$this->conf['ratings.']['maxValue'] = 1;
 		}
 
-		if (intval($this->conf['ratings.']['minValue'])>intval($this->conf['ratings.']['maxValue'])) {
-			$this->conf['ratings.']['minValue']=intval($this->conf['ratings.']['maxValue']);
+		if (intval($this->conf['advanced.']['emailValidDays']) > 365) {
+			$this->conf['advanced.']['emailValidDays'] = 365;
 		}
 
-		if (intval($this->conf['advanced.']['activateClearPageCache'])==1) {
-			$this->activateClearPageCache=TRUE;
-			$this->conf['advanced.']['useSessionCache'] = 0;
+		if (intval($this->conf['advanced.']['emailValidDays']) < 7) {
+			$this->conf['advanced.']['emailValidDays'] = 7;
 		}
+
+		if (intval($this->conf['ratings.']['minValue']) > intval($this->conf['ratings.']['maxValue'])) {
+			$this->conf['ratings.']['minValue'] = intval($this->conf['ratings.']['maxValue']);
+		}
+
+		$this->conf['advanced.']['activateClearPageCache'] = 0;
 
 		if (trim($this->conf['theme.']['selectedBoxmodel']) != '') {
 			if (str_replace('.txt', '', $this->conf['theme.']['selectedBoxmodel']) == $this->conf['theme.']['selectedBoxmodel']) {
@@ -579,40 +611,51 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 					(trim($this->conf['advanced.']['gravatarLocalHost']) == 'retro')) {
 				$gravatarLocalHost = trim($this->conf['advanced.']['gravatarLocalHost']);
 			}
+
 			$this->conf['advanced.']['gravatarLocalHost']=$gravatarLocalHost;
-
 		}
 
-		if (((intval($_SESSION['AJAXimagesrefresh']) == TRUE) || ($this->conf['advanced.']['useSessionCache'] == 0)) && (intval($_SESSION['cachepurged'])!=1)) {
-		// clean sessions if on a different page the plugin is call with useSessionCache == 0
-		// is equivalent to ?purge_cache=1
+		if ((intval($_SESSION['AJAXimagesrefresh']) == TRUE) || ($this->conf['advanced.']['useSessionCache'] == 0)) {
 			$this->InitCachingVariables();
-			$_SESSION['cachepurged']=1;
+
 		}
 
-		if (((intval($this->conf['pluginmode'])==0) || (intval($this->conf['pluginmode'])==5)) && (intval($_GET['purge_cache'])==1) && (intval($_SESSION['cachepurged'])!=1 )) {
+		if (version_compare(TYPO3_version, '4.9', '>')) {
+			if (!\TYPO3\CMS\Core\Utility\GeneralUtility::cmpIP(
+					\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('REMOTE_ADDR'),
+					$GLOBALS['TYPO3_CONF_VARS']['SYS']['devIPmask'])
+			) {
+				unset($_GET['purge_cache']);
+			}
+
+		} else {
+			if(!t3lib_div::cmpIP(t3lib_div::getIndpEnv('REMOTE_ADDR'), $GLOBALS['TYPO3_CONF_VARS']['SYS']['devIPmask'])) {
+				unset($_GET['purge_cache']);
+			}
+
+		}
+
+		if (((intval($this->conf['pluginmode'])==0) || (intval($this->conf['pluginmode'])==5)) && (intval($_GET['purge_cache'])==1)) {
 			unset($_GET['purge_cache']);
 			$this->InitCachingVariables();
-			$_SESSION['cachepurged']=1;
+			$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cacheajax');
+			$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport');
+			$_SESSION['ccacheajax'] = 1;
 			$sdebugprintli .= '<br />'. 'purge_cache = 1, page-id ' .$GLOBALS['TSFE']->id. '<br />';
 		} else {
-			if (($loginreset==TRUE) && (intval($_SESSION['cachepurgedlogin'])!=1) && (intval($_SESSION['cachepurged'])!=1)) {
+			if ($loginreset == TRUE) {
 				$this->InitCachingVariables();
-				$loginreset=FALSE;
+				$loginreset = FALSE;
 				$this->lib->resetSessionVars(0);
 				$_SESSION['activeBoxmodel']=$this->conf['theme.']['selectedBoxmodel'];
 				$_SESSION['commentsPageId'] = $GLOBALS['TSFE']->id;
 				$_SESSION['curPageName'] = $this->currentPageName();
 				$_SESSION['activelang'] = $GLOBALS['TSFE']->lang;
-				$_SESSION['cachepurgedlogin']=1;
-				$_SESSION['cachepurged']=1;
 				$sdebugprintli .= '<br />'. 'Init Sessionvariables because of logout/in on page id ' .$GLOBALS['TSFE']->id. '<br />';
 			} else {
 				if (intval(t3lib_div::_GP('purge_cache'))==1) {
 
-					$sdebugprintli.= '<br />'. 'No more Init Sessionvariables because of logout/in or purge_cache ('.intval($_SESSION['cachepurged']).') on page id ' .$GLOBALS['TSFE']->id. '<br />';
-				} else {
-					$_SESSION['cachepurgedlogin']=0;
+					$sdebugprintli.= '<br />'. 'No more Init Sessionvariables because of logout/in or purge_cache on page id ' .$GLOBALS['TSFE']->id. '<br />';
 				}
 
 			}
@@ -636,18 +679,15 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				$_SESSION['doChangePasswordForm'] = 2;
 			}
 
-			if (($_SESSION['doChangePasswordForm'] == 2) && (intval($_SESSION['cachepurged'])!=1 )) {
+			if ($_SESSION['doChangePasswordForm'] == 2) {
 				$this->InitCachingVariables();
-
-				$_SESSION['cachepurged']=1;
 				$sdebugprintli .= '<br />'. 'purge_cache on reset password, page-id ' .$GLOBALS['TSFE']->id. '<br />';
 			}
-		}
-		$_SESSION['httpuseragent']=$_SERVER['HTTP_USER_AGENT'];
 
-		if (!isset($_SESSION['mirrorconf'])) {
-			$_SESSION['mirrorconf']=base64_encode(serialize($this->conf));
 		}
+
+		$_SESSION['httpuseragent'] = $_SERVER['HTTP_USER_AGENT'];
+		$_SESSION['formTopMessage'] = '';
 
 		if (intval($this->conf['useUserImage'])==0) {
 			$this->conf['UserImageSize']=1;
@@ -861,6 +901,10 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$this->middotchar = $this->conf['advanced.']['midDot'];
 		} else {
 			$this->middotchar = '&nbsp;';
+		}
+
+		if (intval($this->conf['theme.']['themeVersion']) == 2) {
+			$this->middotchar = '';
 		}
 
 		if ((($this->conf['advanced.']['gravatarRating'] == 'G') ||
@@ -1110,76 +1154,22 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				$_SESSION['TSFE']['config']['spamProtectEmailAddresses_atSubst']=$GLOBALS['TSFE']->config['config']['spamProtectEmailAddresses_atSubst'];
 				$_SESSION['TSFE']['config']['spamProtectEmailAddresses_lastDotSubst']=$GLOBALS['TSFE']->config['config']['spamProtectEmailAddresses_lastDotSubst'];
 		}
-
+		$_SESSION['sharrrejs'] = '';
 		unset($_SESSION['requestCapcha']);
 		$_SESSION['requestCapcha'] = array();
 
 		$tdiff = 1000*(microtime(TRUE) - $_SESSION['edgeTime']);
-
-		$printrendering='';
 		$sessionreseted=FALSE;
 		$this->processcssandjsfiles=FALSE;
-		$localssesreset=FALSE;
-		if (!isset($_SESSION['indexOfSortedCommentsCidList'])) {
-			$_SESSION['indexOfSortedCommentsCidList']=0;
-		}
-
-		if ($_SESSION['indexOfSortedCommentsCidList']=='') {
-			$_SESSION['indexOfSortedCommentsCidList']=0;
-		}
-
-		if (intval($tdiff) > intval($this->maxtimeafterinsert)) {
-			if (isset($_SESSION['rowscidflex'])) {
-				if (count($_SESSION['rowscidflex'])>0) {
-
-					if (intval($_SESSION['indexOfSortedCommentsCidList']) >=count($_SESSION['rowscidflex'])-1) {
-
-						$localssesreset=TRUE;
-					} else {
-						if ($_SESSION['renderingdone']==TRUE) {
-							$localssesreset=TRUE;
-						} elseif (intval($tdiff) > intval($this->maxtimeafterinsert)) {
-							$printrendering .= 'Start Pagerendering at <b>' . date('H:i:s') . '</b>';
-							$timereportlast='';
-							$_SESSION['renderedplugins']=0;
-							$_SESSION['indexOfSortedCommentsCidList']=0;
-
-						}
-
-					}
-
-				} else {
-						$localssesreset=TRUE;
-				}
-
-			} else {
-				$localssesreset=TRUE;
-			}
-
-			if ($localssesreset==TRUE) {
-				$this->lib->resetSessionVars(0);
-				$sessionreseted=TRUE;
-				$printrendering .= 'Start Pagerendering at <b>' . date('H:i:s') . '</b>, resetSessionVars(0) done';
-				$timereportlast='';
-			}
-
-		}
 
 		if ($this->showsdebugprint==TRUE) {
 			if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
-				if ($printrendering!='') {
-					$timereportlast.='<div class="tx-tc-debug">' . $printrendering . '</div>';
-
-				}
-
+					$timereportlast.='<div class="tx-tc-debug"><b>' . date('H:i:s') . '</b></div>';
 			}
 
 		}
 
-		$slcurrentPageName=str_replace('?no_cache=1', '', $this->currentPageName());
-		$slcurrentPageName=str_replace('&no_cache=1', '', $slcurrentPageName);
-		$slcurrentPageName=str_replace('?purge_cache=1', '', $slcurrentPageName);
-		$slcurrentPageName=str_replace('&purge_cache=1', '', $slcurrentPageName);
+		$slcurrentPageName = $this->currentPageName();
 		$_SESSION['activelangid'] = $GLOBALS['TSFE']->sys_language_uid;
 
 		/*
@@ -1225,9 +1215,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		} elseif ($_SESSION['feuserid'] != $GLOBALS['TSFE']->fe_user->user['uid']) {
 			// User has made a logon or logout
 
-			if ($GLOBALS['TSFE']->fe_user->user['uid']>0) {
-				$_SESSION['feuserid'] =0;
-			}
+			$_SESSION['feuserid'] = $GLOBALS['TSFE']->fe_user->user['uid'];
 
 			$this->sdebugprint .= 'feuserid, no total init of Sessionvariables ' .$clearCacheIds. '<br />';
 		}  else {
@@ -1255,7 +1243,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		if ($sessionreseted==TRUE) {
 			// common session inits after a reset
 			$_SESSION['commentListIndex'] = array();
-			$_SESSION['curPageName'] = $this->currentPageName() . $msgtocurP;
+			$_SESSION['curPageName'] = $this->currentPageName();
 			$_SESSION['activelang'] =$GLOBALS['TSFE']->lang;
 			$_SESSION['activelangid'] =$GLOBALS['TSFE']->sys_language_uid;
 			$_SESSION['piGllW'][$_SESSION['activelangid']] = array();
@@ -1318,41 +1306,14 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 		}
 
-		 /*
-		 * Lets build a where-condition for a query which gets the sequence of the contentelements (CEs)
-		 * Here  we only consider CEs from one Column. (UseMainColPos)
-		 * This is because we have only one template per page, not per column.
-		 * In the "real life" it is very rare that comments are placed in different columns of a webpage, they are normally in the
-		 * MainContent-Area.
-		 */
 		if ($this->showsdebugprint==TRUE) {
 			$starttimeTYPO3metamodel=microtime(TRUE);
-			$endtimeTYPO3metamodeltemplavoila=0;
-			$endtimeTYPO3metamodelinternal=0;
 			$endtimehookaccess=0;
 			$endtimesetcommentListRecord=0;
 			$endtimecommentsupdate=0;
-
 		}
 
 		$wherecid = 'uid = ' . strval($GLOBALS['TSFE']->id) . '';
-
-		if (is_null(($this->conf['advanced.']['UseMainColPos']))) {
-			$this->conf['advanced.']['UseMainColPos']= 0;
-		}
-
-		if (trim($this->conf['advanced.']['UseMainColPos'])=='') {
-			$this->conf['advanced.']['UseMainColPos']= 0;
-		}
-
-		if (intval($this->conf['advanced.']['UseMainColPos'])<0) {
-			$this->conf['advanced.']['UseMainColPos']= 0;
-		}
-
-		$langcond = ' AND (sys_language_uid= -1 OR sys_language_uid= 0 OR sys_language_uid=' . intval($_SESSION['activelangid']) . ')';
-		$wherettcontentNoTV = ' (colPos = ' . $this->conf['advanced.']['UseMainColPos'] . $langcond .
-								" AND CType = 'list' AND deleted=0 AND hidden=0 AND list_type = 'toctoc_comments_pi1') ";
-		$ttcontentsortNoTV = 'sorting';
 
 		// Check if TS template was included
 		if (!isset($conf['advanced.'])) {
@@ -1382,6 +1343,97 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 		$communitydisplaylist = $this->init();
 
+		if ($this->showsdebugprint==TRUE) {
+			$starttimecObj=microtime(TRUE);
+		}
+
+		if (!isset($this->cObj)) {
+			$this->cObj = t3lib_div::makeInstance('tslib_cObj');
+			$this->cObj->start('', '');
+		}
+		$uidok = 0;
+		$current_content_uid = 0;
+		if (isset($this->cObj->data['uid'])) {
+			if ($this->cObj->data['uid'] != '') {
+
+				$current_content_uid = $this->cObj->data['uid'];
+				if ($GLOBALS['TSFE']->sys_language_uid != 0) {
+					if (intval($this->conf['advanced.']['useMultilingual']) == 0) {
+						//debug($this->cObj);
+						if ($this->cObj->data['l18n_parent'] != 0) {
+							$current_content_uid = $this->cObj->data['l18n_parent'];
+						}
+
+					}
+
+				}
+
+				$current_content_CType =  $this->cObj->data['CType'];
+				if ($this->conf['externalPrefix'] == 'pages') {
+					$current_content_record = 'tt_content';
+				} else {
+					$current_content_record = $this->conf['externalPrefix'];
+				}
+
+				$uidok = 1;
+
+			}
+		}
+		if (isset($this->cObj->parentRecord['data']['uid']) && ($uidok == 0)) {
+			if ($this->cObj->parentRecord['data']['uid'] != '') {
+				$current_content_uid =  $this->cObj->parentRecord['data']['uid'];
+				if ($GLOBALS['TSFE']->sys_language_uid != 0) {
+					if (intval($this->conf['advanced.']['useMultilingual']) == 0) {
+						//debug($this->cObj->parentRecord['data']);
+						if ($this->cObj->parentRecord['data']['l18n_parent'] != 0) {
+							$current_content_uid = $this->cObj->parentRecord['data']['l18n_parent'];
+						}
+
+					}
+
+				}
+
+				$current_content_CType =  $this->cObj->parentRecord['data']['CType'];
+				if ($this->conf['externalPrefix'] == 'pages') {
+					$current_content_record = 'tt_content';
+				} else {
+						$current_content_record = $this->conf['externalPrefix'];
+				}
+
+				$uidok = 1;
+			}
+
+		}
+
+	 	if (($uidok == 0)) {
+			$current_content_uid = (1000 + $GLOBALS['TSFE']->id) . $this->conf['storagePid'] . $this->lhookId;
+			if ($GLOBALS['TSFE']->sys_language_uid != 0) {
+				if (intval($this->conf['advanced.']['useMultilingual']) == 1) {
+					$current_content_uid = (1000 + (($GLOBALS['TSFE']->sys_language_uid)*1000) + $GLOBALS['TSFE']->id) . $this->conf['storagePid'] . $this->lhookId;
+				}
+
+			}
+
+			$current_content_CType =  'hook';
+			$current_content_record =  $this->lhookTablePrefix;
+		}
+
+		if (($current_content_uid == 0) && (intval($this->conf['pluginmode']) == 0)) {
+			// The Contentelement ID containing the plugin could not be found automatically.
+			$edatum = date('d.m.Y', time());
+			$euhrzeit = date('H:i', time());
+			$echodate = $edatum . ' - '. $euhrzeit;
+			$retstr = '<div class="tx-tc-form-top-message tx-tc-required-error"><p>' . $echodate . '<br />' .
+					$this->lib->pi_getLLWrap($this, 'error.automaticcidfail', FALSE) .
+					'</p></div>';
+			$this->commonObj->stop_toctoccomments_session();
+			return $retstr;
+		}
+
+		if ($this->showsdebugprint==TRUE) {
+			$endtimecObj=microtime(TRUE);
+		}
+
 		if ((intval($GLOBALS['TSFE']->fe_user->user['uid'])>0) && ($this->conf['pluginmode'] == 0 )) {
 			if ($this->conf['sharing.']['useOnlySharing'] != 1) {
 			// checking if there was a change of the current users image
@@ -1389,36 +1441,104 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				if ($this->conf['advanced.']['FeUserDbField']) {
 					$fldimage = $this->conf['advanced.']['FeUserDbField'];
 				}
+				$currentuserimage = '';
+				if (intval(trim($GLOBALS['TSFE']->fe_user->user[$fldimage])) != 0) {
+					$querysys_file_reference = 'SELECT uid_local FROM sys_file_reference WHERE tablenames = "fe_users" AND deleted=0 and hidden=0 and uid_foreign=' . $GLOBALS['TSFE']->fe_user->user['uid'] . ' AND sorting_foreign=1 AND fieldname="' . $fldimage .'"';
+					$resultsys_file_reference= $GLOBALS['TYPO3_DB']->sql_query($querysys_file_reference);
+					$uid_local = 0;
+					while ($rowssys_file_reference = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_file_reference)) {
+						$uid_local = $rowssys_file_reference['uid_local'];
+						break;
+					}
+					$storage = 0;
+					if ($uid_local != 0) {
+						$querysys_file = 'SELECT name, identifier, storage FROM sys_file where uid=' . $uid_local;
+						$resultsys_file= $GLOBALS['TYPO3_DB']->sql_query($querysys_file);
+						$uid_local = 0;
+						while ($rowssys_file = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_file)) {
+							$currentuserimage = $rowssys_file['identifier'];
+							$storage = $rowssys_file['storage'];
+							break;
+						}
+					}
+					$currentstorage = 'fileadmin';
+					if ($storage != 0) {
+						$querysys_storage = 'SELECT configuration FROM sys_file_storage where uid=' . $storage;
+						$resultsys_storage = $GLOBALS['TYPO3_DB']->sql_query($querysys_storage);
+						$uid_local = 0;
+						while ($rowssys_storage = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultsys_storage)) {
+							$currentstoragexml = $rowssys_storage['configuration'];
+											/*
+											 * <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+				<T3FlexForms>
+				    <data>
+				        <sheet index="sDEF">
+				            <language index="lDEF">
+				                <field index="basePath">
+				                    <value index="vDEF">fileadmin/</value>
+				                </field>
+				                <field index="pathType">
+											*/
+							$currentstoragexmlarr = explode('"basePath"', $currentstoragexml);
+							$currentstoragexmlarrs1 = $currentstoragexmlarr[1];
+							$currentstoragexmlarr2 = explode('index="vDEF">', $currentstoragexmlarrs1);
+							$currentstoragexmlarrs2 = $currentstoragexmlarr2[1];
+							$currentstoragexmlarr3 = explode('/</value>', $currentstoragexmlarrs2);
+							$currentstorage= $currentstoragexmlarr3[0];
+							break;
+						}
+					}
+					if ($currentuserimage != '') {
+						$arrimg = explode('/', $currentuserimage);
+						$currentuserimagename = array_pop($arrimg);
+						$FeUserImagePath = implode('/', $arrimg);
+						$FeUserImagePath = $currentstorage . $FeUserImagePath . '/';
+						$currentuserimage = $currentstorage . $currentuserimage;
+						$this->conf['advanced.']['FeUserImagePath'] = $FeUserImagePath;
+					}
 
-				$currentuserimage = trim($this->conf['advanced.']['FeUserImagePath']) . trim($GLOBALS['TSFE']->fe_user->user[$fldimage]);
+				} else {
+					$currentuserimage = trim($this->conf['advanced.']['FeUserImagePath']) . trim($GLOBALS['TSFE']->fe_user->user[$fldimage]);
+					$currentuserimagename = trim($GLOBALS['TSFE']->fe_user->user[$fldimage]);
+				}
+
 				if (isset($_SESSION['AJAXOrigimages'])) {
 					if (is_array($_SESSION['AJAXOrigimages'])) {
 						if (count($_SESSION['AJAXOrigimages'])>1) {
 							if (trim($_SESSION['AJAXOrigimages'][$currentuserimage]) == '') {
 								$_SESSION['AJAXimages'] = array();
-								$_SESSION['AJAXOrigimages']  = array();
+								$_SESSION['AJAXOrigimages'] = array();
 								$saveactivateClearPageCache=$this->activateClearPageCache;
 								$this->activateClearPageCache=TRUE;
 								$this->doClearCache();
 								$this->activateClearPageCache=$saveactivateClearPageCache;
+								$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport WHERE ReportPluginMode = 11');
+								$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_plugincachecontrol SET tstamp =' . time() . ' WHERE external_ref_uid != "tx_toctoc_comments_feuser_mm_0"');
+
 							}
+
 						}
+
 					}
+
 				}
 
 			}
+
 		}
 
-		if ((intval($this->conf['pluginmode'])==0) || (intval($this->conf['pluginmode'])==5)) {
+		$typolinksmade = 0;
+		if ((intval($this->conf['pluginmode']) == 0) || (intval($this->conf['pluginmode']) == 5)) {
 			$useCacheHashNeeded = intval($GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError']);
 			$no_cacheflag = 0;
-			if (intval($GLOBALS['TYPO3_CONF_VARS']['FE']['disableNoCacheParameter']) ==0) {
+			if (intval($GLOBALS['TYPO3_CONF_VARS']['FE']['disableNoCacheParameter']) == 0) {
 				if ($useCacheHashNeeded == 1) {
 					$no_cacheflag = 1;
 				}
 
 			}
 
+			//unset($_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]);
 			if ($this->conf['commentsreport.']['active']) {
 				$conftx_commentsreport = $this->conf['commentsreport.'];
 				$this->conf['tx_commentsreport_pi1.']['reportPid']=$conftx_commentsreport['reportPid'];
@@ -1426,60 +1546,101 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			}
 
 			if (intval($this->conf['dataProtect.']['disclaimerPageID']) > 0) {
-				$conflink = array(
-						// Link to current page
-						'parameter' => intval($this->conf['dataProtect.']['disclaimerPageID']),
-						// Set additional parameters
-						'additionalParams' => '',
-						'ATagParams' => 'rel="nofollow"',
-				);
-				$policypage = $this->cObj->typoLink($this->lib->pi_getLLWrap($this, 'pi1_template.disclaimerpagetextreplacelinktext', FALSE), $conflink);
 
-				$_SESSION['policypage'] = $policypage;
-				if (!(is_array($_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid]))) {
-					$_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid]=array();
+				if (!(is_array($_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]))) {
+
+					$_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])] = array();
+					$_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]['policypage'] = '';
 				}
 
-				$_SESSION['lantypoLink' . $_SESSION['activelangid']]['policypage'] = $policypage;
+				if (!isset($_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]['policypage'])) {
+					$_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]['policypage'] = '';
+				}
+
+				if (trim($_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]['policypage']) == '') {
+					$conflink = array(
+							// Link to current page
+							'parameter' => intval($this->conf['dataProtect.']['disclaimerPageID']),
+							// Set additional parameters
+							'additionalParams' => '',
+							'ATagParams' => 'rel="nofollow"',
+					);
+					$policypage = $this->cObj->typoLink($this->lib->pi_getLLWrap($this, 'pi1_template.disclaimerpagetextreplacelinktext', FALSE), $conflink);
+
+					$typolinksmade++;
+					$_SESSION['policypage'] = $policypage;
+					$_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]['policypage'] = $policypage;
+				}
+
+				$_SESSION['policypage'] = $_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' .
+					intval($GLOBALS['TSFE']->fe_user->user['uid'])]['policypage'];
+
+				$_SESSION['lantypoLink' . $_SESSION['activelangid']]['policypage'] = $_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' .
+					intval($GLOBALS['TSFE']->fe_user->user['uid'])]['policypage'];
 			}
 
 			if(intval($this->conf['advanced.']['acceptTermsCondsOnSubmit']) > 0) {
-
-				$conflink = array(
-						// Link to current page
-						'parameter' => intval($this->conf['advanced.']['acceptTermsCondsOnSubmit']),
-						// Set additional parameters
-						'additionalParams' => '',
-						'ATagParams' => 'rel="nofollow" target="_terms"',
-				);
-				$TermsCondspage = $this->cObj->typoLink($this->lib->pi_getLLWrap($this, 'pi1_template.termscondspagelinktext', FALSE), $conflink);
-
-				if (!(is_array($_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid]))) {
-					$_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid]=array();
+				if (!(is_array($_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]))) {
+					$_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]=array();
+					$_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]['TermsCondspage'] = '';
 				}
-				$_SESSION['lantypoLink' . $_SESSION['activelangid']]['TermsCondspage'] = $TermsCondspage;
+
+				if (!isset($_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]['TermsCondspage'])) {
+					$_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]['TermsCondspage'] = '';
+				}
+
+				if (trim($_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]['TermsCondspage']) == '') {
+					$conflink = array(
+							// Link to current page
+							'parameter' => intval($this->conf['advanced.']['acceptTermsCondsOnSubmit']),
+							// Set additional parameters
+							'additionalParams' => '',
+							'ATagParams' => 'rel="nofollow" target="terms"',
+					);
+					$TermsCondspage = $this->cObj->typoLink($this->lib->pi_getLLWrap($this, 'pi1_template.termscondspagelinktext', FALSE), $conflink);
+					$typolinksmade++;
+					$_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]['TermsCondspage'] = $TermsCondspage;
+				}
+
+				$_SESSION['lantypoLink' . $_SESSION['activelangid']]['TermsCondspage'] = $_SESSION['lantypoLink' .
+					$GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]['TermsCondspage'];
 
 			}
 
 			if ((intval($conf['userCenter.']['userCenterPageID']) != 0) && (intval($GLOBALS['TSFE']->fe_user->user['uid']) > 0)) {
-				$conflink = array(
-						// Link to current page
-						'parameter' => intval($this->conf['userCenter.']['userCenterPageID']),
-						// Set additional parameters
-						'additionalParams' => '',
-						'ATagParams' => 'rel="nofollow"',
-				);
-				$userCenterPage = $this->cObj->typoLink($this->lib->pi_getLLWrap($this, 'pi1_template.userCenterpagelinktext', FALSE), $conflink);
-				unset($_SESSION['userCenterPage']);
-				$_SESSION['userCenterPage'] = $userCenterPage;
-				if (!(is_array($_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid]))) {
-					$_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid]=array();
+				if (!(is_array($_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]))) {
+					$_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]=array();
+					$_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]['userCenterPage'] = '';
 				}
-				$_SESSION['lantypoLink' . $_SESSION['activelangid']]['userCenterPage'] = $userCenterPage;
+
+				if (!isset($_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]['userCenterPage'])) {
+					$_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]['userCenterPage'] = '';
+				}
+
+				if (trim($_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]['userCenterPage']) == '') {
+					$conflink = array(
+							// Link to current page
+							'parameter' => intval($this->conf['userCenter.']['userCenterPageID']),
+							// Set additional parameters
+							'additionalParams' => '',
+							'ATagParams' => 'rel="nofollow"',
+					);
+					$userCenterPage = $this->cObj->typoLink($this->lib->pi_getLLWrap($this, 'pi1_template.userCenterpagelinktext', FALSE), $conflink);
+					$typolinksmade++;
+					unset($_SESSION['userCenterPage']);
+					$_SESSION['userCenterPage'] = $userCenterPage;
+					$_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' . intval($GLOBALS['TSFE']->fe_user->user['uid'])]['userCenterPage'] = $userCenterPage;
+				}
+
+				$_SESSION['userCenterPage'] = $_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' .
+					intval($GLOBALS['TSFE']->fe_user->user['uid'])]['userCenterPage'];
+
+				$_SESSION['lantypoLink' . $_SESSION['activelangid']]['userCenterPage'] = $_SESSION['lantypoLink' . $GLOBALS['TSFE']->sys_language_uid . 'l' .
+					intval($GLOBALS['TSFE']->fe_user->user['uid'])]['userCenterPage'];
 
 			}
 
-			//conf-ckecks
+			//conf-checks
 			if ($this->conf['advanced.']['userCommentResponseLevels'] > 20) {
 				$this->conf['advanced.']['userCommentResponseLevels'] = 20;
 			}
@@ -1512,52 +1673,18 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		if (count($gettemp['toctoc_comments_pi1']) == 0) {
 			unset ($gettemp['toctoc_comments_pi1']);
 		}
-
-		$conflink = array(
-				'useCacheHash' => FALSE,
-				// Link to current page
-				'parameter' => $GLOBALS['TSFE']->id,
-				// Set additional parameters
-				'additionalParams' => t3lib_div::implodeArrayForUrl('', $gettemp, '', 1),
-				// We must add cHash because we use parameters ... hmmm - not that sure!
-				// We want link only
-				'returnLast' => 'url',
-				'ATagParams' => '',
-				'forceAbsoluteUrl' => 1,
-		);
-		$commentsPageIdPage = $this->cObj->typoLink('', $conflink);
-		$_SESSION['commentsPageIdsClean'][$GLOBALS['TSFE']->id] = $commentsPageIdPage;
-
-		$_SESSION['commentsPageIdsTypolinks'][$GLOBALS['TSFE']->id] = array();
-		$gettemp['toctoc_comments_pi1']= array();
-		$lastcommentid=0;
-
-		$rowstt2 = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
-				'MAX(tx_toctoc_comments_comments.uid) AS uid',
-				'tx_toctoc_comments_comments',
-				''
-		);
-		if (count($rowstt2)>0) {
-			if ($rowstt2[0]['uid'] !='') {
-				$lastcommentid=$rowstt2[0]['uid'];
-
-			}
+		if (isset($_SESSION['commentsPageIdsClean']) == FALSE) {
+			$_SESSION['commentsPageIdsClean'] = array();
 		}
-		$useCacheHashNeeded = intval($GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError']);
-		$no_cacheflag = 0;
-		if (intval($GLOBALS['TYPO3_CONF_VARS']['FE']['disableNoCacheParameter']) ==0) {
-			if ($useCacheHashNeeded == 1) {
-				$no_cacheflag = 1;
-			}
+		if (isset($_SESSION['commentsPageIdsClean'][$GLOBALS['TSFE']->id]) == FALSE) {
+			$_SESSION['commentsPageIdsClean'][$GLOBALS['TSFE']->id] = '';
 		}
 
-		for ($i=($lastcommentid+1); $i<($lastcommentid + $this->potentialNewCommentsCHashes +1);$i++)  {
-			$gettemp['toctoc_comments_pi1']['anchor'] =  substr($conf['recentcomments.']['anchorPre'], 1) . $i;
+		if (trim($_SESSION['commentsPageIdsClean'][$GLOBALS['TSFE']->id]) == '') {
 			$conflink = array(
-					'useCacheHash' => $useCacheHashNeeded,
-					'no_cache'         => $no_cacheflag,
+					'useCacheHash' => FALSE,
 					// Link to current page
-					'parameter' => $GLOBALS['TSFE']->id. $this->conf['recentcomments.']['anchorPre'].$i,
+					'parameter' => $GLOBALS['TSFE']->id,
 					// Set additional parameters
 					'additionalParams' => t3lib_div::implodeArrayForUrl('', $gettemp, '', 1),
 					// We must add cHash because we use parameters ... hmmm - not that sure!
@@ -1567,8 +1694,59 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 					'forceAbsoluteUrl' => 1,
 			);
 			$commentsPageIdPage = $this->cObj->typoLink('', $conflink);
-			$_SESSION['commentsPageIdsTypolinks'][$GLOBALS['TSFE']->id][$i] = $commentsPageIdPage;
+			$typolinksmade++;
+			$_SESSION['commentsPageIdsClean'][$GLOBALS['TSFE']->id] = $commentsPageIdPage;
+		}
 
+		//$this->sdebugprint .= 'typolinksmade: '.$typolinksmade.' ' .$_SESSION['policypage'].' ' .$_SESSION['userCenterPage'];
+		if (!is_array($_SESSION['commentsPageIdsTypolinks'][$GLOBALS['TSFE']->id])) {
+			$_SESSION['commentsPageIdsTypolinks'][$GLOBALS['TSFE']->id] = array();
+		}
+
+		$gettemp['toctoc_comments_pi1']= array();
+
+		if (count($_SESSION['commentsPageIdsTypolinks'][$GLOBALS['TSFE']->id]) != $this->potentialNewCommentsCHashes) {
+			$lastcommentid=0;
+
+			$rowstt2 = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+					'MAX(tx_toctoc_comments_comments.uid) AS uid',
+					'tx_toctoc_comments_comments',
+					''
+			);
+			if (count($rowstt2)>0) {
+				if ($rowstt2[0]['uid'] !='') {
+					$lastcommentid=$rowstt2[0]['uid'];
+
+				}
+			}
+			$useCacheHashNeeded = intval($GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError']);
+			$no_cacheflag = 0;
+			if (intval($GLOBALS['TYPO3_CONF_VARS']['FE']['disableNoCacheParameter']) ==0) {
+				if ($useCacheHashNeeded == 1) {
+					$no_cacheflag = 1;
+				}
+			}
+
+			for ($i=($lastcommentid+1); $i<($lastcommentid + $this->potentialNewCommentsCHashes +1);$i++)  {
+				$gettemp['toctoc_comments_pi1']['anchor'] =  substr($conf['recentcomments.']['anchorPre'], 1) . $i;
+				$conflink = array(
+						'useCacheHash' => $useCacheHashNeeded,
+						'no_cache'         => $no_cacheflag,
+						// Link to current page
+						'parameter' => $GLOBALS['TSFE']->id. $this->conf['recentcomments.']['anchorPre'].$i,
+						// Set additional parameters
+						'additionalParams' => t3lib_div::implodeArrayForUrl('', $gettemp, '', 1),
+						// We must add cHash because we use parameters ... hmmm - not that sure!
+						// We want link only
+						'returnLast' => 'url',
+						'ATagParams' => '',
+						'forceAbsoluteUrl' => 1,
+				);
+				$commentsPageIdPage = $this->cObj->typoLink('', $conflink);
+				$typolinksmade++;
+				$_SESSION['commentsPageIdsTypolinks'][$GLOBALS['TSFE']->id][$i] = $commentsPageIdPage;
+
+			}
 		}
 
 		$_SESSION['commentsPageIds'][$GLOBALS['TSFE']->id] = t3lib_div::getIndpEnv('TYPO3_REQUEST_URL');
@@ -1601,178 +1779,6 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$this->commonObj->stop_toctoccomments_session();
 			return $retstr;
 		}
-
-		if ($_SESSION['commentListCount']==0) {
-			// do this only at the start of the session, the vars are then kept in seession vars
-			// to optimize DB-IOs
-
-			if (t3lib_extMgm::isLoaded('templavoila')) {
-				if ($this->showsdebugprint==TRUE) {
-					$starttimeTYPO3metamodeltemplavoila=microtime(TRUE);
-				}
-
-				// no sorting in tt_content needed for TV CIDs
-				// Templavoila stores the sequence of its CID in the Flexform XML on table 'pages'
-				$rowscidflex = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid, tx_templavoila_flex',
-						'pages', $wherecid);
-
-				while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($rowscidflex)) {
-					$flexData = t3lib_div::xml2array($row['tx_templavoila_flex']);
-				}
-
-				if ($this->conf['advanced.']['UseTemplavoilaField'] == '') {
-					// If the option is not set
-					$this->conf['advanced.']['UseTemplavoilaField'] = $this->templavoila_field;
-				}
-
-				if (is_array($flexData)) {
-					$rowscidflex = t3lib_div::trimExplode(',', $flexData['data']['sDEF']['lDEF'][$this->conf['advanced.']['UseTemplavoilaField']]['vDEF']);
-					$rowscidflexstr = implode(',', $rowscidflex);
-					$wherettcontentNoTV .= 'AND uid IN (' . $rowscidflexstr .')';
-				}
-
-				else
-				{
-					$rowscidflex =$flexData;
-					$wherettcontentNoTV .=  'AND pid = ' . strval($GLOBALS['TSFE']->id);
-				}
-
-				/*
-				 * Reihenfolge der TempaVoila-ContentElemente: zb 89,45, 23
-				 * in this sequence the TV-CIDs will be on the page
-				 *
-				 * Later we make a cross check of the CIDs of this list with the
-				 * (unsorted) list of CIDs coming from tt_content
-				 * templavoila does not care about the sorting attribute in tt_content
-				 *
-				 * ok now templaviola DS Nr (x, y, ...) with TS-injection of Comments-Plugins are needed
-				*
-				*/
-
-				$wherecidds = "dataprot LIKE '%< plugin.tx_toctoccomments_pi1%'";
-				$rowsttcntcidflexds = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
-						'uid',
-						'tx_templavoila_datastructure',
-						$wherecidds
-				);
-				$tv_comments_cidstrds='(';
-				if (array_key_exists(0, $rowsttcntcidflexds)) {
-					if (array_key_exists('uid', $rowsttcntcidflexds[0])) {
-						foreach ($rowsttcntcidflexds as $rowds) {
-							$tv_comments_cidstrds= $tv_comments_cidstrds . $rowds['uid'] . ',';
-						}
-
-					} else {
-						$tv_comments_cidstrds='(0,';
-					}
-
-				} else {
-					$tv_comments_cidstrds='(0,';
-				}
-
-				$tv_comments_cidstrds= $tv_comments_cidstrds . '0)';
-				// the list of DS with injected comments TS is here
-
-				$templavoilads=' AND tx_templavoila_ds IN ' . $tv_comments_cidstrds;
-
-				// Now we need also "normal" TV-ContentObjecs
-				$wherettcontent = "((CType = 'templavoila_pi1' " . $langcond . ' AND deleted=0 AND hidden=0 AND pid = ' . strval($GLOBALS['TSFE']->id) .
-									$templavoilads. ')' . ' OR ' . $wherettcontentNoTV . ')';
-
-				// Here the DS with plugin instances, but no tt_content should be identified as
-				// Tempavoila-non-content-objects.
-				// It can be for example a TS only Onject in TV witch is not part of a FCE, but of a maintemplate
-				// these Plugin instances are not attached to tt_content but to page_templavoila_ds_id_ds_element_id from <field_menupageactions type="array"> dataprot
-				// its attached to page_ds_id_index_field where index is the index of the field in <el type="array"> of dataprot
-
-				// Now the sequence how the page is built is held by the sequence of the TV-rendering.
-				// It's field by field of dataprot
-				// So this influences the list of plugins which will be nelarged by the Non-Content TV-Objects before or after the
-				// field for $this->conf['advanced.']['UseTemplavoilaField'], where we'll find the contents.
-
-				// array $tvononcontentobjects
-				// select and compare logic with the $this->conf['advanced.']['UseTemplavoilaField']
-				// id building and ref-keys
-				// when rendering the plugins which come are checked against the list of the expected plugins.
-				// here we hook inside TV and attach them as 'normal' record-comments for recored type Page-ID->TypeTVNonCOntent->Index-of-TV-Field.
-				if ($this->showsdebugprint==TRUE) {
-					$endtimeTYPO3metamodeltemplavoila=microtime(TRUE);
-				}
-
-			} else {
-				// simply sorted by sorting and its ok
-				$wherettcontentNoTV .=  'AND pid = ' . strval($GLOBALS['TSFE']->id);
-				$wherettcontent = $wherettcontentNoTV;
-			}
-
-			if ($this->showsdebugprint==TRUE) {
-					$starttimeTYPO3metamodelinternal=microtime(TRUE);
-			}
-
-			$rowsttcntcidflex = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
-					'uid, pid, t3_origuid, sys_language_uid',
-					'tt_content',
-					$wherettcontent,
-					$ttcontentsortNoTV
-			);
-
-			$tv_comments_cidstr='';
-			$tv_comments_meta=array();
-			if (array_key_exists(0, $rowsttcntcidflex)) {
-				if (array_key_exists('uid', $rowsttcntcidflex[0])) {
-					foreach ($rowsttcntcidflex as $row) {
-						$tv_comments_cidstr= $tv_comments_cidstr . $row['uid'] . ',';
-						$virginLastcid=$row['uid'];
-						$tv_comments_meta['c' . $row['t3_origuid']]['parent']=$row['uid'];
-						$tv_comments_meta['c' . $row['t3_origuid']]['langid']=$row['sys_language_uid'];
-					}
-
-				}
-
-			}
-
-			$tv_comments_cidstr= $tv_comments_cidstr . '';
-			$tv_comments_cid = explode(',', $tv_comments_cidstr);
-			unset($tv_comments_cid[count($tv_comments_cid)-1]);
-			if (!t3lib_extMgm::isLoaded('templavoila')) {
-				$rowscidflex= $tv_comments_cid;
-			}
-
-			$_SESSION['rowscidflex']=$rowscidflex;
-			$tv_comments_cidout=array();
-			$j=0;
-			$tv_comments_metakeys=array_keys($tv_comments_meta);
-			$counttv_comments_cid=count($tv_comments_cid);
-			for ($m=0; $m<$counttv_comments_cid; $m++) {
-
-				$dodrop=FALSE;
-				$counttv_comments_metakeys=count($tv_comments_metakeys);
-				for ($n=0; $n<$counttv_comments_metakeys; $n++) {
-					if ('c' . $tv_comments_cid[$m] == $tv_comments_metakeys[$n]) {
-						if ($tv_comments_meta[$tv_comments_metakeys[$n]]['langid']>0) {
-
-							$dodrop=TRUE;
-						}
-
-					}
-
-				}
-
-				if ($dodrop==FALSE) {
-					$tv_comments_cidout[$j]=$tv_comments_cid[$m];
-					$j++;
-				}
-
-			}
-
-			$_SESSION['tv_comments_cid']=$tv_comments_cidout;
-			$_SESSION['tv_comments_meta']=$tv_comments_meta;
-			if ($this->showsdebugprint==TRUE) {
-				$endtimeTYPO3metamodelinternal=microtime(TRUE);
-			}
-
-		}
-
 		$cid_hook=0;
 		if ($this->lhookTablePrefix !='') {
 			//if the plugin is called from tt_news-hook we add insert new records in the plugins-list arrays.
@@ -1783,59 +1789,15 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 			if ($this->lhookTablePrefix !='tt_content') {
 				$cid_hookpp= 1000 + $GLOBALS['TSFE']->id; // 1023, 1123, 2223
+				if ($GLOBALS['TSFE']->sys_language_uid != 0) {
+					if (intval($this->conf['advanced.']['useMultilingual']) == 1) {
+						$cid_hookpp =  (1000 + (($GLOBALS['TSFE']->sys_language_uid)*1000) + $GLOBALS['TSFE']->id);
+					}
+				}
 				$cid_hookpp= $cid_hookpp . $this->conf['storagePid'];
-				$cid_hook= intval($cid_hookpp . $hookId);
+				$cid_hook= trim($cid_hookpp . $hookId);
 			} else	{
 				$cid_hook=$this->lhookId;
-			}
-
-			if ($isPlugin==0) {
-				$cidwrk=array();
-
-				for ($i=0; $i<$_SESSION['indexOfSortedCommentsCidList']; $i++) {
-					if ($_SESSION['rowscidflex'][$i] != $cid_hook) {
-						$cidwrk[$i]=$_SESSION['rowscidflex'][$i];
-					}
-
-				}
-
-				$ji=$i;
-				$cidwrk[$i]=$cid_hook;
-
-				$countrowscidflex=count($_SESSION['rowscidflex']);
-				for ($i=$ji+1; $i<=$countrowscidflex; $i++) {
-					if ($_SESSION['rowscidflex'][$i] != $cid_hook) {
-						$cidwrk[$i]=$_SESSION['rowscidflex'][$i-1];
-					}
-
-				}
-
-				ksort($cidwrk);
-				$_SESSION['rowscidflex']=$cidwrk;
-
-				$cidwrk=array();
-				for ($i=0; $i<$_SESSION['indexOfSortedCommentsCidList']; $i++) {
-					if ($_SESSION['tv_comments_cid'][$i] != $cid_hook) {
-						$cidwrk[$i]=$_SESSION['tv_comments_cid'][$i];
-					}
-
-				}
-
-				$ji=$i;
-				$cidwrk[$i]=$cid_hook;
-				$counttv_comments_cid=count($_SESSION['tv_comments_cid']);
-				for ($i=$ji+1; $i<=$counttv_comments_cid; $i++) {
-					if ($_SESSION['tv_comments_cid'][$i] != $cid_hook) {
-						$cidwrk[$i]=$_SESSION['tv_comments_cid'][$i-1];
-					}
-
-				}
-
-				ksort($cidwrk);
-				$_SESSION['tv_comments_cid']=$cidwrk;
-				$incrementlistcid=1;
-			} else {
-				$incrementlistcid=1;
 			}
 
 			if ($this->showsdebugprint==TRUE) {
@@ -1850,111 +1812,20 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$starttimesetcommentListRecord=microtime(TRUE);
 		}
 
-		$wrki=0;
-		$commentlistcountout=0;
-		$lastindexOfSortedCommentsCidList = $_SESSION['indexOfSortedCommentsCidList'];
-
-		/* The sorted Array $rowscidflex (CIDs of all TemplaVoila Objects) gets filtered by
-		 * the list of objects containing plugins (Array $tv_comments_cid)
-		 * and $_SESSION['indexOfSortedCommentsCidList'], the work-index for $rowscidflex, is set
-		 */
-		$sdebugprintli.='Current index, start: ' . $_SESSION['indexOfSortedCommentsCidList'];
-		if ($optionalRecordIdlhookTablePrefix!='') {
-			$sdebugprintli.=', $optionalRecordIdlhookTablePrefix: ' . $optionalRecordIdlhookTablePrefix;
-
-		}
-
-		$wrkrowscidflex = $_SESSION['rowscidflex'];
-		$wrktv_comments_cid = $_SESSION['tv_comments_cid'];
-		$tv_comments_meta = $_SESSION['tv_comments_meta'];
-		$errornocidfound=FALSE;
-		$debugnocidfoundtext='';
-		while ($wrki==0) {
-			$lidx=$_SESSION['indexOfSortedCommentsCidList'];
-			foreach ($wrktv_comments_cid as $searchrow) {
-				if (count($tv_comments_meta)>0) {
-					if ($tv_comments_meta['c' . $wrkrowscidflex[$lidx]]['langid']>0) {
-						$searchedwrktv_comments_cid=$tv_comments_meta['c' . $wrkrowscidflex[$lidx]]['parent'];
-
-					}else {
-						$searchedwrktv_comments_cid=$wrkrowscidflex[$lidx];
-					}
-
-				} else {
-					$searchedwrktv_comments_cid=$wrkrowscidflex[$lidx];
-				}
-
-				if ($searchrow==$searchedwrktv_comments_cid) {
-					//found the bugger
-					$wrki=1;
-					if ($this->conf['advanced.']['useMultilingual'] == 1) {
-						$commentlistcountout = $searchedwrktv_comments_cid;
-					} else{
-						$commentlistcountout = $wrkrowscidflex[$lidx];
-					}
-
-					if ($optionalRecordIdlhookTablePrefix!='') {
-						// overwrite content_element_id found with optionalRecordID
-						$commentlistcountout = $optionalRecordIdlhookId;
-					}
-
-				}
-
-			}
-
-			$_SESSION['indexOfSortedCommentsCidList']=$_SESSION['indexOfSortedCommentsCidList'] +$incrementlistcid;
-			if ($_SESSION['indexOfSortedCommentsCidList']>count($wrkrowscidflex)) {
-				$wrki=1;
-				if ($optionalRecordIdlhookTablePrefix!='') {
-					// force content_element_id found with optionalRecordID
-					$commentlistcountout = $optionalRecordIdlhookId;
-				} else {
-					// no optionalRecordID given, no element found, aborting to error message
-					$errornocidfound=TRUE;
-					if ($this->showsdebugprint==TRUE) {
-						$debugnocidfoundtext='<p><b>Additional information on detected content element IDs:</b><br />All content elements: ' .
-						json_encode($wrkrowscidflex) .
-						'<br />toctoc_comments content elements: ' . json_encode($wrktv_comments_cid) .
-						'<br />multi-language structure: '  .json_encode($tv_comments_meta) .
-						'<br />Current index: ' . $_SESSION['indexOfSortedCommentsCidList'] . '<br />
-						Setup in TypoScript optionalRecordId for the plugin(s) if the error persists.<br />
-						Alternatively to optionalRecordId you can set up "Trigger optional record" in Backend Plugin</p>';
-					}
-
-					$commentlistcountout = 99;
-				}
-
-				$_SESSION['indexOfSortedCommentsCidList']=$lastindexOfSortedCommentsCidList;
-			}
-
-		}
-
 		/*
 		 * Here is the CID of the Comment-Plugin that is currently being rendered.
 		 */
-		$_SESSION['commentListCount']=$commentlistcountout;
+		$_SESSION['commentListCount'] = $current_content_uid;
 
-		if (intval($this->conf['pluginmode'])==0) {
+		if (intval($this->conf['pluginmode']) == 0) {
 
-			if (($this->lhookTablePrefix !='') && ($isPlugin==1)) {
-				$_SESSION['commentListCount']=$cid_hook;
-				$_SESSION['commentListRecord']='tt_content_' . $_SESSION['commentListCount'];
+			if (($this->lhookTablePrefix != '') && ($isPlugin == 1)) {
+				$_SESSION['commentListCount'] = $cid_hook;
+				$_SESSION['commentListRecord'] = 'tt_content_' . $_SESSION['commentListCount'];
 			}
 
 			if (($this->lhookTablePrefix == '') && ($this->conf['externalPrefix'] == 'pages')) {
-				$_SESSION['commentListRecord']='tt_content_' . $_SESSION['commentListCount'];
-			}
-
-			if (($this->lhookTablePrefix == '') && ($errornocidfound==TRUE) && (intval($this->conf['pluginmode'])==0)) {
-				// The Contentelement ID containing the plugin could not be found automatically.
-				$edatum = date('d.m.Y', time());
-				$euhrzeit = date('H:i', time());
-				$echodate = $edatum . ' - '. $euhrzeit;
-				$retstr = sprintf('<div class="tx-tc-form-top-message tx-tc-required-error"><p>' . $echodate . '<br />' .
-						$this->lib->pi_getLLWrap($this, 'error.automaticcidfail', FALSE)  .
-						'</p></div>', $this->conf['advanced.']['UseMainColPos'], $this->conf['advanced.']['UseTemplavoilaField']) . $debugnocidfoundtext;
-				$this->commonObj->stop_toctoccomments_session();
-				return $retstr;
+				$_SESSION['commentListRecord'] = 'tt_content_' . $_SESSION['commentListCount'];
 			}
 
 			if ($this->showsdebugprint==TRUE) {
@@ -2157,6 +2028,10 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 		}
 
+		if (trim($_SESSION['commentListRecord']) == '') {
+			$_SESSION['commentListRecord'] = 'tt_content_' . $_SESSION['commentListCount'];
+		}
+
 		$this->checktoctoccommentsuser();
 
 		if ($this->showsdebugprint==TRUE) {
@@ -2167,21 +2042,6 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 		$this->checkJSLoc();
 		$this->check_scopes();
-
-		$_SESSION['renderedplugins']++;
-
-		if ($_SESSION['renderedplugins']>=count($_SESSION['tv_comments_cid'])) {
-			$_SESSION['renderingdone']=TRUE;
-			$_SESSION['renderedplugins']=0;
-			if ((($this->lhookTablePrefix!='') && ($this->lhookId!=0))==FALSE) {
-				$this->sdebugprint .= 'Finishing rendering '. count($_SESSION['tv_comments_cid']). ' plugins from internal list<br />';
-				$_SESSION['cachepurged']=0;
-				$_SESSION['cachepurgedlogin']=0;
-				$_SESSION['indexOfSortedCommentsCidList']=0;
-
-			}
-
-		}
 
 		if ($this->showsdebugprint==TRUE) {
 			$endtimesetJSCSS=microtime(TRUE);
@@ -2251,26 +2111,29 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			}
 
 		}
+
 		if ($this->conf['advanced.']['commentReview'] == 1) {
 			$this->conf['ratings.']['useTopVotes'] = 1;
-			//$this->conf['ratings.']['emoLike'] = 0;
 		}
+
 		$md5url = 'p' . $GLOBALS['TSFE']->id . md5($_SESSION['curPageName']);
 		if (intval($this->conf['pluginmode'])==0) {
-			if ($this->getLastUserAdditionTstamp() > intval($_SESSION['AJAXimagesTimeStamp'])) {
+			if ($this->getLastUserAdditionTstamp() > $this->lib->getReportDBCacheMinTimestamp(11)) {
 				// if exeptionally a new user has been added since the last caching time, then the user pics need an update
 				$_SESSION['AJAXimages'] = array();
 				$_SESSION['AJAXOrigimages'] = array();
+				$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport WHERE ReportPluginMode = 11');
+				$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_plugincachecontrol SET tstamp =' . time());
 			}
 
-			if (isset($_GET['toctoc_comments_pi1']['anchor'])) {
+			if ($_SESSION['findanchorok'] == '1') {
 				$clearCacheIds = $GLOBALS['TSFE']->id;
-				$_SESSION['recentcommentsclearcachepage']=$GLOBALS['TSFE']->id;
+				$_SESSION['recentcommentsclearcachepage']= $GLOBALS['TSFE']->id;
 				if ($_SESSION['findanchor'] != '0') {
 					$this->pi_USER_INT_obj = 1;
-					$_SESSION['reemptycache'][$md5url]=2;
-					$_SESSION['reemptycachepage'][$md5url]=$GLOBALS['TSFE']->id;
-					$_SESSION['reemptycacheplugin'][$md5url]=$_SESSION['commentListRecord'];
+					$_SESSION['reemptycache'][$md5url] = 2;
+					$_SESSION['reemptycachepage'][$md5url] = $GLOBALS['TSFE']->id;
+					$_SESSION['reemptycacheplugin'][$md5url] = $_SESSION['commentListRecord'];
 					$this->sdebugprint .= 'Will display recent comment on page ' . $GLOBALS['TSFE']->id . '<br />';
 					$_SESSION['runMemCache'] = FALSE;
 				} else {
@@ -2290,20 +2153,20 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				}
 
 			} else {
-				if ($_SESSION['reemptycache'][$md5url]>=2) {
+				if ($_SESSION['reemptycache'][$md5url] >= 2) {
 					$_SESSION['runMemCache'] = FALSE;
-					if ($_SESSION['reemptycacheplugin'][$md5url]==$_SESSION['commentListRecord']) {
-						$_SESSION['reemptycache'][$md5url]=3;
+					if ($_SESSION['reemptycacheplugin'][$md5url] == $_SESSION['commentListRecord']) {
+						$_SESSION['reemptycache'][$md5url] = 3;
 						$this->ttclearcache($_SESSION['reemptycachepage'][$md5url], TRUE, TRUE, 'reemptycachepage');
 						$this->sdebugprint .= 'Reempty cache on page ' . $GLOBALS['TSFE']->id . ' on "reemptycacheplugin" ' . $_SESSION['reemptycacheplugin'][$md5url]
 						. '<br />';
 						$this->pi_USER_INT_obj = 1;
 					} else {
 
-						if ($_SESSION['reemptycache'][$md5url]==3) {
-							$_SESSION['reemptycache'][$md5url]=0;
-							$_SESSION['reemptycacheplugin'][$md5url]='';
-							$_SESSION['reemptycachepage'][$md5url]='';
+						if ($_SESSION['reemptycache'][$md5url] == 3) {
+							$_SESSION['reemptycache'][$md5url] = 0;
+							$_SESSION['reemptycacheplugin'][$md5url] = '';
+							$_SESSION['reemptycachepage'][$md5url] = '';
 
 						}
 
@@ -2362,15 +2225,8 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 						$tdiffstartupsessions = round(1000*($starttimeTYPO3metamodel - $starttimesessions), 1);
 						$tdiffstartupTYPO3metamodel = round(1000*($starttimesetJSCSS - $starttimeTYPO3metamodel), 1);
 						$tdiffstartupinit = round(1000*($endtimeinit - $starttimeinit), 1);
-						$tdiffstartupTYPO3metamodeltemplavoila=-1;
-						if ($endtimeTYPO3metamodeltemplavoila >0) {
-							$tdiffstartupTYPO3metamodeltemplavoila = round(1000*($endtimeTYPO3metamodeltemplavoila -$starttimeTYPO3metamodeltemplavoila), 1);
-						}
-
-						$tdiffstartupTYPO3metamodelinternal=-1;
-						if ($endtimeTYPO3metamodelinternal >0) {
-							$tdiffstartupTYPO3metamodelinternal = round(1000*($endtimeTYPO3metamodelinternal - $starttimeTYPO3metamodelinternal), 1);
-						}
+						$tcObj = round(1000*($endtimecObj - $starttimecObj), 1);
+						$tTypoLinkConfChecks = round(1000*($endtimeinit - $endtimecObj), 1);
 
 						$tdiffstartuphookaccess=-1;
 						if ($endtimehookaccess >0) {
@@ -2382,63 +2238,39 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 							$tdiffstartupcommentsupdate = round(1000*($endtimecommentsupdate - $starttimecommentsupdate), 1);
 						}
 
-						$tdiffstartupcommentListRecord=-1;
-						if ($endtimesetcommentListRecord >0) {
+						$tdiffstartupcommentListRecord = -1;
+						if ($endtimesetcommentListRecord > 0) {
 							$tdiffstartupcommentListRecord = round(1000*($endtimesetcommentListRecord - $starttimesetcommentListRecord), 1);
+						}
+
+						if ($typolinksmade != 0) {
+							$printlinkscheck = 'TypoLinks made: '. $typolinksmade .' in ' . $tTypoLinkConfChecks . 'ms, ';
 						}
 
 						$tdiffstartupsetJSCSS = round(1000*($endtimesetJSCSS-$starttimesetJSCSS), 1);
 						$startupreport = '<br /><b>Start-up, details</b> (times in ms):<br /> Conf: ' . $tdiffstartupconf . ', ' .
 								'Prefixes: ' . $tdiffstartupprefixes . ', ' .
 								'Sessions: ' . $tdiffstartupsessions . ', ' .
-								'TYPO3 Metamodel: ' . $tdiffstartupTYPO3metamodel . ' (' .
+								'TYPO3 Metamodel: ' . $tdiffstartupTYPO3metamodel . '<br />(' .
 								'Check CSSLoc: ' . $tdifftimeCSSLoc . ', ' .
-								'Init: ' . $tdiffstartupinit . $this->sdebuginitprint . ', ';
-
-						if ($tdiffstartupTYPO3metamodeltemplavoila != -1) {
-							$startupreport .= 'Templavoila: ' . $tdiffstartupTYPO3metamodeltemplavoila . ', ';
-						} else {
-							$startupreport .= 'No Templavoila, ';
-						}
-
-						if ($tdiffstartupTYPO3metamodelinternal != -1) {
-							$startupreport .= 'Internal: ' . $tdiffstartupTYPO3metamodelinternal . ', ';
-						} else {
-							$startupreport .= 'No Internal, ';
-						}
+								'Init: ' . $tdiffstartupinit . '<br /><small>(Check PluginID: ' . $tcObj . ', ' . $printlinkscheck . $this->sdebuginitprint . '<br />';
 
 						if ($tdiffstartuphookaccess != -1) {
 							$startupreport .= 'Hookmode: ' . $tdiffstartuphookaccess . ', ';
-						} else {
-							$startupreport .= 'No Hookmode, ';
 						}
 
 						if ($tdiffstartuphookcommentsupdate != -1) {
 							$startupreport .= 'Updatemode: ' . $tdiffstartuphookcommentsupdate . ', ';
-						} else {
-							$startupreport .= 'No Updatemode, ';
 						}
 
 						if ($tdiffstartupcommentListRecord != -1) {
 							$startupreport .= 'Setup PluginID: ' . $tdiffstartupcommentListRecord;
-						} else {
-							$startupreport .= 'No Setup PluginID';
 						}
 
-						$startupreport .= ') Check JS and theme-CSS: ' . $tdiffstartupsetJSCSS . '<br />';
+						$startupreport .= ')<br />Check JS: ' . $tdiffstartupsetJSCSS . '<br />';
 					}
 
 					$starttimedebuglib=microtime(TRUE);
-				}
-
-			}
-
-			if ($this->showsdebugprint==TRUE) {
-				if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
-					$this->sdebugprint .= '<br /><b>Additional information on detected content element IDs:</b><br />' .
-							              $sdebugprintli. '<br />All content elements: ' . json_encode($wrkrowscidflex) . '<br />toctoc_comments content elements: ' .
-					                      json_encode($wrktv_comments_cid) . '<br />multi-language structure: '  .json_encode($tv_comments_meta) .
-					                      '<br />Current index: ' . $_SESSION['indexOfSortedCommentsCidList'] . '<br />';
 				}
 
 			}
@@ -2458,32 +2290,6 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 					}
 
-				}
-
-			}
-
-			if ($domemcache == TRUE) {
-
-				if ($this->conf['theme.']['selectedBoxmodel'] != $_SESSION['activeBoxmodel']) {
-					$_SESSION['AJAXimages'] = array();
-					$_SESSION['AJAXOrigimages'] = array();
-					$domemcache = FALSE;
-					$_SESSION['DefaultUserImage'] = array();
-					if ($this->showsdebugprint) {
-						if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
-
-							$this->sdebugprint .= '<b>Cache dropped and recacheing</b> (new boxmodel ' . $this->conf['theme.']['selectedBoxmodel'] . ') for ' .
-													$_SESSION['commentListRecord'] . ', L: ' . $_SESSION['activelang'] . ', Userid: ' . intval($this->feuserid) .'<br />';
-						}
-
-					}
-
-				}
-
-				if ($_SESSION['renderingdone']==TRUE) {
-					$_SESSION['activeBoxmodel']=$this->conf['theme.']['selectedBoxmodel'];
-					$_SESSION['cachepurged']=0;
-					$_SESSION['cachepurgedlogin']=0;
 				}
 
 			}
@@ -2544,7 +2350,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 				}
 
-				if ($outml == '') {
+				if (trim($outml) == '') {
 					if ($this->showsdebugprint) {
 						if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
 							$this->sdebugprint .= '<b>No Cache present</b> (Cache ' . $whynocache . ')<br />';
@@ -2571,6 +2377,8 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 							// if exeptionally a new user has been added since the last caching time, then the user pics need an update
 							$_SESSION['AJAXimages'] = array();
 							$_SESSION['AJAXOrigimages'] = array();
+							$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport WHERE ReportPluginMode = 11');
+							$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_plugincachecontrol SET tstamp =' . time());
 						}
 
 						$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
@@ -2584,18 +2392,19 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				}
 
 			}
-			if ($_SESSION['commentsSorting']['mcp' . $_SESSION['commentListRecord']] != $this->conf['advanced.']['reverseSorting']) {
-				// Admin made change in TS-Setup, here just clear the cache if not already done
-				$_SESSION['commentsSorting']['mcp' . $_SESSION['commentListRecord']] = $this->conf['advanced.']['reverseSorting'];
-				unset($_SESSION['commentListIndex']['cid' . $_SESSION['commentListRecord']]);
-				$domemcache=FALSE;
-			}
 
-			if ($_SESSION['sortMostPopular']['mcp' . $_SESSION['commentListRecord']] != $this->conf['advanced.']['sortMostPopular']) {
+			if ($_SESSION['confchk'][$md5url]['mcp' . $_SESSION['commentListRecord']] != 'mcp' . md5(serialize($this->conf))) {
 				// Admin made change in TS-Setup, here just clear the cache if not already done
-				$_SESSION['sortMostPopular']['mcp' . $_SESSION['commentListRecord']] = $this->conf['advanced.']['sortMostPopular'];
-				unset($_SESSION['commentListIndex']['cid' . $_SESSION['commentListRecord']]);
-				$_SESSION['sortMostPopular']['mcp' . $_SESSION['commentListRecord']] = $this->conf['advanced.']['sortMostPopular'];
+				$_SESSION['confchk'][$md5url]['mcp' . $_SESSION['commentListRecord']] = 'mcp' . md5(serialize($this->conf));
+				//unset($_SESSION['commentListIndex']['cid' . $_SESSION['commentListRecord']]);
+				if ($domemcache==TRUE) {
+					if ($this->showsdebugprint) {
+						if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+							$this->sdebugprint .= '<b>Config-Change detected - cache dropped</b> for ' . $_SESSION['commentListRecord']. ', L: ' . $_SESSION['activelang'] .
+													', Userid: ' . intval($this->feuserid) .'<br />';
+						}
+					}
+				}
 				$domemcache=FALSE;
 			}
 
@@ -2609,7 +2418,69 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 			if ($domemcache == FALSE) {
 				// access to lib
-				$outml=$this->lib->maincomments($this->ref, $this->conf, FALSE, $_SESSION['commentsPageId'], $this->feuserid, 'commentdisplay', $this, $this->piVars);
+				$VirginUserNoMemcache = FALSE;
+				if (($this->lib->isVirginUser($_SESSION['commentListRecord']) == TRUE) || (intval($this->conf['sharing.']['useOnlySharing']) == 1)) {
+					$ReportUser = 0;
+					$md5PluginId = md5(serialize($this->conf) . $GLOBALS['TSFE']->lang . $this->ref);
+					$dbCache = $this->lib->getReportDBCache($md5PluginId, $ReportUser);
+
+					if ($dbCache == '') {
+						if ($this->showsdebugprint) {
+							if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+								$this->sdebugprint .= '<div class="tx-tc-debug">' . intval($this->conf['pluginmode']) . ' No DB-Cache - filling cache</div>';
+							}
+
+						}
+
+						$outml=$this->lib->maincomments($this->ref, $this->conf, FALSE, $_SESSION['commentsPageId'], $this->feuserid, 'commentdisplay', $this, $this->piVars);
+						$this->lib->setReportDBCache($this->conf, 0, $ReportUser, $outml, $md5PluginId, $_SESSION['commentListRecord']);
+
+					} else {
+						if ($this->showsdebugprint) {
+							if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+								$this->sdebugprint .= '<div class="tx-tc-debug">' . intval($this->conf['pluginmode']) . ' Using DB-Cache</div>';
+							}
+
+						}
+
+						$outml= $dbCache;
+					}
+
+					$VirginUserNoMemcache = TRUE;
+				} else {
+					$ReportUser = $this->feuserid;
+					if ($this->feuserid != 0) {
+						$md5PluginId = md5(serialize($this->conf) . $GLOBALS['TSFE']->lang . $this->ref);
+						$dbCache = $this->lib->getReportDBCache($md5PluginId, $ReportUser);
+
+						if ($dbCache == '') {
+							if ($this->showsdebugprint) {
+								if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+									$this->sdebugprint .= '<div class="tx-tc-debug">' . intval($this->conf['pluginmode']) . ' No DB-Cache - filling cache for userid '.$this->feuserid.'</div>';
+								}
+
+							}
+
+							$outml=$this->lib->maincomments($this->ref, $this->conf, FALSE, $_SESSION['commentsPageId'], $this->feuserid, 'commentdisplay', $this, $this->piVars);
+							$this->lib->setReportDBCache($this->conf, 0, $ReportUser, $outml, $md5PluginId, $_SESSION['commentListRecord']);
+
+						} else {
+							if ($this->showsdebugprint) {
+								if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+									$this->sdebugprint .= '<div class="tx-tc-debug">' . intval($this->conf['pluginmode']) . ' Using DB-Cache for userid '.$this->feuserid.'</div>';
+								}
+
+							}
+
+							$outml= $dbCache;
+						}
+
+					} else {
+						$outml=$this->lib->maincomments($this->ref, $this->conf, FALSE, $_SESSION['commentsPageId'], $this->feuserid, 'commentdisplay', $this, $this->piVars);
+					}
+
+				}
+
 				$sharrrejsfile = $this->sharrrejs();
 
 				$outml = $outml . $sharrrejsfile;
@@ -2617,23 +2488,26 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 					$outml .= '<div id="tx-tc-cpwf" class="tx-tc-nodisp"></div>';
 					$_SESSION['doChangePasswordForm'] = 1;
 				}
+
 				$outmlmemcache=$timereportlast . $this->sdebugprint . $outml;
 				if (intval($this->conf['advanced.']['wallExtension']) == 0) {
-					if ((intval(t3lib_div::_GP('no_cache'))==0) && (!isset($_GET['toctoc_comments_pi1']['anchor']))) {
-						$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-							$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid'][$md5url]=round(microtime(TRUE), 0);
-						if ($this->conf['sessionCompressionLevel'] > 0) {
-							if ($this->canZip == TRUE) {
-								$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-										$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid'][$md5url] = gzencode($outml, $this->conf['sessionCompressionLevel']);
-							} else {
-								$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-									$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid'][$md5url] = gzcompress($outml, $this->conf['sessionCompressionLevel']);
-							}
+					if ((intval(t3lib_div::_GP('no_cache'))==0) && ($_SESSION['findanchorok'] != '1')) {
+						if ($VirginUserNoMemcache == FALSE) {
+							$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+								$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid'][$md5url]=round(microtime(TRUE), 0);
+							if ($this->conf['sessionCompressionLevel'] > 0) {
+								if ($this->canZip == TRUE) {
+									$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+											$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid'][$md5url] = gzencode($outml, $this->conf['sessionCompressionLevel']);
+								} else {
+									$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+										$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid'][$md5url] = gzcompress($outml, $this->conf['sessionCompressionLevel']);
+								}
 
-						} else {
-								$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-										$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid'][$md5url]=$outml;
+							} else {
+									$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+											$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachecid'][$md5url]=$outml;
+							}
 						}
 
 					} else {
@@ -2673,8 +2547,8 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 						$userintstate='';
 					}
 
-					$timereport='<div class="tx-tc-debug">Start-up: ' . round($tdiffstartup, 0) . 'ms, Lib: ' . round($tdifflib, 0) . 'ms, <b>Total: ' .
-								round($tdifftotal, 0) . 'ms</b>' . $userintstate . ' ' . $startupreport.'</div>';
+					$timereport='<div class="tx-tc-debug"><b>' . date('H:i:s') . '</b>: Start-up: ' . intval($tdiffstartup) . ' ms, Lib: ' . intval($tdifflib) . ' ms, <b>Total: ' .
+								intval($tdifftotal) . ' ms (milliseconds)</b>' . $userintstate . ' ' . $startupreport.'</div>';
 					if($_SESSION['debugprintlib']['debugtext']!=''){
 						$_SESSION['debugprintlib']['debugtext'] .= '</div>';
 					}
@@ -2688,17 +2562,9 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				$outmlmemcache = str_replace('src="http://', 'src="https://', $outmlmemcache);
 			}
 
-			$_SESSION['edgeTime'] = microtime(TRUE);
-			if ($_SESSION['renderingdone']==TRUE) {
-				$_SESSION['edgeTime']=$_SESSION['edgeTime']-10;
-				$_SESSION['indexOfSortedCommentsCidList']=0;
-				$_SESSION['doChangePasswordForm'] = 0;
-				$_SESSION['cachepurged']=0;
-				$_SESSION['cachepurgedlogin']=0;
-			}
-
 			$_SESSION['activeBoxmodel'] = $this->conf['theme.']['selectedBoxmodel'];
 			$this->commonObj->stop_toctoccomments_session();
+			$outmlmemcache = $this->w3cIzer($outmlmemcache);
 			return $outmlmemcache;
 
 		} elseif ($this->conf['pluginmode'] == 1) {
@@ -2711,7 +2577,45 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 			$timereport='';
 			$starttimedebuglib=microtime(TRUE);
-			$outml=$timereportlast .$this->lib->getRecentComments($this, $this->conf, $this->feuserid);
+
+			$ReportUser = $this->getReportUser($this->conf['pluginmode']);
+			$md5PluginId = md5(serialize($this->conf) . $GLOBALS['TSFE']->lang . $GLOBALS['TSFE']->id);
+			$dbCache = $this->lib->getReportDBCache($md5PluginId, $ReportUser);
+			if ($dbCache == '') {
+				if (intval($GLOBALS['TSFE']->fe_user->user['uid']) != 0) {
+					$dbCache = $this->lib->getReportDBCache($md5PluginId, intval($GLOBALS['TSFE']->fe_user->user['uid']));
+				}
+			}
+
+			if ($dbCache == '') {
+				$this->reprtUserByID = FALSE;
+				$ReportData = $this->lib->getRecentComments($this, $this->conf, $this->feuserid);
+				if ($this->showsdebugprint) {
+					if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+						$timereportlast .= '<div class="tx-tc-debug">' . intval($this->conf['pluginmode']) . ' No DB-Cache - filling cache</div>';
+					}
+
+				}
+
+				$outml = $timereportlast . $ReportData;
+				if (($this->reprtUserByID == FALSE) || ($ReportUser == 0)) {
+					$this->lib->setReportDBCache($this->conf, $this->conf['pluginmode'], $ReportUser, $ReportData, $md5PluginId);
+				} else {
+					$this->lib->setReportDBCache($this->conf, $this->conf['pluginmode'], intval($GLOBALS['TSFE']->fe_user->user['uid']),
+							$ReportData, $md5PluginId);
+				}
+
+			} else {
+				if ($this->showsdebugprint) {
+					if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+						$timereportlast.= '<div class="tx-tc-debug">' . $this->conf['pluginmode'] . ' Using DB-Cache</div>';
+					}
+
+				}
+
+				$outml= $timereportlast . $dbCache;
+			}
+
 			if ($this->showsdebugprint) {
 				if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
 
@@ -2725,16 +2629,15 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 					if (!$this->debugshowuserint) {
 						$userintstate='';
 					}
-
-					$timereport='<div class="tx-tc-debug">Start-up: ' . round($tdiffstartup, 0) . 'ms, Lib: ' . round($tdifflib, 0) . 'ms, <b>Total: ' .
-								round($tdifftotal, 0) . 'ms</b>' . $userintstate . ' ' . $startupreport.'</div>';
-
+					$timereport='<div class="tx-tc-debug"><b>Total: ' .
+								intval($tdifftotal) . ' ms (milliseconds)</b>' . $userintstate . ' ' . $startupreport.'</div>';
 				}
 
 			}
 
 			$_SESSION['edgeTime'] = microtime(TRUE);
 			$this->commonObj->stop_toctoccomments_session();
+			$outml = $this->w3cIzer($outml);
 			return $outml . $timereport;
 
 		} elseif ($this->conf['pluginmode'] == 2) {
@@ -2744,14 +2647,88 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$_SESSION['edgeTime'] = microtime(TRUE);
 			$retstr =$this->lib->mainReport($content, $this->conf, $this, $this->piVars);
 			$this->commonObj->stop_toctoccomments_session();
+			$retstr = $this->w3cIzer($retstr);
 			return $retstr;
 
 		} elseif (($this->conf['pluginmode'] == 3) || ($this->conf['pluginmode'] == 4)) {
+			if (!$this->showsdebugprint) {
+				$timereportlast='';
+			} elseif ($this->sdebugprintuser!=intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+				$timereportlast='';
+			}
+
+			$timereport='';
+			$starttimedebuglib=microtime(TRUE);
+
 			$this->pi_USER_INT_obj = 1;
 			$_SESSION['edgeTime'] = microtime(TRUE);
-			$retstr = $this->lib->showtopRatings($this->conf, $this);
+
+			$ReportUser = $this->getReportUser($this->conf['pluginmode']);
+			$md5PluginId = md5(serialize($this->conf) . $GLOBALS['TSFE']->lang . $GLOBALS['TSFE']->id);
+			$dbCache = $this->lib->getReportDBCache($md5PluginId, $ReportUser);
+			if ($dbCache == '') {
+				if (intval($GLOBALS['TSFE']->fe_user->user['uid']) != 0) {
+					$dbCache = $this->lib->getReportDBCache($md5PluginId, intval($GLOBALS['TSFE']->fe_user->user['uid']));
+
+				}
+
+			}
+
+			if ($dbCache == '') {
+				$this->reprtUserByID = FALSE;
+				$retstr = $this->lib->showtopRatings($this->conf, $this);
+				$loctopRatingsMode = '';
+				if (($this->conf['pluginmode'] == 4) && ($this->conf['topRatings.']['topRatingsMode'] == 5)) {
+					$loctopRatingsMode = 1;
+				}
+
+				if (($this->reprtUserByID == FALSE) || ($ReportUser == 0)) {
+					$this->lib->setReportDBCache($this->conf, $this->conf['pluginmode'].$loctopRatingsMode, $ReportUser, $retstr, $md5PluginId);
+				} else {
+					$this->lib->setReportDBCache($this->conf, $this->conf['pluginmode'].$loctopRatingsMode, intval($GLOBALS['TSFE']->fe_user->user['uid']),
+							$retstr, $md5PluginId);
+				}
+
+				if ($this->showsdebugprint) {
+					if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+						$retstr .= '<div class="tx-tc-debug">' . intval($this->conf['pluginmode'] . $loctopRatingsMode) . ' No DB-Cache - filling cache</div>';
+					}
+
+				}
+
+			} else {
+				$retstr= $dbCache;
+				if ($this->showsdebugprint) {
+					if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+						$retstr .= '<div class="tx-tc-debug">' . $this->conf['pluginmode'] . $loctopRatingsMode . ' Using DB-Cache</div>';
+					}
+
+				}
+			}
+			$startreport='';
+			if ($this->showsdebugprint) {
+				if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+
+					$userintstate=' as USER-object';
+					if ($this->pi_USER_INT_obj == 1) {
+						$userintstate=' as USER_INT-object';
+					}
+
+					$tdifflib = 1000*(microtime(TRUE) - $starttimedebuglib);
+					$tdifftotal = 1000*(microtime(TRUE) - $starttimedebug);
+					if (!$this->debugshowuserint) {
+						$userintstate='';
+					}
+					$startreport='<div class="tx-tc-debug"><b>' . date('H:i:s') . '</b></div>';
+					$timereport='<div class="tx-tc-debug"><b>Total: ' .
+							intval($tdifftotal) . ' ms</b>' . $userintstate . ' ' . $startupreport.'</div>';
+				}
+
+			}
+
 			$this->commonObj->stop_toctoccomments_session();
-			return $retstr;
+			$retstr = $this->w3cIzer($retstr);
+			return $startreport . $retstr . $timereport;
 
 		} elseif (($this->conf['pluginmode'] == 5)) {
 			$this->pi_USER_INT_obj = 1;
@@ -2764,14 +2741,69 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			}
 
 			$this->commonObj->stop_toctoccomments_session();
+			$retstr = $this->w3cIzer($retstr);
 			return $retstr;
 
 		} elseif (($this->conf['pluginmode'] == 6)) {
+			if (!$this->showsdebugprint) {
+				$timereportlast='';
+			} elseif ($this->sdebugprintuser!=intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+				$timereportlast='';
+			}
+
+			$timereport='';
+			$starttimedebuglib=microtime(TRUE);
+
 			$this->pi_USER_INT_obj = 1;
 			$_SESSION['edgeTime'] = microtime(TRUE);
-			$retstr = $this->lib->showuserCenter($this->conf, $this);
+
+			$ReportUser = $this->getReportUser($this->conf['pluginmode']);
+			$md5PluginId = md5(serialize($this->conf) . $GLOBALS['TSFE']->lang . $GLOBALS['TSFE']->id);
+			$dbCache = $this->lib->getReportDBCache($md5PluginId, $ReportUser);
+			if ($dbCache == '') {
+				$retstr = $this->lib->showuserCenter($this->conf, $this);
+				$this->lib->setReportDBCache($this->conf, $this->conf['pluginmode'], $ReportUser, $retstr, $md5PluginId);
+				if ($this->showsdebugprint) {
+					if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+						$retstr .= '<div class="tx-tc-debug">' . intval($this->conf['pluginmode']) . ' No DB-Cache - filling cache</div>';
+					}
+
+				}
+
+			} else {
+				$retstr= $dbCache;
+				if ($this->showsdebugprint) {
+					if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+						$retstr .= '<div class="tx-tc-debug">' . $this->conf['pluginmode'] . ' Using DB-Cache</div>';
+					}
+
+				}
+
+			}
+			$startreport='';
+			if ($this->showsdebugprint) {
+				if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+
+					$userintstate=' as USER-object';
+					if ($this->pi_USER_INT_obj == 1) {
+						$userintstate=' as USER_INT-object';
+					}
+
+					$tdifflib = 1000*(microtime(TRUE) - $starttimedebuglib);
+					$tdifftotal = 1000*(microtime(TRUE) - $starttimedebug);
+					if (!$this->debugshowuserint) {
+						$userintstate='';
+					}
+					$startreport='<div class="tx-tc-debug"><b>' . date('H:i:s') . '</b></div>';
+					$timereport='<div class="tx-tc-debug"><b>Total: ' .
+							intval($tdifftotal) . ' ms (milliseconds)</b>' . $userintstate . ' ' . $startupreport.'</div>';
+				}
+
+			}
+
 			$this->commonObj->stop_toctoccomments_session();
-			return $retstr;
+			$retstr = $this->w3cIzer($retstr);
+			return $startreport . $retstr . $timereport;
 
 		}  elseif (($this->conf['pluginmode'] == 7)) {
 			$_SESSION['activelang'] =$GLOBALS['TSFE']->lang;
@@ -2780,16 +2812,71 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$_SESSION['edgeTime'] = microtime(TRUE);
 			$retstr = $this->lib->showCommentsSearch($this->conf, $this, FALSE, '');
 			$this->commonObj->stop_toctoccomments_session();
+			$retstr = $this->w3cIzer($retstr);
 			return $retstr;
 
 		} elseif (($this->conf['pluginmode'] == 8)) {
+
+			if (!$this->showsdebugprint) {
+				$timereportlast='';
+			} elseif ($this->sdebugprintuser!=intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+				$timereportlast='';
+			}
+
+			$timereport='';
+			$starttimedebuglib=microtime(TRUE);
+
 			$_SESSION['activelang'] =$GLOBALS['TSFE']->lang;
 			$_SESSION['activelangid'] =$GLOBALS['TSFE']->sys_language_uid;
 			$this->pi_USER_INT_obj = 1;
 			$_SESSION['edgeTime'] = microtime(TRUE);
-			$retstr = $this->lib->showtopSharings($this->conf, $this);
+			$ReportUser = $this->getReportUser($this->conf['pluginmode']);
+			$md5PluginId = md5(serialize($this->conf) . $GLOBALS['TSFE']->lang . $GLOBALS['TSFE']->id);
+			$dbCache = $this->lib->getReportDBCache($md5PluginId, $ReportUser);
+			if ($dbCache == '') {
+				$retstr = $this->lib->showtopSharings($this->conf, $this);
+				$this->lib->setReportDBCache($this->conf, $this->conf['pluginmode'], $ReportUser, $retstr, $md5PluginId);
+				if ($this->showsdebugprint) {
+					if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+						$retstr .= '<div class="tx-tc-debug">' . intval($this->conf['pluginmode']) . ' No DB-Cache - filling cache</div>';
+					}
+
+				}
+
+			} else {
+				$retstr= $dbCache;
+				if ($this->showsdebugprint) {
+					if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+						$retstr .= '<div class="tx-tc-debug">' . $this->conf['pluginmode'] . ' Using DB-Cache</div>';
+					}
+
+				}
+			}
+
+			$startreport='';
+			if ($this->showsdebugprint) {
+				if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
+
+					$userintstate=' as USER-object';
+					if ($this->pi_USER_INT_obj == 1) {
+						$userintstate=' as USER_INT-object';
+					}
+
+					$tdifflib = 1000*(microtime(TRUE) - $starttimedebuglib);
+					$tdifftotal = 1000*(microtime(TRUE) - $starttimedebug);
+					if (!$this->debugshowuserint) {
+						$userintstate='';
+					}
+					$startreport='<div class="tx-tc-debug"><b>' . date('H:i:s') . '</b></div>';
+					$timereport='<div class="tx-tc-debug"><b>Total: ' .
+							intval($tdifftotal) . ' ms (milliseconds)</b>' . $userintstate . ' ' . $startupreport.'</div>';
+				}
+
+			}
+
 			$this->commonObj->stop_toctoccomments_session();
-			return $retstr;
+			$retstr = $this->w3cIzer($retstr);
+			return $startreport . $retstr . $timereport;
 		} else {
 			$this->commonObj->stop_toctoccomments_session();
 			return '';
@@ -3092,11 +3179,8 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 	protected function checkCSSTheme() {
 		$this->themeLESSfile = '';
 		$this->themeCSS = '';
-		if ($this->conf['theme.']['refreshCSSFromLESS'] == 0) {
-			$filenametheme='theme.txt';
-		} else {
-			$filenametheme='theme.less';
-		}
+
+		$filenametheme='theme.less';
 
 		$dirsep=DIRECTORY_SEPARATOR;
 
@@ -3109,125 +3193,28 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 						'res/css/themes/' . $this->conf['theme.']['selectedTheme'] . '/' );
 		$filenametheme=$txdirnametheme . $filenametheme;
 
-		$filenamecssfile='tx-tc-' . $this->extVersion . '-theme.css';
-		$txdirnamedefault= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep . t3lib_extMgm::siteRelPath('toctoc_comments') .
-							'res/css/themes/default/css/' );
-		$filenamedefaultcss=$txdirnamedefault . $filenamecssfile;
-
 		if (strlen($this->conf['theme.']['themeFontFamily']) < 4) {
 			$this->conf['theme.']['themeFontFamily']='';
 		}
 
-		if ($this->conf['theme.']['refreshCSSFromLESS'] == 0) {
-
-			$printstr='';
-				if (file_exists($filenametheme)) {
-
-					$filetime = @filemtime($filenametheme);
-					if ($this->newestCSSFileTime < $filetime) {
-						$this->newestCSSFileTime = $filetime;
-					}
-
-					$contenttheme = file_get_contents($filenametheme);
-					if (file_exists($filenamedefaultcss)) {
-						$contentdefaultcss = file_get_contents($filenamedefaultcss);
-
-						$contentthemearr = explode(':', $contenttheme);
-						$countcontentthemearr=count($contentthemearr);
-						for ($i=1; $i<$countcontentthemearr; $i++) {
-							$contentthemecolormatch= trim($contentthemearr[$i]);
-							$contentthemecolormatcharr=explode("\n", $contentthemecolormatch);
-							$contentthemecolormatch = $contentthemecolormatcharr[0];
-							$printstr.= $contentthemecolormatch .'<br />';
-							$contentthemecolormatcharr=explode(' ', $contentthemecolormatch);
-							if (count($contentthemecolormatcharr)==2) {
-								if (trim($contentthemecolormatcharr[1])=='d8d8d8') {
-									$this->conf['theme.']['borderColor']=trim($contentthemecolormatcharr[0]);
-								}
-
-								if (trim($contentthemecolormatcharr[1])=='adaeaf') {
-									$this->conf['theme.']['shareborderColor1']=trim($contentthemecolormatcharr[0]);
-								}
-
-								if (trim($contentthemecolormatcharr[1])=='a4a5a7') {
-									$this->conf['theme.']['shareborderColor2']=trim($contentthemecolormatcharr[0]);
-								}
-
-								if (trim($contentthemecolormatcharr[1])=='e3e3e3') {
-									$this->conf['theme.']['shareCountborderColor']=trim($contentthemecolormatcharr[0]);
-								}
-
-								if (trim($contentthemecolormatcharr[1])=='ffffff') {
-									$this->conf['theme.']['shareBackgroundColor']=trim($contentthemecolormatcharr[0]);
-								}
-
-								$contentdefaultcss=str_replace(trim($contentthemecolormatcharr[1]), trim($contentthemecolormatcharr[0]), $contentdefaultcss);
-							}
-
-						}
-
-						if (!$this->processcssandjsfiles) {
-							// exit is possible only here, the additional theme options ...
-							// future tuning would be possible with SESSION-cache per theme
-							return '';
-						}
-
-						$contentarr=explode('font-family:', $contentdefaultcss);
-						if (trim($this->conf['theme.']['themeFontFamily']) != '') {
-							$countcontentarr=count($contentarr);
-							for ($i=1; $i<$countcontentarr; $i++) {
-								$contentarrfontfamilyarr=explode(';', $contentarr[$i]);
-								$contentarrfontfamilyarr[0]=trim($this->conf['theme.']['themeFontFamily']);
-								$contentarr[$i]=implode(';', $contentarrfontfamilyarr);
-							}
-							$contentdefaultcss=implode('font-family:', $contentarr);
-						} else {
-							$countcontentarr=count($contentarr);
-							for ($i=1; $i<$countcontentarr; $i++) {
-								$contentarrfontfamilyarr=explode(';', $contentarr[$i]);
-								$contentarrfontfamilyarr[0]='';
-								$contentarr[$i]=implode('', $contentarrfontfamilyarr);
-							}
-							$contentdefaultcss=implode('', $contentarr);
-						}
-						$this->themeCSS = $contentdefaultcss;
-						$this->themeCSS = str_replace('../img/', '../themes/' . $this->conf['theme.']['selectedTheme'] . '/img/', $this->themeCSS);
-						$this->themeCSS = str_replace('../../../emoji', '../emoji', $this->themeCSS);
-
-					} else {
-						$retstr = $this->pi_wrapInBaseClass($this->lib->pi_getLLWrap($this, 'error', FALSE) . ': ' .
-								$this->lib->pi_getLLWrap($this, 'error.no.css.defaulttheme', FALSE)) . ': ' . $filenamedefaultcss;
-						return $retstr;
-
-					}
-
-				} else {
-					$retstr =$this->pi_wrapInBaseClass($this->lib->pi_getLLWrap($this, 'error', FALSE) . ': ' .
-							$this->lib->pi_getLLWrap($this, 'error.no.css.themetxt', FALSE)) . ': ' . $filenametheme;
-				    return $retstr;
-				}
-		} else {
-			// LESS-mode
-			// get_filedate of LESS-file $filenametheme for color variables of the theme
-			if (file_exists($filenametheme)) {
-				$filetime = @filemtime($filenametheme);
-				if ($this->newestLessFileTime < $filetime) {
-					$this->newestLessFileTime = $filetime;
-				}
-				$this->themeLESSfile = $filenametheme;
+		// get_filedate of LESS-file $filenametheme for color variables of the theme
+		if (file_exists($filenametheme)) {
+			$filetime = @filemtime($filenametheme);
+			if ($this->newestLessFileTime < $filetime) {
+				$this->newestLessFileTime = $filetime;
 			}
-			$this->themeCSS ='';
-
-			$this->conf['theme.']['borderColor']='d8d8d8';
-			$this->conf['theme.']['shareborderColor1']='adaeaf';
-			$this->conf['theme.']['shareborderColor2']='a4a5a7';
-			$this->conf['theme.']['shareCountborderColor']='e3e3e3';
-			$this->conf['theme.']['shareBackgroundColor']='ffffff';
-
-			return '';
+			$this->themeLESSfile = $filenametheme;
 		}
+		$this->themeCSS ='';
+
+		$this->conf['theme.']['borderColor']='d8d8d8';
+		$this->conf['theme.']['shareborderColor1']='adaeaf';
+		$this->conf['theme.']['shareborderColor2']='a4a5a7';
+		$this->conf['theme.']['shareCountborderColor']='e3e3e3';
+		$this->conf['theme.']['shareBackgroundColor']='ffffff';
 
 		return '';
+
 	}
 
 	/**
@@ -3240,6 +3227,7 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 				'var' => array(),
 				'val' => array(),
 		);
+
 		$this->LESS_i = 0;
 
 		$this->LESSVars['comment'][$this->LESS_i] = '// "koogled" boxmodels behave different and there will be some CSS if the boxmodel is koogled' . "\n" .
@@ -3268,34 +3256,21 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 		$this->LESSVars['val'][$this->LESS_i] = $taheight . 'px';
 		$this->LESS_i++;
 
-		$expandiconCSSmargin='margin: 6px 0 0 4px;';
-		$closebuttonkooglemargin='';
-		if ($this->conf['theme.']['selectedBoxmodelkoogled']==1) {
-			$expandiconCSSmargin='margin: 6px 0 0 ' . (2*intval($this->conf['theme.']['boxmodelSpacing'])) . 'px;';
-			$closebuttonkooglemargin='
-.tx-tc-ct-uc .tx-tc-ct-uc-pic2 + .tx-tc-ct-box-ctclose {
-	margin: 48px 0 -48px 4px;
-}
-.tx-tc-ucinner {
-	margin-right: 15px;
-}
-';
-		}
-		if ($this->conf['theme.']['boxmodelLevelIndent']==1) {
-			$levelindent=$this->conf['UserImageSize']+(3*round($this->conf['theme.']['boxmodelSpacing']/2));
-		} elseif ($this->conf['theme.']['boxmodelLevelIndent']==3) {
-			$levelindent=round($this->conf['UserImageSize']/3)+(3*round($this->conf['theme.']['boxmodelSpacing']/2));
-		} elseif ($this->conf['theme.']['boxmodelLevelIndent']==2) {
-			$levelindent=round($this->conf['UserImageSize']/2)+(3*round($this->conf['theme.']['boxmodelSpacing']/2));
+		if ($this->conf['theme.']['boxmodelLevelIndent'] == 1) {
+			$levelindent = $this->conf['UserImageSize']+(3*round($this->conf['theme.']['boxmodelSpacing']/2));
+		} elseif ($this->conf['theme.']['boxmodelLevelIndent'] == 3) {
+			$levelindent = round($this->conf['UserImageSize']/3)+(3*round($this->conf['theme.']['boxmodelSpacing']/2));
+		} elseif ($this->conf['theme.']['boxmodelLevelIndent'] == 2) {
+			$levelindent = round($this->conf['UserImageSize']/2)+(3*round($this->conf['theme.']['boxmodelSpacing']/2));
 		} else {
-			$levelindent=round($this->conf['theme.']['boxmodelSpacing']);
+			$levelindent = round($this->conf['theme.']['boxmodelSpacing']);
 		}
 
-		$cssreplyindents='';
 		$margincheck = 0;
 		if (intval($this->conf['theme.']['boxmodelLineHeight']) > 16) {
 			$margincheck = intval(0.9*(intval($this->conf['theme.']['boxmodelLineHeight']) - 16));
 		}
+
 		$sortind=0;
 		if (intval($this->conf['theme.']['boxmodelLineHeight']) > 17) {
 			if ($this->conf['theme.']['themeVersion'] !=2) {
@@ -3303,19 +3278,13 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 			} else {
 				$sortind = 0;
 			}
+
 		}
 
 		$boxmodelLineHeightorReviewlineHeight = intval($this->conf['theme.']['boxmodelLineHeight']);
 		if (intval($this->conf['ratings.']['reviewImageWidth']) > $boxmodelLineHeightorReviewlineHeight) {
 			$boxmodelLineHeightorReviewlineHeight = intval($this->conf['ratings.']['reviewImageWidth']);
 		}
-
-		$marginleftcommentingform = 0;
-		if ($this->conf['useUserImage'] == 1) {
-			$marginleftcommentingform = 9;
-		}
-		$cssforminputspreserved = '';
-		$marginhalfbm = intval($this->conf['theme.']['boxmodelSpacing']);
 
 		$this->LESSVars['comment'][$this->LESS_i] = '// TS:  theme.boxmodelLabelInputPreserve' . "\n";
 		$this->LESSVars['var'][$this->LESS_i] = '@boxmodelLabelInputPreserve';
@@ -3353,103 +3322,6 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 		$this->LESSVars['val'][$this->LESS_i] = $this->makesharingcss(FALSE) . 'px';
 		$this->LESS_i++;
 
-		if ($this->conf['theme.']['boxmodelLabelInputPreserve']==1) {
-			$cssforminputspreserved='
-div.tx-tc-ct-form-field {
-	float: left;
-	margin-right: inherit !important;
-	margin-bottom: ' . round(intval($this->conf['theme.']['boxmodelSpacing'])/2, 0) . 'px;
-	margin-top: ' . round(intval($this->conf['theme.']['boxmodelSpacing'])/2, 0) . 'px;
-	min-height: inherit !important;
-	padding: inherit !important;
-	-webkit-box-sizing: border-box !important;
-	-moz-box-sizing: border-box !important;
-	box-sizing: border-box !important;
-}
-.tx-tc-ct-ntf-wrap {
-	float: left;
-	margin-right: inherit !important;
-	min-height: inherit !important;
-	padding: inherit !important;
-	-webkit-box-sizing: border-box !important;
-	-moz-box-sizing: border-box !important;
-	box-sizing: border-box !important;
-}
-.tx-tc-ct-form-gender {
-	padding: '.intval($this->conf['theme.']['boxmodelSpacing']/2).'px !important;
-}
-.tx-tc-ct-form-field-1, .tx-tc-div-submit {
-	margin-left: inherit !important;
-}
-.tx-tc-responsive .tx-tc-ct-cap-area-image {
-	margin: 0 1px 10px 5px;
-}
-.tx-tc-responsive .tx-tc-ct-cap-area-image + input {
-	float: left;
-}
-.tx-tc-responsive img.tx-tc-cap-image-rf {
-	float: none;
-}
-.tx-tc-responsive .tx-tc-ct-label-cap {
-	float: none;
-	width: 100%;
-}
-.tx-tc-responsive .tx-tc-ct-cap-area .tx-tc-ct-cap-area-cantreadit .tx-srfreecap-pi2-cant-read, .tx-tc-ct-cap-area-cantread .tx-srfreecap-pi2-cant-read {
-	width: 100%;
-}
-div.tx-tc-ct-form-field input, textarea.tx-tc-ctinput-textarea, textarea.tx-tc-ctinput-textarea-rq {
-	-webkit-box-sizing: border-box !important;
-	-moz-box-sizing: border-box !important;
-	box-sizing: border-box !important;
-}
-.tx-tc-responsive .tx-tc-ctinput-textarea, .tx-tc-responsive .tx-tc-ct-input, .tx-tc-responsive input[type="text"], .tx-tc-responsive input[type="password"] {
-	line-height: ' . intval($this->conf['theme.']['boxmodelLineHeight']) . 'px;
-	width: 100%;
-}
-.tx-tc-responsive .tx-tc-ct-ntf-wrap {
-    width: 85%;
-	width: calc(100% - 35px) !important;
-}
-.tx-tc-responsive .tx-tcfh0 .tx-tc-ct-form-field {
-    width: 100%;
-}
-.tx-tc-responsive .tx-tc-ctinput-textarea {
-	padding: ' .  (intval(($this->conf['theme.']['boxmodelSpacing'])/2)-1) . 'px 0 ' .
-	(intval(($this->conf['theme.']['boxmodelSpacing'])/2)-1) . 'px ' . (intval(($this->conf['theme.']['boxmodelSpacing'])/2)-1) . 'px !important;
-}
-.tx-tc-responsive .tx-tc-ct-form-field input[type=text] {
-	padding-left: ' .  (intval(($this->conf['theme.']['boxmodelSpacing'])/2)-1) . 'px !important;
-}
-.tx-tc-responsive input[type=text], .tx-tc-responsive input[type=password] {
-    height: ' . (intval($this->conf['theme.']['boxmodelLineHeight']) + intval($this->conf['theme.']['boxmodelSpacing'])) . 'px;
-}
-.tx-tc-responsive .tx-tc-ct-cap-area-image {
-    margin: 0 1px ' . intval($this->conf['theme.']['boxmodelSpacing']) . 'px ' . intval($this->conf['theme.']['boxmodelSpacing']/2) . 'px;
-}
-.tx-tc-responsive .tx-tc-ct-cap-area-image + input {
-    float: left;
-}
-.tx-tc-responsive img.tx-tc-cap-image-rf {
-    float: none;
-}
-.tx-tc-responsive .tx-tc-ct-label-cap {
-    float: none;
-    width: 100%;
-}
-.tx-tc-responsive .tx-tc-ct-cap-area .tx-tc-ct-cap-area-cantreadit .tx-srfreecap-pi2-cant-read, .tx-tc-ct-cap-area-cantread .tx-srfreecap-pi2-cant-read {
-    width: 100%;
-}
-.toctoc-comments-pi1 .tx-tc-ct-box-cttxt .tx-tc-ctinput-textarea, .toctoc-comments-pi1 .tx-tc-pi1 .tx-tc-ctinput-textarea {
-	padding-bottom: '.intval(-1+0.5*$this->conf['theme.']['boxmodelSpacing']).'px;
-	padding-top: '.intval(-1+0.5*$this->conf['theme.']['boxmodelSpacing']).'px;
-}
-.tx-tc-ct-form-field-1, .tx-tc-div-submit {
-	margin-left: '.intval($this->conf['theme.']['boxmodelSpacing']).'px;
-}
-
-';
-		}
-
 		$this->LESSVars['comment'][$this->LESS_i] = '// if theme.boxmodelLevelIndent between 1,2,3: then this is true' . "\n";
 		$this->LESSVars['var'][$this->LESS_i] = '@doScaleBecauseOfIndent';
 		$this->LESSVars['val'][$this->LESS_i] = (($this->conf['theme.']['boxmodelLevelIndent'] > 0) && ($this->conf['theme.']['boxmodelLevelIndent']<4)) ? 'true' : 'false';
@@ -3473,17 +3345,21 @@ div.tx-tc-ct-form-field input, textarea.tx-tc-ctinput-textarea, textarea.tx-tc-c
 				$strfilter = $arrUserImageCSS[0];
 			}
 		}
+
 		$this->LESSVars['comment'][$this->LESS_i] = '// TS:  UserImageCSSGrayScale'. "\n";
 		$this->LESSVars['var'][$this->LESS_i] = '@UserImageCSSGrayScale';
 		$this->LESSVars['val'][$this->LESS_i] = $strfilter;
 		$this->LESS_i++;
+
 		$strfilter = '0%';
 		if (count($arrUserImageCSS) == 2) {
 			$filterAmount = str_replace('%', '', $arrUserImageCSS[1]);
 			if (($filterAmount != $arrUserImageCSS[1]) && (intval($filterAmount) >= 0) && (intval($filterAmount) <= 100)) {
 				$strfilter = $arrUserImageCSS[1];
 			}
+
 		}
+
 		$this->LESSVars['comment'][$this->LESS_i] = '// TS:  UserImageCSSGrayScaleHover'. "\n";
 		$this->LESSVars['var'][$this->LESS_i] = '@UserImageCSSGrayScaleHover';
 		$this->LESSVars['val'][$this->LESS_i] = $strfilter;
@@ -3496,18 +3372,24 @@ div.tx-tc-ct-form-field input, textarea.tx-tc-ctinput-textarea, textarea.tx-tc-c
 			if (($filterAmount != $arrUserImageCSS[0]) && (intval($filterAmount) >= 0) && (intval($filterAmount) <= 100)) {
 				$strfilter = $arrUserImageCSS[0];
 			}
+
 		}
+
 		$this->LESSVars['comment'][$this->LESS_i] = '// TS:  UserImageCSSBlur'. "\n";
 		$this->LESSVars['var'][$this->LESS_i] = '@UserImageCSSBlur';
 		$this->LESSVars['val'][$this->LESS_i] = $strfilter;
 		$this->LESS_i++;
+
 		$strfilter = '0px';
+
 		if (count($arrUserImageCSS) == 2) {
 			$filterAmount = str_replace('px', '', $arrUserImageCSS[1]);
 			if (($filterAmount != $arrUserImageCSS[1]) && (intval($filterAmount) >= 0) && (intval($filterAmount) <= 100)) {
 				$strfilter = $arrUserImageCSS[1];
 			}
+
 		}
+
 		$this->LESSVars['comment'][$this->LESS_i] = '// TS:  UserImageCSSBlurHover'. "\n";
 		$this->LESSVars['var'][$this->LESS_i] = '@UserImageCSSBlurHover';
 		$this->LESSVars['val'][$this->LESS_i] = $strfilter;
@@ -3515,22 +3397,27 @@ div.tx-tc-ct-form-field input, textarea.tx-tc-ctinput-textarea, textarea.tx-tc-c
 
 		$arrUserImageCSS = explode(',', $this->conf['theme.']['UserImageCSSSepia']);
 		$strfilter = '0%';
+
 		if (count($arrUserImageCSS) == 2) {
 			$filterAmount = str_replace('%', '', $arrUserImageCSS[0]);
 			if (($filterAmount != $arrUserImageCSS[0]) && (intval($filterAmount) >= 0) && (intval($filterAmount) <= 100)) {
 				$strfilter = $arrUserImageCSS[0];
 			}
+
 		}
+
 		$this->LESSVars['comment'][$this->LESS_i] = '// TS:  UserImageCSSSepia'. "\n";
 		$this->LESSVars['var'][$this->LESS_i] = '@UserImageCSSSepia';
 		$this->LESSVars['val'][$this->LESS_i] = $strfilter;
 		$this->LESS_i++;
+
 		$strfilter = '0%';
 		if (count($arrUserImageCSS) == 2) {
 			$filterAmount = str_replace('%', '', $arrUserImageCSS[1]);
 			if (($filterAmount != $arrUserImageCSS[1]) && (intval($filterAmount) >= 0) && (intval($filterAmount) <= 100)) {
 				$strfilter = $arrUserImageCSS[1];
 			}
+
 		}
 
 		$this->LESSVars['comment'][$this->LESS_i] = '// TS:  UserImageCSSSepiaHover'. "\n";
@@ -3564,52 +3451,6 @@ div.tx-tc-ct-form-field input, textarea.tx-tc-ctinput-textarea, textarea.tx-tc-c
 		$this->LESSVars['val'][$this->LESS_i] = $this->conf['useUserImage'] > 0 ? 'true' : 'false';
 		$this->LESS_i++;
 
-		for ($f=0; $f <= 20; $f++) {
-
-			if (($this->conf['theme.']['boxmodelLevelIndent'] > 0) && ($this->conf['theme.']['boxmodelLevelIndent']<4)) {
-				$scalebecauseofindent= ($this->conf['UserImageSize'] * ($f/$this->conf['theme.']['boxmodelLevelIndent']));
-			} else {
-				$scalebecauseofindent=0;
-			}
-
-			$labelwidth = round(($this->conf['theme.']['boxmodelLabelWidth'] - ($scalebecauseofindent/2)), 0);
-
-			if ($labelwidth <= 50) {
-				$labelwidth=50;
-				$lcsssel .= ' ,.tx-tc-ct-box-rlvl-' . $f;
-				$lcsssel2 .= ' ,.tx-tc-ct-box-rlvlm-' . $f;
-			} else {
-				$shiftleft = $f * $levelindent;
-			}
-
-			if (($labelwidth <= 50) && ($f<19)) {
-				$scalebecauseofindent=0;
-			} elseif (($labelwidth <= 50) && ($f ==19)) {
-				// concat same selectors
-				$cssreplyindents .= '
-' . substr($lcsssel, 2) . ' {
-	width: ' . intval($labelwidth) . 'px;
-}
-' . substr($lcsssel2, 2) . ' {
-	margin: 0 0 0 ' . $shiftleft . 'px;
-	width: calc(100% - ' . $shiftleft . 'px);
-}
-';
-			} else {
-				$cssreplyindents .= '.tx-tc-ct-box-rlvl-' . $f . ' {
-	width: ' . intval($labelwidth) . 'px;
-}
-.tx-tc-ct-box-rlvlm-' . $f . ' {
-	margin: 0 0 0 ' . $shiftleft . 'px;
-	width: calc(100% - ' . $shiftleft . 'px);
-}
-';
-			}
-		}
-		$highlightstyle = '.tx-tc-highlightstyle {
-	min-height: ' . (intval($this->conf['UserImageSize'])+4*intval($this->conf['theme.']['boxmodelSpacing'])) . 'px;
-}
-';
 		$marginpiccomment = 0;
 
 		if ($this->conf['theme.']['selectedBoxmodelkoogled']==1) {
@@ -3617,44 +3458,14 @@ div.tx-tc-ct-form-field input, textarea.tx-tc-ctinput-textarea, textarea.tx-tc-c
 			$themeopacity = 0.5;
 		}
 
-		if ($this->conf['useUserImage']==1) {
-			$useUserImageSize = $this->conf['UserImageSize'];
-			$useUserImageSizeInForm = $this->conf['UserImageSizeInForm'];
-			$ctpicvisibility = 'visible';
-			$cssctpicform= '';
-			$ctpicwidth = '';
-		} else {
+		if ($this->conf['useUserImage']!=1) {
 			$useUserImageSize = 0;
 			$useUserImageSizeInForm = 0;
 			$ctpicvisibility = 'hidden';
-			$ctpicwidth = '
-    width: 0px;';
 			$marginpiccomment=-intval($this->conf['theme.']['boxmodelSpacing']);
-			$cssctpicform= '.tx-tc-ct-box-ctpic2 {
-	display: none;
-}
-.tx-tc-ct-rybox img {
-    display: none;
-}
-.tx-tc-ucinner .tx-tc-ct-uc-pic {
-    display: none;
-}
-.tx-tc-ct-uc-text-contact, .tx-tc-ct-uc-text-stats, .tx-tc-ct-uc-text-ip, .tx-tc-ct-uc-text, .tx-tc-ct-uc-text-contact-title {
-    width: 92%;
-}
-
-';
-
 		}
-		$minheightcommentbox = intval($this->conf['UserImageSizeInForm']) + (3*(intval($this->conf['theme.']['boxmodelSpacing'])));
 
 		$vidmaxwidth=round(intval($this->conf['attachments.']['webpagePreviewHeight'])*(4/3), 0);
-		$websitepreviewareaimagewidth = intval($this->conf['attachments.']['webpagePreviewHeight']) + 10;
-
-		$stylemargincontent=intval($this->conf['topRatings.']['topratingsimagesize'])+2*intval($this->conf['theme.']['boxmodelSpacing']);
-		if ($this->conf['theme.']['selectedBoxmodelkoogled']==1) {
-			$stylemargincontent=$stylemargincontent-6;
-		}
 
 		$vidmaxwidth=round(intval($this->conf['attachments.']['webpagePreviewHeight'])*(4/3), 0);
 
@@ -3667,56 +3478,6 @@ div.tx-tc-ct-form-field input, textarea.tx-tc-ctinput-textarea, textarea.tx-tc-c
 		$this->LESSVars['var'][$this->LESS_i] = '@vidMaxWidth';
 		$this->LESSVars['val'][$this->LESS_i] = $vidmaxwidth . 'px';
 		$this->LESS_i++;
-
-		$picstrvid='.tx-tc-pvs-vid-img-size {
-	display: block;
-	max-width: ' . $vidmaxwidth . 'px;
-	max-height: ' . $this->conf['attachments.']['webpagePreviewHeight'] .'px;
-}
-';
-
-		$wpplogoCSSmargin='.tx-tc-wpplogo {
-	margin: 4px 0 0;
-	max-height: ' . $this->conf['attachments.']['webpagePreviewHeight'] . 'px;
-	max-width:' .(30+$this->conf['attachments.']['webpagePreviewHeight']) . 'px;
-	float:right;
-}
-';
-
-		$this->confid = '';
-	/*
-	 * $this->conf['UserImageSize'] . $this->conf['theme.']['boxmodelSpacing'] .$this->conf['theme.']['boxmodelLabelInputPreserve'].
-										$this->conf['theme.']['boxmodelLineHeight'] . $this->conf['theme.']['boxmodelLabelWidth'] .
-										intval($this->conf['attachments.']['webpagePreviewHeight']) .
-										base64_encode(trim($this->conf['theme.']['themeFontFamily'])) .
-										intval($this->conf['topRatings.']['topratingsnumberwidth']) .
-										$this->conf['sharing.']['dontUseSharingFacebook'] . $this->conf['sharing.']['dontUseSharingTwitter'] .
-										$this->conf['sharing.']['dontUseSharingGoogle'] . $this->conf['sharing.']['dontUseSharingLinkedIn'] .
-										$this->conf['sharing.']['dontUseSharingStumbleupon'] . $this->conf['sharing.']['dontUseSharingPinterest'] .
-										$this->conf['sharing.']['dontUseSharingDigg'] . $this->conf['sharing.']['dontUseSharingDelicious'] .
-										$this->conf['theme.']['shareCountborderColor'] . $this->conf['theme.']['shareBackgroundColor'] .
-										$this->conf['theme.']['shareborderColor1'] . $this->conf['theme.']['shareborderColor2'] .
-										$this->conf['theme.']['borderColor'] . intval($this->showCSScomments) .
-										$this->conf['ratings.']['useLikeDislikeStyle'];
-										*/
-		$csscontent = '';
-		if (intval($this->showCSScomments) == 1) {
-			$csscontent .= '/*
-CSS file generated by toctoc_comments
-Begin CSS Configured from TS-Variables in function checkCSSLoc
-
-		userImageSize: ' . $this->conf['UserImageSize'] . 'px
-		boxmodelSpacing:' . $this->conf['theme.']['boxmodelSpacing'] . 'px
-		boxmodelLineHeight: ' .	$this->conf['theme.']['boxmodelLineHeight'] . 'px
-		webpagePreviewHeight: ' . intval($this->conf['attachments.']['webpagePreviewHeight']) . 'px
-		topratingsnumberwidth: ' . intval($this->conf['topRatings.']['topratingsnumberwidth']) .'px;
-		theme.themeFontFamily: ' . trim($this->conf['theme.']['themeFontFamily']) .';
-
-		! Boxmodel, userImageSize, theme, ratings sharing configuration go together (and webpagePreviewHeight and topratingsnumberwidth)
-		To use another configuration with the same boxmodel use a copy of the boxmodel and rename it to reflect the changes
-
-*/' . "\n";
-		}
 
 		$this->LESSVars['comment'][$this->LESS_i] = '// TS: theme.usethemeFontFamilyForPlugin'. "\n";
 		$this->LESSVars['var'][$this->LESS_i] = '@usethemeFontFamilyForPlugin';
@@ -3788,213 +3549,6 @@ Begin CSS Configured from TS-Variables in function checkCSSLoc
 		$this->LESSVars['val'][$this->LESS_i] = intval($this->conf['ratings.']['useLikeDislikeStyle']) == 1 ? 'true' : 'false';
 		$this->LESS_i++;
 
-		if ($this->conf['theme.']['usethemeFontFamilyForPlugin'] == 1) {
-			$csscontent .= '.toctoc-comments-pi1 {
-    font-family: ' . $this->conf['theme.']['themeFontFamily'] . ';
-}
-textarea.tx-tc-ctinput-textarea, textarea.tx-tc-ctinput-textarea-rq, input.tx-tc-ct-input, #cap-wrap .text-box label {
-    font-family: ' . $this->conf['theme.']['themeFontFamily'] . ';
-}
-.tx-tc-ct-submit, .tx-tc-ct-reset, .tx-tc-ct-submit-loggedin, .tx-tc-cts-ctsbrowse-submit-hide, .tx-tc-cts-ctsbrowse-submit {
-    		font-family: ' . $this->conf['theme.']['themeFontFamily'] . ';
-}'. "\n";
-		}
-
-		$csscontent .= '.toctoc-comments-pi1 .tx-tc-cts .tx-tc-ct-box-cttxt {
-    margin-left: ' . (intval($useUserImageSize)+6+(intval($this->conf['theme.']['boxmodelSpacing'])+$marginpiccomment)) . 'px;
-}
-.tx-tc-images-img {
-    max-width: '.intval($this->conf['attachments.']['picUploadMaxDimWebpage']).'px;
-}
-@media (max-width: '.($this->arrResponsiveSteps[2]).'px) {
-    .txtc_details {
-    	width: 100% !important;
-		display:table;
-	}
-	.txtc_details p, .txtc_details .txtc_h2 {
-   		margin-right: '. (2*intval($this->conf['theme.']['boxmodelSpacing'])).'px;
-	}
-}
-.tx-tc-img-image, .tx-tc-images-img-browse-frame {
-    max-height: '.intval($this->conf['attachments.']['picUploadMaxDimYWebpage']).'px;
-}
-.tx-tc-ct-ry-report-line {
-    margin: -4px 4px 2px ' . (intval($useUserImageSize)+10) . 'px;
-}
-.tx-tc-ct-rybox {
-    min-height: ' . (intval($this->conf['UserImageSizeInForm'])+ 4 + intval($this->conf['theme.']['boxmodelLineHeight']-16)) . 'px;
-}
-.tx-tc-ct-box-picturecrop32 {
-    height: ' . (intval($this->conf['UserImageSize'])-8) .'px;
-}
-.tx-tcresponse-text {
-    margin: 0 0 0 ' . (intval($useUserImageSize)+10) .'px;
- }
-.tx-tc-ct-form-field-1 {
-   	margin-left: -' . (intval($useUserImageSizeInForm)) .'px;
-}
-.tx-tc-trt-rating {
-    margin: 0 '.(intval($this->conf['theme.']['boxmodelSpacing'])).'px 0 0;
-    padding: 0 '.$this->conf['theme.']['boxmodelSpacing'].'px;
- }
-.tx-tc-trl-rank {
-	width: ' . intval($this->conf['topRatings.']['topratingsnumberwidth']) .'px;
-}
-.tx-tc-trt-rating {
-    line-height: '.(intval($this->conf['theme.']['boxmodelLineHeight'])+4).'px;
-}
-.tx-tc-trtpic {
-	margin: 0 '.$this->conf['theme.']['boxmodelSpacing'].'px 0 0;
-}
-.tx-tc-trt-listdesc {
-	margin-bottom: '.(2*intval($this->conf['theme.']['boxmodelSpacing'])).'px;
-}
-.tx-tc-trt-cts-article {
-	margin: '.(intval($this->conf['theme.']['boxmodelSpacing'])).'px 0 '.(2*intval($this->conf['theme.']['boxmodelSpacing'])).'px 0;
-}
-.tx-tc-ct-box-ctpic {
-	visibility: '. $ctpicvisibility . ';' . $ctpicwidth . '
-}
-.tx-tc-div-submit {
-	opacity: ' . $themeopacity . ';
-}
-.tx-tc-dtadyn {
-	min-height: ' . $taheight . 'px;
-	padding: 0 ' . $tapadding . 'px 0 0;
-}
-.tx-tc-hhalfbm {
-	margin-left: '. $marginhalfbm .'px;
-	font-weight: bold;
-}
-.tx-tc-ntf-check {
-    margin: '. $margincheck .'px 8px 0 0 !important;
-    line-height:'.intval($this->conf['theme.']['boxmodelLineHeight']).'px !important;
-}
-.tx-tc-sortind {
-	margin-top: '. $sortind .'px;
-}
-.tx-tc-uimgsize {
-	width: ' . intval($this->conf['UserImageSize']) . 'px;
-	height: ' . intval($this->conf['UserImageSize']) . 'px;
-}
-.tx-tc-ct-box-picturecrop322 img {
-	width: ' . intval($this->conf['UserImageSizeInForm']) . 'px;
-	height: ' . intval($this->conf['UserImageSizeInForm']) . 'px;;
-}
-textarea.tx-tc-ctinput-textarea, textarea.tx-tc-ctinput-textarea-rq {
-	height: ' . $taheight . 'px;
-}
-.tx-tc-expandicon {
-' . $expandiconCSSmargin . '
-}
-.tx-tc-vidimg {
-	max-width: ' . $vidmaxwidth .'px;
-}
-.tx-tc-vidimgh5, .tx-tc-vidimg {
-	max-height: ' . intval($this->conf['attachments.']['webpagePreviewHeight']) . 'px;
-}
-.tx-tc-pvs-formtext {
-	margin: 0 0 0 ' . (15+intval($this->conf['attachments.']['webpagePreviewHeight'])) . 'px;
-}
-.tx-tc-pvs-images {
-	width: ' .	$websitepreviewareaimagewidth . 'px;
-	height: ' . intval($this->conf['attachments.']['webpagePreviewHeight']) . 'px;
-}
-.tx-tc-pvs-img {
-	max-width: ' .	$websitepreviewareaimagewidth . 'px;
-	max-height: ' . intval($this->conf['attachments.']['webpagePreviewHeight']) . 'px;
-}
-.tx-tc-wpp-mrgn {
-	margin: 5px 0 3px ' . $marginleftcommentingform . 'px;
-}
-.tc-tc-webpagepreview {
-	min-height: ' . intval($this->conf['attachments.']['webpagePreviewHeight']) . 'px;
-}
-.tx-tc-pvs-logobg {
-	margin-top: -' . (7+intval($this->conf['attachments.']['webpagePreviewHeight'])) . 'px;
-}
-.tx-tc-pvs-logopic, .tx-tc-pvsmxhgt {
-	max-height: ' . intval($this->conf['attachments.']['webpagePreviewHeight']) . 'px;
-}
-.tx-tc-pvs-prevnext {
-	margin-top: ' . (intval($this->conf['attachments.']['webpagePreviewHeight'])-8) . 'px;
-	width: ' . intval($this->conf['attachments.']['webpagePreviewHeight']) . 'px;
-}
-.tx-tc-pvs-nopreviewpic {
-	padding: 1px 2px 1px  ' . (intval($this->conf['attachments.']['webpagePreviewHeight'])-38) . 'px;
-	margin-left: 24px;
-}
-.tx-tc-pvs-tamg {
-	margin: 0 0 0 ' . (intval($this->conf['attachments.']['webpagePreviewHeight'])+7) . 'px;
-}
-.tx-tc-pvs-mnhgbox {
-	min-height: ' . (intval($this->conf['attachments.']['webpagePreviewHeight'])+5) . 'px;
-}
-.tx-tc-frmsqrhgt {
-	height: ' . (4 + (intval($this->conf['theme.']['boxmodelTextareaLineHeight']) * intval($this->conf['theme.']['boxmodelTextareaNbrLines']))  +
-		(2 * intval($this->conf['theme.']['boxmodelSpacing']))) . 'px;
-}
-.tx-tc-mihgt-ctbox {
-	min-height:' . $minheightcommentbox . 'px;
-}
-form.tx-tc-form-for-newcomment {
-    padding: 0 0 ' .intval((3/2)*$this->conf['theme.']['boxmodelSpacing']) . 'px;
-}
-.tx-tc-trt-userisz {
-	min-height: ' . intval($this->conf['topRatings.']['topratingsimagesize']) . 'px;
-}
-.tx-tc-mrgcnt-left {
-	margin-left: ' .  intval($this->conf['theme.']['boxmodelSpacing']) . 'px;
-}
-.tx-tc-trt-rating-img + .tx-tc-trt-rating-detail .tx-tc-mrgcntnp-left {
-	margin-left: ' . intval($this->conf['theme.']['boxmodelSpacing']). 'px;
-}
-.tx-tc-text-top {
-	line-height: ' . $boxmodelLineHeightorReviewlineHeight . 'px;
-}
-' .
-$cssctpicform .
-$cssreplyindents .
-$cssforminputspreserved .
-$highlightstyle .
-$picstrvid .
-$wpplogoCSSmargin .
-$closebuttonkooglemargin . '
-.tx-tc-pi1 .tx-tc-cts-form-fieldtextarea-1 {
-	min-height: ' . (intval($this->conf['UserImageSize'])) .'px;
-}
-';
-if (intval($this->conf['ratings.']['useLikeDislikeStyle']) == 1) {
-		$csscontent .= 	'div.tx-tc-cts-ct-dp div.tx-tc-ct-box div.tx-tc-ct-box-cttxt p.tx-tc-text {
-	width: 80%;
-}';
-}
-
-	$csscontent .= 	$this->makesharingcss();
-if (intval($this->showCSScomments) == 1) {
-	$csscontent .= '/*
-End CSS Configured from TS-Variables in function checkCSSLoc
-
-Start CSS from tx-tc-' . $this->extVersion . '.css
-
-Variables used in the boxmodel.txt-files res/css/boxmodels/system/boxmodel-system.txt and user-defined res/css/boxmodels/boxmodel.txt:
-	boxmodelTextareaLineHeight: '.$this->conf['theme.']['boxmodelTextareaLineHeight'] . ',
-	boxmodelTextareaHeight: ' . $this->boxmodelTextareaHeight . ',
-	boxmodelSpacing: ' . intval($this->conf['theme.']['boxmodelSpacing']) . ',
-	boxmodelLineHeight: ' . $this->conf['theme.']['boxmodelLineHeight'] . ',
-	boxmodelLineHeightHalf: ' . round(($this->conf['theme.']['boxmodelLineHeight']-16)/2, 0) . ',
-	boxmodelSpacingHalf: ' . round(($this->conf['theme.']['boxmodelSpacing'])/2, 0) . ',
-	boxmodelInputFieldSize: ' . intval($this->conf['theme.']['boxmodelInputFieldSize']) . ',
-	boxmodelLabelInputPreserve: ' . intval($this->conf['theme.']['boxmodelLabelInputPreserve']) . ',
-	boxmodelLabelWidth: ' . intval($this->conf['theme.']['boxmodelLabelWidth']) . ',
-	picUploadMaxDimX: ' . $this->conf['attachments.']['picUploadMaxDimX'] . ',
-	userImageSize: ' . $this->conf['userImageSize'] . ',
-	ratingImageWidth: ' . $this->conf['ratings.']['ratingImageWidth'] . '
-	reviewImageWidth: ' . $this->conf['ratings.']['reviewImageWidth'] . '
-*/';
-}
-
-		$this->confcss=$csscontent . "\n";
 		return '';
 	}
 
@@ -4011,49 +3565,6 @@ Variables used in the boxmodel.txt-files res/css/boxmodels/system/boxmodel-syste
 
 			if ($this->conf['sharing.']['dontUseSharingFacebook'] !=1 ) {
 				$leftpxfb = 4;
-			}
-
-			if ($this->conf['theme.']['refreshCSSFromLESS'] == 0) {
-				if (intval($this->showCSScomments) == 1 ) {
-					$retcss = '/*
-sharrre design 2 and 4, calculated specifics
-*/';
-				}
-
-				$retcss .= '
-.shrdes2 .buttons {
-	background: none repeat scroll 0 0 #' . $this->conf['theme.']['shareBackgroundColor'] . ';
-	border-color: #' . $this->conf['theme.']['shareborderColor2'] . ' #' . $this->conf['theme.']['shareborderColor2'] . ' #' .
-	$this->conf['theme.']['shareborderColor1'] . ';
-	-webkit-box-shadow: 0 1px 2px #' . $this->conf['theme.']['borderColor'] . ';
-	-moz-box-shadow: 0 1px 2px #' . $this->conf['theme.']['borderColor'] . ';
-	box-shadow: 0 1px 2px #' . $this->conf['theme.']['borderColor'] . ';
-}
-.shrdes4 .count {
-	border-right: 1px solid #' . $this->conf['theme.']['shareCountborderColor'] . ';
-}
-.shrdes4 .buttons {
-	background: none repeat scroll 0 0 #' . $this->conf['theme.']['shareBackgroundColor'] . ';
-	-webkit-box-shadow: 0 1px 2px #' . $this->conf['theme.']['borderColor'] . ';
-	-moz-box-shadow: 0 1px 2px #' . $this->conf['theme.']['borderColor'] . ';
-	box-shadow: 0 1px 2px #' . $this->conf['theme.']['borderColor'] . ';
-}
-.shrdes4 .facebook {
-	left: ' . $leftpxfb . 'px;
-}
-.shrdes5 .count {
-	border-right: 1px solid #' . $this->conf['theme.']['shareCountborderColor'] . ';
-}
-.shrdes5 .buttons {
-	background: none repeat scroll 0 0 #' . $this->conf['theme.']['shareBackgroundColor'] . ';
-	-webkit-box-shadow: 0 1px 2px #' . $this->conf['theme.']['borderColor'] . ';
-	-moz-box-shadow: 0 1px 2px #' . $this->conf['theme.']['borderColor'] . ';
-	box-shadow: 0 1px 2px #' . $this->conf['theme.']['borderColor'] . ';
-}
-.shrdes5 .facebook {
-	left: ' . $leftpxfb . 'px;
-}
-';
 			}
 
 		}
@@ -4268,7 +3779,7 @@ sharrre design 2 and 4, calculated specifics
 
 		if ($this->showsdebugprint==TRUE) {
 			$endtimedebug=microtime(TRUE);
-			$this->sdebuginitprint.=' (InitprefixToTableMap: ' . round(1000*($endtimedebug - $starttimedebug), 1) .', ';
+			$this->sdebuginitprint.='InitprefixToTableMap: ' . round(1000*($endtimedebug - $starttimedebug), 1) .', ';
 		}
 
 		$this->mergeConfiguration();
@@ -4369,17 +3880,23 @@ sharrre design 2 and 4, calculated specifics
 					$forceregenerate = TRUE;
 					$_SESSION['AJAXimages'] = array();
 					$_SESSION['AJAXOrigimages'] = array();
-					$_SESSION['selectedTheme']=$this->conf['theme.']['selectedTheme'];
 					$_SESSION['DefaultUserImage'] = array();
 				}
-				$this->processcssandjsfiles=TRUE;
-				$ckeckresult=$this->checkCSSTheme();
-				if ($ckeckresult!='') {
-					return $ckeckresult;
+
+				$_SESSION['selectedTheme'] = $this->conf['theme.']['selectedTheme'];
+				$this->processcssandjsfiles = TRUE;
+
+				if ($this->clientissearchengine == FALSE) {
+					$ckeckresult=$this->checkCSSTheme();
+					if ($ckeckresult!='') {
+						return $ckeckresult;
+					}
+
+					$this->checkandload_emolikes();
+					$this->checkCSSLoc();
+					$this->boxmodel();
 				}
-				$this->checkandload_emolikes();
-				$this->checkCSSLoc();
-				$this->boxmodel();
+
 				if ($this->showsdebugprint==TRUE) {
 					$endtimedebug2=microtime(TRUE);
 					$this->sdebuginitprint.='Boxmodel: ' . round(1000*($endtimedebug2 - $starttimedebug2), 1) .', ';
@@ -4390,14 +3907,13 @@ sharrre design 2 and 4, calculated specifics
 					$subSubPart = $this->cObj->getSubpart($this->templateCode, '###ADDITIONAL_CSS###');
 					$subParts['###ADDITIONAL_CSS###'] = trim($this->cObj->substituteMarker($subSubPart,
 							'###CSS_FILE###', $GLOBALS['TSFE']->tmpl->getFileName($this->conf['ratings.']['additionalCSS'])));
-				}
-
-				else {
+				} else {
 					$subParts['###ADDITIONAL_CSS###'] = '';
 				}
 
 				$mincommentid=0;
 				$maxcommentid=0;
+
 				if (version_compare(TYPO3_version, '4.6', '<')) {
 					$tmpint = t3lib_div::testInt($this->conf['storagePid']);
 				} else {
@@ -4406,83 +3922,83 @@ sharrre design 2 and 4, calculated specifics
 
 				$rangenewcommentswhere=' approved=1 AND ' . ($tmpint ?
 						'pid=' . $this->conf['storagePid'] : 'pid IN (' . $this->conf['storagePid'] . ')') .
-						$this->cObj->enableFields('tx_toctoc_comments_comments') . ' AND crdate > ' . (time() - 691200); //newer than 8 days
-
-				$rowstt = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
-						'tx_toctoc_comments_comments.uid AS uid',
+						$this->cObj->enableFields('tx_toctoc_comments_comments'); //any
+				$rowstt2 = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+						'MAX(tx_toctoc_comments_comments.uid) AS uid',
 						'tx_toctoc_comments_comments',
-						$rangenewcommentswhere,
-						'tx_toctoc_comments_comments.uid'
+						$rangenewcommentswhere
 				);
-				if (count($rowstt)>0) {
-					$mincommentid=$rowstt[0]['uid'];
-					$maxcommentid=$rowstt[(count($rowstt)-1)]['uid']+50;
-				} else {
-					$rangenewcommentswhere=' approved=1 AND ' . ($tmpint ?
-							'pid=' . $this->conf['storagePid'] : 'pid IN (' . $this->conf['storagePid'] . ')') .
-							$this->cObj->enableFields('tx_toctoc_comments_comments'); //any
-					$rowstt2 = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
-							'MAX(tx_toctoc_comments_comments.uid) AS uid',
-							'tx_toctoc_comments_comments',
-							$rangenewcommentswhere
-					);
-					if (count($rowstt2)>0) {
-						if ($rowstt2[0]['uid'] !='') {
-							$mincommentid=$rowstt2[0]['uid'];
-							$maxcommentid=$rowstt2[0]['uid']+50;
+				if (count($rowstt2)>0) {
+					if ($rowstt2[0]['uid'] !='') {
+						$mincommentid=$rowstt2[0]['uid'];
+						$maxcommentid=$rowstt2[0]['uid']+50;
+					}
+
+				}
+
+				if ($mincommentid==0) {
+					$mincommentid=1;
+					$maxcommentid=51;
+				}
+
+				if (trim($this->conf['theme.']['selectedTheme']) == '') {
+					$this->conf['theme.']['selectedTheme'] = 'default';
+				}
+
+				if (!is_array($_SESSION['colourcodesemo'])) {
+					$_SESSION['colourcodesemo'] = array();
+				}
+
+				$checkedcolourcodesemo = '';
+				if ($this->clientissearchengine == FALSE) {
+					if (!isset($_SESSION['colourcodesemo'][$this->conf['theme.']['selectedTheme']])) {
+						$colourcodesemo = '';
+						if ($this->conf['ratings.']['emoLike'] ==1 ) {
+							$filenametheme='theme.less';
+							$dirsep=DIRECTORY_SEPARATOR;
+							$repstr= str_replace('/', $dirsep, '/typo3conf/ext/toctoc_comments/pi1');
+							$txdirnametheme= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep . t3lib_extMgm::siteRelPath('toctoc_comments') .
+									'res/css/themes/' . $this->conf['theme.']['selectedTheme'] . '/' );
+							$filenametheme=$txdirnametheme . $filenametheme;
+							$contentlesscolors = file_get_contents($this->themeLESSfile);
+							$colarr =  explode('@linkbox-color-dislike-active: ', $contentlesscolors);
+							$colarr2 = explode(';', $colarr[1]);
+							$colarra =  explode('@linkbox-color-active: ', $contentlesscolors);
+							$colarra2 = explode(';', $colarra[1]);
+							$colourcodesemo = 'colourcodeemo[0] = "'.trim($colarra2[0]).'";
+			colourcodeemo[1] = "'.trim($colarra2[0]).'";
+			colourcodeemo[7] = "'.trim($colarr2[0]).'";';
+
+							$strsql='SELECT uid AS emolikeid, emolike_sort, emolike_colorcode
+										FROM tx_toctoc_comments_emolike
+										WHERE emolike_colorcode != "" AND emolike_setfolder = "'.$this->conf['ratings.']['emoLikeSet'] .'"
+										AND deleted = 0
+										ORDER BY emolike_sort';
+							$resultl= $GLOBALS['TYPO3_DB']->sql_query($strsql);
+							while ($likerows = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultl)) {
+								$colourcodesemo .= '
+			colourcodeemo['.$likerows['emolike_sort'] .'] = "'.$likerows['emolike_colorcode'].'";';
+							}
+							$checkedcolourcodesemo = ' and emoLike-colorcodes ';
 						}
 
-					}
-
-					if ($mincommentid==0) {
-						$mincommentid=1;
-						$maxcommentid=51;
+						$_SESSION['colourcodesemo'][$this->conf['theme.']['selectedTheme']] = $colourcodesemo;
+					} else {
+						$colourcodesemo = $_SESSION['colourcodesemo'][$this->conf['theme.']['selectedTheme']];
 					}
 
 				}
 
-				if ($this->conf['ratings.']['emoLike'] ==1 ) {
-					$filenametheme='theme.less';
-					$dirsep=DIRECTORY_SEPARATOR;
-
-					$repstr= str_replace('/', $dirsep, '/typo3conf/ext/toctoc_comments/pi1');
-					if (trim($this->conf['theme.']['selectedTheme']) == '') {
-						$this->conf['theme.']['selectedTheme'] = 'default';
-					}
-
-					$txdirnametheme= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep . t3lib_extMgm::siteRelPath('toctoc_comments') .
-							'res/css/themes/' . $this->conf['theme.']['selectedTheme'] . '/' );
-					$filenametheme=$txdirnametheme . $filenametheme;
-					$contentlesscolors = file_get_contents($this->themeLESSfile);
-					$colarr =  explode('@linkbox-color-dislike-active: ', $contentlesscolors);
-					$colarr2 = explode(';', $colarr[1]);
-					$colarra =  explode('@linkbox-color-active: ', $contentlesscolors);
-					$colarra2 = explode(';', $colarra[1]);
-					$colourcodesemo = 'colourcodeemo[0] = "'.trim($colarra2[0]).'";
-	colourcodeemo[1] = "'.trim($colarra2[0]).'";
-	colourcodeemo[7] = "'.trim($colarr2[0]).'";';
-
-					$strsql='SELECT uid AS emolikeid, emolike_sort, emolike_colorcode
-								FROM tx_toctoc_comments_emolike
-								WHERE emolike_colorcode != "" AND emolike_setfolder = "'.$this->conf['ratings.']['emoLikeSet'] .'"
-								AND deleted = 0
-								ORDER BY emolike_sort';
-					$resultl= $GLOBALS['TYPO3_DB']->sql_query($strsql);
-					while ($likerows = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultl)) {
-
-						$colourcodesemo .= '
-	colourcodeemo['.$likerows['emolike_sort'] .'] = "'.$likerows['emolike_colorcode'].'";';
-					}
-				}
 				if ($this->showsdebugprint==TRUE) {
 					$starttimedebug21=microtime(TRUE);
-					$this->sdebuginitprint.='Check new comments: ' . round(1000*($starttimedebug21 - $starttimedebug2), 1) .', ';
+					$this->sdebuginitprint.='Check new comments' . $checkedcolourcodesemo . ': ' . round(1000*($starttimedebug21 - $starttimedebug2), 1) .', ';
 				}
 
 				$loginRequiredIdLoginForm ='';
 				if (($this->conf['advanced.']['loginRequired'] == 1) || ($this->conf['pluginmode'] == 5)) {
 					$loginRequiredIdLoginForm = 'tx-tc-loginform';
 				}
+
 				$tlogon=0;
 				if (intval($GLOBALS['TSFE']->fe_user->user['uid']) > 0) {
 					$tlogon=1;
@@ -4496,6 +4012,7 @@ sharrre design 2 and 4, calculated specifics
 				if (version_compare(TYPO3_version, '6.3', '>')) {
 					$rsajsloc = 'Resources/Public/JavaScript';
 				}
+
 				if (version_compare(TYPO3_version, '6.1', '>')) {
 					$rsajsenc = '/FrontendLoginFormRsaEncryption.js';
 					$rsascript='<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') .
@@ -4520,6 +4037,7 @@ sharrre design 2 and 4, calculated specifics
 							($GLOBALS['TYPO3_CONF_VARS']['FE']['loginSecurityLevel'] == 'rsa')) {
 						$plsUseRSA = 1;
 					}
+
 				}
 
 				if ((intval($this->conf['advanced.']['loginRequired']) == 0) && ($this->conf['pluginmode'] != 5)) {
@@ -4553,6 +4071,7 @@ sharrre design 2 and 4, calculated specifics
 					$locLoginFormhtml= str_replace('###SIGNON_FORM###', '',
 							$locLoginFormhtml);
 					$loctest= explode('<div class="tx-tc-loginform" id="tx-tc-loginform">', $locLoginFormhtml);
+
 					if  (intval($this->conf['pluginmode']) != 5) {
 						$locLoginFormhtml= str_replace('<div class="tx-tc-loginform" id="tx-tc-loginform">', '', $locLoginFormhtml);
 						$locLoginFormhtml= substr($locLoginFormhtml, 0, (strlen($locLoginFormhtml)-6));
@@ -4567,6 +4086,7 @@ sharrre design 2 and 4, calculated specifics
 					} elseif ((intval($this->conf['pluginmode']) == 5) && (count($loctest) > 2)){
 						$locLoginFormhtml= substr($locLoginFormhtml, strlen('<div class="tx-tc-loginform" id="tx-tc-loginform">'));
 						$locLoginFormhtmlarr = explode('<!-- ###LOGIN_FORM### -->', $locLoginFormhtml);
+
 						if(count($locLoginFormhtmlarr)>2) {
 							$locLoginFormhtmlarr[3]=substr($locLoginFormhtmlarr[3], 8);
 						}
@@ -4575,11 +4095,13 @@ sharrre design 2 and 4, calculated specifics
 					} elseif ((intval($this->conf['pluginmode']) == 5) && (count($loctest)<3)){
 						$testlogoutarr = explode('formlo', $locLoginFormhtml);
 						$adddiv='</div>';
+
 						if (count($testlogoutarr) > 1) {
 							$adddiv='';
 						}
 
 						$locLoginFormhtmlarr = explode('<!-- ###LOGIN_FORM### -->', $locLoginFormhtml);
+
 						if(count($locLoginFormhtmlarr) > 2) {
 							$locLoginFormhtmlarr[3] =substr($locLoginFormhtmlarr[3], 8);
 						}
@@ -4589,6 +4111,7 @@ sharrre design 2 and 4, calculated specifics
 					}
 
 					$locLoginFormhtmlarr = explode('<!-- ###FORGOT_FORM### -->', $locLoginFormhtml);
+
 					if(count($locLoginFormhtmlarr) > 1) {
 						$locLoginFormhtmlarr[2] = substr($locLoginFormhtmlarr[2], 8);
 					}
@@ -4597,7 +4120,6 @@ sharrre design 2 and 4, calculated specifics
 					$locLoginFormhtml = str_replace('<!--', '', $locLoginFormhtml);
 					$locLoginFormhtml = str_replace('User login', '', $locLoginFormhtml);
 					$locLoginFormhtml = str_replace('-->', '', $locLoginFormhtml);
-
 					$locLoginFormhtml = trim($locLoginFormhtml);
 					$locLoginFormhtmlarr = explode('</form>', $locLoginFormhtml);
 					$locLoginFormhtmlarr[1] = trim($locLoginFormhtmlarr[1]);
@@ -4619,6 +4141,7 @@ sharrre design 2 and 4, calculated specifics
 						}
 
 					}
+
 					if ($this->conf['theme.']['boxmodelLabelInputPreserve']==1) {
 						$locLoginFormhtml = str_replace('class="tx-tc-loginform', 'class="tx-tc-loginform tx-tc-responsive', $locLoginFormhtml);
 					}
@@ -4638,9 +4161,10 @@ sharrre design 2 and 4, calculated specifics
 				$jscontent .= '	var boxmodelTextareaHeight = ' . intval($this->boxmodelTextareaHeight) . ';' . "\n";
 				if ($this->conf['theme.']['boxmodelLabelInputPreserve']==0) {
 					$jscontent .= '	var boxmodelLabelWidth = ' . intval($this->conf['theme.']['boxmodelLabelWidth']) . ';' . "\n";
-				}else {
+				} else {
 					$jscontent .= '	var boxmodelLabelWidth = 0;' . "\n";
 				}
+
 				$jscontent .= '	var dolabel = ' . intval($this->conf['advanced.']['watermarkFormFields']) . ';' . "\n";
 				$jscontent .= '	var boxmodelSpacing = ' . intval($this->conf['theme.']['boxmodelSpacing']) . ';' . "\n";
 				$jscontent .= '	var boxmodelLineHeight = ' . intval($this->conf['theme.']['boxmodelLineHeight']) . ';' . "\n";
@@ -4670,6 +4194,7 @@ sharrre design 2 and 4, calculated specifics
 	var colourcodeemo = [];
 	' . $colourcodesemo;
 				}
+				$ajaxdna = md5($GLOBALS['TSFE']->sys_language_uid . 'g6g9g' . $GLOBALS['TSFE']->lang . 'g6g9g' . intval($GLOBALS['TSFE']->fe_user->user['uid']) . $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey']) . 'l6l9l' . $GLOBALS['TSFE']->sys_language_uid . 'g6g9g' . $GLOBALS['TSFE']->lang . 'g6g9g' . intval($GLOBALS['TSFE']->fe_user->user['uid']);
 				$jsservervars = '' . $rsajsstr . '
 <script type="text/javascript">
 	var tcistouch = ' . $jsjqmobile  .';
@@ -4682,6 +4207,7 @@ sharrre design 2 and 4, calculated specifics
 	var loginRequiredIdLoginForm = "' . $loginRequiredIdLoginForm .'";
 	var loginRequiredRefreshCIDs = "";
 	var loginRequiredRefreshRecs = "";
+	var ajaxdna = "' . $ajaxdna . '";
 	var global_loggedon = '. $tlogon . ';' . $emolike . "\n". $locLoginFormhtml . $locchangePasswordFormhtml . "\n". '
 </script>'. "\n". '<script type="text/javascript">
 ' . $jscontent . "\n". '</script>';
@@ -4769,6 +4295,7 @@ sharrre design 2 and 4, calculated specifics
 					}
 
 				}
+
 				$filenm = $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') .
 				'res/css/' . $this->boxmodelcss;
 				$mod1_file = $this->createVersionNumberedFilename($filenm);
@@ -4906,7 +4433,7 @@ sharrre design 2 and 4, calculated specifics
 		$this->ref=$this->foreignTableName . '_' . $this->externalUid;
 		if ($this->showsdebugprint==TRUE) {
 			$endtimedebug2=microtime(TRUE);
-			$this->sdebuginitprint.='Init end: ' . round(1000*($endtimedebug2 - $starttimedebug2), 1) .') ';
+			$this->sdebuginitprint.='Init end: ' . round(1000*($endtimedebug2 - $starttimedebug2), 1) .')</small> ';
 
 		}
 
@@ -5118,6 +4645,10 @@ sharrre design 2 and 4, calculated specifics
 			$this->conf['ratings.']['enableRatings'] = 0;
 		}
 
+		if ((intval($this->conf['ratings.']['ratingsOnly']) == 1) && ($this->conf['ratings.']['enableRatings'] == 0)) {
+			$this->conf['sharing.']['useOnlySharing'] = 1;
+		}
+
 		if ((($this->conf['sharing.']['useOnlySharing'] == 1) || (($this->conf['sharing.']['useSharing'] == 1) && ($this->conf['ratings.']['ratingsOnly'] == 1) && ($this->conf['ratings.']['enableRatings'] == 0))) == FALSE) {
 			if (($this->conf['sharing.']['useSharing'] == 1) && ((($this->conf['ratings.']['ratingsOnly'] == 0) && ($this->conf['ratings.']['enableRatings'] == 1) && ($this->conf['ratings.']['useLikeDisLike'] == 1)) ||
 					($this->conf['advanced.']['useCommentLink'] == 1))) {
@@ -5254,17 +4785,6 @@ sharrre design 2 and 4, calculated specifics
 			$this->conf['advanced.']['dateFormat'] = $GLOBALS['TYPO3_CONF_VARS']['SYS']['ddmmyy'] . ' ' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['hhmm'];
 			$this->conf['dateFormatMode'] = 'date';
 		}
-
-		// Call hook for custom configuration
-		/* if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['mergeConfiguration'])) {
-			foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['toctoc_comments']['mergeConfiguration'] as $userFunc) {
-				$params = array(
-					'pObj' => $this,
-				);
-				t3lib_div::callUserFunction($userFunc, $params, $this);
-			}
-
-		} */
 
 	}
 
@@ -5599,29 +5119,6 @@ sharrre design 2 and 4, calculated specifics
 			}
 		}
 
-		if ($this->conf['theme.']['refreshCSSFromLESS'] != 1) {
-			// checking boxmodel_system
-			$txdirnameboxmodelsystem= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep .
-									t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/css/boxmodels/system/' );
-			$filenameboxmodelsystem=$txdirnameboxmodelsystem . 'boxmodel_system.txt';
-			$filetime = @filemtime($filenameboxmodelsystem);
-			if ($this->newestCSSFileTime < $filetime) {
-				$this->newestCSSFileTime = $filetime;
-			}
-
-			if (!isset($_SESSION['fileTimeBoxModelSystem'])) {
-				$runboxmodel = TRUE;
-				$_SESSION['fileTimeBoxModelSystem'] = $filetime;
-			} else {
-				if ($_SESSION['fileTimeBoxModelSystem']  != $filetime) {
-					$runboxmodel = TRUE;
-					$_SESSION['fileTimeBoxModelSystem'] = $filetime;
-				}
-
-			}
-
-		}
-
 		$httpsid='';
 		if (@$_SERVER['HTTPS'] == 'on') {
 			$httpsid='-https';
@@ -5634,17 +5131,16 @@ sharrre design 2 and 4, calculated specifics
 		if (trim($this->conf['ratings.']['emoLikeSet']) == '') {
 			$ratingsemoLikeSet = 'default';
 		}
+		$cssmd5 = md5(serialize($this->LESSVars['val']) . $this->conf['ratings.']['useLikeDislikeStyle'] .
+					'-' . $this->conf['theme.']['boxmodelLabelInputPreserve'] . $this->conf['theme.']['themeVersion'] .
+			$this->conf['ratings.']['emoLike'] . $ratingsemoLikeSet . intval($isTabletOrHandyexceptFF) . intval($this->conf['useUserImage']) . $atMediaWitdhs);
 
 		if (trim($this->conf['theme.']['selectedBoxmodel']) != '') {
 			$filenamecssoutfile='tx-tc-' . $this->extVersion . '-' . str_replace('.txt', '', $this->conf['theme.']['selectedBoxmodel']) .'-' .
-					$this->conf['theme.']['selectedTheme'] . '-' . $GLOBALS['TSFE']->sys_language_uid  . $httpsid . '-' . $this->conf['ratings.']['useLikeDislikeStyle'] .
-					'-' . $this->conf['theme.']['boxmodelLabelInputPreserve'] . $this->conf['theme.']['themeVersion'] .
-			$this->conf['ratings.']['emoLike'] . $ratingsemoLikeSet . intval($isTabletOrHandyexceptFF) . intval($this->conf['useUserImage']) . $atMediaWitdhs . '.css';
+					$this->conf['theme.']['selectedTheme'] . '-' . $GLOBALS['TSFE']->sys_language_uid  . $httpsid . '-' . $cssmd5 . '.css';
 		} else {
 			$filenamecssoutfile='tx-tc-' . $this->extVersion . '-system-' .
-					$this->conf['theme.']['selectedTheme'] . '-' . $GLOBALS['TSFE']->sys_language_uid  . $httpsid . '-' . $this->conf['ratings.']['useLikeDislikeStyle'] .
-					'-' . $this->conf['theme.']['boxmodelLabelInputPreserve'] . $this->conf['theme.']['themeVersion'] .
-			$this->conf['ratings.']['emoLike'] . $ratingsemoLikeSet . intval($isTabletOrHandyexceptFF) . intval($this->conf['useUserImage']) . $atMediaWitdhs . '.css';
+					$this->conf['theme.']['selectedTheme'] . '-' . $GLOBALS['TSFE']->sys_language_uid  . $httpsid . '-' . $cssmd5 . '.css';
 		}
 
 		$txdirname= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep . t3lib_extMgm::siteRelPath('toctoc_comments') .
@@ -5684,248 +5180,226 @@ sharrre design 2 and 4, calculated specifics
 			$controlTSless .= $this->LESSVars['val'][$i];
 		}
 
-		if ($this->conf['theme.']['refreshCSSFromLESS'] == 0) {
-
-			$this->confid = $controlTSless;
-
-		}
-
-		if ($this->conf['theme.']['refreshCSSFromLESS'] == 1) {
-			if ($this->conf['theme.']['freezeLevelCSS'] < 2) {
-				$txdirnametemp = str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep . t3lib_extMgm::siteRelPath('toctoc_comments') .
-						'res/css/temp' );
-				$txdirnamebase = str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep .
-						t3lib_extMgm::siteRelPath('toctoc_comments'));
-				$txdirtoctoc = '../';
-				// get max LESS-filemtime
-				$txdirnamelessbootstrap = str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep .
-						t3lib_extMgm::siteRelPath('toctoc_comments') .
-						'res/less/' . $this->extLESSVersion . '' );
-				$lessbootstrapfile = $txdirnamelessbootstrap . DIRECTORY_SEPARATOR . 'bootstrap.less';
-				if (file_exists($lessbootstrapfile)) {
-					$contentbootstrap = file_get_contents($lessbootstrapfile);
-					$cbsarrimports = explode('@import "', $contentbootstrap);
-					$countcbsarrimports = count($cbsarrimports);
-					for ($i =1; $i < $countcbsarrimports; $i++) {
-						$importcandarr = explode('"', $cbsarrimports[$i]);
-						$importcand = $importcandarr[0];
-						$checktime = FALSE;
-						if (str_replace('.less', '', $importcand) != $importcand) {
-							if (str_replace('_php', '', $importcand) != $importcand) {
-								if ($importcand == '_php/boxmodelderivedvariables.less') {
-									$checktime = TRUE;
-								}
-
-							} else {
-								$checktime = TRUE;
-							}
-
+		$txdirnametemp = str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep . t3lib_extMgm::siteRelPath('toctoc_comments') .
+				'res/css/temp' );
+		$txdirnamebase = str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep .
+				t3lib_extMgm::siteRelPath('toctoc_comments'));
+		$txdirtoctoc = '../';
+		// get max LESS-filemtime
+		$txdirnamelessbootstrap = str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep .
+				t3lib_extMgm::siteRelPath('toctoc_comments') .
+				'res/less/' . $this->extLESSVersion . '' );
+		$lessbootstrapfile = $txdirnamelessbootstrap . DIRECTORY_SEPARATOR . 'bootstrap.less';
+		if (file_exists($lessbootstrapfile)) {
+			$contentbootstrap = file_get_contents($lessbootstrapfile);
+			$cbsarrimports = explode('@import "', $contentbootstrap);
+			$countcbsarrimports = count($cbsarrimports);
+			for ($i =1; $i < $countcbsarrimports; $i++) {
+				$importcandarr = explode('"', $cbsarrimports[$i]);
+				$importcand = $importcandarr[0];
+				$checktime = FALSE;
+				if (str_replace('.less', '', $importcand) != $importcand) {
+					if (str_replace('_php', '', $importcand) != $importcand) {
+						if ($importcand == '_php/boxmodelderivedvariables.less') {
+							$checktime = TRUE;
 						}
-
-						if ($checktime == TRUE) {
-							$timecheckfile =$txdirnamelessbootstrap. DIRECTORY_SEPARATOR . $importcand;
-							if (file_exists($timecheckfile)) {
-								$filetime = @filemtime($timecheckfile);
-								if ($this->newestLessFileTime < $filetime) {
-									$this->newestLessFileTime = $filetime;
-								}
-
-							} else {
-								print 'less-file ' . $timecheckfile. ' not found<br>';
-								exit;
-							}
-
-						}
-
-					}
-
-				} else {
-					print 'bootstrap-file ' . $lessbootstrapfile. ' not found<br>';
-					exit;
-				}
-
-				$lessbootstrapfile = $txdirnamelessbootstrap . DIRECTORY_SEPARATOR . '_php'. DIRECTORY_SEPARATOR .'boxmodel.less';
-				if (file_exists($lessbootstrapfile)) {
-					if (trim($this->conf['theme.']['selectedBoxmodel']) != '') {
-						$timecheckfile = $txdirnamelessbootstrap . DIRECTORY_SEPARATOR .
-						'boxmodel' . DIRECTORY_SEPARATOR .
-						str_replace('boxmodel_', '', str_replace('.txt', '', trim($this->conf['theme.']['selectedBoxmodel']))) . '.less';
-						if (file_exists($timecheckfile)) {
-							$filetime = @filemtime($timecheckfile);
-							if ($this->newestLessFileTime < $filetime) {
-								$this->newestLessFileTime = $filetime;
-							}
-
-						} else {
-							print 'boxmodel-file ' . $timecheckfile. ' not found<br>';
-							exit;
-						}
-
-					}
-					if (trim($this->conf['theme.']['themeVersion']) == '2') {
-						$timecheckfile = $txdirnamelessbootstrap . DIRECTORY_SEPARATOR .
-						'_php' . DIRECTORY_SEPARATOR . 'themeVersion2.less';
-						if (file_exists($timecheckfile)) {
-							$filetime = @filemtime($timecheckfile);
-							if ($this->newestLessFileTime < $filetime) {
-								$this->newestLessFileTime = $filetime;
-							}
-
-						} else {
-							print 'boxmodelthemeVersion-file ' . $timecheckfile. ' not found<br>';
-							exit;
-						}
-						if (trim($this->conf['ratings.']['emoLike']) == '1') {
-							$timecheckfile = $txdirnamelessbootstrap . DIRECTORY_SEPARATOR .
-							'ratings' . DIRECTORY_SEPARATOR . 'emolike.less';
-							if (file_exists($timecheckfile)) {
-								$filetime = @filemtime($timecheckfile);
-								if ($this->newestLessFileTime < $filetime) {
-									$this->newestLessFileTime = $filetime;
-								}
-
-							} else {
-								print 'boxmodelthemeVersion-file ' . $timecheckfile. ' not found<br>';
-								exit;
-							}
-
-						}
-
-					}
-
-				} else {
-					print 'boxmodel-include-file ' . $lessbootstrapfile. ' not found<br>';
-					exit;
-				}
-
-				$controlTSless = $this->newestLessFileTime . '-' . $controlTSless;
-				// check controlfile
-				$filenamecontrolcss = str_replace('.css', '.txt', $filenamecss);
-				$doless= FALSE;
-				if (file_exists($filenamecontrolcss)) {
-					$contentcurrentcontrol = file_get_contents($filenamecontrolcss);
-					if ($controlTSless != $contentcurrentcontrol) {
-						$doless= TRUE;
-					} else {
-						if (!file_exists($filenamecss)) {
-							$doless= TRUE;
-						}
-
-					}
-
-				} else {
-					$doless= TRUE;
-				}
-
-				if ($doless ==TRUE) {
-				// Check LOCK-file
-					$lockfile = $txdirnametemp . DIRECTORY_SEPARATOR . '~lock.less';
-					if (file_exists($lockfile)) {
-						$i=0;
-						do {
-							usleep(200);
-							$fex = file_exists($lockfile);
-							$i++;
-						} while (($fex == FALSE) || ($i > 60));
 
 					} else {
-						file_put_contents($lockfile, 'locked');
+						$checktime = TRUE;
 					}
 
-					// Loop, sleep 3 ms, if lock file until nomore lockfile
-					// make new look file
+				}
 
-					// copy css/themes/[theme]/theme.less over less/' . $this->extLESSVersion . '/_php/themecolorvariables.less
-					$contentlesscolors = file_get_contents($this->themeLESSfile);
-					$txdirnamelessphp = str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep . t3lib_extMgm::siteRelPath('toctoc_comments') .
-							'res/less/' . $this->extLESSVersion . '/_php' );
-					$lessphpfile = $txdirnamelessphp . DIRECTORY_SEPARATOR . 'themecolorvariables.less';
-					if (file_exists($lessphpfile)) {
-						file_put_contents($lessphpfile, $contentlesscolors);
-					}
-
-					$lessphpTSfile = $txdirnamelessphp . DIRECTORY_SEPARATOR . 'boxmodelvariables.less';
-					if (file_exists($lessphpTSfile)) {
-						file_put_contents($lessphpTSfile, $contentTSless);
-					}
-
-					$lessphpbmfile = $txdirnamelessphp . DIRECTORY_SEPARATOR . 'boxmodel.less';
-					if (file_exists($lessphpbmfile)) {
-						$contentbmless = '';
-						if (trim($this->conf['theme.']['selectedBoxmodel']) != '') {
-							$contentbmless .= '@import "../boxmodel/' .
-											str_replace('boxmodel_', '', str_replace('.txt', '', trim($this->conf['theme.']['selectedBoxmodel']))) .
-											'.less";' . "\n";
-						}
-						$sepl = '';
-						if (trim($this->conf['theme.']['themeVersion']) == '2') {
-							$contentbmless .= '@import "themeVersion2.less";';
-							$sepl = "\n";
+				if ($checktime == TRUE) {
+					$timecheckfile =$txdirnamelessbootstrap. DIRECTORY_SEPARATOR . $importcand;
+					if (file_exists($timecheckfile)) {
+						$filetime = @filemtime($timecheckfile);
+						if ($this->newestLessFileTime < $filetime) {
+							$this->newestLessFileTime = $filetime;
 						}
 
-						if (trim($this->conf['ratings.']['emoLike']) == '1') {
-							$contentbmless .= $sepl . '@import "../ratings/emolike.less";';
-						}
-
-						file_put_contents($lessphpbmfile, $contentbmless);
-					}
-
-					require_once (t3lib_extMgm::extPath('toctoc_comments', 'contrib/less/less.php/Autoloader.php'));
-					if (!class_exists('Less_Cache')) {
-						$autoload = t3lib_div::makeInstance('Less_Autoloader');
-						$autoload::register();
-					}
-
-					Less_Cache::$cache_dir = $txdirnametemp;
-					$files = array();
-					$files[$txdirnamebase . 'res/less/' . $this->extLESSVersion . '/bootstrap.less'] = $txdirtoctoc;
-
-					$filenamecssfile = Less_Cache::Get( $files );
-					$subfldrLESS = 'temp/';
-					$txdirnamedefault= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep . t3lib_extMgm::siteRelPath('toctoc_comments') .
-							'res/css/' );
-					$filenamedefaultcssmod= $txdirnamedefault . $subfldrLESS . $filenamecssfile;
-					if (file_exists($filenamedefaultcssmod)) {
-						// tx-tc' . $this->extVersion . '.css is present
-						$contentdefaultcssmod = file_get_contents($filenamedefaultcssmod);
-						$contentdefaultcssmod = str_replace('   ', "\t", $contentdefaultcssmod);
-						$contentdefaultcssmod = str_replace('  ', "\t", $contentdefaultcssmod);
-						$contentdefaultcssmod = str_replace(',' . "\r\n", ', ', $contentdefaultcssmod);
-						$contentdefaultcssmod = str_replace(',' . "\n", ', ', $contentdefaultcssmod);
-						$contentdefaultcssmod = str_replace('url("../../', 'url("../', $contentdefaultcssmod);
-						file_put_contents($filenamedefaultcssmod, $contentdefaultcssmod);
 					} else {
-						print '! File default css mod "' . $filenamedefaultcssmod . '" not found<br>';
+						print 'less-file ' . $timecheckfile. ' not found<br>';
 						exit;
 					}
 
-					file_put_contents($filenamecontrolcss, $controlTSless);
-					$runboxmodel = TRUE;
 				}
 
 			}
 
 		} else {
-			$subfldrLESS = '';
-			$filenamecssfile='tx-tc-' . $this->extVersion . '.css';
+			print 'bootstrap-file ' . $lessbootstrapfile. ' not found<br>';
+			exit;
+		}
+
+		$lessbootstrapfile = $txdirnamelessbootstrap . DIRECTORY_SEPARATOR . '_php'. DIRECTORY_SEPARATOR .'boxmodel.less';
+		if (file_exists($lessbootstrapfile)) {
+			if (trim($this->conf['theme.']['selectedBoxmodel']) != '') {
+				$timecheckfile = $txdirnamelessbootstrap . DIRECTORY_SEPARATOR .
+				'boxmodel' . DIRECTORY_SEPARATOR .
+				str_replace('boxmodel_', '', str_replace('.txt', '', trim($this->conf['theme.']['selectedBoxmodel']))) . '.less';
+				if (file_exists($timecheckfile)) {
+					$filetime = @filemtime($timecheckfile);
+					if ($this->newestLessFileTime < $filetime) {
+						$this->newestLessFileTime = $filetime;
+					}
+
+				} else {
+					print 'boxmodel-file ' . $timecheckfile. ' not found<br>';
+					exit;
+				}
+
+			}
+			if (trim($this->conf['theme.']['themeVersion']) == '2') {
+				$timecheckfile = $txdirnamelessbootstrap . DIRECTORY_SEPARATOR .
+				'_php' . DIRECTORY_SEPARATOR . 'themeVersion2.less';
+				if (file_exists($timecheckfile)) {
+					$filetime = @filemtime($timecheckfile);
+					if ($this->newestLessFileTime < $filetime) {
+						$this->newestLessFileTime = $filetime;
+					}
+
+				} else {
+					print 'boxmodelthemeVersion-file ' . $timecheckfile. ' not found<br>';
+					exit;
+				}
+				if (trim($this->conf['ratings.']['emoLike']) == '1') {
+					$timecheckfile = $txdirnamelessbootstrap . DIRECTORY_SEPARATOR .
+					'ratings' . DIRECTORY_SEPARATOR . 'emolike.less';
+					if (file_exists($timecheckfile)) {
+						$filetime = @filemtime($timecheckfile);
+						if ($this->newestLessFileTime < $filetime) {
+							$this->newestLessFileTime = $filetime;
+						}
+
+					} else {
+						print 'boxmodelthemeVersion-file ' . $timecheckfile. ' not found<br>';
+						exit;
+					}
+
+				}
+
+			}
+
+		} else {
+			print 'boxmodel-include-file ' . $lessbootstrapfile. ' not found<br>';
+			exit;
+		}
+
+		$controlTSless = $this->newestLessFileTime . '-' . $controlTSless;
+		// check controlfile
+		$filenamecontrolcss = str_replace('.css', '.txt', $filenamecss);
+		$doless= FALSE;
+		if (file_exists($filenamecontrolcss)) {
+			$contentcurrentcontrol = file_get_contents($filenamecontrolcss);
+			if ($controlTSless != $contentcurrentcontrol) {
+
+				$doless= TRUE;
+			} else {
+				if (!file_exists($filenamecss)) {
+					$doless= TRUE;
+				}
+
+			}
+
+		} else {
+			$doless= TRUE;
+		}
+
+		if ($doless ==TRUE) {
+		// Check LOCK-file
+			$lockfile = $txdirnametemp . DIRECTORY_SEPARATOR . '~lock.less';
+			if (file_exists($lockfile)) {
+				$i=0;
+				do {
+					usleep(200);
+					$fex = file_exists($lockfile);
+					$i++;
+				} while (($fex == FALSE) || ($i > 60));
+
+			} else {
+				file_put_contents($lockfile, 'locked');
+			}
+
+			// Loop, sleep 3 ms, if lock file until nomore lockfile
+			// make new look file
+
+			// copy css/themes/[theme]/theme.less over less/' . $this->extLESSVersion . '/_php/themecolorvariables.less
+			$contentlesscolors = file_get_contents($this->themeLESSfile);
+			$txdirnamelessphp = str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep . t3lib_extMgm::siteRelPath('toctoc_comments') .
+					'res/less/' . $this->extLESSVersion . '/_php' );
+			$lessphpfile = $txdirnamelessphp . DIRECTORY_SEPARATOR . 'themecolorvariables.less';
+			if (file_exists($lessphpfile)) {
+				file_put_contents($lessphpfile, $contentlesscolors);
+			}
+
+			$lessphpTSfile = $txdirnamelessphp . DIRECTORY_SEPARATOR . 'boxmodelvariables.less';
+			if (file_exists($lessphpTSfile)) {
+				file_put_contents($lessphpTSfile, $contentTSless);
+			}
+
+			$lessphpbmfile = $txdirnamelessphp . DIRECTORY_SEPARATOR . 'boxmodel.less';
+			if (file_exists($lessphpbmfile)) {
+				$contentbmless = '';
+				if (trim($this->conf['theme.']['selectedBoxmodel']) != '') {
+					$contentbmless .= '@import "../boxmodel/' .
+									str_replace('boxmodel_', '', str_replace('.txt', '', trim($this->conf['theme.']['selectedBoxmodel']))) .
+									'.less";' . "\n";
+				}
+				$sepl = '';
+				if (trim($this->conf['theme.']['themeVersion']) == '2') {
+					$contentbmless .= '@import "themeVersion2.less";';
+					$sepl = "\n";
+				}
+
+				if (trim($this->conf['ratings.']['emoLike']) == '1') {
+					$contentbmless .= $sepl . '@import "../ratings/emolike.less";';
+				}
+
+				file_put_contents($lessphpbmfile, $contentbmless);
+			}
+
+			require_once (t3lib_extMgm::extPath('toctoc_comments', 'contrib/less/less.php/Autoloader.php'));
+			if (!class_exists('Less_Cache')) {
+				$autoload = t3lib_div::makeInstance('Less_Autoloader');
+				$autoload::register();
+			}
+
+			Less_Cache::$cache_dir = $txdirnametemp;
+			$files = array();
+			$files[$txdirnamebase . 'res/less/' . $this->extLESSVersion . '/bootstrap.less'] = $txdirtoctoc;
+
+			$filenamecssfile = Less_Cache::Get( $files );
+			$subfldrLESS = 'temp/';
+			$txdirnamedefault= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep . t3lib_extMgm::siteRelPath('toctoc_comments') .
+					'res/css/' );
+			$filenamedefaultcssmod= $txdirnamedefault . $subfldrLESS . $filenamecssfile;
+			if (file_exists($filenamedefaultcssmod)) {
+				// tx-tc' . $this->extVersion . '.css is present
+				$contentdefaultcssmod = file_get_contents($filenamedefaultcssmod);
+				$contentdefaultcssmod = str_replace('   ', "\t", $contentdefaultcssmod);
+				$contentdefaultcssmod = str_replace('  ', "\t", $contentdefaultcssmod);
+				$contentdefaultcssmod = str_replace(',' . "\r\n", ', ', $contentdefaultcssmod);
+				$contentdefaultcssmod = str_replace(',' . "\n", ', ', $contentdefaultcssmod);
+				$contentdefaultcssmod = str_replace('url("../../', 'url("../', $contentdefaultcssmod);
+				file_put_contents($filenamedefaultcssmod, $contentdefaultcssmod);
+			} else {
+				print '! File default css mod "' . $filenamedefaultcssmod . '" not found<br>';
+				exit;
+			}
+
+			file_put_contents($filenamecontrolcss, $controlTSless);
+			$runboxmodel = TRUE;
 		}
 
 		if ($filenamecssfile == '') {
 			$runboxmodel = FALSE;
 		} else {
 
-			$txdirnamedefault= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep . t3lib_extMgm::siteRelPath('toctoc_comments') .
+			$txdirnamedefault= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep .
+					t3lib_extMgm::siteRelPath('toctoc_comments') .
 								'res/css/' );
 			$filenamedefaultcss=$txdirnamedefault . $subfldrLESS . $filenamecssfile;
-			if ($this->conf['theme.']['refreshCSSFromLESS'] != 1) {
-				$filetime = @filemtime($filenamedefaultcss);
-
-				if ($this->newestCSSFileTime < $filetime) {
-					$this->newestCSSFileTime = $filetime;
-				}
-
-				$this->confid = $this->newestLessFileTime . '-' . $this->confid;
-			}
 
 			if (!isset($_SESSION['fileTimeDefaultCSS'])) {
 				$runboxmodel = TRUE;
@@ -5966,846 +5440,389 @@ sharrre design 2 and 4, calculated specifics
 				$bmcsslastmodif = filemtime($filenamecss);
 			}
 
-			if ($this->conf['theme.']['refreshCSSFromLESS'] != 1) {
-				$contentconfidarr= explode('6g9', $content);
-				if (($contentconfidarr[1] != $this->confid) || ($this->conf['theme.']['freezeLevelCSS'] == 0)) {
-					$forceregenerate=TRUE;
-				}
-			} else {
-				$forceregenerate=TRUE;
-			}
+			$forceregenerate=TRUE;
 
-			if ($this->conf['theme.']['freezeLevelCSS'] < 2) {
-				if ((file_exists($filenameboxmodelsystem)) || ($this->conf['theme.']['refreshCSSFromLESS'] == 1)) {
-					//boxmodel_system.txt found
-					$nbrfilestoprocess=1;
-					if ($this->conf['theme.']['refreshCSSFromLESS'] == 0) {
-						$bmtxtlastmodif = filemtime($filenameboxmodelsystem);
-						$boxmodelarr = file($filenameboxmodelsystem);
-						if ((file_exists($filenameboxmodel)) && ($this->conf['theme.']['selectedBoxmodel'] !='')) {
-							// use boxmodel.txt found, so iteration will be done twice
-							$nbrfilestoprocess=2;
-							$bmtxtlastmodif = filemtime($filenameboxmodel);
+			if (file_exists($filenamedefaultcss)) {
+				// tx-tc' . $this->extVersion . '.css is present
+				$contentdefaultcss = file_get_contents($filenamedefaultcss);
+
+				$basecsslastmodif = filemtime($filenamedefaultcss);
+				if (($forceregenerate==TRUE) || ($bmcsslastmodif<$bmtxtlastmodif) || ($bmcsslastmodif<$basecsslastmodif)) {
+					if ($this->conf['theme.']['boxmodelLineHeightPreserve'] == 1) {
+						// deleting some line-heights in CSS
+						$nolineheightarr = array('.tx-tc-recent-cts-entry {',
+												'.tx-tc-recent-cts-title {',
+												'.tx-tc-myrts-ilke {',
+												'.tx-tc-myrts-disilke {',
+												'.tx-tc-rts {',
+												'toctoc-comments-pi1 {',
+												'.tx-tc-text {',
+												'.tx-tc-myrts-ilke {',
+												'.tx-tc-text-top {',
+												'.tx-tc-ct-viewcnt {',
+												'.tx-tc-ftm-text {',
+												'.tx-tcresponse-text {',
+												'.tx-tcresponse-text-title {',
+												'.tx-tc-ct-rybox-title {',
+												'.tx-tc-ct-rybox {',
+												'.tx-tc-ct-cnt {',
+												'.txtc_details {',
+												'.tx-tc-ct-cnt span, .tx-tc-ct-viewcnt span {',
+												'.tx-tc-ct-prv-frame {',
+												'.tx-tc-ntf-box {',
+												'.tx-tc-scopetitle, .tx-tc-scopetitlebold {',
+												'.tx-tcresponse-text {',
+								);
+						$countnolineheight = count($nolineheightarr);
+						for ($x=0; $x < $countnolineheight; $x++) {
+							$contentdefaultcssarr = explode($nolineheightarr[$x], $contentdefaultcss);
+							$contentdefaultcssarrlineheight = explode('line-height', $contentdefaultcssarr[1]);
+							$contentdefaultcssarrlineheightend = explode(';', $contentdefaultcssarrlineheight[1]);
+							array_shift($contentdefaultcssarrlineheightend);
+							$contentdefaultcssarrlineheight[1] = 'lnh' . implode(';', $contentdefaultcssarrlineheightend);
+							$contentdefaultcssarr[1] = implode('line-height', $contentdefaultcssarrlineheight);
+							$contentdefaultcss = implode($nolineheightarr[$x], $contentdefaultcssarr);
+
+							$contentdefaultcss = str_replace('line-heightlnh'."\n", '', $contentdefaultcss);
+							$contentdefaultcss = str_replace('line-heightlnh'."\r\n", '', $contentdefaultcss);
 						}
+
 					}
 
-					if (file_exists($filenamedefaultcss)) {
-						// tx-tc' . $this->extVersion . '.css is present
-						$contentdefaultcss = file_get_contents($filenamedefaultcss);
-
-						$basecsslastmodif = filemtime($filenamedefaultcss);
-						if (($forceregenerate==TRUE) || ($bmcsslastmodif<$bmtxtlastmodif) || ($bmcsslastmodif<$basecsslastmodif)) {
-							if ($this->conf['theme.']['refreshCSSFromLESS'] != 1) {
-								for ($ifile=0; $ifile<$nbrfilestoprocess; $ifile++) {
-									//*// // first system-boxmodel, then possible normal box-model
-									//*// // output will be one file, so both resuls are merge into the rest.
-
-									if ($ifile==1) {
-										$currentfilename = $this->conf['theme.']['selectedBoxmodel'];
-										$boxmodelarr = file($filenameboxmodel);
-									} else {
-										$currentfilename = 'boxmodel_system.txt';
-									}
-
-									$boxmodelcssarr = array();
-									$boxmodelsrulesarr = array();
-									$i_rules=0;
-									$i_boxmodel=-1;
-									$parsestate = '';
-									$countboxmodelarr=count($boxmodelarr);
-									for ($i=0; $i<$countboxmodelarr; $i++) {
-
-										if (trim($boxmodelarr[$i])== 'Boxmodel') {
-											$i_boxmodel++;
-											$i_boxmodelCSS=-2;
-											$boxmodelcssarr[$i_boxmodel] = array();
-
-											$boxmodelcssarr[$i_boxmodel]['selectorCSSkey']= array();
-											$parsestate = '';
-											$i_selector=0;
-										} elseif (trim($boxmodelarr[$i])== 'CSS') {
-											$parsestate = 'CSS';
-										} elseif (trim($boxmodelarr[$i])== 'Selectors') {
-											$parsestate = 'Selectors';
-										} elseif (trim($boxmodelarr[$i])== 'Rules') {
-											$parsestate = 'Rules';
-										} elseif (trim($boxmodelarr[$i])== '***') {
-											$parsestate = '';
-										} elseif (trim($boxmodelarr[$i])== '') {
-											$parsestate = '';
-										} elseif (($parsestate== 'CSS')) {
-
-											$i_boxmodelCSS=$i_boxmodelCSS+2;
-											$boxmodelcssarrtmp=explode(':', $boxmodelarr[$i]);
-											$boxmodelcssarr[$i_boxmodel]['CSS'][$i_boxmodelCSS]=$boxmodelcssarrtmp[0];
-											$boxmodelcssarr[$i_boxmodel]['CSS'][$i_boxmodelCSS+1]=$boxmodelcssarrtmp[1];
-											$parsestate = 'CSS2';
-										} elseif ($parsestate== 'CSS2') {
-
-											$boxmodelcssarr[$i_boxmodel]['CSS2']=explode(':', $boxmodelarr[$i]);
-
-											$boxmodelsrulesarr[$i_boxmodel]=array();
-											$boxmodelsrulesarr[$i_boxmodel]['boxmodel'] =$i_boxmodel;
-											$boxmodelsrulesarr[$i_boxmodel]['fullrule'] =$boxmodelcssarr[$i_boxmodel]['CSS2'][$i_boxmodelCSS+1]; // {2}px
-											$boxmodelsrulesarr[$i_boxmodel]['selector'] =$boxmodelcssarr[$i_boxmodel]['CSS2'][$i_boxmodelCSS]; // border-width
-											$boxmodelsrulesarr[$i_boxmodel]['fullruleeval'] ='';
-											$parsestate = 'CSS';
-
-											$i_rules++;
-										} elseif ($parsestate== 'Rules') {
-											$boxmodelsrulesarr[$i_boxmodel]=array();
-											$boxmodelsrulesarr[$i_boxmodel]['boxmodel'] =$i_boxmodel;
-											$boxmodelsrulesarr[$i_boxmodel]['fullruleeval'] =$boxmodelarr[$i]; //{3} = {1} + {2}+ 30
-											$i_rules++;
-
-										} elseif ($parsestate== 'Selectors') {
-											$boxmodelcssarr[$i_boxmodel]['selectorCSSkey'][$i_selector]=$boxmodelarr[$i];
-											$boxmodelcssarr[$i_boxmodel]['CSSComment'][$i_selector]='
-			/*
-			change for ' . $boxmodelarr[$i] . ' on line ' . $i . ' in ' . $currentfilename .'
-			*/
-			';
-											$i_selector++;
-
-										}
-
-									}
-
-									//now the 2 boxmodel arrays are there: one with rules, the other with data to process
-
-									// 1. apply rules on data-array
-									$countboxmodelsrulesarr=count($boxmodelsrulesarr);
-									for ($i=0; $i<$countboxmodelsrulesarr; $i++) {
-
-										// get the value to replace
-										$replrightarr= explode('}', $boxmodelcssarr[$boxmodelsrulesarr[$i]['boxmodel']]['CSS2'][1]);  // xxx{2, px;
-										$replright=$replrightarr[1]; // px;
-										$replleftarr= explode('{', $boxmodelcssarr[$boxmodelsrulesarr[$i]['boxmodel']]['CSS2'][1]);   // xxx   2}px;
-										$replleft=$replrightarr[0]; // xxx
-										if ($replright !='') {
-											$varrighttrimedarr= explode($replright, $boxmodelcssarr[$boxmodelsrulesarr[$i]['boxmodel']]['CSS'][1]); // xxx170 ,
-											$varrighttrimed=implode($varrighttrimedarr); // xxx170
-										} else {
-											$varrighttrimed=$boxmodelcssarr[$boxmodelsrulesarr[$i]['boxmodel']]['CSS'][1];
-										}
-
-										$vartrimed=intval($varrighttrimed); // if not int -> 0
-
-										if ($replleft !='') {
-											// xxx
-											$varlefttrimedarr= explode($replleft, $varrighttrimed); // xxx170
-											$vartrimed=$varlefttrimedarr[0];		// 170
-										}
-
-										$boxmodelsrulesarr[$i]['varval']=$vartrimed;
-										$varnamearr= explode('{', $boxmodelcssarr[$boxmodelsrulesarr[$i]['boxmodel']]['CSS2'][1]);  // xxx  2}px;
-										$varnamearr2=explode('}', $varnamearr[1]); // 2   px;
-										$boxmodelsrulesarr[$i]['varname']=trim($varnamearr2[0]);
-										if (intval($boxmodelsrulesarr[$i]['varname'])==0) {
-											if ($boxmodelsrulesarr[$i]['varname']=='boxmodelTextareaLineHeight') {
-												$boxmodelsrulesarr[$i]['varval']=$this->conf['theme.']['boxmodelTextareaLineHeight'];
-											}
-
-											if ($boxmodelsrulesarr[$i]['varname']=='boxmodelTextareaHeight') {
-												$boxmodelsrulesarr[$i]['varval']=$this->boxmodelTextareaHeight;
-											}
-
-											if ($boxmodelsrulesarr[$i]['varname']=='boxmodelSpacing') {
-												$boxmodelsrulesarr[$i]['varval']=intval($this->conf['theme.']['boxmodelSpacing']);
-											}
-
-											if ($boxmodelsrulesarr[$i]['varname']=='boxmodelLineHeight') {
-												$boxmodelsrulesarr[$i]['varval']=$this->conf['theme.']['boxmodelLineHeight'];
-											}
-
-											if ($boxmodelsrulesarr[$i]['varname']=='boxmodelLineHeightHalf') {
-												$boxmodelsrulesarr[$i]['varval']=round(($this->conf['theme.']['boxmodelLineHeight']-16)/2, 0);
-											}
-
-											if ($boxmodelsrulesarr[$i]['varname']=='boxmodelSpacingHalf') {
-												$boxmodelsrulesarr[$i]['varval']=round(($this->conf['theme.']['boxmodelSpacing'])/2, 0);
-											}
-
-											if ($boxmodelsrulesarr[$i]['varname']=='ratingImageWidth') {
-												$boxmodelsrulesarr[$i]['varval']=$this->conf['ratings.']['ratingImageWidth'];
-											}
-
-											if ($boxmodelsrulesarr[$i]['varname']=='reviewImageWidth') {
-												$boxmodelsrulesarr[$i]['varval']=$this->conf['ratings.']['reviewImageWidth'];
-											}
-
-											if ($boxmodelsrulesarr[$i]['varname']=='reviewLineHeight') {
-												$boxmodelsrulesarr[$i]['varval']=$reviewlineheight;
-											}
-
-											if ($boxmodelsrulesarr[$i]['varname']=='ratingLineHeight') {
-												$boxmodelsrulesarr[$i]['varval']=$ratinglineheight;
-											}
-
-											if ($boxmodelsrulesarr[$i]['varname']=='reviewTextMargin') {
-												$boxmodelsrulesarr[$i]['varval']=$reviewTextMargin;
-											}
-
-											if ($boxmodelsrulesarr[$i]['varname']=='ratingTextMargin') {
-												$boxmodelsrulesarr[$i]['varval']=$ratingTextMargin;
-											}
-
-											if ($boxmodelsrulesarr[$i]['varname']=='reviewMarginTop') {
-												$boxmodelsrulesarr[$i]['varval']=$reviewMarginTop;
-											}
-
-											if ($boxmodelsrulesarr[$i]['varname']=='ratingMarginTop') {
-												$boxmodelsrulesarr[$i]['varval']=$ratingMarginTop;
-											}
-
-											if ($boxmodelsrulesarr[$i]['varname']=='ratingNbrStars') {
-												$boxmodelsrulesarr[$i]['varval']=$nbrofstars;
-											}
-
-											if ($boxmodelsrulesarr[$i]['varname']=='picUploadMaxDimX') {
-												$boxmodelsrulesarr[$i]['varval']=$this->conf['attachments.']['picUploadMaxDimX'];
-											}
-
-											if ($boxmodelsrulesarr[$i]['varname']=='boxmodelLabelWidth') {
-												$boxmodelsrulesarr[$i]['varval']=intval($this->conf['theme.']['boxmodelLabelWidth']);
-											}
-
-											if ($boxmodelsrulesarr[$i]['varname']=='userImageSize') {
-												$boxmodelsrulesarr[$i]['varval']=intval($this->conf['userImageSize']);
-											}
-
-										}
-
-										if ($boxmodelsrulesarr[$i]['fullruleeval'] != '') {
-											// set the values in the formula
-											$rulevarnamepartevalpartarr= explode('=', $boxmodelsrulesarr[$i]['fullruleeval'] );
-											$varpart=  trim($rulevarnamepartevalpartarr[0]); // {3}
-
-											$evalpart=  trim($rulevarnamepartevalpartarr[1]); // {1} + {2} + 30
-											$countjjboxmodelsrulesarr=count($boxmodelsrulesarr);
-
-											for ($j=0; $j<$countjjboxmodelsrulesarr; $j++) {
-												if ($boxmodelsrulesarr[$j]['varname']=='boxmodelTextareaLineHeight') {
-													$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->conf['theme.']['boxmodelTextareaLineHeight'],
-															$evalpart);
-												} elseif ($boxmodelsrulesarr[$j]['varname']=='boxmodelTextareaHeight') {
-													$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->boxmodelTextareaHeight, $evalpart);
-												} elseif ($boxmodelsrulesarr[$j]['varname']=='boxmodelSpacing') {
-													$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', intval($this->conf['theme.']['boxmodelSpacing']),
-															$evalpart);
-												} elseif ($boxmodelsrulesarr[$j]['varname']=='boxmodelLineHeight') {
-													$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->conf['theme.']['boxmodelLineHeight'], $evalpart);
-												} elseif ($boxmodelsrulesarr[$j]['varname']=='boxmodelLineHeightHalf') {
-													$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}',
-															round(($this->conf['theme.']['boxmodelLineHeight']-16)/2, 0), $evalpart);
-												} elseif ($boxmodelsrulesarr[$j]['varname']=='ratingImageWidth') {
-													$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->conf['ratings.']['ratingImageWidth'],
-															$evalpart);
-												} elseif ($boxmodelsrulesarr[$j]['varname']=='ratingNbrStars') {
-													$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $nbrofstars,
-															$evalpart);
-												} elseif ($boxmodelsrulesarr[$j]['varname']=='reviewImageWidth') {
-													$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->conf['ratings.']['reviewImageWidth'],
-															$evalpart);
-												} elseif ($boxmodelsrulesarr[$j]['varname']=='reviewLineHeight') {
-													$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $reviewlineheight,
-															$evalpart);
-												} elseif ($boxmodelsrulesarr[$j]['varname']=='ratingLineHeight') {
-													$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $ratinglineheight,
-															$evalpart);
-												} elseif ($boxmodelsrulesarr[$j]['varname']=='reviewTextMargin') {
-													$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $reviewTextMargin,
-															$evalpart);
-												} elseif ($boxmodelsrulesarr[$j]['varname']=='ratingTextMargin') {
-													$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $ratingTextMargin,
-															$evalpart);
-												} elseif ($boxmodelsrulesarr[$j]['varname']=='reviewMarginTop') {
-													$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $reviewMarginTop,
-															$evalpart);
-												} elseif ($boxmodelsrulesarr[$j]['varname']=='ratingMarginTop') {
-													$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $ratingMarginTop,
-															$evalpart);
-												} elseif ($boxmodelsrulesarr[$j]['varname']=='boxmodelLabelWidth') {
-													$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', intval($this->conf['theme.']['boxmodelLabelWidth']),
-															$evalpart);
-												} elseif ($boxmodelsrulesarr[$j]['varname']=='picUploadMaxDimX') {
-													$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->conf['attachments.']['picUploadMaxDimX'],
-																	$evalpart);
-												} elseif ($boxmodelsrulesarr[$j]['varname']=='userImageSize') {
-													$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $this->conf['userImageSize'],
-																	$evalpart);
-												} elseif ($boxmodelsrulesarr[$j]['varname']=='boxmodelSpacingHalf') {
-													$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', round(($this->conf['theme.']['boxmodelSpacing'])/2, 0),
-															$evalpart);
-												} else {
-													$evalpart= str_replace('{' . $boxmodelsrulesarr[$j]['varname'] . '}', $boxmodelsrulesarr[$j]['varval'], $evalpart);
-												}
-
-												$countjjboxmodelsrulesarr=count($boxmodelsrulesarr);
-											}
-
-											$boxmodelsrulesarr[$i]['varname']=str_replace('{', '', str_replace('}', '', $varpart)); // 3
-											$boxmodelsrulesarr[$i]['varval']= $this->calculate_string($evalpart);  //240
-										}
-
-										$countboxmodelsrulesarr=count($boxmodelsrulesarr);
-									}
-
-									// not the values in the data-array are set and calculated
-									// replace the vars in CSS2 with varvals and replace CSS with CSS2
-									$countiboxmodelcssarr=count($boxmodelcssarr);
-									for ($i=0; $i<$countiboxmodelcssarr; $i++) {
-										$countboxmodelsrulesarrj=count($boxmodelsrulesarr);
-										for ($j=0; $j<$countboxmodelsrulesarrj; $j++) {
-											$countboxmodelcssarriCSS2=count($boxmodelcssarr[$i]['CSS2']);
-											for ($c=1; $c<$countboxmodelcssarriCSS2; $c=$c+2) {
-												$boxmodelcssarr[$i]['CSS2'][$c]=str_replace('{' . $boxmodelsrulesarr[$j]['varname'] .
-														'}', $boxmodelsrulesarr[$j]['varval'], $boxmodelcssarr[$i]['CSS2'][$c]);
-												// width: 200px; becomes width: 240px if CSS2= width: {3}px;
-												$countboxmodelcssarriCSS2=count($boxmodelcssarr[$i]['CSS2']);
-											}
-
-										}
-
-										$countboxmodelcssarriCSS2=count($boxmodelcssarr[$i]['CSS2']);
-										for ($c=1; $c<$countboxmodelcssarriCSS2; $c=$c+2) {
-											if ($boxmodelcssarr[$i]['CSS2'][$c]!='') {
-												$boxmodelcssarr[$i]['CSS'][$c]=$boxmodelcssarr[$i]['CSS2'][$c];
-											}
-
-											$countboxmodelcssarriCSS2=count($boxmodelcssarr[$i]['CSS2']);
-										}
-
-										$countiboxmodelcssarr=count($boxmodelcssarr);
-									}
-
-									// So now all the CSS  in the data-array are ready to be checked against the CSS file
-									//spilt CSS on seletor and subsequent '}'
-									$countiboxmodelcssarr=count($boxmodelcssarr);
-									for ($i=0; $i<$countiboxmodelcssarr; $i++) {
-										$countboxmodelcssarrselectorCSSkey=count($boxmodelcssarr[$i]['selectorCSSkey']);
-										for ($j=0; $j<$countboxmodelcssarrselectorCSSkey; $j++) {
-										// - checking every css-selector in the boxmodel-entry
-											$dolbrk=TRUE;
-											$selectorCSSkey= rtrim($boxmodelcssarr[$i]['selectorCSSkey'][$j]) . ' {';
-											// - selectorCSSkey looks like for example "tx-tc-goodguy {"
-											$countcboxmodelcssarriCSS=count($boxmodelcssarr[$i]['CSS']);
-											for ($c=0; $c<$countcboxmodelcssarriCSS; $c=$c+2) {
-											// - for every CSS-property to be assigned to the  current selectorCSSKey. $c holds search value, $d replace with value
-												$d=$c+1;
-												// take the selector to work on and isolate it from default CSS
-												$contentdefaultcssarr = explode("\n". $selectorCSSkey, $contentdefaultcss);
-												// - the entire default CSS gets splitet on the selectorCSSKey
-												if (count($contentdefaultcssarr) >1) {
-													// -if splitting was successful
-													$contentdefaultcssarr2= explode('}', $contentdefaultcssarr[1]);
-													// -make an array with the part after the selectorCSSKey
-													$selectorsscss= $contentdefaultcssarr2[0];
-													// -setting selectorcss to the css-properies of the selectorCSSKey
-												} else {
-													// - if splitting wasn't successful'
-													$selectorsscss= '';
-													// -selectors CSS is empty
-													$contentdefaultcssarr2=array();
-													$contentdefaultcssarr2[0]='';
-													$contentdefaultcssarr2[1]='';
-												}
-
-												// isolation done
-												// find property $boxmodelcssarr[$i]['CSS2'][0] in the selector
-												$boxmodelcssarr[$i]['CSS'][$d]=str_replace(';', '', $boxmodelcssarr[$i]['CSS'][$d]);
-												// -remove ";" from new CSS-Property-line
-												$selectorsscssarr= explode("\t" . $boxmodelcssarr[$i]['CSS'][$c] . ':', $selectorsscss);
-												// - Now we split the found CSS-Properties on the Property whose value we want to replace
-												//   EX1: splitting such the array will be so: (height)
-												//      width: 34px;   height: 45px; top: 0px;->  [0]:   width: 34px; [1]: 45px: top: 0px;
-												//   is empty if $selectorsscss=''
-												if (count($selectorsscssarr)>1) {
-													// property was found now we replace its content
-
-													$selectorsscssarr2= explode(';', $selectorsscssarr[1]);
-													// - EX1: we isolate the "45 px", it's in element [0]
-													$selectorsscssarr2[0]=$boxmodelcssarr[$i]['CSS'][$d];
-													// - here we filled in the new value 79px
-													//and implode back
-
-													$selectorsscssarr[1]=implode(';', $selectorsscssarr2);
-													// - [1] has now the new value inside
-													$selectorsscssarr[1]=str_replace("\r\n" . ';', ';', $selectorsscssarr[1]);
-													$selectorsscssarr[1]=str_replace("\n" . ';', ';', $selectorsscssarr[1]);
-													// - replaced the new lines in the "79px-string" [1]
-													$selectorsscss=implode( "\t".$boxmodelcssarr[$i]['CSS'][$c] .':', $selectorsscssarr);
-													// - restored the selectors entire CSS properties
-													$contentdefaultcssarr2[0]="\t". $selectorsscss;
-													// - prepend a tab and write it back to the originating array element
-													$contentdefaultcssarr[1]=implode('}', $contentdefaultcssarr2);
-
-													// - rebuild the originating array element
-												} else {
-													// property was not, we check for a leading '+' in the property string
-													// if present we add the property (without the '+' to the selector
-
-													if (substr($boxmodelcssarr[$i]['CSS'][$c], 0, 1) == '+') {
-
-														$selectorsscssplus = "\t" . substr($boxmodelcssarr[$i]['CSS'][$c], 1). ':' . $boxmodelcssarr[$i]['CSS'][$d] . ";\n";
-														$selectorsscssplus =str_replace("\r\n" . ';', ';', $selectorsscssplus);
-														$selectorsscssplus =str_replace("\n" . ';', ';', $selectorsscssplus);
-														// - new CSS Property with value set up
-														$selectorsscss .= $selectorsscssplus;
-														// appending new stuff to existing selectorscss
-
-														$contentdefaultcssarr2[0]=$selectorsscss;
-														if ($dolbrk) {
-															$contentdefaultcssarr[1]="\r\n" .implode('}', $contentdefaultcssarr2);
-															$dolbrk=FALSE;
-														} else {
-															$contentdefaultcssarr[1]=implode('}', $contentdefaultcssarr2);
-														}
-
-													} else {
-														if (($dropprotokollon) && ($this->showsdebugprint==TRUE)) {
-															$this->sdebuginitprint.= 'DROP: '. json_encode($boxmodelcssarr[$i]). '<br />';
-														}
-
-													}
-
-												}
-												if (intval($this->showCSScomments) == 1) {
-													$contentdefaultcss=implode(trim($boxmodelcssarr[$i]['CSSComment'][$j]) . "\n". $selectorCSSkey, $contentdefaultcssarr);
-													$contentdefaultcss=str_replace('*//*', '', $contentdefaultcss);
-												} else {
-													$contentdefaultcss=implode("\n". $selectorCSSkey, $contentdefaultcssarr);
-
-												}
-												$countcboxmodelcssarriCSS=count($boxmodelcssarr[$i]['CSS']);
-											}
-
-											$countboxmodelcssarrselectorCSSkey=count($boxmodelcssarr[$i]['selectorCSSkey']);
-										}
-
-										$countiboxmodelcssarr=count($boxmodelcssarr);
-									}
-
-								}
-
-								// and apply the correct path to the theme in the rating stars url
-								if ($this->conf['theme.']['refreshCSSFromLESS'] == 0) {
-									$cssconfid = '/* confid: "6g9' . $this->confid . '6g9" */' . "\n";
-								} else {
-									$cssconfid = '';
-								}
-
-								$contentdefaultcss = $cssconfid . $this->confcss .
-								str_replace('themes/default/', 'themes/' . $this->conf['theme.']['selectedTheme'] . '/', $contentdefaultcss) . "\n" . $this->themeCSS;
-							}
-
-							if ($this->conf['theme.']['boxmodelLineHeightPreserve'] == 1) {
-								// deleting some line-heights in CSS
-								$nolineheightarr = array('.tx-tc-recent-cts-entry {',
-														'.tx-tc-recent-cts-title {',
-														'.tx-tc-myrts-ilke {',
-														'.tx-tc-myrts-disilke {',
-														'.tx-tc-rts {',
-														'toctoc-comments-pi1 {',
-														'.tx-tc-text {',
-														'.tx-tc-myrts-ilke {',
-														'.tx-tc-text-top {',
-														'.tx-tc-ct-viewcnt {',
-														'.tx-tc-ftm-text {',
-														'.tx-tcresponse-text {',
-														'.tx-tcresponse-text-title {',
-														'.tx-tc-ct-rybox-title {',
-														'.tx-tc-ct-rybox {',
-														'.tx-tc-ct-cnt {',
-														'.txtc_details {',
-														'.tx-tc-ct-cnt span, .tx-tc-ct-viewcnt span {',
-														'.tx-tc-ct-prv-frame {',
-														'.tx-tc-ntf-box {',
-														'.tx-tc-scopetitle, .tx-tc-scopetitlebold {',
-														'.tx-tcresponse-text {',
-										);
-								$countnolineheight = count($nolineheightarr);
-								for ($x=0; $x < $countnolineheight; $x++) {
-									$contentdefaultcssarr = explode($nolineheightarr[$x], $contentdefaultcss);
-									$contentdefaultcssarrlineheight = explode('line-height', $contentdefaultcssarr[1]);
-									$contentdefaultcssarrlineheightend = explode(';', $contentdefaultcssarrlineheight[1]);
-									array_shift($contentdefaultcssarrlineheightend);
-									$contentdefaultcssarrlineheight[1] = 'lnh' . implode(';', $contentdefaultcssarrlineheightend);
-									$contentdefaultcssarr[1] = implode('line-height', $contentdefaultcssarrlineheight);
-									$contentdefaultcss = implode($nolineheightarr[$x], $contentdefaultcssarr);
-
-									$contentdefaultcss = str_replace('line-heightlnh'."\n", '', $contentdefaultcss);
-									$contentdefaultcss = str_replace('line-heightlnh'."\r\n", '', $contentdefaultcss);
-								}
-
-							}
-
-							// remove button CSS if boxmodelLabelInputPreserve is forced
-							if ($this->conf['theme.']['boxmodelLabelInputPreserve'] == 1) {
-								if ($this->conf['theme.']['boxmodelButtonPreserve'] == 1) {
-									$nolineheightarr = array('.tx-tc-ct-submit, .tx-tc-ct-submit-loggedin {',
-										'.tx-tc-ct-submit, .tx-tc-ct-reset, .tx-tc-ct-submit-loggedin {',
-										);
-								} else {
-									$nolineheightarr = array();
-								}
-
-								$countnolineheight = count($nolineheightarr);
-								for ($x=0; $x < $countnolineheight; $x++) {
-									$contentdefaultcssarr = explode($nolineheightarr[$x], $contentdefaultcss);
-									$contentdefaultcssarrlineheight = explode('}', $contentdefaultcssarr[1]);
-									$contentdefaultcssarrlineheight[0] = '';
-									$contentdefaultcssarr[1] = implode('}', $contentdefaultcssarrlineheight);
-									$contentdefaultcss = implode($nolineheightarr[$x], $contentdefaultcssarr);
-								}
-
-							}
-
-							if ($this->conf['theme.']['refreshCSSFromLESS'] != 1) {
-								// @media-widths
-								$contentdefaultcss = str_replace('@media (max-width: 950px)', '@media (max-width: '.$this->arrResponsiveSteps[2].'px)', $contentdefaultcss);
-								$contentdefaultcss = str_replace('@media (min-width: 950px)', '@media (min-width: '.$this->arrResponsiveSteps[2].'px)', $contentdefaultcss);
-								$contentdefaultcss = str_replace('@media (max-width: 450px)', '@media (max-width: '.$this->arrResponsiveSteps[1].'px)', $contentdefaultcss);
-								$contentdefaultcss = str_replace('@media (min-width: 450px)', '@media (min-width: '.$this->arrResponsiveSteps[1].'px)', $contentdefaultcss);
-								$contentdefaultcss = str_replace('@media (max-width: 350px)', '@media (max-width: '.$this->arrResponsiveSteps[0].'px)', $contentdefaultcss);
-								$contentdefaultcss = str_replace('@media (min-width: 350px)', '@media (min-width: '.$this->arrResponsiveSteps[0].'px)', $contentdefaultcss);
-							}
-
-							$contentdefaultcss = str_replace('}/*', '}' . "\n" . '/*', $contentdefaultcss);
-							$contentdefaultcss = str_replace(' }', '}', $contentdefaultcss);
-							$contentdefaultcss = str_replace("\r\n", "\n", $contentdefaultcss);
-							$contentdefaultcss = str_replace("\n\n", "\n", $contentdefaultcss);
-
-							// merging identical selectors and overwrite properties with more Css-Importance
-							$contentdefaultscssarr = explode("\n" .'}', $contentdefaultcss);
-							$countcssselectors = count($contentdefaultscssarr);
-							$selectorarr = array();
-							$onatmedia = FALSE;
-							$sti=0;
-							for ($i=0;$i< $countcssselectors;$i++) {
-
-								$strselectorarr = array();
-								$strcssselectorall = $contentdefaultscssarr[$i];
-								$strselectorarr = explode("\n", $strcssselectorall);
-								$countcssprops = count($strselectorarr);
-								if ($strselectorarr[0] !='') {
-									$strselectorarr0 = $strselectorarr[0];
-									$jstart=1;
-
-								} else {
-									$strselectorarr0 = $strselectorarr[1];
-									$jstart=2;
-								}
-
-								if ($onatmedia == TRUE) {
-										//@media is finished
-										$onatmedia = FALSE;
-								}
-
-								$selectorarr[$sti] = array();
-								$selectorarr[$sti]['selector'] = $strselectorarr0;
-
-								// check if comment
-								$selectorarr[$sti]['comment'] = FALSE;
-
-								if (str_replace('/*', '', $selectorarr[$sti]['selector']) != $selectorarr[$sti]['selector']) {
-									$selectorarr[$sti]['comment'] = TRUE;
-									do {$selectorarr[$sti]['selectoratmedia'] = FALSE;
-										$selectorarr[$sti]['properities'] = array();
-										if (str_replace('*/', '', $selectorarr[$sti]['selector']) != $selectorarr[$sti]['selector']) {
-											$sti++;
-
-											$strselectorarr0 = $strselectorarr[$jstart];
-											$jstart++;
-											$selectorarr[$sti]['selector'] = $strselectorarr0;
-											$selectorarr[$sti]['comment'] = FALSE;
-										} else {
-											//find end line, move all to selector
-											for ($c=$jstart; $c < $countcssprops; $c++) {
-												$selectorarr[$sti]['selector'] .= "\n" . $strselectorarr[$c];
-												$strselectorarr0 = $strselectorarr[$c];
-												$jstart++;
-
-												if (str_replace('*/', '', $strselectorarr[$c]) != $strselectorarr[$c]) {
-													$sti++;
-													$selectorarr[$sti]['selector'] = $strselectorarr[$c+1];
-													$selectorarr[$sti]['comment'] = FALSE;
-
-													if (str_replace('/*', '', $selectorarr[$sti]['selector']) != $selectorarr[$sti]['selector']) {
-														$selectorarr[$sti]['comment'] = TRUE;
-
-													}
-													$jstart++;
-													break;
-												}
-											}
-										}
-
-									} while ($selectorarr[$sti]['comment'] == TRUE);
-								}
-
-								if (str_replace('@media', '', $strselectorarr0) != $strselectorarr0) {
-									// leaving @media untouched and get the different kind of arraystructure
-									$onatmedia = TRUE;
-								}
-
-								$selectorarr[$sti]['selectoratmedia'] = $onatmedia;
+					// remove button CSS if boxmodelLabelInputPreserve is forced
+					if ($this->conf['theme.']['boxmodelLabelInputPreserve'] == 1) {
+						if ($this->conf['theme.']['boxmodelButtonPreserve'] == 1) {
+							$nolineheightarr = array('.tx-tc-ct-submit, .tx-tc-ct-submit-loggedin {',
+								'.tx-tc-ct-submit, .tx-tc-ct-reset, .tx-tc-ct-submit-loggedin {',
+								);
+						} else {
+							$nolineheightarr = array();
+						}
+
+						$countnolineheight = count($nolineheightarr);
+						for ($x=0; $x < $countnolineheight; $x++) {
+							$contentdefaultcssarr = explode($nolineheightarr[$x], $contentdefaultcss);
+							$contentdefaultcssarrlineheight = explode('}', $contentdefaultcssarr[1]);
+							$contentdefaultcssarrlineheight[0] = '';
+							$contentdefaultcssarr[1] = implode('}', $contentdefaultcssarrlineheight);
+							$contentdefaultcss = implode($nolineheightarr[$x], $contentdefaultcssarr);
+						}
+
+					}
+
+					$contentdefaultcss = str_replace('}/*', '}' . "\n" . '/*', $contentdefaultcss);
+					$contentdefaultcss = str_replace(' }', '}', $contentdefaultcss);
+					$contentdefaultcss = str_replace("\r\n", "\n", $contentdefaultcss);
+					$contentdefaultcss = str_replace("\n\n", "\n", $contentdefaultcss);
+
+					// merging identical selectors and overwrite properties with more Css-Importance
+					$contentdefaultscssarr = explode("\n" .'}', $contentdefaultcss);
+					$countcssselectors = count($contentdefaultscssarr);
+					$selectorarr = array();
+					$onatmedia = FALSE;
+					$sti=0;
+					for ($i=0;$i< $countcssselectors;$i++) {
+
+						$strselectorarr = array();
+						$strcssselectorall = $contentdefaultscssarr[$i];
+						$strselectorarr = explode("\n", $strcssselectorall);
+						$countcssprops = count($strselectorarr);
+						if ($strselectorarr[0] !='') {
+							$strselectorarr0 = $strselectorarr[0];
+							$jstart=1;
+
+						} else {
+							$strselectorarr0 = $strselectorarr[1];
+							$jstart=2;
+						}
+
+						if ($onatmedia == TRUE) {
+								//@media is finished
+								$onatmedia = FALSE;
+						}
+
+						$selectorarr[$sti] = array();
+						$selectorarr[$sti]['selector'] = $strselectorarr0;
+
+						// check if comment
+						$selectorarr[$sti]['comment'] = FALSE;
+
+						if (str_replace('/*', '', $selectorarr[$sti]['selector']) != $selectorarr[$sti]['selector']) {
+							$selectorarr[$sti]['comment'] = TRUE;
+							do {$selectorarr[$sti]['selectoratmedia'] = FALSE;
 								$selectorarr[$sti]['properities'] = array();
-								for ($j=0;$j< ($countcssprops - $jstart);$j++) {
-									$selectorarr[$sti]['properities'][$j] = array();
-									$propertyarr = explode(':', $strselectorarr[$jstart+$j]);
-									$selectorarr[$sti]['properities'][$j]['propname'] = trim($propertyarr[0]);// zB height
-									if (count($propertyarr) > 1) {
-										$selectorarr[$sti]['properities'][$j]['propval'] = trim($propertyarr[1]); // zB 30px;
-									} else {
-										$selectorarr[$sti]['properities'][$j]['propval'] = ''; // in @media constructs;
-									}
-
-								}
-								if (count($selectorarr[$sti]['properities']) > 0) {
+								if (str_replace('*/', '', $selectorarr[$sti]['selector']) != $selectorarr[$sti]['selector']) {
 									$sti++;
-								}
 
-							}
+									$strselectorarr0 = $strselectorarr[$jstart];
+									$jstart++;
+									$selectorarr[$sti]['selector'] = $strselectorarr0;
+									$selectorarr[$sti]['comment'] = FALSE;
+								} else {
+									//find end line, move all to selector
+									for ($c=$jstart; $c < $countcssprops; $c++) {
+										$selectorarr[$sti]['selector'] .= "\n" . $strselectorarr[$c];
+										$strselectorarr0 = $strselectorarr[$c];
+										$jstart++;
 
-							// now we parse $selectorarr, lock out for duplicate selectors
-							// if we find one, going down the tree we add new properies to the selector,
-							// overwrite existing properties values, if according to !important if present.
-							$countselectorarr = count($selectorarr);
-							$selectormergedarr = array();
-							$smi = 0;
+										if (str_replace('*/', '', $strselectorarr[$c]) != $strselectorarr[$c]) {
+											$sti++;
+											$selectorarr[$sti]['selector'] = $strselectorarr[$c+1];
+											$selectorarr[$sti]['comment'] = FALSE;
 
-							$droparr = array();
-							$dpi= 0;
+											if (str_replace('/*', '', $selectorarr[$sti]['selector']) != $selectorarr[$sti]['selector']) {
+												$selectorarr[$sti]['comment'] = TRUE;
 
-							for ($i=0;$i<$countselectorarr;$i++) {
-								$collectedpropertiesarr = array();
-								$cp=0;
-								$currentselector = $selectorarr[$i]['selector'];
-
-								// $droparr
-								// it allows to let drop already processed selectors
-								$dropselector = FALSE;
-								// checking $droparr
-								if ($selectorarr[$i]['selectoratmedia'] == FALSE) {
-									for  ($d=0;$d< $dpi;$d++) {
-										if (trim($droparr[$d])== trim($currentselector)) {
-											$dropselector = TRUE;
+											}
+											$jstart++;
 											break;
 										}
 									}
 								}
 
-								if ($selectorarr[$i]['selectoratmedia'] == FALSE) {
-									// no job to do looking out for twin selectors if we are on @media
+							} while ($selectorarr[$sti]['comment'] == TRUE);
+						}
 
-									if ($dropselector == FALSE) {
-										// job to do if we cannot let drop the current selector
-										// with another index we scan again the selectors
-										$countproperitiesarr = count($selectorarr[$i]['properities']);
+						if (str_replace('@media', '', $strselectorarr0) != $strselectorarr0) {
+							// leaving @media untouched and get the different kind of arraystructure
+							$onatmedia = TRUE;
+						}
+
+						$selectorarr[$sti]['selectoratmedia'] = $onatmedia;
+						$selectorarr[$sti]['properities'] = array();
+						for ($j=0;$j< ($countcssprops - $jstart);$j++) {
+							$selectorarr[$sti]['properities'][$j] = array();
+							$propertyarr = explode(':', $strselectorarr[$jstart+$j]);
+							$selectorarr[$sti]['properities'][$j]['propname'] = trim($propertyarr[0]);// zB height
+							if (count($propertyarr) > 1) {
+								$selectorarr[$sti]['properities'][$j]['propval'] = trim($propertyarr[1]); // zB 30px;
+							} else {
+								$selectorarr[$sti]['properities'][$j]['propval'] = ''; // in @media constructs;
+							}
+
+						}
+						if (count($selectorarr[$sti]['properities']) > 0) {
+							$sti++;
+						}
+
+					}
+
+					// now we parse $selectorarr, lock out for duplicate selectors
+					// if we find one, going down the tree we add new properies to the selector,
+					// overwrite existing properties values, if according to !important if present.
+					$countselectorarr = count($selectorarr);
+					$selectormergedarr = array();
+					$smi = 0;
+
+					$droparr = array();
+					$dpi= 0;
+
+					for ($i=0;$i<$countselectorarr;$i++) {
+						$collectedpropertiesarr = array();
+						$cp=0;
+						$currentselector = $selectorarr[$i]['selector'];
+
+						// $droparr
+						// it allows to let drop already processed selectors
+						$dropselector = FALSE;
+						// checking $droparr
+						if ($selectorarr[$i]['selectoratmedia'] == FALSE) {
+							for  ($d=0;$d< $dpi;$d++) {
+								if (trim($droparr[$d])== trim($currentselector)) {
+									$dropselector = TRUE;
+									break;
+								}
+							}
+						}
+
+						if ($selectorarr[$i]['selectoratmedia'] == FALSE) {
+							// no job to do looking out for twin selectors if we are on @media
+
+							if ($dropselector == FALSE) {
+								// job to do if we cannot let drop the current selector
+								// with another index we scan again the selectors
+								$countproperitiesarr = count($selectorarr[$i]['properities']);
+								for ($p=0; $p<$countproperitiesarr; $p++) {
+									// we add an element to the currently collected properties array
+									$collectedpropertiesarr[$cp]= array();
+									// and copy the found properties
+									$collectedpropertiesarr[$cp]['propname'] = $selectorarr[$i]['properities'][$p]['propname'];
+									$collectedpropertiesarr[$cp]['propval'] = $selectorarr[$i]['properities'][$p]['propval'];
+									$cp++;
+								}
+
+								for ($j=$i+1;$j < $countselectorarr; $j++) {
+									// if we find a twin we xcan go ahead
+
+									if (trim($currentselector) == trim($selectorarr[$j]['selector'])) {
+										// duplicate selector found on position $j
+										$countproperitiesarr = count($selectorarr[$j]['properities']);
+										// counting currently< present properties
 										for ($p=0; $p<$countproperitiesarr; $p++) {
 											// we add an element to the currently collected properties array
 											$collectedpropertiesarr[$cp]= array();
 											// and copy the found properties
-											$collectedpropertiesarr[$cp]['propname'] = $selectorarr[$i]['properities'][$p]['propname'];
-											$collectedpropertiesarr[$cp]['propval'] = $selectorarr[$i]['properities'][$p]['propval'];
+											$collectedpropertiesarr[$cp]['propname'] = $selectorarr[$j]['properities'][$p]['propname'];
+											$collectedpropertiesarr[$cp]['propval'] = $selectorarr[$j]['properities'][$p]['propval'];
 											$cp++;
 										}
+									}
+								}
+								// after the walk thru the selectors array we count the propertities we've found
+								$countcollectedpropertiesarr = count($collectedpropertiesarr);
+								$droparr[$dpi]= $currentselector;
+								$dpi++;
 
-										for ($j=$i+1;$j < $countselectorarr; $j++) {
-											// if we find a twin we xcan go ahead
+								if ($countcollectedpropertiesarr > 0) {
+									// add current selector to future drops
 
-											if (trim($currentselector) == trim($selectorarr[$j]['selector'])) {
-												// duplicate selector found on position $j
-												$countproperitiesarr = count($selectorarr[$j]['properities']);
-												// counting currently< present properties
-												for ($p=0; $p<$countproperitiesarr; $p++) {
-													// we add an element to the currently collected properties array
-													$collectedpropertiesarr[$cp]= array();
-													// and copy the found properties
-													$collectedpropertiesarr[$cp]['propname'] = $selectorarr[$j]['properities'][$p]['propname'];
-													$collectedpropertiesarr[$cp]['propval'] = $selectorarr[$j]['properities'][$p]['propval'];
-													$cp++;
-												}
-											}
-										}
-										// after the walk thru the selectors array we count the propertities we've found
-										$countcollectedpropertiesarr = count($collectedpropertiesarr);
-										$droparr[$dpi]= $currentselector;
-										$dpi++;
+									// well collected properties present
+									// for every element in the $collectedpropertiesarr we first check if a 'propname'-twin is present
+									$addedpropertiesarr = array();
+									$ap=0;
+									$countpresentselectors=0;
 
-										if ($countcollectedpropertiesarr > 0) {
-											// add current selector to future drops
+									for ($j=0; $j < $countcollectedpropertiesarr; $j++) {
+										if (trim($collectedpropertiesarr[$j]['propname']) !='') {
+											$currentproperty = $collectedpropertiesarr[$j]['propname'];
+											$currentpropval = $collectedpropertiesarr[$j]['propval'];
+											// the number of already present properties wil allow to add nw ones at the end:
+											$countpresentselectors = count($selectorarr[$i]['properities']);
+											$propertyreplaced = FALSE;
+											for ($p=0; $p< $countpresentselectors; $p++) {
+												if ($currentproperty == $selectorarr[$i]['properities'][$p]['propname']) {
+													// found one, now check if current property is not !important
 
-											// well collected properties present
-											// for every element in the $collectedpropertiesarr we first check if a 'propname'-twin is present
-											$addedpropertiesarr = array();
-											$ap=0;
-											$countpresentselectors=0;
-
-											for ($j=0; $j < $countcollectedpropertiesarr; $j++) {
-												if (trim($collectedpropertiesarr[$j]['propname']) !='') {
-													$currentproperty = $collectedpropertiesarr[$j]['propname'];
-													$currentpropval = $collectedpropertiesarr[$j]['propval'];
-													// the number of already present properties wil allow to add nw ones at the end:
-													$countpresentselectors = count($selectorarr[$i]['properities']);
-													$propertyreplaced = FALSE;
-													for ($p=0; $p< $countpresentselectors; $p++) {
-														if ($currentproperty == $selectorarr[$i]['properities'][$p]['propname']) {
-															// found one, now check if current property is not !important
-
-															if (str_replace('!important', '', $currentpropval) == $currentpropval) {
-																// current property is not !important, replace propertyvalue
-																$selectorarr[$i]['properities'][$p]['propval'] = $currentpropval;
-
-															}
-															// else we let drop the new one
-															// but we have to say propertyreplaced because else we'll add it
-															$propertyreplaced = TRUE;
-															//break;
-														}
+													if (str_replace('!important', '', $currentpropval) == $currentpropval) {
+														// current property is not !important, replace propertyvalue
+														$selectorarr[$i]['properities'][$p]['propval'] = $currentpropval;
 
 													}
-
-													If ($propertyreplaced == FALSE) {
-														// the addedproperties array gets a new item
-														$addedpropertiesarr[$ap] = array();
-														$addedpropertiesarr[$ap]['propname'] = $collectedpropertiesarr[$j]['propname'];
-														$addedpropertiesarr[$ap]['propval'] = $collectedpropertiesarr[$j]['propval'];
-														$ap++;
-													}
+													// else we let drop the new one
+													// but we have to say propertyreplaced because else we'll add it
+													$propertyreplaced = TRUE;
+													//break;
 												}
 
 											}
-											// changes have been made, now we add the new (added) properties to $selectorarr[$i]['selector']
-											$countadded = count($addedpropertiesarr);
-											for ($j=0; $j < $countadded; $j++) {
-												$selectorarr[$i]['properities'][$countpresentselectors + $j]['propname']=$addedpropertiesarr[$j]['propname'];
-												$selectorarr[$i]['properities'][$countpresentselectors + $j]['propval']=$addedpropertiesarr[$j]['propval'];
 
+											If ($propertyreplaced == FALSE) {
+												// the addedproperties array gets a new item
+												$addedpropertiesarr[$ap] = array();
+												$addedpropertiesarr[$ap]['propname'] = $collectedpropertiesarr[$j]['propname'];
+												$addedpropertiesarr[$ap]['propval'] = $collectedpropertiesarr[$j]['propval'];
+												$ap++;
 											}
-
-										}
-
-										// now we add the item to the outputing array $selectormergedarr
-										$selectormergedarr[$smi]['selector'] = $selectorarr[$i]['selector'];
-										$selectormergedarr[$smi]['comment'] = $selectorarr[$i]['comment'];
-										$selectormergedarr[$smi]['selectoratmedia'] = $selectorarr[$i]['selectoratmedia'];
-										$selectormergedarr[$smi]['properities'] = array();
-										$countcssprops = count($selectorarr[$i]['properities']);
-
-										for ($j=0;$j< $countcssprops;$j++) {
-											$selectormergedarr[$smi]['properities'][$j] = array();
-
-											$selectormergedarr[$smi]['properities'][$j]['propname'] = $selectorarr[$i]['properities'][$j]['propname'];// zB height
-											if (count($selectorarr[$i]['properities'][$j]) > 1) {
-												$selectormergedarr[$smi]['properities'][$j]['propval'] = $selectorarr[$i]['properities'][$j]['propval']; // zB 30px;
-											} else {
-												$selectormergedarr[$smi]['properities'][$j]['propval'] = ''; // in @media constructs;
-											}
-
-										}
-										$smi++;
-									}
-
-								} else {
-									// on @media - just copy the item to the outputing array $selectormergedarr
-									$selectormergedarr[$smi]['selector'] = $selectorarr[$i]['selector'];
-									$selectormergedarr[$smi]['comment'] = $selectorarr[$i]['comment'];
-									$selectormergedarr[$smi]['selectoratmedia'] = $selectorarr[$i]['selectoratmedia'];
-									$selectormergedarr[$smi]['properities'] = array();
-									$countcssprops = count($selectorarr[$i]['properities']);
-									for ($j=0;$j< $countcssprops;$j++) {
-										$selectormergedarr[$smi]['properities'][$j] = array();
-
-										$selectormergedarr[$smi]['properities'][$j]['propname'] = $selectorarr[$i]['properities'][$j]['propname'];// zB height
-										if (count($selectorarr[$i]['properities'][$j]) > 1) {
-											$selectormergedarr[$smi]['properities'][$j]['propval'] = $selectorarr[$i]['properities'][$j]['propval']; // zB 30px;
-										} else {
-											$selectormergedarr[$smi]['properities'][$j]['propval'] = ''; // in @media constructs;
 										}
 
 									}
+									// changes have been made, now we add the new (added) properties to $selectorarr[$i]['selector']
+									$countadded = count($addedpropertiesarr);
+									for ($j=0; $j < $countadded; $j++) {
+										$selectorarr[$i]['properities'][$countpresentselectors + $j]['propname']=$addedpropertiesarr[$j]['propname'];
+										$selectorarr[$i]['properities'][$countpresentselectors + $j]['propval']=$addedpropertiesarr[$j]['propval'];
 
-									$smi++;
+									}
+
 								}
 
-							}
+								// now we add the item to the outputing array $selectormergedarr
+								$selectormergedarr[$smi]['selector'] = $selectorarr[$i]['selector'];
+								$selectormergedarr[$smi]['comment'] = $selectorarr[$i]['comment'];
+								$selectormergedarr[$smi]['selectoratmedia'] = $selectorarr[$i]['selectoratmedia'];
+								$selectormergedarr[$smi]['properities'] = array();
+								$countcssprops = count($selectorarr[$i]['properities']);
 
-							// and after all this theatre we can restore $selectormergedarr into $contentdefaultcss
-							$countselectorarr=count($selectormergedarr);
-							$contentdefaultcssmerged = '';
-							for ($i=0;$i< $countselectorarr-1;$i++) {
-								$contentdefaultcssmerged .= $selectormergedarr[$i]['selector'] . "\n";
-								$countcssprops= count($selectormergedarr[$i]['properities']);
 								for ($j=0;$j< $countcssprops;$j++) {
-									$contentdefaultcssmerged .= "\t" . $selectormergedarr[$i]['properities'][$j]['propname'];
-									if ($selectormergedarr[$i]['properities'][$j]['propval'] != '') {
-										$contentdefaultcssmerged .= ': ' . $selectormergedarr[$i]['properities'][$j]['propval'];
+									$selectormergedarr[$smi]['properities'][$j] = array();
+
+									$selectormergedarr[$smi]['properities'][$j]['propname'] = $selectorarr[$i]['properities'][$j]['propname'];// zB height
+									if (count($selectorarr[$i]['properities'][$j]) > 1) {
+										$selectormergedarr[$smi]['properities'][$j]['propval'] = $selectorarr[$i]['properities'][$j]['propval']; // zB 30px;
+									} else {
+										$selectormergedarr[$smi]['properities'][$j]['propval'] = ''; // in @media constructs;
 									}
 
-									$contentdefaultcssmerged .= "\n";
+								}
+								$smi++;
+							}
+
+						} else {
+							// on @media - just copy the item to the outputing array $selectormergedarr
+							$selectormergedarr[$smi]['selector'] = $selectorarr[$i]['selector'];
+							$selectormergedarr[$smi]['comment'] = $selectorarr[$i]['comment'];
+							$selectormergedarr[$smi]['selectoratmedia'] = $selectorarr[$i]['selectoratmedia'];
+							$selectormergedarr[$smi]['properities'] = array();
+							$countcssprops = count($selectorarr[$i]['properities']);
+							for ($j=0;$j< $countcssprops;$j++) {
+								$selectormergedarr[$smi]['properities'][$j] = array();
+
+								$selectormergedarr[$smi]['properities'][$j]['propname'] = $selectorarr[$i]['properities'][$j]['propname'];// zB height
+								if (count($selectorarr[$i]['properities'][$j]) > 1) {
+									$selectormergedarr[$smi]['properities'][$j]['propval'] = $selectorarr[$i]['properities'][$j]['propval']; // zB 30px;
+								} else {
+									$selectormergedarr[$smi]['properities'][$j]['propval'] = ''; // in @media constructs;
 								}
 
-								if ($selectormergedarr[$i]['comment'] == FALSE) {
-									$contentdefaultcssmerged .= '}' . "\n";
-
-								}
-
 							}
 
-							$contentdefaultcssmerged = str_replace(', ' . "\t" . '.', ', .', $contentdefaultcssmerged);
-							$contentdefaultcss = $contentdefaultcssmerged;
-
-							if ($this->conf['theme.']['crunchCSS'] == 1) {
-								$contentdefaultcss =$this->crunchcss($contentdefaultcss);
-							}
-
-							if (($contentdefaultcss !='') &&
-									(($contentdefaultcss != $content) || ($this->conf['theme.']['freezeLevelCSS'] == 0))) {
-								file_put_contents($filenamecss, $contentdefaultcss);
-							}
-
-						}
-
-						//sets active css to boxmodell css
-						$this->boxmodelcss ='temp/' . $filenamecssoutfile;
-					} else {
-						$retstr =$this->pi_wrapInBaseClass($this->lib->pi_getLLWrap($this, 'error', FALSE) . ': ' .
-						$this->lib->pi_getLLWrap($this, 'error.no.css.defaultcss', FALSE)) . ': ' . $filenamedefaultcss;
-						if ($txdirnametemp != '') {
-							foreach (glob($txdirnametemp . DIRECTORY_SEPARATOR . 'lessphp*.*') as $filenametmp) {
-								unlink($filenametmp);
-							}
-
-							if (file_exists($lockfile)) {
-								unlink($lockfile);
-							}
-
-						}
-
-						return $retstr;
-					}
-
-				} else {
-					$retstr =$this->pi_wrapInBaseClass($this->lib->pi_getLLWrap($this, 'error', FALSE) . ': ' .
-							$this->lib->pi_getLLWrap($this, 'error.no.css.boxmodeltxt', FALSE)) . ': ' . $filenameboxmodel;
-				    if ($txdirnametemp != '') {
-						foreach (glob($txdirnametemp . DIRECTORY_SEPARATOR . 'lessphp*.*') as $filenametmp) {
-							unlink($filenametmp);
-						}
-
-				    	if (file_exists($lockfile)) {
-							unlink($lockfile);
+							$smi++;
 						}
 
 					}
 
-				    return $retstr;
+					// and after all this theatre we can restore $selectormergedarr into $contentdefaultcss
+					$countselectorarr=count($selectormergedarr);
+					$contentdefaultcssmerged = '';
+					for ($i=0;$i< $countselectorarr-1;$i++) {
+						$contentdefaultcssmerged .= $selectormergedarr[$i]['selector'] . "\n";
+						$countcssprops= count($selectormergedarr[$i]['properities']);
+						for ($j=0;$j< $countcssprops;$j++) {
+							$contentdefaultcssmerged .= "\t" . $selectormergedarr[$i]['properities'][$j]['propname'];
+							if ($selectormergedarr[$i]['properities'][$j]['propval'] != '') {
+								$contentdefaultcssmerged .= ': ' . $selectormergedarr[$i]['properities'][$j]['propval'];
+							}
+
+							$contentdefaultcssmerged .= "\n";
+						}
+
+						if ($selectormergedarr[$i]['comment'] == FALSE) {
+							$contentdefaultcssmerged .= '}' . "\n";
+
+						}
+
+					}
+
+					$contentdefaultcssmerged = str_replace(', ' . "\t" . '.', ', .', $contentdefaultcssmerged);
+					$contentdefaultcss = $contentdefaultcssmerged;
+
+					if ($this->conf['theme.']['crunchCSS'] == 1) {
+						$contentdefaultcss =$this->crunchcss($contentdefaultcss);
+					}
+
+					if (($contentdefaultcss != '') && ($contentdefaultcss != $content)) {
+						file_put_contents($filenamecss, $contentdefaultcss);
+					}
+
 				}
 
-			} else {
+				//sets active css to boxmodell css
 				$this->boxmodelcss ='temp/' . $filenamecssoutfile;
+			} else {
+				$retstr =$this->pi_wrapInBaseClass($this->lib->pi_getLLWrap($this, 'error', FALSE) . ': ' .
+				$this->lib->pi_getLLWrap($this, 'error.no.css.defaultcss', FALSE)) . ': ' . $filenamedefaultcss;
+				if ($txdirnametemp != '') {
+					foreach (glob($txdirnametemp . DIRECTORY_SEPARATOR . 'lessphp*.*') as $filenametmp) {
+						unlink($filenametmp);
+					}
+
+					if (file_exists($lockfile)) {
+						unlink($lockfile);
+					}
+
+				}
+
+				return $retstr;
 			}
 
 		} else {
@@ -6817,11 +5834,9 @@ sharrre design 2 and 4, calculated specifics
 				unlink($filenametmp);
 			}
 
-			if ($this->conf['theme.']['refreshCSSFromLESS'] == 1) {
-				// remove possible LOCK-file
-				if (file_exists($lockfile)) {
-					unlink($lockfile);
-				}
+			// remove possible LOCK-file
+			if (file_exists($lockfile)) {
+				unlink($lockfile);
 			}
 
 		}
@@ -6850,34 +5865,7 @@ sharrre design 2 and 4, calculated specifics
 		$buffer = str_replace(': ', ':', $buffer);
 		$buffer = str_replace(' ,', ',', $buffer);
 		$buffer = str_replace(' ;', ';', $buffer);
-		if ($this->conf['theme.']['refreshCSSFromLESS'] == 0) {
-			$buffer = '/* confid: "6g9' . $this->confid . '6g9" */' . $buffer;
-		}
 		return $buffer;
-	}
-
-	/**
-	 * Calculated an expressions value comparable to JS eval
-	 *
-	 * @param	string		$$mathString: String to be evaluated
-	 * @return	int		value calculated
-	 */
-	protected function calculate_string( $mathString )    {
-		$mathString = trim($mathString);     // trim white spaces
-		$mathString = preg_replace('~[^0-9\(\)\-\+\*\/]~', '', $mathString);    // remove any non-numbers chars; exception for math operators
-	//print $mathString . '<br>';
-		try
-		{
-			$compute = create_function('', 'return (' . $mathString . ');' );
-		}
-
-		catch (Exception $e)
-		{
-			print 'Invalid formula in boxmodel: ' . $mathString .'<br />';
-			return 0;
-		}
-
-		return 0 + $compute();
 	}
 
 	/**
@@ -6912,15 +5900,17 @@ sharrre design 2 and 4, calculated specifics
 	 		$serverrequri = $_SERVER['REQUEST_URI'];
 	 	}
 
-		 $s = empty($_SERVER['HTTPS']) ? '' : ($_SERVER['HTTPS'] == 'on') ? 's' : '';
-		 $slcurrentPageName=str_replace('?&no_cache=1', '', $serverrequri);
-		 $slcurrentPageName=str_replace('?no_cache=1', '', $slcurrentPageName);
-		 $slcurrentPageName=str_replace('&no_cache=1', '', $slcurrentPageName);
-		 $slcurrentPageName=str_replace('?&purge_cache=1', '', $slcurrentPageName);
-		 $slcurrentPageName=str_replace('?purge_cache=1', '', $slcurrentPageName);
-		 $slcurrentPageName=str_replace('&purge_cache=1', '', $slcurrentPageName);
+		$slcurrentPageName=str_replace('?&no_cache=1', '', $serverrequri);
+		$slcurrentPageName=str_replace('?no_cache=1', '', $slcurrentPageName);
+		$slcurrentPageName=str_replace('&no_cache=1', '', $slcurrentPageName);
+		$slcurrentPageName=str_replace('?&purge_cache=1', '', $slcurrentPageName);
+		$slcurrentPageName=str_replace('?purge_cache=1', '', $slcurrentPageName);
+		$slcurrentPageName=str_replace('&purge_cache=1', '', $slcurrentPageName);
+		$slcurrentPageName=str_replace('?&L=0', '', $slcurrentPageName);
+		$slcurrentPageName=str_replace('&L=0', '', $slcurrentPageName);
+		$slcurrentPageName=str_replace('?L=0', '', $slcurrentPageName);
 
-		 return $slcurrentPageName;
+		return $slcurrentPageName;
 	}
 
 	/**
@@ -6967,7 +5957,7 @@ sharrre design 2 and 4, calculated specifics
 	 * @param	boolean		$forceclear: when $this->activateClearPageCache is not active, pagecache is forced to be checked
 	 * @return	void
 	 */
-	protected function doClearCache ($forceclear=FALSE) {
+	protected function doClearCache($forceclear=FALSE) {
 		$this->initLegacyCache();
 		if (($this->activateClearPageCache) || ($forceclear)) {
 			$clearCacheIds = $this->lib->getClearCacheIds($this->conf, $GLOBALS['TSFE']->id);
@@ -7022,7 +6012,7 @@ sharrre design 2 and 4, calculated specifics
 			$currentSessiongc_maxlifetime = $_SESSION['cSgcMl'];
 			$sessionwasset = $_SESSION['cSwasSet'];
 			$sessionid = $_SESSION['cSId'];
-
+			$viewMaxAgeDone = intval($_SESSION['viewMaxAgeDone']);
 			$curPageName = '-';
 
 			if (isset($_SESSION['curPageName'])) {
@@ -7043,6 +6033,7 @@ sharrre design 2 and 4, calculated specifics
 			$_SESSION['cSgcMl'] = $currentSessiongc_maxlifetime;
 			$_SESSION['cSwasSet'] = $sessionwasset;
 			$_SESSION['cSId'] = $sessionid;
+			$_SESSION['viewMaxAgeDone'] = $viewMaxAgeDone;
 
 			if ($curPageName != '-') {
 				$_SESSION['curPageName'] = $curPageName;
@@ -7301,6 +6292,7 @@ sharrre design 2 and 4, calculated specifics
 		}
 
 	}
+
 	/**
 	 * writes if needed a tx-tc-shrrr-nnn.js
 	 * returns link to file to be appended on output
@@ -7308,35 +6300,44 @@ sharrre design 2 and 4, calculated specifics
 	 * @return	void
 	 */
 	protected function sharrrejs() {
-		$ret='';
-		if (($GLOBALS['TSFE']->id !='') && (trim($_SESSION['sharrrejs']) != '')) {
-			$httpsid='';
-			if (@$_SERVER['HTTPS'] == 'on') {
-				// on https StumbleUpon and Digg fail
-				if (($this->conf['sharing.']['dontUseSharingStumbleupon'] == 0) || ($this->conf['sharing.']['dontUseSharingDigg'] == 0)) {
-					$httpsid='-https';
-				}
+		$ret = '';
+		$httpsid = '';
+		$jscontent = '';
+
+		if (@$_SERVER['HTTPS'] == 'on') {
+			// on https StumbleUpon and Digg fail
+			if (($this->conf['sharing.']['dontUseSharingStumbleupon'] == 0) || ($this->conf['sharing.']['dontUseSharingDigg'] == 0)) {
+				$httpsid = '-https';
 			}
-			$sharingconfimprint =  $this->conf['sharing.']['useSharingDesign'] . $this->conf['sharing.']['dontUseSharingFacebook'] .
-			$this->conf['sharing.']['dontUseSharingGoogle'] . $this->conf['sharing.']['dontUseSharingTwitter'] . $this->conf['sharing.']['dontUseSharingLinkedIn'] .
-			$this->conf['sharing.']['dontUseSharingStumbleupon'] . $this->conf['sharing.']['dontUseSharingPinterest'] . $this->conf['sharing.']['dontUseSharingDigg'] .
-			$this->conf['sharing.']['dontUseSharingDelicious'] . $this->conf['sharing.']['dontUseSharingAddThisMore'];
 
-			$md5url = md5($_SESSION['curPageName'] . $sharingconfimprint);
+		}
 
-			$filenamejs='tx-tc-shrrr-' . $this->extVersion . '-' . $md5url . '-' . $GLOBALS['TSFE']->id . '-' . $_SESSION['commentListRecord'] .
-			'-' . $GLOBALS['TSFE']->sys_language_uid  . $httpsid . '.js';
+		$sharingconfimprint =  $this->conf['sharing.']['useSharingDesign'] . $this->conf['sharing.']['dontUseSharingFacebook'] .
+		$this->conf['sharing.']['dontUseSharingGoogle'] . $this->conf['sharing.']['dontUseSharingTwitter'] . $this->conf['sharing.']['dontUseSharingLinkedIn'] .
+		$this->conf['sharing.']['dontUseSharingStumbleupon'] . $this->conf['sharing.']['dontUseSharingPinterest'] . $this->conf['sharing.']['dontUseSharingDigg'] .
+		$this->conf['sharing.']['dontUseSharingDelicious'] . $this->conf['sharing.']['dontUseSharingAddThisMore'];
+		$md5url = md5($_SESSION['curPageName'] . $sharingconfimprint);
+		$filenamejs='tx-tc-shrrr-' . $this->extVersion . '-' . $md5url . '-' . $GLOBALS['TSFE']->id . '-' . $_SESSION['commentListRecord'] .
+		'-' . $GLOBALS['TSFE']->sys_language_uid  . $httpsid . '.js';
 
-			$dirsep=DIRECTORY_SEPARATOR;
-			$repstr= str_replace('/', $dirsep, '/typo3conf/ext/toctoc_comments/pi1');
+		$repstr = str_replace('/', DIRECTORY_SEPARATOR, '/typo3conf/ext/toctoc_comments/pi1');
 
-			$txdirname= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep .
-					t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/js/temp/' );
-			$filenamejs=$txdirname . $filenamejs;
+		$txdirname = str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . DIRECTORY_SEPARATOR .
+				t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/js/temp/');
 
-			$unlinked=FALSE;
+		$filenamejslink = $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') . 'res/js/temp/' . $filenamejs;
+
+		$filenamejs = $txdirname . $filenamejs;
+		$hassharrefile = FALSE;
+		if (file_exists($filenamejs)) {
+			$hassharrefile = TRUE;
+		}
+
+		$ReportUser = 0;
+		$md5PluginId = md5($GLOBALS['TSFE']->id . '-' . $_SESSION['commentListRecord'] . '-' . $GLOBALS['TSFE']->sys_language_uid  . $httpsid . 'shr');
+
+		if (($GLOBALS['TSFE']->id != '') && (trim($_SESSION['sharrrejs']) != '')) {
 			$jscontent = trim($_SESSION['sharrrejs']);
-
 			$jscontent = '/*
  * sharrre events
  */
@@ -7346,44 +6347,46 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 	})(jQuery);
 }';
 
-			if (file_exists($filenamejs)) {
+			$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport WHERE md5PluginId = "' . $md5PluginId . '" AND ReportUser = "' . $ReportUser . '"');
+			$this->lib->setReportDBCache($this->conf, 0, $ReportUser, $jscontent, $md5PluginId, $_SESSION['commentListRecord']);
+		} elseif (($GLOBALS['TSFE']->id != '') && (trim($_SESSION['sharrrejs']) == '')) {
+			$dbCache = $this->lib->getReportDBCache($md5PluginId, $ReportUser);
+			if ($dbCache != '') {
+				$jscontent = $dbCache;
+			}
+
+		}
+
+		if ($jscontent != '') {
+			$unlinked = FALSE;
+			if ($hassharrefile == TRUE) {
 				$content = file_get_contents($filenamejs);
 				if ($content != $jscontent) {
-					$unlinked=TRUE;
+					$unlinked = TRUE;
 					unlink($filenamejs);
 				}
 
 			}
 
-			if ((!file_exists($filenamejs)) || ($unlinked)) {
+			if ((!file_exists($filenamejs)) || ($unlinked == TRUE)) {
 				// Write the contents back to the file
 				file_put_contents($filenamejs, $jscontent);
+				$hassharrefile = TRUE;
 			}
-			$httpsid='';
-			if (@$_SERVER['HTTPS'] == 'on') {
-				// on https StumbleUpon and Digg fail
-				if (($this->conf['sharing.']['dontUseSharingStumbleupon'] == 0) || ($this->conf['sharing.']['dontUseSharingDigg'] == 0)) {
-					$httpsid='-https';
-				}
-			}
-			$sharingconfimprint =  $this->conf['sharing.']['useSharingDesign'] . $this->conf['sharing.']['dontUseSharingFacebook'] .
-			$this->conf['sharing.']['dontUseSharingGoogle'] . $this->conf['sharing.']['dontUseSharingTwitter'] . $this->conf['sharing.']['dontUseSharingLinkedIn'] .
-			$this->conf['sharing.']['dontUseSharingStumbleupon'] . $this->conf['sharing.']['dontUseSharingPinterest'] . $this->conf['sharing.']['dontUseSharingDigg'] .
-			$this->conf['sharing.']['dontUseSharingDelicious'] . $this->conf['sharing.']['dontUseSharingAddThisMore'];
 
-			$md5url = md5($_SESSION['curPageName'] . $sharingconfimprint);
-			$filenamejsshrrr ='tx-tc-shrrr-' . $this->extVersion . '-' . $md5url . '-' . $GLOBALS['TSFE']->id . '-' . $_SESSION['commentListRecord'] .
-			'-' . $GLOBALS['TSFE']->sys_language_uid  . $httpsid . '.js';
-
-			$filenm = $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') .
-			'res/js/temp/' . $filenamejsshrrr;
-			$mod1_file = $this->createVersionNumberedFilename($filenm);
-			$ret='<script type="text/javascript" src="'. $mod1_file . '"></script>';
-
-			$_SESSION['sharrrejs']='';
 		}
+
+		$_SESSION['sharrrejs'] = '';
+
+		if ($hassharrefile == TRUE) {
+			$mod1_file = $this->createVersionNumberedFilename($filenamejslink);
+			$ret = '<script type="text/javascript" src="'. $mod1_file . '"></script>';
+
+		}
+
 		return $ret;
 	}
+
 	/**
 	 * Function for static version numbers on files, based on the filemtime
 	 *
@@ -7877,16 +6880,17 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 			} else {
 				$ret='en-GB';
 			}
+
 		}
 		return $ret;
 
 	}
 
 	/**
-	 * [Describe function...]
+	 * detects if browser is tablet or handy, special handling for firefox on tablet.
 	 *
-	 * @param	[type]		$isTabletOrHandyexceptFF: ...
-	 * @return	[type]		...
+	 * @param	boolean		$isTabletOrHandyexceptFF: ...
+	 * @return	boolean		TRUE if mobile, FALSE if not
 	 */
 	private function detectmobile($isTabletOrHandyexceptFF = FALSE){
 		$agent = $_SERVER['HTTP_USER_AGENT'];
@@ -7902,20 +6906,100 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 				'BlackBerry',
 				'webOS'
 		);
+
 		$result = FALSE;
 		foreach ( $useragents as $useragent ) {
 			if (preg_match('/'.$useragent.'/i', $agent)){
 				$result = TRUE;
 			}
+
 		}
+
 		if ($isTabletOrHandyexceptFF == TRUE){
 			if (str_replace('Firefox', '', $agent) != $agent) {
 				$result = FALSE;
 			}
+
 		}
 
 		return $result;
 	}
+
+
+	/**
+	 * returns ReportUser according loggin-state and plugin-mode
+	 *
+	 * @param	int		$ReportPluginMode:  Cache-Type (2, 3 ,4 ...)
+	 * @return	string		$ret (holding $ReportUser)
+	 */
+	protected function getReportUser($ReportPluginMode) {
+		if (intval($GLOBALS['TSFE']->fe_user->user['uid']) > 0) {
+			// 1: recent comments, 3: topratings, 4: other reports, 6: user center, 8: topsharings
+
+			if ($ReportPluginMode == 6) {
+				$ret = intval($GLOBALS['TSFE']->fe_user->user['uid']);
+			} else {
+				$ret = 1;
+			}
+
+		} else {
+			$ret = 0;
+		}
+
+		return $ret;
+	}
+	
+	/**
+	 * returns html with missing alt tags, empty alt-Tags with filled alt tags taking the value from the title-attrubute
+	 *
+	 * @param	string		$content:  HTML to work on
+	 * @return	string		$content:  fixed HTML
+	 */
+	protected function w3cIzer($content) {
+		$contentimgarr = explode('<img', $content);
+		$cntcontentimgarr = count($contentimgarr);
+		for ($img = 1; $img<$cntcontentimgarr; $img++) {
+			$contentsnglimgarr = explode('>', $contentimgarr[$img]);
+			$contentsnglimg = $contentsnglimgarr[0];
+			if (str_replace(' alt=""', '', $contentsnglimg) != $contentsnglimg) {
+				// alttag empty
+				if (str_replace(' title="', '', $contentsnglimg) != $contentsnglimg) {
+					// title present
+					$contentsnglimgtitlearr = explode('title="', $contentsnglimg);
+					$contentsnglimgtitlearr2 = explode('"', $contentsnglimgtitlearr[1]);
+					$title = $contentsnglimgtitlearr2[0];
+					if (trim($title) != '') {
+						$contentsnglimg = str_replace(' alt=""', ' alt="' . $title . '"', $contentsnglimg);
+					}
+				}
+			} elseif (str_replace(' alt=', '', $contentsnglimg) == $contentsnglimg) { 
+				// no altttag at all
+				if (str_replace(' title="', '', $contentsnglimg) != $contentsnglimg) {
+					// title present
+					$contentsnglimgtitlearr = explode('title="', $contentsnglimg);
+					$contentsnglimgtitlearr2 = explode('"', $contentsnglimgtitlearr[1]);
+					$title = $contentsnglimgtitlearr2[0];
+					if (trim($title) != '') {
+						$contentsnglimg = str_replace(' title="', ' alt="' . $title . '" title="', $contentsnglimg);
+					}
+				}
+			} 
+			
+			$contentsnglimgarr[0] = $contentsnglimg;
+			$contentimgarr[$img] = implode('>', $contentsnglimgarr);
+			
+		}
+		
+		$content = implode('<img', $contentimgarr);
+		$content = str_replace(' size="" ', ' ', $content);
+		$content = str_replace(' action=""', ' ', $content);
+		$content = str_replace(' align="right"', ' ', $content);
+		$content = str_replace(' align="left"', ' ', $content);
+		$content = str_replace(' border="0"', ' ', $content);
+		return $content;
+	}
+
+
 }
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/toctoc_comments/pi1/class.toctoc_comments_pi1.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/toctoc_comments/pi1/class.toctoc_comments_pi1.php']);

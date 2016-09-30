@@ -38,10 +38,10 @@
  *   67:     public function getoverview(&$pObj)
  *  190:     public function createCommentstext ($overviewdata, $pObj)
  *  329:     public function createUserstext($overviewdata, $pObj)
- *  452:     public function createRatingstext ($overviewdata)
- *  606:     public function createReportstext ($overviewdata, $pObj)
- *  731:     public function createSystemtext ($overviewdata, $pObj)
- *  774:     public function createBLtext ($overviewdata, $pObj)
+ *  451:     public function createRatingstext ($overviewdata)
+ *  605:     public function createReportstext ($overviewdata, $pObj)
+ *  731:     public function createSystemtext ($overviewdata, $overviewdatacache, $pObj)
+ *  801:     public function createBLtext ($overviewdata, $pObj)
  *
  * TOTAL FUNCTIONS: 7
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -72,7 +72,7 @@ class toctoc_comments_be_overview {
 		$Userstext = $this->createUserstext($overviewdata['Users'], $pObj);
 		$Ratingstext = $this->createRatingstext($overviewdata['Ratings']);
 		$Reportstext = $this->createReportstext($overviewdata['Reports'], $pObj);
-		$Systemtext = $this->createSystemtext($overviewdata['System'], $pObj);
+		$Systemtext = $this->createSystemtext($overviewdata['System'], $overviewdata['Cache'], $pObj);
 		$BLtext = $this->createBLtext($overviewdata['BlacklistData'], $pObj);
 
 		$icoComments = '<img class="tx-tc-titleicon" align="left" src="' . $GLOBALS['BACK_PATH']. $pObj->picpathgfx . $pObj->iconComments . '" ' . $pObj->iconWidthHeightTitle .
@@ -725,9 +725,10 @@ class toctoc_comments_be_overview {
  *
  * @param	array		$overviewdata
  * @param	[type]		$pObj: ...
+ * @param	[type]		$pObj: ...
  * @return	$overview		html with Overviews Systemtext
  */
-	public function createSystemtext ($overviewdata, $pObj) {
+	public function createSystemtext ($overviewdata, $overviewdatacache, $pObj) {
 		require_once (t3lib_extMgm::extPath('toctoc_comments', 'Classes/Controller/Dto/BackendSystem.php'));
 	    $this->be_db = new toctoc_comments_be_db;
 	    $be_dbmessage = $this->be_db->bedb($pObj);
@@ -755,9 +756,36 @@ class toctoc_comments_be_overview {
 			$overview .= '<div class="tx-tc-100">' . $GLOBALS['LANG']->getLL('norowsindatabase') .  '</div>';
 		}
 
+		if ((intval($overviewdatacache['numberofrowsAJAX'])+intval($overviewdatacache['numberofrowsDBCache'])+intval($overviewdatacache['numberofSessions'])) !=0) {
+			$csshascache = 'tx-tc-show';
+			$cssnocache = 'tx-tc-dontshow';
+		} else {
+			$csshascache = 'tx-tc-dontshow';
+			$cssnocache = 'tx-tc-show';
+			$be_dbmessage = str_replace('tx-tc-datarequester tx-tc-be-link tx-tc-be-bulkcache', 'tx-tc-nodatarequester', $be_dbmessage);
+			$be_dbmessage = str_replace('tx-tc-datarequester tx-tc-be-link tx-tc-be-p-bulkcache', 'tx-tc-nodatarequester', $be_dbmessage);
+		}
+
+		$overview .= '<div class="tx-tc-100 ' . $csshascache .  '" id="hascache">' . $GLOBALS['LANG']->getLL('cachedentities') .
+				': <span id="sysnbrofcachedentities" title="' .
+						$GLOBALS['LANG']->getLL('cachedentitiessessions') . ': ' . $overviewdatacache['numberofSessions']. ', ' .
+						$GLOBALS['LANG']->getLL('cachedentitiesdb') . ': ' . ($overviewdatacache['numberofrowsAJAX']+$overviewdatacache['numberofrowsDBCache']) .
+						'">' . (intval($overviewdatacache['numberofrowsAJAX'])+intval($overviewdatacache['numberofrowsDBCache'])+intval($overviewdatacache['numberofSessions'])) .  '</span>';
+		if ($overviewdatacache['datalengthSessions'] !=0) {
+			$overview .= ',  ' . $GLOBALS['LANG']->getLL('sessionssize') .
+			': <span id="sysdbsize">' . $pObj->be_common->human_filesize($overviewdatacache['datalengthSessions']) .  '</span>';
+		}
+		if (($overviewdatacache['datalengthAJAX']+$overviewdatacache['datalengthDBCache']) !=0) {
+			$overview .= ',  ' . $GLOBALS['LANG']->getLL('dbcachesize') .
+			': <span id="sysdbsize">' . $pObj->be_common->human_filesize(($overviewdatacache['datalengthAJAX']+$overviewdatacache['datalengthDBCache'])) .  '</span>';
+		}
+
+		$overview .= '</div>';
+		$overview .= '<div class="tx-tc-100 ' . $cssnocache .  '" id="nocache">' . $GLOBALS['LANG']->getLL('nocachefound') .  '</div>';
+
 		$overview .= '
 		<div class="tx-tc-100">
-				<div class="tx-tc-margin-right" id="databasehtmlframe">
+			<div class="tx-tc-margin-right" id="databasehtmlframe">
 		' . $be_dbmessage . '
 		</div>';
 

@@ -37,9 +37,9 @@
  *
  *
  *
- *   63: class toctoc_comments_attachmentupload
- *   75:     public function main($files, $post)
- *  442:     protected function create_thumbnail_frompdf($pdffile, $pdffilejpg, $impath, $isgm)
+ *   57: class toctoc_comments_attachmentupload
+ *   70:     public function main($files, $post, $pObj)
+ *  434:     protected function create_thumbnail_frompdf($pdffile, $pdffilejpg, $impath, $isgm)
  *
  * TOTAL FUNCTIONS: 2
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -54,12 +54,6 @@
  * @package TYPO3
  * @subpackage toctoc_comments
  */
-
-
-
-
-$ml = new toctoc_comments_attachmentupload;
-$ml->main($_FILES, $_POST);
 class toctoc_comments_attachmentupload {
 	protected $uplfile = array();
 	protected $conf = array();
@@ -70,9 +64,10 @@ class toctoc_comments_attachmentupload {
 	 *
 	 * @param	array		$files: ...
 	 * @param	array		$post: ...
+	 * @param	[type]		$pObj: ...
 	 * @return	[type]		...
 	 */
-	public function main($files, $post) {
+	public function main($files, $post, $pObj) {
 		// $retstr <br>-separated string-array
 		// 0: filename
 		// 1: relative path
@@ -80,7 +75,12 @@ class toctoc_comments_attachmentupload {
 		// 3: server-path and filename
 
 		$ajaxdataarr=array();
-		$ajaxdataarr=$post['toctoc_comments_pi1']['ajax'];
+		$ajaxdataarr = $post['toctoc_comments_pi1']['ajax'];
+		$data_uid = $post['toctoc_comments_pi1']['ajax'];
+		if (intval($data_uid) != 0) {
+			$ajaxdataarr = $pObj->getAJAXDBCache($data_uid);
+		}
+
 		$cid=$post['toctoc_comments_pi1']['cid'];
 		$dataajaxatt = unserialize(base64_decode($ajaxdataarr));
 		$dataajaxatt['awaitgoogle'] = base64_decode($dataajaxatt['awaitgoogle']);
@@ -107,14 +107,6 @@ class toctoc_comments_attachmentupload {
 		}
 
 		$retstr = '';
-		$sessionFile = realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'sessionpath.tmp';
-		$sessionSavePath =  @file_get_contents($sessionFile);
-
-		if (!(isset($commonObj))) {
-			require_once ('class.toctoc_comments_common.php');
-			$commonObj = new toctoc_comments_common;
-		}
-		$commonObj->start_toctoccomments_session(3*1440, $sessionSavePath);
 
 		if (!isset($_SESSION['uploadstep'])) {
 			$_SESSION['uploadstep']=0;

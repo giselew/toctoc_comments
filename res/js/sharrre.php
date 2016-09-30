@@ -1,6 +1,7 @@
 <?php
 
 if( invalid_request() ){
+	echo 'Facebook die'; exit;
 	die();
 }
 
@@ -27,7 +28,7 @@ if(filter_var($_GET['url'], FILTER_VALIDATE_URL)){
 			$json['count'] = str_replace('>', '', $filtered->item(0)->nodeValue);
 		}
 
-	} else if($type == 'stumbleupon'){
+	} elseif($type == 'stumbleupon'){
 		$content = parse("https://www.stumbleupon.com/services/1.01/badge.getinfo?url=$url");
 
 		$result = json_decode($content);
@@ -35,7 +36,7 @@ if(filter_var($_GET['url'], FILTER_VALIDATE_URL)){
 			$json['count'] = $result->result->views;
 		}
 
-	} else if($type == 'linkedin'){
+	} elseif($type == 'linkedin'){
       $content = parse("https://www.linkedin.com/countserv/count/share?format=jsonp&url=$url");
       
       if ( strpos( $content, '"count":' ) !== false ) {
@@ -43,7 +44,7 @@ if(filter_var($_GET['url'], FILTER_VALIDATE_URL)){
 	       $json['count'] = $matches[1];
       }
 
-    }
+    } 
 
 }
 

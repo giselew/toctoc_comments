@@ -189,16 +189,6 @@ commentsEditBack                                                                
                                                                                             indicates how many comments back the user is allowed to
                                                                                             edit. set 0 for none. allowed 0 to 50.
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
-UseTemplavoilaField                                                             string      Name of the field defined in TemplaVoila (if used)       field_content
-                                                                                            where the comments-plugins goes. Check your TemplaVoila
-                                                                                            page-template. (W)
-------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
-UseMainColPos                                                                   int         tt_content Column (colPos) with comments-plugins:        0
-                                                                                            
-Columnposition (colPos) where the
-                                                                                            comments-plugins go. Can be left on 0, most of the
-                                                                                            times. (W)
-------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
 FeUserImagePath                                                                 string      Path where the feuser-images are stored. Normally        uploads/pics/
                                                                                             uploads/pics/. (W)
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
@@ -343,32 +333,10 @@ useMultilingual                                                                 
                                                                                             plugin will be per language. (S recommended, W
                                                                                             possible)
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
-activateClearPageCache                                                          boolean     Dont use TYPO3 caching: If set to 1 pages with plugins   0
-                                                                                            will not be cached.
-
-                                                                                            If set to 0 please consider additionalCachePagesLocal
-                                                                                            when you have the same plugin data on different pages.
-
+cacheBackTrack                                                                  boolean     Show the user the plugins where data has changed since   1 
+                                                                                            their first visit using the current session. 
+                                                                                            (left plugin border gets a highlight)
                                                                                             (S recommended, W possible)
-------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
-useSessionCache                                                                 boolean     Use session based caching                                1
-
-                                                                                            If set to 1 and activateClearPageCache=0, plugins are
-                                                                                            cached in PHP-session and recalculated only after
-                                                                                            changes in the data of a plugin of the page.
-
-                                                                                            (S recommended, W possible)
-
-                                                                                            **Good to know in this context:**
-                                                                                            URL-parameter ?no_cache=1 empties SessionCache,
-                                                                                            URL-parameter ?purge_cache=1 clears
-                                                                                            page cache and resets entire session
-------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
-cacheBackTrack                                                                  boolean     Show plugins with changed data: If useSessionCache is    1
-                                                                                            set to 1 you can use cacheBackTrack and show the user
-                                                                                            the plugins where data has changed since their first
-                                                                                            visit using the current session. . (S
-                                                                                            recommended, W possible)
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
 countViews                                                                      boolean     Enables counting of Plugin views: For each Plugin a      1
                                                                                             counter will be maintained and will be displayed on top
@@ -507,11 +475,6 @@ useNameCommentSeparator            boolean    Use or don't use the separator str
                                               commentators name and the subsequent text
 ---------------------------------  ---------  -------------------------------------------------------  -------------------------------------------------------------------
 loginRequiredIdLoginForm           string     Id of the div holding the login form                     tx-tc-loginform
----------------------------------  ---------  -------------------------------------------------------  -------------------------------------------------------------------
-dontUseMirrorConf                  boolean    set this to 1 only for debugging when you need to        0
-                                              display entire conf in Frontend
-
-                                              (V 5.0.0.)
 ---------------------------------  ---------  -------------------------------------------------------  -------------------------------------------------------------------
 dontuseGIFBUILDER                  boolean    if you dont want to use GIFBUILDER for userpics then     0
                                               set this to 1
