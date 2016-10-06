@@ -858,3 +858,11 @@
 	  ratings.allowedNumberOfRatings = 40 (before 10)
 	  ratings.allowedNumberOfRatingsExceededBlocktime = 5 (before 13)
 	* Made the extension 99% compliant with the new W3C-HTML-validator (https://validator.w3.org/nu/)
+	
+2016-10-06  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 9.2.1 - see www.toctoc.ch for demos, news, support and donations
+	* Fixed problems with table-definitions for the new caching tables
+	* Fixed missing cache-refresh after comments and comment*ratings on records (using plugin-to-table-maps)
+	* Added option attachments.useFlowPlayer - FlowPlayer, even the newest version is full with deprecated jQuery and JavaScript. 
+	  Default of the new option is 1, if in future you see problems because of FlowPlayer, set it to 0 and turn it off. Replacement for FlowPlayer will follow in next version
+	* Changed minimal value and default of advanced.sessionCompressionLevel to 1, avoiding problems with 0-zipped data using MYSQL 5.5

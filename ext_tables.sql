@@ -366,8 +366,8 @@ CREATE TABLE tx_toctoc_comments_cacheajax (
 	AJAXCache char(20) DEFAULT '' NOT NULL,
 	md5Data char(32) DEFAULT '' NOT NULL,
 	AJAXdata blob NOT NULL,
-	PRIMARY KEY (AJAXCache,md5Data),
-	KEY xuid (uid)
+	PRIMARY KEY (uid),
+	UNIQUE KEY Xmd5DataCache (AJAXCache, md5Data)
 );
 
 #
@@ -381,9 +381,9 @@ CREATE TABLE tx_toctoc_comments_cachereport (
 	ReportUser char(11) DEFAULT '0' NOT NULL,
 	ReportData blob NOT NULL,
 	external_ref_uid char(100) DEFAULT '' NOT NULL,
-	PRIMARY KEY (md5PluginId,ReportUser),
-	KEY cruid (uid),
-	KEY xexternal_ref_uid (external_ref_uid)
+	PRIMARY KEY (uid),
+	UNIQUE KEY XReportUserCache (md5PluginId, ReportUser),
+	KEY XexternalRefUid (external_ref_uid)
 );
 
 #

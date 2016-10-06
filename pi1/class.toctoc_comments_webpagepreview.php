@@ -147,6 +147,7 @@ class toctoc_comments_webpagepreview {
 				$this->conf['attachments.']['webpagePreviewCurlTimeout'] = 7000;
 				$this->conf['attachments.']['webpagePreviewDescriptionPortionLength'] =40;
 				$this->conf['attachments.']['useWebpageVideoPreview'] =1;
+				$this->conf['attachments.']['useFlowPlayer'] = 1;
 
 			}
 
@@ -1324,7 +1325,7 @@ class toctoc_comments_webpagepreview {
 					$commonObj->start_toctoccomments_session(3*1440, $this->sessionSavePath);
 */
 
-			// check for ideo content
+			// check for video content
 			$checkvideocontent=FALSE;
 			if ($this->conf['attachments.']['useWebpageVideoPreview'] == 1) {
 				if ($this->checkvideocontent($html) == 'found') {
@@ -2006,116 +2007,118 @@ class toctoc_comments_webpagepreview {
 		$html5vidogg='';
 		$html5vidmp4='';
 		$html5vidwebm='';
-		$htmlvidarr = explode('<video', $html);
-		if (count($htmlvidarr)>1) {
-			$htmlvidarrvid = explode('.ogg', $htmlvidarr[1]);
-			if (count($htmlvidarrvid)>1) {
-				$html5vidogg = $htmlvidarrvid[0] . '.ogg';
-			}
-
-			$htmlvidarrvid = explode('.mp4', $htmlvidarr[1]);
-			if (count($htmlvidarrvid)>1) {
-				$html5vidmp4 = $htmlvidarrvid[0] . '.mp4';
-			}
-
-			$htmlvidarrvid = explode('.webm', $htmlvidarr[1]);
-			if (count($htmlvidarrvid)>1) {
-				$html5vidwebm = $htmlvidarrvid[0]. '.webm';
-			}
-
-			if ($html5vidogg!='') {
-				$html5vidarr = explode('src=', $html5vidogg);
-				if (count($html5vidarr)>1) {
-					$html5vidogg = $html5vidarr[count($html5vidarr)-1];
+		if ($this->conf['attachments.']['useFlowPlayer']= 1) {
+			$htmlvidarr = explode('<video', $html);
+			if (count($htmlvidarr)>1) {
+				$htmlvidarrvid = explode('.ogg', $htmlvidarr[1]);
+				if (count($htmlvidarrvid)>1) {
+					$html5vidogg = $htmlvidarrvid[0] . '.ogg';
 				}
-
-			}
-
-			if ($html5vidmp4!='') {
-				$html5vidarr = explode('src=', $html5vidmp4);
-				if (count($html5vidarr)>1) {
-					$html5vidmp4 = $html5vidarr[count($html5vidarr)-1];
+	
+				$htmlvidarrvid = explode('.mp4', $htmlvidarr[1]);
+				if (count($htmlvidarrvid)>1) {
+					$html5vidmp4 = $htmlvidarrvid[0] . '.mp4';
 				}
-
-			}
-
-			if ($html5vidwebm!='') {
-				$html5vidarr = explode('src=', $html5vidwebm);
-				if (count($html5vidarr)>1) {
-					$html5vidwebm = $html5vidarr[count($html5vidarr)-1];
+	
+				$htmlvidarrvid = explode('.webm', $htmlvidarr[1]);
+				if (count($htmlvidarrvid)>1) {
+					$html5vidwebm = $htmlvidarrvid[0]. '.webm';
 				}
-
-			}
-
-			if ($html5vidogg!='') {
-				if (strpos($html5vidogg, 'http')===FALSE) {
-					//add base dir
-					if ($this->urlsubpath!=''){
-						if (strpos(($this->urlhomearrstr . $html5vidogg), $this->urlsubpath)===FALSE) {
-							$html5vidogg=$this->urlhomearrstr . $this->urlsubpath . $html5vidogg;
+	
+				if ($html5vidogg!='') {
+					$html5vidarr = explode('src=', $html5vidogg);
+					if (count($html5vidarr)>1) {
+						$html5vidogg = $html5vidarr[count($html5vidarr)-1];
+					}
+	
+				}
+	
+				if ($html5vidmp4!='') {
+					$html5vidarr = explode('src=', $html5vidmp4);
+					if (count($html5vidarr)>1) {
+						$html5vidmp4 = $html5vidarr[count($html5vidarr)-1];
+					}
+	
+				}
+	
+				if ($html5vidwebm!='') {
+					$html5vidarr = explode('src=', $html5vidwebm);
+					if (count($html5vidarr)>1) {
+						$html5vidwebm = $html5vidarr[count($html5vidarr)-1];
+					}
+	
+				}
+	
+				if ($html5vidogg!='') {
+					if (strpos($html5vidogg, 'http')===FALSE) {
+						//add base dir
+						if ($this->urlsubpath!=''){
+							if (strpos(($this->urlhomearrstr . $html5vidogg), $this->urlsubpath)===FALSE) {
+								$html5vidogg=$this->urlhomearrstr . $this->urlsubpath . $html5vidogg;
+							} else {
+								$html5vidogg=$this->urlhomearrstr  . $html5vidogg;
+							}
+	
 						} else {
 							$html5vidogg=$this->urlhomearrstr  . $html5vidogg;
 						}
-
-					} else {
-						$html5vidogg=$this->urlhomearrstr  . $html5vidogg;
+	
 					}
-
+	
 				}
-
-			}
-
-			$html5vidogg=str_replace('"', '', $html5vidogg);
-			if ($html5vidmp4!='') {
-				if (strpos($html5vidmp4, 'http')===FALSE) {
-					//add base dir
-					if ($this->urlsubpath!=''){
-						if (strpos(($this->urlhomearrstr . $html5vidmp4), $this->urlsubpath)===FALSE) {
-							$html5vidmp4=$this->urlhomearrstr . $this->urlsubpath . $html5vidmp4;
+	
+				$html5vidogg=str_replace('"', '', $html5vidogg);
+				if ($html5vidmp4!='') {
+					if (strpos($html5vidmp4, 'http')===FALSE) {
+						//add base dir
+						if ($this->urlsubpath!=''){
+							if (strpos(($this->urlhomearrstr . $html5vidmp4), $this->urlsubpath)===FALSE) {
+								$html5vidmp4=$this->urlhomearrstr . $this->urlsubpath . $html5vidmp4;
+							} else {
+								$html5vidmp4=$this->urlhomearrstr  . $html5vidmp4;
+							}
+	
 						} else {
 							$html5vidmp4=$this->urlhomearrstr  . $html5vidmp4;
 						}
-
-					} else {
-						$html5vidmp4=$this->urlhomearrstr  . $html5vidmp4;
+	
 					}
-
+	
 				}
-
-			}
-
-			$html5vidmp4=str_replace('"', '', $html5vidmp4);
-			if ($html5vidwebm!='') {
-				if (strpos($html5vidwebm, 'http')===FALSE) {
-					//add base dir
-					if ($this->urlsubpath!=''){
-						if (strpos(($this->urlhomearrstr . $html5vidwebm), $this->urlsubpath)===FALSE) {
-							$html5vidwebm=$this->urlhomearrstr . $this->urlsubpath . $html5vidwebm;
+	
+				$html5vidmp4=str_replace('"', '', $html5vidmp4);
+				if ($html5vidwebm!='') {
+					if (strpos($html5vidwebm, 'http')===FALSE) {
+						//add base dir
+						if ($this->urlsubpath!=''){
+							if (strpos(($this->urlhomearrstr . $html5vidwebm), $this->urlsubpath)===FALSE) {
+								$html5vidwebm=$this->urlhomearrstr . $this->urlsubpath . $html5vidwebm;
+							} else {
+								$html5vidwebm=$this->urlhomearrstr  . $html5vidwebm;
+							}
+	
 						} else {
 							$html5vidwebm=$this->urlhomearrstr  . $html5vidwebm;
 						}
-
-					} else {
-						$html5vidwebm=$this->urlhomearrstr  . $html5vidwebm;
+	
 					}
-
+	
 				}
-
+	
+				$html5vidwebm=str_replace('"', '', $html5vidwebm);
+	
+				$thumbnailUrl=$html5vidogg . '@@@' . $html5vidmp4 . '@@@' .$html5vidwebm . '@@@';
+				$_SESSION[$this->cid][$this->commentid]['embedUrl'] = $thumbnailUrl;
+				$_SESSION[$this->cid][$this->commentid]['videotype'] = $videotype;
+				$_SESSION[$this->cid][$this->commentid]['totalcounter'] = 1;
+				$_SESSION[$this->cid][$this->commentid]['logo'] = $thumbnailUrl;
+				$_SESSION[$this->cid][$this->commentid]['videosite'] = '';
+				$_SESSION[$this->cid][$this->commentid]['urlfound'] = $_SESSION[$this->cid][$this->commentid]['url'];
+				$_SESSION[$this->cid][$this->commentid]['urltext'] = $_SESSION[$this->cid][$this->commentid]['url'];
+				$return = 'found';
 			}
-
-			$html5vidwebm=str_replace('"', '', $html5vidwebm);
-
-			$thumbnailUrl=$html5vidogg . '@@@' . $html5vidmp4 . '@@@' .$html5vidwebm . '@@@';
-			$_SESSION[$this->cid][$this->commentid]['embedUrl'] = $thumbnailUrl;
-			$_SESSION[$this->cid][$this->commentid]['videotype'] = $videotype;
-			$_SESSION[$this->cid][$this->commentid]['totalcounter'] = 1;
-			$_SESSION[$this->cid][$this->commentid]['logo'] = $thumbnailUrl;
-			$_SESSION[$this->cid][$this->commentid]['videosite'] = '';
-			$_SESSION[$this->cid][$this->commentid]['urlfound'] = $_SESSION[$this->cid][$this->commentid]['url'];
-			$_SESSION[$this->cid][$this->commentid]['urltext'] = $_SESSION[$this->cid][$this->commentid]['url'];
-			$return= 'found';
 		}
-
+		
 		if (($html5vidogg=='') && ($html5vidmp4=='') && ($html5vidwebm=='')) {
 			$metakeys=array();
 			$j=0;
@@ -2280,16 +2283,17 @@ class toctoc_comments_webpagepreview {
 			}
 
 		}
+	
 
-		if ($return=='found') {
+		if ($return == 'found') {
 			// cleansing
-			$description=$_SESSION[$this->cid][$this->commentid]['description'];
+			$description = $_SESSION[$this->cid][$this->commentid]['description'];
 
-			$description=$this->cleanouttitleordesc($description);
+			$description = $this->cleanouttitleordesc($description);
 			$_SESSION[$this->cid][$this->commentid]['description'] = $description;
 
-			$title=$_SESSION[$this->cid][$this->commentid]['title'];
-			$title=$this->cleanouttitleordesc($title);
+			$title = $_SESSION[$this->cid][$this->commentid]['title'];
+			$title = $this->cleanouttitleordesc($title);
 			$_SESSION[$this->cid][$this->commentid]['title'] = $title;
 			return 'found';
 		}

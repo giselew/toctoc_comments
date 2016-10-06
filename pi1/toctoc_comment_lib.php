@@ -10791,9 +10791,8 @@ class toctoc_comment_lib extends tslib_pibase {
 		$sqlexternal_ref_uid = '';
 		if ($external_ref_uid != '') {
 			if (str_replace('tx_toctoc_comments_comments', '', $external_ref_uid) != $external_ref_uid) {
-
 				$rowsrf = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
-						'external_ref_uid',
+						'external_ref_uid, external_ref',
 						'tx_toctoc_comments_comments',
 						'uid = ' . str_replace('tx_toctoc_comments_comments_', '', $external_ref_uid) . '',
 						'',
@@ -10802,9 +10801,16 @@ class toctoc_comment_lib extends tslib_pibase {
 				);
 
 				if (count($rowsrf) > 0) {
-					$external_ref_uid=$rowsrf[0]['external_ref_uid'];
+					if (str_replace('pages_', '', $rowsrf[0]['external_ref']) != $rowsrf[0]['external_ref']) {
+						$external_ref_uid=$rowsrf[0]['external_ref_uid'];
+					} else {
+						$external_ref_uid=$rowsrf[0]['external_ref'];
+					}
+					
 				}
+				
 			}
+			
 			$sqlexternal_ref_uid = ' OR (ReportPluginMode = 0 AND external_ref_uid = "' . $external_ref_uid. '")';
 		}
 		// 1: recent comments, 3: topratings, 4: other reports, 6: user center, 8: topsharings
@@ -10823,6 +10829,7 @@ class toctoc_comment_lib extends tslib_pibase {
 				} else {
 					$viewsCacheDelay = intval($this->conf['advanced.']['viewsCacheDelay'])*60;
 				}
+				
 				$droptime = time() - $viewsCacheDelay;
 				$sqlexternal_ref_uid = ' OR (ReportPluginMode = 0 AND external_ref_uid = "' . $external_ref_uid. '" AND crdate < "' . $droptime. '")';
 			}
@@ -11443,11 +11450,11 @@ class toctoc_comment_lib extends tslib_pibase {
 				$sessionstore='confAJAXlogout';
 				$AJAXCache = 'DataLogout';
 			}
-
+			
 			if (is_array($_SESSION[$sessionstore])) {
 				$confCopyo=array();
 				$confCopyo = array_merge($_SESSION[$sessionstore]);
-
+				
 			// this would generate a too long string for unserialize
 
 				$data = base64_encode(serialize($confCopyo));
@@ -11467,7 +11474,8 @@ class toctoc_comment_lib extends tslib_pibase {
 					}
 					$Auid = $this->setAJAXDBCache($AJAXCache, $md5Data, $AJAXDBdata);
 				}
-
+				
+				
 				$retstr = $Auid;
 				return $retstr;
 
@@ -16783,7 +16791,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 		$recs['ReportCD'] = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('Reportdata',
 				'tx_toctoc_comments_cachereport',
 				'md5PluginId = "' . $md5PluginId . '" AND ReportUser = "' . $ReportUser . '"');
-		$ret = $recs['ReportCD'][0]['Reportdata'];
+		$ret = '' . $recs['ReportCD'][0]['Reportdata'];
 		$ReportDBdata = '';
 		if (trim($ret) != '') {
 			if (function_exists('gzdecode')) {

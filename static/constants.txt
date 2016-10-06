@@ -69,7 +69,7 @@ plugin.tx_toctoccomments_pi1 {
 	dbCacheTimeout = 10080
 	
 	# cat=plugin.tx_toctoccomments_pi1: Basic//24; type=int+; label=Compression Level for PHP-Sessions, 0 disable compression, 5 maximum available
-	sessionCompressionLevel = 0
+	sessionCompressionLevel = 1
 
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//01; type=string; label=Path to feuser-images:Path where the feuser-images are stored. Normally uploads/pics/.
 	FeUserImagePath = uploads/pics/
@@ -571,6 +571,9 @@ plugin.tx_toctoccomments_pi1 {
 
 	# cat=plugin.tx_toctoccomments_pi1: Attachments//32; type=string; Soundcloud Client Secret: Secret matching the Soundcloud Client ID
 	soundcloudClientSecret = 
+	
+	# cat=plugin.tx_toctoccomments_pi1: Attachments//40; type=boolean; Use Flowplayer for HTML5 Videos: Websitepreviews containing HTML5-Videos will be presented using FlowPlayer
+	useFlowPlayer = 1
 
 	# cat=plugin.tx_toctoccomments_pi1: Top ratings//01; type=options[likes=0,votes=1,both by rating=2,both by likes=3]; label=Composition - what to show?: Show top ratings for likes (0), votes(1) or both together(2 or 3)
 	topRatingsMode = 2

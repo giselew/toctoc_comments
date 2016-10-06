@@ -561,6 +561,7 @@ plugin.tx_toctoccomments_pi1 {
     soundcloudClientID = {$plugin.tx_toctoccomments_pi1.soundcloudClientID}
     soundcloudClientSecret = {$plugin.tx_toctoccomments_pi1.soundcloudClientSecret}
     
+    useFlowPlayer = {$plugin.tx_toctoccomments_pi1.useFlowPlayer}
   }
 
   recentcomments {

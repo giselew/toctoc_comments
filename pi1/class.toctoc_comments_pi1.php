@@ -112,7 +112,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '920';
+	public $extVersion = '921';
 	public $extLESSVersion = 'toctoc_comments-LESS.2';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
@@ -808,11 +808,11 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$this->conf['sessionCompressionLevel'] = 0;
 		}
 
-		if (intval($this->conf['sessionCompressionLevel']) < 0) {
-			$this->conf['sessionCompressionLevel'] = 0;
+		if (intval($this->conf['sessionCompressionLevel']) < 1) {
+			$this->conf['sessionCompressionLevel'] = 1;
 		}
 
-		if (intval($this->conf['sessionCompressionLevel']) >5) {
+		if (intval($this->conf['sessionCompressionLevel']) > 5) {
 			$this->conf['sessionCompressionLevel'] = 5;
 		}
 
@@ -1270,29 +1270,22 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 		$_SESSION['confAJAXlogin']=array();
 		if (isset($this->conf['confAJAXlogin.'])) {
-
 			if (is_array($this->conf['confAJAXlogin.'])) {
-
-				$_SESSION['confAJAXlogin']=array_merge($this->conf['confAJAXlogin.']);
-			} else {
-				unset($this->conf['confAJAXlogin.']);
-			}
-			unset($this->conf['confAJAXlogin.']);
+				$_SESSION['confAJAXlogin']=$this->conf['confAJAXlogin.'];
+			} 
+			//unset($this->conf['confAJAXlogin.']);
 		}
 
 		$_SESSION['confAJAXlogout']=array();
 		if (isset($this->conf['confAJAXlogout.'])) {
 			if (is_array($this->conf['confAJAXlogout.'])) {
+				$_SESSION['confAJAXlogout']=$this->conf['confAJAXlogout.'];
+				
+			} 
 
-				$_SESSION['confAJAXlogout']=array_merge($this->conf['confAJAXlogout.']);
-				//
-			} else {
-				unset($this->conf['confAJAXlogout.']);
-			}
-
-			unset($this->conf['confAJAXlogout.']);
+			//unset($this->conf['confAJAXlogout.']);
 		}
-
+		
 		//reset of the commentid of the last comment preview
 		$_SESSION['lastpreviewid']=0;
 
@@ -2433,7 +2426,9 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 						}
 
 						$outml=$this->lib->maincomments($this->ref, $this->conf, FALSE, $_SESSION['commentsPageId'], $this->feuserid, 'commentdisplay', $this, $this->piVars);
-						$this->lib->setReportDBCache($this->conf, 0, $ReportUser, $outml, $md5PluginId, $_SESSION['commentListRecord']);
+						if (trim($outml) != '') {
+							$this->lib->setReportDBCache($this->conf, 0, $ReportUser, $outml, $md5PluginId, $_SESSION['commentListRecord']);
+						}
 
 					} else {
 						if ($this->showsdebugprint) {
@@ -2462,7 +2457,9 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 							}
 
 							$outml=$this->lib->maincomments($this->ref, $this->conf, FALSE, $_SESSION['commentsPageId'], $this->feuserid, 'commentdisplay', $this, $this->piVars);
-							$this->lib->setReportDBCache($this->conf, 0, $ReportUser, $outml, $md5PluginId, $_SESSION['commentListRecord']);
+							if (trim($outml) != '') {
+								$this->lib->setReportDBCache($this->conf, 0, $ReportUser, $outml, $md5PluginId, $_SESSION['commentListRecord']);
+							}
 
 						} else {
 							if ($this->showsdebugprint) {
@@ -4362,7 +4359,14 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 				if ($jqueryfound == FALSE) {
 					$jquerytoolsfile .= "\n" . '<!-- Warning: jquery not found in page.includeJSlibs, nor includeJS or includeJSFooterlibs -->';
 				}
-
+				$jsflowplayer = '';
+				if ($this->conf['attachments.']['useFlowPlayer'] == 1) {
+					$cssflowplayer = '<link href="'. $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') .
+				             		'contrib/flowplayer/css/functional.css" rel="stylesheet" type="text/css"/>';
+					$jsflowplayer = '<script type="text/javascript" src="'. $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') .
+				             		'contrib/flowplayer/js/flowplayer.min.js"></script>';
+				}
+				
 				$headerParts = $this->cObj->substituteMarkerArrayCached($headerParts, array(
 						'###SITE_REL_PATH###' => $this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments'),
 						'###LANCODE###' => $lancode,
@@ -4374,6 +4378,8 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 						'###JSSERVERVARS###' => $jsservervars,
 						'###JSJQMOBILE###' => $jquerymobilefile,
 						'###JSMAIN###' => $jsmain,
+						'###CSSFLOWPLAYER###' => $cssflowplayer,
+						'###JSFLOWPLAYER###' => $jsflowplayer,
 				), $subParts);
 				$GLOBALS['TSFE']->additionalHeaderData[$key] = $headerParts;
 				if ($this->showsdebugprint==TRUE) {
