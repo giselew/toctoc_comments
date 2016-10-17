@@ -36,13 +36,15 @@ if ((version_compare(TYPO3_version, '7.6.8', '<'))) {
 
 	$GLOBALS['BE_USER']->modAccess($MCONF, 1);	// This checks permissions and exits if the users has no permission for entry.
 }
+
 /**
-} * AJAX Social Network Components
-} *
-} * @author Gisele Wendl <gisele.wendl@toctoc.ch>
-} * @package TYPO3
-} * @subpackage toctoc_comments
-} */
+* AJAX Social Network Components
+*
+* @author Gisele Wendl <gisele.wendl@toctoc.ch>
+* @package TYPO3
+* @subpackage toctoc_comments
+*/
+
 class BackendAjaxAdministration extends t3lib_SCbase {
 	public $pageinfo;
 
@@ -272,6 +274,7 @@ class BackendAjaxAdministration extends t3lib_SCbase {
 		}
 
 		$settingfunction = 0;
+
 		if(($_POST['actadmincommand']) || ($_POST['actadmincommand1']) || ($_POST['actadmincommand2']) ||
 				($_POST['actadmincommand3']) || ($_POST['actadmincommand4']) || ($_POST['actadmincommand5']))  {
 			if(intval($_POST['admincommand']) == 1) {
@@ -284,6 +287,14 @@ class BackendAjaxAdministration extends t3lib_SCbase {
 				$settingfunction = 4;
 			} elseif(intval($_POST['admincommand']) == 5) {
 				$settingfunction = 5;
+			}
+
+		}
+
+		if (isset($_POST['admincommand']) == FALSE) {
+			// return path under TYPO37.6 or newer
+			if ((version_compare(TYPO3_version, '7.5', '>'))) {
+				$settingfunction = 6;
 			}
 
 		}
@@ -373,6 +384,50 @@ class BackendAjaxAdministration extends t3lib_SCbase {
 	    	require_once (t3lib_extMgm::extPath('toctoc_comments', 'Classes/Controller/Dto/BackendSystem.php'));
 	    	$this->be_db = new toctoc_comments_be_db;
 	    	$this->content = $this->be_db->bedb($this);
+	    	unset($_SESSION['backendcontentoverviewlist']);
+	    	break;
+	    case 6:
+	    	unset($_SESSION['backendcontentcommentlist']);
+	    	$cachedEntities = '1,41,6';
+	    	$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport WHERE ReportPluginMode IN (' . $cachedEntities . ')');
+	    	if (isset($_SESSION['toctoccomments_cacheid'])) {
+	    		$cacheidarr=explode('external_ref', $_SESSION['toctoccomments_cacheid']);
+	    		if (count($cacheidarr) == 2) {
+		    		$external_ref =  $cacheidarr[1];
+		    		$external_ref_uid = $cacheidarr[0];
+		    		if (str_replace('pages_', $external_ref) != $external_ref) {
+		    			$external_ref_uid = $external_ref;
+		    		}
+
+		    		$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport WHERE ReportPluginMode = 0 AND external_ref_uid="'.$external_ref_uid.'"');
+	    			$res2 = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_toctoc_comments_plugincachecontrol', 'external_ref_uid="'.
+									$external_ref_uid.'"', '', '');
+					$num_rows2 = $GLOBALS['TYPO3_DB']->sql_num_rows($res2);
+					if ($num_rows2>0) {
+						$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_plugincachecontrol SET ' .
+								'tstamp=' . time() .
+								' WHERE external_ref_uid ="' . $external_ref_uid . '"');
+
+					} else {
+						$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_plugincachecontrol',
+								array(
+										'tstamp' => time(),
+										'external_ref_uid' => $external_ref_uid,
+								)
+						);
+
+					}
+
+	    		}
+
+	    		unset($_SESSION['toctoccomments_cacheid']);
+
+	    	}
+			require_once (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('toctoc_comments', 'Classes/Backend/BackendAdministration.php'));
+			if (!(version_compare(TYPO3_version, '7.6.8', '<'))) {
+				exit;
+			}
+
 	    	break;
 		}
 

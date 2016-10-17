@@ -601,9 +601,9 @@ class toctoc_comments_recentcomments extends toctoc_comment_lib {
 
 							$markerArray = array(
 									'###AUTHOR###' => $autortext,
-									'###COMMENT_DATE###' => '<span id="tx-tc-rctdatedisp-' .$row['uid'] .'">' .
+									'###COMMENT_DATE###' => '<span class="tx-tc-dyndate"><span id="tx-tc-rctdatedisp-' .$row['uid'] .'">' .
 									$this->applyStdWrap($this->formatDate($row['crdate'], $pObj, $fromAjax, $conf), 'crdate_stdWrap', $conf) .
-									'</span><span id="tx-tc-rctdatetime-' .$row['uid'] .'" class="tx-tc-nodisp">'.$row['crdate'].'</span>',
+									'</span><span id="tx-tc-rctdatetime-' .$row['uid'] .'" class="tx-tc-nodisp">'.$row['crdate'].'</span></span>',
 									'###TITLE###' => $this->applyStdWrap($titleimage . $titlelink, 'recentComment_stdWrap', $conf),
 									'###COMMENT_CONTENT###' => $commentcontent,
 									'###RCID###' => $okrowsi,

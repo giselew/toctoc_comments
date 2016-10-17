@@ -38,6 +38,11 @@ $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['toctoc_comments_ajax'] = 'EXT:
 if (t3lib_extMgm::isLoaded('tt_news')) {
 	$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['tt_news']['extraItemMarkerHook'][$_EXTKEY] = 'EXT:toctoc_comments/class.user_toctoc_comments_ttnews.php:&user_toctoc_comments_ttnews';
 }
+// get extension confArr
+$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['toctoc_comments']);
+if (!isset($confArr['enableRealURLAutoConfiguration']) || $confArr['enableRealURLAutoConfiguration']) {
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/realurl/class.tx_realurl_autoconfgen.php']['extensionConfiguration']['toctoc_comments'] = 'GiseleWendl\\ToctocComments\\Hooks\\RealUrl->addRealURLConfig';
+}
 
 // Register cache 'toctoc_comments_cache' just if TYPO3 4.3-4.5
 if (version_compare(TYPO3_version, '4.6', '<')) {

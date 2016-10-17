@@ -39,8 +39,8 @@
  *   67: class toctoc_comments_eID
  *   81:     public function init()
  *  207:     public function main()
- *  472:     protected function processReponseOutput()
- *  568:     protected function ipBlock()
+ *  473:     protected function processReponseOutput()
+ *  571:     protected function ipBlock()
  *
  * TOTAL FUNCTIONS: 4
  * (This index is automatically created/updated by the extension "extdeveval")

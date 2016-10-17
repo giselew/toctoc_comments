@@ -39,19 +39,19 @@
  *
  *   82: class toctoc_comments_webpagepreview
  *  122:     public function main ($inputurl, $inputcommentid, $inputcid, $lang, $inconf = array(), $pObj = NULL, $pObjParent=NULL)
- *  354:     protected function timepoint($startpoint, $datainfo, $showtotal = FALSE)
- *  380:     protected function check_pvs_url($value)
- *  400:     protected function file_pvs_get_contents_curl($urltofetch, $ext, $savepathfilename = '')
- *  565:     public function saveAndResize($filename, $new_width, $new_height, $pathAndFilename, $ext)
- *  920:     public function previewsite ($pObj=NULL, $pObjParent=NULL)
- * 1599:     private function pvs_fetch_images($strextraction, $iscss, $cssfile='')
- * 1778:     protected function pvs_fetch_css($strextraction,&$strouthtml, $iscss, $cssfile='')
- * 1907:     protected function checklogopattern($strtest)
- * 1939:     protected function checkimagepattern($strtest)
- * 1971:     protected function checkvideocontent($html)
- * 2306:     protected function croptitleordesc($description)
- * 2335:     protected function cleanouttitleordesc($title)
- * 2412:     protected function checkandcorrUTF8($strtocheck)
+ *  355:     protected function timepoint($startpoint, $datainfo, $showtotal = FALSE)
+ *  381:     protected function check_pvs_url($value)
+ *  401:     protected function file_pvs_get_contents_curl($urltofetch, $ext, $savepathfilename = '')
+ *  566:     public function saveAndResize($filename, $new_width, $new_height, $pathAndFilename, $ext)
+ *  921:     public function previewsite ($pObj=NULL, $pObjParent=NULL)
+ * 1600:     private function pvs_fetch_images($strextraction, $iscss, $cssfile='')
+ * 1779:     protected function pvs_fetch_css($strextraction,&$strouthtml, $iscss, $cssfile='')
+ * 1908:     protected function checklogopattern($strtest)
+ * 1940:     protected function checkimagepattern($strtest)
+ * 1972:     protected function checkvideocontent($html)
+ * 2309:     protected function croptitleordesc($description)
+ * 2338:     protected function cleanouttitleordesc($title)
+ * 2415:     protected function checkandcorrUTF8($strtocheck)
  *
  * TOTAL FUNCTIONS: 14
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -2014,41 +2014,41 @@ class toctoc_comments_webpagepreview {
 				if (count($htmlvidarrvid)>1) {
 					$html5vidogg = $htmlvidarrvid[0] . '.ogg';
 				}
-	
+
 				$htmlvidarrvid = explode('.mp4', $htmlvidarr[1]);
 				if (count($htmlvidarrvid)>1) {
 					$html5vidmp4 = $htmlvidarrvid[0] . '.mp4';
 				}
-	
+
 				$htmlvidarrvid = explode('.webm', $htmlvidarr[1]);
 				if (count($htmlvidarrvid)>1) {
 					$html5vidwebm = $htmlvidarrvid[0]. '.webm';
 				}
-	
+
 				if ($html5vidogg!='') {
 					$html5vidarr = explode('src=', $html5vidogg);
 					if (count($html5vidarr)>1) {
 						$html5vidogg = $html5vidarr[count($html5vidarr)-1];
 					}
-	
+
 				}
-	
+
 				if ($html5vidmp4!='') {
 					$html5vidarr = explode('src=', $html5vidmp4);
 					if (count($html5vidarr)>1) {
 						$html5vidmp4 = $html5vidarr[count($html5vidarr)-1];
 					}
-	
+
 				}
-	
+
 				if ($html5vidwebm!='') {
 					$html5vidarr = explode('src=', $html5vidwebm);
 					if (count($html5vidarr)>1) {
 						$html5vidwebm = $html5vidarr[count($html5vidarr)-1];
 					}
-	
+
 				}
-	
+
 				if ($html5vidogg!='') {
 					if (strpos($html5vidogg, 'http')===FALSE) {
 						//add base dir
@@ -2058,15 +2058,15 @@ class toctoc_comments_webpagepreview {
 							} else {
 								$html5vidogg=$this->urlhomearrstr  . $html5vidogg;
 							}
-	
+
 						} else {
 							$html5vidogg=$this->urlhomearrstr  . $html5vidogg;
 						}
-	
+
 					}
-	
+
 				}
-	
+
 				$html5vidogg=str_replace('"', '', $html5vidogg);
 				if ($html5vidmp4!='') {
 					if (strpos($html5vidmp4, 'http')===FALSE) {
@@ -2077,15 +2077,15 @@ class toctoc_comments_webpagepreview {
 							} else {
 								$html5vidmp4=$this->urlhomearrstr  . $html5vidmp4;
 							}
-	
+
 						} else {
 							$html5vidmp4=$this->urlhomearrstr  . $html5vidmp4;
 						}
-	
+
 					}
-	
+
 				}
-	
+
 				$html5vidmp4=str_replace('"', '', $html5vidmp4);
 				if ($html5vidwebm!='') {
 					if (strpos($html5vidwebm, 'http')===FALSE) {
@@ -2096,17 +2096,17 @@ class toctoc_comments_webpagepreview {
 							} else {
 								$html5vidwebm=$this->urlhomearrstr  . $html5vidwebm;
 							}
-	
+
 						} else {
 							$html5vidwebm=$this->urlhomearrstr  . $html5vidwebm;
 						}
-	
+
 					}
-	
+
 				}
-	
+
 				$html5vidwebm=str_replace('"', '', $html5vidwebm);
-	
+
 				$thumbnailUrl=$html5vidogg . '@@@' . $html5vidmp4 . '@@@' .$html5vidwebm . '@@@';
 				$_SESSION[$this->cid][$this->commentid]['embedUrl'] = $thumbnailUrl;
 				$_SESSION[$this->cid][$this->commentid]['videotype'] = $videotype;
@@ -2118,7 +2118,7 @@ class toctoc_comments_webpagepreview {
 				$return = 'found';
 			}
 		}
-		
+
 		if (($html5vidogg=='') && ($html5vidmp4=='') && ($html5vidwebm=='')) {
 			$metakeys=array();
 			$j=0;
@@ -2283,7 +2283,6 @@ class toctoc_comments_webpagepreview {
 			}
 
 		}
-	
 
 		if ($return == 'found') {
 			// cleansing

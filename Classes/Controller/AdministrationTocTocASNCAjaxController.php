@@ -47,7 +47,7 @@ class AdministrationTocTocASNCAjaxController extends \TYPO3\CMS\Extbase\Mvc\Cont
 		}
 
 		$admincommand = $_POST['admincommand'];
-		
+
 		$ret = GeneralUtility::requireOnce(ExtensionManagementUtility::extPath('toctoc_comments') . 'Classes/Backend/BackendAjaxAdministration.php');
 		echo $ret;
 		exit;

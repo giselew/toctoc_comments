@@ -39,10 +39,10 @@
  *
  *   60: class toctoc_comments_charts extends toctoc_comment_lib
  *   69:     public function topratings ($conf, $pObj, $fromusercenterid = 0)
- * 1521:     public function topsharings ($conf, $pObj)
- * 1953:     private function human_sharesize($bytes, $decimals = 1)
- * 1973:     private function enrichrows($conf, $rowsmerged, $pObj, $show_uid, $input_sys_language_uid = FALSE)
- * 2793:     private function initconf($pidcond, $conf, $restrictor)
+ * 1569:     public function topsharings ($conf, $pObj)
+ * 2001:     private function human_sharesize($bytes, $decimals = 1)
+ * 2021:     private function enrichrows($conf, $rowsmerged, $pObj, $show_uid, $input_sys_language_uid = FALSE)
+ * 2867:     private function initconf($pidcond, $conf, $restrictor)
  *
  * TOTAL FUNCTIONS: 5
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -107,19 +107,19 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 			$restrictor .= 'toctoc_commentsfeuser_feuser=' . $GLOBALS['TSFE']->fe_user->user['uid'] . ' AND ';
 
 			if ($fromusercenterid == 2) {
-				$feusergroupby = ', isreview, (CASE WHEN tstampmyrating = 0 THEN tstamp ELSE tstampmyrating END), toctoc_commentsfeuser_feuser';
+				$feusergroupby = ', isreview, (CASE WHEN tstampmyrating = 0 THEN crdate ELSE tstampmyrating END), toctoc_commentsfeuser_feuser';
 
-				$feusersort = '(CASE WHEN tstampmyrating = 0 THEN tstamp ELSE tstampmyrating END) DESC, ';
+				$feusersort = '(CASE WHEN tstampmyrating = 0 THEN crdate ELSE tstampmyrating END) DESC, ';
 				$feusersql = ', isreview AS isreview, toctoc_commentsfeuser_feuser AS toctoc_commentsfeuser_feuser,
-						(CASE WHEN tstampmyrating = 0 THEN tstamp ELSE tstampmyrating END) AS ratedate';
+						(CASE WHEN tstampmyrating = 0 THEN crdate ELSE tstampmyrating END) AS ratedate';
 				$restrictor .= 'isreview<>1 AND ';
 			} else {
-				$feusergroupby = ', (CASE WHEN tstampidislike = 0 THEN CASE WHEN tstampilike = 0 THEN tstamp ELSE tstampilike END ELSE tstampidislike END),
+				$feusergroupby = ', (CASE WHEN tstampidislike = 0 THEN CASE WHEN tstampilike = 0 THEN crdate ELSE tstampilike END ELSE tstampidislike END),
 						toctoc_commentsfeuser_feuser, emolikeid';
 
-				$feusersort = '(CASE WHEN tstampidislike = 0 THEN CASE WHEN tstampilike = 0 THEN tstamp ELSE tstampilike END ELSE tstampidislike END) DESC, ';
+				$feusersort = '(CASE WHEN tstampidislike = 0 THEN CASE WHEN tstampilike = 0 THEN crdate ELSE tstampilike END ELSE tstampidislike END) DESC, ';
 				$feusersql = ', emolikeid AS emolikeid, toctoc_commentsfeuser_feuser AS toctoc_commentsfeuser_feuser,
-						(CASE WHEN tstampidislike = 0 THEN CASE WHEN tstampilike = 0 THEN tstamp ELSE tstampilike END ELSE tstampidislike END) AS ratedate';
+						(CASE WHEN tstampidislike = 0 THEN CASE WHEN tstampilike = 0 THEN crdate ELSE tstampilike END ELSE tstampidislike END) AS ratedate';
 			}
 
 		}
@@ -330,7 +330,18 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					$sprint= TRUE;
 				}
 
-				$rowsmerged[$i]['ref'] = $fixedref;
+				$arrpagemode = explode('888', $fixedref);
+				//  . PageID . ['888' . sys_language_uid . ] '888' . storagePid . '888' . $hookId
+				//  -> Pagemode Record
+				if (count($arrpagemode) >=3) {
+					$hookId = array_pop($arrpagemode);
+					if ($hookId == $arrpagemode[0]){
+						$rowsmerged[$i]['ref'] = 'pages_' . $hookId;
+					}
+				} else {
+					$rowsmerged[$i]['ref'] = $fixedref;
+				}
+
 				$rowsmerged[$i]['pageid'] = $rowsmerged1['pageid'];
 				$rowsmerged[$i]['sumilikedislike'] = $rowsmerged1['sumilikedislike'];
 				$rowsmerged[$i]['sumilikedislikevote'] = $rowsmerged1['sumilikedislikevote'];
@@ -636,6 +647,12 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					if (($rowsmerged1['lastview']!=0) && ($conf['topRatings.']['showCountTopViewsLastView']==1)) {
 						$timebefore=$this->formatDate($rowsmerged1['lastview'], $pObj, FALSE, $conf);
 						$timebefore=strtolower(substr($timebefore, 0, 1)) . substr($timebefore, 1);
+						$rowiddate = $conf['topRatings.']['topRatingsMode'] . '777' . str_replace('_', '', $rowsmerged1['ref']);
+						$timebefore = '<span class="tx-tc-dyndate"><span id="tx-tc-rctlowdatedisp-' .$rowiddate .'">' .
+								trim($timebefore) .
+								'</span><span id="tx-tc-rctlowdatetime-' .
+								$rowiddate .'" class="tx-tc-nodisp">' . $rowsmerged1['lastview'].'</span></span>';
+
 						$lastview = ', ' . $this->pi_getLLWrap($pObj, 'pi1_template.lastseen', FALSE) . ' ' . $timebefore;
 					}
 
@@ -865,6 +882,12 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					if (($lastview!='') && ($conf['topRatings.']['showCountTopViewsLastView']==1)) {
 						$timebefore=$this->formatDate($lastview, $pObj, FALSE, $conf);
 						$timebefore=strtolower(substr($timebefore, 0, 1)) . substr($timebefore, 1);
+						$rowiddate = $conf['topRatings.']['topRatingsMode'] . '707' . str_replace('_', '', $rowsmerged1['ref']);
+						$timebefore = '<span class="tx-tc-dyndate"><span id="tx-tc-rctlowdatedisp-' .$rowiddate .'">' .
+								trim($timebefore) .
+								'</span><span id="tx-tc-rctlowdatetime-' .
+								$rowiddate .'" class="tx-tc-nodisp">' . $rowsmerged1['lastview'].'</span></span>';
+
 						$lastview = ', ' . $this->pi_getLLWrap($pObj, 'pi1_template.lastactivity', FALSE) . ' ' . $timebefore;
 					} else {
 						$lastview ='';
@@ -1119,7 +1142,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 				$skiprow=FALSE;
 				if ($skiprow==FALSE) {
 				 	$commentID = $row['refID'];
-					if ($prefix == 'tt_content_') {
+					if (($prefix == 'tt_content_') || ($prefix == 'pages_') || ($prefix == '_')) {
 
 						if (version_compare(TYPO3_version, '7.0', '<')) {
 							$exticon= '/typo3/sysext/cms/ext_icon.gif">';
@@ -1149,9 +1172,13 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 
 					if ($itemtitle !='') {
 						$itemtitle='title="' . $itemtitle . '" ';
+					} else {
+						if($prefix == '_') {
+							$itemtitle='title="' . ucfirst($this->pi_getLLWrap($pObj, 'comments_recent.pages', FALSE)) . '" ';
+						}
 					}
 
-					$titleimage = '<img class="tx-tc-rcentpic" width="14" height="14" valign="middle" ' . $itemtitle . 'src="' . $exticon;
+					$titleimage = '<img class="tx-tc-rcentpic" width="14" height="14" ' . $itemtitle . 'src="' . $exticon;
 
 					$commenttext =$row['text'];
 
@@ -1216,7 +1243,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 
 					}
 
-					if (strpos($row['link'], 'href=')>0) {
+					if (strpos($row['link'], 'href=') > 0) {
 
 						if ($conf['ratings.']['useNumberOfVotes'] != 1) {
 							$row['nbrvotes']='';
@@ -1238,7 +1265,13 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 
 								}
 							} else {
-								$row['nbrvotes']='(' . $this->formatDate($row['ratedate'], $pObj, FALSE, $conf) . ')';
+								//$row['nbrvotes']='(' . $this->formatDate($row['ratedate'], $pObj, FALSE, $conf) . ')';
+								$rowiddate = $conf['topRatings.']['topRatingsMode'] . '999' . str_replace('_', '', $row['refID']);
+								$row['nbrvotes'] = '(' . '<span class="tx-tc-dyndate"><span id="tx-tc-rctdatedisp-' .$rowiddate .'">' .
+								trim($this->applyStdWrap($this->formatDate($row['ratedate'], $pObj, FALSE, $conf), 'crdate_stdWrap', $conf)) .
+													'</span><span id="tx-tc-rctdatetime-' .
+												     $rowiddate .'" class="tx-tc-nodisp">' . $row['ratedate'].'</span></span>)';
+
 							}
 
 						}
@@ -1425,11 +1458,26 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 						}
 						$titledate = '';
 						if ($row['date'] != '') {
+							$rowiddate = $conf['topRatings.']['topRatingsMode'] . '001' . $rank . str_replace('_', '', $row['refID']);
+
 							if ($conf['topRatings.']['RatedItemSeparatedDate'] == 1) {
-								$titledate = ' &#124; ' . $row['date'];
+								//$titledate = ' &#124; ' . $row['date'];
+								$titledate = ' &#124; ' .
+												'<span class="tx-tc-dyndate"><span id="tx-tc-rctdatedisp-' .$rowiddate .'">' .
+									$row['date'] .
+									'</span><span id="tx-tc-rctdatetime-' .
+									$rowiddate .'" class="tx-tc-nodisp">' .
+									$row['dateorig'].'</span></span>';
 							} else {
-								$titledate = ' ' . $row['date'];
+								// $titledate = ' ' . $row['date'];
+								$titledate = ' ' .
+												'<span class="tx-tc-dyndate"><span id="tx-tc-rctdatedisp-' .$rowiddate .'">' .
+									$row['date'] .
+									'</span><span id="tx-tc-rctdatetime-' .
+									$rowiddate .'" class="tx-tc-nodisp">' .
+									$row['dateorig'].'</span></span>';
 							}
+
 							if ($conf['topRatings.']['RatedItemShowDate'] != 1) {
 								$titledate = '';
 							}
@@ -1452,7 +1500,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 
 						$entries[] = $this->t3substituteMarkerArray($template, $markerArray);
 						$okrowsi++;
-						$rank=$rank+1;
+						$rank = $rank+1;
 					}
 
 					// if not: link did not resolve -> not accessible to user - we skip
@@ -1979,7 +2027,19 @@ AND pages.deleted = 0 and pages.hidden= 0';
 			if ($input_sys_language_uid == TRUE) {
 				$input_sys_language_uid = $rowsmerged[$i]['lang'];
 			}
-			$pageidrecord=$rowsmerged[$i]['ref'];
+
+			$arrpagemode = explode('888', $rowsmerged[$i]['ref']);
+			//  . PageID . ['888' . sys_language_uid . ] '888' . storagePid . '888' . $hookId
+			//  -> Pagemode Record
+			if (count($arrpagemode) >=3) {
+				$hookId = array_pop($arrpagemode);
+				if ($hookId == $arrpagemode[0]){
+					$rowsmerged[$i]['ref'] = 'pages_' . $hookId;
+				}
+			} else {
+				$pageidrecord=$rowsmerged[$i]['ref'];
+			}
+
 			// zb tt_news_21
 			$prefix=$pageidrecord;
 			$posbeforeid = strrpos($pageidrecord, '_')+1;
@@ -2294,13 +2354,16 @@ AND pages.deleted = 0 and pages.hidden= 0';
 					}
 					$k=0;
 					$rowsdisplaycompressed = array();
+					$rowsdisplaycompressedDate = '';
 					foreach($rowsdisplay[0] as $key=>$val) {
 						$tmpdisplayfieldswork=$tmpdisplayfields;
 						if (($key== 'crdate') || ($key== 'tstamp') || ($key== 'datetime') || ($key== 'start_date')) {
 							if (intval($val) != 0) {
 								$rowsdisplaycompressed[4] = $this->formatDate($val, $pObj, FALSE, $conf);
+								$rowsdisplaycompressedDate = $val;
 							} else {
 								$rowsdisplaycompressed[4] = '';
+								$rowsdisplaycompressedDate = '';
 							}
 						} elseif ((substr($key, 0, 5)== 'image') || (substr($key, 0, 5)== 'photo') || ($key== 'picture')) {
 							if (intval($val) == 0) {
@@ -2365,8 +2428,10 @@ AND pages.deleted = 0 and pages.hidden= 0';
 							if (($key== 'crdate') || ($key== 'tstamp') || ($key== 'datetime') || ($key== 'start_date')) {
 								if (intval($val) == 0) {
 									$rowsdisplaycompressed[4] = '';
+									$rowsdisplaycompressedDate = '';
 								} else {
 									$rowsdisplaycompressed[4] = $this->formatDate($val, $pObj, FALSE, $conf);
+									$rowsdisplaycompressedDate = $val;
 								}
 							} elseif ((substr($key, 0, 5)== 'image') || (substr($key, 0, 5)== 'photo') || ($key== 'picture')) {
 								if (intval($val) == 0) {
@@ -2446,6 +2511,7 @@ AND pages.deleted = 0 and pages.hidden= 0';
 							if (count($rowspages) == 1) {
 								$rowsdisplaycompressed[0] = $rowspages[0]['title'];
 							} else {
+
 								$rowsdisplaycompressed[0] = 'no title found at all';
 							}
 
@@ -2627,6 +2693,12 @@ AND pages.deleted = 0 and pages.hidden= 0';
 							if (count($rowspage) > 0) {
 								$rowsmerged[$i]['pageid'] = intval($rowspage[0]['pageid']);
 							}
+							/* if (\TYPO3\CMS\Core\Utility\GeneralUtility::cmpIP(
+								\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('REMOTE_ADDR'),
+								$GLOBALS['TYPO3_CONF_VARS']['SYS']['devIPmask'])
+						) {
+							print_r($rowsmerged[$i]);exit;
+						} */
 
 						}
 						$paramarr['L']=0;
@@ -2654,6 +2726,7 @@ AND pages.deleted = 0 and pages.hidden= 0';
 						if ($GLOBALS['TSFE']->sys_language_uid != 0) {
 							$paramarr['L']=0;
 						}
+
 						$texttip='';
 						if (intval($rowsmerged[$i]['lang']) != 0) {
 							$paramarr['L']=intval($rowsmerged[$i]['lang']);
@@ -2757,6 +2830,7 @@ AND pages.deleted = 0 and pages.hidden= 0';
 					$rowsmerged[$i]['language'] = $rowsdisplaycompressed[2];
 					$rowsmerged[$i]['image'] = $rowsdisplaycompressed[3];
 					$rowsmerged[$i]['date'] = $rowsdisplaycompressed[4];
+					$rowsmerged[$i]['dateorig'] = $rowsdisplaycompressedDate;
 					$rowsmerged[$i]['linkfinalpure'] = $linkpure;
 					$rowsmerged[$i]['isok'] = 1;
 					if (strpos($rowsmerged[$i]['link'], 'href=') == 0) {

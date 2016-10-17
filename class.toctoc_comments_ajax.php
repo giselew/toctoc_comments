@@ -37,31 +37,31 @@
  *
  *
  *
- *  108: class toctoc_comments_ajax
- *  165:     public function __construct()
- *  350:     protected function launchCmd($data)
- *  887:     protected function initTSFE()
- *  961:     public function main()
- * 1016:     private function checksharre()
- * 1099:     public function handleCommentatorNotifications()
- * 1110:     protected function updateCommentDisplay()
- * 1128:     protected function updateComment()
- * 1143:     protected function webpagepreview()
- * 1155:     protected function previewcomment()
- * 1166:     protected function commentsSearch()
- * 1178:     protected function cleanupfup()
- * 1192:     public function getCaptcha($captchatype, $cid)
- * 1209:     public function chkcaptcha($cid, $code)
- * 1222:     protected function getUserCard()
- * 1234:     protected function getEmoCard()
- * 1246:     protected function getCurrentIp()
- * 1259:     protected function updateCommentsView()
- * 1564:     protected function updateRating()
- * 2261:     protected function processDeleteSubmission()
- * 2342:     protected function deleteDBcachereport($cachedEntities, $ref = '')
- * 2353:     protected function processDenotifycommentSubmission()
- * 2404:     protected function recentCommentsClearCache()
- * 2437:     protected function getAJAXDBCache($uid)
+ *  110: class toctoc_comments_ajax
+ *  167:     public function __construct()
+ *  364:     protected function launchCmd($data)
+ *  947:     protected function initTSFE()
+ * 1021:     public function main()
+ * 1084:     private function checksharre()
+ * 1167:     public function handleCommentatorNotifications()
+ * 1178:     protected function updateCommentDisplay()
+ * 1196:     protected function updateComment()
+ * 1211:     protected function webpagepreview()
+ * 1223:     protected function previewcomment()
+ * 1234:     protected function commentsSearch()
+ * 1246:     protected function cleanupfup()
+ * 1260:     public function getCaptcha($captchatype, $cid)
+ * 1277:     public function chkcaptcha($cid, $code)
+ * 1290:     protected function getUserCard()
+ * 1302:     protected function getEmoCard()
+ * 1314:     protected function getCurrentIp()
+ * 1327:     protected function updateCommentsView()
+ * 1632:     protected function updateRating()
+ * 2329:     protected function processDeleteSubmission()
+ * 2410:     protected function deleteDBcachereport($cachedEntities, $ref = '')
+ * 2421:     protected function processDenotifycommentSubmission()
+ * 2472:     protected function recentCommentsClearCache()
+ * 2504:     public function getAJAXDBCache($uid)
  *
  * TOTAL FUNCTIONS: 24
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -173,7 +173,7 @@ class toctoc_comments_ajax {
 		if (version_compare(TYPO3_version, '6.1', '<')) {
 			tslib_eidtools::connectDB();
 		}
-		
+
 		if ((isset($_POST['cmd'])) || (isset($_GET['cmd']))) {
 			$this->cmd = t3lib_div::_GP('cmd');
 			$data_str = t3lib_div::_GP('data');
@@ -209,22 +209,22 @@ class toctoc_comments_ajax {
 					if (isset($data['activelangid'])) {
 						$data['activelangid'] = $dnalanid;
 					}
-				}				
-	
+				}
+
 				$this->nosessclose = FALSE;
 				if (str_replace('preview', '', t3lib_div::_GP('cmd')) != t3lib_div::_GP('cmd')) {
 					if (t3lib_div::_GP('cmd') != 'previewcomment') {
 						$this->nosessclose = TRUE;
 					}
-					
+
 				}
-				
+
 			}
-		
+
 		} else {
 			$this->cmd = 'attachmentupload';
 		}
-		
+
 		$this->pageid = 0;
 		if (trim(t3lib_div::_GP('pageid')) != '') {
 			$this->pageid = intval(t3lib_div::_GP('pageid'));
@@ -255,7 +255,7 @@ class toctoc_comments_ajax {
 			} else {
 				session_start();
 			}
-			
+
 			$GLOBALS['LANG'] = t3lib_div::makeInstance('language');
 			$GLOBALS['LANG']->init($_SESSION['activelang'] ? $_SESSION['activelang'] : 'default');
 			$GLOBALS['LANG']->includeLLFile('EXT:toctoc_comments/locallang_ajax.xml');
@@ -331,10 +331,10 @@ class toctoc_comments_ajax {
 							strlen($dispatchData_str) .
 							', number of elements in PHP-unserialized array: ' . count($dispatchData);
 			}
-			
+
 			//if ($this->echostr != '') {
 				//$this->dispatchmessage .= $this->echostr;
-			//}			
+			//}
 			if ($locnosessclose == FALSE) {
 				$this->commonObj->stop_toctoccomments_session();
 			}
@@ -395,12 +395,21 @@ class toctoc_comments_ajax {
 
 			$dataconf = unserialize(base64_decode($dataconf_str));
 			if (!is_array($dataconf['conf'])) {
-				echo $GLOBALS['LANG']->getLL('bad_conf_value') . ', diffconf in ' .$this->cmd . ' (2)';
+				if (trim($data_uid) == '') {
+					echo $GLOBALS['LANG']->getLL('bad_conf_value') . ': uid is missing in AJAX-request, command was ' .$this->cmd;
+				} else {
+					if (intval($data_uid) != 0) {
+						echo $GLOBALS['LANG']->getLL('bad_conf_value') . ': No data in cache for uid ' . $data_uid . ', command was ' .$this->cmd;
+					} else {
+						echo $GLOBALS['LANG']->getLL('bad_conf_value') . ': Configuration must be an array, command was ' . $this->cmd;
+					}
+				}
+
 				exit();
 			}
 
 			$this->conf = $dataconf['conf'];
-				
+
 			if ($this->conf == '') {
 				echo $GLOBALS['LANG']->getLL('session_expired');
 				exit();
@@ -410,29 +419,38 @@ class toctoc_comments_ajax {
 			$this->previewconf = $data;
 		} elseif (($this->cmd == 'searchcomment') || ($this->cmd == 'searchbrowse')) {
 			$dataconf_str = t3lib_div::_GP('data');
-			
+
 			$dataconf = unserialize(base64_decode($dataconf_str));
-			
+
 			$data_uid = $dataconf['conf'];
 			if (intval($data_uid) != 0) {
 				$dataconf_str = $this->getAJAXDBCache($data_uid);
 			}
-			
+
 			$confdiffarray = unserialize(base64_decode($dataconf_str));
 
 			if (!is_array($confdiffarray)) {
-				echo $GLOBALS['LANG']->getLL('bad_conf_value') . ', diffconf in ' .$this->cmd . ' (1)';
+				if (trim($data_uid) == '') {
+					echo $GLOBALS['LANG']->getLL('bad_conf_value') . ': uid is missing in AJAX-request, command was ' .$this->cmd;
+				} else {
+					if (intval($data_uid) != 0) {
+						echo $GLOBALS['LANG']->getLL('bad_conf_value') . ': No data in cache for uid ' . $data_uid . ', command was ' .$this->cmd;
+					} else {
+						echo $GLOBALS['LANG']->getLL('bad_conf_value') . ': Configuration must be an array, command was ' . $this->cmd;
+					}
+				}
+
 				exit();
 			}
 			$this->conf = $confdiffarray;
-				
+
 			if ($this->conf == '') {
 				echo $GLOBALS['LANG']->getLL('session_expired');
 				exit();
 			}
 			$this->pluginid = t3lib_div::_GP('ref');
 			$this->previewconf = $dataconf;
-			
+
 		} elseif ($this->cmd == 'gettime') {
 			echo time();
 			exit;
@@ -443,10 +461,10 @@ class toctoc_comments_ajax {
 
 			//conf in commentsview
 			if (!is_array($data['conf'])) {
-				echo $GLOBALS['LANG']->getLL('bad_conf_value') . ', diffconf in ' .$this->cmd . ', conf: ' . $data['conf'];
+				echo $GLOBALS['LANG']->getLL('bad_conf_value') . ' in ' .$this->cmd . ', conf: ' . $data['conf'];
 				exit();
 			}
-			
+
 			$this->conf = $data['conf'];
 			if ($this->conf == '') {
 				echo $GLOBALS['LANG']->getLL('session_expired');
@@ -485,8 +503,18 @@ class toctoc_comments_ajax {
 
 			$dataconf = unserialize(base64_decode($data_strconf));
 			if (!is_array($dataconf['conf'])) {
-				echo $GLOBALS['LANG']->getLL('bad_conf_value') . ', diffconf in ' .$this->cmd . ' (4)';
+				if (trim($data_uid) == '') {
+					echo $GLOBALS['LANG']->getLL('bad_conf_value') . ': uid is missing in AJAX-request, command was ' . $this->cmd;
+				} else {
+					if (intval($data_uid) != 0) {
+						echo $GLOBALS['LANG']->getLL('bad_conf_value') . ': No data in cache for uid ' . $data_uid . ', command was ' . $this->cmd;
+					} else {
+						echo $GLOBALS['LANG']->getLL('bad_conf_value') . ': Configuration must be an array, command was ' . $this->cmd;
+					}
+				}
+
 				exit();
+
 			}
 			$this->conf = $dataconf['conf'];
 			if ($this->conf == '') {
@@ -504,9 +532,18 @@ class toctoc_comments_ajax {
 			$this->conf = $dataconfatt['conf'];
 
 			$this->previewid = t3lib_div::_GP('previewid');
-			
+
 			if (!is_array($this->conf)) {
-				echo $GLOBALS['LANG']->getLL('bad_conf_value') . ' (2: ' . $this->cmd .') ' . $this->conf . ' - ' . $data_strtmp;
+				if (trim($data_uid) == '') {
+					echo $GLOBALS['LANG']->getLL('bad_conf_value') . ': uid is missing in AJAX-request, command was ' . $this->cmd;
+				} else {
+					if (intval($data_uid) != 0) {
+						echo $GLOBALS['LANG']->getLL('bad_conf_value') . ': No data in cache for uid ' . $data_uid . ', command was ' . $this->cmd;
+					} else {
+						echo $GLOBALS['LANG']->getLL('bad_conf_value') . ': Configuration must be an array, command was ' . $this->cmd;
+					}
+				}
+
 				exit();
 			}
 
@@ -533,7 +570,7 @@ class toctoc_comments_ajax {
 			}
 
 			$this->conf = $data['conf'];
-			
+
 			if ($this->conf == '') {
 				echo $GLOBALS['LANG']->getLL('session_expired');
 				exit();
@@ -561,7 +598,7 @@ class toctoc_comments_ajax {
 			}
 			$this->ref = trim(t3lib_div::_GP('ref'));
 			$this->conf = $data['conf'];
-			
+
 			if ($this->conf == '') {
 				echo $GLOBALS['LANG']->getLL('session_expired');
 				exit();
@@ -614,8 +651,9 @@ class toctoc_comments_ajax {
 				// no piVars check when deleting and then rescanning comments
 				$this->softcheck = intval(t3lib_div::_GP('softcheck'));
 			}
+
 			if (!is_array($data['conf'])) {
-				echo $GLOBALS['LANG']->getLL('bad_conf_value') . ', diffconf in ' .$this->cmd . ' (3)';
+				echo $GLOBALS['LANG']->getLL('bad_conf_value') . ' in ' .$this->cmd;
 				exit();
 			}
 
@@ -627,7 +665,7 @@ class toctoc_comments_ajax {
 
 			// Is the configuration array really an array
 			if (!is_array($this->conf)) {
-				echo $GLOBALS['LANG']->getLL('bad_conf_value') . ' (1)';
+				echo $GLOBALS['LANG']->getLL('bad_conf_value')  . ' in ' .$this->cmd;
 				exit();
 			}
 
@@ -1576,7 +1614,7 @@ class toctoc_comments_ajax {
 				}
 
 				$_SESSION['commentViewsUpdateTimePlugin'][$pluginid]=microtime(TRUE);
-				
+
 				$this->echostr .= time() . ' - ' . $viewsCacheDelay/1000 . ',tdifftolastrun: ' . $tdifftolastrun . ' *** ';
 				$apiObj->setPluginCacheControlTstamp($setPluginCacheControlTstamppluginid, (microtime(TRUE)-(intval($this->conf['advanced.']['viewsCacheDelay'])*60)));
 				$action .= ' setPluginCache id ' . $setPluginCacheControlTstamppluginid;
@@ -2357,7 +2395,7 @@ class toctoc_comments_ajax {
 				}
 
 			}
-			
+
 			$apiObj->setPluginCacheControlTstamp($this->pluginid);
 		}
 
@@ -2469,26 +2507,26 @@ class toctoc_comments_ajax {
 				'tx_toctoc_comments_cacheajax',
 				'uid=' . $uid);
 		$ret = $recs[0]['AJAXdata'];
-	
+
 		if ($ret == '') {
 			$ret = $recs['AJAXdata'];
 		}
-	
+
 		if ($ret == '') {
-			echo 'no data '.count($recs).'found in tx_toctoc_comments_cacheajax for uid=' . intval($uid);
+			echo 'no data '.count($recs).' found in tx_toctoc_comments_cacheajax for uid=' . intval($uid);
 			exit;
 		}
-	
+
 		if (function_exists('gzdecode')) {
-			$AJAXDBdata=gzdecode($ret);
+			$AJAXDBdata = gzdecode($ret);
 		} else {
-			$AJAXDBdata=gzuncompress($ret);
+			$AJAXDBdata = gzuncompress($ret);
 		}
-	
+
 		if ($AJAXDBdata == '') {
-			$AJAXDBdata=$ret;
+			$AJAXDBdata = $ret;
 		}
-	
+
 		return $AJAXDBdata;
 	}
 

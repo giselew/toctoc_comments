@@ -53,17 +53,17 @@ require_once(t3lib_extMgm::extPath('toctoc_comments', 'pi1/toctoc_comment_lib.ph
  *  281:     public function getEmoCard($conf, $cid, $ref, $feuser)
  *  295:     public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
 			$feuserid = 0, $cmd, $piVars, $cid, $datathis, $userpic, $commentspics, $check='',
-			$extref='', $tctreestate  = NULL, $commentreplyid=0, $isrefresh=0, $confSess = array())
- *  361:     public function updateComment($conf, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
- *  374:     public function previewcomment($data, $conf)
- *  388:     public function commentsSearch($data, $conf, $cid)
- *  407:     public function isVoted($ref, $scopeid, $feuser, $fromAjax)
- *  417:     public function initCaches()
- *  428:     public function enableFields($table)
- *  441:     public function setPluginCacheControlTstamp ($external_ref_uid_list, $tstime = -1)
- *  450:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
- *  465:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
- *  490:     public function createLinks($text, $conf = NULL)
+		    $extref='', $tctreestate  = NULL, $commentreplyid=0, $isrefresh=0, $confSess = array())
+ *  362:     public function updateComment($conf, $ctid, $content, $pid, $plugincacheid, $commenttitle = '')
+ *  375:     public function previewcomment($data, $conf)
+ *  389:     public function commentsSearch($data, $conf, $cid)
+ *  408:     public function isVoted($ref, $scopeid, $feuser, $fromAjax)
+ *  418:     public function initCaches()
+ *  429:     public function enableFields($table)
+ *  442:     public function setPluginCacheControlTstamp ($external_ref_uid_list, $tstime = -1)
+ *  451:     public function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ *  466:     public function applyStdWrap($text, $stdWrapName, $conf = NULL)
+ *  491:     public function createLinks($text, $conf = NULL)
  *
  * TOTAL FUNCTIONS: 21
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -297,7 +297,7 @@ class toctoc_comments_api {
 	public function getAjaxCommentDisplay($ref, $conf = NULL, $fromAjax, $pid=0,
 			$feuserid = 0, $cmd, $piVars, $cid, $datathis, $userpic, $commentspics, $check='',
 		    $extref='', $tctreestate  = NULL, $commentreplyid=0, $isrefresh=0, $confSess = array()) {
-		
+
 		$this->conf = $conf;
 		if ($fromAjax == TRUE) {
 			$this->externalUid = $datathis['externalUid'];
@@ -394,7 +394,7 @@ class toctoc_comments_api {
 		$usetemplateFile= str_replace('EXT:toctoc_comments', 'typo3conf/ext/toctoc_comments', $usetemplateFile);
 
 		$this->templateCode = @file_get_contents(PATH_site . $usetemplateFile);
-		
+
 		$retstr = $this->lib->showCommentsSearch($conf, $this, TRUE, $data, $cid);
 		return $retstr;
 	}

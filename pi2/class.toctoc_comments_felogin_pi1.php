@@ -64,12 +64,12 @@
  * 1956:     protected function processSignupCaptcha($postData)
  * 2004:     protected function loginUser($facebookId)
  * 2033:     protected function storeUser($facebookUserProfile, $socialnetwork)
- * 2317:     private function registerUserGroup()
- * 2378:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
- * 2397:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
- * 2487:     protected function getCurrentIp()
- * 2499:     protected function initTSFE()
- * 2571:     protected function addSysFile($FileName, $FileNameIdentifier, $currentstorage, $advancedFeUserImagePath,
+ * 2319:     private function registerUserGroup()
+ * 2380:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
+ * 2399:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
+ * 2489:     protected function getCurrentIp()
+ * 2501:     protected function initTSFE()
+ * 2573:     protected function addSysFile($FileName, $FileNameIdentifier, $currentstorage, $advancedFeUserImagePath,
 			$useruid, $feuserstoragefolder, $imagefield)
  *
  * TOTAL FUNCTIONS: 31
@@ -2125,6 +2125,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 							$currentstorage= $currentstoragexmlarr3[0];
 							break;
 						}
+
 					}
 
 					if ($currentuserimage != '') {
@@ -2133,19 +2134,21 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 						$currentuserimagename = array_pop($arrimg);
 						$FeUserImagePath = implode('/', $arrimg);
 						$FeUserImagePath = $currentstorage . $FeUserImagePath . '/';
-						//$user[$fldimage] = $currentstorage . $currentuserimage;
 						$confpi1['advanced.']['FeUserImagePath'] = $FeUserImagePath;
 
 					}
+
 				}
+
 			}
 
-
 		}
+
 		$imageurl='';
 		if($socialnetwork=='google') {
 			$imageurl=$facebookUserProfile['imageurl'];
 		}
+
 		$fe_usersValues['tstamp'] = time();
 		$fe_usersValues['first_name'] = $facebookUserProfile['first_name'];
 		$fe_usersValues['last_name'] = $facebookUserProfile['last_name'];
@@ -2160,7 +2163,6 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 		if(isset($facebookUserProfile['gender'])) {
 			$fe_usersValues['tx_toctoc_comments_facebook_gender'] = $facebookUserProfile['gender'];
-
 		}
 
 		if(isset($facebookUserProfile['email'])) {
