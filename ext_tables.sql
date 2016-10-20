@@ -248,7 +248,7 @@ CREATE TABLE tx_toctoc_comments_attachment_mm (
    	userurltext tinytext NOT NULL,
 	reference varchar(55) DEFAULT '' NOT NULL,
 	PRIMARY KEY (uid),
-	KEY att_mmref (reference,attachmentid)
+	KEY att_mmref (reference,attachmentid),
 	KEY att_mmurl (userurltext(64))
 );
 
@@ -270,7 +270,7 @@ CREATE TABLE tx_toctoc_comments_sharing (
     	sharecount int(11) DEFAULT '0' NOT NULL,
     	sys_language_uid int(11) unsigned DEFAULT '0' NOT NULL,
  	PRIMARY KEY (uid),
-	KEY shr_sharer (sharer,shareurl(64))
+	KEY shr_sharer (sharer,shareurl(64)),
 	KEY shr_url (shareurl(64))
 );
 
@@ -309,7 +309,7 @@ CREATE TABLE tx_toctoc_comments_prefixtotable (
 	topratingsimagesfolder tinytext NOT NULL,
 	topratingsdetailpage int(11) unsigned DEFAULT '0' NOT NULL,
 	PRIMARY KEY (uid),
-	KEY pi1_key (pi1_key(64))
+	KEY pi1_key (pi1_key(64)),
 	KEY pi1_table (pi1_table(64))
 );
 

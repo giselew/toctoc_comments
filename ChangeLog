@@ -880,3 +880,8 @@
 	* Release of version 9.2.3 - see www.toctoc.ch for demos, news, support and donations
 	* Problem with BackendAjaxAdministration, PHP script documentation help destroyed a file in 9.2.2 	
 	
+2016-10-21  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 9.2.4 - see www.toctoc.ch for demos, news, support and donations
+	* Problem with RealURL-Hook, PHP script documentation help destroyed the file in 9.2.2
+	* Fixed: On install under TYPO3 8.4.0 ext_tables.sql causes an error (missing commas) 	
+	

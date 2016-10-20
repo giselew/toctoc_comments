@@ -23,8 +23,7 @@ namespace GiseleWendl\ToctocComments\Hooks;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  * **************************************************************/
- *
- */
+
 class RealUrl {
 
 	/**
