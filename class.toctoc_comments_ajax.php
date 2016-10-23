@@ -165,6 +165,7 @@ class toctoc_comments_ajax {
 	 * @return	void
 	 */
 	public function __construct() {
+		
 		if (version_compare(TYPO3_version, '4.5', '<')) {
 			// Initialize FE user object:
 			$feUserObj = tslib_eidtools::initFeUser();
@@ -987,8 +988,8 @@ class toctoc_comments_ajax {
 				}
 
 				$GLOBALS['TSFE'] = & $frontend;
-
-				if (version_compare(TYPO3_version, '8.0.99', '>')) {
+				
+				if ((version_compare(TYPO3_version, '8.0.99', '>')) && (version_compare(TYPO3_version, '8.3.99', '<'))) {
 						\TYPO3\CMS\Frontend\Page\PageGenerator::pagegenInit();
 						$pgitdone = TRUE;
 				}
@@ -1075,88 +1076,6 @@ class toctoc_comments_ajax {
 			echo $this->dispatchmessage;
 		}
 
-	}
-	/**
-	 * checks the sharrre-array from the client against the DB and maintains the sharing-table
-	 *
-	 * @return	string		empty
-	 */
-	private function checksharre() {
-		$ret = '';
-		$countsharings = count($this->conf);
-		$protocol = 'confcountsharings: ' . $countsharings . '<br>';
-		for ($i = 0;$i < $countsharings; $i++) {
-			$dataWhere = 'deleted=0 AND pid=' . intval($this->storagePid) . ' AND reference="' . $this->pageid . '" AND sharer="' .
-					$this->conf[$i]['sharer'] . '" AND external_prefix="' .
-					$this->conf[$i]['external_prefix'] . '" AND external_ref="' .
-					$this->conf[$i]['external_ref'] . '" AND sys_language_uid=' .
-					$this->conf[$i]['lang'] . ' AND shareurl="' . $this->conf[$i]['url'] . '"';
-			$protocol .= '<br>'. 'sharer: ' . $this->conf[$i]['sharer'] . ' with ' . intval($this->conf[$i]['count']) . '<br>';
-			$protocol .= '<br>'. 'url: ' . $this->conf[$i]['url'] . '<br>';
-
-			list($row) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('crdate AS LastChangedTime, uid AS uid, sharecount AS sharecount',
-					'tx_toctoc_comments_sharing', $dataWhere, '', 'crdate DESC', 1);
-
-			$protocol .= 'sharecount: ' . intval($row['sharecount']) . '<br>';
-			$protocol .= 'confcount: ' . intval($this->conf[$i]['count']) . '<br>';
-			$protocol .= 'dataWhere: ' . $dataWhere . '<br>';
-
-			if (intval($row['sharecount']) != intval($this->conf[$i]['count'])) {
-
-				$continuewithinsert = TRUE;
-				if (intval($row['sharecount']) == 1 && intval($this->conf[$i]['count']) == 0) {
-					// to reset to 0 can come from a missing total.
-					if ((time() - $row['LastChangedTime']) < 86000) {
-						// please - this only after a day after the last insert
-						$continuewithinsert = FALSE;
-					}
-
-				}
-
-				if (intval($row['sharecount']) - intval($this->conf[$i]['count']) > 1) {
-					// felt down by more than 1 since last observation
-					if ((time() - $row['LastChangedTime']) < 86000) {
-						// also this only after a day after the last insert
-						$continuewithinsert = FALSE;
-					}
-
-				}
-
-				if ($continuewithinsert == TRUE) {
-				//insert the sharer with the new count
-					$protocol .= 'insert the sharer ' . $this->conf[$i]['sharer'] . ' with the new count: ' . $this->conf[$i]['count'] . '<br>';
-					$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_sharing', array(
-						'crdate' => time(),
-						'reference' => $this->pageid,
-						'tstamp' => time(),
-						'sharecount' => $this->conf[$i]['count'],
-						'pid' => $this->storagePid,
-						'sharer' => $this->conf[$i]['sharer'],
-						'shareurl' => $this->conf[$i]['url'],
-						'external_ref' => $this->conf[$i]['external_ref'],
-						'external_prefix' => $this->conf[$i]['external_prefix'],
-						'sys_language_uid' => $this->conf[$i]['lang'],
-					));
-
-					$this->deleteDBcachereport('sharings');
-
-					$this->conf[$i]['sharer'] . ' with url ' . $this->conf[$i]['url'] . ', count: ' . $this->conf[$i]['count'] . ' ----';
-
-					$newUid = $GLOBALS['TYPO3_DB']->sql_insert_id();
-					// Update reference index. This will show in theList view that someone refers to external record.
-					$refindex = t3lib_div::makeInstance('t3lib_refindex');
-					/* @var $refindex t3lib_refindex */
-					if (isset($GLOBALS['TCA']['tx_toctoc_comments_sharing']['columns'])) {
-						$refindex->updateRefIndexTable('tx_toctoc_comments_sharing', $newUid);
-					}
-
-				}
-
-			}
-
-		}
-
-		echo '';//$protocol;
 	}
 
 	/**
@@ -1325,301 +1244,304 @@ class toctoc_comments_ajax {
  * @return	void
  */
 	protected function updateCommentsView() {
-		$feusertoinsert = intval($this->feuser);
-		//$apiObj = t3lib_div::makeInstance('toctoc_comments_api');
-		$strCurrentIP = $this->getCurrentIp();
-		$pageid= $this->pageid;
-		$GLOBALS['TYPO3_DB']->sql_query('START TRANSACTION');
-		$pluginid= $this->pluginid;
-		$action='try';
-		if (intval($this->feuser) === 0) {
-
-			$fetoctocusertoquery = '"' . $strCurrentIP . '.0"';
-			$fetoctocusertoinsert = '' . $strCurrentIP . '.0';
-		} else {
-			$fetoctocusertoquery = '"0.0.0.0.' . $this->feuser . '"';
-			$fetoctocusertoinsert = '0.0.0.0.' . $this->feuser;
-		}
-
-		if (!isset($_SESSION['commentViewsLastPluginId'])) {
-			$_SESSION['commentViewsLastPluginId']='';
-
-		}
-
-		if ((str_replace('tx_toctoc_comments_comments_', '', $pluginid) != $pluginid) && ($_SESSION['commentViewsLastPluginId'] != '')) {
-			$setPluginCacheControlTstamppluginid=$_SESSION['commentViewsLastPluginId'];
-		} else {
-			$_SESSION['commentViewsLastPluginId']=$pluginid;
-			$setPluginCacheControlTstamppluginid=$pluginid;
-		}
-		$this->echostr .= time() . ' - ' . $_SESSION['viewMaxAgeDone'] . '-' . intval($_SESSION['viewMaxAgeDone']) . ' *** ';
-		// seen compress to viewMaxAge
-		if (intval($_SESSION['viewMaxAgeDone']) == 0) {
-
-			//check timestamp last update
-			$external_ref_uid = 'tx_toctoc_comments_feuser_mm_0';
-			$res2 = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('external_ref_uid, tstamp, uid', 'tx_toctoc_comments_plugincachecontrol', 'external_ref_uid="'.
-					$external_ref_uid.'"', '', '');
-			$num_rows2 = count($res2);
-			$viewscheckneeded= FALSE;
-			if ($num_rows2>0) {
-				$lastchecktime = $res2[0]['tstamp'];
-				$this->echostr .= time() . ' - ' . $lastchecktime . ', ' . $num_rows2 . ', ' . $_SESSION['viewMaxAgeDone'] . ' *** ';
-				if ((time() - $lastchecktime) > 86000) {
-					$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_plugincachecontrol SET ' .
-						'tstamp=' . time() .
-						' WHERE external_ref_uid ="' . $external_ref_uid . '"');
-					$viewscheckneeded= TRUE;
-				}
+		if ((intval($this->conf['advanced.']['countViews']) == 1) || (intval($this->conf['advanced.']['countCommentViews']) == 1)) {
+			$feusertoinsert = intval($this->feuser);
+			//$apiObj = t3lib_div::makeInstance('toctoc_comments_api');
+			$strCurrentIP = $this->getCurrentIp();
+			$pageid= $this->pageid;
+			$GLOBALS['TYPO3_DB']->sql_query('START TRANSACTION');
+			$pluginid= $this->pluginid;
+			$action='try';
+			if (intval($this->feuser) === 0) {
+	
+				$fetoctocusertoquery = '"' . $strCurrentIP . '.0"';
+				$fetoctocusertoinsert = '' . $strCurrentIP . '.0';
 			} else {
-				$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_plugincachecontrol',
-						array(
-								'tstamp' => time(),
-								'external_ref_uid' => $external_ref_uid,
-						)
-				);
-				$viewscheckneeded = TRUE;
+				$fetoctocusertoquery = '"0.0.0.0.' . $this->feuser . '"';
+				$fetoctocusertoinsert = '0.0.0.0.' . $this->feuser;
 			}
-			$_SESSION['viewMaxAgeDone']=1;
-
-			if ($viewscheckneeded == TRUE) {
-				$compressAgeDifferenceSeconds = intval($this->conf['advanced.']['viewMaxAge'])*86000;
-				$compressAgeTime = time() - $compressAgeDifferenceSeconds;
-				$dataWhere = 'tstampseen < ' . $compressAgeTime . ' AND seen >= 1 AND deleted=0 AND reference_scope=0 AND toctoc_comments_user<>"0.0.0.127.0"';
-				$limitrows = 100000;
-
-				/* @var $refindex t3lib_refindex */
-				$refindex = t3lib_div::makeInstance('t3lib_refindex');
-
-				Do {
-					//$GLOBALS['TYPO3_DB']->sql_query('START TRANSACTION');
-					$rows = array();
-					$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('(ilike+idislike+myrating) as rateval, pagetstampseen AS pagetstampseen,
-							tstampseen AS tstampseen, pid AS pid, reference AS reference, seen AS seen, uid AS uid',
-							'tx_toctoc_comments_feuser_mm',
-							$dataWhere,
-							'',
-							'reference, pid, tstampseen',
-							$limitrows);
-					// brings all 'too old' seens
-					$limitrows = count($rows);
-
-					if ($limitrows > 0) {
-						$arr127 = array();
-						$arr127cnt = 0;
-						$rowreference='';
-						$rowpid='';
-						foreach($rows as $row) {
-							if (($rowreference != $row['reference']) || ($rowpid != $row['pid'])) {
-								$arr127[$arr127cnt] = array();
-								$arr127[$arr127cnt]['reference'] = $row['reference'];
-								$arr127[$arr127cnt]['pid'] = $row['pid'];
-								$arr127[$arr127cnt]['tstampseen'] = $row['tstampseen'];
-								$arr127[$arr127cnt]['pagetstampseen'] = $row['pagetstampseen'];
-								$arr127[$arr127cnt]['seen'] = $row['seen'];
-								$arr127cnt++;
-							} else {
-								if ((($arr127[$arr127cnt]['tstampseen'] > $row['tstampseen']) && (intval($row['tstampseen'])>0)) ||
-										((intval($arr127[$arr127cnt]['tstampseen'])==0) && (intval($row['tstampseen'])>0))) {
-									$arr127[$arr127cnt]['tstampseen'] = $row['tstampseen'];
-								}
-								$arr127[$arr127cnt]['seen'] += $row['seen'];
-							}
-
-							$dataWhereup = 'uid=' . $row['uid'];
-							if ($row['rateval'] > 0) {
-								//update to 0
-								$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET seen=0,
-										pagetstampseen=NULL, tstampseen=NULL WHERE ' . $dataWhereup);
-
-							} else {
-								// delete
-								$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_feuser_mm WHERE ' . $dataWhereup);
-
-							}
-
-						}
-
-						foreach($arr127 as $row) {
-							$dataWhere = 'pid=' . intval($row['pid']) . ' AND deleted=0 AND reference_scope=0 AND reference="' . $row['reference'] .
-							'" AND toctoc_comments_user="0.0.0.127.0"';
-							$rows127 = array();
-							$rows127 = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('pagetstampseen AS pagetstampseen, tstampseen AS tstampseen, seen AS seen, uid AS uid',
-									'tx_toctoc_comments_feuser_mm', $dataWhere);
-
-							if (count($rows127) > 0) {
-								if (is_array($rows127[0])) {
-									$rows127uid = $rows127[0]['uid'];
-									$rows127seen= $rows127[0]['seen'];
-									$rows127tstampseen=$rows127[0]['tstampseen'];
-								} else {
-									$rows127uid = $rows127['uid'];
-									$rows127seen= $rows127['seen'];
-									$rows127tstampseen=$rows127['tstampseen'];
-								}
-
-								if ($rows127uid > 0) {
-									$dataWhereup = 'uid=' . $rows127uid;
-									if ((($rows127tstampseen > $row['tstampseen']) && (intval($row['tstampseen'])>0)) ||
-											((intval($rows127tstampseen)==0) && (intval($row['tstampseen'])>0))) {
-										$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET tstamp = ' . $row['tstampseen'] .
-												', crdate = ' . $row['tstampseen'] .
-												', tstampseen = ' . $row['tstampseen'] .
-												', seen = ' . (intval($rows127seen) + intval($row['seen']))  .
-												' WHERE ' . $dataWhereup);
-									} else {
-										$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET seen=' .
-												(intval($rows127seen) + intval($row['seen']))  . ' WHERE ' . $dataWhereup);
-									}
-
-								}
-							} else {
-								$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_feuser_mm', array(
-										'crdate' => $row['tstampseen'],
-										'tstampseen' => $row['tstampseen'],
-										'pagetstampseen' => $row['pagetstampseen'],
-										'tstamp' => $row['tstampseen'],
-										'seen' => intval($row['seen']),
-										'pid' => $row['pid'],
-										'idislike' => 0,
-										'myrating' => 0,
-										'toctoc_commentsfeuser_feuser' => 0,
-										'toctoc_comments_user' => '0.0.0.127.0',
-										'reference' => $row['reference'],
-										'reference_scope' => 0,
-										'remote_addr' => '0.0.0.127'
-								));
-
-								$newUid = $GLOBALS['TYPO3_DB']->sql_insert_id();
-								// Update reference index. This will show in theList view that someone refers to external record.
-								if (isset($GLOBALS['TCA']['tx_toctoc_comments_feuser_mm']['columns'])) {
-									$refindex->updateRefIndexTable('tx_toctoc_comments_feuser_mm', $newUid);
-								}
-							}
-
-						}
-
+	
+			if (!isset($_SESSION['commentViewsLastPluginId'])) {
+				$_SESSION['commentViewsLastPluginId']='';
+	
+			}
+	
+			if ((str_replace('tx_toctoc_comments_comments_', '', $pluginid) != $pluginid) && ($_SESSION['commentViewsLastPluginId'] != '')) {
+				$setPluginCacheControlTstamppluginid=$_SESSION['commentViewsLastPluginId'];
+			} else {
+				$_SESSION['commentViewsLastPluginId']=$pluginid;
+				$setPluginCacheControlTstamppluginid=$pluginid;
+			}
+			$this->echostr .= time() . ' - ' . $_SESSION['viewMaxAgeDone'] . '-' . intval($_SESSION['viewMaxAgeDone']) . ' *** ';
+			// seen compress to viewMaxAge
+			if (intval($_SESSION['viewMaxAgeDone']) == 0) {
+	
+				//check timestamp last update
+				$external_ref_uid = 'tx_toctoc_comments_feuser_mm_0';
+				$res2 = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('external_ref_uid, tstamp, uid', 'tx_toctoc_comments_plugincachecontrol', 'external_ref_uid="'.
+						$external_ref_uid.'"', '', '');
+				$num_rows2 = count($res2);
+				$viewscheckneeded= FALSE;
+				if ($num_rows2>0) {
+					$lastchecktime = $res2[0]['tstamp'];
+					$this->echostr .= time() . ' - ' . $lastchecktime . ', ' . $num_rows2 . ', ' . $_SESSION['viewMaxAgeDone'] . ' *** ';
+					if ((time() - $lastchecktime) > 86000) {
+						$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_plugincachecontrol SET ' .
+							'tstamp=' . time() .
+							' WHERE external_ref_uid ="' . $external_ref_uid . '"');
+						$viewscheckneeded= TRUE;
 					}
-
-				} while ($limitrows > 10);
-			// delete orphans in tx_toctoc_comments_user
-				$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_user WHERE
-					vote_count = 0 AND like_count = 0 AND dislike_count = 0 AND
-					toctoc_comments_user NOT IN (SELECT DISTINCT toctoc_comments_user FROM tx_toctoc_comments_feuser_mm) AND
-					toctoc_comments_user NOT IN (SELECT DISTINCT toctoc_comments_user FROM tx_toctoc_comments_comments)');
-
+				} else {
+					$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_plugincachecontrol',
+							array(
+									'tstamp' => time(),
+									'external_ref_uid' => $external_ref_uid,
+							)
+					);
+					$viewscheckneeded = TRUE;
+				}
+				$_SESSION['viewMaxAgeDone']=1;
+	
+				if ($viewscheckneeded == TRUE) {
+					$compressAgeDifferenceSeconds = intval($this->conf['advanced.']['viewMaxAge'])*86000;
+					$compressAgeTime = time() - $compressAgeDifferenceSeconds;
+					$dataWhere = 'tstampseen < ' . $compressAgeTime . ' AND seen >= 1 AND deleted=0 AND reference_scope=0 AND toctoc_comments_user<>"0.0.0.127.0"';
+					$limitrows = 100000;
+	
+					/* @var $refindex t3lib_refindex */
+					$refindex = t3lib_div::makeInstance('t3lib_refindex');
+	
+					Do {
+						//$GLOBALS['TYPO3_DB']->sql_query('START TRANSACTION');
+						$rows = array();
+						$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('(ilike+idislike+myrating) as rateval, pagetstampseen AS pagetstampseen,
+								tstampseen AS tstampseen, pid AS pid, reference AS reference, seen AS seen, uid AS uid',
+								'tx_toctoc_comments_feuser_mm',
+								$dataWhere,
+								'',
+								'reference, pid, tstampseen',
+								$limitrows);
+						// brings all 'too old' seens
+						$limitrows = count($rows);
+	
+						if ($limitrows > 0) {
+							$arr127 = array();
+							$arr127cnt = 0;
+							$rowreference='';
+							$rowpid='';
+							foreach($rows as $row) {
+								if (($rowreference != $row['reference']) || ($rowpid != $row['pid'])) {
+									$arr127[$arr127cnt] = array();
+									$arr127[$arr127cnt]['reference'] = $row['reference'];
+									$arr127[$arr127cnt]['pid'] = $row['pid'];
+									$arr127[$arr127cnt]['tstampseen'] = $row['tstampseen'];
+									$arr127[$arr127cnt]['pagetstampseen'] = $row['pagetstampseen'];
+									$arr127[$arr127cnt]['seen'] = $row['seen'];
+									$arr127cnt++;
+								} else {
+									if ((($arr127[$arr127cnt]['tstampseen'] > $row['tstampseen']) && (intval($row['tstampseen'])>0)) ||
+											((intval($arr127[$arr127cnt]['tstampseen'])==0) && (intval($row['tstampseen'])>0))) {
+										$arr127[$arr127cnt]['tstampseen'] = $row['tstampseen'];
+									}
+									$arr127[$arr127cnt]['seen'] += $row['seen'];
+								}
+	
+								$dataWhereup = 'uid=' . $row['uid'];
+								if ($row['rateval'] > 0) {
+									//update to 0
+									$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET seen=0,
+											pagetstampseen=NULL, tstampseen=NULL WHERE ' . $dataWhereup);
+	
+								} else {
+									// delete
+									$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_feuser_mm WHERE ' . $dataWhereup);
+	
+								}
+	
+							}
+	
+							foreach($arr127 as $row) {
+								$dataWhere = 'pid=' . intval($row['pid']) . ' AND deleted=0 AND reference_scope=0 AND reference="' . $row['reference'] .
+								'" AND toctoc_comments_user="0.0.0.127.0"';
+								$rows127 = array();
+								$rows127 = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('pagetstampseen AS pagetstampseen, tstampseen AS tstampseen, seen AS seen, uid AS uid',
+										'tx_toctoc_comments_feuser_mm', $dataWhere);
+	
+								if (count($rows127) > 0) {
+									if (is_array($rows127[0])) {
+										$rows127uid = $rows127[0]['uid'];
+										$rows127seen= $rows127[0]['seen'];
+										$rows127tstampseen=$rows127[0]['tstampseen'];
+									} else {
+										$rows127uid = $rows127['uid'];
+										$rows127seen= $rows127['seen'];
+										$rows127tstampseen=$rows127['tstampseen'];
+									}
+	
+									if ($rows127uid > 0) {
+										$dataWhereup = 'uid=' . $rows127uid;
+										if ((($rows127tstampseen > $row['tstampseen']) && (intval($row['tstampseen'])>0)) ||
+												((intval($rows127tstampseen)==0) && (intval($row['tstampseen'])>0))) {
+											$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET tstamp = ' . $row['tstampseen'] .
+													', crdate = ' . $row['tstampseen'] .
+													', tstampseen = ' . $row['tstampseen'] .
+													', seen = ' . (intval($rows127seen) + intval($row['seen']))  .
+													' WHERE ' . $dataWhereup);
+										} else {
+											$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET seen=' .
+													(intval($rows127seen) + intval($row['seen']))  . ' WHERE ' . $dataWhereup);
+										}
+	
+									}
+								} else {
+									$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_feuser_mm', array(
+											'crdate' => $row['tstampseen'],
+											'tstampseen' => $row['tstampseen'],
+											'pagetstampseen' => $row['pagetstampseen'],
+											'tstamp' => $row['tstampseen'],
+											'seen' => intval($row['seen']),
+											'pid' => $row['pid'],
+											'idislike' => 0,
+											'myrating' => 0,
+											'toctoc_commentsfeuser_feuser' => 0,
+											'toctoc_comments_user' => '0.0.0.127.0',
+											'reference' => $row['reference'],
+											'reference_scope' => 0,
+											'remote_addr' => '0.0.0.127'
+									));
+	
+									$newUid = $GLOBALS['TYPO3_DB']->sql_insert_id();
+									// Update reference index. This will show in theList view that someone refers to external record.
+									if (isset($GLOBALS['TCA']['tx_toctoc_comments_feuser_mm']['columns'])) {
+										$refindex->updateRefIndexTable('tx_toctoc_comments_feuser_mm', $newUid);
+									}
+								}
+	
+							}
+	
+						}
+	
+					} while ($limitrows > 10);
+				// delete orphans in tx_toctoc_comments_user
+					$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_user WHERE
+						vote_count = 0 AND like_count = 0 AND dislike_count = 0 AND
+						toctoc_comments_user NOT IN (SELECT DISTINCT toctoc_comments_user FROM tx_toctoc_comments_feuser_mm) AND
+						toctoc_comments_user NOT IN (SELECT DISTINCT toctoc_comments_user FROM tx_toctoc_comments_comments)');
+	
+				}
+	
 			}
-
-		}
-
-		// seen compress to viewMaxAge end
-		$GLOBALS['TYPO3_DB']->sql_query('COMMIT');
-
-		$dataWhere = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND reference="' . $pluginid . '" AND toctoc_comments_user=' .
-						$fetoctocusertoquery .'';
-		list($row) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('seen AS seenrows, uid AS insertedrows', 'tx_toctoc_comments_feuser_mm', $dataWhere);
-
-		if (intval($row['insertedrows'] > 0)) {
-			if (intval($row['seenrows']) == 0) {
-				//update to 1
-				$action='update';
-
-				$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET seen=1,
-						pagetstampseen=' . $pageid . ', tstampseen=' . time() . ', tstamp=' . time() . ' WHERE ' . $dataWhere);
-
+	
+			// seen compress to viewMaxAge end
+			$GLOBALS['TYPO3_DB']->sql_query('COMMIT');
+	
+			$dataWhere = 'deleted=0 AND pid=' . intval($this->conf['storagePid']) . ' AND reference="' . $pluginid . '" AND toctoc_comments_user=' .
+							$fetoctocusertoquery .'';
+			list($row) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('seen AS seenrows, uid AS insertedrows', 'tx_toctoc_comments_feuser_mm', $dataWhere);
+	
+			if (intval($row['insertedrows'] > 0)) {
+				if (intval($row['seenrows']) == 0) {
+					//update to 1
+					$action='update';
+	
+					$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_feuser_mm SET seen=1,
+							pagetstampseen=' . $pageid . ', tstampseen=' . time() . ', tstamp=' . time() . ' WHERE ' . $dataWhere);
+	
+					$this->deleteDBcachereport('views', $pluginid);
+				}
+	
+			} else {
+				$action='insert';
+				$GLOBALS['TYPO3_DB']->exec_DELETEquery('tx_toctoc_comments_feuser_mm',
+						'deleted=1 AND pid=' . intval($this->conf['storagePid']) . ' AND reference="' . $pluginid . '" AND toctoc_comments_user=' .
+							$fetoctocusertoquery .'');
+				$this->deleteDBcachereport('views', $pluginid);
+				$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_feuser_mm', array(
+						'crdate' => time(),
+						'tstampseen' => time(),
+						'pagetstampseen' =>$pageid,
+						'tstamp' => time(),
+						'seen' => 1,
+						'pid' => $this->conf['storagePid'],
+						'idislike' => 0,
+						'myrating' => 0,
+						'toctoc_commentsfeuser_feuser' => $feusertoinsert,
+						'toctoc_comments_user' => $fetoctocusertoinsert,
+						'reference' => $pluginid,
+						'remote_addr' => $strCurrentIP
+				));
+				$newUid = $GLOBALS['TYPO3_DB']->sql_insert_id();
+				// Update reference index. This will show in theList view that someone refers to external record.
+				$refindex = t3lib_div::makeInstance('t3lib_refindex');
+				/* @var $refindex t3lib_refindex */
+				if (isset($GLOBALS['TCA']['tx_toctoc_comments_feuser_mm']['columns'])) {
+					$refindex->updateRefIndexTable('tx_toctoc_comments_feuser_mm', $newUid);
+				}
+	
 				$this->deleteDBcachereport('views', $pluginid);
 			}
-
-		} else {
-			$action='insert';
-			$GLOBALS['TYPO3_DB']->exec_DELETEquery('tx_toctoc_comments_feuser_mm',
-					'deleted=1 AND pid=' . intval($this->conf['storagePid']) . ' AND reference="' . $pluginid . '" AND toctoc_comments_user=' .
-						$fetoctocusertoquery .'');
-			$this->deleteDBcachereport('views', $pluginid);
-			$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_feuser_mm', array(
-					'crdate' => time(),
-					'tstampseen' => time(),
-					'pagetstampseen' =>$pageid,
-					'tstamp' => time(),
-					'seen' => 1,
-					'pid' => $this->conf['storagePid'],
-					'idislike' => 0,
-					'myrating' => 0,
-					'toctoc_commentsfeuser_feuser' => $feusertoinsert,
-					'toctoc_comments_user' => $fetoctocusertoinsert,
-					'reference' => $pluginid,
-					'remote_addr' => $strCurrentIP
-			));
-			$newUid = $GLOBALS['TYPO3_DB']->sql_insert_id();
-			// Update reference index. This will show in theList view that someone refers to external record.
-			$refindex = t3lib_div::makeInstance('t3lib_refindex');
-			/* @var $refindex t3lib_refindex */
-			if (isset($GLOBALS['TCA']['tx_toctoc_comments_feuser_mm']['columns'])) {
-				$refindex->updateRefIndexTable('tx_toctoc_comments_feuser_mm', $newUid);
-			}
-
-			$this->deleteDBcachereport('views', $pluginid);
-		}
-
-		if ($action != 'try') {
-			if (!isset($_SESSION['commentViewsUpdateTime'])) {
-				$_SESSION['commentViewsUpdateTime']=0;
-
-			}
-
-			if (!isset($_SESSION['commentViewsUpdateTimePlugin'])) {
-				$_SESSION['commentViewsUpdateTimePlugin']=array();
-
-			}
-
-			if (!isset($_SESSION['commentViewsUpdateTimePlugin'][$pluginid])) {
-				$_SESSION['commentViewsUpdateTimePlugin'][$pluginid]=0;
-			}
-
-			$tdifftolastrun = 1000*(microtime(TRUE) - $_SESSION['commentViewsUpdateTime']);
-			if ($tdifftolastrun>5000) {
-				$_SESSION['commentViewsUpdateTime']=microtime(TRUE);
-				$apiObj = t3lib_div::makeInstance('toctoc_comments_api');
-				/* @var $apiObj toctoc_comments_api */
-				if (version_compare(TYPO3_version, '4.6', '<')) {
-					$apiObj->initCaches();
+	
+			if ($action != 'try') {
+				if (!isset($_SESSION['commentViewsUpdateTime'])) {
+					$_SESSION['commentViewsUpdateTime']=0;
+	
 				}
-
-				if (version_compare(TYPO3_version, '6.0', '<')) {
-					t3lib_div::requireOnce(PATH_t3lib . 'class.t3lib_tcemain.php');
-				} else {
-					require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/DataHandling/DataHandler.php';
+	
+				if (!isset($_SESSION['commentViewsUpdateTimePlugin'])) {
+					$_SESSION['commentViewsUpdateTimePlugin']=array();
+	
 				}
-				// the $GLOBALS['TCA']-Patch for eID and FLUX
-				if (!(isset($GLOBALS['TCA']))) {
-					$GLOBALS['TCA'] = array();
-					$GLOBALS['TCA']['tt_content'] = array();
+	
+				if (!isset($_SESSION['commentViewsUpdateTimePlugin'][$pluginid])) {
+					$_SESSION['commentViewsUpdateTimePlugin'][$pluginid]=0;
 				}
-				$tce = t3lib_div::makeInstance('t3lib_TCEmain');
-				$tce->clear_cacheCmd($pageid);
-				$action .= ' cleared page cache for id ' . $pageid;
-
-			}
-
-			$tdifftolastrun = 1000*(microtime(TRUE) - $_SESSION['commentViewsUpdateTimePlugin'][$pluginid]);
-			if (intval($this->conf['advanced.']['viewsCacheDelay']) == 0) {
-				$viewsCacheDelay = 3*60*1000;
-			} else {
-				$viewsCacheDelay = intval($this->conf['advanced.']['viewsCacheDelay'])*60*1000;
-			}
-			$droptime = (time()*1000) - $viewsCacheDelay;
-			if ($tdifftolastrun>$droptime) {
-				if (!isset($apiObj)) {
+	
+				$tdifftolastrun = 1000*(microtime(TRUE) - $_SESSION['commentViewsUpdateTime']);
+				if ($tdifftolastrun>5000) {
+					$_SESSION['commentViewsUpdateTime']=microtime(TRUE);
 					$apiObj = t3lib_div::makeInstance('toctoc_comments_api');
+					/* @var $apiObj toctoc_comments_api */
+					if (version_compare(TYPO3_version, '4.6', '<')) {
+						$apiObj->initCaches();
+					}
+	
+					if (version_compare(TYPO3_version, '6.0', '<')) {
+						t3lib_div::requireOnce(PATH_t3lib . 'class.t3lib_tcemain.php');
+					} else {
+						require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/DataHandling/DataHandler.php';
+					}
+					// the $GLOBALS['TCA']-Patch for eID and FLUX
+					if (!(isset($GLOBALS['TCA']))) {
+						$GLOBALS['TCA'] = array();
+						$GLOBALS['TCA']['tt_content'] = array();
+					}
+					$tce = t3lib_div::makeInstance('t3lib_TCEmain');
+					$tce->clear_cacheCmd($pageid);
+					$action .= ' cleared page cache for id ' . $pageid;
+	
 				}
-
-				$_SESSION['commentViewsUpdateTimePlugin'][$pluginid]=microtime(TRUE);
-
-				$this->echostr .= time() . ' - ' . $viewsCacheDelay/1000 . ',tdifftolastrun: ' . $tdifftolastrun . ' *** ';
-				$apiObj->setPluginCacheControlTstamp($setPluginCacheControlTstamppluginid, (microtime(TRUE)-(intval($this->conf['advanced.']['viewsCacheDelay'])*60)));
-				$action .= ' setPluginCache id ' . $setPluginCacheControlTstamppluginid;
+	
+				$tdifftolastrun = 1000*(microtime(TRUE) - $_SESSION['commentViewsUpdateTimePlugin'][$pluginid]);
+				if (intval($this->conf['advanced.']['viewsCacheDelay']) == 0) {
+					$viewsCacheDelay = 3*60*1000;
+				} else {
+					$viewsCacheDelay = intval($this->conf['advanced.']['viewsCacheDelay'])*60*1000;
+				}
+				$droptime = (time()*1000) - $viewsCacheDelay;
+				if ($tdifftolastrun>$droptime) {
+					if (!isset($apiObj)) {
+						$apiObj = t3lib_div::makeInstance('toctoc_comments_api');
+					}
+	
+					$_SESSION['commentViewsUpdateTimePlugin'][$pluginid]=microtime(TRUE);
+	
+					$this->echostr .= time() . ' - ' . $viewsCacheDelay/1000 . ',tdifftolastrun: ' . $tdifftolastrun . ' *** ';
+					$apiObj->setPluginCacheControlTstamp($setPluginCacheControlTstamppluginid, (microtime(TRUE)-(intval($this->conf['advanced.']['viewsCacheDelay'])*60)));
+					$action .= ' setPluginCache id ' . $setPluginCacheControlTstamppluginid;
+				}
+	
 			}
-
+			
 		}
 
 	}

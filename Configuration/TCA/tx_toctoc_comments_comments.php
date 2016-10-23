@@ -218,8 +218,7 @@ $tx_toctoc_comments_comments = array (
 			),
 	),
 	'types' => array (
-			0 => array ('showitem' => 'hidden;;;;1,approved;;;;2-2-2,firstname,lastname,gender,commenttitle;;;;3-3-3,toctoc_comments_user,toctoc_commentsfeuser_feuser,'.
-					'remote_addr;;;;4-4-4,email,homepage,location,content,tx_commentsnotify_notify;;;;5-5-5,external_prefix,external_ref,external_ref_uid,tx_commentsresponse_response'),
+			0 => array ('showitem' => 'hidden,approved,firstname,lastname,gender,commenttitle,toctoc_comments_user,toctoc_commentsfeuser_feuser,remote_addr,email,homepage,location,content,tx_commentsnotify_notify,external_prefix,external_ref,external_ref_uid,tx_commentsresponse_response'),
 	),
 );
 	

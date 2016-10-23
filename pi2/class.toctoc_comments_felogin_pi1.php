@@ -132,6 +132,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 	protected $nofacebook = FALSE;
 	protected $tableName = 'fe_users';
 	protected $fberror = '';
+	protected $gotnewpic = FALSE;
 
 	/**
 	 * [Describe function...]
@@ -2061,14 +2062,17 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 		if($userFound) {
 			$user = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result);
-			if($user['tx_toctoc_comments_facebook_updated_time'] != '') {
+			if(($user['tx_toctoc_comments_facebook_updated_time'] != '') && ($user['tx_toctoc_comments_facebook_updated_time'] != $user['tstamp'])) {
 
 				if(!($facebookUserProfile['updated_time'] instanceof DateTime)) {
 					$facebookUserProfileupdated_time = $facebookUserProfile['updated_time'];
 				} else {
 					$facebookUserProfileupdated_time = $facebookUserProfile['updated_time']->getTimestamp();
 				}
-
+				if($facebookUserProfileupdated_time == '') {
+					$facebookUserProfileupdated_time = $user['tstamp'];
+				}
+				
 				if($user['tx_toctoc_comments_facebook_updated_time'] == $facebookUserProfileupdated_time) {
 					if ($user['disable'] != 0) {
 						$this->fberror = 'waitconfirm';
@@ -2169,11 +2173,34 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			$fe_usersValues['tx_toctoc_comments_facebook_email'] = $facebookUserProfile['email'];
 			$fe_usersValues['email'] = $facebookUserProfile['email'];
 		}
-
+		
+		if(!($facebookUserProfile['updated_time'] instanceof DateTime)) {
+		 	$fe_usersValues['tx_toctoc_comments_facebook_updated_time'] = $facebookUserProfile['updated_time'];
+		} else {
+		 	$fe_usersValues['tx_toctoc_comments_facebook_updated_time'] = $facebookUserProfile['updated_time']->getTimestamp();
+		 	
+		}
+		
+		$fe_usersValuesfacebook_updated_time = $fe_usersValues['tx_toctoc_comments_facebook_updated_time'];
+		if ($fe_usersValues['tx_toctoc_comments_facebook_updated_time'] == '') {
+			if (isset($facebookUserProfile['etag']) == TRUE) {
+				if (trim($facebookUserProfile['etag']) != '') {
+					$fe_usersValuesfacebook_updated_time = md5($facebookUserProfile['etag']); 
+				} else {
+					$fe_usersValuesfacebook_updated_time = $user['tstamp'];
+				}
+				
+			} else {
+				$fe_usersValuesfacebook_updated_time = $user['tstamp'];
+			}
+			
+			$fe_usersValues['tx_toctoc_comments_facebook_updated_time'] = $user['tstamp'];
+		}
+		
 		$fe_usersValues['pid'] = $this->conf['storagePid'];
 		$imagename = '';
-		$imagename = $this->copyImageFromFacebook($facebookUserProfile['id'], $imageurl, $socialnetwork);
-		if ($user[$fldimage] == $imagename) {
+		$imagename = $this->copyImageFromFacebook($facebookUserProfile['id'], $imageurl, $socialnetwork, $fe_usersValuesfacebook_updated_time);
+		if ($this->gotnewpic == FALSE) {
 			$sameimage = TRUE;
 			if (version_compare(TYPO3_version, '8.2', '>')) {
 				$fe_usersValues[$fldimage] = $user[$fldimage];
@@ -2190,12 +2217,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		if (version_compare(TYPO3_version, '8.3', '<')) {
 			$fe_usersValues[$fldimage] = $imagename;
 		}
-		if(!($facebookUserProfile['updated_time'] instanceof DateTime)) {
-		 	$fe_usersValues['tx_toctoc_comments_facebook_updated_time'] = $facebookUserProfile['updated_time'];
-		} else {
-		 	$fe_usersValues['tx_toctoc_comments_facebook_updated_time'] = $facebookUserProfile['updated_time']->getTimestamp();
-		}
-
+		
 		if($userFound) {
 			$userId = $user['uid'];
 			if ($user['disable'] ==1) {
@@ -2238,14 +2260,16 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 		}
 		if (version_compare(TYPO3_version, '8.2', '>')) {
-			if ($currentuserimage == '') {
-				$FileNameIdentifier = 'user_upload/' . $imagename;
-				$currentstorage = 'fileadmin';
-			}
-
 			$confpi1['advanced.']['FeUserImagePath'] = $this->conf['facebook.']['imageDir'];
-			$addSysFileMsg = $this->addSysFile($imagename, $FileNameIdentifier, $currentstorage . '/', $confpi1['advanced.']['FeUserImagePath'],
-					$userId, $this->conf['storagePid'], $confpi1['advanced.']['FeUserDbField']);
+			if ($this->gotnewpic == TRUE) {
+				if ($currentuserimage == '') {
+					$FileNameIdentifier = 'user_upload/' . $imagename;
+					$currentstorage = 'fileadmin';
+				}	
+				
+				$addSysFileMsg = $this->addSysFile($imagename, $FileNameIdentifier, $currentstorage . '/', $confpi1['advanced.']['FeUserImagePath'],
+						$userId, $this->conf['storagePid'], $confpi1['advanced.']['FeUserDbField']);
+			}
 /*
  * 			if (str_replace('image ok <br>', '', $addSysFileMsg) == $addSysFileMsg) {
  * 				echo $addSysFileMsg;exit;
@@ -2307,7 +2331,8 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			$_SESSION['AJAXimagesrefresh'] = TRUE;
 			$_SESSION['AJAXimagesrefreshImage'] = $fe_usersValues[$fldimage];
 			$_SESSION['AJAXimagesTimeStamp'] = microtime(TRUE);
-			$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport WHERE ReportPluginMode = 11');
+			$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport 
+					WHERE (ReportPluginMode = 11) OR (ReportPluginMode = 0 AND ReportUser ="' . $userId . '")');
 			$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_plugincachecontrol SET tstamp =' . time() . ' WHERE external_ref_uid != "tx_toctoc_comments_feuser_mm_0"');
  		}
 
@@ -2378,15 +2403,33 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 	 * @param	[type]		$socialnetwork: ...
 	 * @return	string		$imgname
 	 */
-	private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork) {
+	private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork, $facebook_updated_time) {
 		$imageUrl = 'http://graph.facebook.com/' . $facebookUserId. '/picture?width=300&height=300';
 		if ($url !='') {
 			$imageUrl =$url;
 		}
-		$fileName = $socialnetwork . $facebookUserId . time() . '.jpg';
-
-		$savepathfilename = $this->file_get_contents_curl($imageUrl, 'jpg', PATH_site . $this->conf['facebook.']['imageDir'] . $fileName);
-		$ret = str_replace(PATH_site . $this->conf['facebook.']['imageDir'], '', $savepathfilename);
+		$this->gotnewpic = FALSE;
+		$fileNameExists = '';
+		if (file_exists(PATH_site . $this->conf['facebook.']['imageDir'] . $socialnetwork . $facebookUserId . $facebook_updated_time . '.jpg')) {
+			$fileNameExists = $socialnetwork . $facebookUserId  . $facebook_updated_time .  '.jpg';
+		} elseif (file_exists(PATH_site . $this->conf['facebook.']['imageDir'] . $socialnetwork . $facebookUserId . $facebook_updated_time . '.png')) {
+			$fileNameExists = $socialnetwork . $facebookUserId  . $facebook_updated_time .  '.png';
+		} elseif (file_exists(PATH_site . $this->conf['facebook.']['imageDir'] . $socialnetwork . $facebookUserId . $facebook_updated_time . '.bmp')) {
+			$fileNameExists = $socialnetwork . $facebookUserId  . $facebook_updated_time .  '.bmp';
+		} elseif (file_exists(PATH_site . $this->conf['facebook.']['imageDir'] . $socialnetwork . $facebookUserId . $facebook_updated_time . '.gif')) {
+			$fileNameExists = $socialnetwork . $facebookUserId  . $facebook_updated_time .  '.gif';
+		}
+		
+		if ($fileNameExists == '') {	
+			$fileName = $socialnetwork . $facebookUserId . $facebook_updated_time . '.jpg';
+	
+			$savepathfilename = $this->file_get_contents_curl($imageUrl, 'jpg', PATH_site . $this->conf['facebook.']['imageDir'] . $fileName);
+			$this->gotnewpic = TRUE;
+			$ret = str_replace(PATH_site . $this->conf['facebook.']['imageDir'], '', $savepathfilename);
+		} else {
+			$ret = $fileNameExists;
+		}
+		
 		return $ret;
 	}
 	/**

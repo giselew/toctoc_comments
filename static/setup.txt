@@ -11,7 +11,7 @@ plugin.tx_toctoccomments_pi1 {
   includeLibs = EXT:toctoc_comments/pi1/class.toctoc_comments_pi1.php
   userFunc = tx_toctoccomments_pi1->main
 
-  # mode for plugin, '' (empty) : normal, 1: recent comments, 2: report bad comment, 3: topratings, 4: other reports, 5: ajax login, 6: user center, 7: comments search, 8: topsharings
+  # mode for plugin, '' (empty) : normal, 1: recent comments, 2: report bad comment, 3: topratings, 4: other reports, 5: ajax login, 6: user center, 7: comments search
   pluginmode =
 
   # code for commenting parts, commenting style, possible: "FORM,COMMENTS" (default), "COMMENTS,FORM" or "COMMENTS"
@@ -619,12 +619,6 @@ plugin.tx_toctoccomments_pi1 {
     RatedItemShowDate = 1
   }
   
-  topSharings {
-    topSharingsMode = {$plugin.tx_toctoccomments_pi1.topSharingsMode}
-    # if you want to visualize how the ratings were some days ago
-    topSharingsLookBackDays = 0
-  }
-
   theme {
     # color theme (CSS)is used by the extension in frontend
     selectedTheme = {$plugin.tx_toctoccomments_pi1.selectedTheme}

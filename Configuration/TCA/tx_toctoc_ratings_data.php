@@ -97,7 +97,7 @@ $tx_toctoc_comments_comments = array(
 		),
 	),
 	'types' => array (
-		'0' => array ('showitem' => 'reference,reference_scope;;;;1-1-1, rating, vote_count')
+		'0' => array ('showitem' => 'reference,reference_scope,rating,vote_count')
 	),
 );
 	

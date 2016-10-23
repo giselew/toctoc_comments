@@ -13,6 +13,18 @@ $scriptcontent = array(
 				'act' => 'edit'
 		)
 );
+
+if (version_compare(TYPO3_version, '7.9', '>')) {
+	$configlink = 'actions-wizard-link';
+} else {
+	$configlink = array(
+					'type'         => 'popup',
+					'title'        => 'Link',
+					'icon'         => 'link_popup.gif',
+					$scriptelem => $scriptcontent,
+					'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
+				);
+}
 $tempColumns = array (
 		'tx_toctoc_comments_facebook_id' => array (
 				'exclude' => '1',
@@ -33,13 +45,7 @@ $tempColumns = array (
 						'eval'     => 'trim',
 						'wizards'  => array(
 								'_PADDING' => 2,
-								'link'     => array(
-										'type'         => 'popup',
-										'title'        => 'Link',
-										'icon'         => 'link_popup.gif',
-										$scriptelem => $scriptcontent,
-										'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
-								)
+								'link'     => $configlink,
 						)
 				)
 		),
@@ -121,8 +127,8 @@ if (str_replace('gender,', '', $GLOBALS['TCA']['fe_users']['interface']['showRec
 
 $GLOBALS['TCA']['fe_users']['interface']['showRecordFieldList'] .= ',tx_toctoc_comments_facebook_id,tx_toctoc_comments_facebook_link,tx_toctoc_comments_facebook_email,tx_toctoc_comments_facebook_gender,tx_toctoc_comments_facebook_locale,tx_toctoc_comments_facebook_updated_time' . $sgender;
 if ($sgenderadd == TRUE) {
-	t3lib_extMgm::addToAllTCATypes('fe_users', '--div--;toctoc comments,tx_toctoc_comments_facebook_id;;;;1-1-1,tx_toctoc_comments_facebook_link,tx_toctoc_comments_facebook_email,tx_toctoc_comments_facebook_gender,tx_toctoc_comments_facebook_locale,tx_toctoc_comments_facebook_updated_time,gender');
+	t3lib_extMgm::addToAllTCATypes('fe_users', '--div--;toctoc comments,tx_toctoc_comments_facebook_id,tx_toctoc_comments_facebook_link,tx_toctoc_comments_facebook_email,tx_toctoc_comments_facebook_gender,tx_toctoc_comments_facebook_locale,tx_toctoc_comments_facebook_updated_time,gender');
 } else {
-	t3lib_extMgm::addToAllTCATypes('fe_users', '--div--;toctoc comments,tx_toctoc_comments_facebook_id;;;;1-1-1,tx_toctoc_comments_facebook_link,tx_toctoc_comments_facebook_email,tx_toctoc_comments_facebook_gender,tx_toctoc_comments_facebook_locale,tx_toctoc_comments_facebook_updated_time');
+	t3lib_extMgm::addToAllTCATypes('fe_users', '--div--;toctoc comments,tx_toctoc_comments_facebook_id,tx_toctoc_comments_facebook_link,tx_toctoc_comments_facebook_email,tx_toctoc_comments_facebook_gender,tx_toctoc_comments_facebook_locale,tx_toctoc_comments_facebook_updated_time');
 }
 ?>

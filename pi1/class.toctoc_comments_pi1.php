@@ -113,7 +113,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '924';
+	public $extVersion = '925';
 	public $extLESSVersion = 'toctoc_comments-LESS.2';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
@@ -1293,15 +1293,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		//reset of the commentid of the last comment preview
 		$_SESSION['lastpreviewid']=0;
 
-		// we try to show the anchor only once, here we go
-		if ($_GET['toctoc_comments_pi1']['anchor']) {
-			if (!$_SESSION['findanchorok'] == '1') {
-				$_SESSION['findanchor'] = '1';
-			} else {
-				$_SESSION['findanchor'] = '0';
-			}
-
-		}
+		
 
 		if ($this->showsdebugprint==TRUE) {
 			$starttimeTYPO3metamodel=microtime(TRUE);
@@ -2045,7 +2037,41 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		if (trim($_SESSION['commentListRecord']) == '') {
 			$_SESSION['commentListRecord'] = 'tt_content_' . $_SESSION['commentListCount'];
 		}
-
+		// we try to show the anchor only once, here we go
+		
+		if (isset($_GET['toctoc_comments_pi1']['anchor']) == TRUE) {
+			$anchorCommentList = $_GET['toctoc_comments_pi1']['anchor'] . '-' . $_SESSION['commentListRecord'];
+			
+			if (!isset($_SESSION['findanchorok'])) {
+				$_SESSION['findanchorok'] = array();
+			}
+			
+			if (!isset($_SESSION['findanchorok'][$anchorCommentList])) {
+				$_SESSION['findanchorok'][$anchorCommentList] = 0;
+			}
+			
+			if (!isset($_SESSION['findanchor'])) {
+				$_SESSION['findanchor'] = array();
+			}
+			
+			if (!isset($_SESSION['findanchor'][$anchorCommentList])) {
+				$_SESSION['findanchor'][$anchorCommentList] = 0;
+			}
+			
+			if ($_SESSION['findanchorok'][$anchorCommentList] == -1) {
+				$_SESSION['findanchor'][$anchorCommentList] = 0;
+			} elseif ($_SESSION['findanchorok'][$anchorCommentList] == 0) {
+				$_SESSION['findanchor'][$anchorCommentList] = 1;
+			} elseif ((round((1000*microtime(TRUE)),0) - $_SESSION['findanchorok'][$anchorCommentList]) > 2000) {
+				// last successfull scan is more than 2 seconds ago
+				$_SESSION['findanchor'][$anchorCommentList] = 1;
+				$_SESSION['findanchorok'][$anchorCommentList] = 0;
+			} else { 
+				$_SESSION['findanchor'][$anchorCommentList] = 0;
+			}
+		
+		}
+		
 		$this->checktoctoccommentsuser();
 
 		if ($this->showsdebugprint==TRUE) {
@@ -2139,11 +2165,10 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport WHERE ReportPluginMode = 11');
 				$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_plugincachecontrol SET tstamp =' . time());
 			}
-
-			if ($_SESSION['findanchorok'] == '1') {
+			if (isset($_GET['toctoc_comments_pi1']['anchor']) == TRUE) {
 				$clearCacheIds = $GLOBALS['TSFE']->id;
 				$_SESSION['recentcommentsclearcachepage']= $GLOBALS['TSFE']->id;
-				if ($_SESSION['findanchor'] != '0') {
+				if (($_SESSION['findanchor'][$anchorCommentList] == 1) && ($_SESSION['findanchorok'][$anchorCommentList] == 0)) {
 					$this->pi_USER_INT_obj = 1;
 					$_SESSION['reemptycache'][$md5url] = 2;
 					$_SESSION['reemptycachepage'][$md5url] = $GLOBALS['TSFE']->id;
@@ -2316,7 +2341,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 					if ($_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
 							$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid'][$md5url]>0) {
 						if ($_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-								$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid'][$md5url] > $this->getPluginCacheControlTstamp($_SESSION['commentListRecord'])) {
+								$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid'][$md5url] >= $this->getPluginCacheControlTstamp($_SESSION['commentListRecord'])) {
 									if ($this->conf['sessionCompressionLevel'] > 0) {
 										if ($this->canZip == TRUE) {
 											$outml = gzdecode($_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
@@ -2410,7 +2435,6 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			if ($_SESSION['confchk'][$md5url]['mcp' . $_SESSION['commentListRecord']] != 'mcp' . md5(serialize($this->conf))) {
 				// Admin made change in TS-Setup, here just clear the cache if not already done
 				$_SESSION['confchk'][$md5url]['mcp' . $_SESSION['commentListRecord']] = 'mcp' . md5(serialize($this->conf));
-				//unset($_SESSION['commentListIndex']['cid' . $_SESSION['commentListRecord']]);
 				if ($domemcache==TRUE) {
 					if ($this->showsdebugprint) {
 						if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
@@ -2429,7 +2453,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 				}
 
 			}
-
+			$hasDBCache = FALSE;
 			if ($domemcache == FALSE) {
 				// access to lib
 				$VirginUserNoMemcache = FALSE;
@@ -2461,7 +2485,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 						$outml= $dbCache;
 					}
-
+					$hasDBCache = TRUE;
 					$VirginUserNoMemcache = TRUE;
 				} else {
 					$ReportUser = $this->feuserid;
@@ -2492,7 +2516,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 							$outml= $dbCache;
 						}
-
+						$hasDBCache = TRUE;
 					} else {
 						$outml=$this->lib->maincomments($this->ref, $this->conf, FALSE, $_SESSION['commentsPageId'], $this->feuserid, 'commentdisplay', $this, $this->piVars);
 					}
@@ -2509,10 +2533,15 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 
 				$outmlmemcache=$timereportlast . $this->sdebugprint . $outml;
 				if (intval($this->conf['advanced.']['wallExtension']) == 0) {
-					if ((intval(t3lib_div::_GP('no_cache'))==0) && ($_SESSION['findanchorok'] != '1')) {
+					if ((intval(t3lib_div::_GP('no_cache'))==0) && (isset($_GET['toctoc_comments_pi1']['anchor']) == FALSE)) {
 						if ($VirginUserNoMemcache == FALSE) {
-							$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+							if ($hasDBCache == TRUE) {
+								$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+										$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid'][$md5url]=$this->getPluginCacheControlTstamp($_SESSION['commentListRecord']);
+							} else {
+								$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
 								$GLOBALS['TSFE']->fe_user->user['uid']]['Plugincachetimecid'][$md5url]=round(microtime(TRUE), 0);
+							}
 							if ($this->conf['sessionCompressionLevel'] > 0) {
 								if ($this->canZip == TRUE) {
 									$_SESSION['mcp' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
@@ -2833,68 +2862,6 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			$retstr = $this->w3cIzer($retstr);
 			return $retstr;
 
-		} elseif (($this->conf['pluginmode'] == 8)) {
-
-			if (!$this->showsdebugprint) {
-				$timereportlast='';
-			} elseif ($this->sdebugprintuser!=intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
-				$timereportlast='';
-			}
-
-			$timereport='';
-			$starttimedebuglib=microtime(TRUE);
-
-			$_SESSION['activelang'] =$GLOBALS['TSFE']->lang;
-			$_SESSION['activelangid'] =$GLOBALS['TSFE']->sys_language_uid;
-			$this->pi_USER_INT_obj = 1;
-			$_SESSION['edgeTime'] = microtime(TRUE);
-			$ReportUser = $this->getReportUser($this->conf['pluginmode']);
-			$md5PluginId = md5(serialize($this->conf) . $GLOBALS['TSFE']->lang . $GLOBALS['TSFE']->id);
-			$dbCache = $this->lib->getReportDBCache($md5PluginId, $ReportUser);
-			if ($dbCache == '') {
-				$retstr = $this->lib->showtopSharings($this->conf, $this);
-				$this->lib->setReportDBCache($this->conf, $this->conf['pluginmode'], $ReportUser, $retstr, $md5PluginId);
-				if ($this->showsdebugprint) {
-					if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
-						$retstr .= '<div class="tx-tc-debug">' . intval($this->conf['pluginmode']) . ' No DB-Cache - filling cache</div>';
-					}
-
-				}
-
-			} else {
-				$retstr= $dbCache;
-				if ($this->showsdebugprint) {
-					if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
-						$retstr .= '<div class="tx-tc-debug">' . $this->conf['pluginmode'] . ' Using DB-Cache</div>';
-					}
-
-				}
-			}
-
-			$startreport='';
-			if ($this->showsdebugprint) {
-				if ($this->sdebugprintuser==intval($GLOBALS['TSFE']->fe_user->user['uid'])) {
-
-					$userintstate=' as USER-object';
-					if ($this->pi_USER_INT_obj == 1) {
-						$userintstate=' as USER_INT-object';
-					}
-
-					$tdifflib = 1000*(microtime(TRUE) - $starttimedebuglib);
-					$tdifftotal = 1000*(microtime(TRUE) - $starttimedebug);
-					if (!$this->debugshowuserint) {
-						$userintstate='';
-					}
-					$startreport='<div class="tx-tc-debug"><b>' . date('H:i:s') . '</b></div>';
-					$timereport='<div class="tx-tc-debug"><b>Total: ' .
-							intval($tdifftotal) . ' ms (milliseconds)</b>' . $userintstate . ' ' . $startupreport.'</div>';
-				}
-
-			}
-
-			$this->commonObj->stop_toctoccomments_session();
-			$retstr = $this->w3cIzer($retstr);
-			return $startreport . $retstr . $timereport;
 		} else {
 			$this->commonObj->stop_toctoccomments_session();
 			return '';
@@ -4143,7 +4110,64 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 					$this->tclogincard = str_replace('Youre logged in.', '', $locLoginFormhtml);
 					$locLoginFormhtml = base64_encode($locLoginFormhtml);
 					$locLoginFormhtml = '	var tclogincard =\'' . $locLoginFormhtml . '\';
-';
+							
+	function signinCallback(authResult) {
+		//console.log(\'callback\');
+		window.___gcfg = {
+		    lang: pi2_googlelan
+		};
+		  if (authResult[\'status\'][\'signed_in\']) {
+				if (googleclicked == 1) {
+					googleclicked = 0;
+					gapi.client.load(\'plus\',\'v1\', function(){
+						 var request = gapi.client.plus.people.get({
+						   \'userId\': \'me\'
+						 });
+						 request.execute(function(resp) {
+							 var primaryEmail = \'\';
+							 if(typeof resp.emails == \'object\'){
+								 for (var i=0; i < resp.emails.length; i++) {
+									 if (resp.emails[i].type === \'account\') primaryEmail = resp.emails[i].value;
+								 }
+							 }
+							 var primaryURL = \'\';
+							 if(typeof resp.urls == \'object\'){
+								 for (var i=0; i < resp.urls.length; i++) {
+									 if (resp.urls[i].type === \'other\') primaryURL = resp.urls[i].value;
+								 }
+							}
+							var profilearr = [];
+							profilearr[\'id\'] = resp.id;
+							profilearr[\'email\'] = primaryEmail;
+							profilearr[\'first_name\'] = resp.name.givenName;
+							profilearr[\'last_name\'] = resp.name.familyName;
+							profilearr[\'updated_time\'] = \'\';
+							profilearr[\'name\'] = resp.displayName;
+							profilearr[\'link\'] = resp.url;
+							profilearr[\'gender\'] = resp.gender;
+							profilearr[\'etag\'] = resp.etag;
+							profilearr[\'locale\'] = \'\';
+							profilearr[\'imageurl\'] = \'\';
+							if(typeof resp.image == \'object\'){
+								profilearr[\'imageurl\'] = resp.image.url;
+							}
+							profilearr[\'imageurl\'] = profilearr[\'imageurl\'].replace(\'?sz=50\', \'?sz=150\');
+							var str1=toctoc_comments_pi1_serialize(profilearr);													
+							var str2=toctoc_comments_pi1_base64_encode(str1);
+							ttc_ajaxfelogin(document.getElementById(\'tx_toctoccomments_pi2_submit\'), 0, \'googleLogin\', str2);
+						   
+						 });
+					});
+					    
+				}
+		  } else {
+			  if (googleclicked == 1) {
+				  googleclicked = 0;
+				  console.log(\'Sign-in state: \' + authResult[\'error\']);
+			  }
+		  }
+	}
+							';
 				}
 
 				$jscontent = ' var errCommentRequiredLength = ' . intval($this->conf['minCommentLength']) . ';' . "\n";
@@ -6935,7 +6959,7 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 	 */
 	protected function getReportUser($ReportPluginMode) {
 		if (intval($GLOBALS['TSFE']->fe_user->user['uid']) > 0) {
-			// 1: recent comments, 3: topratings, 4: other reports, 6: user center, 8: topsharings
+			// 1: recent comments, 3: topratings, 4: other reports, 6: user center
 
 			if ($ReportPluginMode == 6) {
 				$ret = intval($GLOBALS['TSFE']->fe_user->user['uid']);
@@ -6970,7 +6994,7 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 					$contentsnglimgtitlearr2 = explode('"', $contentsnglimgtitlearr[1]);
 					$title = $contentsnglimgtitlearr2[0];
 					if (trim($title) != '') {
-						$contentsnglimg = str_replace(' alt=""', ' alt="' . $title . '"', $contentsnglimg);
+						$contentsnglimg = str_replace(' alt=""', ' alt="' . htmlspecialchars($title) . '"', $contentsnglimg);
 					}
 				}
 			} elseif (str_replace(' alt=', '', $contentsnglimg) == $contentsnglimg) {
@@ -6981,7 +7005,7 @@ function tcrebshr' . $_SESSION['commentListRecord'] . '(){
 					$contentsnglimgtitlearr2 = explode('"', $contentsnglimgtitlearr[1]);
 					$title = $contentsnglimgtitlearr2[0];
 					if (trim($title) != '') {
-						$contentsnglimg = str_replace(' title="', ' alt="' . $title . '" title="', $contentsnglimg);
+						$contentsnglimg = str_replace(' title="', ' alt="' . htmlspecialchars($title) . '" title="', $contentsnglimg);
 					}
 				}
 			}

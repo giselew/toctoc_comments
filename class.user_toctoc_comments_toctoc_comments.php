@@ -57,7 +57,7 @@ class user_toctoc_comments_toctoc_comments {
 
 public $donExtkey = 'toctoccommentsce';
 public $donExtension = 'toctoc_comments';
-public $donExtversion = '924';
+public $donExtversion = '925';
 
 	/**
 	 * This method returns the message's content

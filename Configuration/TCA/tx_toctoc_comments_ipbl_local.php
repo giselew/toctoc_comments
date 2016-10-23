@@ -66,10 +66,7 @@ $tx_toctoc_comments_comments = array(
 		),
 	),
 	'types' => array (
-		'0' => array ('showitem' => 'ipaddr,blockfe;;;;1-1-1, crdate, comment')
-	),
-	'palettes' => array (
-		'1' => array ('showitem' => '')
+		'0' => array ('showitem' => 'ipaddr,blockfe,crdate,comment')
 	),
 );
 	

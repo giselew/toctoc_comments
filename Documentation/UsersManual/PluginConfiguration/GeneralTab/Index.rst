@@ -22,4 +22,3 @@ General tab
     MoreChartsMode/Index
     AjaxLoginMode/Index
     UserCenterMode1/Index
-    TopSharingsMode1/Index

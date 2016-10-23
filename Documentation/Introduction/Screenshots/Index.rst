@@ -28,4 +28,3 @@ There are screen-shots also in other sections of this manual.
     AjaxloginMode/Index
     UserCenterMode/Index
     SearchCommentsMode/Index
-    TopSharingsMode/Index

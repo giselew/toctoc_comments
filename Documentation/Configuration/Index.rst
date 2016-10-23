@@ -36,7 +36,6 @@ needed to change a value.
     Debug/Index
     Dataprotect/Index
     Sharing1/Index
-    Topsharings/Index
     Usercenter/Index
     Search/Index
     SetupOptionsFor/Index

@@ -118,8 +118,7 @@ $tx_toctoc_comments_attachment = array (
 			),
 	),
 	'types' => array (
-			0 => array ('showitem' => 'hidden;;;;1,reference;;;;2-2-2,systemurltext,title,description;;;;3-3-3,photo_main,'.
-					'attachmentfilesize,photos_etc,attachmentvariant'),
+			0 => array ('showitem' => 'hidden,reference,systemurltext,title,description,photo_main,attachmentfilesize,photos_etc,attachmentvariant'),
 	),
 );
 

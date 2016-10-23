@@ -320,7 +320,7 @@ $tx_toctoc_comments_comments = array(
 				),
 		),
 		'types' => array (
-			0 => array ('showitem' => 'hidden;;;;1,toctoc_comments_user;;2, ip, ipresolved;;4,, tstamp;;7, current_ip;;3, tstamp_lastupdate;;6, comment_count;;5'),
+			0 => array ('showitem' => 'hidden,toctoc_comments_user,--palette--;;2,ip,ipresolved,--palette--;;4,tstamp,--palette--;;7,current_ip,--palette--;;3,tstamp_lastupdate,--palette--;;6,comment_count,--palette--;;5,--palette--;;6,--palette--;;7'),
 		),
 		'palettes' => array (
 			'2' => array ('showitem' => 'initial_firstname,initial_lastname'),

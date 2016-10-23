@@ -1,13 +1,8 @@
-# This is the project specific Settings.yml file.
-# Place Sphinx specific build information here.
-# Settings given here will replace the settings of 'conf.py'.
-
----
 conf.py:
   copyright: 2012-2016
-  project: EXT: AJAX Social Network Components
+  project: AJAX Social Network Components
   version: 9.2
-  release: 9.2.0
+  release: 9.2.5
   latex_documents:
   - - Index
     - restdoc.tex
@@ -33,4 +28,3 @@ conf.py:
     - t3sphinx.ext.targets
     - sphinx.ext.extlinks
     - sphinxcontrib.youtube
-...

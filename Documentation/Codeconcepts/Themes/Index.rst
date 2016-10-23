@@ -12,7 +12,7 @@ Themes
 ------
 
 .. index::
-	single: Design; Themes txt-files
+	single: Design; Themes LESS-files
 
 Since version 3.2, the extension uses themes to define the colors used in front end. 
 

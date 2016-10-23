@@ -126,7 +126,7 @@ $tx_toctoc_comments_comments = array(
 			),
 	),
 	'types' => array (
-					0 => array ('showitem' => 'emolike_setfolder,emolike_setpos;;;;1-1-1,emolike_sort;;;;2-2-2,emolike_ll,emolike_colorcode,emolike_rating,emolike_engagement'),
+					0 => array ('showitem' => 'emolike_setfolder,emolike_setpos,emolike_sort,emolike_ll,emolike_colorcode,emolike_rating,emolike_engagement'),
 				),
 );
 	

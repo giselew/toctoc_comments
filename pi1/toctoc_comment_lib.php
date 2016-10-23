@@ -387,7 +387,13 @@ class toctoc_comment_lib extends tslib_pibase {
 			$_SESSION['commentsPageId']=$confSess['commentsPageId'];
 			$_SESSION['commentListCount'] = $confSess['commentListCount'];
 			$_SESSION['commentListRecord']= $confSess['commentListRecord'];
-			$_SESSION['findanchorok']= $confSess['findanchorok'];
+			
+			if ($confSess['findanchorok'] != '') {
+				$_SESSION['findanchorok'] = unserialize($confSess['findanchorok']);
+			} else {
+				$_SESSION['findanchorok'] = array();
+			}
+
 			$_SESSION['newcommentid']=  $confSess['newcommentid'];
 			if (isset($confSess['lastStartpoint'])) {
 				if (isset($confSess['lastStartpoint'][$cid])) {
@@ -666,7 +672,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	/**
 	 * Checks that $this->externalUid represents a real record.
 	 *
-	 * @param	array		$conf:  Array with the plugin configuration
+	 * @param	array		$conf: Array with the plugin configuration
 	 * @param	object		$pObj: parent object
 	 * @param	[type]		$fromAjax: ...
 	 * @return	boolean		TRUE, if $this->externalUid is ok
@@ -1002,6 +1008,7 @@ class toctoc_comment_lib extends tslib_pibase {
 				$totalcommentsviewcount.= $this->t3substituteMarkerArray($templatecommentviewscount, $markerscommentviewscount);
 				$this->trackdebug('comments countViews');
 			}
+			
 			$this->trackdebug('comments startpoint');
 			$totalcommentscount .=$totalcommentsviewcount;
 			if (($conf['advanced.']['countViews'] ==1) && ($conf['advanced.']['commentsShowCount'] ==1)) {
@@ -1133,12 +1140,13 @@ class toctoc_comment_lib extends tslib_pibase {
 			}
 
 			$this->trackdebug('comments startpoint');
-
 			$this->trackdebug('comments domemcache');
+			
 			$domemcache = FALSE;
 			if (($conf['advanced.']['useSessionCache']==1) && (intval($conf['advanced.']['wallExtension']) == 0)) {
 				$domemcache = TRUE;
 			}
+			
 			$allrows = array();
 			$whynocache='';
 			$showsdebugprint= FALSE;
@@ -1210,22 +1218,14 @@ class toctoc_comment_lib extends tslib_pibase {
 										$nodbcache = 0;
 									}
 
-								} else {
-									$nodbcache = 0;
 								}
 
 							}
 
-							if ($nodbcache == 0) {
+							if ($nodbcache == 1) {
 								if ($conf['sessionCompressionLevel'] > 0) {
-									/* if (\TYPO3\CMS\Core\Utility\GeneralUtility::cmpIP(
-											\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('REMOTE_ADDR'),
-											$GLOBALS['TYPO3_CONF_VARS']['SYS']['devIPmask'])
-									) {
-										print 'mcpdata' . $_SESSION['commentListRecord'];
-									} */
-									if ($this->canZip == TRUE) {
 
+									if ($this->canZip == TRUE) {
 										$gzrows = gzdecode($_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
 												$feuserid]['Plugincachecid']['gzrows' . $pid]);
 									} else {
@@ -1249,6 +1249,7 @@ class toctoc_comment_lib extends tslib_pibase {
 									}
 
 								}
+								
 							}
 
 							$this->trackdebug('gzuncompress_commentsallrows');
@@ -1688,6 +1689,7 @@ class toctoc_comment_lib extends tslib_pibase {
 							if (!isset($gzallrowsarr)) {
 								$gzallrowsarr = array();
 							}
+							
 							if (!isset($gzrowsorigarr)) {
 								$gzrowsorigarr = array();
 							}
@@ -1697,7 +1699,9 @@ class toctoc_comment_lib extends tslib_pibase {
 								$feuserid]['Plugincachetimecid']['p' . $pid]=round(microtime(TRUE), 0);
 						$_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
 								$feuserid]['Plugincachecid']['p' . $pid]=array();
+						
 						$this->trackdebug('gzcompress_comments');
+						
 						if (($conf['sessionCompressionLevel'] > 0)) {
 							$iccount = count($allrows);
 							$_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
@@ -1724,28 +1728,30 @@ class toctoc_comment_lib extends tslib_pibase {
 						if ($this->isVirginUser($_SESSION['commentListRecord']) == TRUE) {
 						// setting db-cache
 							$ReportUser = 0;
-							$md5PluginId = md5(serialize($conf) . 'rows' . $_SESSION['activelang'] . $_SESSION['commentListRecord']);
-							$dbCache = $this->getReportDBCache($md5PluginId, $ReportUser);
+						} else {
+							$ReportUser = $feuserid;
+						}
+						
+					    $md5PluginId = md5(serialize($conf) . 'rows' . $_SESSION['activelang'] . $_SESSION['commentListRecord']);
+						$dbCache = $this->getReportDBCache($md5PluginId, $ReportUser);
 
-							if ($dbCache == '') {
-								$iccount = count($rowsorig);
+						if ($dbCache == '') {
+							$iccount = count($rowsorig);
+							$_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+								$feuserid]['Plugincachecid']['rowsorig_p' . $pid] = $rowsorig;
+							for ($ic=0;$ic<$iccount;$ic++) {
+								$tmpcntnt = $rowsorig[$ic]['content'];
+								unset($_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
+								$feuserid]['Plugincachecid']['rowsorig_p' . $pid][$ic]['content']);
 								$_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-									$feuserid]['Plugincachecid']['rowsorig_p' . $pid] = $rowsorig;
-								for ($ic=0;$ic<$iccount;$ic++) {
-									$tmpcntnt = $rowsorig[$ic]['content'];
-									unset($_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-									$feuserid]['Plugincachecid']['rowsorig_p' . $pid][$ic]['content']);
-									$_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
-									$feuserid]['Plugincachecid']['rowsorig_p' . $pid][$ic]['content'] = '';
-									$gzrowsorigarr[$ic] = $tmpcntnt;
-								}
-
-								$gzrowsorig = $this->oneDimArr_encode($gzrowsorigarr);
-								$gzrows = $gzallrows . '6g98g7gzrow6g98g7' . $gzrowsorig;
-
-								$this->setReportDBCache($conf, 0, $ReportUser, $gzrows, $md5PluginId, $_SESSION['commentListRecord']);
+								$feuserid]['Plugincachecid']['rowsorig_p' . $pid][$ic]['content'] = '';
+								$gzrowsorigarr[$ic] = $tmpcntnt;
 							}
 
+							$gzrowsorig = $this->oneDimArr_encode($gzrowsorigarr);
+							$gzrows = $gzallrows . '6g98g7gzrow6g98g7' . $gzrowsorig;
+
+							$this->setReportDBCache($conf, 0, $ReportUser, $gzrows, $md5PluginId, $_SESSION['commentListRecord']);
 						}
 
 						if (($conf['sessionCompressionLevel'] > 0)) {
@@ -1765,6 +1771,7 @@ class toctoc_comment_lib extends tslib_pibase {
 								$gzrowsorig = $this->oneDimArr_encode($gzrowsorigarr);
 								$gzrows = $gzallrows . '6g98g7gzrow6g98g7' . $gzrowsorig;
 							}
+							
 							if ($this->canZip == TRUE) {
 								$_SESSION['mcpdata' . $_SESSION['commentListRecord']]['L' . $_SESSION['activelang'] . 'U' .
 										$feuserid]['Plugincachecid']['gzrows' . $pid] = gzencode($gzrows, $conf['sessionCompressionLevel']);
@@ -1831,9 +1838,11 @@ class toctoc_comment_lib extends tslib_pibase {
 			$levelhlt=0;
 			$levelhlttopparentid=0;
 			// HIGHLIGHT HANDLING
-			$_SESSION['findanchorok'] = '0';
-			if (($_GET['toctoc_comments_pi1']['anchor']) || (intval($_SESSION['newcommentid']) > 0)) {
-				if (($_SESSION['findanchor'] == '1') || (intval($_SESSION['newcommentid']) > 0)) {
+			// $_SESSION['findanchorok'] = '0';
+			if ((isset($_GET['toctoc_comments_pi1']['anchor']) == TRUE) || (intval($_SESSION['newcommentid']) > 0)) {
+				$anchorCommentList = $_GET['toctoc_comments_pi1']['anchor'] . '-' . $_SESSION['commentListRecord'];
+				
+				if (($_SESSION['findanchor'][$anchorCommentList] == 1) || (intval($_SESSION['newcommentid']) > 0)) {
 					$this->trackdebug('comments anchor');
 					$hlsanchorarr=explode('-', $_GET['toctoc_comments_pi1']['anchor']);
 					if ((count($hlsanchorarr)>0) || (intval($_SESSION['newcommentid']) > 0)) {
@@ -1869,7 +1878,7 @@ class toctoc_comment_lib extends tslib_pibase {
 								 }
 
 								 if (count($hlsctrow) > 0) {
-						 			$_SESSION['findanchorok'] = '1';
+						 			$_SESSION['findanchorok'][$anchorCommentList] = round((1000*microtime(TRUE)),0);
 						 		 }
 
 							}
@@ -3856,7 +3865,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * @param	string		$uidlist: multiple uids needed, returns array with 2 dims
 	 * @param	[type]		$uid: ...
 	 * @param	[type]		$uidlist: ...
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @return	array		$retarr
 	 */
 	protected function getBaseFeUsersArray($pObj, $fromAjax, $uid, $uidlist = '', $conf) {
@@ -4051,7 +4060,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * Main comments display function
 	 *
 	 * @param	[type]		$rows: Data from the db
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @param	[type]		$pObj: ...
 	 * @param	int		$feuserid: id of current user...
 	 * @param	[type]		$fromAjax: ...
@@ -5420,7 +5429,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	 *
 	 * @param	object		$pObj: parent object
 	 * @param	boolean		$fromAjax: if the request is an AJAX request
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @return	void
 	 */
 	protected function commentingClosed($pObj, $fromAjax, $conf) {
@@ -5443,7 +5452,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * @param	int		$totalrows: 	total of rows present
 	 * @param	object		$pObj: parent object
 	 * @param	boolean		$fromAjax: if the request is an AJAX request
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @return	string		Generated HTML
 	 */
 	protected function comments_getCommentsBrowser($rpp, $startpoint, $totalrows, $pObj, $fromAjax, $conf) {
@@ -5591,7 +5600,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * Returns a list of markers with fe_user properties
 	 *
 	 * @param	[type]		$params: ...
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @param	[type]		$pObj: ...
 	 * @param	[type]		$commentid: ...
 	 * @param	[type]		$fromAjax: ...
@@ -5759,8 +5768,8 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * Gemnerates coment preview, call by AJAX - adds smilies, bbs etc
 	 *
 	 * @param	array		$data: data array containing text for preview
-	 * @param	array		$conf: ...
-	 * @param	[type]		$conf: ...
+	 * @param	array		$conf: Array with the plugin configuration
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @param	[type]		$decode: ...
 	 * @return	string		preview to display
 	 */
@@ -5806,7 +5815,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	 *
 	 * @param	int		$feuserid: userid
 	 * @param	int		$commentid: uid of the comment
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @param	[type]		$email: ...
 	 * @return	string		HTML for the image in the commentslist
 	 */
@@ -5936,7 +5945,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	/**
 	 * Creates a cached structure holding the userpictures
 	 *
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @param	[type]		$pObj: ...
 	 * @param	[type]		$usergenderexistsstr: ...
 	 * @param	[type]		$fromAjax: ...
@@ -7631,20 +7640,78 @@ class toctoc_comment_lib extends tslib_pibase {
 
 		$outputcidarr=explode('6g9', $output_cid);
 		if (count($outputcidarr) >0) {
-
-			$toreplacecid = $outputcidarr[0];
-			if (str_replace('title="', '', $imagetag) == $imagetag) {
-				$imagetag = str_replace('alt=""', 'title="' . trim(htmlspecialchars($_SESSION['submitCommentVars'][$cid]['firstname']) . ' ' .
-					htmlspecialchars($_SESSION['submitCommentVars'][$cid]['lastname'])) .'"', $imagetag);
+			
+			$toreplacecid = $outputcidarr[0];			
+			
+			$nametoreplace = trim($_SESSION['submitCommentVars'][$cid]['firstname'] . ' ' .
+					$_SESSION['submitCommentVars'][$cid]['lastname']);
+			$nameok = trim(htmlspecialchars($_SESSION['submitCommentVars'][$cid]['firstname']) . ' ' .
+					htmlspecialchars($_SESSION['submitCommentVars'][$cid]['lastname']));
+			$itprt .= '<div>'.$nameok . ', ' .$imagetag .'</div>';
+			$arrimgtitle=explode(' title="', $imagetag);
+			if (count($arrimgtitle) >1) {
+				$imgtagnew=$arrimgtitle[0] . ' title="' . $nameok .'"';
+				$imgx=array_shift($arrimgtitle);
+				$ztag1rest = implode(' title="', $arrimgtitle);				
+				$arrimgtitle2=explode('"', $ztag1rest);
+				$arrimgtitlex=array_shift($arrimgtitle2);
+				$ztagrest = implode('"', $arrimgtitle2);
+				$imgtagnew .= $ztagrest;
+				$imagetag=$imgtagnew;
+				$itprt .= '<div>'. '2, ' .$imagetag .'</div>';
+			} else {
+				$arrimgtitle=explode(' alt="', $imagetag);
+				if (count($arrimgtitle) >1) {
+					$imgtagnew=$arrimgtitle[0] . ' alt="' . $nameok .'" title="' . $nameok .'"';
+					$imgx=array_shift($arrimgtitle);
+				$ztag1rest = implode(' alt="', $arrimgtitle);				
+				$arrimgtitle2=explode('"', $ztag1rest);
+					$ztagrest = implode('"', $arrimgtitle2);
+					
+					$imgtagnew .= $ztagrest;
+					$imagetag=$imgtagnew;
+					$itprt .= '<div>'. '3, ' .$imagetag .'</div>';
+				}
+				
 			}
+			$imgtagnew = $imagetag;
+			$arrimgattrs = explode('="', $imagetag);
+			if (count($arrimgattrs) > 1) {
+				$imgtagnew = $arrimgattrs[0];
+				$countarrimgattrs=count($arrimgattrs);
+				for ($x=1;$x<$countarrimgattrs;$x++) {
+					$imgtagnew .= '="';
+					$arrimgattrval = explode('"', $arrimgattrs[$x]);
+					$imgtagnew .= $arrimgattrval[0] . '" ';
+					$arrimgnextattr = explode(' ', $arrimgattrs[$x]);
+					$imgnextattr = array_pop($arrimgnextattr);
+					if ((trim($imgnextattr) == '') || (str_replace('>', '', $imgnextattr) != $imgnextattr)) {
+						$imgnextattr = ' />';
+					} 
+					
+					$imgtagnew .= $imgnextattr;
+					
+				}
+			}
+			$imagetag = $imgtagnew;
+			$imagetag= str_replace($nametoreplace, $nameok, $imagetag);
+			
+			if (str_replace('title="', '', $imagetag) == $imagetag) {
+				$imagetag = str_replace('alt=""', 'title="' . $nameok .'"', $imagetag);
+				//$imagetag = str_replace('alt="'.$nameok.'"', 'title="' . $nameok .'"', $imagetag);
+			}
+			
 			$imagetag = str_replace(' title=""', '', $imagetag);
+			
 			$imagetag = str_replace('alt="" >', 'alt="" />', $imagetag);
+			//$imagetag = str_replace('alt="'.$nameok.'" >', 'alt="'.$nameok.'" />', $imagetag);
 
 			$imagetag = str_replace('tx-tc-uimg-' . $toreplacecid . '"', 'tx-tc-uimg-' . $output_cid . '"', $imagetag);
 			if (!(strpos($imagetag, '6g9') > 1)) {
 				$imagetag = str_replace('tx-tc-uimg-' . $toreplacecid . '"', 'tx-tc-uimg-' . $output_cid . '"', $imagetag);
 			}
-
+			//$itprt .= '<div>Nachher: ' .$imagetag .'</div>';
+			//echo $itprt; exit;
 			$txtwatermarkform = $this->pi_getLLWrap($pObj, 'pi1_template.replytocomment', $fromAjax) . '...';
 		}
 
@@ -8297,7 +8364,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * @param	integer		$fe_user_user_uid: fe_users.uid
 	 * @param	object		$pObj: parent object
 	 * @param	boolean		$fromAjax: if the request is an AJAX request
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @return	string		users name
 	 */
 	protected function getUserName($fe_user_user_uid, $pObj, $fromAjax, $conf) {
@@ -8825,7 +8892,7 @@ class toctoc_comment_lib extends tslib_pibase {
 							$this->initCaches();
 							$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_toctoc_comments_comments', $record);
 							$newUid = $GLOBALS['TYPO3_DB']->sql_insert_id();
-							$this->deleteDBcachereport ('comments', $testedexternal_ref_uid);
+							
 							// increase startpoint if set
 
 							$_SESSION['submitCommentVars'][$cid]['uploadpicid']='';
@@ -9065,7 +9132,13 @@ class toctoc_comment_lib extends tslib_pibase {
 								if (trim($conf['externalPrefix'])=='pages') {
 									$plugincacheid=$testedexternal_ref_uid;
 								}
-
+								
+								$this->deleteDBcachereport('comments', $plugincacheid);
+								if ($_SESSION['commentListIndex']['cid' . $plugincacheid]['startIndex'] > 0) {
+									$_SESSION['commentListIndex']['cid' . $plugincacheid]['startIndex'] = $_SESSION['commentListIndex']['cid' .
+											$plugincacheid]['startIndex'] + 1;
+								}
+								
 								$this->clearPagesCaches($conf, $pid, $plugincacheid);
 							}
 
@@ -10687,8 +10760,8 @@ class toctoc_comment_lib extends tslib_pibase {
 		if ($resetcontext==0) {
 			// quite total init
 			$_SESSION['commentListCount'] = 0;
-			$_SESSION['findanchorok'] ='0';
-			$_SESSION['findanchor'] = '0';
+			$_SESSION['findanchorok'] = array();
+			$_SESSION['findanchor'] = array();
 
 			$_SESSION['commentListRecord']= 0;
 			$_SESSION['commentsPageId'] = $GLOBALS['TSFE']->id;
@@ -10724,7 +10797,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	/**
 	 * Returns a list of pageids on which cache should be cleared.
 	 *
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @param	[type]		$pid: ...
 	 * @param	[type]		$repectsession: ...
 	 * @return	string
@@ -10820,7 +10893,7 @@ class toctoc_comment_lib extends tslib_pibase {
 
 			$sqlexternal_ref_uid = ' OR (ReportPluginMode = 0 AND external_ref_uid = "' . $external_ref_uid. '")';
 		}
-		// 1: recent comments, 3: topratings, 4: other reports, 6: user center, 8: topsharings
+		// 1: recent comments, 3: topratings, 4: other reports, 6: user center
 		if ($cachedEntitiesInput == 'comments') {
 			$cachedEntities = '1,41,6';
 		} elseif ($cachedEntitiesInput == 'ratings') {
@@ -10858,7 +10931,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	/**
 	 * Returns a list with external_ref_uids on which session memory cache should be cleared.
 	 *
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @param	[type]		$external_ref_uid: ...
 	 * @param	[type]		$repectsession: ...
 	 * @return	array
@@ -10877,7 +10950,7 @@ class toctoc_comment_lib extends tslib_pibase {
 		}
 		foreach($clearCachePluginsarr as $memexternal_ref_uid) {
 			$_SESSION['mcpdata' . $memexternal_ref_uid]['L' . $_SESSION['activelang'] . 'U' . $_SESSION['currentfeuserid']]=array();
-		}
+		}		
 
 		if ($clearCachePlugins!='') {
 			$this->setPluginCacheControlTstamp($clearCachePlugins);
@@ -11054,7 +11127,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	/**
 	 * Clears page cache and application cache
 	 *
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @param	[type]		$pid: ...
 	 * @param	[type]		$plugincacheid: ...
 	 * @return	void		...
@@ -11135,7 +11208,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	 *
 	 * @param	string		$content: content
 	 * @param	int		$commentCropLength: planned cropping length
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @param	[type]		$pObj: ...
 	 * @return	array		needed cropping length
 	 */
@@ -11425,7 +11498,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * updates feuserid in $_SESSIONs AJAXData
 	 *
 	 * @param	int		$feuserid:  ID of the User, 0 when not logged in
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @return	string		rawurlencode($_SESSION['ajaxData'])
 	 */
 	protected function updateAjaxData($cid) {
@@ -11497,7 +11570,13 @@ class toctoc_comment_lib extends tslib_pibase {
 			//$confCopyo['activelangid']= $_SESSION['activelangid'];
 			$confCopyo['activelangid'] = 0;
 			$confCopyo['commentListRecord'] = $_SESSION['commentListRecord'];
-			$confCopyo['findanchorok'] = $_SESSION['findanchorok'];
+			
+			if (is_array($_SESSION['findanchorok']) == TRUE) {
+				$confCopyo['findanchorok'] = serialize($_SESSION['findanchorok']);
+			} else {
+				$confCopyo['findanchorok'] = '';
+			}
+			
 			$confCopyo['newcommentid'] =  $_SESSION['newcommentid'];
 			if (isset($_SESSION['lastStartpoint'])) {
 				if (isset($_SESSION['lastStartpoint'][$_SESSION['commentListCount']])) {
@@ -12106,7 +12185,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * @param	int		$date	Date as Unix timestamp
 	 * @param	object		$pObj: parent object
 	 * @param	boolean		$fromAjax: if the request is an AJAX request
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @return	string		Formatted date
 	 */
 	protected function formatDate($date, $pObj, $fromAjax, $conf) {
@@ -12314,7 +12393,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	/**
 	 * Get the HTML for the login form
 	 *
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @param	[type]		$pObj: ...
 	 * @return	string
 	 */
@@ -12333,7 +12412,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	/**
 	 * Get the HTML for the login form
 	 *
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @param	[type]		$pObj: ...
 	 * @return	string
 	 */
@@ -12352,7 +12431,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	/**
 	 * Get the HTML for the BB popup
 	 *
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @param	[type]		$pObj: ...
 	 * @param	[type]		$buildthisbb: ...
 	 * @param	[type]		$returnbbarray: ...
@@ -12458,7 +12537,7 @@ class toctoc_comment_lib extends tslib_pibase {
 	/**
 	 * Get the HTML for the smilie and emoji selectors
 	 *
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @return	string		Informations about the userstatistics
 	 */
 	public function getSmiliesCard($conf) {
@@ -13849,7 +13928,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	 * called from eid and from processformsubmission (for comments without approval)
 	 *
 	 * @param	[type]		$uid: the comment id
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @param	[type]		$pObj: ...
 	 * @param	boolean		$fromeID: if request has been made by eID-call
 	 * @param	int		$pid: page id needed to fetch right session values
@@ -14196,7 +14275,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	 * called from eid
 	 *
 	 * @param	int		$uid: the user uid
-	 * @param	array		$conf: ...
+	 * @param	array		$conf: Array with the plugin configuration
 	 * @param	[type]		$pObj: ...
 	 * @param	boolean		$fromeID: if request has been made by eID-call
 	 * @param	int		$pid: page id needed to fetch right session values
@@ -14408,7 +14487,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	 * @param	int		$cid: ...
 	 * @param	array		$data:array with needed comment id
 	 * @param	[type]		$pObj: ...
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @return	string		confirmation for the request
 	 */
 	protected function getpreviewinit($cid, $data, $conf) {
@@ -14452,7 +14531,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	 * @param	int		$pcid: content element id
 	 * @param	int		$pcommentid: comment id
 	 * @param	string		$userurl: url as entered by the user
-	 * @param	array		$conf: ...
+	 * @param	array		$conf: Array with the plugin configuration
 	 * @param	[type]		$pObj: ...
 	 * @return	int		$newUid, uid of the attachment in tx_toctoc_comments_attachment_mm
 	 */
@@ -15039,7 +15118,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	 *
 	 * @param	int		$rowattachmentid: ...
 	 * @param	int		$rowattachment_subid: ...
-	 * @param	array		$conf: ...
+	 * @param	array		$conf: Array with the plugin configuration
 	 * @param	object		$pObj: parent object
 	 * @param	int		$cid: content element ID
 	 * @param	boolean		$topwebsitepreview: If the preview is on top of the plugin
@@ -15724,7 +15803,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	 * Handles request from the eID-Interfaces, grabs the template and generated the HTML-Page
 	 *
 	 * @param	int		$uid: commentid
-	 * @param	array		$conf: ...
+	 * @param	array		$conf: Array with the plugin configuration
 	 * @param	object		$pObj: parent object
 	 * @param	string		$messagetodisplay: the message from eID to display on the page
 	 * @param	string		$refreshurl: Refreh-URL for the http-equiv=refresh redirects
@@ -15834,7 +15913,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
  * Checks if comment for $commentid should be displayed or not
  *
  * @param	int		$commentid: ...
- * @param	array		$conf: ...
+ * @param	array		$conf: Array with the plugin configuration
  * @param	boolean		$level: hierarchical level of the $commentid
  * @param	boolean		$fromAjax: ...
  * @param	[type]		$triggeredlevel: ...
@@ -15910,7 +15989,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	 * Checks if the commentbox for a comment child (reply) is opened or closed
 	 *
 	 * @param	string		$commentschildrenids: string with list of child-IDs
-	 * @param	array		$conf: ...
+	 * @param	array		$conf: Array with the plugin configuration
 	 * @param	int		$level: hierarchical level of the request
 	 * @param	boolean		$fromAjax: ...
 	 * @param	[type]		$triggeredlevel: ...
@@ -15985,7 +16064,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	 *
 	 * @param	[type]		$pObj: ...
 	 * @param	[type]		$fromAjax: ...
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @param	[type]		$communitybuddies: ...
 	 * @return	string		List of users like (123, 234, 244, 245)
 	 */
@@ -16178,7 +16257,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	 *
 	 * @param	array		$params: Array of parameters
 	 * @param	object		$pObj: Reference to parent object
-	 * @param	array		$conf: ...
+	 * @param	array		$conf: Array with the plugin configuration
 	 * @param	boolean		$fromAjax: ...
 	 * @param	int		$pid: page id for referencing the report link used in the page
 	 * @return	array		Updated markers
@@ -16246,6 +16325,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 		$retstr = $libreport->generateReport($content, $conf, $pObj, $piVars);
 		return $retstr;
 	}
+	
 	/**
 	 * Debug function
 	 *
@@ -16266,12 +16346,12 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 		if (trim($_SESSION['debugprintlib']['debugtext'])!='') {
 			$i=intval($this->debugprintlib['tfs'][$trackingfunction . 'index']);
 			$this->debugprintlib['tfs'][$trackingfunction . '_in'][$i] = microtime(TRUE);
-				if ($i % 2 == 1) {
+			if ($i % 2 == 1) {
 				$this->debugprintlib['trackingfunction'][$trackingfunction][($i-1)/2]=$this->debugprintlib['tfs'][$trackingfunction. '_in'][$i]-
-																				$this->debugprintlib['tfs'][$trackingfunction. '_in'][$i-1];
-				}
+																			$this->debugprintlib['tfs'][$trackingfunction. '_in'][$i-1];
+			}
 
-			$this->debugprintlib['tfs'][$trackingfunction . 'index']=intval($this->debugprintlib['tfs'][$trackingfunction . 'index'])+1;
+			$this->debugprintlib['tfs'][$trackingfunction . 'index'] = intval($this->debugprintlib['tfs'][$trackingfunction . 'index'])+1;
 		}
 
 	}
@@ -16285,7 +16365,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	/**
 	 * Entry point from pi, stating a cObj in $this and lauch generation of top ratings
 	 *
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @param	[type]		$pObj: ...
 	 * @return	string		...
 	 */
@@ -16297,22 +16377,6 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 		$retstr = $libchart->topratings($conf, $pObj);
 		return $retstr;
 	}
-	/**
-	 * Entry point from pi, stating a cObj in $this and lauch generation of top sharings
-	 *
-	 * @param	[type]		$conf: ...
-	 * @param	[type]		$pObj: ...
-	 * @return	string		...
-	 */
-	public function showtopSharings($conf, $pObj) {
-
-		require_once(t3lib_extMgm::extPath('toctoc_comments', 'pi1/class.toctoc_comments_charts.php'));
-		$libchart = t3lib_div::makeInstance('toctoc_comments_charts');
-
-		$retstr = $libchart->topsharings($conf, $pObj);
-		return $retstr;
-	}
-
 
 	/**
 	 * show userCenter functions
@@ -16323,7 +16387,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	/**
 	 * Entry point from pi to launch generation of user Center
 	 *
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @param	[type]		$pObj: ...
 	 * @return	string		...
 	 */
@@ -16337,7 +16401,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	/**
 	 * Entry point from pi for search comments
 	 *
-	 * @param	[type]		$conf: ...
+	 * @param	[type]		$conf: Array with the plugin configuration
 	 * @param	[type]		$pObj: ...
 	 * @param	[type]		$fromAjax: ...
 	 * @param	[type]		$data: ...
@@ -16355,10 +16419,10 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	/**
 	 * Changes a user picture to the corresponding gravatar, using current email.
 	 *
-	 * @param	array		$conf: ...
+	 * @param	array		$conf: Array with the plugin configuration
 	 * @param	string		$outstr: linkaddress of the current userpic
 	 * @param	string		$email: users email
-	 * @param	[type]		$watchanonymgravatar: ...
+	 * @param	boolean		$watchanonymgravatar: ...
 	 * @return	string		...
 	 */
 	private function gravatarize($conf, $outstr, $email, $watchanonymgravatar = FALSE) {
@@ -16466,8 +16530,10 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 				$img['file.']['XY'] = '' . $buildimagesize .',' . $buildimagesize . '';
 				$img['file.']['10'] = IMAGE;
 				$img['file.']['10.']['file'] = $userimgFile;
+				$img['file.']['10.']['file.']['stripProfile'] = 1;
 				$img['file.']['10.']['file.']['width'] = $buildimagesize .'c';
 				$img['file.']['10.']['file.']['height'] = $buildimagesize .'c';
+				
 				$img['params'] = 'class="' . $profileimgclass . $classonline . $userimagestyle . '"' . $imgalign . ' title="'.$usernametitle.'" id="' . $cssid . '"';
 				if (version_compare(TYPO3_version, '7.6', '<')) {
 					$tmpimgstr = $pObj->cObj->IMAGE($img);
@@ -16494,7 +16560,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	 * Checks for needed changes in final HTML when themeVersion = 2
 	 *
 	 * @param	string		$content: ...
-	 * @param	arreay		$conf
+	 * @param	array		$conf: Array with the plugin configuration
 	 * @return	string		$tmpimgstr: img-tag of the pic
 	 */
 	private function checkThemeVersion($content, $conf) {
@@ -16814,11 +16880,19 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	 * @return	string		$ReportDBdata
 	 */
 	public function getReportDBCacheMinTimestamp ($ReportPluginMode) {
-		$recs['ReportCD'] = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('MIN(crdate) as mints',
+		$recs = array();
+		$recs = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('MIN(crdate) as mints',
 				'tx_toctoc_comments_cachereport',
 				'ReportPluginMode = ' . $ReportPluginMode);
-		$ret = $recs['ReportCD'][0]['mints'];
-
+		$ret = 0;
+		if (count($recs) > 0) {
+			$ret = $recs[0]['mints'];
+		}
+	
+		if (($ret == 0) && ($ReportPluginMode == 11)){
+			$ret = time();
+		}
+		
 		return $ret;
 	}
 	/**
@@ -16893,7 +16967,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	/**
 	 * cleans up tx_toctoc_comments_cache_mailconf
 	 *
-	 * @param	$conf		Conf
+	 * @param	$conf		$conf: Array with the plugin configuration
 	 * @return	void
 	 */
 	protected function purgeMailConf($conf) {

@@ -14,6 +14,19 @@ $scriptcontent = array(
 				'act' => 'edit'
 		)
 );
+if (version_compare(TYPO3_version, '7.9', '>')) {
+	$configlink = 'actions-open';
+} else {
+	$configlink = array (
+							'type' => 'popup',
+							'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.external_ref.wizard',
+							$scriptelem => $scriptcontent,
+							'popup_onlyOpenIfSelected' => 1,
+							'icon' => 'edit2.gif',
+							'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
+						);
+}
+
 if (version_compare(TYPO3_version, '7.6', '<')) {
 	$iconfilepath = t3lib_extMgm::extRelPath('toctoc_comments');
 } else {
@@ -82,14 +95,7 @@ $tx_toctoc_comments_comments = array(
 					'wizards' => array (
 						'_PADDING' => 1,
 						'_VERTICAL' => 1,
-						'edit' => array (
-							'type' => 'popup',
-							'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.external_ref.wizard',
-							$scriptelem => $scriptcontent,
-							'popup_onlyOpenIfSelected' => 1,
-							'icon' => 'edit2.gif',
-							'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
-						),
+						'edit' => $configlink,
 					),
 				),
 			),
@@ -103,7 +109,7 @@ $tx_toctoc_comments_comments = array(
 			),
 	),
 	'types' => array (
-			0 => array ('showitem' => 'hidden;;;;1,pi1_key;;;;2-2-2,pi1_table;;;;3-3-3,show_uid,displayfields,topratingsdetailpage,topratingsimagesfolder'),
+			0 => array ('showitem' => 'hidden,pi1_key,pi1_table,show_uid,displayfields,topratingsdetailpage,topratingsimagesfolder'),
 	),
 );
 	

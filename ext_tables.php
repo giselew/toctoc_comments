@@ -296,20 +296,7 @@ if (version_compare(TYPO3_version, '7.5', '<')) {
 		
 				)
 		);
-		// Sharings table
-		$TCA['tx_toctoc_comments_sharing'] = array(
-				'ctrl' => array (
-						'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_sharing',
-						'label' => 'sharer',
-						'tstamp' => 'tstamp',
-						'crdate' => 'crdate',
-						'sortby' => 'crdate',
-						'default_sortby' => ' ORDER BY crdate DESC',
-						'delete' => 'deleted',
-						'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
-						'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_toctoc_comments_sharing.gif',
-				)
-		);
+
 		// emolike table
 		$TCA['tx_toctoc_comments_emolike'] = array(
 				'ctrl' => array (
@@ -514,9 +501,6 @@ t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_comments_spamwords', 'EXT:toctoc_co
 
 t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_comments_attachment');
 t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_comments_attachment', 'EXT:toctoc_comments/locallang_csh.xml');
-
-t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_comments_sharing');
-t3lib_extMgm::addLLrefForTCAdescr('tx_toctoc_comments_sharing', 'EXT:toctoc_comments/locallang_sharing_csh.xml');
 
 t3lib_extMgm::allowTableOnStandardPages('tx_toctoc_comments_prefixtotable');
 t3lib_extMgm::addToInsertRecords('tx_toctoc_comments_prefixtotable');

@@ -235,8 +235,7 @@ $tx_toctoc_comments_comments = array(
 		),
 	),
 	'types' => array (
-		0 => array ('showitem' => 'hidden;;;;1,reference,reference_scope;;;;2-2-2,toctoc_comments_user,toctoc_commentsfeuser_feuser;;;;3-3-3,ilike,idislike,myrating,isreview,emolikeid,'.
-				'seen,remote_addr,tstampilike,pagetstampilike,tstampidislike,pagetstampidislike,tstampmyrating,pagetstampmyrating,tstampseen,pagetstampseen'),
+		0 => array ('showitem' => 'hidden,reference,reference_scope,toctoc_comments_user,toctoc_commentsfeuser_feuser,ilike,idislike,myrating,isreview,emolikeid,seen,remote_addr,tstampilike,pagetstampilike,tstampidislike,pagetstampidislike,tstampmyrating,pagetstampmyrating,tstampseen,pagetstampseen'),
 	),
 );
 	

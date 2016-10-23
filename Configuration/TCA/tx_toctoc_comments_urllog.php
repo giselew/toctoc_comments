@@ -9,6 +9,18 @@ $scriptcontent = array(
 		'act' => 'edit'
 	)
 );
+if (version_compare(TYPO3_version, '7.9', '>')) {
+	$configlink = 'actions-open';
+} else {
+	$configlink = array (
+			'type' => 'popup',
+			'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.external_ref.wizard',
+			$scriptelem => $scriptcontent,
+			'popup_onlyOpenIfSelected' => 1,
+			'icon' => 'edit2.gif',
+			'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
+	);
+}
 		
 if (version_compare(TYPO3_version, '6.3', '>')) {
 	(class_exists('t3lib_extMgm', FALSE)) ? TRUE : class_alias('\TYPO3\CMS\Core\Utility\ExtensionManagementUtility', 't3lib_extMgm');
@@ -54,14 +66,7 @@ $tx_toctoc_comments_comments = array(
 				'wizards' => array (
 					'_PADDING' => 1,
 					'_VERTICAL' => 1,
-					'edit' => array (
-						'type' => 'popup',
-						'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.external_ref.wizard',
-						$scriptelem => $scriptcontent,
-						'popup_onlyOpenIfSelected' => 1,
-						'icon' => 'edit2.gif',
-						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
-					),
+					'edit' => $configlink,
 				),
 			),
 		),
@@ -85,20 +90,13 @@ $tx_toctoc_comments_comments = array(
 				'wizards' => array (
 					'_PADDING' => 1,
 					'_VERTICAL' => 1,
-					'edit' => array (
-						'type' => 'popup',
-						'title' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_comments.external_ref_uid.wizard',
-						$scriptelem => $scriptcontent,
-						'popup_onlyOpenIfSelected' => 1,
-						'icon' => 'edit2.gif',
-						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
-					),
+					'edit' => $configlink,
 				),
 			),
 		),
 	),
 	'types' => array (
-		0 => array ('showitem' => 'external_ref,external_ref_uid;;;;1,url'),
+		0 => array ('showitem' => 'external_ref,external_ref_uid,url'),
 	),
 );
 	

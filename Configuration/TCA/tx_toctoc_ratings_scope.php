@@ -48,6 +48,7 @@ $tx_toctoc_comments_comments = array(
 							'label' => 'LLL:EXT:lang/locallang_general.php:LGL.language',
 							'config' => array (
 									'type' => 'select',
+									'renderType' => 'selectSingle',
 									'foreign_table' => 'sys_language',
 									'foreign_table_where' => 'ORDER BY sys_language.title',
 									'items' => array(
@@ -62,6 +63,7 @@ $tx_toctoc_comments_comments = array(
 							'label' => 'LLL:EXT:lang/locallang_general.php:LGL.l18n_parent',
 							'config' => array (
 									'type' => 'select',
+									'renderType' => 'selectSingle',
 									'items' => array (
 											array('', 0),
 									),
@@ -123,11 +125,7 @@ $tx_toctoc_comments_comments = array(
 					),
 			),
 			'types' => array (
-					'0' => array('showitem' => 'sys_language_uid;;;;3-3-3, l18n_parent, l18n_diffsource, hidden, scope_title, scope_description, display_order')
-			),
-			'palettes' => array (
-					'1' => array('showitem' => 'scope_title,scope_description'),
-					'2' => array('showitem' => 'l18n_parent,l18n_diffsource'),
+					'0' => array('showitem' => 'sys_language_uid,l18n_parent,l18n_diffsource,hidden,scope_title,scope_description,display_order')
 			),
 	);
 	

@@ -64,6 +64,7 @@ $tx_toctoc_comments_comments = array(
 					'label' => 'LLL:EXT:lang/locallang_general.php:LGL.language',
 					'config' => array (
 							'type' => 'select',
+							'renderType' => 'selectSingle',
 							'foreign_table' => 'sys_language',
 							'foreign_table_where' => 'ORDER BY sys_language.title',
 							'items' => array (
@@ -74,7 +75,7 @@ $tx_toctoc_comments_comments = array(
 			),
 	),
 	'types' => array (
-			0 => array ('showitem' => 'hidden;;;;1,spamword;;;;2-2-2,spamvalue,sys_language_uid'),
+			0 => array ('showitem' => 'hidden,spamword,spamvalue,sys_language_uid'),
 	),
 );
 	

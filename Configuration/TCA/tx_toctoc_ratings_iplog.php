@@ -89,7 +89,7 @@ $tx_toctoc_comments_comments = array(
 		),
 	),
 	'types' => array (
-		'0' => array ('showitem' => 'reference,reference_scope;;;;1-1-1, crdate, ip')
+		'0' => array ('showitem' => 'reference,reference_scope,crdate,ip')
 	),
 );
 	

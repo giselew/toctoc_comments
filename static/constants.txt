@@ -275,7 +275,7 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//62;  type=boolean; label=Links on subcomments: Display the link for subcomments and number of subcomments  
 	displayChildComments = 1
 
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//63;  type=boolean; label=Require login: The commenting form will link to a login form and onyl after login commenting will be possible  
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//63;  type=boolean; label=Require login: The commenting form will link to a login form and only after login commenting will be possible  
 	loginRequired = 0
 
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//64;  type=boolean; label=Watermark form fields: form fields will have a watermark instead of labels  
@@ -727,9 +727,6 @@ plugin.tx_toctoccomments_pi1 {
 
 	# cat=plugin.tx_toctoccomments_pi1: Sharing//21; type=boolean; label=Dont show share count:If set to 1, the sharing totals won't be displayed
 	noShareCount = 0
-
-	# cat=plugin.tx_toctoccomments_pi1: Top Sharings//01; type=options[sharer=0,page=1]; label=Composition if report - what to show?: Show top sharings for each sharer (0), each page (1)
-	topSharingsMode	= 0
 
 	# cat=plugin.tx_toctoccomments_pi1: userCenter//01; type=string; label=Comment-Lists:Comment-Lists to be distinguished in user center. comma-separated list. Possible values are Reviews, Plugintotablemap, Commentsoncomments. Normal comments are always shown as a list, also iLikes und Votings will always have their lists.
 	uCLists = Reviews, Plugintotablemap, Commentsoncomments
