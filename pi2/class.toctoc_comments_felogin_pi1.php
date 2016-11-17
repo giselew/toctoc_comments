@@ -39,37 +39,37 @@
  *
  *
  *  117: class tx_toctoccomments_pi2 extends tslib_pibase
- *  140:     protected function processRedirect()
- *  154:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  246:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
- *  517:     protected function watermark($conf, $content)
- *  555:     protected function showForgot()
- *  635:     protected function showLogout()
- *  670:     protected function showLogin()
- *  822:     protected function getRSAKeyPair()
- *  859:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
- *  895:     protected function getPreserveGetVars()
- *  948:     protected function generatePassword($len)
- *  968:     protected function getDisplayText($label, $stdWrapArray=array())
- *  980:     protected function getUserFieldMarkers()
- * 1022:     protected function validateRedirectUrl($url)
- * 1053:     protected function isInCurrentDomain($url)
- * 1065:     protected function isInLocalDomain($url)
- * 1106:     protected function isRelativeUrl($url)
- * 1122:     protected function generateAndSendHash($user)
- * 1294:     protected function changePassword($uid, $piHash)
- * 1418:     protected function showSignon()
- * 1836:     protected function getSignupCaptcha($required, $errcp, $cpval)
- * 1929:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
- * 1956:     protected function processSignupCaptcha($postData)
- * 2004:     protected function loginUser($facebookId)
- * 2033:     protected function storeUser($facebookUserProfile, $socialnetwork)
- * 2319:     private function registerUserGroup()
- * 2380:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork)
- * 2399:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
- * 2489:     protected function getCurrentIp()
- * 2501:     protected function initTSFE()
- * 2573:     protected function addSysFile($FileName, $FileNameIdentifier, $currentstorage, $advancedFeUserImagePath,
+ *  142:     protected function processRedirect()
+ *  156:     protected function pmain($content, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  248:     public function main($content, $conf, $dochangepassword = FALSE, $uid = 0, $piHash = '')
+ *  519:     protected function watermark($conf, $content)
+ *  557:     protected function showForgot()
+ *  637:     protected function showLogout()
+ *  672:     protected function showLogin()
+ *  824:     protected function getRSAKeyPair()
+ *  861:     protected function getPageLink($label, $piVars, $returnUrl = FALSE)
+ *  897:     protected function getPreserveGetVars()
+ *  950:     protected function generatePassword($len)
+ *  970:     protected function getDisplayText($label, $stdWrapArray=array())
+ *  982:     protected function getUserFieldMarkers()
+ * 1024:     protected function validateRedirectUrl($url)
+ * 1055:     protected function isInCurrentDomain($url)
+ * 1067:     protected function isInLocalDomain($url)
+ * 1108:     protected function isRelativeUrl($url)
+ * 1124:     protected function generateAndSendHash($user)
+ * 1296:     protected function changePassword($uid, $piHash)
+ * 1420:     protected function showSignon()
+ * 1838:     protected function getSignupCaptcha($required, $errcp, $cpval)
+ * 1931:     protected function locationHeaderUrlsubDir($withleadingslash = TRUE)
+ * 1958:     protected function processSignupCaptcha($postData)
+ * 2006:     protected function loginUser($facebookId)
+ * 2035:     protected function storeUser($facebookUserProfile, $socialnetwork)
+ * 2366:     private function registerUserGroup()
+ * 2428:     private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork, $facebook_updated_time)
+ * 2465:     protected function file_get_contents_curl($urltofetch,$ext, $savepathfilename = '')
+ * 2555:     protected function getCurrentIp()
+ * 2564:     protected function initTSFE()
+ * 2636:     protected function addSysFile($FileName, $FileNameIdentifier, $currentstorage, $advancedFeUserImagePath,
 			$useruid, $feuserstoragefolder, $imagefield)
  *
  * TOTAL FUNCTIONS: 31
@@ -133,6 +133,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 	protected $tableName = 'fe_users';
 	protected $fberror = '';
 	protected $gotnewpic = FALSE;
+	protected $usrimagesize = 96;
 
 	/**
 	 * [Describe function...]
@@ -2060,19 +2061,21 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			$this->conf['facebook.']['imageDir'] = 'fileadmin/user_upload/';
 		}
 
-		if($userFound) {
+		if($userFound == TRUE) {
 			$user = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result);
+			$username = $user['username'];
 			if(($user['tx_toctoc_comments_facebook_updated_time'] != '') && ($user['tx_toctoc_comments_facebook_updated_time'] != $user['tstamp'])) {
 
 				if(!($facebookUserProfile['updated_time'] instanceof DateTime)) {
-					$facebookUserProfileupdated_time = $facebookUserProfile['updated_time'];
+					$facebookUserProfileupdated_time = trim($facebookUserProfile['updated_time']);
 				} else {
 					$facebookUserProfileupdated_time = $facebookUserProfile['updated_time']->getTimestamp();
 				}
+
 				if($facebookUserProfileupdated_time == '') {
 					$facebookUserProfileupdated_time = $user['tstamp'];
 				}
-				
+
 				if($user['tx_toctoc_comments_facebook_updated_time'] == $facebookUserProfileupdated_time) {
 					if ($user['disable'] != 0) {
 						$this->fberror = 'waitconfirm';
@@ -2080,6 +2083,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 					/* no update needed since facebook profile was not updated */
 					return;
 				}
+
 			}
 
 			if (version_compare(TYPO3_version, '8.2', '>')) {
@@ -2167,36 +2171,39 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 
 		if(isset($facebookUserProfile['gender'])) {
 			$fe_usersValues['tx_toctoc_comments_facebook_gender'] = $facebookUserProfile['gender'];
+			if ($fe_usersValues['tx_toctoc_comments_facebook_gender'] == 'female') {
+				$fe_usersValues['gender'] = 1;
+			}
+
 		}
 
 		if(isset($facebookUserProfile['email'])) {
 			$fe_usersValues['tx_toctoc_comments_facebook_email'] = $facebookUserProfile['email'];
 			$fe_usersValues['email'] = $facebookUserProfile['email'];
 		}
-		
+
 		if(!($facebookUserProfile['updated_time'] instanceof DateTime)) {
-		 	$fe_usersValues['tx_toctoc_comments_facebook_updated_time'] = $facebookUserProfile['updated_time'];
+		 	$fe_usersValues['tx_toctoc_comments_facebook_updated_time'] = trim($facebookUserProfile['updated_time']);
 		} else {
 		 	$fe_usersValues['tx_toctoc_comments_facebook_updated_time'] = $facebookUserProfile['updated_time']->getTimestamp();
-		 	
 		}
-		
+
 		$fe_usersValuesfacebook_updated_time = $fe_usersValues['tx_toctoc_comments_facebook_updated_time'];
 		if ($fe_usersValues['tx_toctoc_comments_facebook_updated_time'] == '') {
 			if (isset($facebookUserProfile['etag']) == TRUE) {
 				if (trim($facebookUserProfile['etag']) != '') {
-					$fe_usersValuesfacebook_updated_time = md5($facebookUserProfile['etag']); 
+					$fe_usersValuesfacebook_updated_time = md5($facebookUserProfile['etag']);
 				} else {
 					$fe_usersValuesfacebook_updated_time = $user['tstamp'];
 				}
-				
+
 			} else {
 				$fe_usersValuesfacebook_updated_time = $user['tstamp'];
 			}
-			
+
 			$fe_usersValues['tx_toctoc_comments_facebook_updated_time'] = $user['tstamp'];
 		}
-		
+
 		$fe_usersValues['pid'] = $this->conf['storagePid'];
 		$imagename = '';
 		$imagename = $this->copyImageFromFacebook($facebookUserProfile['id'], $imageurl, $socialnetwork, $fe_usersValuesfacebook_updated_time);
@@ -2217,25 +2224,45 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		if (version_compare(TYPO3_version, '8.3', '<')) {
 			$fe_usersValues[$fldimage] = $imagename;
 		}
-		
-		if($userFound) {
+
+		if ($userFound == TRUE) {
 			$userId = $user['uid'];
-			if ($user['disable'] ==1) {
+			if ($user['disable'] == 1) {
 				$this->fberror = 'waitconfirm';
 			}
 
 			$updateWhere = 'uid=' . $user['uid'];
 			$userId = $user['uid'];
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery($this->tableName, $updateWhere, $fe_usersValues, TRUE);
+			$makeUpdate = FALSE;
+			foreach($fe_usersValues as $newkey => $newval){
+				if (isset($user[$newkey])) {
+					if (($newkey != 'tstamp') && ($newkey != 'tx_toctoc_comments_facebook_updated_time') && ($newkey != 'lastlogin')) {
+						if ($user[$newkey] != $newval) {
+							$makeUpdate = TRUE;
+							break;
+						}
+
+					}
+
+				}
+
+			}
+
+			if ($makeUpdate == TRUE) {
+				$fe_usersValues['tx_toctoc_comments_facebook_updated_time'] = time();
+				$GLOBALS['TYPO3_DB']->exec_UPDATEquery($this->tableName, $updateWhere, $fe_usersValues);
+			}
+
 		} else {
 			$fe_usersValues['tx_toctoc_comments_facebook_id'] = $facebookUserProfile['id'];
 			$fe_usersValues['usergroup'] = $this->registerUserGroup();
 			$fe_usersValues['password'] = t3lib_div::getRandomHexString(32);
 			$fe_usersValues['crdate'] = time();
+			$fe_usersValues['tx_toctoc_comments_facebook_updated_time'] = time();
 			$fe_usersValues['disable'] = intval($this->conf['register.']['signupAdminConfirmation']);
 			$GLOBALS['TYPO3_DB']->exec_INSERTquery($this->tableName, $fe_usersValues);
-			$userId = $GLOBALS['TYPO3_DB']->sql_insert_id();
 
+			$userId = $GLOBALS['TYPO3_DB']->sql_insert_id();
 			if (intval($this->conf['register.']['signupAdminConfirmation']) == 1) {
 				$this->fberror = 'waitconfirm';
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
@@ -2249,7 +2276,6 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 				}
 
 				if ($row) {
-
 					$requrl = t3lib_div::getIndpEnv('TYPO3_REQUEST_URL');
 					$langajax = $GLOBALS['TSFE']->lang;
 					$this->lib->sendNotificationEmail($row['uid'], 0, 0, 'adminconfirmsignup', $confpi1, $this, TRUE, $row, $GLOBALS['TSFE']->id,
@@ -2259,29 +2285,25 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			}
 
 		}
+
 		if (version_compare(TYPO3_version, '8.2', '>')) {
 			$confpi1['advanced.']['FeUserImagePath'] = $this->conf['facebook.']['imageDir'];
 			if ($this->gotnewpic == TRUE) {
 				if ($currentuserimage == '') {
 					$FileNameIdentifier = 'user_upload/' . $imagename;
 					$currentstorage = 'fileadmin';
-				}	
-				
+				}
+
 				$addSysFileMsg = $this->addSysFile($imagename, $FileNameIdentifier, $currentstorage . '/', $confpi1['advanced.']['FeUserImagePath'],
 						$userId, $this->conf['storagePid'], $confpi1['advanced.']['FeUserDbField']);
 			}
-/*
- * 			if (str_replace('image ok <br>', '', $addSysFileMsg) == $addSysFileMsg) {
- * 				echo $addSysFileMsg;exit;
- * 			}
- */
+
 		}
 
  		if ($imagename != '') {
  			// and add $fe_usersValues['image'] to the $_SESSION['AJAXimages']
-
 			$commentuserimagepath = $confpi1['advanced.']['FeUserImagePath'];
-			$userimagesize = 96;
+			$userimagesize = $this->usrimagesize;
 			$userimagestyle = ' tx-tc-uimgsize';
 			$profileimgclass ='tx-tc-userpic';
 
@@ -2331,7 +2353,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			$_SESSION['AJAXimagesrefresh'] = TRUE;
 			$_SESSION['AJAXimagesrefreshImage'] = $fe_usersValues[$fldimage];
 			$_SESSION['AJAXimagesTimeStamp'] = microtime(TRUE);
-			$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport 
+			$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport
 					WHERE (ReportPluginMode = 11) OR (ReportPluginMode = 0 AND ReportUser ="' . $userId . '")');
 			$GLOBALS['TYPO3_DB']->sql_query('UPDATE tx_toctoc_comments_plugincachecontrol SET tstamp =' . time() . ' WHERE external_ref_uid != "tx_toctoc_comments_feuser_mm_0"');
  		}
@@ -2401,6 +2423,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 	 * @param	string		$facebookUserId: url to fetch
 	 * @param	[type]		$url: ...
 	 * @param	[type]		$socialnetwork: ...
+	 * @param	[type]		$facebook_updated_time: ...
 	 * @return	string		$imgname
 	 */
 	private function copyImageFromFacebook($facebookUserId, $url, $socialnetwork, $facebook_updated_time) {
@@ -2419,17 +2442,17 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 		} elseif (file_exists(PATH_site . $this->conf['facebook.']['imageDir'] . $socialnetwork . $facebookUserId . $facebook_updated_time . '.gif')) {
 			$fileNameExists = $socialnetwork . $facebookUserId  . $facebook_updated_time .  '.gif';
 		}
-		
-		if ($fileNameExists == '') {	
+
+		if ($fileNameExists == '') {
 			$fileName = $socialnetwork . $facebookUserId . $facebook_updated_time . '.jpg';
-	
+
 			$savepathfilename = $this->file_get_contents_curl($imageUrl, 'jpg', PATH_site . $this->conf['facebook.']['imageDir'] . $fileName);
 			$this->gotnewpic = TRUE;
 			$ret = str_replace(PATH_site . $this->conf['facebook.']['imageDir'], '', $savepathfilename);
 		} else {
 			$ret = $fileNameExists;
 		}
-		
+
 		return $ret;
 	}
 	/**
@@ -2531,11 +2554,8 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 	 * @return	string		Current IP address
 	 */
 	protected function getCurrentIp() {
-		if (preg_match('/^\d{2,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/', $_SERVER['HTTP_X_FORWARDED_FOR'])) {
-			return $_SERVER['HTTP_X_FORWARDED_FOR'];
-		}
-
-		return $_SERVER['REMOTE_ADDR'];
+		$ret = t3lib_div::getIndpEnv('REMOTE_ADDR');
+		return $ret;
 	}
 	/**
 	 * Initializes TSFE and sets $GLOBALS['TSFE']

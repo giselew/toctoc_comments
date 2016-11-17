@@ -25,4 +25,4 @@ problems.
 1. Wrong or no version of jquery.tools present
 
 2. jQuery version makes fail a jQuery-library, mostly the old fancybox or other older
-jQuery-libraries. **toctoc_comments** has been tested with jQuery 1.8.0 to 1.10.2 
+jQuery-libraries. *toctoc_comments* has been tested with jQuery 1.8.0 to 1.10.2 

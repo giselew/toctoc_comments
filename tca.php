@@ -1265,7 +1265,7 @@ if (version_compare(TYPO3_version, '7.5', '<')) {
 				'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_ipbl_local.crdate',
 				'config' => array (
 					'type' => 'input',
-					'eval' => 'tx_toctoc_comments_ipbl_hooks,datetime',
+					'eval' => 'datetime',
 					'readOnly' => TRUE,
 					'default' => time(),
 				),

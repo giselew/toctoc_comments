@@ -285,8 +285,6 @@
 			<label index="nocurrentpage">No current page selected</label>
 			<label index="staticblacklist">Static blacklist</label>
 			<label index="localblacklist">Local blacklist</label>
-			<label index="sitebannotloaded">ASNC Siteban not loaded</label>
-			<label index="sitebanloaded">ASNC Siteban is loaded</label>
 			<label index="overviewlocalblacklist0noverall">There are no local blacklist entries</label>
 			<label index="overviewlocalblacklist1noverall">There is 1 local blacklist entry overall</label>
 			<label index="overviewlocalblacklistnoverall">There are %d local blacklist entries overall</label>

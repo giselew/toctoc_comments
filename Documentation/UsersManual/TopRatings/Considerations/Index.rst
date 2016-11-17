@@ -12,7 +12,7 @@ Considerations
 ^^^^^^^^^^^^^^
 
 The statistics at the base of top ratings are correctly maintained from the moment on you install
-**toctoc_comments** . 
+*toctoc_comments* . 
 Ratings of versions of **toctoc_comments older than 4.0** 
 are also considered if you expand the time interval beyond this moment, but it's fuzzy:
 

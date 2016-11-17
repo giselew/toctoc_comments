@@ -86,7 +86,7 @@ boxmodelButtonPreserve        boolean     For Button design: Uses the old defaul
                                           (V 6.0.0)
 ----------------------------  ----------  -------------------------------------------------------  --------------------------------------------------------
 responsiveSteps               string      Screenwidths for responsive design in px: This are the   350,450
-                                          window-widths in pixels when **toctoc_comments**
+                                          window-widths in pixels when *toctoc_comments*
                                           changes the layout to fit in the place on the screen.
                                           Defaults are the original values from the CSS-file.
 

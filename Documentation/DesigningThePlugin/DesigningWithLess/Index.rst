@@ -14,7 +14,7 @@ Designing with LESS-model
 .. index::
 	single: Design; LESS model
 
-**toctoc_comments** 8.0.0. introduced a LESS model.
+*toctoc_comments* 8.0.0. introduced a LESS model.
 
 .. figure:: /Images/modellingpartsLESS.jpg
 

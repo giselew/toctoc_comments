@@ -13,7 +13,7 @@ CREATE TABLE tx_toctoc_comments_ipbl_static (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY ipaddr (ipaddr(22))
+	KEY ipaddr (ipaddr(32))
 );
 
 INSERT INTO tx_toctoc_comments_ipbl_static (ipaddr,comment) VALUES ('1.116.0.0/14','DROP lasso');

@@ -11,7 +11,7 @@
 After change of template, changes are not visible in frontend, what to do?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You need to clear the internal session cache of **toctoc_comments**  as well. 
+You need to clear the internal session cache of *toctoc_comments*  as well. 
 
 In the backend module delete all cache and sessions in Overview -> System
 

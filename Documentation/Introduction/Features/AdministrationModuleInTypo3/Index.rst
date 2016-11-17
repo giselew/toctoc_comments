@@ -35,7 +35,7 @@ In Reports you find 4 reports:
 Sessions: Shows current PHP-sessions, possibility to delete sessions or black list IPs.
 
 Active User: Shows Users with activities one the site (You need to be placed on the Root Folder or a
-Sysfolder containing **toctoc_comments**  records.)
+Sysfolder containing *toctoc_comments*  records.)
 
 Crawler protocol: Shows which crawlers accessed pages holding AJAX Social Network Components
 

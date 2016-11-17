@@ -851,17 +851,6 @@ class toctoc_comments_be_overview {
 			</div>
 			';
 
-		if (!t3lib_extMgm::isLoaded('toctoccommentssiteban')) {
-			$overview .= '
-			<div class="tx-tc-100">
-				<span class="tx-tc-margin-right">' . $GLOBALS['LANG']->getLL('sitebannotloaded') . '</span>
-			</div>';
-		} else {
-			$overview .= '
-			<div class="tx-tc-100">
-				<span class="tx-tc-margin-right">' . $GLOBALS['LANG']->getLL('sitebanloaded') . '</span>
-			</div>';
-		}
 		return $overview;
 	}
 }

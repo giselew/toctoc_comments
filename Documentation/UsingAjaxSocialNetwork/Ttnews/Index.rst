@@ -11,7 +11,7 @@
 tt_news
 -------
 
-**toctoc_comments** provides 2 custom markers for **tt_news**.
+*toctoc_comments* provides 2 custom markers for **tt_news**.
  
 The markers do
 not influence performance of **tt_news**, when they are not used.
@@ -33,7 +33,7 @@ By default it will produce the following HTML:
     <a href="url/to/news/item#tx-toctoc-comments-comments-###UID###" class="tx-toctoc-comments-count">5 comments(s)</span>
 
 
-This HTML can be customized by modifying template supplied with ***toctoc_comments***. 
+This HTML can be customized by modifying template supplied with **toctoc_comments**. 
 
 See ###TTNEWS_COMMENT_COUNT_SUB### subpart in the template. 
 

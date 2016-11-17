@@ -12,16 +12,16 @@ Use in other pi1-extensions
 ---------------------------
 
 Extension authors can place calls to
-**toctoc_comments**  anywhere in their PHP-code where they want their records being commented or
+*toctoc_comments*  anywhere in their PHP-code where they want their records being commented or
 rated.
 
-You call **toctoc_comments**  in “**hook-mode** ”. 
+You call *toctoc_comments*  in “**hook-mode** ”. 
 
 You can render the plugin directly to a marker in your code and then display the marker.
-**toctoc_comments**  can be called with the uid of your record and your extensions externalPrefix
+*toctoc_comments*  can be called with the uid of your record and your extensions externalPrefix
 (Key of “Plug-in-to-Table map”)
 
-In TS-Setup of your extension you can overwrite the default setup of **toctoc_comments** 
+In TS-Setup of your extension you can overwrite the default setup of *toctoc_comments* 
 
 ::
 
@@ -73,7 +73,7 @@ exists for your extension in table
 
 
 
-If this is ok, the following code will call the output of a **toctoc_comments** 
+If this is ok, the following code will call the output of a *toctoc_comments* 
 plugin instance:
 
 ::

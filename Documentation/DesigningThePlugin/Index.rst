@@ -15,7 +15,7 @@ Designing the plugin
 	single: Design; Overview
 
 Here we present the best practices for
-changes of the design of **toctoc_comments**.
+changes of the design of *toctoc_comments*.
 You'll find all about customizing CSS with the LESS-model.
 
 The chapter also explains the TS-Options for the plugin layout in the front end.

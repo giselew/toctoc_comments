@@ -41,9 +41,9 @@
  *   63: class toctoc_comments_commentreport extends toctoc_comment_lib
  *   74:     public function generateReport ($content, $conf, $pObj, $piVars)
  *  103:     protected function processReportForm(&$errors, $conf, $pObj, $piVars)
- *  300:     protected function showReportThanks($pObj)
- *  315:     protected function showReportForm($errors, $conf, $pObj, $piVars)
- *  419:     protected function getReportCaptcha($required, $error, $conf, $pObj)
+ *  296:     protected function showReportThanks($pObj)
+ *  311:     protected function showReportForm($errors, $conf, $pObj, $piVars)
+ *  415:     protected function getReportCaptcha($required, $error, $conf, $pObj)
  *
  * TOTAL FUNCTIONS: 5
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -250,16 +250,12 @@ class toctoc_comments_commentreport extends toctoc_comment_lib {
 
 				if ($conf['HTMLEmail']) {	// If htmlmail lib is included, then generate a nice HTML-email
 					$content = $this->t3substituteMarkerArray($templateCode, $markerArray);
-
-					self::send_mail($conf['commentsreport.']['destinationEmail'], $subject, '', $content, $conf['commentsreport.']['sourceEmail'], $sendername);
-
 				} else {
 					$template = $this->t3getSubpart($pObj, $templateCode, '###COMMENTS_RECIPENT_MAIL###');
-					$mailContent = $this->t3substituteMarkerArray($template, $markerArray); // substitute markerArray for HTML content
-					t3lib_div::plainMailEncoded($conf['commentsreport.']['destinationEmail'], $subject, $mailContent, 'From: ' .
-					$conf['commentsreport.']['sourceEmail'] );
+					$content = $this->t3substituteMarkerArray($template, $markerArray); // substitute markerArray for HTML content
 				}
 
+				self::send_mail($conf['HTMLEmail'], $conf['commentsreport.']['destinationEmail'], $subject, '', $content, $conf['commentsreport.']['sourceEmail'], $sendername);
 				return TRUE;
 			}
 
@@ -268,7 +264,7 @@ class toctoc_comments_commentreport extends toctoc_comment_lib {
 			foreach (t3lib_div::trimExplode(',', $conf['commentsreport.']['requiredFields'], TRUE) as $field) {
 				if (trim($piVars[$field]) == '') {
 					if (trim($piVars['text']) != '') {
-					$errors[$field] = $this->pi_getLLWrap($pObj, 'error.empty.field', FALSE);
+						$errors[$field] = $this->pi_getLLWrap($pObj, 'error.empty.field', FALSE);
 					}
 
 				}

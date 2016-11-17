@@ -11,7 +11,7 @@
 User profiles
 """""""""""""
 
-The user profiles shown in **toctoc_comments** (Pop-ups on user pictures) are fully configurable by
+The user profiles shown in *toctoc_comments* (Pop-ups on user pictures) are fully configurable by
 the operator of the website using it.
 
-By default **toctoc_comments**  does not show e-mail user profiles.
+By default *toctoc_comments*  does not show e-mail user profiles.

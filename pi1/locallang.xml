@@ -486,7 +486,6 @@
 			<label index="reviewtext_no_comments">No reviews</label>
 			<label index="text_share">Share</label>
 			<label index="text_share_on">Share on</label>
-			<label index="text_share_this_page">shares</label>
 			<label index="text_share_datatext_comments">Found these comments on page</label>
 			<label index="reviewtext_share_datatext_comments">Found these reviews on page</label>
 			<label index="text_share_datatext">Found this on page</label>

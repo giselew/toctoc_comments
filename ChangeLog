@@ -896,3 +896,16 @@
 	* Fixed: Hotlinks to comments did not show comment if the comment wasn't present on the list by default (old comments)
 	* Removed some console.log messages in JavaScript
 		
+2016-11-17  Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 9.2.6 - see www.toctoc.ch for demos, news, support and donations
+	* Fixed: errors when sending notification email in plaintext format
+	* Fixed: changed blob-fields to medium blob in the new cache tables
+	* Update: strict use of t3lib_div::getIndpEnv('REMOTE_ADDR') to avoid private IPs
+	* Fixed: static IP-Blocklist did not move to storagePid if plugin to table maps are already there.
+	* Fixed: added cacheupdate for recent comments after Approve, Hide, Delete a comment in Backendmodule
+	* Fixed: $TCA error messages in fe_users under TYPO3 8.4.0 are gone
+	* Fixed: AJAX-login with Google or Facebook did not update changed user profiles properly
+	* Removed "Sharing total text" from Backend Plugin
+	* Removed hint on ext:toctoccommentssiteban in Backend Module
+	
+	

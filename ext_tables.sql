@@ -343,9 +343,9 @@ CREATE TABLE tx_toctoc_comments_cacheajax (
 	crdate int(11) DEFAULT '0' NOT NULL,
 	AJAXCache char(20) DEFAULT '' NOT NULL,
 	md5Data char(32) DEFAULT '' NOT NULL,
-	AJAXdata blob NOT NULL,
+	AJAXdata mediumblob NOT NULL,
 	PRIMARY KEY (uid),
-	UNIQUE KEY Xmd5DataCache (AJAXCache,md5Data)
+	KEY Xmd5DataCache (AJAXCache,md5Data)
 );
 
 #
@@ -357,10 +357,10 @@ CREATE TABLE tx_toctoc_comments_cachereport (
 	md5PluginId char(32) DEFAULT '' NOT NULL,
 	ReportPluginMode int(11) DEFAULT '0' NOT NULL,
 	ReportUser char(11) DEFAULT '0' NOT NULL,
-	ReportData blob NOT NULL,
+	ReportData mediumblob NOT NULL,
 	external_ref_uid char(100) DEFAULT '' NOT NULL,
 	PRIMARY KEY (uid),
-	UNIQUE KEY XReportUserCache (md5PluginId,ReportUser),
+	KEY XReportUserCache (md5PluginId,ReportUser),
 	KEY XexternalRefUid (external_ref_uid)
 );
 
@@ -419,5 +419,5 @@ CREATE TABLE fe_users (
     tx_toctoc_comments_facebook_gender tinytext,
     tx_toctoc_comments_facebook_email tinytext,
     tx_toctoc_comments_facebook_locale varchar(5) DEFAULT '' NOT NULL,
-    tx_toctoc_comments_facebook_updated_time varchar(25) DEFAULT '' NOT NULL
+    tx_toctoc_comments_facebook_updated_time varchar(100) DEFAULT '' NOT NULL
 );

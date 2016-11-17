@@ -215,17 +215,6 @@
 				</config>
 				</TCEforms> 
 			</dontUseSharingStumbleuponV2>
-			<shareUsersTotalTextV2>
-				<TCEforms>
-				<label>LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.shareUsersTotalText</label>
-				<config>
-					<type>input</type>
-					<default></default>
-					<eval>trim</eval>
-					<size>30</size>
-				</config>
-				</TCEforms>
-			</shareUsersTotalTextV2>
 			<sharePageURLV2>
 				<TCEforms>
 				<label>LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.sharePageURL</label>

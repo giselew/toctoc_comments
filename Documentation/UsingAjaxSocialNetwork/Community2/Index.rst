@@ -11,10 +11,10 @@
 community
 ---------
 
-In extension **community**  it is possible to use **toctoc_comments**  in the user profile page and
+In extension **community**  it is possible to use *toctoc_comments*  in the user profile page and
 on the user wall. 
 
-The user wall of **tx_community**  still can not be “mixed” with **toctoc_comments** , but the
+The user wall of **tx_community**  still can not be “mixed” with *toctoc_comments* , but the
 plugins can be displayed aside.
 
 On the **user profile toctoc_comments**  allows new comments only for friends of the user profile
@@ -29,7 +29,7 @@ prefix: tx_community
 table: fe_users
 showUid parameter: user
 
-On the profile page it's needed to run **toctoc_comments**  as USER_INT-object to avoid caching when
+On the profile page it's needed to run *toctoc_comments*  as USER_INT-object to avoid caching when
 changing to another user profile. Set in Page TS-Setup:
 
 ::

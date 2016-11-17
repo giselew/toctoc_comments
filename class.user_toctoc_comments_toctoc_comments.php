@@ -57,7 +57,7 @@ class user_toctoc_comments_toctoc_comments {
 
 public $donExtkey = 'toctoccommentsce';
 public $donExtension = 'toctoc_comments';
-public $donExtversion = '925';
+public $donExtversion = '926';
 
 	/**
 	 * This method returns the message's content
@@ -200,8 +200,6 @@ public $donExtversion = '925';
 		$data ='';
 		$infomessage = '';
 		$donationserver = 'www.toctoc.ch';
-		//$donationserver = 'toctoc4xdrp';
-		//$_SESSION['toctoc_commentsfedonation'] = '';
 		if (trim($_SESSION['toctoc_commentsfedonation']) != '') {
 			if ($_SESSION['toctoc_commentsfedonationdone']==1) {
 				$this->toctoccommentsfedonationdone=1;
@@ -279,16 +277,17 @@ public $donExtversion = '925';
 					curl_close($ch);
 					$infomessage = 'Curl, error reading: ' . $curl_errmsg;
 					$alertmsg = 1;
-				}
-
-				$infohttpcode = intval(curl_getinfo($ch, CURLINFO_HTTP_CODE));
-				// checking mime types
-				if ($infohttpcode < 400)  {
-					curl_close($ch);
 				} else {
-					$infomessage = 'Curl, returned code ' . $infohttpcode . ' for URL: ' . $urltofetch;
-					$alertmsg = 1;
-					curl_close($ch);
+
+					$infohttpcode = intval(curl_getinfo($ch, CURLINFO_HTTP_CODE));
+					// checking mime types
+					if ($infohttpcode < 400)  {
+						curl_close($ch);
+					} else {
+						$infomessage = 'Curl, returned code ' . $infohttpcode . ' for URL: ' . $urltofetch;
+						$alertmsg = 1;
+						curl_close($ch);
+					}
 				}
 
 			}
@@ -298,11 +297,11 @@ public $donExtversion = '925';
 			}
 
 			if (trim($data) != '') {
-				$_SESSION['toctoc_commentsfedonation']=$data;
+				$_SESSION['toctoc_commentsfedonation'] = $data;
 				$ret = trim($data);
 				return $ret;
 			} else {
-				$_SESSION['toctoc_commentsfedonation']=$infomessage;
+				$_SESSION['toctoc_commentsfedonation'] = $infomessage;
 				return $infomessage;
 			}
 

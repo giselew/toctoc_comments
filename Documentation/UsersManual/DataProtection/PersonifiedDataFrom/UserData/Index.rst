@@ -11,14 +11,14 @@
 User data
 """""""""
 
-To operate as a commenting-system **toctoc_comments**  requires last name, gender and e-mail
+To operate as a commenting-system *toctoc_comments*  requires last name, gender and e-mail
 (mandatory information).
 
 Time and IP-address also are needed for operation.
 
 If gender is not present, then it's supposed to be "male"
 
-In default configuration **toctoc_comments**  adds first name and location.
+In default configuration *toctoc_comments*  adds first name and location.
 
 The operator of the website can add additionally comment-title and website.
 

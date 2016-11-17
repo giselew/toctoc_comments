@@ -18,7 +18,7 @@ Installing and Setup
 have problems with creating the tables, please deactivate **dbal**  for this
 install.
 
-If you update from a former version of**toctoc_comments** , then make sure that the
+If you update from a former version of*toctoc_comments* , then make sure that the
 upload-folders are created: In EM open the Configuration-tab of the extension
 and press Update to create these folders.
 
@@ -58,7 +58,7 @@ It's
     <script src="/typo3conf/ext/toctoc_comments/res/js/tx-tc-ftr-versionnumber.js" type="text/javascript"></script>
 
     
-(**versionnumber**  is like '530' for **toctoc_comments** version 5.3.0)
+(**versionnumber**  is like '530' for *toctoc_comments* version 5.3.0)
 
 4) Setup your TS. See setup.txt in
 directory /static for an example.

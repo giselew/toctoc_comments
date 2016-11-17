@@ -11,7 +11,7 @@
 Changes to template files
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**toctoc_comments**  is an AJAX-based solution. 
+*toctoc_comments*  is an AJAX-based solution. 
 Normally a marker can be set-up
 anywhere in a sub-template and it will work. 
 But if a marker is needed in an AJAX

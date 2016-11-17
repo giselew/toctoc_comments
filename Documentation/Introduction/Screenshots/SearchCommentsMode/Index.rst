@@ -11,7 +11,7 @@
 Search Comments mode
 ^^^^^^^^^^^^^^^^^^^^
 
-Pluginmode 7 shows **toctoc_comments**  as a comment search form. In the backend plugin you can
+Pluginmode 7 shows *toctoc_comments*  as a comment search form. In the backend plugin you can
 adjust the storagePid(s) where there search looks out for comments. 
 
 The search is made in fields firstname, lastname and content.

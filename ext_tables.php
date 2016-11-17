@@ -364,6 +364,8 @@ if (version_compare(TYPO3_version, '7.5', '<')) {
 						'config' => array (
 								'type' => 'input',
 								'size' => '20',
+								'max' => '255',
+								'eval' => 'trim',								
 						)
 				),
 				'tx_toctoc_comments_facebook_link' => array (
@@ -373,18 +375,7 @@ if (version_compare(TYPO3_version, '7.5', '<')) {
 								'type'     => 'input',
 								'size'     => '30',
 								'max'      => '255',
-								'checkbox' => '',
-								'eval'     => 'trim',
-								'wizards'  => array(
-										'_PADDING' => 2,
-										'link'     => array(
-												'type'         => 'popup',
-												'title'        => 'Link',
-												'icon'         => 'link_popup.gif',
-												'script'       => 'browse_links.php?mode=wizard',
-												'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
-										)
-								)
+								'eval'     => 'trim',								
 						)
 				),
 				'tx_toctoc_comments_facebook_gender' => array (
@@ -393,6 +384,8 @@ if (version_compare(TYPO3_version, '7.5', '<')) {
 						'config' => array (
 								'type' => 'input',
 								'size' => '5',
+								'max' => '15',
+								'eval' => 'trim',								
 						)
 				),
 				'tx_toctoc_comments_facebook_email' => array (
@@ -401,6 +394,8 @@ if (version_compare(TYPO3_version, '7.5', '<')) {
 						'config' => array (
 								'type' => 'input',
 								'size' => '30',
+								'max' => '255',
+								'eval' => 'trim',
 						)
 				),
 				'tx_toctoc_comments_facebook_locale' => array (
@@ -409,7 +404,7 @@ if (version_compare(TYPO3_version, '7.5', '<')) {
 						'config' => array (
 								'type' => 'input',
 								'size' => '5',
-								'max' => '5',
+								'max' => '25',
 								'eval' => 'trim',
 						)
 				),

@@ -422,14 +422,14 @@ class toctoc_comments_common {
 		 			}
 	 			}
 
-	 			$currip = $_SERVER['REMOTE_ADDR'];
+	 			$currip = t3lib_div::getIndpEnv('REMOTE_ADDR');
 	 			$_SESSION['CurrentIP'] =  $currip;
 	 		}
 
 	 		if (!isset($_SESSION['toctoc_user'])) {
 	 			if (isset($GLOBALS['TSFE'])) {
 			 		if (intval($GLOBALS['TSFE']->fe_user->user['uid']) == 0) {
-			 			$_SESSION['toctoc_user'] = '' . $_SERVER['REMOTE_ADDR'] . '.0';
+			 			$_SESSION['toctoc_user'] = '' . t3lib_div::getIndpEnv('REMOTE_ADDR') . '.0';
 			 		} else {
 			 			$_SESSION['toctoc_user'] = '0.0.0.0.' . $GLOBALS['TSFE']->fe_user->user['uid'];
 			 		}

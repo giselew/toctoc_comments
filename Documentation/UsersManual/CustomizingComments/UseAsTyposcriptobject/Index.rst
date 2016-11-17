@@ -11,7 +11,7 @@
 Use as TypoScript-Object
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-It's possible to use **toctoc_comments**  as TypoScript Object.
+It's possible to use *toctoc_comments*  as TypoScript Object.
 Important
 condition: optionalRecordId needs to be setup.
 

@@ -1,4 +1,4 @@
-TocToc_Comments Text Template for email notification to ciommentator
+TocToc_Comments Text Template for email notification to commentator
 
 Valid Markers:
 
@@ -16,6 +16,7 @@ Valid Markers:
 ###MESSAGETYPE### - ###MYHOMEPAGE###
 
 ###SALUTATION### ###USER###
+
 ###MESSAGE###
 
 ###LINK_TO_COMMENT###

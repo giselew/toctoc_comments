@@ -170,7 +170,7 @@ optionalRecordId                string          A specific record to comment on,
                                                 See: also externalPrefix for use of records
 
                                                 You can specify a content element holding another
-                                                **toctoc_comments**  plugin with this.
+                                                *toctoc_comments*  plugin with this.
                                                 If so, the comments of the other
                                                 plugin are displayed, but still you can configure the
                                                 current plugin as you want. It works

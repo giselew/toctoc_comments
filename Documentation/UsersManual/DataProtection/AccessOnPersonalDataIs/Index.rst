@@ -13,7 +13,7 @@ Access on personal data is possible ...
 
 **1. locally, on your PC.** Websites can read your cookies create user profiles.
 
-**toctoc_comments**  requires the OK of the user for storage of cookies containing personal data.
+*toctoc_comments*  requires the OK of the user for storage of cookies containing personal data.
 
 **2. during transport of data** between you and the server. Encryption of data protects data during
 transport. Encrypted data is hard to spy, data won't be transmitted as readable text
@@ -37,17 +37,17 @@ interest for this data like the databases of for example Yahoo, Google. GMX also
 3c) Storage of data on external MySQL-servers offers bigger chances for unauthorized access to
 happen.
 
-**toctoc_comments**  does not save data on central servers. By default data is located on the
+*toctoc_comments*  does not save data on central servers. By default data is located on the
 web-server running the website.
 
 **4. by search engines:** Storage of comments by search engines like Google or Bing is a problem in
 case these comments should disappear from the internet by whatever reason.
 
-**toctoc_comments**  protects comments from indexing by search engines.
+*toctoc_comments*  protects comments from indexing by search engines.
 
 **5. Complete security** 
 
 does not exist
 
-**toctoc_comments**  shows the status and recommendations concerning data protection (in the front
+*toctoc_comments*  shows the status and recommendations concerning data protection (in the front
 end disclaimer).

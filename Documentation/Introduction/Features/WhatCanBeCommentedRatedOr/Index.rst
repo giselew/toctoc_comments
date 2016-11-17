@@ -37,7 +37,7 @@ comments.
 \*\* Possible In TemplaVoila flexible content elements (FCE), plugin
 identification is achieved with OptionalRecordIDs.
 
-\*\*\* Comments and ratings on pages imply that only one **toctoc_comments**  plugin is present
+\*\*\* Comments and ratings on pages imply that only one *toctoc_comments*  plugin is present
 on a page. 
 
 TemplaVoila
@@ -49,7 +49,7 @@ Can be used in FCE as TypoScript-Only Object
 TypoScript-Object
 """""""""""""""""
 
-**toctoc_comments**  can be used as TypoScript-Object and placed in the page by TypoScript
+*toctoc_comments*  can be used as TypoScript-Object and placed in the page by TypoScript
 
 PHP code of other pibase-extensions
 """""""""""""""""""""""""""""""""""

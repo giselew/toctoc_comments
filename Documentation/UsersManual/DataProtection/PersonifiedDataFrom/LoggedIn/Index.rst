@@ -11,5 +11,5 @@
 Logged In
 """""""""
 
-If you are logged in, then **toctoc_comments** is using your user data (as defined in your website
+If you are logged in, then *toctoc_comments* is using your user data (as defined in your website
 user administration) and your avatar, if there is any.

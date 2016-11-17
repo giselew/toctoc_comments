@@ -32,6 +32,9 @@ $tempColumns = array (
 				'config' => array (
 						'type' => 'input',
 						'size' => '20',
+						'max'      => '255',
+						'eval'     => 'trim',
+						
 				)
 		),
 		'tx_toctoc_comments_facebook_link' => array (
@@ -41,12 +44,7 @@ $tempColumns = array (
 						'type'     => 'input',
 						'size'     => '30',
 						'max'      => '255',
-						'checkbox' => '',
 						'eval'     => 'trim',
-						'wizards'  => array(
-								'_PADDING' => 2,
-								'link'     => $configlink,
-						)
 				)
 		),
 		'tx_toctoc_comments_facebook_gender' => array (
@@ -55,6 +53,9 @@ $tempColumns = array (
 				'config' => array (
 						'type' => 'input',
 						'size' => '5',
+						'max'      => '15',
+						'eval'     => 'trim',
+						
 				)
 		),
 		'tx_toctoc_comments_facebook_email' => array (
@@ -63,6 +64,9 @@ $tempColumns = array (
 				'config' => array (
 						'type' => 'input',
 						'size' => '30',
+						'max'      => '255',
+						'eval'     => 'trim',
+						
 				)
 		),
 		'tx_toctoc_comments_facebook_locale' => array (
@@ -71,8 +75,9 @@ $tempColumns = array (
 				'config' => array (
 						'type' => 'input',
 						'size' => '5',
-						'max' => '5',
-						'eval' => 'trim',
+						'max'      => '25',
+						'eval'     => 'trim',
+						
 				)
 		),
 		'tx_toctoc_comments_facebook_updated_time' => array (

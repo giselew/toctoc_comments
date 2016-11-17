@@ -14,7 +14,7 @@ Comments and ratings on records of other extensions
 .. index::
 	single: Other Extensions; Plugin-to-table-maps
 
-Before version 3.1 of **toctoc_comments**  commenting and rating on records was
+Before version 3.1 of *toctoc_comments*  commenting and rating on records was
 implemented as Prefix-to-table-map and was setup in TS-Configuration. 
 Now prefix-to-table maps are maintained in TYPO3 table **Plugin to table
 map**.
@@ -35,7 +35,7 @@ The records must be shown in a details view page and the parameters used by the 
 the record must be present as GET-Variables in the URL of the page. (Don't worry if you use nice
 URLs made with realURL or others, it works)
 
-**toctoc_comments**  already includes the “Plugin to table map” for the following 11 extension
+*toctoc_comments*  already includes the “Plugin to table map” for the following 11 extension
 keys.
 
 If there are no “Plugin to table map”-entries present in your database you can import a first
@@ -91,7 +91,7 @@ http://domain.tld/index.php?id=12345&tx_myext_pi1[showUid]=67890
 
 (Parameter “showUid” is normally set by default extension design)
 
-**toctoc_comments**  will understand that it must refer to tx_myextmytable for triggering prefix
+*toctoc_comments*  will understand that it must refer to tx_myextmytable for triggering prefix
 tx_myext_pi1.
 
 Optional URL parameter
@@ -114,7 +114,7 @@ Extensions mostly use “showUid” parameter. If “showUid” is used, there i
 it in “Plugin to table map”, it will be the default.
 
 With “Optional URL parameter” it is possible to use custom URL parameter with
-**toctoc_comments** . 
+*toctoc_comments* . 
 
 If your extension, for example, uses parameter “newsid” to display it's records, then add
 “newsid” to the entry concerning your extension in “Plugin to table map” field “Optional
@@ -127,7 +127,7 @@ So if the paramenter is “newsid”, the URL looks like this:
     `http://domain.tld/index.php?id=12345&tx_myext_pi1[newsid]=67890 <http://domain.tld/index.php?id=12345&tx_myext_pi1[uid]=67890>`__
 
 
-**toctoc_comments**  will understand that record's uid value is 67890.
+*toctoc_comments*  will understand that record's uid value is 67890.
 
     
 Entries for top Ratings
@@ -136,7 +136,7 @@ Entries for top Ratings
 displayfields
 """""""""""""
 
-For selecting topRatings data on records like News or Products **toctoc_comments** needs to know
+For selecting topRatings data on records like News or Products *toctoc_comments* needs to know
 which fields of the record to display. 
 In displayfields you can specify title,
 time of the record, the content (will be cropped) and you can specify if toctoc_comments should use

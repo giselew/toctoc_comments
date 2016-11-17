@@ -14,7 +14,7 @@ Administration module in TYPO3 Backend
 .. index::
 	single: Administration; Comments module in TYPO3 Backend
 
-**toctoc_comments**  installs a module for comment- and user-administration in the TYPO3 backend.
+*toctoc_comments*  installs a module for comment- and user-administration in the TYPO3 backend.
 
 With version 7.0.1 administration of spamhaus blocked IPs is available as 3rd option in the
 administration menu.

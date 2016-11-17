@@ -34,7 +34,7 @@ completely the personal data it stores about a user on the server.
 In the administration back-end the user administration give the possibility to delete users from the
 system. This action includes comments, personal data and statistics.
 
-If ever a deletion of your personal data on a server running **toctoc_comments** should be needed,
+If ever a deletion of your personal data on a server running *toctoc_comments* should be needed,
 then you should contact technical support of the website and ask for deletion - please indicate your
 email, first- and last-name. The technical support can ask you more things to do in order to link
 your identification with the user you like to delete.

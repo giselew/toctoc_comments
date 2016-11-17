@@ -192,7 +192,7 @@ commentsEditBack                                                                
 FeUserImagePath                                                                 string      Path where the feuser-images are stored. Normally        uploads/pics/
                                                                                             uploads/pics/. (W)
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
-FeUserDbField                                                                   string      Database field in fe_users where **toctoc_comments**     image
+FeUserDbField                                                                   string      Database field in fe_users where *toctoc_comments*     image
                                                                                             should look for a user pic. (W)
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
 useAdditionalFe_usersFields                                                     string      Only fe_users-fields in 'uid, pid, username, email,

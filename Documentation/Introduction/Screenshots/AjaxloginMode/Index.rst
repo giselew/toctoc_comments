@@ -23,7 +23,7 @@ Also for forgotten passwords the recovery of a new password can be done in this 
 Note that users can login with their
 Facebook- or Google+-accounts
 To use this features, you have to create first an app
-for your website on Google or Facebook and then add the App ID and Secret to **toctoc_comments** 
+for your website on Google or Facebook and then add the App ID and Secret to *toctoc_comments* 
 pi2-TS-Setup
 
 Note on the Captcha for the registration

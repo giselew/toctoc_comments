@@ -13,7 +13,7 @@ cwt_community
 
 For extension **cwt_community**  the same it's the same like for **community**  
 
-**cwt_community**  uses same jQuery like **toctoc_comments** , we recommend, on pages where you use
+**cwt_community**  uses same jQuery like *toctoc_comments* , we recommend, on pages where you use
 **toctoc_comments,**  to disbale jQuery from **cwt_ community**  with 
 
 ::

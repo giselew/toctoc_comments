@@ -16,7 +16,7 @@ keep track.
 
 **What is a User in toctoc_comments ?**  
 
-**There are 2 kinds of users: Anonymous and logged in users. **toctoc_comments** stores it's own
+**There are 2 kinds of users: Anonymous and logged in users. *toctoc_comments* stores it's own
 user format especially with the goal to identify returning anonymous users.** 
 
 Logged in users, FE-Users, are stored in format '0.0.0.0.fe_userid' (example: 0.0.0.0.2054).

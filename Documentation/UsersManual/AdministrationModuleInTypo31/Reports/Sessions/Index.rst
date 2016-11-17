@@ -13,7 +13,7 @@ Sessions
 
 .. figure:: /Images/backendReportSelectSessions.jpg
 
-In the Sessionreport the current sessions made with **toctoc_comments**  are shown. 
+In the Sessionreport the current sessions made with *toctoc_comments*  are shown. 
 
 Session-files reside in pi1/temp-Folder and they contain information about the user, IP, pages visited and cookies
 found on the client.

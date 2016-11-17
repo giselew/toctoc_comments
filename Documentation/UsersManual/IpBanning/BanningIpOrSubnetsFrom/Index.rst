@@ -18,8 +18,8 @@ In the Extension Configuration Options you will find option
     useSpamhausBlocklistForWebsiteBan = 0
 
 
-In the table “Local IP blocking list for toctoc_comments” you find the field
-“Block frontend access”
+In the table "Local IP blocking list for toctoc_comments" you find the field
+"Block frontend access"
 
-IMPORTANT: These options work only in connection with installed EXT:toctocsiteban
+IMPORTANT: These options work only in connection with installed EXT:cyberpeace
 

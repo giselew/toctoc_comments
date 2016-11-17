@@ -1,8 +1,11 @@
 ###URL######POINTS###
 
 ###USER###
+
 ###REMOTE_ADDR###
+
 ###RESPOND_LINK###
+
 ###TEXTCONTENT###
 --------------------------------------------------------------------------
 ###CONTENT### ###ATTACHMENT###

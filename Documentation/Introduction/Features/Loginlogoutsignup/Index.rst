@@ -17,7 +17,7 @@ Write comment, login, continue write comment
 
 Refresh parts of the page identified by CSS-ids after login and logout
 
-Useable as stand alone plugin or inside **toctoc_comments** 
+Useable as stand alone plugin or inside *toctoc_comments* 
 
 Based on options like in TYPO3s **felogin,**  additional options for sign up and Google+/Facebook-login
 

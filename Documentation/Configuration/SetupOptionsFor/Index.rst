@@ -14,7 +14,7 @@ Setup Options for tx_toctoc_comments_pi2
 .. index::
 	single: Configuration; AJAX-Login (tx_toctoc_comments_pi2)
 
-**toctoc_comments**  installs all the AJAX
+*toctoc_comments*  installs all the AJAX
 Login-options as **tx_toctoc_comments_pi2** . 
 
 All options are setup only and they are
