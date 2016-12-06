@@ -394,7 +394,7 @@ CREATE TABLE tx_toctoc_comments_cache_tags (
 #
 CREATE TABLE tx_toctoc_comments_cache_mailconf (
     id int(11) NOT NULL auto_increment,
-    crdate int(11) DEFAULT '1471672855' NOT NULL,
+    crdate int(11) DEFAULT '0' NOT NULL,
     mailconf text NOT NULL,
     PRIMARY KEY (id)
 );

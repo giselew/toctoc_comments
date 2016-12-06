@@ -199,8 +199,6 @@ class toctoc_comments_be_comments {
 
 							// cachereport
 							$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport WHERE external_ref_uid = "' . $external_ref_uid .'"');
-							$cachedEntities = '1,41,6';
-							$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport WHERE ReportPluginMode IN (' . $cachedEntities . ')');
 							
 						}
 
@@ -234,8 +232,10 @@ class toctoc_comments_be_comments {
 						}
 
 						unset($tce);
-					}
-
+					}							
+					
+					$cachedEntities = '1,41,6';
+					$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cachereport WHERE ReportPluginMode IN (' . $cachedEntities . ')');
 				}
 
 			} else {

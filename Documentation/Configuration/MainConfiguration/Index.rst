@@ -29,7 +29,7 @@ For Updates we started to add the version number to new TS options, starting wit
 Also changes to defaults are tagged by version number. 
 
 Note: The following TypoScript-options apply to **plugin.tx_toctoc_comments_pi1** , it includes all
-apart from the AJAX-Login part of the extension, which you'll find after this chapter, these option
+apart from the AJAX-Login part of the extension, which you'll find after this chapter. Options for AJAX-Login 
 are available as plugin.tx_toctoc_comments_pi2.
 
 ==============================  ==============  ============================================================  ============================================================================================
@@ -115,10 +115,7 @@ HTMLEmailFontFamily             string          Font Family for HTML E-Mail     
 ------------------------------  --------------  ------------------------------------------------------------  --------------------------------------------------------------------------------------------
 sessionTimeout                  int+            Timeout for User-Sessions in minutes. After this time         1440
                                                 sessions older than the timeout are deleted by the PHP
-                                                Garbage collector. Session files were in
-                                                toctoc_comments Sessionfolder in typo3temp, since V 5.2.2 
-                                                the sessions are stored in the extension-directory in
-                                                pi1/sessionTemp/TocTocCommentsSessions
+                                                Garbage collector. 
                                                 \(S), (V 5.1.0)
 ------------------------------  --------------  ------------------------------------------------------------  --------------------------------------------------------------------------------------------
 dbCacheTimeout                  int+            Timeout for db-cache in minutes (7 days), must be             10080
@@ -149,7 +146,7 @@ pluginmode                      int             Empty, 0: Comments and Form, Sha
 
                                                 7 – Comments Search (V7.0.0)
                                                 
-                                                8 – Deprecated, removal in version 9.3: Top sharings (V8.0.0)
+                                                8 – Deprecated, removal in version 9.3: Top sharings
 
                                                 (P – General – Mode )
 ------------------------------  --------------  ------------------------------------------------------------  --------------------------------------------------------------------------------------------
@@ -177,7 +174,7 @@ optionalRecordId                string          A specific record to comment on,
                                                 for **toctoc_comment** plugins implemented for comments
                                                 on pages (default).
 
-                                                For **toctoc_comment** plugins implemented for comments
+                                                For *toctoc_comments* plugins implemented for comments
                                                 on records it will not work, the prefix-to-table map
                                                 can be used only in context of the plugin for the
                                                 external records. And makes no sense, because comments
@@ -258,9 +255,6 @@ smilies                         array           Array with all available smilies
                                                 [filename] = [string1] [string2]
 
                                                 Smilies are a mix from Facebook-like smilies and the 
-                                                smilies from the original smilie-extension. Smilies
-                                                gisele (Gisèle Wendl), Roman and Jacqueline are, just
-                                                like the famous developer Putnam from Facebook,
-                                                dedicated to the related, living persons, who
-                                                contributed to this extension.
+                                                smilies from the original smilie-extension. 
 ==============================  ==============  ============================================================  ============================================================================================
+ 

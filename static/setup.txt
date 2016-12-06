@@ -215,7 +215,7 @@ plugin.tx_toctoccomments_pi1 {
     commentatorNotifybyIP = {$plugin.tx_toctoccomments_pi1.commentatorNotifybyIP}
     moderationMessageWithComment = {$plugin.tx_toctoccomments_pi1.moderationMessageWithComment}
 	
-	emailValidDays   = {$plugin.tx_toctoccomments_pi1.emailValidDays}  
+    emailValidDays   = {$plugin.tx_toctoccomments_pi1.emailValidDays}  
     # Information e-mail when a new comment is posted for commentator of former comments is sent from this address
     notificationForCommentatorEmail = {$plugin.tx_toctoccomments_pi1.notificationForCommentatorEmail}
     notificationForCommentatorEmailName = {$plugin.tx_toctoccomments_pi1.notificationForCommentatorEmailName}

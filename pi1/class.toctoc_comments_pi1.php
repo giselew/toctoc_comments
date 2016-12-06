@@ -114,7 +114,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '926';
+	public $extVersion = '927';
 	public $extLESSVersion = 'toctoc_comments-LESS.2';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
@@ -1329,7 +1329,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		}
 
 		$communitydisplaylist = $this->init();
-
+		
 		if ($this->showsdebugprint==TRUE) {
 			$starttimecObj=microtime(TRUE);
 		}
@@ -1820,18 +1820,20 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 		 * Here is the CID of the Comment-Plugin that is currently being rendered.
 		 */
 		$_SESSION['commentListCount'] = $current_content_uid;
-
+		
 		if (intval($this->conf['pluginmode']) == 0) {
 
 			if (($this->lhookTablePrefix != '') && ($isPlugin == 1)) {
 				$_SESSION['commentListCount'] = $cid_hook;
-				$_SESSION['commentListRecord'] = 'tt_content_' . $_SESSION['commentListCount'];
+				if (($this->lhookTablePrefix == 'pages') || ($this->lhookTablePrefix == 'tt_content')) {
+					$_SESSION['commentListRecord'] = 'tt_content_' . $_SESSION['commentListCount'];
+				}
 			}
 
 			if (($this->lhookTablePrefix == '') && ($this->conf['externalPrefix'] == 'pages')) {
 				$_SESSION['commentListRecord'] = 'tt_content_' . $_SESSION['commentListCount'];
 			}
-
+			
 			if ($this->showsdebugprint==TRUE) {
 				$endtimesetcommentListRecord=microtime(TRUE);
 			}
@@ -2031,7 +2033,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 			}
 
 		}
-
+		
 		if (trim($_SESSION['commentListRecord']) == '') {
 			$_SESSION['commentListRecord'] = 'tt_content_' . $_SESSION['commentListCount'];
 		}
@@ -3754,7 +3756,7 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 
 		}
 
-		$_SESSION['commentListRecord']=$this->foreignTableName . '_' . $this->externalUid;
+		$_SESSION['commentListRecord'] = $this->foreignTableName . '_' . $this->externalUid;
 		return TRUE;
 	}
 
@@ -3835,6 +3837,7 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 				$_SESSION['commentsPageOrigId']=$this->hooksrecordpage;
 				$_SESSION['commentsContentElementOrigId']=$this->hooksrecordcontentelement; // ?!?
 			}
+			
 
 		} elseif ($this->conf['externalPrefix'] != 'pages') {
 
@@ -3842,7 +3845,7 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 			if ($this->initexternaluid(FALSE) == FALSE) {
 				return FALSE;
 			}
-
+			
 		} else {
 			// We are commenting normally
 			$this->externalUid = $GLOBALS['TSFE']->id;
@@ -4470,7 +4473,7 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 			$this->sdebuginitprint.='Init end: ' . round(1000*($endtimedebug2 - $starttimedebug2), 1) .')</small> ';
 
 		}
-
+				
 		return TRUE;
 
 	}
@@ -5162,11 +5165,15 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 			$this->conf['ratings.']['emoLike'] . $ratingsemoLikeSet . intval($isTabletOrHandyexceptFF) . intval($this->conf['useUserImage']) . $atMediaWitdhs);
 
 		if (trim($this->conf['theme.']['selectedBoxmodel']) != '') {
+			//$filenamecssoutfile='tx-tc-' . $this->extVersion . '-' . str_replace('.txt', '', $this->conf['theme.']['selectedBoxmodel']) .'-' .
+			//		$this->conf['theme.']['selectedTheme'] . '-' . $GLOBALS['TSFE']->sys_language_uid  . $httpsid . '-' . $cssmd5 . '.css';
 			$filenamecssoutfile='tx-tc-' . $this->extVersion . '-' . str_replace('.txt', '', $this->conf['theme.']['selectedBoxmodel']) .'-' .
-					$this->conf['theme.']['selectedTheme'] . '-' . $GLOBALS['TSFE']->sys_language_uid  . $httpsid . '-' . $cssmd5 . '.css';
+					$this->conf['theme.']['selectedTheme'] . '-' . $cssmd5 . '.css';
 		} else {
+			//$filenamecssoutfile='tx-tc-' . $this->extVersion . '-system-' .
+			//		$this->conf['theme.']['selectedTheme'] . '-' . $GLOBALS['TSFE']->sys_language_uid  . $httpsid . '-' . $cssmd5 . '.css';
 			$filenamecssoutfile='tx-tc-' . $this->extVersion . '-system-' .
-					$this->conf['theme.']['selectedTheme'] . '-' . $GLOBALS['TSFE']->sys_language_uid  . $httpsid . '-' . $cssmd5 . '.css';
+					$this->conf['theme.']['selectedTheme'] . '-' . $cssmd5 . '.css';
 		}
 
 		$txdirname= str_replace('/', DIRECTORY_SEPARATOR, str_replace($repstr, '', dirname(__FILE__)) . $dirsep . t3lib_extMgm::siteRelPath('toctoc_comments') .

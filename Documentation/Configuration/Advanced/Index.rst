@@ -175,11 +175,10 @@ notificationForPwdChangeHTMLEmailTemplate                                       
                                                                                             who needs to change his password (forgot or new user)
 
                                                                                             (V 7.4.1)
-
-                                                                                            =
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
-eIDHTMLTemplate                                                                 string      When clicking on Links in Admin-E-Mails this template    EXT:toctoc_comments/res/template/toctoccomments_template_eid.html
-                                                                                            will be used to show the answer of the system (S)
+eIDHTMLTemplate                                                                 string      When clicking on Links in Admin-E-Mails this template    EXT:toctoc_comments/res/template/
+                                                                                            will be used to show the answer of the system            toctoccomments_template_eid.html 
+                                                                                            (S)
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
 CommentsShowOldPerCID                                                           int+        This is the scrolling multiplication number, telling     3
                                                                                             how many commentsPerPage the show older comments
@@ -192,7 +191,7 @@ commentsEditBack                                                                
 FeUserImagePath                                                                 string      Path where the feuser-images are stored. Normally        uploads/pics/
                                                                                             uploads/pics/. (W)
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
-FeUserDbField                                                                   string      Database field in fe_users where *toctoc_comments*     image
+FeUserDbField                                                                   string      Database field in fe_users where *toctoc_comments*       image
                                                                                             should look for a user pic. (W)
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
 useAdditionalFe_usersFields                                                     string      Only fe_users-fields in 'uid, pid, username, email,
@@ -304,7 +303,6 @@ replyModeInline                                                                 
                                                                                             replied on. Slows down bit performance.
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
 replyModeInlineOpenForm                                                         boolean     reply mode inline with open form                         0
-Form
                                                                                             for Replies on comments is shown instead of reply link
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
 useEmoji                                                                        options     inactive=0,emoji images 16px=1,emoji images              1
@@ -513,8 +511,8 @@ protocolBlacklistedIPsMaxLines     integer    Maximal number of lines for the Bl
                                               protocol
                                               (V 7.4.0.)
 ---------------------------------  ---------  -------------------------------------------------------  -------------------------------------------------------------------
-dontTakeEmptyAgentStringAsCrawler  boolean    mpty HTTP_USER_AGENT are uncool, most possibly crawlers
-                                              to be excluded from the commenting system and session
-                                              creation
+dontTakeEmptyAgentStringAsCrawler  boolean    Empty HTTP_USER_AGENT are uncool, most possibly 
+                                              crawlers to be excluded from the commenting system and 
+                                              session creation
                                               (V 7.4.0.)
 =================================  =========  =======================================================  ===================================================================

@@ -440,9 +440,10 @@ class toctoc_comments_ratings extends toctoc_comment_lib {
 					if (!$fromAjax) {
 						$this->build_AJAXImages($conf, $pObj, $usergenderexistsstr, $fromAjax);
 					} else {
-						if (count($_SESSION['AJAXimages']) !=0 ) {
+						if (count($_SESSION['AJAXimages']) != 0 ) {
 							$this->AJAXimages = $_SESSION['AJAXimages'];
 							$this->gravatarimages = $_SESSION['gravatarimages'];
+							$this->AJAXimagesCache = $_SESSION['AJAXOrigimages'];								
 						}
 
 					}
@@ -2527,6 +2528,7 @@ class toctoc_comments_ratings extends toctoc_comment_lib {
 						if (count($_SESSION['AJAXimages']) !=0 ) {
 							$this->AJAXimages = $_SESSION['AJAXimages'];
 							$this->gravatarimages = $_SESSION['gravatarimages'];
+							$this->AJAXimagesCache = $_SESSION['AJAXOrigimages'];
 						}
 
 					}

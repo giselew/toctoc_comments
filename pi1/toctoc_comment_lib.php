@@ -1363,7 +1363,7 @@ class toctoc_comment_lib extends tslib_pibase {
 						$reviewsql = '(tx_toctoc_comments_comments.uid = ' . $reviewcommentid . ') OR ';
 					}
 				}
-
+				
 				if ((intval($conf['advanced.']['sortMostPopular']) == 0) && (intval($conf['advanced.']['useMostPopular']) == 0)) {
 					// make OFFSET and LIMIT in PHP, this allow mysql to cache the query for later page browseing
 					$rowsorig = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('uid',
@@ -1396,6 +1396,7 @@ class toctoc_comment_lib extends tslib_pibase {
 
 					}
 
+					
 					$wherecompletepttm = '(' . $wherepttm . '="' . $_SESSION['commentListRecord'] . '") AND';
 					if ($condfeusergroupmembers != '') {
 						$wherecompletepttm = '';
@@ -1423,6 +1424,7 @@ class toctoc_comment_lib extends tslib_pibase {
 						GROUP BY tx_toctoc_comments_comments.uid, tx_toctoc_comments_comments.crdate
 						ORDER BY ' . $sortinglvlpop;
 					$qryrowsorig = $GLOBALS['TYPO3_DB']->sql_query($queryrowsorig);
+					
 					$uidswithstats = '0,';
 					while ($datarowsorig = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($qryrowsorig)) {
 						$rowsorigraw[$datarowsorig['uid']] = $datarowsorig['sumilikedislike'];
@@ -1579,13 +1581,14 @@ class toctoc_comment_lib extends tslib_pibase {
 			}
 
 			if ($domemcache == FALSE) {
+				
 				$allrowswhereloc = str_replace(' AND parentuid=0', '', $pObj->where);
 				$allrows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('toctoc_commentsfeuser_feuser, toctoc_comments_user, uid,approved,crdate,
 									commenttitle,firstname,lastname,homepage,
 									location,email,content,tx_commentsnotify_notify,remote_addr,SUBSTR(external_ref_uid,12) AS external_ref_uid,
 									attachment_id,attachment_subid,parentuid,gender,external_ref,tx_commentsresponse_response',
 						'tx_toctoc_comments_comments', $allrowswhereloc . $condfeusergroup, '', $sortinglvlall);
-
+				
 				//add statvals
 				$cntallrows = count($allrows);
 				$txtin = '';
@@ -1607,8 +1610,7 @@ class toctoc_comment_lib extends tslib_pibase {
 						 FROM tx_toctoc_comments_feuser_mm
 						 WHERE deleted= 0 AND pid=' . $conf['storagePid'] . ' AND seen>0 AND reference = ""';
 					}
-
-					$resultmerged = $GLOBALS['TYPO3_DB']->sql_query($querymerged);
+					
 					$firstviewdate = '';
 					while ($rowsmerged = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultmerged)) {
 						if ($firstviewdate == '') {
@@ -6287,7 +6289,52 @@ class toctoc_comment_lib extends tslib_pibase {
 
 						$this->setAJAXimage($tmpimgstr, $userindex);
 					}
-
+					$DebugWindow = TRUE;
+					if (version_compare(TYPO3_version, '4.9', '>')) {
+						if (!\TYPO3\CMS\Core\Utility\GeneralUtility::cmpIP(
+								\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('REMOTE_ADDR'),
+								$GLOBALS['TYPO3_CONF_VARS']['SYS']['devIPmask'])
+						) {
+							$DebugWindow = FALSE;
+						}
+					
+					} else {
+						if(!t3lib_div::cmpIP(t3lib_div::getIndpEnv('REMOTE_ADDR'), $GLOBALS['TYPO3_CONF_VARS']['SYS']['devIPmask'])) {
+							$DebugWindow = FALSE;
+						}
+					
+					}
+					$DebugWindow = FALSE;
+					if ($DebugWindow == TRUE) {
+						// now put it together again,
+						 print '<br>unserializeAJAXimages:<br>';
+						 echo "<pre>";
+						print_r(unserialize(serialize($this->AJAXimages)));
+						echo "</pre>";
+						/*print '<br>cssbelow:<br>';
+						echo "<pre>";
+						print($cssbelow);
+						echo "</pre>";*/
+						print '<br>unserializeAJAXimagesCache:<br>';
+						echo "<pre>";
+						print_r(unserialize(serialize($this->AJAXimagesCache)));
+						echo "</pre>";
+						print '<br>gravatarimages:<br>';
+						echo "<pre>";
+						print_r($this->gravatarimages);
+						echo "</pre>";
+						/* 		print '<br><br>ids:<br><br>';
+						 print_r($this->bufferinids);
+						
+						print '<br><br>AJAXimagesCache:<br><br>';
+						print_r($this->AJAXimagesCache);
+								print '<br><br>tags:<br><br>';
+						 print_r($this->bufferintags);
+						print '<br><br>types:<br><br>';
+						print_r($this->bufferinputtypes);
+						*/
+						exit;
+					}
 					$md5PluginId = md5($this->userimagesize . 'images');
 					$dbCache = serialize($this->AJAXimages);
 					$this->setReportDBCache($conf, 11, 0, $dbCache, $md5PluginId);
@@ -12830,8 +12877,10 @@ class toctoc_comment_lib extends tslib_pibase {
 	 */
 	public function getEmoCard($conf, $pObj, $cid, $ref, $feuserid, $fromAjax = TRUE) {
 		$ret = '';
+			
 		$this->AJAXimages = $_SESSION['AJAXimages'];
 		$this->gravatarimages = $_SESSION['gravatarimages'];
+		$this->AJAXimagesCache = $_SESSION['AJAXOrigimages'];
 
 		$maxtippentries = $conf['ratings.']['emoLikeMaxOverviewEntries'];
 
@@ -12950,7 +12999,7 @@ class toctoc_comment_lib extends tslib_pibase {
 
 		$recsilikeemofemaleusers = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('DISTINCT toctoc_comments_user',
 				 'tx_toctoc_comments_comments',
-		'toctoc_commentsfeuser_feuser=0 AND deleted =0 AND hidden=0 AND approved=1 AND gender=1',
+		'toctoc_commentsfeuser_feuser = 0 AND deleted = 0 AND hidden = 0 AND approved = 1 AND gender = 1',
 		'',
 			'',
 			'');
@@ -13031,13 +13080,13 @@ class toctoc_comment_lib extends tslib_pibase {
 					}
 
 					if ($recsilikeemousers[$m]['toctoc_commentsfeuser_feuser'] != 0) {
-						$image=$this->getAJAXimage($recsilikeemousers[$m]['toctoc_commentsfeuser_feuser'], $commentid, $conf,
+						$image = $this->getAJAXimage($recsilikeemousers[$m]['toctoc_commentsfeuser_feuser'], $commentid, $conf,
 								$recsilikeemousers[$m]['current_email']);
 
 					} else {
 						$picid = 0;
 						foreach($recsilikeemofemaleusers as $possfemale) {
-							if ($recsilikeemousers[$m]['tc_ct_user']==$possfemale['toctoc_comments_user']) {
+							if ($recsilikeemousers[$m]['tc_ct_user'] == $possfemale['toctoc_comments_user']) {
 								$picid = 99999;
 							}
 
@@ -13046,7 +13095,7 @@ class toctoc_comment_lib extends tslib_pibase {
 						$image = $this->getAJAXimage($picid, $commentid, $conf, $recsilikeemousers[$m]['current_email']);
 						//kill title and replace by commentusername
 						$killtitlearr = explode('title="', $image);
-						if (count($killtitlearr) > 0) {
+						if (count($killtitlearr) > 1) {
 							$killtitlearr2 = explode('"', $killtitlearr[1]);
 							$killtitlearr2[0] = $printname;
 							$killtitlearr[1] = implode ('"', $killtitlearr2);
@@ -14726,7 +14775,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 
 			// we need all rows in tx_toctoc_comments_attachment_mm which are older than the cachetime and which are not linked to a comment
 
-			$rowsattm = $GLOBALS['TYPO3_DB']->exec_DELETEquery 	('tx_toctoc_comments_attachment_mm',
+			$rowsattm = $GLOBALS['TYPO3_DB']->exec_DELETEquery('tx_toctoc_comments_attachment_mm',
 					'tx_toctoc_comments_attachment_mm.tstamp < ' . $conf_cachetime .
 					' AND tx_toctoc_comments_attachment_mm.uid NOT IN (SELECT DISTINCT attachment_id FROM tx_toctoc_comments_comments)'
 					);
@@ -14808,7 +14857,7 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 
 			}
 
-			$rowsattm = $GLOBALS['TYPO3_DB']->exec_DELETEquery 	('tx_toctoc_comments_attachment',
+			$rowsattm = $GLOBALS['TYPO3_DB']->exec_DELETEquery ('tx_toctoc_comments_attachment',
 					'tx_toctoc_comments_attachment.tstamp < ' . $conf_cachetime . $wherettcontnt .
 					' AND tx_toctoc_comments_attachment.uid NOT IN (SELECT DISTINCT attachmentid FROM tx_toctoc_comments_attachment_mm)'
 			);
@@ -16918,15 +16967,15 @@ SUM(vote_count) AS vote_count, SUM(like_count) AS like_count, SUM(dislike_count)
 	 * @return	void
 	 */
 	protected function purgeMailConf($conf) {
-		if (intval($conf['advanced.']['emailValidDays']) == 0) {
-			$conf['advanced.']['emailValidDays'] = 60;
+		if (intval($conf['advanced.']['emailValidDays']) < 7) {
+			$confcachetime = 7 * 24 * 60 * 60;
+		} else {
+			$confcachetime = intval($conf['advanced.']['emailValidDays']) * 24 * 60 * 60;
 		}
-		$conf_cachetime = intval($conf['advanced.']['emailValidDays'])*24*60*60;
-		$conf_cacheage =(time() - conf_cachetime);
+	
+		$confcacheage = time()-$confcachetime;
 		// deleting mail metadata older than the days an email is vaild
-		$GLOBALS['TYPO3_DB']->exec_DELETEquery('tx_toctoc_comments_cache_mailconf',
-		'tx_toctoc_comments_cache_mailconf.crdate < ' . $conf_cacheage
-		);
+		$GLOBALS['TYPO3_DB']->sql_query('DELETE FROM tx_toctoc_comments_cache_mailconf WHERE crdate<' . $confcacheage);
 	}
 
 }
