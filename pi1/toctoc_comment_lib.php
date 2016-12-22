@@ -9641,8 +9641,12 @@ class toctoc_comment_lib extends tslib_pibase {
 			if (!isset($piVars[$field])) {
 				$_SESSION['formValidationErrors'][$field] = $this->pi_getLLWrap($pObj, 'error.required.field', $fromAjax);
 				$_SESSION['formValidationErrors']['errorcode'] = '12';
-				$errfound= TRUE;
+				$errfound = TRUE;
 
+			} elseif (trim($piVars[$field]) == '') {
+					$_SESSION['formValidationErrors'][$field] = $this->pi_getLLWrap($pObj, 'error.required.field', $fromAjax);
+					$_SESSION['formValidationErrors']['errorcode'] = '12';
+					$errfound = TRUE;
 			}
 
 		}
@@ -9651,14 +9655,14 @@ class toctoc_comment_lib extends tslib_pibase {
 		if ($piVars['email'] && !t3lib_div::validEmail($piVars['email'])) {
 			$_SESSION['formValidationErrors']['email'] = $this->pi_getLLWrap($pObj, 'error.invalid.email', $fromAjax);
 			$_SESSION['formValidationErrors']['errorcode'] = '13';
-			$errfound= TRUE;
+			$errfound = TRUE;
 
 		}
 
 		if ($piVars['email'] == 'badmailadress@nosite.net') {
 			$_SESSION['formValidationErrors']['email'] = $this->pi_getLLWrap($pObj, 'error.invalid.useremail', $fromAjax);
 			$_SESSION['formValidationErrors']['errorcode'] = '14';
-			$errfound= TRUE;
+			$errfound = TRUE;
 		}
 
 		// Check spam: captcha

@@ -84,7 +84,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 			$conf['storagePid'] = $GLOBALS['TYPO3_DB']->cleanIntList($conf['storagePid']);
 			$pidcond = 'deleted=0 AND pid IN (' . $conf['storagePid'] . ') AND ';
 		}
-
+		$usercenterlistid = 5 - $fromusercenterid;
 		$pidonlycond = ($tmpint ?
 		'pid=' . $conf['storagePid'] : 'pid IN (' . $conf['storagePid'] . ')');
 		$restrictor = $pidcond;
@@ -1520,9 +1520,25 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 		if (intval($fromusercenterid)==0) {
 			$retstr = implode($entries);
 		} else {
+						
 			$cntentries = count($entries);
 			for ($i=0; (($i<$shownbritemsinusercenter) && ($i<$cntentries)); $i++) {
 				$retstr .= $entries[$i];
+			}
+			for ($i=$shownbritemsinusercenter;($i<$cntentries);$i++) {
+				$retstrinner .= $entries[$i];
+			}
+			if ($retstrinner !='') {
+				$retstr .= $this->t3substituteMarkerArray($this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTER_DROPDOWNSHOWMORE###'),
+						array(
+								'###DROPDOWNID###' => ($usercenterlistid+$usercenterlistid*100),
+								'###DROPDOWNTIPTEXT###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercenter_showmoreorless', $fromAjax),
+								'###DROPUPORDOWN###' => 'Down',
+								'###TITLE###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercenter_showmore', $fromAjax),
+								'###CONTENT###' => $retstrinner,
+			
+						)
+				);
 			}
 
 		}

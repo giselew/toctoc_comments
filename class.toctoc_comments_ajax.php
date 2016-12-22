@@ -222,7 +222,15 @@ class toctoc_comments_ajax {
 			}
 
 		} else {
-			$this->cmd = 'attachmentupload';
+			if (count($_FILES) > 0){
+				$this->cmd = 'attachmentupload';
+			} else {
+				echo 'toctoc_comments bad post: Received invalid AJAX-request, posted data found was:<pre>';
+				print_r($_POST);
+				echo '</pre>';
+				exit();
+			}
+			
 		}
 
 		$this->pageid = 0;
