@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2015 - 2016 Gisele Wendl <gisele.wendl@toctoc.ch>
+*  (c) 2015 - 2017 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -57,7 +57,8 @@ class user_toctoc_comments_toctoc_comments {
 
 public $donExtkey = 'toctoccommentsce';
 public $donExtension = 'toctoc_comments';
-public $donExtversion = '928';
+public $donExtversion = '929';
+public $donationServer= 'www.toctoc.ch';
 
 	/**
 	 * This method returns the message's content
@@ -94,6 +95,7 @@ public $donExtversion = '928';
 				session_name('sess_toctoccommentsfe');
 				session_start();
 			}
+			
 			if (!isset($_SESSION['toctoc_commentsfedonation'])) {
 				$_SESSION['toctoc_commentsfedonation']='';
 				$_SESSION['toctoc_commentsfedonationdone']=0;
@@ -103,8 +105,11 @@ public $donExtversion = '928';
 		}
 
 		$datadonation = '';
-		$secret='';
-
+		$secret='';		
+		if (trim($tsSettings['donationServer']) != '') {
+			$this->donationServer = trim($tsSettings['donationServer']);
+		}
+		
 		if (trim($_SESSION['toctoccommentsfedonationsecret']) != '') {
 			// secret from toctooccommmetts
 			if ($tsSettings['donationSecret'] == '') {
@@ -112,7 +117,9 @@ public $donExtversion = '928';
 				if ($_SESSION['toctoc_commentsfedonationsecret'] != $_SESSION['toctoccommentsfedonationsecret']) {
 					$_SESSION['toctoc_commentsfedonation'] = '';
 				}
+				
 			}
+			
 		}
 
 		if ($_SESSION['toctoc_commentsfedonationlang'] != $langreq) {
@@ -172,6 +179,7 @@ public $donExtversion = '928';
 				} else {
 					$datadonation .= '<br>' . $txtoptionnotset;
 				}
+				
 			}
 
 			$this->toctoccommentsfedonationdone=0;
@@ -199,7 +207,7 @@ public $donExtversion = '928';
 	protected function checkSecret($secret) {
 		$data ='';
 		$infomessage = '';
-		$donationserver = 'www.toctoc.ch';
+		$donationserver = $this->donationServer;
 		if (trim($_SESSION['toctoc_commentsfedonation']) != '') {
 			if ($_SESSION['toctoc_commentsfedonationdone']==1) {
 				$this->toctoccommentsfedonationdone=1;
@@ -239,7 +247,6 @@ public $donExtversion = '928';
 				list($rowusr) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('COUNT(*) AS tusr',
 						'tx_toctoc_comments_user', $dataWhereuser);
 				$nbrusers = intval($rowusr['tusr']);
-
 				$dataarr = array(
 						'secret' => $secret,
 						'remoteadr' => $curip,
@@ -253,9 +260,8 @@ public $donExtversion = '928';
 				);
 
 				$dataout = rawurlencode(base64_encode(serialize($dataarr)));
-				$toctoccommentsuseragent = 'TocTocCommentsDonationsExternalhit/1.1 (+https://www.toctoc.ch/en/home/toctoc-comments/)';
-
-				$urltofetch = 'https://'.$donationserver.'/index.php?eID=toctoc_donations&data=' . $dataout;
+				$toctoccommentsuseragent = 'TocTocCommentsDonationsExternalhit/1.1 (+https://' . $donationserver . '/en/home/toctoc-comments/)';
+				$urltofetch = 'https://' . $donationserver . '/index.php?eID=toctoc_donations&data=' . $dataout;
 				curl_setopt($ch, CURLOPT_USERAGENT, toctoccommentsuseragent);
 				curl_setopt($ch, CURLOPT_URL, $urltofetch);
 				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
@@ -268,17 +274,14 @@ public $donExtversion = '928';
 				curl_setopt($ch, CURLOPT_TRANSFERTEXT, 1);
 				curl_setopt($ch, CURLOPT_NOSIGNAL, 1);
 				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 7);
-
 				$data = curl_exec($ch);
 				$curl_errno = curl_errno($ch);
-
 				if ($curl_errno > 0) {
 					$curl_errmsg =  curl_error($ch);
 					curl_close($ch);
 					$infomessage = 'Curl, error reading: ' . $curl_errmsg;
 					$alertmsg = 1;
 				} else {
-
 					$infohttpcode = intval(curl_getinfo($ch, CURLINFO_HTTP_CODE));
 					// checking mime types
 					if ($infohttpcode < 400)  {
@@ -288,6 +291,7 @@ public $donExtversion = '928';
 						$alertmsg = 1;
 						curl_close($ch);
 					}
+					
 				}
 
 			}

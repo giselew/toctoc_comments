@@ -28,13 +28,13 @@ EXT: AJAX Social Network Components
 	Userpictures include gravatar-, Facebook- or fe_users-userpictures. 
 	More plugin-modes for comments are available, a user center, a recent comments list, a report bad comment form and several charts. 
 	Many looks for ratings by voting stars and Facebook-like iLikes. Usage of scopes for categorized ratings. 
-	There is a plugin-mode for top ratings. Many options for spam- and data-protection. AJAX runs with jQuery.
+	There is a plugin-mode for top ratings. Many options for spam- and data-protection. AJAX runs with jQuery. 
 	ViewHelpers for extension news. 
-	Comments, reviews or ratings can trigger content elements, pages or records in other extensions DETAIL-views and LIST-views (LIST-view tt_news, news, modify all other pi1-extensions in PHP and implement a new marker or ViewHelper for comments and ratings in LIST-views).
+	Comments, reviews or ratings can trigger content elements, pages or records in other extensions DETAIL-views and LIST-views (LIST-view tt_news, news, modify all other pi1-extensions in PHP and implement a new marker or ViewHelper for comments and ratings in LIST-views). 
 	Includes full featured AJAX Login and Sign Up, including login with Facebook or Google+ account. 
-	Backendmodule for comments, users and system control
-	Works with TemplaVoila, news, tt_news, tt_products, community, cwt_community and most of all other extensions.
-	Designable from included LESS-model.
+	Backendmodule for comments, users and system control. 
+	Works with TemplaVoila, news, tt_news, tt_products, community, cwt_community and most of all other extensions. 
+	Designable from included LESS-model. 
 
     :Keywords:
         for Admins, for Advanced, AJAX-Commenting, -rating, -sharing, Attachments, LESS, AJAX-Login and Sign Up

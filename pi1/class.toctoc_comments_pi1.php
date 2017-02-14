@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 - 2016 Gisele Wendl <gisele.wendl@toctoc.ch>
+*  (c) 2012 - 2017 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -114,7 +114,7 @@ class tx_toctoccomments_pi1 extends tslib_pibase {
 	public $prefixId = 'toctoc_comments_pi1';
 	public $scriptRelPath = 'pi1/class.toctoc_comments_pi1.php';
 	public $extKey = 'toctoc_comments';
-	public $extVersion = '928';
+	public $extVersion = '929';
 	public $extLESSVersion = 'toctoc_comments-LESS.2';
 
 	public $pi_checkCHash = TRUE;				// Required for proper caching! See in the typo3/sysext/cms/tslib/class.tslib_pibase.php
@@ -3939,8 +3939,8 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 							$colarra =  explode('@linkbox-color-active: ', $contentlesscolors);
 							$colarra2 = explode(';', $colarra[1]);
 							$colourcodesemo = 'colourcodeemo[0] = "'.trim($colarra2[0]).'";
-			colourcodeemo[1] = "'.trim($colarra2[0]).'";
-			colourcodeemo[7] = "'.trim($colarr2[0]).'";';
+	colourcodeemo[1] = "'.trim($colarra2[0]).'";
+	colourcodeemo[7] = "'.trim($colarr2[0]).'";';
 
 							$strsql='SELECT uid AS emolikeid, emolike_sort, emolike_colorcode
 										FROM tx_toctoc_comments_emolike
@@ -3950,7 +3950,7 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 							$resultl= $GLOBALS['TYPO3_DB']->sql_query($strsql);
 							while ($likerows = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultl)) {
 								$colourcodesemo .= '
-			colourcodeemo['.$likerows['emolike_sort'] .'] = "'.$likerows['emolike_colorcode'].'";';
+	colourcodeemo['.$likerows['emolike_sort'] .'] = "'.$likerows['emolike_colorcode'].'";';
 							}
 							$checkedcolourcodesemo = ' and emoLike-colorcodes ';
 						}
@@ -3978,7 +3978,7 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 				}
 
 				$this->tcchangepasswordcard = '';
-				$locchangePasswordFormhtml = '	var tcpasswordcard ="";
+				$locchangePasswordFormhtml = '	var tcpasswordcard = "";
 ';
 
 				$rsajsloc = 'resources';
@@ -4014,13 +4014,11 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 				}
 
 				if ((intval($this->conf['advanced.']['loginRequired']) == 0) && ($this->conf['pluginmode'] != 5)) {
-					$locLoginFormhtml= '	var tclogincard ="";
+					$locLoginFormhtml= '	var tclogincard = "";
 ';
 					$rsajsstr = '';
 				} else {
-
 					$postDatapi2 =  t3lib_div::_GET('tx_toctoccomments_pi2');
-
 					if ($postDatapi2['forgothash']) {
 						$getChangePasswordForm = $this->lib->getChangePasswordForm($postDatapi2['user'], $postDatapi2['forgothash']);
 						$getChangePasswordForm= str_replace('<div id="tx_toctoccomments_pi2">', '<div id="tx_toctoccomments_pi2_cp">', $getChangePasswordForm);
@@ -4068,19 +4066,16 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 					} elseif ((intval($this->conf['pluginmode']) == 5) && (count($loctest)<3)){
 						$testlogoutarr = explode('formlo', $locLoginFormhtml);
 						$adddiv='</div>';
-
 						if (count($testlogoutarr) > 1) {
 							$adddiv='';
 						}
 
 						$locLoginFormhtmlarr = explode('<!-- ###LOGIN_FORM### -->', $locLoginFormhtml);
-
 						if(count($locLoginFormhtmlarr) > 2) {
 							$locLoginFormhtmlarr[3] =substr($locLoginFormhtmlarr[3], 8);
 						}
 
 						$locLoginFormhtml = implode('', $locLoginFormhtmlarr) . $adddiv;
-
 					}
 
 					$locLoginFormhtmlarr = explode('<!-- ###FORGOT_FORM### -->', $locLoginFormhtml);
@@ -4179,7 +4174,7 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 			  }
 		  }
 	}
-							';
+';
 				}
 
 				$jscontent = ' var errCommentRequiredLength = ' . intval($this->conf['minCommentLength']) . ';' . "\n";
@@ -4189,7 +4184,7 @@ var tcsmiliecard =tcsc1+tcsc2+tcsc3+tcsc4;
 				$jscontent .= '	var boxmodelTextareaAreaTotalHeight = ' . intval($this->boxmodelTextareaAreaTotalHeight) . ';' . "\n";
 				$jscontent .= '	var plsUseRSA = ' . $plsUseRSA . ';' . "\n";
 				$jscontent .= '	var boxmodelTextareaHeight = ' . intval($this->boxmodelTextareaHeight) . ';' . "\n";
-				if ($this->conf['theme.']['boxmodelLabelInputPreserve']==0) {
+				if ($this->conf['theme.']['boxmodelLabelInputPreserve'] == 0) {
 					$jscontent .= '	var boxmodelLabelWidth = ' . intval($this->conf['theme.']['boxmodelLabelWidth']) . ';' . "\n";
 				} else {
 					$jscontent .= '	var boxmodelLabelWidth = 0;' . "\n";

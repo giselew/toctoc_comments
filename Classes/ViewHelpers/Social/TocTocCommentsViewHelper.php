@@ -1,7 +1,7 @@
 <?php
 /***************************************************************
  *  Copyright notice
- *  (c) 2014 - 2016 Gisele Wendl <gisele.wendl@toctoc.ch>
+ *  (c) 2014 - 2017 Gisele Wendl <gisele.wendl@toctoc.ch>
  *  All rights reserved
  *  This script is part of the TYPO3 project. The TYPO3 project is
  *  free software; you can redistribute it and/or modify

@@ -257,4 +257,4 @@ smilies                         array           Array with all available smilies
                                                 Smilies are a mix from Facebook-like smilies and the 
                                                 smilies from the original smilie-extension. 
 ==============================  ==============  ============================================================  ============================================================================================
- 
+                             

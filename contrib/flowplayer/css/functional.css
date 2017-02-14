@@ -257,7 +257,6 @@
 .flowplayer.is-mouseover .fp-fullscreen,.flowplayer.fixed-controls .fp-fullscreen,.flowplayer.is-mouseover .fp-unload,.flowplayer.fixed-controls .fp-unload,.flowplayer.is-mouseover .fp-elapsed,.flowplayer.fixed-controls .fp-elapsed,.flowplayer.is-mouseover .fp-remaining,.flowplayer.fixed-controls .fp-remaining,.flowplayer.is-mouseover .fp-duration,.flowplayer.fixed-controls .fp-duration,.flowplayer.is-mouseover .fp-embed,.flowplayer.fixed-controls .fp-embed,.flowplayer.is-mouseover .fp-logo,.flowplayer.fixed-controls .fp-logo,.flowplayer.is-mouseover .fp-volume,.flowplayer.fixed-controls .fp-volume,.flowplayer.is-mouseover .fp-play,.flowplayer.fixed-controls .fp-play,.flowplayer.is-mouseover .fp-menu,.flowplayer.fixed-controls .fp-menu{opacity:1;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100)}
 .flowplayer.fixed-controls .fp-volume{display:block}
 .flowplayer.fixed-controls .fp-controls{bottom:-30px;}
-.is-fullscreen.flowplayer.fixed-controls .fp-controls{bottom:0}
 .flowplayer.fixed-controls .fp-time em{bottom:-20px;opacity:1;filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);}
 .is-fullscreen.flowplayer.fixed-controls .fp-time em{bottom:10px}
 .flowplayer.is-disabled .fp-progress{background-color:#999}

@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 - 2016 Gisele Wendl <gisele.wendl@toctoc.ch>
+*  (c) 2012 - 2017 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -6434,8 +6434,8 @@ class toctoc_comment_lib extends tslib_pibase {
 
 					$emojipath=$this->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments') .'res/css/emoji/';
 					$i=0;
-					$_SESSION[$conf['theme.']['selectedTheme']][$conf['advanced.']['useEmoji']]['emoji'][$i]=$emojipic;
-					$i++;
+					/* $_SESSION[$conf['theme.']['selectedTheme']][$conf['advanced.']['useEmoji']]['emoji'][$i]=$emojipic;
+					$i++; */
 					$_SESSION[$conf['theme.']['selectedTheme']][$conf['advanced.']['useEmoji']]['emoji'][$i]=$emojipath . 'edot1.png';
 					$i++;
 					$_SESSION[$conf['theme.']['selectedTheme']][$conf['advanced.']['useEmoji']]['emoji'][$i]=$emojipath . 'edot0.png';
@@ -10680,15 +10680,14 @@ class toctoc_comment_lib extends tslib_pibase {
 	 * @return	string		Text to convert
 	 */
 	protected function createLinks($text, $conf) {
-		if ($conf['advanced.']['autoConvertLinks']) {
-			$textout=
-			preg_replace('/((https?:\/\/)?((?(2)([^\s]+)|(www\.[^\s]+))))/', '<a href="http://\3" rel="nofollow" class="tx-tc-external-autolink">\1</a>', $text);
-			$textout= str_replace('." rel="nofollow"', '" rel="nofollow"', $textout);
-			$textout= str_replace('," rel="nofollow"', '" rel="nofollow"', $textout);
-			$textout= str_replace(',</a>', '</a>,', $textout);
-			$textout= str_replace('.</a>', '</a>.', $textout);
-			$textoutarr=explode('tx-tc-external-autolink">', $textout);
-			$textworkarr=array();
+		if (intval($conf['advanced.']['autoConvertLinks']) == 1) {
+			$textout = preg_replace('/((https?:\/\/)?((?(2)([^\s]+)|(www\.[^\s]+))))/', '<a href="http://\3" rel="nofollow" class="tx-tc-external-autolink">\1</a>', $text);
+			$textout = str_replace('." rel="nofollow"', '" rel="nofollow"', $textout);
+			$textout = str_replace('," rel="nofollow"', '" rel="nofollow"', $textout);
+			$textout = str_replace(',</a>', '</a>,', $textout);
+			$textout = str_replace('.</a>', '</a>.', $textout);
+			$textoutarr = explode('tx-tc-external-autolink">', $textout);
+			$textworkarr = array();
 			$counttextoutarr = count($textoutarr);
 			if ($counttextoutarr > 1) {
 

@@ -1,6 +1,9 @@
 # cat=basic//01; type=string; label=Donation key: If you've made a donation you can enter your donation key here - you receive a donation key upon first donation for toctoc_comments or toctoccommentsce
 donationSecret =
 
+# cat=basic//015; type=string; label=Donationserver: Server hosting the Donationkeys, normally www.toctoc.ch
+donationServer = www.toctoc.ch
+
 # cat=basic//02; type=boolean; label=Use old non AJAX-Backend-Module
 use_OldBackendModule = 0
 

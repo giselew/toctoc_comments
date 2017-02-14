@@ -918,3 +918,12 @@
 	* Release of version 9.2.8 - see www.toctoc.ch for demos, news, support and donations
 	* Fixed missing votes and likes in usercenter - votes and likes-panel showed only the last 3 likes or votes ... which was obviously wrong	
 	* Fixed error with comments required fields, required fields have passed the test even if empty, now they are required again (happily)
+	
+2017-02-14 Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 9.2.9 - see www.toctoc.ch for demos, news, support and donations
+	* Fixed PHP Warning concerning str_replace() in BackendAjaxAdministration.php on line 398 (Issue: Cache wasn't properly refreshed after 
+	  Updates of comments in backend module)
+	* Fixed duplicate CSS entry in CSS for flowplayer
+	* Fixed 2 unused markers in Topratings
+	* Fixed problem with ext:min (HTMLTidy) when using advanced.loginRequired in the comments form
+	* Added extension configuration option "donationServer", which is normally www.toctoc.ch, but we could be happy to change that somewhere if ever this would be needed.

@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 - 2016 Gisele Wendl <gisele.wendl@toctoc.ch>
+*  (c) 2012 - 2017 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -395,7 +395,7 @@ class BackendAjaxAdministration extends t3lib_SCbase {
 	    		if (count($cacheidarr) == 2) {
 		    		$external_ref =  $cacheidarr[1];
 		    		$external_ref_uid = $cacheidarr[0];
-		    		if (str_replace('pages_', $external_ref) != $external_ref) {
+		    		if (str_replace('pages_', '', $external_ref) != $external_ref) {
 		    			$external_ref_uid = $external_ref;
 		    		}
 

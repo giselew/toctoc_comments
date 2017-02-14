@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-* (c) 2012 - 2016 Gisele Wendl <gisele.wendl@toctoc.ch>
+* (c) 2012 - 2017 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -697,21 +697,23 @@ class toctoc_comments_common {
 			}
 
 			imagecopyresampled($image_p, $image, 0, 0, $srcx, $srcy, $targetwidth, $targetheight, $width-2*$srcx, $height-2*$srcy);
+			$quality = $GLOBALS['TYPO3_CONF_VARS']['GFX']['jpg_quality'];
 			switch(strtolower($ext)) {
 				case 'gif':
 					imagegif($image_p, $savepathfilename);
 					break;
 				case 'png':
-					imagepng($image_p, $savepathfilename, 0);
+					// little fixed compression
+					imagepng($image_p, $savepathfilename, 3, PNG_ALL_FILTERS);
 					break;
 				case 'bmp':
 					imagewbmp($image_p, $savepathfilename);
 					break;
 				case 'jpg':
-					imagejpeg($image_p, $savepathfilename, 100);
+					imagejpeg($image_p, $savepathfilename, intval($quality));
 					break;
 				case 'jpeg':
-					imagejpeg($image_p, $savepathfilename, 100);
+					imagejpeg($image_p, $savepathfilename, intval($quality));
 					break;
 				default:
 					return FALSE;

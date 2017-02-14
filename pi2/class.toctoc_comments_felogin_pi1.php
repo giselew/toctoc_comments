@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-* (c) 2012 - 2016 Gisele Wendl <gisele.wendl@toctoc.ch>
+* (c) 2012 - 2017 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -424,7 +424,7 @@ class tx_toctoccomments_pi2 extends tslib_pibase {
 			if (intval($conf['register.']['enableSignup']) == 1) {
 				$buttonnewaccount = '<div class="tx-tc-login-form-iframe' . $hideIfFacebookActiveClass . '" id="tx-tc-buttonfornewaccount">
 					 		<input type="button" id="tx-tc-buttonfornewaccount-bt" value="' . $this->pi_getLL('sign_up', '', 1) .
-					 		'"	class="tx-tc-ct-submit tx-tc-login-button" /></div>';
+					 		'" class="tx-tc-ct-submit tx-tc-login-button" /></div>';
 			}
 
 			$contentforgotpwarr=explode('###DIV_BLOCKLINKS###', $content);

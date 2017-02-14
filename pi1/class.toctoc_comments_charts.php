@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-* (c) 2012 - 2016 Gisele Wendl <gisele.wendl@toctoc.ch>
+* (c) 2012 - 2017 Gisele Wendl <gisele.wendl@toctoc.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -1334,12 +1334,15 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							));
 						}
 
-						$hidecss ='';
+						$hidecss ='';						
+						$strhidevoteplus = '';
+						$classvotebar = '';
 						$markers = array(
 								'###HIDECSS###' . $hidecss,
 								'###PID###' => $pid,
 								'###CID###' => $cid,
 								'###HIDEVOTE###' => $strhidevote,
+								'###HIDEVOTEMYRATING###' => $strhidevote . $strhidevoteplus,
 								'###REF###' => htmlspecialchars($refforvote),
 								'###TEXT_SUBMITTING###' => $this->pi_getLLWrap($pObj, 'api_submitting', FALSE),
 								'###TEXT_ALREADY_RATED###' => $this->pi_getLLWrap($pObj, 'api_already_rated', FALSE),
@@ -1349,6 +1352,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 								'###TEXT_RATING_TIP###' => $this->pi_getLLWrap($pObj, 'api_tip', FALSE),
 								'###SITE_REL_PATH###' => $siteRelPath,
 								'###VOTE_LINKS###' => $links,
+								'###CLASSVOTEBARREVIEW###' => $classvotebar,
 								'###MYRATING###' => $myratingtext,
 								'###MYILIKE_AREA###' => $mylikeareahtml,
 								'###MYILIKE###' => $mylike,
@@ -1364,6 +1368,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 						if ($conf['theme.']['themeVersion'] == 2) {
 							$strv2='v2';
 						}
+						
 						if ($row['emolikeid']>0) {
 							//print $row['emolikeid'] . ' - ' ;
 							$mylikepic= $emolikepicarr[$row['emolikeid']];
@@ -1377,6 +1382,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 								$strdislike='dis';
 
 							}
+							
 						}
 
 						$mylikepictitle=$this->pi_getLLWrap($pObj, 'pi1_template.text_topratings_'.$strdislike.'likes', FALSE);
@@ -1407,6 +1413,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							if ($fromusercenterid == 0) {
 								$row['nbrvotes']='';
 							}
+							
 						} elseif ($conf['topRatings.']['topRatingsMode']==1){
 							$topratings_ilike_vote=$this->pi_getLLWrap($pObj, 'pi1_template.text_topratings_rating', FALSE) . ':&nbsp;' .
 							$voteingstr . $row['voting']. ' ';
@@ -1424,23 +1431,20 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							//activity
 							$topratings_ilike_vote='' . $mylike . '&nbsp;<b> ' . round($row['likecount'], 1) . '</b>' . $row['datefirstview'];
 							$addbr='<br class="tx-tc-br-articleview">';
-
 							$row['nbrvotes']='';
-
 						}
 
 						$contenttxt='';
-
 						//margin twice 3px, border 2*1px, width 20px + 8px padding
 						$marginratingnumber = $conf['theme.']['boxmodelSpacing']-1;
 						$paddingratingnumber = $conf['theme.']['boxmodelSpacing'];
-
 						if ($stylemargincontent==0) {
 							$margincontent= ' tx-tc-mrgcntnp-left';
 						}
 						else {
 							$margincontent= ' tx-tc-mrgcnt-left';
 						}
+						
 						if (trim($row['text']) != '') {
 							$contenttxt = '<div class="tx-tc-trt-content' . $margincontent . '">' . $row['text'] . '</div>';
 						}
@@ -1456,6 +1460,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							//bronze
 							$rankstyle=' tx-tc-rank3';
 						}
+						
 						$titledate = '';
 						if ($row['date'] != '') {
 							$rowiddate = $conf['topRatings.']['topRatingsMode'] . '001' . $rank . str_replace('_', '', $row['refID']);
@@ -1525,9 +1530,11 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 			for ($i=0; (($i<$shownbritemsinusercenter) && ($i<$cntentries)); $i++) {
 				$retstr .= $entries[$i];
 			}
+			
 			for ($i=$shownbritemsinusercenter;($i<$cntentries);$i++) {
 				$retstrinner .= $entries[$i];
 			}
+			
 			if ($retstrinner !='') {
 				$retstr .= $this->t3substituteMarkerArray($this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTER_DROPDOWNSHOWMORE###'),
 						array(
@@ -1538,7 +1545,9 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 								'###CONTENT###' => $retstrinner,
 			
 						)
+						
 				);
+				
 			}
 
 		}
@@ -1546,6 +1555,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 		$subParts = array(
 			'###SINGLE_TOPRATINGS###' => $retstr,
 		);
+		
 		$retstr='';
 		$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###TOPRATINGS_LIST###');
 		$markers = array(
@@ -1555,7 +1565,6 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 
 		$retstr = $this->substituteMarkersAndSubparts($template, $markers, $subParts, $pObj);
 		return $retstr;
-
 	}
 
 
