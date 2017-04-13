@@ -22,15 +22,15 @@ dateFormat                                                                      
                                                                                             for information about format specifiers. If empty, 
                                                                                             defaults to concatenation of SYS->ddmmyy and SYS->hhmm
                                                                                             systemvariables (from Install tool) and dateFormatMode
-                                                                                            is forced to “date”.
+                                                                                            is forced to “date�?.
 
                                                                                             If the format is invalid, you will get an error-message
                                                                                             in the frontend.
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
 dateFormatMode                                                                  string      Determines what PHP function to use for date             strftime
-                                                                                            formatting. Defaults to “date”. If you want to use       (Changed in V 7.2.0)
+                                                                                            formatting. Defaults to “date�?. If you want to use   (Changed in V 7.2.0)
                                                                                             month or week days in national language, you have to
-                                                                                            use “strftime”.
+                                                                                            use “strftime�?.
 
                                                                                             Valid values are:
 
@@ -41,7 +41,7 @@ commentReview                                                                   
                                                                                             the behavior of the commenting plugin in the frontend.
                                                                                             Comments are considered as reviews
                                                                                             and are handled differently than comments.
-                                                                                            Please read chapter “Reviews” for
+                                                                                            Please read chapter “Reviews�? for
                                                                                             more information on this
 
                                                                                             (P – General,
@@ -66,6 +66,13 @@ commentingClosed                                                                
                                                                                             Commenting closed for this
                                                                                             plugin-instance)
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
+makeBreakWordsLongerThan                                                        int+        Break long words in the comments list                    37
+                                                                                            This makes break words longer than the length given
+                                                                                            in the comments list, minimal length = 17, 
+                                                                                            maximal length: 1024
+
+                                                                                            (V 9.2.10.)
+------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
 autoConvertLinks                                                                boolean     If enabled, will search for possible links in comment    1
                                                                                             text and turn them to links. Specifically the following
                                                                                             texts are searched:
@@ -74,10 +81,10 @@ autoConvertLinks                                                                
                                                                                             space will be converted to links. This procedure is not
                                                                                             very clever but works in most cases.
 
-                                                                                            Links are always created with `rel=”nofollow”
+                                                                                            Links are always created with `rel=�?nofollow�?
                                                                                             <http://googleblog.blogspot.com/2005/01/
                                                                                             preventing-comment-spam.html>`__
-                                                                                            and css class “tx-comments-external-autolink”.
+                                                                                            and css class “tx-comments-external-autolink�?.
                                                                                             There is no way to change any of these two attributes.
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
 autoConvertLinksCropLength                                                      int+        Crop length for created links in comments:               50
@@ -210,7 +217,7 @@ useAdditionalFe_usersFields                                                     
                                                                                             (V 7.0.1)
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
 Formerly to version 6 in section advanced you had TS options for sharing.
-You find them now in section “sharing”.
+You find them now in section “sharing�?.
 In version 7 the sharing options here in section advanced were removed.
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
 recentcommentsPluginpages                                                       string      Pages with a record to display :
@@ -220,7 +227,7 @@ recentcommentsPluginpages                                                       
                                                                                             the page-ids here as a comma separated list.
 
                                                                                             Used by recent comments (if mode Restrict to external
-                                                                                            prefix = “All”) and report bad comments forms.
+                                                                                            prefix = “All�?) and report bad comments forms.
                                                                                             
 
 
@@ -381,7 +388,7 @@ activityMultiplicatorComment                                                    
 useCommentLink                                                                  boolean     Display the link for Commenting on top of the plugin     1
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
 displayChildComments                                                            boolean     Display the link for and number of subcomments – in      1
-                                                                                            addition to the “expand-collapse”-Icons (if
+                                                                                            addition to the “expand-collapse�?-Icons (if
                                                                                             useUserPic=1)
 ------------------------------------------------------------------------------  ----------  -------------------------------------------------------  -----------------------------------------------------
 loginRequired                                                                   boolean     Require login: The commenting form will link to a login  0
@@ -515,4 +522,7 @@ dontTakeEmptyAgentStringAsCrawler  boolean    Empty HTTP_USER_AGENT are uncool, 
                                               crawlers to be excluded from the commenting system and 
                                               session creation
                                               (V 7.4.0.)
+---------------------------------  ---------  -------------------------------------------------------  -------------------------------------------------------------------
+usesjQuery3                        boolean    When you use jQuery v3 then please set this to 1         0
+                                              (V 9.2.10.)
 =================================  =========  =======================================================  ===================================================================

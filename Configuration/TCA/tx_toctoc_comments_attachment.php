@@ -56,31 +56,17 @@ $tx_toctoc_comments_attachment = array (
 					'exclude' => 1,
 					'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_attachment.photo_main',
 					'config' => array (
-							'type' => 'group',
-							'internal_type' => 'file',
-							'allowed' => 'gif,png,jpeg,jpg,png,pdf',
-							'max_size' => 1000,
-							'uploadfolder' => 'uploads/tx_toctoccomments/webpagepreview',
-							'show_thumbs' => 1,
-							'size' => 1,
-							'minitems' => 0,
-							'maxitems' => 1,
-					)
+						'type' => 'input',
+						'eval' => 'trim',
+					),
 			),
 			'photos_etc' => array (
 					'exclude' => 1,
 					'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_attachment.photos_etc',
 					'config' => array (
-							'type' => 'group',
-							'internal_type' => 'file',
-							'allowed' => 'gif,png,jpeg,jpg,png',
-							'max_size' => 500,
-							'uploadfolder' => 'uploads/tx_toctoccomments/webpagepreview',
-							'show_thumbs' => 1,
-							'size' => 3,
-							'minitems' => 0,
-							'maxitems' => 25,
-					)
+						'type' => 'input',
+						'eval' => 'trim',
+					),
 			),
 
 			'title' => array (

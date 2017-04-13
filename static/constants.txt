@@ -95,9 +95,12 @@ plugin.tx_toctoccomments_pi1 {
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//042; type=boolean; label=Closes Commenting:Closes commenting totally
 	commentingClosed = 0
 	
-	# cat=plugin.tx_toctoccomments_pi1: Advanced//045; type=int+; label=Comments per plugin: Number of comments shown in the plugin in COMMENTS
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//045; type=int+; label=Comments per plugin:Number of comments shown in the plugin in COMMENTS
 	commentsPerPage = 3	
 
+	# cat=plugin.tx_toctoccomments_pi1: Advanced//047; type=int+; label=break long words:make break words longer than this length in comment list, minimal length = 17, maximal length: 1024
+	makeBreakWordsLongerThan = 37
+    
 	# cat=plugin.tx_toctoccomments_pi1: Advanced//050; type=boolean; label=Create links in comments:If enabled, will search comment text for links (using "http://" or "www." as trigger) and create HTML links automatically
 	autoConvertLinks = 1
 

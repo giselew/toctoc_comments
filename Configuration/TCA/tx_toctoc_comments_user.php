@@ -270,9 +270,9 @@ $tx_toctoc_comments_comments = array(
 						'config' => array (
 								'type'     => 'input',
 								'size'     => '22',
-								'max'      => '16',
 								'eval'     => 'datetime',
 								'readOnly' => 1,
+								'renderType' => 'inputDateTime',
 						)
 				),
 				'tstamp_lastupdate' => array (
@@ -281,9 +281,9 @@ $tx_toctoc_comments_comments = array(
 						'config' => array (
 								'type'     => 'input',
 								'size'     => '22',
-								'max'      => '16',
 								'eval'     => 'datetime',
 								'readOnly' => 1,
+								'renderType' => 'inputDateTime',
 						)
 				),
 				'optindate' => array (
@@ -292,9 +292,9 @@ $tx_toctoc_comments_comments = array(
 						'config' => array (
 								'type'     => 'input',
 								'size'     => '22',
-								'max'      => '16',
 								'eval'     => 'datetime',
 								'readOnly' => 1,
+								'renderType' => 'inputDateTime',
 						)
 				),
 				'optin_email' => array (

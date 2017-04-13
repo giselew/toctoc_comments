@@ -40,7 +40,7 @@
  *   81:     public function init()
  *  207:     public function main()
  *  473:     protected function processReponseOutput()
- *  571:     protected function ipBlock()
+ *  572:     protected function ipBlock()
  *
  * TOTAL FUNCTIONS: 4
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -512,17 +512,16 @@ class toctoc_comments_eID {
 						$GLOBALS['TCA']['tt_content'] = array();
 					}
 
-						$tce->clear_cacheCmd($pid);
-						$messageMarkers = array(
-							'###STATUS_MESSAGE###' => $GLOBALS['LANG']->getLL('response_saved_cache_cleared')
-						);
+					$tce->clear_cacheCmd($pid);
+					$messageMarkers = array(
+						'###STATUS_MESSAGE###' => $GLOBALS['LANG']->getLL('response_saved_cache_cleared')
+					);
 
 				}
 
 			}
 			$this->apiObj->setPluginCacheControlTstamp($this->conf['plugin']);
 			$this->apiObj->deleteDBcachereport('comments', $this->conf['plugin']);
-
 			$content = $this->cObj->substituteMarkerArray($message, $messageMarkers);
 		} else {
 			$form = $this->cObj->getSubpart($this->template, '###FORM###');
@@ -533,15 +532,17 @@ class toctoc_comments_eID {
 					'###RESPONSE###' => htmlspecialchars($this->data['response']),
 					'###SUBMIT_LABEL###' => $GLOBALS['LANG']->getLL('submit_label'),
 			);
-
 			$content = $this->cObj->substituteMarkerArray($form, $formMarkers);
 		}
 
 		$document = $this->cObj->getSubpart($this->template, '###DOCUMENT###');
-
-		$myhomepagelinkarr=explode('//', t3lib_div::locationHeaderUrl(''));
-		$myhomepagelink=$myhomepagelinkarr[1];
+		$myhomepagelinkarr  =explode('//', t3lib_div::locationHeaderUrl(''));
+		$myhomepagelink = $myhomepagelinkarr[1];
+		$myhomepagelink = (@$_SERVER['HTTPS'] == 'on') ? str_replace('http://', 'https://', $myhomepagelink) : str_replace('https://', 'http://', $myhomepagelink);
 		$pageTitle=$this->conf['pageTitle'];
+		$locationHeaderUrl = t3lib_div::locationHeaderUrl('');
+		$locationHeaderUrl = (@$_SERVER['HTTPS'] == 'on') ? str_replace('http://', 'https://', $locationHeaderUrl) : str_replace('https://', 'http://', $locationHeaderUrl);
+		$siteRelPath = substr($this->apiObj->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments'), 1);
 		$linktocomment = $this->conf['pageURL'];
 		$documentMarkers = array(
 				'###MESSAGE###' => '',
@@ -552,8 +553,8 @@ class toctoc_comments_eID {
 				'###INFOSLEFT###'  => '',
 				'###INFOSRIGHT###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
 				'###MYHOMEPAGE###'  => $myhomepagelink,
-				'###SITE_REL_PATH###' => $this->apiObj->locationHeaderUrlsubDir(). t3lib_extMgm::siteRelPath('toctoc_comments'),
-				'###MYHOMEPAGELINK###'  => t3lib_div::locationHeaderUrl(''),
+				'###SITE_REL_PATH###' => $siteRelPath,
+				'###MYHOMEPAGELINK###'  => $locationHeaderUrl,
 				'###MYFONTFAMILY###'  => $this->conf['HTMLEmailFontFamily'],
 				'###MYHOMEPAGETITLE###'  => $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'],
 				'###TITLE###' => $GLOBALS['LANG']->getLL('title'),

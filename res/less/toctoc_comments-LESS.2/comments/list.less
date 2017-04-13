@@ -453,7 +453,6 @@ p.tx-tc-lower-text {
  	border-right-style: solid;
 	border-right-width: 1px;
 }
-
 .tx-tc-picupload {
 	margin: 0;
 }
@@ -463,19 +462,31 @@ p.tx-tc-lower-text {
 .tx-tc-pdfupload-koogle {
 	margin: 4px 0 0;
 }
+.tx-tc-cts-dp .tx-tc-ct-box .tx-tc-text-top .tx-tc-rts-area .tx-tc-rts-li-text {
+    word-break: normal;
+    word-wrap: normal;
+}
 div.tx-tc-cts-ct-dp div.tx-tc-ct-box div.tx-tc-ct-box-cttxt p.tx-tc-text {
 	word-break: break-all;
 }
-
+div.tx-tc-cts-ct-dp div.tx-tc-ct-box div.tx-tc-ct-box-cttxt p.tx-tc-text span.tx-tc-brkwrd code, 
+div.tx-tc-cts-ct-dp div.tx-tc-ct-box div.tx-tc-ct-box-cttxt p.tx-tc-text span.tx-tc-brkwrd, 
+.tx-tc-brkwrd {
+    word-break: break-all;    
+}
 @media (min-width: @screen-md) {
 	div.tx-tc-cts-ct-dp div.tx-tc-ct-box div.tx-tc-ct-box-cttxt p.tx-tc-text {
 		word-break: normal;
+	}
+	div.tx-tc-cts-ct-dp div.tx-tc-ct-box div.tx-tc-ct-box-cttxt p.tx-tc-text.tx-tc-brkwrd {
+		word-break: break-all;
 	}
 }
 @media (max-width: @screen-md) {
 	.tx-tc-ze {
 		display:none;
 	}
+	
 }
 /* picture/pdf-  fileupload text area */
 .tx-tc-cts-fupta {

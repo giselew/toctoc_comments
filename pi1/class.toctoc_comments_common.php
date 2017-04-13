@@ -44,7 +44,7 @@
  *  529:     private function getSessionSavePath()
  *  552:     private function ensureSessionSavePathExists($sessionSavePath, $dohtaccess = TRUE)
  *  615:     public function substGifbuilder ($contentdir, $filename, $imgsize)
- *  735:     private function getGifBuilderSavePath()
+ *  737:     private function getGifBuilderSavePath()
  *
  * TOTAL FUNCTIONS: 7
  * (This index is automatically created/updated by the extension "extdeveval")

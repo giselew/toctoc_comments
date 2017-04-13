@@ -139,10 +139,10 @@ $tx_toctoc_comments_comments = array(
 			'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_feuser_mm.tstampilike',
 			'config' => array (
 				'type'     => 'input',
-				'size'     => '22',
-				'max'      => '16',
+				'size'     => '22',				
 				'eval'     => 'datetime',
 				'readOnly' => 1,
+				'renderType' => 'inputDateTime',
 			)
 		),
 		'pagetstampilike' => array (
@@ -151,7 +151,6 @@ $tx_toctoc_comments_comments = array(
 			'config' => array (
 				'type'     => 'input',
 				'size'     => '22',
-				'max'      => '16',
 				'eval'     => 'trim',
 				'readOnly' => 1,
 			)
@@ -162,9 +161,8 @@ $tx_toctoc_comments_comments = array(
 			'config' => array (
 				'type'     => 'input',
 				'size'     => '22',
-				'max'      => '16',
-				'eval'     => 'datetime',
 				'readOnly' => 1,
+				'renderType' => 'inputDateTime',
 			)
 		),
 		'pagetstampidislike' => array (
@@ -184,9 +182,9 @@ $tx_toctoc_comments_comments = array(
 			'config' => array (
 				'type'     => 'input',
 				'size'     => '22',
-				'max'      => '16',
 				'eval'     => 'datetime',
 				'readOnly' => 1,
+				'renderType' => 'inputDateTime',
 			)
 		),
 		'pagetstampmyrating' => array (
@@ -213,13 +211,13 @@ $tx_toctoc_comments_comments = array(
 		),
 		'tstampseen' => array (
 				'exclude' => 1,
-				'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_feuser_mm.tstampseen',
+				'label' => 'LLL:EXT:toctoc_comments/locallang_db.xml:tx_toctoc_comments_feuser_mm.tstampseen',				
 				'config' => array (
 						'type'     => 'input',
 						'size'     => '22',
-						'max'      => '16',
 						'eval'     => 'datetime',
 						'readOnly' => 1,
+						'renderType' => 'inputDateTime',
 				)
 		),
 		'pagetstampseen' => array (

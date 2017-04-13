@@ -186,6 +186,9 @@ plugin.tx_toctoccomments_pi1 {
     # Enable old style Date format mode.
     dateFormatOldStyle = 0
 
+    # make break words longer than this length in comment list
+    makeBreakWordsLongerThan = {$plugin.tx_toctoccomments_pi1.makeBreakWordsLongerThan}
+    
     # Create links inside comment text automatically?
     autoConvertLinks = {$plugin.tx_toctoccomments_pi1.autoConvertLinks}
 
@@ -338,7 +341,9 @@ plugin.tx_toctoccomments_pi1 {
     
     # Empty HTTP_USER_AGENT are uncool, most possibly crawlers to be excluded from the commenting system and session creation
     dontTakeEmptyAgentStringAsCrawler = 0
-   
+    
+    # when you use jQuery v3 then please set this to 1
+    usesjQuery3 = 0   
   }
   sharing {
      // sharing option valid since version 6

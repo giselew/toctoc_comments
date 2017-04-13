@@ -14,6 +14,7 @@ New in versions 9.x.x
 .. index::
 	single: News; Version 9
 
+- toctoc_comments 9.2.10 allows to break long words in comments lists, see option advanced.makeBreakWordsLongerThan
 - With toctoc_comments 9.2.0 the CSS-modell has been dropped as announced 1 year ago, when LESS was introduced for CSS-generation
 - toctoc_comments 9.2.0 improves performance with better caching and reduced output from server to client
 - toctoc_comments 9.1.0 brings a new kind of ratings, called the emoLikes. EmoLikes are heavily inspired by the reactions Facebook introduced in winter 2016

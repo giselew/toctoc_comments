@@ -922,8 +922,21 @@
 2017-02-14 Gisèle Wendl  <gisele.wendl@toctoc.ch>
 	* Release of version 9.2.9 - see www.toctoc.ch for demos, news, support and donations
 	* Fixed PHP Warning concerning str_replace() in BackendAjaxAdministration.php on line 398 (Issue: Cache wasn't properly refreshed after 
-	  Updates of comments in backend module)
+	  updates of comments in backend module)
 	* Fixed duplicate CSS entry in CSS for flowplayer
 	* Fixed 2 unused markers in Topratings
 	* Fixed problem with ext:min (HTMLTidy) when using advanced.loginRequired in the comments form
 	* Added extension configuration option "donationServer", which is normally www.toctoc.ch, but we could be happy to change that somewhere if ever this would be needed.
+		
+2017-04-13 Gisèle Wendl  <gisele.wendl@toctoc.ch>
+	* Release of version 9.2.10 - see www.toctoc.ch for demos, news, support and donations
+	* Compatibility TYPO3 8.7 LTS
+	* Compatibility jQuery v3: When you use jQuery v3, then please set new TS-Setup-option advanced.usesjQuery3 = 1 (default 0)
+	* Fixed links to images in administrators-eID-replies when using https
+	* Fixed problem with likes on pagemode comments in user center (displayed only if in first place, duplicated row before if placed after)
+	* Fixed $TCA field definitions for tx_toctoc_comments_attachment regarding changes in TYPO3 8 ('DBcheck -> Database relations' had an error because of this issue)
+	* Long words in comments can break responsive behavior on small screens. To avoid this we can apply style "word-break: break-all;" to comments containing long words
+	  Default length of a long word is 37, specified in new option advanced.makeBreakWordsLongerThan
+	* Deleting typo3temp deletes the generated userpictures by toctoc_comments. 
+	  A new check on the files makes safe now, that when toctoc_comments wants to use its cached image-information, at least one file must exist
+	* Fixed display-error of dates shown in top-ratings (JavaScript had an error in the logics for their automatic date refresh)

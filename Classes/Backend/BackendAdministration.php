@@ -226,6 +226,10 @@ class toctoc_comments_module2 extends t3lib_SCbase {
 			$donlib = new user_toctoc_comments_toctoc_comments;
 			$donmsg = $donlib->displayDonationMessage();
 			$max_records = $this->extConf['max_records'];
+			$id8 = '';
+			if (version_compare(TYPO3_version, '7.9.9', '>')) {
+				$id8 = '.8';
+			}
 			$readyfunctionjs = '		<script language="javascript" type="text/javascript">
 					var picext = "' .$this->picext . '";
 			function txtcinittablesorter () {
@@ -347,7 +351,7 @@ class toctoc_comments_module2 extends t3lib_SCbase {
 			})(jQuery);
 		}
 		</script>
-		<script type="text/javascript" src="../typo3conf/ext/toctoc_comments/Resources/Public/JavaScript/tx-tc-be-ftr.js"></script>
+		<script type="text/javascript" src="../typo3conf/ext/toctoc_comments/Resources/Public/JavaScript/tx-tc-be-ftr' . $id8 . '.js"></script>
 		<script language="javascript" type="text/javascript">
 			jQuery(document).ready(function() {
 				txtcinittablesorter();

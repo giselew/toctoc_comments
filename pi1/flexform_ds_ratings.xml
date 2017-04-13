@@ -157,7 +157,6 @@
 			<useScopesForVote> 
 				<TCEforms>
 					<label>LLL:EXT:toctoc_comments/pi1/locallang.xml:tt_content.toctoc_comments_pi1.useScopesForVote</label>
-					<displayCond></displayCond>
 					<config>
 						<type>group</type>
 						<internal_type>db</internal_type>

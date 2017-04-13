@@ -39,28 +39,28 @@
  *
  *  109: class toctoc_comments_ajax
  *  166:     public function __construct()
- *  364:     protected function launchCmd($data)
- *  947:     protected function initTSFE()
- * 1021:     public function main()
- * 1085:     public function handleCommentatorNotifications()
- * 1096:     protected function updateCommentDisplay()
- * 1114:     protected function updateComment()
- * 1129:     protected function webpagepreview()
- * 1141:     protected function previewcomment()
- * 1152:     protected function commentsSearch()
- * 1164:     protected function cleanupfup()
- * 1178:     public function getCaptcha($captchatype, $cid)
- * 1195:     public function chkcaptcha($cid, $code)
- * 1208:     protected function getUserCard()
- * 1220:     protected function getEmoCard()
- * 1232:     protected function getCurrentIp()
- * 1242:     protected function updateCommentsView()
- * 1550:     protected function updateRating()
- * 2247:     protected function processDeleteSubmission()
- * 2328:     protected function deleteDBcachereport($cachedEntities, $ref = '')
- * 2339:     protected function processDenotifycommentSubmission()
- * 2390:     protected function recentCommentsClearCache()
- * 2422:     public function getAJAXDBCache($uid)
+ *  372:     protected function launchCmd($data)
+ *  955:     protected function initTSFE()
+ * 1029:     public function main()
+ * 1093:     public function handleCommentatorNotifications()
+ * 1104:     protected function updateCommentDisplay()
+ * 1122:     protected function updateComment()
+ * 1137:     protected function webpagepreview()
+ * 1149:     protected function previewcomment()
+ * 1160:     protected function commentsSearch()
+ * 1172:     protected function cleanupfup()
+ * 1186:     public function getCaptcha($captchatype, $cid)
+ * 1203:     public function chkcaptcha($cid, $code)
+ * 1216:     protected function getUserCard()
+ * 1228:     protected function getEmoCard()
+ * 1240:     protected function getCurrentIp()
+ * 1250:     protected function updateCommentsView()
+ * 1558:     protected function updateRating()
+ * 2255:     protected function processDeleteSubmission()
+ * 2336:     protected function deleteDBcachereport($cachedEntities, $ref = '')
+ * 2347:     protected function processDenotifycommentSubmission()
+ * 2398:     protected function recentCommentsClearCache()
+ * 2430:     public function getAJAXDBCache($uid)
  *
  * TOTAL FUNCTIONS: 23
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -230,7 +230,7 @@ class toctoc_comments_ajax {
 				echo '</pre>';
 				exit();
 			}
-			
+
 		}
 
 		$this->pageid = 0;

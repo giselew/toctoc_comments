@@ -24,6 +24,7 @@ EXT: AJAX Social Network Components
 
     :Description:
         AJAX-based commenting, review, rating and sharing system (jQuery) for TYPO3 4.5 to 8.x.
+        Includes full featured AJAX Login and Sign Up, including login with Facebook or Google+ account. 
      	Comments or reviews can have webpage previews, pictures and pdfs attached. You can use BB-Codes, emojis and smilies. 
 	Userpictures include gravatar-, Facebook- or fe_users-userpictures. 
 	More plugin-modes for comments are available, a user center, a recent comments list, a report bad comment form and several charts. 
@@ -31,7 +32,6 @@ EXT: AJAX Social Network Components
 	There is a plugin-mode for top ratings. Many options for spam- and data-protection. AJAX runs with jQuery. 
 	ViewHelpers for extension news. 
 	Comments, reviews or ratings can trigger content elements, pages or records in other extensions DETAIL-views and LIST-views (LIST-view tt_news, news, modify all other pi1-extensions in PHP and implement a new marker or ViewHelper for comments and ratings in LIST-views). 
-	Includes full featured AJAX Login and Sign Up, including login with Facebook or Google+ account. 
 	Backendmodule for comments, users and system control. 
 	Works with TemplaVoila, news, tt_news, tt_products, community, cwt_community and most of all other extensions. 
 	Designable from included LESS-model. 
@@ -40,7 +40,7 @@ EXT: AJAX Social Network Components
         for Admins, for Advanced, AJAX-Commenting, -rating, -sharing, Attachments, LESS, AJAX-Login and Sign Up
 
     :Copyright:
-        2012-2016
+        2012-2017
 
     :Author:
         Gisèle Wendl

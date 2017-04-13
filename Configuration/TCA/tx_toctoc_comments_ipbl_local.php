@@ -53,6 +53,7 @@ $tx_toctoc_comments_comments = array(
 				'eval' => 'datetime',
 				'readOnly' => TRUE,
 				'default' => time(),
+				'renderType' => 'inputDateTime',
 			),
 		),
 		'comment' => array (

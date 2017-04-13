@@ -72,9 +72,9 @@ $tx_toctoc_comments_comments = array(
 			'config' => array (
 				'type'     => 'input',
 				'size'     => '22',
-				'max'      => '16',
 				'eval'     => 'datetime',
 				'readOnly' => $toctoc_ratings_debug_mode_disabled,
+				'renderType' => 'inputDateTime',
 			)
 		),
 		'ip' => array (

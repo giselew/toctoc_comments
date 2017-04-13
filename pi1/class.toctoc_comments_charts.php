@@ -37,14 +37,12 @@
  *
  *
  *
- *   60: class toctoc_comments_charts extends toctoc_comment_lib
- *   69:     public function topratings ($conf, $pObj, $fromusercenterid = 0)
- * 1569:     public function topsharings ($conf, $pObj)
- * 2001:     private function human_sharesize($bytes, $decimals = 1)
- * 2021:     private function enrichrows($conf, $rowsmerged, $pObj, $show_uid, $input_sys_language_uid = FALSE)
- * 2867:     private function initconf($pidcond, $conf, $restrictor)
+ *   58: class toctoc_comments_charts extends toctoc_comment_lib
+ *   67:     public function topratings ($conf, $pObj, $fromusercenterid = 0)
+ * 1578:     private function enrichrows($conf, $rowsmerged, $pObj, $show_uid, $input_sys_language_uid = FALSE)
+ * 2419:     private function initconf($pidcond, $conf, $restrictor)
  *
- * TOTAL FUNCTIONS: 5
+ * TOTAL FUNCTIONS: 3
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -967,7 +965,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 		$irank=0;
 
 		if ((count($rowsmerged)>0) && ($rowsmerged[0]['nbrvotes']!='')) {
-			$rowsmerged = $this->enrichrows($conf, $rowsmerged, $pObj, $show_uid);
+			$rowsmerged = $this->enrichrows($conf, $rowsmerged, $pObj, $show_uid, FALSE);
 		}
 
 		$rowsmergedclean= array();
@@ -1120,16 +1118,15 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 
 		foreach ($rowsmerged as $row) {
 
-			$externalprefix=$row['pi1_key'];
-			$this->mmtable=$row['pi1_table'];
-			$prefix=$this->mmtable . '_';
+			$externalprefix = $row['pi1_key'];
+			$this->mmtable = $row['pi1_table'];
+			$prefix = $this->mmtable . '_';
 			$refID = $row['refID'];
-			$where = $this->mmtable. '.uid = ' . $refID;
-			$ownershipok=1;
+			$where = $this->mmtable . '.uid = ' . $refID;
+			$ownershipok = 1;
 
 			if ($this->mmtable== 'fe_users') {
 				$arr_groupmembers=explode(',', $this->usersGroupmembers($pObj, FALSE, $conf, TRUE));
-
 				$arr_groupmembers=array_flip($arr_groupmembers);
 				if (!array_key_exists($refID, $arr_groupmembers))  {
 					$ownershipok=0;
@@ -1334,7 +1331,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							));
 						}
 
-						$hidecss ='';						
+						$hidecss ='';
 						$strhidevoteplus = '';
 						$classvotebar = '';
 						$markers = array(
@@ -1368,7 +1365,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 						if ($conf['theme.']['themeVersion'] == 2) {
 							$strv2='v2';
 						}
-						
+
 						if ($row['emolikeid']>0) {
 							//print $row['emolikeid'] . ' - ' ;
 							$mylikepic= $emolikepicarr[$row['emolikeid']];
@@ -1382,7 +1379,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 								$strdislike='dis';
 
 							}
-							
+
 						}
 
 						$mylikepictitle=$this->pi_getLLWrap($pObj, 'pi1_template.text_topratings_'.$strdislike.'likes', FALSE);
@@ -1413,7 +1410,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							if ($fromusercenterid == 0) {
 								$row['nbrvotes']='';
 							}
-							
+
 						} elseif ($conf['topRatings.']['topRatingsMode']==1){
 							$topratings_ilike_vote=$this->pi_getLLWrap($pObj, 'pi1_template.text_topratings_rating', FALSE) . ':&nbsp;' .
 							$voteingstr . $row['voting']. ' ';
@@ -1444,7 +1441,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 						else {
 							$margincontent= ' tx-tc-mrgcnt-left';
 						}
-						
+
 						if (trim($row['text']) != '') {
 							$contenttxt = '<div class="tx-tc-trt-content' . $margincontent . '">' . $row['text'] . '</div>';
 						}
@@ -1460,7 +1457,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 							//bronze
 							$rankstyle=' tx-tc-rank3';
 						}
-						
+
 						$titledate = '';
 						if ($row['date'] != '') {
 							$rowiddate = $conf['topRatings.']['topRatingsMode'] . '001' . $rank . str_replace('_', '', $row['refID']);
@@ -1525,16 +1522,16 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 		if (intval($fromusercenterid)==0) {
 			$retstr = implode($entries);
 		} else {
-						
+
 			$cntentries = count($entries);
 			for ($i=0; (($i<$shownbritemsinusercenter) && ($i<$cntentries)); $i++) {
 				$retstr .= $entries[$i];
 			}
-			
+
 			for ($i=$shownbritemsinusercenter;($i<$cntentries);$i++) {
 				$retstrinner .= $entries[$i];
 			}
-			
+
 			if ($retstrinner !='') {
 				$retstr .= $this->t3substituteMarkerArray($this->t3getSubpart($pObj, $pObj->templateCode, '###USERCENTER_DROPDOWNSHOWMORE###'),
 						array(
@@ -1543,11 +1540,11 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 								'###DROPUPORDOWN###' => 'Down',
 								'###TITLE###' => $this->pi_getLLWrap($pObj, 'pi1_template.text_usercenter_showmore', $fromAjax),
 								'###CONTENT###' => $retstrinner,
-			
+
 						)
-						
+
 				);
-				
+
 			}
 
 		}
@@ -1555,12 +1552,12 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 		$subParts = array(
 			'###SINGLE_TOPRATINGS###' => $retstr,
 		);
-		
+
 		$retstr='';
 		$template = $this->t3getSubpart($pObj, $pObj->templateCode, '###TOPRATINGS_LIST###');
 		$markers = array(
 			'###TOPRATINGS_CONFIG_TITLE###' => $text_topratings . '<br />',
-			'###TOPRATINGS_CONFIG_DETAIL###' => $topratings_ilike_vote_desc.$AlignResultsWithMaxVotesAndAvgVoteText. '<br />',
+			'###TOPRATINGS_CONFIG_DETAIL###' => $topratings_ilike_vote_desc . $AlignResultsWithMaxVotesAndAvgVoteText. '<br />',
 		);
 
 		$retstr = $this->substituteMarkersAndSubparts($template, $markers, $subParts, $pObj);
@@ -1596,6 +1593,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 				if ($hookId == $arrpagemode[0]){
 					$rowsmerged[$i]['ref'] = 'pages_' . $hookId;
 				}
+				$pageidrecord = '';
 			} else {
 				$pageidrecord=$rowsmerged[$i]['ref'];
 			}
@@ -1604,8 +1602,8 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 			$prefix=$pageidrecord;
 			$posbeforeid = strrpos($pageidrecord, '_')+1;
 
-			$prefix=substr($pageidrecord, 0, $posbeforeid);
-			$this->mmtable=substr($pageidrecord, 0, $posbeforeid-1);
+			$prefix = substr($pageidrecord, 0, $posbeforeid);
+			$this->mmtable = substr($pageidrecord, 0, $posbeforeid-1);
 
 			$refID = substr($pageidrecord, $posbeforeid);
 			if (str_replace('ext', '', $refID) != $refID) {
@@ -2395,7 +2393,7 @@ class toctoc_comments_charts extends toctoc_comment_lib {
 					$rowsmerged[$i]['isok'] = 1;
 					if (strpos($rowsmerged[$i]['link'], 'href=') == 0) {
 						$rowsmerged[$i]['isok'] = 0;
-					} 
+					}
 
 				} else {
 					$rowsmerged[$i]['isok'] = 0;

@@ -27,8 +27,8 @@
  *
  *
  *   56: class user_toctoc_comments_toctoc_comments
- *   68:     public function displayDonationMessage()
- *  199:     protected function checkSecret($secret)
+ *   69:     public function displayDonationMessage()
+ *  203:     protected function checkSecret($secret)
  *
  * TOTAL FUNCTIONS: 2
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -57,7 +57,7 @@ class user_toctoc_comments_toctoc_comments {
 
 public $donExtkey = 'toctoccommentsce';
 public $donExtension = 'toctoc_comments';
-public $donExtversion = '929';
+public $donExtversion = '9210';
 public $donationServer= 'www.toctoc.ch';
 
 	/**
@@ -84,9 +84,9 @@ public $donationServer= 'www.toctoc.ch';
 			session_name('sess_toctoccommentsfe');
 			session_start();
 			if (!isset($_SESSION['toctoc_commentsfedonation'])) {
-				$_SESSION['toctoc_commentsfedonation']='';
-				$_SESSION['toctoc_commentsfedonationdone']=0;
-				$_SESSION['toctoc_commentsfedonationlang']=$langreq;
+				$_SESSION['toctoc_commentsfedonation'] = '';
+				$_SESSION['toctoc_commentsfedonationdone'] = 0;
+				$_SESSION['toctoc_commentsfedonationlang'] = $langreq;
 			}
 
 		} else {
@@ -95,21 +95,21 @@ public $donationServer= 'www.toctoc.ch';
 				session_name('sess_toctoccommentsfe');
 				session_start();
 			}
-			
+
 			if (!isset($_SESSION['toctoc_commentsfedonation'])) {
-				$_SESSION['toctoc_commentsfedonation']='';
-				$_SESSION['toctoc_commentsfedonationdone']=0;
-				$_SESSION['toctoc_commentsfedonationlang']=$langreq;
+				$_SESSION['toctoc_commentsfedonation'] = '';
+				$_SESSION['toctoc_commentsfedonationdone'] = 0;
+				$_SESSION['toctoc_commentsfedonationlang'] = $langreq;
 			}
 
 		}
 
 		$datadonation = '';
-		$secret='';		
+		$secret = '';
 		if (trim($tsSettings['donationServer']) != '') {
 			$this->donationServer = trim($tsSettings['donationServer']);
 		}
-		
+
 		if (trim($_SESSION['toctoccommentsfedonationsecret']) != '') {
 			// secret from toctooccommmetts
 			if ($tsSettings['donationSecret'] == '') {
@@ -117,19 +117,18 @@ public $donationServer= 'www.toctoc.ch';
 				if ($_SESSION['toctoc_commentsfedonationsecret'] != $_SESSION['toctoccommentsfedonationsecret']) {
 					$_SESSION['toctoc_commentsfedonation'] = '';
 				}
-				
+
 			}
-			
+
 		}
 
 		if ($_SESSION['toctoc_commentsfedonationlang'] != $langreq) {
 			$_SESSION['toctoc_commentsfedonationlang'] = $langreq;
 			$_SESSION['toctoc_commentsfedonation'] = '';
-
 		}
 
 		if ($tsSettings['donationSecret'] != '') {
-			$secret= trim($tsSettings['donationSecret']);
+			$secret = trim($tsSettings['donationSecret']);
 			if ($_SESSION['toctoc_commentsfedonationsecret'] != $secret) {
 				$_SESSION['toctoc_commentsfedonation'] = '';
 				$_SESSION['toctoc_commentsfedonationdone'] = 0;
@@ -150,7 +149,6 @@ public $donationServer= 'www.toctoc.ch';
 		$txtstatusdonation =  $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/locallang_cedb.xml:tx_toctoccommentscedonation.statusdonation');
 		$txtoptionnotset =  $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/locallang_cedb.xml:tx_toctoccommentsdonation.optionnotset');
 		$txtthanksforusing =  $GLOBALS['LANG']->sL('LLL:EXT:toctoc_comments/locallang_cedb.xml:tx_toctoccommentscedonation.thanksforusing');
-
 		$datadonationarr = explode('@', $datadonation);
 		$datadonationretcode = '403';
 		if (count($datadonationarr) > 1) {
@@ -158,12 +156,10 @@ public $donationServer= 'www.toctoc.ch';
 			$datadonationintro = $datadonationarr[2];
 			$datadonationoutro = $datadonationarr[3];
 			$datadonationretcode = $datadonationarr[0];
-
 			if (count($datadonationarr) > 4) {
 				$datadonationarrauth = $datadonationarr[4];
 				$autharr = explode(',', $datadonationarrauth);
 				$dkcontent = $_SESSION['toctoc_commentsfedonationsecret'];
-
 			}
 
 		}
@@ -179,7 +175,7 @@ public $donationServer= 'www.toctoc.ch';
 				} else {
 					$datadonation .= '<br>' . $txtoptionnotset;
 				}
-				
+
 			}
 
 			$this->toctoccommentsfedonationdone=0;
@@ -194,7 +190,7 @@ public $donationServer= 'www.toctoc.ch';
 
 		}
 
-		$_SESSION['toctoc_commentsfedonationdone']=$this->toctoccommentsfedonationdone;
+		$_SESSION['toctoc_commentsfedonationdone'] = $this->toctoccommentsfedonationdone;
 		return $html;
 	}
 
@@ -205,12 +201,12 @@ public $donationServer= 'www.toctoc.ch';
 	 * @return	void
 	 */
 	protected function checkSecret($secret) {
-		$data ='';
+		$data = '';
 		$infomessage = '';
 		$donationserver = $this->donationServer;
 		if (trim($_SESSION['toctoc_commentsfedonation']) != '') {
-			if ($_SESSION['toctoc_commentsfedonationdone']==1) {
-				$this->toctoccommentsfedonationdone=1;
+			if ($_SESSION['toctoc_commentsfedonationdone'] == 1) {
+				$this->toctoccommentsfedonationdone = 1;
 			}
 
 			return $_SESSION['toctoc_commentsfedonation'];
@@ -221,10 +217,10 @@ public $donationServer= 'www.toctoc.ch';
 			} else {
 				$curip = $_ENV['SERVER_ADDR'];
 				$curipres = $_ENV['SERVER_NAME'];
-
 				if (trim($curip) == '') {
 					$curip = isset($_SERVER['SERVER_ADDR'])?$_SERVER['SERVER_ADDR']:gethostbyname(gethostname());
 				}
+
 				if (trim($curipres) == '') {
 					$curipres = isset($_SERVER['SERVER_NAME'])?$_SERVER['SERVER_NAME']:gethostname();
 				}
@@ -291,7 +287,7 @@ public $donationServer= 'www.toctoc.ch';
 						$alertmsg = 1;
 						curl_close($ch);
 					}
-					
+
 				}
 
 			}

@@ -45,14 +45,14 @@
  *  156:     public function getBarWidth($rating, $conf, $isReview = 0)
  *  174:     protected function synchLikesWithEmoLikes($pObj, $ref, $conf, $fromAjax)
  *  277:     protected function getSubEmoLikeResultText($conf, $pObj, $template, $ref, $cid, $myemolikeval, $feuserid, $fromAjax)
- *  663:     protected function getSubEmoLikeResultIcons($conf, $pObj, $template, $ref, $rows, $myemolikeval, $fromAjax)
- *  760:     protected function getEmoTextColorLL($myemoval)
- *  796:     protected function getRatingInfo($ref, $pObj, $feuserid=-1, $conf, $scopeid=0, $fromAjax, $isReview = 0, $fromcomments = 0, $reviewfeuserid = 0)
- * 1040:     protected function generateRatingContent($ref, $template, $conf, $fromAjax, $pid, $returnasarray, $feuserid, $pObj, $cmd, $cid, $fromcomments,
+ *  664:     protected function getSubEmoLikeResultIcons($conf, $pObj, $template, $ref, $rows, $myemolikeval, $fromAjax)
+ *  761:     protected function getEmoTextColorLL($myemoval)
+ *  797:     protected function getRatingInfo($ref, $pObj, $feuserid=-1, $conf, $scopeid=0, $fromAjax, $isReview = 0, $fromcomments = 0, $reviewfeuserid = 0)
+ * 1041:     protected function generateRatingContent($ref, $template, $conf, $fromAjax, $pid, $returnasarray, $feuserid, $pObj, $cmd, $cid, $fromcomments,
 	$scopeid = 0, $isReview = 0, $commentusername = '')
- * 2211:     public function emopopup($pObj, $template, $hidecss,$cid,$refforvote, $conf, $fromAjax, $selected = '-1')
- * 2324:     public function setemopopupiLikeDislikeSession($conf)
- * 2379:     private function makeiLikeText($conf, $pObj, $cmd, $ref, $fromAjax, $myrating = array(), $mylikeval, $mydis='', $template, $cid,
+ * 2212:     public function emopopup($pObj, $template, $hidecss,$cid,$refforvote, $conf, $fromAjax, $selected = '-1')
+ * 2325:     public function setemopopupiLikeDislikeSession($conf)
+ * 2380:     private function makeiLikeText($conf, $pObj, $cmd, $ref, $fromAjax, $myrating = array(), $mylikeval, $mydis='', $template, $cid,
 			$extpreffortext, $myemoval = 0, $myemoll = '')
  *
  * TOTAL FUNCTIONS: 11
@@ -443,7 +443,7 @@ class toctoc_comments_ratings extends toctoc_comment_lib {
 						if (count($_SESSION['AJAXimages']) != 0 ) {
 							$this->AJAXimages = $_SESSION['AJAXimages'];
 							$this->gravatarimages = $_SESSION['gravatarimages'];
-							$this->AJAXimagesCache = $_SESSION['AJAXOrigimages'];								
+							$this->AJAXimagesCache = $_SESSION['AJAXOrigimages'];
 						}
 
 					}
